@@ -1415,7 +1415,7 @@
               <p class="card-desc" data-i18n="feature_search_desc">支持书签、历史、已打开网页、最常访问</p>
             </header>
             <div class="card-a-graphic" data-node-id="3359:336">
-              <img class="card-a-image mark-svg" src="./assets/search@3x.png" alt="" draggable="false" />
+              <img class="card-a-image mark-svg js-inline-svg" src="./assets/search.svg" alt="" draggable="false" />
             </div>
           </article>
 
@@ -1425,7 +1425,7 @@
               <p class="card-desc" data-i18n="feature_sitesearch_desc">内置常用网站列表，Tab 一键搜索</p>
             </header>
             <div class="card-b-graphic" data-node-id="3359:358">
-              <img class="card-graphic-image mark-svg" src="./assets/sitesearch@3x.png" alt="" draggable="false" />
+              <img class="card-graphic-image mark-svg js-inline-svg" src="./assets/sitesearch.svg" alt="" draggable="false" />
             </div>
           </article>
 
@@ -1435,7 +1435,7 @@
               <p class="card-desc" data-i18n="feature_newtab_desc">展示书签与网页卡片</p>
             </header>
             <div class="card-c-graphic" data-node-id="3359:392">
-              <img class="card-graphic-image mark-svg" src="./assets/newtab@3x.png" alt="" draggable="false" />
+              <img class="card-graphic-image mark-svg js-inline-svg" src="./assets/newtab.svg" alt="" draggable="false" />
             </div>
           </article>
 
@@ -1448,7 +1448,7 @@
               <p class="card-desc" data-i18n="feature_labs_desc">更多玩法，敬请期待</p>
             </header>
             <div class="card-d-graphic" data-node-id="3359:444">
-              <img class="card-graphic-image mark-svg" src="./assets/lab@3x.png" alt="" draggable="false" />
+              <img class="card-graphic-image mark-svg js-inline-svg" src="./assets/lab.svg" alt="" draggable="false" />
             </div>
           </article>
         </div>
@@ -1456,6 +1456,13 @@
     </main>
     <script src="../assets/safari-svg-png-fallback.js"></script>
     <script>
+      const safariBitmapMap = {
+        "./assets/search.svg": "./assets/search@3x.png",
+        "./assets/sitesearch.svg": "./assets/sitesearch@3x.png",
+        "./assets/newtab.svg": "./assets/newtab@3x.png",
+        "./assets/lab.svg": "./assets/lab@3x.png"
+      };
+
       async function inlineSvgImages() {
         const targets = Array.from(document.querySelectorAll("img.js-inline-svg[src$='.svg']"));
         await Promise.all(
@@ -1507,7 +1514,8 @@
         if (typeof window.applySafariPngFallbackForSvgImages === "function") {
           await window.applySafariPngFallbackForSvgImages({
             selector: "img[src$='.svg']",
-            removeClassName: "js-inline-svg"
+            removeClassName: "js-inline-svg",
+            extraMap: safariBitmapMap
           });
         }
         await inlineSvgImages();

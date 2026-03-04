@@ -492,10 +492,10 @@
       body.is-safari .text-shimmer,
       body.is-safari .text-shimmer-delay {
         filter: none;
-        animation: none;
-        background: none;
-        -webkit-text-fill-color: currentColor;
-        color: currentColor;
+        -webkit-font-smoothing: antialiased;
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
       }
 
       .pill-btn-figma-icon {

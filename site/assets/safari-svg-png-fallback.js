@@ -29,7 +29,12 @@
     const selector = config.selector || "img[src$='.svg']";
     const removeClassName = config.removeClassName || "";
     const extraMap = config.extraMap || {};
-    const root = config.root instanceof ParentNode ? config.root : document;
+    const root =
+      config.root &&
+      (config.root.nodeType === Node.DOCUMENT_NODE || config.root.nodeType === Node.ELEMENT_NODE) &&
+      typeof config.root.querySelectorAll === "function"
+        ? config.root
+        : document;
     const markBodyClass = config.markBodyClass !== false;
 
     if (markBodyClass && document.body) {

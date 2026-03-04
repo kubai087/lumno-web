@@ -274,17 +274,6 @@
         }
       }
 
-      @keyframes x-hero-enter-no-blur {
-        from {
-          opacity: 0;
-          transform: translateX(-24px);
-        }
-        to {
-          opacity: 1;
-          transform: translateX(0);
-        }
-      }
-
       .kbd-group {
         display: inline-flex;
         align-items: center;
@@ -482,20 +471,6 @@
         .logo-butterfly animate {
           display: none;
         }
-      }
-
-      body.is-safari .shortcut-line {
-        filter: none;
-        animation-name: x-hero-enter-no-blur;
-      }
-
-      body.is-safari .text-shimmer,
-      body.is-safari .text-shimmer-delay {
-        filter: none;
-        animation: none;
-        background: none;
-        -webkit-text-fill-color: currentColor;
-        color: currentColor;
       }
 
       .pill-btn-figma-icon {
@@ -701,14 +676,11 @@
         height: 128px;
         flex: 0 0 128px;
         margin-top: 8px;
-        display: flex;
-        align-items: flex-end;
       }
 
       .card-a-image {
         width: 100%;
-        height: auto;
-        max-height: 100%;
+        height: 100%;
         object-fit: contain;
         object-position: center bottom;
         display: block;
@@ -716,8 +688,7 @@
 
       .card-graphic-image {
         width: 100%;
-        height: auto;
-        max-height: 100%;
+        height: 100%;
         object-fit: contain;
         object-position: center bottom;
         display: block;
@@ -736,8 +707,6 @@
         flex: 0 0 128px;
         margin-top: 8px;
         overflow: hidden;
-        display: flex;
-        align-items: flex-end;
       }
 
       .rings {
@@ -846,8 +815,6 @@
         flex: 0 0 128px;
         margin-top: 8px;
         overflow: hidden;
-        display: flex;
-        align-items: flex-end;
       }
 
       .c-ellipse-a {
@@ -994,8 +961,6 @@
         flex: 0 0 128px;
         margin-top: 8px;
         overflow: hidden;
-        display: flex;
-        align-items: flex-end;
       }
 
       .auto-pip-box {
@@ -1247,13 +1212,6 @@
           min-height: 228px;
         }
 
-        .feature-card,
-        .feature-card.is-active,
-        .feature-card:hover {
-          transition: none;
-          transform: none;
-        }
-
         .card-a,
         .card-b,
         .card-c,
@@ -1318,7 +1276,7 @@
               <h1 class="title" data-i18n="title_welcome">欢迎使用</h1>
               <div class="logo-lockup">
                 <span class="logo-icon-wrap">
-                  <img class="logo-icon mark-svg js-inline-svg" src="./assets/logo.svg" alt="Lumno 图标" data-i18n-alt="logo_icon_alt" draggable="false" />
+                  <img class="logo-icon mark-svg" src="./assets/logo.svg" alt="Lumno 图标" data-i18n-alt="logo_icon_alt" draggable="false" />
                 </span>
                 <span class="logo-wordmark-wrap">
                   <img class="logo-wordmark mark-svg" src="./assets/textlogo.svg" alt="Lumno" draggable="false" />
@@ -1415,7 +1373,7 @@
               <p class="card-desc" data-i18n="feature_search_desc">支持书签、历史、已打开网页、最常访问</p>
             </header>
             <div class="card-a-graphic" data-node-id="3359:336">
-              <img class="card-a-image mark-svg js-inline-svg" src="./assets/search.svg" alt="" draggable="false" />
+              <img class="card-a-image mark-svg" src="./assets/search.svg" alt="" draggable="false" />
             </div>
           </article>
 
@@ -1425,7 +1383,7 @@
               <p class="card-desc" data-i18n="feature_sitesearch_desc">内置常用网站列表，Tab 一键搜索</p>
             </header>
             <div class="card-b-graphic" data-node-id="3359:358">
-              <img class="card-graphic-image mark-svg js-inline-svg" src="./assets/sitesearch.svg" alt="" draggable="false" />
+              <img class="card-graphic-image mark-svg" src="./assets/sitesearch.svg" alt="" draggable="false" />
             </div>
           </article>
 
@@ -1435,7 +1393,7 @@
               <p class="card-desc" data-i18n="feature_newtab_desc">展示书签与网页卡片</p>
             </header>
             <div class="card-c-graphic" data-node-id="3359:392">
-              <img class="card-graphic-image mark-svg js-inline-svg" src="./assets/newtab.svg" alt="" draggable="false" />
+              <img class="card-graphic-image mark-svg" src="./assets/newtab.svg" alt="" draggable="false" />
             </div>
           </article>
 
@@ -1448,82 +1406,13 @@
               <p class="card-desc" data-i18n="feature_labs_desc">更多玩法，敬请期待</p>
             </header>
             <div class="card-d-graphic" data-node-id="3359:444">
-              <img class="card-graphic-image mark-svg js-inline-svg" src="./assets/lab.svg" alt="" draggable="false" />
+              <img class="card-graphic-image mark-svg" src="./assets/lab.svg" alt="" draggable="false" />
             </div>
           </article>
         </div>
       </section>
     </main>
     <script>
-      const userAgent = navigator.userAgent || "";
-      const isSafari = /Safari\//.test(userAgent) && !/Chrome\/|Chromium\/|CriOS\/|Edg\/|OPR\/|Firefox\/|FxiOS\//.test(userAgent);
-      if (isSafari) {
-        document.body.classList.add("is-safari");
-        const safariBitmapMap = {
-          "./assets/search.svg": "./assets/search@3x.png",
-          "./assets/sitesearch.svg": "./assets/sitesearch@3x.png",
-          "./assets/newtab.svg": "./assets/newtab@3x.png",
-          "./assets/lab.svg": "./assets/lab@3x.png"
-        };
-        document.querySelectorAll("img[src]").forEach((img) => {
-          const src = img.getAttribute("src");
-          if (!src) return;
-          const bitmap = safariBitmapMap[src];
-          if (bitmap) {
-            img.setAttribute("src", bitmap);
-          }
-        });
-      }
-
-      async function inlineSvgImages() {
-        const targets = Array.from(document.querySelectorAll("img.js-inline-svg[src$='.svg']"));
-        await Promise.all(
-          targets.map(async (img) => {
-            const src = img.getAttribute("src");
-            if (!src) return;
-            try {
-              const response = await fetch(src, { cache: "force-cache" });
-              if (!response.ok) return;
-              const text = await response.text();
-              const parsed = new DOMParser().parseFromString(text, "image/svg+xml");
-              const svg = parsed.documentElement;
-              if (!svg || svg.nodeName.toLowerCase() !== "svg") return;
-
-              const className = img.getAttribute("class");
-              if (className) svg.setAttribute("class", className);
-
-              if (img.id) svg.id = img.id;
-              for (const attr of img.attributes) {
-                if (attr.name.startsWith("data-")) {
-                  svg.setAttribute(attr.name, attr.value);
-                }
-              }
-
-              const inlineStyle = img.getAttribute("style");
-              if (inlineStyle) {
-                const svgStyle = svg.getAttribute("style");
-                svg.setAttribute("style", svgStyle ? `${svgStyle}; ${inlineStyle}` : inlineStyle);
-              }
-
-              const alt = img.getAttribute("alt");
-              if (!alt) {
-                svg.setAttribute("aria-hidden", "true");
-              } else {
-                svg.setAttribute("role", "img");
-                svg.setAttribute("aria-label", alt);
-              }
-              svg.setAttribute("focusable", "false");
-              svg.setAttribute("draggable", "false");
-              img.replaceWith(svg);
-            } catch (_) {
-              // Keep the original <img> if fetching/parsing the SVG fails.
-            }
-          })
-        );
-      }
-
-      void inlineSvgImages();
-
       const LANGUAGE_STORAGE_KEY = "_x_extension_language_2024_unique_";
       const FALLBACK_LOCALE = "zh-CN";
       const I18N_MESSAGES = {
@@ -1782,12 +1671,6 @@
       const rightPaneEl = document.querySelector(".right-pane");
       const cards = Array.from(document.querySelectorAll(".feature-card"));
       if (rightPaneEl && cards.length > 1) {
-        const isNarrowMobile = window.matchMedia("(max-width: 680px)").matches;
-        if (isNarrowMobile) {
-          cards.forEach((card) => card.classList.remove("is-active"));
-          return;
-        }
-
         const RIGHT_AUTOPLAY_INTERVAL_MS = 1500;
         const LEFT_ENTER_TOTAL_MS = 1000;
         let activeIndex = 0;

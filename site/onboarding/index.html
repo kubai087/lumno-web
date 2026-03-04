@@ -1413,6 +1413,26 @@
       </section>
     </main>
     <script>
+      const userAgent = navigator.userAgent || "";
+      const isSafari = /Safari\//.test(userAgent) && !/Chrome\/|Chromium\/|CriOS\/|Edg\/|OPR\/|Firefox\/|FxiOS\//.test(userAgent);
+      if (isSafari) {
+        const safariBitmapMap = {
+          "./assets/logo.svg": "./assets/logo@3x.png",
+          "./assets/search.svg": "./assets/search@3x.png",
+          "./assets/sitesearch.svg": "./assets/sitesearch@3x.png",
+          "./assets/newtab.svg": "./assets/newtab.svg@3x.png",
+          "./assets/lab.svg": "./assets/lab.svg@3x.png"
+        };
+        document.querySelectorAll("img[src]").forEach((img) => {
+          const src = img.getAttribute("src");
+          if (!src) return;
+          const bitmap = safariBitmapMap[src];
+          if (bitmap) {
+            img.setAttribute("src", bitmap);
+          }
+        });
+      }
+
       async function inlineSvgImages() {
         const targets = Array.from(document.querySelectorAll("img.js-inline-svg[src$='.svg']"));
         await Promise.all(

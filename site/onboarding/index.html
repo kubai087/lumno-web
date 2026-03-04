@@ -492,10 +492,10 @@
       body.is-safari .text-shimmer,
       body.is-safari .text-shimmer-delay {
         filter: none;
-        -webkit-font-smoothing: antialiased;
-        background-clip: text;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        animation: none;
+        background: none;
+        -webkit-text-fill-color: currentColor;
+        color: currentColor;
       }
 
       .pill-btn-figma-icon {
@@ -1468,11 +1468,9 @@
         document.querySelectorAll("img[src]").forEach((img) => {
           const src = img.getAttribute("src");
           if (!src) return;
-          const normalizedSrc = src.startsWith("./") ? src : `./${src}`;
-          const bitmap = safariBitmapMap[src] || safariBitmapMap[normalizedSrc];
+          const bitmap = safariBitmapMap[src];
           if (bitmap) {
             img.setAttribute("src", bitmap);
-            img.classList.remove("js-inline-svg");
           }
         });
       }

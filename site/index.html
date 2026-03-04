@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lumno</title>
+    <style>
+      :root {
+        --bg: #f6f7fb;
+        --card: #ffffff;
+        --text: #1b1f2a;
+        --muted: #616a7d;
+        --border: #e5e8f0;
+        --accent: #0b57d0;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: "Open Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+        color: var(--text);
+        background: radial-gradient(circle at 20% 0%, #ffffff 0%, var(--bg) 60%);
+      }
+      main {
+        max-width: 860px;
+        margin: 72px auto;
+        padding: 0 20px;
+      }
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 28px;
+        box-shadow: 0 12px 28px rgba(18, 30, 67, 0.08);
+      }
+      h1 { margin: 0 0 12px; font-size: 34px; }
+      p { margin: 0 0 16px; color: var(--muted); line-height: 1.6; }
+      .links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
+      a {
+        text-decoration: none;
+        padding: 10px 14px;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+        color: var(--text);
+        background: #fff;
+      }
+      a.primary { border-color: var(--accent); color: #fff; background: var(--accent); }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="card">
+        <h1>Lumno</h1>
+        <p>这是 Lumno 的网站入口。你可以从这里访问 onboarding 页面和 release 页面。</p>
+        <div class="links">
+          <a class="primary" href="/onboarding/">Open Onboarding</a>
+          <a href="/release/">Open Release Notes</a>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

@@ -694,21 +694,6 @@
         display: block;
       }
 
-      /* Safari can blur SVGs when parent layers combine transform + filter. */
-      @supports (-webkit-touch-callout: none) {
-        .feature-grid {
-          filter: none;
-        }
-
-        .card-a-image,
-        .card-graphic-image {
-          -webkit-backface-visibility: hidden;
-          backface-visibility: hidden;
-          transform: translateZ(0);
-          image-rendering: -webkit-optimize-contrast;
-        }
-      }
-
       .card-b {
         left: 292px;
         top: 0;

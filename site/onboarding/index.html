@@ -1247,6 +1247,13 @@
           min-height: 228px;
         }
 
+        .feature-card,
+        .feature-card.is-active,
+        .feature-card:hover {
+          transition: none;
+          transform: none;
+        }
+
         .card-a,
         .card-b,
         .card-c,
@@ -1775,6 +1782,12 @@
       const rightPaneEl = document.querySelector(".right-pane");
       const cards = Array.from(document.querySelectorAll(".feature-card"));
       if (rightPaneEl && cards.length > 1) {
+        const isNarrowMobile = window.matchMedia("(max-width: 680px)").matches;
+        if (isNarrowMobile) {
+          cards.forEach((card) => card.classList.remove("is-active"));
+          return;
+        }
+
         const RIGHT_AUTOPLAY_INTERVAL_MS = 1500;
         const LEFT_ENTER_TOTAL_MS = 1000;
         let activeIndex = 0;

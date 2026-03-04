@@ -1515,20 +1515,6 @@
 
       const LANGUAGE_STORAGE_KEY = "_x_extension_language_2024_unique_";
       const FALLBACK_LOCALE = "zh-CN";
-      function safeStorageGet(key) {
-        try {
-          return localStorage.getItem(key);
-        } catch (_) {
-          return null;
-        }
-      }
-      function safeStorageSet(key, value) {
-        try {
-          localStorage.setItem(key, value);
-        } catch (_) {
-          // Ignore storage write errors in restricted browser modes.
-        }
-      }
       const I18N_MESSAGES = {
         "zh-CN": {
           page_title: "欢迎使用 Lumno！| Lumno 聚焦搜索&新标签页",
@@ -1738,7 +1724,7 @@
         applyI18n(normalizedMode);
         updateLanguageOptionState(normalizedMode);
         if (options && options.persist) {
-          safeStorageSet(LANGUAGE_STORAGE_KEY, normalizedMode);
+          localStorage.setItem(LANGUAGE_STORAGE_KEY, normalizedMode);
         }
       }
 
@@ -1774,7 +1760,7 @@
           }
         });
       }
-      applyLanguageMode(safeStorageGet(LANGUAGE_STORAGE_KEY) || getSystemLocale());
+      applyLanguageMode(localStorage.getItem(LANGUAGE_STORAGE_KEY) || getSystemLocale());
 
       const modifierKeyEl = document.getElementById("shortcut-modifier-key");
       if (modifierKeyEl) {
@@ -1788,48 +1774,49 @@
         const isNarrowMobile = window.matchMedia("(max-width: 680px)").matches;
         if (isNarrowMobile) {
           cards.forEach((card) => card.classList.remove("is-active"));
-        } else {
-          const RIGHT_AUTOPLAY_INTERVAL_MS = 1500;
-          const LEFT_ENTER_TOTAL_MS = 1000;
-          let activeIndex = 0;
-          let autoplayTimer = null;
-          let paused = false;
-
-          const renderActiveCard = () => {
-            cards.forEach((card, index) => {
-              card.classList.toggle("is-active", index === activeIndex);
-            });
-          };
-
-          const nextCard = () => {
-            if (paused) return;
-            activeIndex = (activeIndex + 1) % cards.length;
-            renderActiveCard();
-          };
-
-          const startAutoplay = () => {
-            if (autoplayTimer) clearInterval(autoplayTimer);
-            autoplayTimer = setInterval(nextCard, RIGHT_AUTOPLAY_INTERVAL_MS);
-          };
-
-          cards.forEach((card) => card.classList.remove("is-active"));
-
-          window.setTimeout(() => {
-            document.body.classList.add("is-entered");
-            renderActiveCard();
-            startAutoplay();
-          }, LEFT_ENTER_TOTAL_MS);
-
-          rightPaneEl.addEventListener("mouseenter", () => {
-            paused = true;
-            rightPaneEl.classList.add("is-manual-hover");
-          });
-
-          rightPaneEl.addEventListener("mouseleave", () => {
-            paused = false;
-            rightPaneEl.classList.remove("is-manual-hover");
-          });
+          return;
         }
+
+        const RIGHT_AUTOPLAY_INTERVAL_MS = 1500;
+        const LEFT_ENTER_TOTAL_MS = 1000;
+        let activeIndex = 0;
+        let autoplayTimer = null;
+        let paused = false;
+
+        const renderActiveCard = () => {
+          cards.forEach((card, index) => {
+            card.classList.toggle("is-active", index === activeIndex);
+          });
+        };
+
+        const nextCard = () => {
+          if (paused) return;
+          activeIndex = (activeIndex + 1) % cards.length;
+          renderActiveCard();
+        };
+
+        const startAutoplay = () => {
+          if (autoplayTimer) clearInterval(autoplayTimer);
+          autoplayTimer = setInterval(nextCard, RIGHT_AUTOPLAY_INTERVAL_MS);
+        };
+
+        cards.forEach((card) => card.classList.remove("is-active"));
+
+        window.setTimeout(() => {
+          document.body.classList.add("is-entered");
+          renderActiveCard();
+          startAutoplay();
+        }, LEFT_ENTER_TOTAL_MS);
+
+        rightPaneEl.addEventListener("mouseenter", () => {
+          paused = true;
+          rightPaneEl.classList.add("is-manual-hover");
+        });
+
+        rightPaneEl.addEventListener("mouseleave", () => {
+          paused = false;
+          rightPaneEl.classList.remove("is-manual-hover");
+        });
       }
 
     </script>

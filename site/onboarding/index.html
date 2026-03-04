@@ -705,48 +705,42 @@
         display: block;
       }
 
-      /* Safari can blur SVGs when parent layers combine transform + filter. */
-      @supports (-webkit-touch-callout: none) {
-        .hero,
-        .shortcut-line {
-          filter: none;
-          animation-name: x-hero-enter-safari;
-        }
+      /* Safari-specific overrides to avoid persistent blur from filter+transform layers. */
+      body.is-safari .hero,
+      body.is-safari .shortcut-line {
+        filter: none;
+        animation-name: x-hero-enter-safari;
+      }
 
-        .text-shimmer {
-          filter: none;
-        }
+      body.is-safari .text-shimmer {
+        filter: none;
+      }
 
-        .logo-lockup {
-          transform: none;
-        }
+      body.is-safari .logo-lockup {
+        transform: none;
+      }
 
-        .logo-butterfly-wing-back {
-          transform: translate(1px, 0) rotate(12deg) scale(0.97);
-          filter: none;
-        }
+      body.is-safari .logo-butterfly-wing-back {
+        transform: translate(1px, 0) rotate(12deg) scale(0.97);
+        filter: none;
+      }
 
-        .logo-butterfly-wing-front {
-          transform: translate(0, 0) rotate(-8deg) scale(1.01);
-        }
+      body.is-safari .logo-butterfly-wing-front {
+        transform: translate(0, 0) rotate(-8deg) scale(1.01);
+      }
 
-        .mark-svg {
-          -webkit-backface-visibility: hidden;
-          backface-visibility: hidden;
-          transform: translateZ(0);
-        }
+      body.is-safari .mark-svg,
+      body.is-safari .card-a-image,
+      body.is-safari .card-graphic-image {
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        transform: translateZ(0);
+        image-rendering: -webkit-optimize-contrast;
+      }
 
-        .feature-grid {
-          filter: none;
-        }
-
-        .card-a-image,
-        .card-graphic-image {
-          -webkit-backface-visibility: hidden;
-          backface-visibility: hidden;
-          transform: translateZ(0);
-          image-rendering: -webkit-optimize-contrast;
-        }
+      body.is-safari .feature-grid {
+        filter: none;
+        transform: none;
       }
 
       .card-b {
@@ -1468,6 +1462,12 @@
       </section>
     </main>
     <script>
+      const ua = navigator.userAgent || "";
+      const isSafari = /Safari\//.test(ua) && !/Chrome\/|Chromium\/|CriOS\/|Edg\/|OPR\/|Firefox\/|FxiOS\//.test(ua);
+      if (isSafari) {
+        document.body.classList.add("is-safari");
+      }
+
       const LANGUAGE_STORAGE_KEY = "_x_extension_language_2024_unique_";
       const FALLBACK_LOCALE = "zh-CN";
       const I18N_MESSAGES = {

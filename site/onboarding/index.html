@@ -1454,14 +1454,28 @@
         </div>
       </section>
     </main>
-    <script src="../assets/safari-svg-png-fallback.js"></script>
     <script>
-      const safariBitmapMap = {
-        "./assets/search.svg": "./assets/search@3x.png",
-        "./assets/sitesearch.svg": "./assets/sitesearch@3x.png",
-        "./assets/newtab.svg": "./assets/newtab@3x.png",
-        "./assets/lab.svg": "./assets/lab@3x.png"
-      };
+      const userAgent = navigator.userAgent || "";
+      const isSafari = /Safari\//.test(userAgent) && !/Chrome\/|Chromium\/|CriOS\/|Edg\/|OPR\/|Firefox\/|FxiOS\//.test(userAgent);
+      if (isSafari) {
+        document.body.classList.add("is-safari");
+        const safariBitmapMap = {
+          "./assets/search.svg": "./assets/search@3x.png",
+          "./assets/sitesearch.svg": "./assets/sitesearch@3x.png",
+          "./assets/newtab.svg": "./assets/newtab@3x.png",
+          "./assets/lab.svg": "./assets/lab@3x.png"
+        };
+        document.querySelectorAll("img[src]").forEach((img) => {
+          const src = img.getAttribute("src");
+          if (!src) return;
+          const normalizedSrc = src.startsWith("./") ? src : `./${src}`;
+          const bitmap = safariBitmapMap[src] || safariBitmapMap[normalizedSrc];
+          if (bitmap) {
+            img.setAttribute("src", bitmap);
+            img.classList.remove("js-inline-svg");
+          }
+        });
+      }
 
       async function inlineSvgImages() {
         const targets = Array.from(document.querySelectorAll("img.js-inline-svg[src$='.svg']"));
@@ -1510,16 +1524,7 @@
         );
       }
 
-      void (async () => {
-        if (typeof window.applySafariPngFallbackForSvgImages === "function") {
-          await window.applySafariPngFallbackForSvgImages({
-            selector: "img[src$='.svg']",
-            removeClassName: "js-inline-svg",
-            extraMap: safariBitmapMap
-          });
-        }
-        await inlineSvgImages();
-      })();
+      void inlineSvgImages();
 
       const LANGUAGE_STORAGE_KEY = "_x_extension_language_2024_unique_";
       const FALLBACK_LOCALE = "zh-CN";

@@ -274,6 +274,17 @@
         }
       }
 
+      @keyframes x-hero-enter-no-blur {
+        from {
+          opacity: 0;
+          transform: translateX(-24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
       .kbd-group {
         display: inline-flex;
         align-items: center;
@@ -471,6 +482,20 @@
         .logo-butterfly animate {
           display: none;
         }
+      }
+
+      body.is-safari .shortcut-line {
+        filter: none;
+        animation-name: x-hero-enter-no-blur;
+      }
+
+      body.is-safari .text-shimmer,
+      body.is-safari .text-shimmer-delay {
+        filter: none;
+        animation: none;
+        background: none;
+        -webkit-text-fill-color: currentColor;
+        color: currentColor;
       }
 
       .pill-btn-figma-icon {
@@ -1416,6 +1441,7 @@
       const userAgent = navigator.userAgent || "";
       const isSafari = /Safari\//.test(userAgent) && !/Chrome\/|Chromium\/|CriOS\/|Edg\/|OPR\/|Firefox\/|FxiOS\//.test(userAgent);
       if (isSafari) {
+        document.body.classList.add("is-safari");
         const safariBitmapMap = {
           "./assets/search.svg": "./assets/search@3x.png",
           "./assets/sitesearch.svg": "./assets/sitesearch@3x.png",

@@ -2,18 +2,6 @@
   const userAgent = navigator.userAgent || "";
   const isSafari = /Safari\//.test(userAgent) && !/Chrome\/|Chromium\/|CriOS\/|Edg\/|OPR\/|Firefox\/|FxiOS\//.test(userAgent);
   const availabilityCache = new Map();
-  const debugEnabled =
-    /(?:^|[?&])debugSafariImages=1(?:&|$)/.test(location.search) ||
-    window.localStorage.getItem("debugSafariImages") === "1";
-
-  function debugLog(message, payload) {
-    if (!debugEnabled) return;
-    if (payload === undefined) {
-      console.info(`[safari-png-fallback] ${message}`);
-      return;
-    }
-    console.info(`[safari-png-fallback] ${message}`, payload);
-  }
 
   function normalizePath(src) {
     return src.startsWith("./") || src.startsWith("../") || src.startsWith("/") ? src : `./${src}`;
@@ -36,10 +24,7 @@
   }
 
   async function applySafariPngFallbackForSvgImages(options) {
-    if (!isSafari) {
-      debugLog("skip: current browser is not Safari");
-      return;
-    }
+    if (!isSafari) return;
     const config = options || {};
     const selector = config.selector || "img[src$='.svg']";
     const removeClassName = config.removeClassName || "";
@@ -57,7 +42,6 @@
     }
 
     const targets = Array.from(root.querySelectorAll(selector));
-    debugLog("start", { targets: targets.length, selector });
     await Promise.all(
       targets.map(async (img) => {
         const src = img.getAttribute("src");
@@ -73,16 +57,11 @@
           if (await canLoadImage(candidate)) {
             img.setAttribute("src", candidate);
             if (removeClassName) img.classList.remove(removeClassName);
-            debugLog("replaced", { from: src, to: candidate });
             break;
           }
         }
-        if (img.getAttribute("src") === src) {
-          debugLog("kept-svg", { src });
-        }
       })
     );
-    debugLog("done");
   }
 
   window.applySafariPngFallbackForSvgImages = applySafariPngFallbackForSvgImages;

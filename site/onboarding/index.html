@@ -274,6 +274,17 @@
         }
       }
 
+      @keyframes x-hero-enter-safari {
+        from {
+          opacity: 0;
+          transform: translateX(-24px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
       .kbd-group {
         display: inline-flex;
         align-items: center;
@@ -696,6 +707,35 @@
 
       /* Safari can blur SVGs when parent layers combine transform + filter. */
       @supports (-webkit-touch-callout: none) {
+        .hero,
+        .shortcut-line {
+          filter: none;
+          animation-name: x-hero-enter-safari;
+        }
+
+        .text-shimmer {
+          filter: none;
+        }
+
+        .logo-lockup {
+          transform: none;
+        }
+
+        .logo-butterfly-wing-back {
+          transform: translate(1px, 0) rotate(12deg) scale(0.97);
+          filter: none;
+        }
+
+        .logo-butterfly-wing-front {
+          transform: translate(0, 0) rotate(-8deg) scale(1.01);
+        }
+
+        .mark-svg {
+          -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+          transform: translateZ(0);
+        }
+
         .feature-grid {
           filter: none;
         }

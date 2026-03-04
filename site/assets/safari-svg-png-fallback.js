@@ -2,9 +2,18 @@
   const userAgent = navigator.userAgent || "";
   const isSafari = /Safari\//.test(userAgent) && !/Chrome\/|Chromium\/|CriOS\/|Edg\/|OPR\/|Firefox\/|FxiOS\//.test(userAgent);
   const availabilityCache = new Map();
+  const safeStorage = {
+    getItem(key) {
+      try {
+        return window.localStorage.getItem(key);
+      } catch (_) {
+        return null;
+      }
+    }
+  };
   const debugEnabled =
     /(?:^|[?&])debugSafariImages=1(?:&|$)/.test(location.search) ||
-    window.localStorage.getItem("debugSafariImages") === "1";
+    safeStorage.getItem("debugSafariImages") === "1";
 
   function debugLog(message, payload) {
     if (!debugEnabled) return;

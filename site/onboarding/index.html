@@ -1468,9 +1468,11 @@
         document.querySelectorAll("img[src]").forEach((img) => {
           const src = img.getAttribute("src");
           if (!src) return;
-          const bitmap = safariBitmapMap[src];
+          const normalizedSrc = src.startsWith("./") ? src : `./${src}`;
+          const bitmap = safariBitmapMap[src] || safariBitmapMap[normalizedSrc];
           if (bitmap) {
             img.setAttribute("src", bitmap);
+            img.classList.remove("js-inline-svg");
           }
         });
       }

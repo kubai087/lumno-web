@@ -67,6 +67,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         --text: #101828;
         --muted: #667085;
         --line: #eaecf0;
+        --border-soft: #d8dde3;
         --card: #ffffff;
         --chip-bg: #f9fafb;
         --chip-text: #475467;
@@ -120,25 +121,72 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         gap: 10px;
       }
 
-      .header-links {
+      .header-actions {
         display: flex;
         align-items: center;
-        gap: 12px;
-        flex-wrap: wrap;
+        gap: 8px;
       }
 
-      .header-link {
+      .social-btn {
+        min-height: 36px;
+        border-radius: 999px;
+        border: 1px solid var(--border-soft);
+        background: linear-gradient(180deg, #ffffff 0%, #ecedef 100%);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02), inset 0 -4px 3px rgba(255, 255, 255, 0.59);
+        color: #4b545f;
         text-decoration: none;
-        color: var(--muted);
-        font-size: 14px;
-        line-height: 1.2;
-        height: 32px;
         display: inline-flex;
         align-items: center;
+        justify-content: center;
+        transition:
+          transform 0.18s ease,
+          box-shadow 0.18s ease,
+          border-color 0.18s ease,
+          background 0.18s ease;
       }
 
-      .header-link:hover {
-        color: var(--text);
+      .social-btn:focus-visible {
+        outline: 2px solid rgba(75, 84, 95, 0.35);
+        outline-offset: 2px;
+      }
+
+      @media (hover: hover) and (pointer: fine) {
+        .social-btn:hover {
+          transform: translateY(-1px);
+          border-color: #d2d8df;
+          background: linear-gradient(180deg, #ffffff 0%, #e8ebef 100%);
+          box-shadow:
+            0 14px 18px rgba(0, 0, 0, 0.04),
+            0 2px 3px rgba(0, 0, 0, 0.04),
+            inset 0 -4px 3px rgba(255, 255, 255, 0.65);
+        }
+      }
+
+      .social-btn:active {
+        transform: translateY(1px);
+        background: linear-gradient(180deg, #ffffff 0%, #ecedef 100%);
+        box-shadow:
+          0 2px 5px rgba(0, 0, 0, 0.06),
+          inset 0 -4px 3px rgba(255, 255, 255, 0.59);
+      }
+
+      .social-btn-icon {
+        width: 36px;
+        min-width: 36px;
+        padding: 0;
+        font-size: 18px;
+      }
+
+      .social-btn-discord {
+        padding: 0 14px;
+        gap: 8px;
+        font-size: 14px;
+        line-height: 1;
+        font-weight: 500;
+      }
+
+      .social-btn-discord i {
+        font-size: 18px;
       }
 
       .lang-control {
@@ -146,15 +194,41 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
       }
 
       .lang-toggle {
-        border: 1px solid var(--line);
-        background: #fff;
-        color: #344054;
-        border-radius: 8px;
-        height: 32px;
-        min-width: 32px;
-        padding: 0 9px;
+        width: 36px;
+        min-width: 36px;
+        min-height: 36px;
+        border-radius: 999px;
+        border: 1px solid var(--border-soft);
+        background: linear-gradient(180deg, #ffffff 0%, #ecedef 100%);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02), inset 0 -4px 3px rgba(255, 255, 255, 0.59);
+        color: #4b545f;
         cursor: pointer;
         font-size: 14px;
+        transition:
+          transform 0.18s ease,
+          box-shadow 0.18s ease,
+          border-color 0.18s ease,
+          background 0.18s ease;
+      }
+
+      @media (hover: hover) and (pointer: fine) {
+        .lang-toggle:hover {
+          transform: translateY(-1px);
+          border-color: #d2d8df;
+          background: linear-gradient(180deg, #ffffff 0%, #e8ebef 100%);
+          box-shadow:
+            0 14px 18px rgba(0, 0, 0, 0.04),
+            0 2px 3px rgba(0, 0, 0, 0.04),
+            inset 0 -4px 3px rgba(255, 255, 255, 0.65);
+        }
+      }
+
+      .lang-toggle:active {
+        transform: translateY(1px);
+        background: linear-gradient(180deg, #ffffff 0%, #ecedef 100%);
+        box-shadow:
+          0 2px 5px rgba(0, 0, 0, 0.06),
+          inset 0 -4px 3px rgba(255, 255, 255, 0.59);
       }
 
       .lang-menu {
@@ -205,7 +279,6 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         margin: 0 0 24px;
         border-radius: 16px;
         overflow: hidden;
-        border: 1px solid var(--line);
         background: #f8fafc;
       }
 
@@ -536,8 +609,8 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
           flex-wrap: wrap;
         }
 
-        .header-links {
-          gap: 10px;
+        .header-actions {
+          margin-left: auto;
         }
 
         main {
@@ -571,11 +644,6 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
             <img class="brand-logo" src="/resource_commited/logo.png" alt="Lumno" draggable="false" />
           </a>
           <div class="header-controls">
-            <nav class="header-links" data-i18n-aria-label="changelog_links_aria" aria-label="Changelog links">
-              <a class="header-link" href="/" data-i18n="nav_home">Home</a>
-              <a class="header-link" href="/onboarding/" data-i18n="nav_onboarding">Onboarding</a>
-              <a class="header-link" href="https://github.com/kubai087/lumno-extension/releases" target="_blank" rel="noreferrer" data-i18n="nav_github_releases">GitHub Releases</a>
-            </nav>
             <div class="lang-control">
               <button
                 id="language-toggle"
@@ -597,6 +665,18 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
                 </button>
               </div>
             </div>
+            <nav class="header-actions">
+              <a class="social-btn social-btn-icon" href="https://github.com/kubai087/lumno-extension" target="_blank" rel="noreferrer noopener" aria-label="Visit GitHub repository" data-i18n-aria-label="github_repo_aria">
+                <i class="ri-github-fill" aria-hidden="true"></i>
+              </a>
+              <a class="social-btn social-btn-icon" href="https://x.com/kubai087" target="_blank" rel="noreferrer noopener" aria-label="Visit X profile" data-i18n-aria-label="x_aria">
+                <i class="ri-twitter-x-fill" aria-hidden="true"></i>
+              </a>
+              <a class="social-btn social-btn-discord" href="https://discord.gg/2u9sg7ZNkJ" target="_blank" rel="noreferrer noopener" aria-label="Join Discord channel" data-i18n-aria-label="discord_aria">
+                <i class="ri-discord-fill" aria-hidden="true"></i>
+                <span data-i18n="join_discord">Join Discord</span>
+              </a>
+            </nav>
           </div>
         </div>
       </div>
@@ -752,11 +832,11 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
       const I18N_MESSAGES = {
         "zh-CN": {
           page_title: "Lumno 更新日志",
-          nav_home: "首页",
-          nav_onboarding: "引导页",
-          nav_github_releases: "GitHub Releases",
-          changelog_links_aria: "更新日志链接",
           brand_home_aria: "回到 Lumno 首页",
+          join_discord: "加入 Discord",
+          discord_aria: "加入 Discord 频道",
+          github_repo_aria: "访问 Lumno GitHub 仓库",
+          x_aria: "访问 Lumno X 主页",
           language_select_aria: "语言",
           language_zh_cn: "简体中文",
           language_en: "English",
@@ -772,11 +852,11 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         },
         en: {
           page_title: "Lumno Changelog",
-          nav_home: "Home",
-          nav_onboarding: "Onboarding",
-          nav_github_releases: "GitHub Releases",
-          changelog_links_aria: "Changelog links",
           brand_home_aria: "Back to Lumno home",
+          join_discord: "Join Discord",
+          discord_aria: "Join Discord channel",
+          github_repo_aria: "Visit Lumno GitHub repository",
+          x_aria: "Visit Lumno X profile",
           language_select_aria: "Language",
           language_zh_cn: "简体中文",
           language_en: "English",

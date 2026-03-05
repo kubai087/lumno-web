@@ -63,6 +63,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preload" as="image" href="/resource_commited/banner.jpg" />
     <link rel="stylesheet" href="/onboarding/assets/remixicon.css" />
     <link rel="stylesheet" href="/onboarding/assets/fonts/open-sans/open-sans.css" />
     <style>
@@ -443,14 +444,19 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         margin: 0 0 24px;
         border-radius: 16px;
         overflow: hidden;
-        background: #f8fafc;
+        background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
         position: relative;
+        aspect-ratio: 3038 / 810;
+        min-height: 132px;
       }
 
       .top-banner img {
-        display: block;
+        position: absolute;
+        inset: 0;
         width: 100%;
-        height: auto;
+        height: 100%;
+        object-fit: cover;
+        display: block;
       }
 
       .banner-overlay {
@@ -1009,7 +1015,15 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
 
     <main class="container">
       <div class="top-banner">
-        <img src="/resource_commited/banner.jpg" alt="Lumno banner" loading="lazy" />
+        <img
+          src="/resource_commited/banner.jpg"
+          alt="Lumno banner"
+          loading="eager"
+          fetchpriority="high"
+          decoding="async"
+          width="3038"
+          height="810"
+        />
         <div class="banner-overlay">
           <h1 class="banner-title">
             <span class="banner-title-emoji" aria-hidden="true">🎉</span>
@@ -1490,6 +1504,9 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
       });
 
       applyLanguageMode(getInitialLanguageMode());
+      window.addEventListener("load", () => {
+        applyLanguageMode(getInitialLanguageMode());
+      }, { once: true });
       setupQrcodeModal();
 
       function setupAccordionAnimations() {

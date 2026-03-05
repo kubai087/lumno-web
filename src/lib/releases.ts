@@ -124,7 +124,12 @@ function detectLanguageFromHeading(heading: string): "zh-CN" | "en" | null {
     return "zh-CN";
   }
 
-  if (lower === "english" || lower === "en" || lower.includes("english")) {
+  if (
+    lower === "english" ||
+    lower === "en" ||
+    lower === "英文" ||
+    lower.includes("english")
+  ) {
     return "en";
   }
 
@@ -181,7 +186,7 @@ export function parseReleaseBody(body: string): ParsedReleaseBody {
   for (const line of lines) {
     const trimmed = line.trim();
 
-    const tagsMatch = trimmed.match(/^tags?\s*:\s*(.+)$/i);
+    const tagsMatch = trimmed.match(/^tags?\s*[:：]\s*(.+)$/i);
     if (tagsMatch && tags.length === 0) {
       tags = parseInlineTags(tagsMatch[1]);
       continue;

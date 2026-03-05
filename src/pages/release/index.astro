@@ -1313,6 +1313,8 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         return String(template || "").replace("{version}", version || "");
       }
 
+      const INITIAL_ENTRY_CONTEXT = getEntryContext();
+
       function updateLanguageOptionState(mode) {
         let activeLabel = "";
         document.querySelectorAll("[data-lang-value]").forEach((node) => {
@@ -1334,7 +1336,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         const resolvedLocale = I18N_MESSAGES[locale] ? locale : FALLBACK_LOCALE;
         document.documentElement.lang = resolvedLocale;
         document.body.setAttribute("data-release-locale", resolvedLocale);
-        const entryContext = getEntryContext();
+        const entryContext = INITIAL_ENTRY_CONTEXT;
         document.body.setAttribute("data-release-entry", entryContext.isExtensionEntry ? "ext" : "web");
 
         document.querySelectorAll("[data-i18n]").forEach((node) => {
@@ -1634,7 +1636,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         requestAnimationFrame(frame);
       }
 
-      const entryContext = getEntryContext();
+      const entryContext = INITIAL_ENTRY_CONTEXT;
       if (entryContext.isExtensionEntry) {
         window.setTimeout(() => fireIntroConfetti(), 280);
         if (window.history && typeof window.history.replaceState === "function") {

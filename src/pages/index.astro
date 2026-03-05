@@ -10,7 +10,9 @@ const gaId = import.meta.env.PUBLIC_GA_ID;
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lumno | Focused Search Workspace</title>
     <meta name="description" content="Lumno homepage with product overview, onboarding, and release links." />
-    <link rel="icon" type="image/png" href="/resource_commited/fav.png" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     {gaId && <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>}
     {gaId && (
       <script is:inline define:vars={{ gaId }}>

@@ -618,7 +618,6 @@ function hasLocaleContent(content: ReleaseLocaleContent): boolean {
       </section>
     </main>
     <script>
-      const LANGUAGE_STORAGE_KEY = "_x_release_language_2026_unique_";
       const FALLBACK_LOCALE = "zh-CN";
       const I18N_MESSAGES = {
         "zh-CN": {
@@ -729,13 +728,10 @@ function hasLocaleContent(content: ReleaseLocaleContent): boolean {
         });
       }
 
-      function applyLanguageMode(mode, options) {
+      function applyLanguageMode(mode) {
         const normalizedMode = normalizeLanguageMode(mode);
         applyI18n(normalizedMode);
         updateLanguageOptionState(normalizedMode);
-        if (options && options.persist) {
-          localStorage.setItem(LANGUAGE_STORAGE_KEY, normalizedMode);
-        }
       }
 
       const languageToggle = document.getElementById("language-toggle");
@@ -749,7 +745,7 @@ function hasLocaleContent(content: ReleaseLocaleContent): boolean {
           const target = event.target instanceof HTMLElement ? event.target.closest("[data-lang-value]") : null;
           if (!target) return;
           const next = target.getAttribute("data-lang-value") || getSystemLocale();
-          applyLanguageMode(next, { persist: true });
+          applyLanguageMode(next);
           setLanguageMenuOpen(false);
         });
         document.addEventListener("click", (event) => {
@@ -765,7 +761,7 @@ function hasLocaleContent(content: ReleaseLocaleContent): boolean {
         });
       }
 
-      applyLanguageMode(localStorage.getItem(LANGUAGE_STORAGE_KEY) || getSystemLocale());
+      applyLanguageMode(getSystemLocale());
     </script>
   </body>
 </html>

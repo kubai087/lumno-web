@@ -1,15 +1,20 @@
+---
+import FeatureGrid from "../../components/onboarding/FeatureGrid";
+import LanguageMenu from "../../components/onboarding/LanguageMenu";
+---
+
 <!doctype html>
 <html lang="zh-CN">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title data-i18n="page_title">欢迎使用 Lumno！| Lumno 聚焦搜索&新标签页</title>
-    <link rel="icon" type="image/svg+xml" href="./assets/logo.svg" />
-    <link rel="stylesheet" href="./assets/remixicon.css" />
+    <link rel="icon" type="image/svg+xml" href="/onboarding/assets/logo.svg" />
+    <link rel="stylesheet" href="/onboarding/assets/remixicon.css" />
     <style>
       @font-face {
         font-family: "Open Sans";
-        src: url("./assets/OpenSans-VariableFont-wdth-wght.ttf") format("truetype");
+        src: url("/onboarding/assets/OpenSans-VariableFont-wdth-wght.ttf") format("truetype");
         font-style: normal;
         font-weight: 300 800;
         font-display: swap;
@@ -573,7 +578,7 @@
       .right-bg {
         position: absolute;
         inset: 0;
-        background: url("./assets/frame234-bg.png") left center / cover no-repeat;
+        background: url("/onboarding/assets/frame234-bg.png") left center / cover no-repeat;
         opacity: 0.2;
       }
 
@@ -1253,16 +1258,7 @@
     </style>
   </head>
   <body>
-    <div class="lang-control">
-      <button id="language-toggle" class="pill-btn pill-btn-selected lang-toggle" type="button" data-i18n-aria-label="language_select_aria" aria-label="语言" aria-haspopup="menu" aria-expanded="false">
-        <i class="ri-global-line" aria-hidden="true"></i>
-      </button>
-      <div id="language-menu" class="lang-menu" role="menu" hidden>
-        <button class="lang-option" type="button" role="menuitemradio" data-lang-value="zh-CN" data-i18n="language_zh_cn">简体中文</button>
-        <button class="lang-option" type="button" role="menuitemradio" data-lang-value="zh-TW" data-i18n="language_zh_tw">繁體中文</button>
-        <button class="lang-option" type="button" role="menuitemradio" data-lang-value="en" data-i18n="language_en">English</button>
-      </div>
-    </div>
+    <LanguageMenu client:load />
     <main class="onboarding" data-node-id="3152:2">
       <section class="left-pane">
         <div class="left-main">
@@ -1271,10 +1267,10 @@
               <h1 class="title" data-i18n="title_welcome">欢迎使用</h1>
               <div class="logo-lockup">
                 <span class="logo-icon-wrap">
-                  <img class="logo-icon mark-svg" src="./assets/logo.svg" alt="Lumno 图标" data-i18n-alt="logo_icon_alt" draggable="false" />
+                  <img class="logo-icon mark-svg" src="/onboarding/assets/logo.svg" alt="Lumno 图标" data-i18n-alt="logo_icon_alt" draggable="false" />
                 </span>
                 <span class="logo-wordmark-wrap">
-                  <img class="logo-wordmark mark-svg" src="./assets/textlogo.svg" alt="Lumno" draggable="false" />
+                  <img class="logo-wordmark mark-svg" src="/onboarding/assets/textlogo.svg" alt="Lumno" draggable="false" />
                   <span class="logo-butterfly-stage" aria-hidden="true">
                     <svg class="logo-butterfly logo-butterfly-wing logo-butterfly-wing-back mark-svg" viewBox="0 0 23 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path
@@ -1348,7 +1344,7 @@
 
         <div class="actions" data-node-id="3358:77">
           <a class="pill-btn pill-btn-selected" href="https://discord.gg/2u9sg7ZNkJ" target="_blank" rel="noreferrer noopener" aria-label="加入 Discord 频道" data-i18n-aria-label="discord_aria" data-node-id="3358:42">
-            <img class="pill-btn-figma-icon" src="./assets/discord-selected.svg" alt="" draggable="false" />
+            <img class="pill-btn-figma-icon" src="/onboarding/assets/discord-selected.svg" alt="" draggable="false" />
             <span data-i18n="join_discord">加入 Discord 频道</span>
           </a>
           <a class="pill-btn pill-btn-selected" href="https://github.com/kubai087/lumno-extension" target="_blank" rel="noreferrer noopener" aria-label="访问 Lumno GitHub 仓库" data-i18n-aria-label="settings_aria">
@@ -1361,50 +1357,7 @@
       <section class="right-pane" aria-hidden="true">
         <div class="right-bg"></div>
 
-        <div class="feature-grid" data-node-id="3359:330">
-          <article class="feature-card card-a" data-node-id="3359:331">
-            <header class="card-title-wrap">
-              <h2 class="card-title" data-i18n="feature_search_title">搜索任意浏览器网页</h2>
-              <p class="card-desc" data-i18n="feature_search_desc">支持书签、历史、已打开网页、最常访问</p>
-            </header>
-            <div class="card-a-graphic" data-node-id="3359:336">
-              <img class="card-a-image mark-svg" src="./assets/search.svg" alt="" draggable="false" />
-            </div>
-          </article>
-
-          <article class="feature-card card-b" data-node-id="3359:353">
-            <header class="card-title-wrap">
-              <h2 class="card-title" data-i18n="feature_sitesearch_title">自定义站内搜索</h2>
-              <p class="card-desc" data-i18n="feature_sitesearch_desc">内置常用网站列表，Tab 一键搜索</p>
-            </header>
-            <div class="card-b-graphic" data-node-id="3359:358">
-              <img class="card-graphic-image mark-svg" src="./assets/sitesearch.svg" alt="" draggable="false" />
-            </div>
-          </article>
-
-          <article class="feature-card card-c" data-node-id="3359:387">
-            <header class="card-title-wrap">
-              <h2 class="card-title" data-i18n="feature_newtab_title">极简新标签页</h2>
-              <p class="card-desc" data-i18n="feature_newtab_desc">展示书签与网页卡片</p>
-            </header>
-            <div class="card-c-graphic" data-node-id="3359:392">
-              <img class="card-graphic-image mark-svg" src="./assets/newtab.svg" alt="" draggable="false" />
-            </div>
-          </article>
-
-          <article class="feature-card card-d" data-node-id="3359:428">
-            <header class="card-title-wrap">
-              <div class="title-with-badge">
-                <h2 class="card-title"><span data-i18n="feature_labs_title">实验室功能</span> <span class="title-strong" data-i18n="feature_labs_title_strong">&amp; 精美 UI</span></h2>
-                <img class="title-badge" src="./assets/badge-selected.svg" alt="Beta" data-i18n-alt="beta_alt" />
-              </div>
-              <p class="card-desc" data-i18n="feature_labs_desc">更多玩法，敬请期待</p>
-            </header>
-            <div class="card-d-graphic" data-node-id="3359:444">
-              <img class="card-graphic-image mark-svg" src="./assets/lab.svg" alt="" draggable="false" />
-            </div>
-          </article>
-        </div>
+        <FeatureGrid client:load />
       </section>
     </main>
     <script>

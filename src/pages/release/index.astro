@@ -1,0 +1,142 @@
+---
+import { fetchReleases, formatDate } from "../../lib/releases";
+
+const releases = await fetchReleases();
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lumno Release Notes</title>
+    <meta name="description" content="Lumno release notes synced from GitHub Releases." />
+    <style>
+      :root {
+        --bg: #f7f8fc;
+        --surface: #ffffff;
+        --text: #1a1f2f;
+        --muted: #66708c;
+        --line: #e4e8f3;
+        --accent: #0b57d0;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        color: var(--text);
+        font-family: "Open Sans", "Segoe UI", system-ui, sans-serif;
+        background: linear-gradient(180deg, #f2f6ff 0%, var(--bg) 35%);
+      }
+      main {
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 48px 20px 64px;
+      }
+      h1 {
+        margin: 0;
+        font-size: clamp(28px, 4vw, 38px);
+      }
+      .subtitle {
+        margin: 8px 0 0;
+        color: var(--muted);
+      }
+      .top-links {
+        margin-top: 16px;
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .top-links a {
+        text-decoration: none;
+        color: var(--accent);
+      }
+      .list {
+        margin-top: 24px;
+        display: grid;
+        gap: 12px;
+      }
+      .item {
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        background: var(--surface);
+        padding: 18px;
+      }
+      .meta {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: baseline;
+        flex-wrap: wrap;
+      }
+      .name {
+        margin: 0;
+        font-size: 18px;
+      }
+      .tag {
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .date {
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .body {
+        margin-top: 10px;
+        color: #3d4863;
+        white-space: pre-wrap;
+        line-height: 1.6;
+      }
+      .badge {
+        display: inline-block;
+        margin-top: 10px;
+        padding: 2px 8px;
+        border-radius: 999px;
+        border: 1px solid #ffd8b6;
+        color: #9a4a00;
+        font-size: 12px;
+        background: #fff5eb;
+      }
+      .link {
+        margin-top: 10px;
+      }
+      .link a {
+        color: var(--accent);
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Lumno Release Notes</h1>
+      <p class="subtitle">Auto-generated at build time from GitHub Releases.</p>
+      <div class="top-links">
+        <a href="/">Back to Home</a>
+        <a href="https://github.com/kubai087/lumno-web/releases" target="_blank" rel="noreferrer">Open GitHub Releases</a>
+      </div>
+
+      <section class="list">
+        {
+          releases.length > 0 ? (
+            releases.map((item) => (
+              <article class="item">
+                <div class="meta">
+                  <h2 class="name">{item.name}</h2>
+                  <div class="date">{formatDate(item.date)}</div>
+                </div>
+                <div class="tag">{item.tag}</div>
+                {item.prerelease && <div class="badge">Pre-release</div>}
+                <div class="body">{item.body || "No release notes provided."}</div>
+                <div class="link">
+                  <a href={item.url} target="_blank" rel="noreferrer">Read on GitHub</a>
+                </div>
+              </article>
+            ))
+          ) : (
+            <article class="item">
+              <h2 class="name">No releases yet</h2>
+              <div class="body">Create a GitHub Release and it will appear here on next deploy.</div>
+            </article>
+          )
+        }
+      </section>
+    </main>
+  </body>
+</html>

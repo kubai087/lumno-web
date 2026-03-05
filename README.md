@@ -1,27 +1,46 @@
 # lumno-web
 
-Lumno 官方网站仓库（静态站点），统一部署到：
+Lumno 官方网站仓库，采用 **Astro + React**，部署到 GitHub Pages。
 
-- `/`：主页
+## 页面规划
+
+- `/`：主页（功能介绍）
 - `/onboarding/`：安装后引导页
-- `/release/`：版本更新说明
+- `/release/`：版本更新说明（构建时从 GitHub Releases 拉取）
 
-## 目录
+## 本地开发
 
-- `site/`：部署到线上的网站文件
-- `.github/workflows/deploy-pages.yml`：GitHub Actions 自动部署配置
+```bash
+npm install
+npm run dev
+```
 
-## 域名规划
+## 构建与预览
+
+```bash
+npm run build
+npm run preview
+```
+
+构建产物位于 `dist/`，由 `.github/workflows/deploy-pages.yml` 自动部署。
+
+## 埋点（GA4）
+
+首页支持 GA4。部署时设置环境变量：
+
+- `PUBLIC_GA_ID`：例如 `G-XXXXXXXXXX`
+
+未设置时会自动跳过埋点脚本注入。
+
+## Release 数据源配置（可选）
+
+`/release/` 默认读取 `kubai087/lumno-web` 的 Releases。可通过构建环境变量覆盖：
+
+- `GITHUB_RELEASES_OWNER`
+- `GITHUB_RELEASES_REPO`
+- `GITHUB_RELEASES_TOKEN`（可选，用于提升 API 额度或读取私有仓库）
+
+## 域名
 
 - 自定义域名：`lumno.kubai.design`
-- 页面路径：
-  - `https://lumno.kubai.design/`
-  - `https://lumno.kubai.design/onboarding/`
-  - `https://lumno.kubai.design/release/`
-
-## 术语说明（给新手）
-
-- **GitHub Pages**：GitHub 提供的静态网站托管服务。
-- **Custom Domain（自定义域名）**：把你自己的域名（如 `lumno.kubai.design`）绑定到 GitHub Pages。
-- **DNS CNAME 记录**：把一个域名指向另一个域名的 DNS 记录类型。
-- **Workflow（工作流）**：GitHub Actions 的自动化脚本，这里用于自动部署网站。
+- `public/CNAME` 在构建时会原样复制到 `dist/CNAME`

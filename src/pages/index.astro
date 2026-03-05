@@ -1,0 +1,146 @@
+---
+import HeroMotion from "../components/HeroMotion";
+
+const gaId = import.meta.env.PUBLIC_GA_ID;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lumno | Focused Search Workspace</title>
+    <meta name="description" content="Lumno homepage with product overview, onboarding, and release links." />
+    {gaId && <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script>}
+    {gaId && (
+      <script is:inline define:vars={{ gaId }}>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){window.dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', gaId);
+      </script>
+    )}
+    <style>
+      :root {
+        --bg: #f1f6ff;
+        --card: #ffffff;
+        --text: #11141e;
+        --muted: #5d6882;
+        --line: #dce7ff;
+        --accent: #0c63ff;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        color: var(--text);
+        font-family: "Open Sans", "Segoe UI", system-ui, sans-serif;
+        background:
+          radial-gradient(circle at 10% 0%, #ffffff 0%, transparent 40%),
+          radial-gradient(circle at 100% 100%, #d6e6ff 0%, transparent 40%),
+          var(--bg);
+      }
+      main {
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 64px 20px;
+      }
+      .card {
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        padding: 32px;
+        background: linear-gradient(160deg, #ffffff 0%, #f7fbff 100%);
+        box-shadow: 0 20px 45px rgba(17, 55, 134, 0.12);
+        overflow: hidden;
+      }
+      h1 {
+        margin: 12px 0 10px;
+        font-size: clamp(30px, 5vw, 46px);
+        line-height: 1.1;
+      }
+      p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+      .links {
+        margin-top: 28px;
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .btn {
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 11px 16px;
+        color: var(--text);
+        background: #ffffff;
+        text-decoration: none;
+        font-weight: 600;
+      }
+      .btn-primary {
+        background: var(--accent);
+        color: #fff;
+        border-color: var(--accent);
+      }
+      .grid {
+        margin-top: 28px;
+        display: grid;
+        gap: 12px;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      .pill {
+        border: 1px solid var(--line);
+        border-radius: 14px;
+        padding: 12px;
+        font-size: 14px;
+        color: var(--muted);
+        background: rgba(255, 255, 255, 0.75);
+      }
+      .hero-wrap { position: relative; min-height: 74px; }
+      .hero-orb {
+        position: absolute;
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        filter: blur(26px);
+        pointer-events: none;
+      }
+      .hero-orb-a { left: -36px; top: -40px; background: rgba(12, 99, 255, 0.25); }
+      .hero-orb-b { left: 88px; top: -46px; background: rgba(0, 186, 145, 0.2); }
+      .hero-kicker {
+        margin: 0;
+        position: relative;
+        z-index: 1;
+        font-size: 14px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #325ca8;
+        font-weight: 700;
+      }
+      @media (max-width: 760px) {
+        .card { padding: 22px; }
+        .grid { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section class="card">
+        <HeroMotion client:load />
+        <h1>Lumno Official Site</h1>
+        <p>
+          Lumno helps users jump between search, bookmarks, and tabs quickly. This site hosts product
+          intro, post-install onboarding, and release updates.
+        </p>
+        <div class="links">
+          <a class="btn btn-primary" href="/onboarding/">Open Onboarding</a>
+          <a class="btn" href="/release/">View Release Notes</a>
+        </div>
+        <div class="grid">
+          <div class="pill">Fast keyword search workflow</div>
+          <div class="pill">Smooth migration path to richer React UI</div>
+          <div class="pill">Built for static deployment on GitHub Pages</div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

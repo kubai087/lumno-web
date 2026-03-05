@@ -24,3 +24,9 @@ Last updated: 2026-03-05
   - `/` for product homepage and feature intro
   - `/onboarding` for post-install onboarding
   - `/release` for changelog/release notes
+
+## Implementation Status
+
+- Astro + React scaffold has been introduced in repository root.
+- GitHub Pages workflow now builds with Node and deploys `dist/`.
+- Onboarding page is currently preserved as static content under `public/onboarding`.

@@ -145,7 +145,13 @@ function detectSectionFromHeading(
     return "summary";
   }
 
-  if (lower.includes("feature") || lower.includes("enhancement") || lower.includes("improvement") || lower.includes("新功能")) {
+  if (
+    lower.includes("feature") ||
+    lower.includes("enhancement") ||
+    lower.includes("improvement") ||
+    lower.includes("新功能") ||
+    lower.includes("特性")
+  ) {
     return "features";
   }
 
@@ -154,6 +160,19 @@ function detectSectionFromHeading(
   }
 
   return null;
+}
+
+function containsCjk(text: string): boolean {
+  return /[\u3400-\u9FFF]/.test(text);
+}
+
+function looksLikeEnglishSummaryLine(text: string): boolean {
+  const trimmed = text.trim();
+  if (!trimmed) return false;
+  if (containsCjk(trimmed)) return false;
+  if (!/[A-Za-z]/.test(trimmed)) return false;
+  if (/^[-*]\s+/.test(trimmed)) return false;
+  return true;
 }
 
 function createEmptyLocaleContent(): ReleaseLocaleContent {
@@ -182,9 +201,21 @@ export function parseReleaseBody(body: string): ParsedReleaseBody {
   let tags: string[] = [];
   let locale: "zh-CN" | "en" = "zh-CN";
   let section: "summary" | "features" | "bugFixes" = "summary";
+  let sawZhFeatures = false;
+  let sawZhBugFixes = false;
+  let inHtmlComment = false;
 
   for (const line of lines) {
     const trimmed = line.trim();
+
+    if (trimmed.startsWith("<!--")) {
+      inHtmlComment = !trimmed.includes("-->");
+      continue;
+    }
+    if (inHtmlComment) {
+      if (trimmed.includes("-->")) inHtmlComment = false;
+      continue;
+    }
 
     const tagsMatch = trimmed.match(/^tags?\s*[:：]\s*(.+)$/i);
     if (tagsMatch && tags.length === 0) {
@@ -210,7 +241,23 @@ export function parseReleaseBody(body: string): ParsedReleaseBody {
 
       const sectionHeading = detectSectionFromHeading(heading);
       if (sectionHeading) {
+        // No explicit locale heading: infer English block on the second Features/Bug Fixes section.
+        if (
+          locale === "zh-CN" &&
+          sawZhFeatures &&
+          sawZhBugFixes &&
+          sectionHeading === "features" &&
+          features.en.length === 0 &&
+          bugFixes.en.length === 0
+        ) {
+          locale = "en";
+          section = "summary";
+          continue;
+        }
+
         section = sectionHeading;
+        if (locale === "zh-CN" && sectionHeading === "features") sawZhFeatures = true;
+        if (locale === "zh-CN" && sectionHeading === "bugFixes") sawZhBugFixes = true;
       }
       continue;
     }
@@ -228,6 +275,20 @@ export function parseReleaseBody(body: string): ParsedReleaseBody {
     }
 
     if (section === "bugFixes") {
+      if (
+        locale === "zh-CN" &&
+        sawZhFeatures &&
+        sawZhBugFixes &&
+        looksLikeEnglishSummaryLine(trimmed) &&
+        features.en.length === 0 &&
+        bugFixes.en.length === 0 &&
+        summaryLines.en.length === 0
+      ) {
+        locale = "en";
+        section = "summary";
+        summaryLines.en.push(line);
+        continue;
+      }
       appendListItem(bugFixes[locale], line);
       continue;
     }

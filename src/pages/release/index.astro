@@ -890,7 +890,9 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
           background: #ffffff;
           box-shadow: 0 6px 18px rgba(14, 24, 38, 0.08);
           padding: 0 12px;
-          justify-content: space-between;
+          display: grid;
+          grid-template-columns: 1fr auto 1fr;
+          align-items: center;
           gap: 10px;
         }
 
@@ -901,6 +903,21 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
 
         .lang-current-label {
           display: block;
+          flex: none;
+          justify-self: center;
+          text-align: center;
+          padding: 0 6px;
+          max-width: 100%;
+        }
+
+        .lang-select-prefix {
+          justify-self: start;
+          width: 18px;
+        }
+
+        .lang-select-arrow {
+          justify-self: end;
+          width: 18px;
         }
 
         .lang-menu {
@@ -1384,7 +1401,19 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         syncCommunityAction(normalizedMode);
         updateLanguageOptionState(normalizedMode);
         if (options && options.persist) {
-          localStorage.setItem(LANGUAGE_STORAGE_KEY, normalizedMode);
+          try {
+            localStorage.setItem(LANGUAGE_STORAGE_KEY, normalizedMode);
+          } catch (_error) {
+            // Ignore storage write errors (private mode / blocked storage).
+          }
+        }
+      }
+
+      function getInitialLanguageMode() {
+        try {
+          return localStorage.getItem(LANGUAGE_STORAGE_KEY) || getSystemLocale();
+        } catch (_error) {
+          return getSystemLocale();
         }
       }
 
@@ -1454,7 +1483,10 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         }
       });
 
-      applyLanguageMode(localStorage.getItem(LANGUAGE_STORAGE_KEY) || getSystemLocale());
+      applyLanguageMode(getInitialLanguageMode());
+      window.addEventListener("load", () => {
+        applyLanguageMode(getInitialLanguageMode());
+      }, { once: true });
       setupQrcodeModal();
 
       function setupAccordionAnimations() {

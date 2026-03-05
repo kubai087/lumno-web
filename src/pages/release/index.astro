@@ -368,13 +368,28 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         font-weight: 500;
         line-height: normal;
         letter-spacing: 0;
+        color: #111827;
+        text-shadow: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .banner-title-text {
         background-image:
           linear-gradient(180deg, #45563c 0%, #7a8c71 100%),
           linear-gradient(180deg, #000000 0%, #888888 100%);
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
-        text-shadow: none;
+      }
+
+      .banner-title-emoji {
+        color: initial;
+        transform: translateY(10px) scale(0.94);
+      }
+
+      .banner-title {
         transform: translateY(10px) scale(0.94);
         opacity: 0;
         animation: banner-pop 620ms cubic-bezier(0.22, 1, 0.36, 1) 120ms forwards;
@@ -789,7 +804,10 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
       <div class="top-banner">
         <img src="/resource_commited/banner.jpg" alt="Lumno banner" loading="lazy" />
         <div class="banner-overlay">
-          <h1 class="banner-title" data-i18n="banner_title">🎉已更新至新版本！</h1>
+          <h1 class="banner-title">
+            <span class="banner-title-emoji" aria-hidden="true">🎉</span>
+            <span class="banner-title-text" data-i18n="banner_title">已更新至新版本！</span>
+          </h1>
         </div>
       </div>
       <section class="timeline">
@@ -939,8 +957,8 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         "zh-CN": {
           page_title: "Lumno 更新日志｜Lumno 聚焦搜索&新标签页",
           page_title_ext: "Lumno 已更新至 {version}",
-          banner_title: "🎉已更新至新版本！",
-          banner_title_ext: "🎉您已更新至 {version}",
+          banner_title: "已更新至新版本！",
+          banner_title_ext: "您已更新至 {version}",
           brand_home_aria: "回到 Lumno 首页",
           join_discord: "加入 Discord",
           discord_aria: "加入 Discord 频道",
@@ -962,8 +980,8 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         en: {
           page_title: "Lumno Changelog｜Lumno - The Ultimate Browser Command Bar",
           page_title_ext: "Lumno Updated to {version}",
-          banner_title: "🎉You're on the latest version!",
-          banner_title_ext: "🎉Updated to {version}",
+          banner_title: "You're on the latest version!",
+          banner_title_ext: "Updated to {version}",
           brand_home_aria: "Back to Lumno home",
           join_discord: "Join Discord",
           discord_aria: "Join Discord channel",

@@ -317,6 +317,11 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         font-size: 13px;
       }
 
+      .chip-link {
+        text-decoration: none;
+        cursor: pointer;
+      }
+
       .chip-github {
         border-color: #d0d5dd;
         background: #f8fafc;
@@ -333,6 +338,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         border-color: #ffd19a;
         background: #fff8eb;
         color: #b54708;
+        cursor: default;
       }
 
       .entry-localized {
@@ -589,6 +595,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
             releases.map((item) => {
               const zhContent = item.parsed.locales["zh-CN"];
               const enContent = item.parsed.locales.en;
+              const chromeStatusKey = getChromeStatusI18nKey(item.tag);
 
               return (
                 <article class="entry">
@@ -613,10 +620,22 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
                             <i class="ri-github-fill" aria-hidden="true"></i>
                             <span data-i18n="github_published">Published</span>
                           </span>
-                          <span class={`chip chip-status chip-chrome ${getChromeStatusI18nKey(item.tag) === "chrome_published" ? "is-published" : "is-reviewing"}`}>
-                            <i class="ri-chrome-fill" aria-hidden="true"></i>
-                            <span data-i18n={getChromeStatusI18nKey(item.tag)}>In Review</span>
-                          </span>
+                          {chromeStatusKey === "chrome_published" ? (
+                            <a
+                              class="chip chip-status chip-chrome is-published chip-link"
+                              href="https://chromewebstore.google.com/detail/nggfkkbmogmadfoikakkfegkoilfcfao"
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              <i class="ri-chrome-fill" aria-hidden="true"></i>
+                              <span data-i18n={chromeStatusKey}>Published</span>
+                            </a>
+                          ) : (
+                            <span class="chip chip-status chip-chrome is-reviewing">
+                              <i class="ri-chrome-fill" aria-hidden="true"></i>
+                              <span data-i18n={chromeStatusKey}>In Review</span>
+                            </span>
+                          )}
                         </div>
 
                         <div class="entry-localized" data-release-locale="zh-CN">

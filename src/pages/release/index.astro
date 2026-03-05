@@ -6,6 +6,7 @@ const releases = (await fetchReleases()).map((item) => ({
   ...item,
   parsed: parseReleaseBody(item.body),
 }));
+const latestReleaseVersion = String(releases[0]?.tag || "").trim();
 
 const chromeStoreVersion = String(
   import.meta.env.PUBLIC_CHROME_STORE_VERSION ||
@@ -1197,7 +1198,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         <img class="qrcode-modal-image" src="/qrcode.JPG" alt="微信群二维码" data-i18n-alt="qrcode_image_alt" loading="lazy" />
       </div>
     </div>
-    <script>
+    <script define:vars={{ latestReleaseVersion }}>
       const LANGUAGE_STORAGE_KEY = "_x_extension_language_2024_unique_";
       const FALLBACK_LOCALE = "zh-CN";
       const ZH_CN_LOCALE = "zh-CN";
@@ -1301,7 +1302,9 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         const params = new URLSearchParams(window.location.search);
         const entry = (params.get("entry") || "").trim().toLowerCase();
         const reason = (params.get("reason") || "").trim().toLowerCase();
-        const version = formatVersionToken(params.get("version") || "");
+        const versionFromParam = formatVersionToken(params.get("version") || "");
+        const fallbackVersion = formatVersionToken(latestReleaseVersion || "");
+        const version = versionFromParam || fallbackVersion;
         const isExtensionEntry = entry === "ext";
         return { isExtensionEntry, reason, version };
       }
@@ -1342,9 +1345,10 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
             value = withVersion(getMessage(resolvedLocale, "page_title_ext"), entryContext.version);
           }
           if (key === "banner_title") {
-            value = entryContext.isExtensionEntry
-              ? withVersion(getMessage(resolvedLocale, "banner_title_ext"), entryContext.version)
-              : "";
+            value =
+              entryContext.isExtensionEntry && entryContext.version
+                ? withVersion(getMessage(resolvedLocale, "banner_title_ext"), entryContext.version)
+                : getMessage(resolvedLocale, "banner_title");
           }
           if (node.tagName === "TITLE") {
             document.title = value;

@@ -1490,9 +1490,6 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
       });
 
       applyLanguageMode(getInitialLanguageMode());
-      window.addEventListener("load", () => {
-        applyLanguageMode(getInitialLanguageMode());
-      }, { once: true });
       setupQrcodeModal();
 
       function setupAccordionAnimations() {

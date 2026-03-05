@@ -4,6 +4,8 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  schedule:
+    - cron: "15 * * * *"
 
 permissions:
   contents: read
@@ -35,6 +37,10 @@ jobs:
         run: npm ci
 
       - name: Build site
+        env:
+          GITHUB_RELEASES_OWNER: kubai087
+          GITHUB_RELEASES_REPO: lumno-extension
+          GITHUB_RELEASES_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run build
 
       - name: Configure Pages

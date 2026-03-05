@@ -158,12 +158,20 @@ export function parseReleaseBody(body: string): ParsedReleaseBody {
     }
 
     if (section === "features") {
-      features.push(toListItem(trimmed));
+      if (/^[-*]\s+/.test(trimmed) || features.length === 0) {
+        features.push(toListItem(trimmed));
+      } else {
+        features[features.length - 1] = `${features[features.length - 1]} ${trimmed}`.trim();
+      }
       continue;
     }
 
     if (section === "bugFixes") {
-      bugFixes.push(toListItem(trimmed));
+      if (/^[-*]\s+/.test(trimmed) || bugFixes.length === 0) {
+        bugFixes.push(toListItem(trimmed));
+      } else {
+        bugFixes[bugFixes.length - 1] = `${bugFixes[bugFixes.length - 1]} ${trimmed}`.trim();
+      }
       continue;
     }
 

@@ -1,10 +1,19 @@
 ---
 import { fetchReleases, formatDate, parseReleaseBody } from "../../lib/releases";
+import { marked } from "marked";
 
 const releases = (await fetchReleases()).map((item) => ({
   ...item,
   parsed: parseReleaseBody(item.body),
 }));
+
+function renderMdInline(markdown: string): string {
+  return marked.parseInline(markdown || "");
+}
+
+function renderMdBlock(markdown: string): string {
+  return marked.parse(markdown || "");
+}
 
 function getVersionLabel(tag: string): string {
   const normalized = tag.replace(/^v/i, "");
@@ -219,6 +228,15 @@ function getVersionLabel(tag: string): string {
         font-size: 15px;
       }
 
+      :global(.entry-summary a) {
+        color: #175cd3;
+        text-decoration: none;
+      }
+
+      :global(.entry-summary a:hover) {
+        text-decoration: underline;
+      }
+
       .accordion-group {
         margin-top: 14px;
         display: grid;
@@ -268,12 +286,63 @@ function getVersionLabel(tag: string): string {
         margin-top: 8px;
       }
 
+      :global(.accordion-list a) {
+        color: #175cd3;
+        text-decoration: none;
+      }
+
+      :global(.accordion-list a:hover) {
+        text-decoration: underline;
+      }
+
+      :global(.accordion-list code) {
+        font-size: 12px;
+        background: #f2f4f7;
+        border: 1px solid #e4e7ec;
+        border-radius: 6px;
+        padding: 1px 5px;
+      }
+
       .entry-notes {
         margin-top: 12px;
         color: #344054;
         line-height: 1.72;
         font-size: 15px;
-        white-space: pre-wrap;
+      }
+
+      :global(.entry-notes p) {
+        margin: 0 0 10px;
+      }
+
+      :global(.entry-notes p:last-child) {
+        margin-bottom: 0;
+      }
+
+      :global(.entry-notes ul),
+      :global(.entry-notes ol) {
+        margin: 0 0 10px;
+        padding-left: 20px;
+      }
+
+      :global(.entry-notes li + li) {
+        margin-top: 6px;
+      }
+
+      :global(.entry-notes a) {
+        color: #175cd3;
+        text-decoration: none;
+      }
+
+      :global(.entry-notes a:hover) {
+        text-decoration: underline;
+      }
+
+      :global(.entry-notes code) {
+        font-size: 12px;
+        background: #f2f4f7;
+        border: 1px solid #e4e7ec;
+        border-radius: 6px;
+        padding: 1px 5px;
       }
 
       .entry-link {
@@ -398,7 +467,7 @@ function getVersionLabel(tag: string): string {
                         ))}
                       </div>
 
-                      {item.parsed.summary && <div class="entry-summary">{item.parsed.summary}</div>}
+                      {item.parsed.summary && <div class="entry-summary" set:html={renderMdInline(item.parsed.summary)}></div>}
 
                       {(item.parsed.features.length > 0 || item.parsed.bugFixes.length > 0) && (
                         <div class="accordion-group">
@@ -407,7 +476,7 @@ function getVersionLabel(tag: string): string {
                               <summary>Features ({item.parsed.features.length})</summary>
                               <ul class="accordion-list">
                                 {item.parsed.features.map((feature) => (
-                                  <li>{feature}</li>
+                                  <li set:html={renderMdInline(feature)}></li>
                                 ))}
                               </ul>
                             </details>
@@ -418,7 +487,7 @@ function getVersionLabel(tag: string): string {
                               <summary>Bug Fixes ({item.parsed.bugFixes.length})</summary>
                               <ul class="accordion-list">
                                 {item.parsed.bugFixes.map((fix) => (
-                                  <li>{fix}</li>
+                                  <li set:html={renderMdInline(fix)}></li>
                                 ))}
                               </ul>
                             </details>
@@ -426,7 +495,7 @@ function getVersionLabel(tag: string): string {
                         </div>
                       )}
 
-                      {item.parsed.notes && <div class="entry-notes">{item.parsed.notes}</div>}
+                      {item.parsed.notes && <div class="entry-notes" set:html={renderMdBlock(item.parsed.notes)}></div>}
 
                       <div class="entry-link">
                         <a href={item.url} target="_blank" rel="noreferrer">Read on GitHub</a>

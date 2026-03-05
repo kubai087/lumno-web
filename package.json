@@ -12,6 +12,7 @@
   "dependencies": {
     "@astrojs/react": "^4.4.0",
     "astro": "^5.4.2",
+    "marked": "^16.4.2",
     "motion": "^12.5.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"

@@ -58,14 +58,18 @@ export async function fetchReleases(): Promise<ReleaseItem[]> {
   }
 }
 
-export function formatDate(dateIso: string): string {
+export function formatDate(
+  dateIso: string,
+  locale = "en-US",
+  options: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "short",
+    day: "2-digit",
+  },
+): string {
   if (!dateIso) return "Unknown date";
   const dt = new Date(dateIso);
   if (Number.isNaN(dt.getTime())) return "Unknown date";
 
-  return new Intl.DateTimeFormat("en-US", {
-    year: "numeric",
-    month: "short",
-    day: "2-digit",
-  }).format(dt);
+  return new Intl.DateTimeFormat(locale, options).format(dt);
 }

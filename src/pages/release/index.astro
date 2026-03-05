@@ -2,137 +2,454 @@
 import { fetchReleases, formatDate } from "../../lib/releases";
 
 const releases = await fetchReleases();
+
+function getVersionLabel(tag: string): string {
+  const normalized = tag.replace(/^v/i, "");
+  return normalized.length > 10 ? normalized.slice(0, 10) : normalized;
+}
+
+const dateOptions: Intl.DateTimeFormatOptions = {
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+};
 ---
 
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lumno Release Notes</title>
-    <meta name="description" content="Lumno release notes synced from GitHub Releases." />
+    <title>Lumno 更新日志</title>
+    <meta name="description" content="Lumno 更新日志，构建时自动同步 GitHub Releases。" />
+    <link rel="icon" type="image/svg+xml" href="/onboarding/assets/logo.svg" />
     <style>
-      :root {
-        --bg: #f7f8fc;
-        --surface: #ffffff;
-        --text: #1a1f2f;
-        --muted: #66708c;
-        --line: #e4e8f3;
-        --accent: #0b57d0;
+      @font-face {
+        font-family: "Open Sans";
+        src: url("/onboarding/assets/OpenSans-VariableFont-wdth-wght.ttf") format("truetype");
+        font-style: normal;
+        font-weight: 300 800;
+        font-display: swap;
       }
-      * { box-sizing: border-box; }
+
+      :root {
+        --bg: #fafafa;
+        --text-main: #2d3138;
+        --text-sub: #898989;
+        --border-soft: #e2e2e2;
+        --surface: #ffffff;
+        --surface-soft: #f9f9f9;
+        --chip-bg: #f3f6fb;
+        --dot: #3c4455;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
       body {
         margin: 0;
-        color: var(--text);
-        font-family: "Open Sans", "Segoe UI", system-ui, sans-serif;
-        background: linear-gradient(180deg, #f2f6ff 0%, var(--bg) 35%);
+        min-height: 100%;
+        background: var(--bg);
+        color: var(--text-main);
+        font-family: "Open Sans", "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
       }
-      main {
-        max-width: 860px;
+
+      body {
+        position: relative;
+        overflow-x: hidden;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background:
+          radial-gradient(circle at 6% 8%, rgba(121, 195, 242, 0.2), transparent 28%),
+          radial-gradient(circle at 88% 92%, rgba(217, 232, 255, 0.25), transparent 34%);
+      }
+
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background: url("/onboarding/assets/frame234-bg.png") center / cover no-repeat;
+        opacity: 0.1;
+      }
+
+      .header {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        backdrop-filter: blur(10px);
+        background: rgba(250, 250, 250, 0.86);
+        border-bottom: 1px solid rgba(226, 226, 226, 0.72);
+      }
+
+      .header-inner {
+        max-width: 1060px;
         margin: 0 auto;
-        padding: 48px 20px 64px;
-      }
-      h1 {
-        margin: 0;
-        font-size: clamp(28px, 4vw, 38px);
-      }
-      .subtitle {
-        margin: 8px 0 0;
-        color: var(--muted);
-      }
-      .top-links {
-        margin-top: 16px;
+        padding: 12px 22px;
         display: flex;
-        gap: 12px;
-        flex-wrap: wrap;
-      }
-      .top-links a {
-        text-decoration: none;
-        color: var(--accent);
-      }
-      .list {
-        margin-top: 24px;
-        display: grid;
-        gap: 12px;
-      }
-      .item {
-        border: 1px solid var(--line);
-        border-radius: 14px;
-        background: var(--surface);
-        padding: 18px;
-      }
-      .meta {
-        display: flex;
+        align-items: center;
         justify-content: space-between;
         gap: 12px;
-        align-items: baseline;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .brand-logo {
+        width: 34px;
+        height: 34px;
+      }
+
+      .brand-wordmark {
+        width: 106px;
+        height: auto;
+      }
+
+      .header-links {
+        display: flex;
+        gap: 14px;
+        align-items: center;
+      }
+
+      .header-link {
+        font-size: 14px;
+        color: #475163;
+        text-decoration: none;
+      }
+
+      .header-link:hover {
+        color: #2d3138;
+      }
+
+      main {
+        position: relative;
+        z-index: 1;
+        max-width: 1060px;
+        margin: 0 auto;
+        padding: 38px 22px 80px;
+      }
+
+      .hero {
+        margin-bottom: 28px;
+        opacity: 0;
+        transform: translateY(12px);
+        filter: blur(5px);
+        animation: fade-up 540ms cubic-bezier(0.22, 1, 0.36, 1) 60ms forwards;
+      }
+
+      .hero-title {
+        margin: 0;
+        font-size: clamp(34px, 4.2vw, 46px);
+        line-height: 1.14;
+        font-weight: 550;
+        letter-spacing: 0.2px;
+        background: linear-gradient(180deg, #000000 0%, #666666 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .hero-subtitle {
+        margin: 10px 0 0;
+        color: var(--text-sub);
+        font-size: 15px;
+        line-height: 1.55;
+      }
+
+      .timeline {
+        display: grid;
+        gap: 8px;
+      }
+
+      .entry {
+        display: grid;
+        grid-template-columns: 180px minmax(0, 1fr);
+        column-gap: 30px;
+        opacity: 0;
+        transform: translateY(16px);
+        filter: blur(5px);
+        animation: fade-up 520ms cubic-bezier(0.22, 1, 0.36, 1) var(--delay, 0ms) forwards;
+      }
+
+      .entry-side {
+        padding-top: 4px;
+      }
+
+      .entry-side-sticky {
+        position: sticky;
+        top: 78px;
+        padding-bottom: 24px;
+      }
+
+      .entry-date {
+        margin: 0 0 10px;
+        color: #767f8f;
+        font-size: 14px;
+        letter-spacing: 0.2px;
+      }
+
+      .entry-version {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 44px;
+        min-height: 44px;
+        padding: 0 10px;
+        border-radius: 12px;
+        border: 1px solid var(--border-soft);
+        background: linear-gradient(180deg, var(--surface) 0%, var(--surface-soft) 100%);
+        box-shadow:
+          0 1px 2px rgba(0, 0, 0, 0.04),
+          0 6px 16px rgba(0, 0, 0, 0.03);
+        font-size: 13px;
+        font-weight: 700;
+        color: #2f3745;
+      }
+
+      .entry-main {
+        position: relative;
+        padding: 0 0 24px 24px;
+      }
+
+      .entry-main::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 2px;
+        bottom: -8px;
+        width: 1px;
+        background: linear-gradient(180deg, rgba(196, 205, 220, 0.9) 0%, rgba(226, 226, 226, 0.35) 100%);
+      }
+
+      .entry-dot {
+        position: absolute;
+        left: -5px;
+        top: 13px;
+        width: 10px;
+        height: 10px;
+        border-radius: 999px;
+        background: var(--dot);
+        box-shadow: 0 0 0 4px rgba(60, 68, 85, 0.12);
+      }
+
+      .entry-card {
+        border-radius: 14px;
+        border: 1px solid var(--border-soft);
+        background: linear-gradient(180deg, var(--surface) 0%, var(--surface-soft) 100%);
+        box-shadow:
+          0 2px 4px rgba(0, 0, 0, 0.03),
+          0 14px 30px rgba(0, 0, 0, 0.03);
+        padding: 18px 20px 20px;
+      }
+
+      .entry-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
         flex-wrap: wrap;
       }
-      .name {
+
+      .entry-title {
         margin: 0;
-        font-size: 18px;
+        font-size: clamp(21px, 2.2vw, 27px);
+        line-height: 1.2;
+        letter-spacing: 0.1px;
+        color: #121723;
       }
-      .tag {
-        color: var(--muted);
-        font-size: 13px;
-      }
-      .date {
-        color: var(--muted);
-        font-size: 14px;
-      }
-      .body {
+
+      .chip-row {
         margin-top: 10px;
-        color: #3d4863;
-        white-space: pre-wrap;
-        line-height: 1.6;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
       }
-      .badge {
-        display: inline-block;
-        margin-top: 10px;
-        padding: 2px 8px;
+
+      .chip {
+        height: 26px;
+        display: inline-flex;
+        align-items: center;
+        padding: 0 10px;
         border-radius: 999px;
-        border: 1px solid #ffd8b6;
-        color: #9a4a00;
+        border: 1px solid var(--border-soft);
+        background: var(--chip-bg);
+        color: #4e586d;
         font-size: 12px;
+        font-weight: 600;
+      }
+
+      .chip.is-pre {
+        border-color: #ffd8b6;
         background: #fff5eb;
+        color: #9a4a00;
       }
-      .link {
-        margin-top: 10px;
+
+      .entry-body {
+        margin-top: 14px;
+        color: #3c4455;
+        line-height: 1.68;
+        font-size: 14px;
+        white-space: pre-wrap;
+        word-break: break-word;
       }
-      .link a {
-        color: var(--accent);
+
+      .entry-link {
+        margin-top: 14px;
+      }
+
+      .entry-link a {
+        color: #3c4455;
+        text-decoration: none;
+        border-bottom: 1px dashed rgba(60, 68, 85, 0.45);
+      }
+
+      .entry-link a:hover {
+        color: #141922;
+        border-bottom-color: rgba(20, 25, 34, 0.5);
+      }
+
+      .empty {
+        padding: 22px;
+      }
+
+      @media (max-width: 960px) {
+        .entry {
+          grid-template-columns: 1fr;
+          gap: 10px;
+        }
+
+        .entry-side-sticky {
+          position: static;
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding-bottom: 0;
+        }
+
+        .entry-date {
+          margin: 0;
+        }
+
+        .entry-main {
+          padding-left: 0;
+        }
+
+        .entry-main::before,
+        .entry-dot {
+          display: none;
+        }
+      }
+
+      @media (max-width: 680px) {
+        .header-inner,
+        main {
+          padding-left: 16px;
+          padding-right: 16px;
+        }
+
+        .header-links {
+          gap: 10px;
+        }
+
+        .header-link {
+          font-size: 13px;
+        }
+
+        .hero-title {
+          font-size: clamp(29px, 9.5vw, 40px);
+        }
+
+        .entry-card {
+          padding: 16px;
+        }
+      }
+
+      @keyframes fade-up {
+        from {
+          opacity: 0;
+          transform: translateY(16px);
+          filter: blur(5px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+          filter: blur(0);
+        }
       }
     </style>
   </head>
   <body>
-    <main>
-      <h1>Lumno Release Notes</h1>
-      <p class="subtitle">Auto-generated at build time from GitHub Releases.</p>
-      <div class="top-links">
-        <a href="/">Back to Home</a>
-        <a href="https://github.com/kubai087/lumno-web/releases" target="_blank" rel="noreferrer">Open GitHub Releases</a>
+    <header class="header">
+      <div class="header-inner">
+        <a class="brand" href="/">
+          <img class="brand-logo" src="/onboarding/assets/logo.svg" alt="Lumno" draggable="false" />
+          <img class="brand-wordmark" src="/onboarding/assets/textlogo.svg" alt="Lumno" draggable="false" />
+        </a>
+        <nav class="header-links" aria-label="release links">
+          <a class="header-link" href="/">首页</a>
+          <a class="header-link" href="/onboarding/">Onboarding</a>
+          <a class="header-link" href="https://github.com/kubai087/lumno-web/releases" target="_blank" rel="noreferrer">GitHub Releases</a>
+        </nav>
       </div>
+    </header>
 
-      <section class="list">
+    <main>
+      <section class="hero">
+        <h1 class="hero-title">Lumno 更新日志</h1>
+        <p class="hero-subtitle">基于 GitHub Releases 自动同步，页面结构参考 Magic UI 的 Changelog 模板，并对齐 onboarding 的视觉语言。</p>
+      </section>
+
+      <section class="timeline">
         {
           releases.length > 0 ? (
-            releases.map((item) => (
-              <article class="item">
-                <div class="meta">
-                  <h2 class="name">{item.name}</h2>
-                  <div class="date">{formatDate(item.date)}</div>
+            releases.map((item, index) => (
+              <article class="entry" style={`--delay: ${Math.min(index * 80, 500)}ms`}>
+                <div class="entry-side">
+                  <div class="entry-side-sticky">
+                    <time class="entry-date">{formatDate(item.date, "zh-CN", dateOptions)}</time>
+                    <div class="entry-version">{getVersionLabel(item.tag)}</div>
+                  </div>
                 </div>
-                <div class="tag">{item.tag}</div>
-                {item.prerelease && <div class="badge">Pre-release</div>}
-                <div class="body">{item.body || "No release notes provided."}</div>
-                <div class="link">
-                  <a href={item.url} target="_blank" rel="noreferrer">Read on GitHub</a>
+
+                <div class="entry-main">
+                  <span class="entry-dot" aria-hidden="true"></span>
+                  <div class="entry-card">
+                    <div class="entry-head">
+                      <h2 class="entry-title">{item.name}</h2>
+                    </div>
+
+                    <div class="chip-row">
+                      <span class="chip">{item.tag}</span>
+                      {item.prerelease && <span class="chip is-pre">Pre-release</span>}
+                    </div>
+
+                    <div class="entry-body">{item.body || "本次发布未填写更新说明。"}</div>
+                    <div class="entry-link">
+                      <a href={item.url} target="_blank" rel="noreferrer">在 GitHub 查看完整发布说明</a>
+                    </div>
+                  </div>
                 </div>
               </article>
             ))
           ) : (
-            <article class="item">
-              <h2 class="name">No releases yet</h2>
-              <div class="body">Create a GitHub Release and it will appear here on next deploy.</div>
+            <article class="entry" style="--delay: 0ms">
+              <div class="entry-main" style="padding-left:0">
+                <div class="entry-card empty">
+                  <h2 class="entry-title">暂无发布记录</h2>
+                  <div class="entry-body">创建 GitHub Release 后，将在下次构建时自动出现在这里。</div>
+                </div>
+              </div>
             </article>
           )
         }

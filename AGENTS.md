@@ -30,3 +30,18 @@ Last updated: 2026-03-05
 - Astro + React scaffold has been introduced in repository root.
 - GitHub Pages workflow now builds with Node and deploys `dist/`.
 - Onboarding page is currently preserved as static content under `public/onboarding`.
+
+## SVG Rendering Notes (Safari)
+
+- For visually critical SVGs (logo, hero cards, decorated UI), prefer inline SVG rendering over `<img src="*.svg">`:
+  - Astro: `import xxx from "...svg?raw"` + `set:html={xxx}`
+  - React: `import xxx from "...svg?raw"` + `dangerouslySetInnerHTML`
+- In Safari, avoid stacking `scale + filter + subpixel transform` on the same SVG container.
+- Prefer integer pixel geometry/alignment for Safari-specific overrides when fine-tuning sharpness.
+- Keep `shape-rendering: geometricPrecision` on inline SVGs that need crisp edges.
+- Avoid `preserveAspectRatio="none"` for logos/marks unless stretching is intentional.
+
+## Collaboration Preference
+
+- When introducing new SVG assets or refactoring existing SVG rendering, ask Kevin first:
+  - "Do you want to apply the inline-SVG Safari-clarity strategy used in onboarding?"

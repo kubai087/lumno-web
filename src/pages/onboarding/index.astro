@@ -1,6 +1,7 @@
 ---
 import FeatureGrid from "../../components/onboarding/FeatureGrid";
 import LanguageMenu from "../../components/onboarding/LanguageMenu";
+import logoIconSvg from "../../assets/onboarding/logo.svg?raw";
 ---
 
 <!doctype html>
@@ -120,7 +121,18 @@ import LanguageMenu from "../../components/onboarding/LanguageMenu";
         height: calc(var(--logo-box) * 69 / 48);
         left: calc(var(--logo-box) * -13 / 48);
         top: calc(var(--logo-box) * -1 / 48);
+        display: block;
         max-width: none;
+        transform: translateZ(0);
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+      }
+
+      .logo-icon svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+        shape-rendering: geometricPrecision;
       }
 
       .logo-wordmark-wrap {
@@ -478,6 +490,12 @@ import LanguageMenu from "../../components/onboarding/LanguageMenu";
         .logo-butterfly animate {
           display: none;
         }
+
+        .feature-card {
+          opacity: 1;
+          transform: none;
+          animation: none;
+        }
       }
 
       .pill-btn-figma-icon {
@@ -661,6 +679,29 @@ import LanguageMenu from "../../components/onboarding/LanguageMenu";
         transform-origin: center;
       }
 
+      .is-safari .feature-grid {
+        filter: none;
+        transform: none;
+        width: 590px;
+        height: 491px;
+      }
+
+      .is-safari .logo-lockup {
+        transform: none;
+      }
+
+      .is-safari .logo-icon {
+        width: 71px;
+        height: 78px;
+        left: -15px;
+        top: -1px;
+      }
+
+      .is-safari .logo-butterfly-wing-back {
+        transform: translate(1px, 0) rotate(12deg) scale(0.97);
+        filter: none;
+      }
+
       .feature-card {
         position: absolute;
         overflow: hidden;
@@ -668,6 +709,9 @@ import LanguageMenu from "../../components/onboarding/LanguageMenu";
         flex-direction: column;
         border-radius: 12px;
         background: #fff;
+        opacity: 0;
+        transform: translateY(14px);
+        animation: x-feature-card-enter 400ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
         transition:
           transform 340ms cubic-bezier(0.22, 1, 0.36, 1),
           box-shadow 340ms cubic-bezier(0.22, 1, 0.36, 1);
@@ -689,6 +733,17 @@ import LanguageMenu from "../../components/onboarding/LanguageMenu";
           box-shadow:
             0 12px 24px rgba(0, 0, 0, 0.05),
             0 4px 8px rgba(0, 0, 0, 0.03);
+        }
+      }
+
+      @keyframes x-feature-card-enter {
+        from {
+          opacity: 0;
+          transform: translateY(14px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
         }
       }
 
@@ -718,6 +773,7 @@ import LanguageMenu from "../../components/onboarding/LanguageMenu";
         top: 0;
         width: 280px;
         height: 222px;
+        animation-delay: 120ms;
       }
 
       .card-a-graphic {
@@ -730,17 +786,27 @@ import LanguageMenu from "../../components/onboarding/LanguageMenu";
       .card-a-image {
         width: 100%;
         height: 100%;
-        object-fit: contain;
-        object-position: center bottom;
         display: block;
+        transform: translateZ(0);
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
       }
 
       .card-graphic-image {
         width: 100%;
         height: 100%;
-        object-fit: contain;
-        object-position: center bottom;
         display: block;
+        transform: translateZ(0);
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+      }
+
+      .card-a-image svg,
+      .card-graphic-image svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+        shape-rendering: geometricPrecision;
       }
 
       .card-b {
@@ -748,6 +814,7 @@ import LanguageMenu from "../../components/onboarding/LanguageMenu";
         top: 0;
         width: 252px;
         height: 222px;
+        animation-delay: 200ms;
       }
 
       .card-b-graphic {
@@ -856,6 +923,7 @@ import LanguageMenu from "../../components/onboarding/LanguageMenu";
         top: 233px;
         width: 236px;
         height: 222px;
+        animation-delay: 280ms;
       }
 
       .card-c-graphic {
@@ -985,6 +1053,7 @@ import LanguageMenu from "../../components/onboarding/LanguageMenu";
         top: 233px;
         width: 298px;
         height: 222px;
+        animation-delay: 360ms;
       }
 
       .title-with-badge {
@@ -1222,6 +1291,13 @@ import LanguageMenu from "../../components/onboarding/LanguageMenu";
           top: calc(var(--logo-box) * -1 / 48);
         }
 
+        .is-safari .logo-icon {
+          width: 55px;
+          height: 60px;
+          left: -11px;
+          top: -1px;
+        }
+
         .logo-icon-wrap {
           --logo-box: 42px;
         }
@@ -1247,9 +1323,18 @@ import LanguageMenu from "../../components/onboarding/LanguageMenu";
           height: auto;
           display: flex;
           flex-direction: column;
+          align-items: center;
           gap: 12px;
           transform: none;
           margin: 0 auto;
+        }
+
+        .is-safari .feature-grid {
+          width: min(92vw, 420px);
+          height: auto;
+          transform: none;
+          margin-left: auto;
+          margin-right: auto;
         }
 
         .feature-card {
@@ -1259,6 +1344,8 @@ import LanguageMenu from "../../components/onboarding/LanguageMenu";
           width: 100%;
           height: auto;
           min-height: 228px;
+          margin-left: auto;
+          margin-right: auto;
         }
 
         .card-a,
@@ -1279,8 +1366,12 @@ import LanguageMenu from "../../components/onboarding/LanguageMenu";
         .card-a-image,
         .card-graphic-image {
           height: auto;
-          object-fit: contain;
-          object-position: center bottom;
+        }
+
+        .card-a-image svg,
+        .card-graphic-image svg {
+          width: 100%;
+          height: auto;
         }
 
         .card-title {
@@ -1297,6 +1388,9 @@ import LanguageMenu from "../../components/onboarding/LanguageMenu";
           min-height: auto;
           margin-top: 36px;
           padding: 16px 0 12px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
         }
 
         .right-bg {
@@ -1316,7 +1410,7 @@ import LanguageMenu from "../../components/onboarding/LanguageMenu";
               <h1 class="title" data-i18n="title_welcome">欢迎使用</h1>
               <div class="logo-lockup">
                 <span class="logo-icon-wrap">
-                  <img class="logo-icon mark-svg" src="/onboarding/assets/logo.svg" alt="Lumno 图标" data-i18n-alt="logo_icon_alt" draggable="false" />
+                  <span class="logo-icon mark-svg" role="img" aria-label="Lumno 图标" data-i18n-aria-label="logo_icon_alt" set:html={logoIconSvg}></span>
                 </span>
                 <span class="logo-wordmark-wrap">
                   <img class="logo-wordmark mark-svg" src="/onboarding/assets/textlogo.svg" alt="Lumno" draggable="false" />
@@ -1416,7 +1510,7 @@ import LanguageMenu from "../../components/onboarding/LanguageMenu";
       <section class="right-pane" aria-hidden="true">
         <div class="right-bg"></div>
 
-        <FeatureGrid client:load />
+        <FeatureGrid />
       </section>
     </main>
     <div id="community-qrcode-modal" class="qrcode-modal" hidden>
@@ -1724,6 +1818,16 @@ import LanguageMenu from "../../components/onboarding/LanguageMenu";
         });
       }
 
+      function isSafariBrowser() {
+        const ua = navigator.userAgent;
+        return /Safari/i.test(ua) && !/Chrome|CriOS|Edg|OPR|Android/i.test(ua);
+      }
+
+      function applySafariBrowserClass() {
+        const isSafari = isSafariBrowser();
+        document.documentElement.classList.toggle("is-safari", isSafari);
+      }
+
       document.addEventListener("dragstart", (event) => {
         if (event.target instanceof HTMLImageElement && event.target.classList.contains("mark-svg")) {
           event.preventDefault();
@@ -1759,6 +1863,7 @@ import LanguageMenu from "../../components/onboarding/LanguageMenu";
       }
       applyLanguageMode(localStorage.getItem(LANGUAGE_STORAGE_KEY) || getSystemLocale());
       setupQrcodeModal();
+      applySafariBrowserClass();
 
       const modifierKeyEl = document.getElementById("shortcut-modifier-key");
       if (modifierKeyEl) {

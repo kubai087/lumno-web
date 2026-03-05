@@ -1,16 +1,14 @@
-import { motion } from "motion/react";
-
-const cardTransition = { duration: 0.4, ease: "easeOut" } as const;
+import searchSvg from "../../assets/onboarding/search.svg?raw";
+import siteSearchSvg from "../../assets/onboarding/sitesearch.svg?raw";
+import newtabSvg from "../../assets/onboarding/newtab.svg?raw";
+import labSvg from "../../assets/onboarding/lab.svg?raw";
 
 export default function FeatureGrid() {
   return (
     <div className="feature-grid" data-node-id="3359:330">
-      <motion.article
+      <article
         className="feature-card card-a"
         data-node-id="3359:331"
-        initial={{ opacity: 0, y: 14 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ ...cardTransition, delay: 0.12 }}
       >
         <header className="card-title-wrap">
           <h2 className="card-title" data-i18n="feature_search_title">
@@ -21,16 +19,13 @@ export default function FeatureGrid() {
           </p>
         </header>
         <div className="card-a-graphic" data-node-id="3359:336">
-          <img className="card-a-image mark-svg" src="/onboarding/assets/search.svg" alt="" draggable="false" />
+          <span className="card-a-image mark-svg" aria-hidden="true" dangerouslySetInnerHTML={{ __html: searchSvg }} />
         </div>
-      </motion.article>
+      </article>
 
-      <motion.article
+      <article
         className="feature-card card-b"
         data-node-id="3359:353"
-        initial={{ opacity: 0, y: 14 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ ...cardTransition, delay: 0.2 }}
       >
         <header className="card-title-wrap">
           <h2 className="card-title" data-i18n="feature_sitesearch_title">
@@ -41,16 +36,13 @@ export default function FeatureGrid() {
           </p>
         </header>
         <div className="card-b-graphic" data-node-id="3359:358">
-          <img className="card-graphic-image mark-svg" src="/onboarding/assets/sitesearch.svg" alt="" draggable="false" />
+          <span className="card-graphic-image mark-svg" aria-hidden="true" dangerouslySetInnerHTML={{ __html: siteSearchSvg }} />
         </div>
-      </motion.article>
+      </article>
 
-      <motion.article
+      <article
         className="feature-card card-c"
         data-node-id="3359:387"
-        initial={{ opacity: 0, y: 14 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ ...cardTransition, delay: 0.28 }}
       >
         <header className="card-title-wrap">
           <h2 className="card-title" data-i18n="feature_newtab_title">
@@ -61,16 +53,13 @@ export default function FeatureGrid() {
           </p>
         </header>
         <div className="card-c-graphic" data-node-id="3359:392">
-          <img className="card-graphic-image mark-svg" src="/onboarding/assets/newtab.svg" alt="" draggable="false" />
+          <span className="card-graphic-image mark-svg" aria-hidden="true" dangerouslySetInnerHTML={{ __html: newtabSvg }} />
         </div>
-      </motion.article>
+      </article>
 
-      <motion.article
+      <article
         className="feature-card card-d"
         data-node-id="3359:428"
-        initial={{ opacity: 0, y: 14 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ ...cardTransition, delay: 0.36 }}
       >
         <header className="card-title-wrap">
           <div className="title-with-badge">
@@ -84,9 +73,9 @@ export default function FeatureGrid() {
           </p>
         </header>
         <div className="card-d-graphic" data-node-id="3359:444">
-          <img className="card-graphic-image mark-svg" src="/onboarding/assets/lab.svg" alt="" draggable="false" />
+          <span className="card-graphic-image mark-svg" aria-hidden="true" dangerouslySetInnerHTML={{ __html: labSvg }} />
         </div>
-      </motion.article>
+      </article>
     </div>
   );
 }

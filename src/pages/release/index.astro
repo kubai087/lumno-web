@@ -1305,7 +1305,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         const versionFromParam = formatVersionToken(params.get("version") || "");
         const fallbackVersion = formatVersionToken(latestReleaseVersion || "");
         const version = versionFromParam || fallbackVersion;
-        const isExtensionEntry = entry === "ext";
+        const isExtensionEntry = entry === "ext" || Boolean(reason) || Boolean(versionFromParam);
         return { isExtensionEntry, reason, version };
       }
 

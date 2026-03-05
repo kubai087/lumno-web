@@ -875,37 +875,41 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
 
         .lang-control {
           position: fixed;
-          left: auto;
+          left: 16px;
           right: 16px;
           bottom: 16px;
-          width: 38px;
+          width: auto;
         }
 
         .lang-toggle {
-          width: 38px;
-          min-width: 38px;
-          height: 38px;
-          border-radius: 999px;
-          border: 1px solid transparent;
-          background: rgba(255, 255, 255, 0.72);
-          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-          padding: 0;
-          justify-content: center;
-          gap: 0;
+          width: 100%;
+          min-width: 0;
+          min-height: 40px;
+          border-radius: 10px;
+          border: 1px solid #dbe1e8;
+          background: #ffffff;
+          box-shadow: 0 6px 18px rgba(14, 24, 38, 0.08);
+          padding: 0 12px;
+          justify-content: space-between;
+          gap: 10px;
         }
 
         .lang-current-label,
         .lang-select-arrow {
-          display: none;
+          display: inline-flex;
+        }
+
+        .lang-current-label {
+          display: block;
         }
 
         .lang-menu {
-          width: min(72vw, 180px);
-          min-width: 156px;
-          left: auto;
+          width: 100%;
+          min-width: 0;
+          left: 0;
           right: 0;
           transform: translateY(6px) scale(0.97);
-          transform-origin: bottom right;
+          transform-origin: bottom center;
         }
 
         .lang-menu[data-open="true"] {
@@ -929,7 +933,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         }
 
         main {
-          padding: 22px 16px 44px;
+          padding: 22px 16px 96px;
         }
 
         .entry-main::before,

@@ -203,7 +203,8 @@ import logoIconSvg from "../../assets/onboarding/logo.svg?raw";
       }
 
       .is-locale-en .subtitle {
-        white-space: nowrap;
+        white-space: normal;
+        overflow-wrap: anywhere;
         font-size: 15px;
         letter-spacing: 0;
       }
@@ -1395,6 +1396,11 @@ import logoIconSvg from "../../assets/onboarding/logo.svg?raw";
           justify-content: center;
         }
 
+        .is-locale-en .subtitle {
+          white-space: normal;
+          overflow-wrap: anywhere;
+        }
+
         .shortcut-line {
           margin-top: 22px;
           font-size: 17px;
@@ -1951,7 +1957,7 @@ import logoIconSvg from "../../assets/onboarding/logo.svg?raw";
         en: {
           page_title: "Welcome to Lumno!｜Lumno - The Ultimate Browser Command Bar",
           title_welcome: "Welcome to",
-          subtitle: "An open-source browser extension for focused search and a minimalist new tab.",
+          subtitle: "An open-source browser extension for Command Bar search and a minimalist new tab.",
           shortcut_press: "Press",
           shortcut_invoke: "to launch",
           language_select_aria: "Language",

@@ -9,7 +9,7 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title data-i18n="page_title">Lumno 聚焦搜索&新标签页</title>
+    <title data-i18n="page_title">Lumno - 聚焦搜索&新标签页</title>
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -203,7 +203,8 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
       }
 
       .is-locale-en .subtitle {
-        white-space: nowrap;
+        white-space: normal;
+        overflow-wrap: anywhere;
         font-size: 15px;
         letter-spacing: 0;
       }
@@ -1409,6 +1410,11 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
           justify-content: center;
         }
 
+        .is-locale-en .subtitle {
+          white-space: normal;
+          overflow-wrap: anywhere;
+        }
+
         .shortcut-line {
           margin-top: 22px;
           font-size: 17px;
@@ -1886,7 +1892,7 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
       const ZH_CN_LOCALE = "zh-CN";
       const I18N_MESSAGES = {
         "zh-CN": {
-          page_title: "Lumno 聚焦搜索&新标签页",
+          page_title: "Lumno - 聚焦搜索&新标签页",
           title_welcome: "欢迎使用",
           subtitle: "开源浏览器聚焦搜索 & 极简新标签页",
           shortcut_press: "按下",
@@ -1922,7 +1928,7 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
           logo_icon_alt: "Lumno 图标"
         },
         "zh-TW": {
-          page_title: "Lumno 聚焦搜尋&新分頁",
+          page_title: "Lumno - 聚焦搜尋&新分頁",
           title_welcome: "歡迎使用",
           subtitle: "開源瀏覽器聚焦搜尋 & 極簡新分頁",
           shortcut_press: "按下",
@@ -1958,7 +1964,7 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
           logo_icon_alt: "Lumno 圖示"
         },
         "zh-HK": {
-          page_title: "Lumno 聚焦搜尋&新分頁",
+          page_title: "Lumno - 聚焦搜尋&新分頁",
           title_welcome: "歡迎使用",
           subtitle: "開源瀏覽器聚焦搜尋 & 極簡新分頁",
           shortcut_press: "按下",
@@ -1994,9 +2000,9 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
           logo_icon_alt: "Lumno 圖示"
         },
         en: {
-          page_title: "Lumno Focused Search & New Tab",
+          page_title: "Lumno - The Ultimate Browser Command Bar",
           title_welcome: "Welcome to",
-          subtitle: "An open-source browser extension for focused search and a minimalist new tab.",
+          subtitle: "An open-source browser extension for Command Bar search and a minimalist new tab.",
           shortcut_press: "Press",
           shortcut_invoke: "to launch",
           language_select_aria: "Language",

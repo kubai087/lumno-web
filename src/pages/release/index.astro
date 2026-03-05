@@ -93,25 +93,6 @@ function renderMdBlock(markdown: string): string {
         padding: 30px 24px 60px;
       }
 
-      .template-note {
-        margin: 0 0 26px;
-        padding: 12px 14px;
-        border: 1px solid var(--line);
-        border-radius: 10px;
-        color: #344054;
-        font-size: 14px;
-        background: #fcfcfd;
-      }
-
-      .template-note a {
-        color: #175cd3;
-        text-decoration: none;
-      }
-
-      .template-note a:hover {
-        text-decoration: underline;
-      }
-
       .timeline {
         position: relative;
       }
@@ -400,10 +381,6 @@ function renderMdBlock(markdown: string): string {
     </header>
 
     <main class="container">
-      <p class="template-note">
-        Use release template: <a href="https://github.com/kubai087/lumno-web/blob/main/.github/RELEASE_TEMPLATE.md" target="_blank" rel="noreferrer">.github/RELEASE_TEMPLATE.md</a>
-      </p>
-
       <section class="timeline">
         {
           releases.length > 0 ? (

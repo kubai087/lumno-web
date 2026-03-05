@@ -248,6 +248,11 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
           background 0.18s ease;
       }
 
+      .lang-toggle i {
+        font-size: 18px;
+        line-height: 1;
+      }
+
       @media (hover: hover) and (pointer: fine) {
         .lang-toggle:hover {
           transform: translateY(-1px);
@@ -279,10 +284,21 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         box-shadow: 0 10px 20px rgba(16, 24, 40, 0.09);
         padding: 6px;
         z-index: 20;
+        opacity: 0;
+        transform: translateY(-6px) scale(0.97);
+        transform-origin: top right;
+        pointer-events: none;
+        transition: opacity 180ms ease, transform 180ms ease;
       }
 
       .lang-menu[hidden] {
         display: none;
+      }
+
+      .lang-menu[data-open="true"] {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        pointer-events: auto;
       }
 
       .lang-option {
@@ -317,12 +333,46 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         border-radius: 16px;
         overflow: hidden;
         background: #f8fafc;
+        position: relative;
       }
 
       .top-banner img {
         display: block;
         width: 100%;
         height: auto;
+      }
+
+      .banner-overlay {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px;
+        pointer-events: none;
+      }
+
+      .banner-title {
+        margin: 0;
+        font-size: clamp(22px, 3.2vw, 34px);
+        line-height: 1.1;
+        letter-spacing: -0.02em;
+        color: #ffffff;
+        text-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+        transform: translateY(10px) scale(0.94);
+        opacity: 0;
+        animation: banner-pop 620ms cubic-bezier(0.22, 1, 0.36, 1) 120ms forwards;
+      }
+
+      @keyframes banner-pop {
+        from {
+          opacity: 0;
+          transform: translateY(10px) scale(0.94);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
       }
 
       .timeline {
@@ -691,7 +741,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
                 aria-haspopup="menu"
                 aria-expanded="false"
               >
-                🌐
+                <i class="ri-global-line" aria-hidden="true"></i>
               </button>
               <div id="language-menu" class="lang-menu" role="menu" hidden>
                 <button class="lang-option" type="button" role="menuitemradio" data-lang-value="zh-CN" data-i18n="language_zh_cn">
@@ -722,6 +772,9 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
     <main class="container">
       <div class="top-banner">
         <img src="/resource_commited/banner.jpg" alt="Lumno banner" loading="lazy" />
+        <div class="banner-overlay">
+          <h1 class="banner-title" data-i18n="banner_title">您已更新至新版本</h1>
+        </div>
       </div>
       <section class="timeline">
         {
@@ -869,6 +922,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
       const I18N_MESSAGES = {
         "zh-CN": {
           page_title: "Lumno 更新日志",
+          banner_title: "您已更新至新版本",
           brand_home_aria: "回到 Lumno 首页",
           join_discord: "加入 Discord",
           discord_aria: "加入 Discord 频道",
@@ -889,6 +943,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         },
         en: {
           page_title: "Lumno Changelog",
+          banner_title: "You're now on the latest version",
           brand_home_aria: "Back to Lumno home",
           join_discord: "Join Discord",
           discord_aria: "Join Discord channel",
@@ -913,7 +968,17 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         const languageMenu = document.getElementById("language-menu");
         const languageToggle = document.getElementById("language-toggle");
         if (!languageMenu || !languageToggle) return;
-        languageMenu.hidden = !open;
+        if (!open) {
+          languageMenu.setAttribute("data-open", "false");
+          window.setTimeout(() => {
+            if (languageMenu.getAttribute("data-open") === "false") {
+              languageMenu.hidden = true;
+            }
+          }, 180);
+        } else {
+          languageMenu.hidden = false;
+          requestAnimationFrame(() => languageMenu.setAttribute("data-open", "true"));
+        }
         languageToggle.setAttribute("aria-expanded", open ? "true" : "false");
       }
 
@@ -992,9 +1057,10 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
       const languageToggle = document.getElementById("language-toggle");
       const languageMenu = document.getElementById("language-menu");
       if (languageToggle && languageMenu) {
+        languageMenu.setAttribute("data-open", "false");
         languageToggle.addEventListener("click", (event) => {
           event.stopPropagation();
-          setLanguageMenuOpen(languageMenu.hidden);
+          setLanguageMenuOpen(languageToggle.getAttribute("aria-expanded") !== "true");
         });
         languageMenu.addEventListener("click", (event) => {
           const target = event.target instanceof HTMLElement ? event.target.closest("[data-lang-value]") : null;
@@ -1017,6 +1083,79 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
       }
 
       applyLanguageMode(getSystemLocale());
+
+      function fireIntroConfetti() {
+        const canvas = document.createElement("canvas");
+        canvas.style.position = "fixed";
+        canvas.style.inset = "0";
+        canvas.style.width = "100%";
+        canvas.style.height = "100%";
+        canvas.style.pointerEvents = "none";
+        canvas.style.zIndex = "9999";
+        document.body.appendChild(canvas);
+        const ctx = canvas.getContext("2d");
+        if (!ctx) {
+          canvas.remove();
+          return;
+        }
+        const dpr = Math.max(1, window.devicePixelRatio || 1);
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        canvas.width = Math.floor(width * dpr);
+        canvas.height = Math.floor(height * dpr);
+        ctx.scale(dpr, dpr);
+
+        const colors = ["#60A5FA", "#22C55E", "#F59E0B", "#F43F5E", "#A78BFA"];
+        const particles = Array.from({ length: 120 }).map(() => {
+          const left = Math.random() > 0.5;
+          const x = left ? width * 0.3 : width * 0.7;
+          return {
+            x,
+            y: height * 0.32,
+            vx: (Math.random() * 6 + 2) * (left ? -1 : 1),
+            vy: -(Math.random() * 8 + 5),
+            size: Math.random() * 6 + 4,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            rotate: Math.random() * Math.PI,
+            spin: (Math.random() - 0.5) * 0.25,
+          };
+        });
+
+        const gravity = 0.24;
+        const drag = 0.992;
+        const endAt = performance.now() + 1500;
+
+        function frame(now) {
+          ctx.clearRect(0, 0, width, height);
+          particles.forEach((p) => {
+            p.vx *= drag;
+            p.vy = p.vy * drag + gravity;
+            p.x += p.vx;
+            p.y += p.vy;
+            p.rotate += p.spin;
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate(p.rotate);
+            ctx.fillStyle = p.color;
+            ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.65);
+            ctx.restore();
+          });
+          if (now < endAt) {
+            requestAnimationFrame(frame);
+          } else {
+            canvas.remove();
+          }
+        }
+        requestAnimationFrame(frame);
+      }
+
+      try {
+        const key = "lumno_release_confetti_once_v1";
+        if (!localStorage.getItem(key)) {
+          localStorage.setItem(key, "1");
+          window.setTimeout(() => fireIntroConfetti(), 280);
+        }
+      } catch (_) {}
     </script>
   </body>
 </html>

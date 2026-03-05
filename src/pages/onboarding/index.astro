@@ -535,10 +535,21 @@ import LanguageMenu from "../../components/onboarding/LanguageMenu";
         flex-direction: column;
         gap: 4px;
         box-shadow: 0 14px 28px rgba(0, 0, 0, 0.12);
+        opacity: 0;
+        transform: translateY(-6px) scale(0.97);
+        transform-origin: top right;
+        pointer-events: none;
+        transition: opacity 180ms ease, transform 180ms ease;
       }
 
       .lang-menu[hidden] {
         display: none;
+      }
+
+      .lang-menu[data-open="true"] {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        pointer-events: auto;
       }
 
       .lang-option {
@@ -1323,7 +1334,7 @@ import LanguageMenu from "../../components/onboarding/LanguageMenu";
 
         <div class="actions" data-node-id="3358:77">
           <a class="pill-btn pill-btn-selected" href="https://discord.gg/2u9sg7ZNkJ" target="_blank" rel="noreferrer noopener" aria-label="加入 Discord 频道" data-i18n-aria-label="discord_aria" data-node-id="3358:42">
-            <img class="pill-btn-figma-icon" src="/onboarding/assets/discord-selected.svg" alt="" draggable="false" />
+            <i class="ri-discord-fill" aria-hidden="true"></i>
             <span data-i18n="join_discord">加入 Discord 频道</span>
           </a>
           <a class="pill-btn pill-btn-selected" href="https://github.com/kubai087/lumno-extension" target="_blank" rel="noreferrer noopener" aria-label="访问 Lumno GitHub 仓库" data-i18n-aria-label="settings_aria">
@@ -1460,7 +1471,17 @@ import LanguageMenu from "../../components/onboarding/LanguageMenu";
         const languageMenu = document.getElementById("language-menu");
         const languageToggle = document.getElementById("language-toggle");
         if (!languageMenu || !languageToggle) return;
-        languageMenu.hidden = !open;
+        if (!open) {
+          languageMenu.setAttribute("data-open", "false");
+          window.setTimeout(() => {
+            if (languageMenu.getAttribute("data-open") === "false") {
+              languageMenu.hidden = true;
+            }
+          }, 180);
+        } else {
+          languageMenu.hidden = false;
+          requestAnimationFrame(() => languageMenu.setAttribute("data-open", "true"));
+        }
         languageToggle.setAttribute("aria-expanded", open ? "true" : "false");
       }
 
@@ -1564,9 +1585,10 @@ import LanguageMenu from "../../components/onboarding/LanguageMenu";
       const languageToggle = document.getElementById("language-toggle");
       const languageMenu = document.getElementById("language-menu");
       if (languageToggle && languageMenu) {
+        languageMenu.setAttribute("data-open", "false");
         languageToggle.addEventListener("click", (event) => {
           event.stopPropagation();
-          setLanguageMenuOpen(languageMenu.hidden);
+          setLanguageMenuOpen(languageToggle.getAttribute("aria-expanded") !== "true");
         });
         languageMenu.addEventListener("click", (event) => {
           const target = event.target instanceof HTMLElement ? event.target.closest("[data-lang-value]") : null;

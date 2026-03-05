@@ -160,6 +160,17 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
             0 2px 3px rgba(0, 0, 0, 0.04),
             inset 0 -4px 3px rgba(255, 255, 255, 0.65);
         }
+
+        .social-btn-discord:hover {
+          border-color: transparent;
+          background: linear-gradient(180deg, #4a5467 0%, #2f3a4f 100%);
+          box-shadow:
+            0 12px 4px rgba(0, 0, 0, 0),
+            0 7px 3px rgba(0, 0, 0, 0.015),
+            0 4px 3px rgba(0, 0, 0, 0.045),
+            0 2px 2px rgba(0, 0, 0, 0.075),
+            0 0 1px rgba(0, 0, 0, 0.09);
+        }
       }
 
       .social-btn:active {
@@ -170,6 +181,10 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
           inset 0 -4px 3px rgba(255, 255, 255, 0.59);
       }
 
+      .social-btn-discord:active {
+        background: linear-gradient(180deg, #3a4353 0%, #232b3b 100%);
+      }
+
       .social-btn-icon {
         width: 36px;
         min-width: 36px;
@@ -178,15 +193,37 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
       }
 
       .social-btn-discord {
+        position: relative;
         padding: 0 14px;
         gap: 8px;
         font-size: 14px;
         line-height: 1;
         font-weight: 500;
+        border: none;
+        color: #ffffff;
+        background: linear-gradient(180deg, #404859 0%, #273042 100%);
+        box-shadow:
+          0 10px 3px rgba(0, 0, 0, 0),
+          0 6px 2px rgba(0, 0, 0, 0.008),
+          0 3px 2px rgba(0, 0, 0, 0.035),
+          0 2px 2px rgba(0, 0, 0, 0.065),
+          0 0 1px rgba(0, 0, 0, 0.075);
       }
 
       .social-btn-discord i {
         font-size: 18px;
+      }
+
+      .social-btn-discord::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        box-shadow:
+          inset 0 0 0 1px #040404,
+          inset 0 1px 0 rgba(255, 255, 255, 0.52),
+          inset 0 1px 2.4px rgba(255, 255, 255, 0.36);
       }
 
       .lang-control {

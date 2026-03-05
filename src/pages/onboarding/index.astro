@@ -244,7 +244,6 @@ import logoIconSvg from "../../assets/onboarding/logo.svg?raw";
         -webkit-background-clip: text;
         background-clip: text;
         -webkit-text-fill-color: transparent;
-        filter: blur(0.25px);
       }
 
       .is-entered .text-shimmer {
@@ -278,6 +277,43 @@ import logoIconSvg from "../../assets/onboarding/logo.svg?raw";
         100% {
           background-position: -40% 0;
         }
+      }
+
+      .is-safari .text-shimmer {
+        color: #3c4455;
+        background: none;
+        -webkit-background-clip: border-box;
+        background-clip: border-box;
+        -webkit-text-fill-color: currentColor;
+      }
+
+      .is-safari .text-shimmer::after {
+        content: attr(data-shimmer-text);
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        color: transparent;
+        -webkit-text-fill-color: transparent;
+        background-image: linear-gradient(
+          110deg,
+          rgba(255, 255, 255, 0) 0%,
+          rgba(255, 255, 255, 0) 38%,
+          rgba(255, 255, 255, 0.6) 49%,
+          rgba(255, 255, 255, 0) 60%,
+          rgba(255, 255, 255, 0) 100%
+        );
+        background-size: 280% 100%;
+        background-position: 140% 0;
+        -webkit-background-clip: text;
+        background-clip: text;
+      }
+
+      .is-safari .is-entered .text-shimmer::after {
+        animation: x-text-shimmer-press 4300ms linear infinite;
+      }
+
+      .is-safari .is-entered .text-shimmer-delay::after {
+        animation: x-text-shimmer-invoke 4300ms linear infinite;
       }
 
       @keyframes x-hero-enter {
@@ -1741,6 +1777,9 @@ import logoIconSvg from "../../assets/onboarding/logo.svg?raw";
             return;
           }
           node.textContent = value;
+          if (node.classList && node.classList.contains("text-shimmer")) {
+            node.setAttribute("data-shimmer-text", value);
+          }
         });
         document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
           const key = node.getAttribute("data-i18n-aria-label");

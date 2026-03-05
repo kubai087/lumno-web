@@ -251,81 +251,108 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
       }
 
       .lang-control {
-        position: relative;
+        position: fixed;
+        right: 24px;
+        bottom: 24px;
+        z-index: 22;
+        width: 38px;
       }
 
       .lang-toggle {
-        width: 36px;
-        min-width: 36px;
-        min-height: 36px;
+        width: 38px;
+        min-width: 38px;
+        height: 38px;
         border-radius: 999px;
-        border: 1px solid var(--border-soft);
-        background: linear-gradient(180deg, #ffffff 0%, #ecedef 100%);
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02), inset 0 -4px 3px rgba(255, 255, 255, 0.59);
+        border: 1px solid transparent;
+        background: transparent;
+        box-shadow: none;
         color: #4b545f;
         cursor: pointer;
-        font-size: 14px;
-        transition:
-          transform 0.18s ease,
-          box-shadow 0.18s ease,
-          border-color 0.18s ease,
-          background 0.18s ease;
+        font-size: 16px;
+        padding: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0;
+        transition: border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
       }
 
       .lang-toggle i {
-        font-size: 18px;
+        font-size: 16px;
         line-height: 1;
+      }
+
+      .lang-select-prefix {
+        width: 18px;
+        height: 18px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .lang-current-label {
+        display: none;
+        flex: 1 1 auto;
+        min-width: 0;
+        font-size: 14px;
+        color: #4b545f;
+        text-align: left;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .lang-select-arrow {
+        display: none;
+        width: 16px;
+        height: 16px;
+        align-items: center;
+        justify-content: center;
+        color: #768095;
       }
 
       @media (hover: hover) and (pointer: fine) {
         .lang-toggle:hover {
-          transform: translateY(-1px);
           border-color: #d2d8df;
-          background: linear-gradient(180deg, #ffffff 0%, #e8ebef 100%);
-          box-shadow:
-            0 14px 18px rgba(0, 0, 0, 0.04),
-            0 2px 3px rgba(0, 0, 0, 0.04),
-            inset 0 -4px 3px rgba(255, 255, 255, 0.65);
+          background: rgba(255, 255, 255, 0.72);
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
         }
       }
 
       .lang-toggle:active {
-        transform: translateY(1px);
-        background: linear-gradient(180deg, #ffffff 0%, #ecedef 100%);
-        box-shadow:
-          0 2px 5px rgba(0, 0, 0, 0.06),
-          inset 0 -4px 3px rgba(255, 255, 255, 0.59);
+        border-color: #ccd3db;
+        background: rgba(255, 255, 255, 0.78);
+        box-shadow: none;
       }
 
       .lang-menu {
         position: absolute;
-        top: calc(100% + 6px);
         right: 0;
+        bottom: calc(100% + 8px);
+        top: auto;
+        z-index: 36;
+        min-width: 180px;
+        background: #fff;
+        border: 1px solid #e2e2e2;
+        border-radius: 12px;
+        padding: 6px;
         display: flex;
         flex-direction: column;
         gap: 4px;
-        min-width: 132px;
-        border: 1px solid var(--line);
-        border-radius: 10px;
-        background: #fff;
-        box-shadow: 0 10px 20px rgba(16, 24, 40, 0.09);
-        padding: 6px;
-        z-index: 20;
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.12);
         opacity: 0;
-        transform: translateY(-6px) scale(0.97);
-        transform-origin: top right;
+        visibility: hidden;
+        transform: translateY(6px) scale(0.97);
+        transform-origin: bottom right;
         pointer-events: none;
         transition: opacity 180ms ease, transform 180ms ease;
-      }
-
-      .lang-menu[hidden] {
-        display: none;
       }
 
       .lang-menu[data-open="true"] {
         opacity: 1;
         transform: translateY(0) scale(1);
         pointer-events: auto;
+        visibility: visible;
       }
 
       .lang-option {
@@ -847,7 +874,46 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         }
 
         .lang-control {
-          display: none;
+          position: fixed;
+          left: 16px;
+          right: 16px;
+          bottom: 16px;
+          width: auto;
+        }
+
+        .lang-toggle {
+          width: 100%;
+          min-width: 0;
+          min-height: 40px;
+          border-radius: 10px;
+          border: 1px solid #dbe1e8;
+          background: #ffffff;
+          box-shadow: 0 6px 18px rgba(14, 24, 38, 0.08);
+          padding: 0 12px;
+          justify-content: space-between;
+          gap: 10px;
+        }
+
+        .lang-current-label,
+        .lang-select-arrow {
+          display: inline-flex;
+        }
+
+        .lang-current-label {
+          display: block;
+        }
+
+        .lang-menu {
+          width: 100%;
+          min-width: 0;
+          left: 0;
+          right: 0;
+          transform: translateY(6px) scale(0.97);
+          transform-origin: bottom center;
+        }
+
+        .lang-menu[data-open="true"] {
+          transform: translateY(0) scale(1);
         }
 
         .header-actions {
@@ -867,7 +933,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         }
 
         main {
-          padding: 22px 16px 44px;
+          padding: 22px 16px 96px;
         }
 
         .entry-main::before,
@@ -897,27 +963,6 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
             <img class="brand-logo" src="/resource_commited/logo.png" alt="Lumno" draggable="false" />
           </a>
           <div class="header-controls">
-            <div class="lang-control">
-              <button
-                id="language-toggle"
-                class="lang-toggle"
-                type="button"
-                data-i18n-aria-label="language_select_aria"
-                aria-label="Language"
-                aria-haspopup="menu"
-                aria-expanded="false"
-              >
-                <i class="ri-global-line" aria-hidden="true"></i>
-              </button>
-              <div id="language-menu" class="lang-menu" role="menu" hidden>
-                <button class="lang-option" type="button" role="menuitemradio" data-lang-value="zh-CN" data-i18n="language_zh_cn">
-                  简体中文
-                </button>
-                <button class="lang-option" type="button" role="menuitemradio" data-lang-value="en" data-i18n="language_en">
-                  English
-                </button>
-              </div>
-            </div>
             <nav class="header-actions">
               <a class="social-btn social-btn-icon" href="https://github.com/kubai087/lumno-extension" target="_blank" rel="noreferrer noopener" aria-label="Visit GitHub repository" data-i18n-aria-label="github_repo_aria">
                 <i class="ri-github-fill" aria-hidden="true"></i>
@@ -1098,6 +1143,33 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         }
       </section>
     </main>
+    <div class="lang-control">
+      <button
+        id="language-toggle"
+        class="lang-toggle"
+        type="button"
+        data-i18n-aria-label="language_select_aria"
+        aria-label="Language"
+        aria-haspopup="menu"
+        aria-expanded="false"
+      >
+        <span class="lang-select-prefix">
+          <i class="ri-global-line" aria-hidden="true"></i>
+        </span>
+        <span id="language-current-label" class="lang-current-label" data-i18n="language_zh_cn">简体中文</span>
+        <span class="lang-select-arrow" aria-hidden="true">
+          <i class="ri-arrow-down-s-line"></i>
+        </span>
+      </button>
+      <div id="language-menu" class="lang-menu" role="menu" data-open="false">
+        <button class="lang-option" type="button" role="menuitemradio" data-lang-value="zh-CN" data-i18n="language_zh_cn">
+          简体中文
+        </button>
+        <button class="lang-option" type="button" role="menuitemradio" data-lang-value="en" data-i18n="language_en">
+          English
+        </button>
+      </div>
+    </div>
     <div id="community-qrcode-modal" class="qrcode-modal" hidden>
       <div class="qrcode-modal-backdrop" data-close-qrcode-modal></div>
       <div class="qrcode-modal-panel" role="dialog" aria-modal="true" aria-labelledby="community-qrcode-title">
@@ -1109,6 +1181,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
       </div>
     </div>
     <script>
+      const LANGUAGE_STORAGE_KEY = "_x_extension_language_2024_unique_";
       const FALLBACK_LOCALE = "zh-CN";
       const ZH_CN_LOCALE = "zh-CN";
       const I18N_MESSAGES = {
@@ -1170,17 +1243,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         const languageMenu = document.getElementById("language-menu");
         const languageToggle = document.getElementById("language-toggle");
         if (!languageMenu || !languageToggle) return;
-        if (!open) {
-          languageMenu.setAttribute("data-open", "false");
-          window.setTimeout(() => {
-            if (languageMenu.getAttribute("data-open") === "false") {
-              languageMenu.hidden = true;
-            }
-          }, 180);
-        } else {
-          languageMenu.hidden = false;
-          requestAnimationFrame(() => languageMenu.setAttribute("data-open", "true"));
-        }
+        languageMenu.setAttribute("data-open", open ? "true" : "false");
         languageToggle.setAttribute("aria-expanded", open ? "true" : "false");
       }
 
@@ -1231,12 +1294,20 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
       }
 
       function updateLanguageOptionState(mode) {
+        let activeLabel = "";
         document.querySelectorAll("[data-lang-value]").forEach((node) => {
           const value = node.getAttribute("data-lang-value") || getSystemLocale();
           const isActive = value === mode;
           node.classList.toggle("is-active", isActive);
           node.setAttribute("aria-checked", isActive ? "true" : "false");
+          if (isActive) {
+            activeLabel = (node.textContent || "").trim();
+          }
         });
+        const currentLabel = document.getElementById("language-current-label");
+        if (currentLabel && activeLabel) {
+          currentLabel.textContent = activeLabel;
+        }
       }
 
       function applyI18n(locale) {
@@ -1307,11 +1378,14 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         }
       }
 
-      function applyLanguageMode(mode) {
+      function applyLanguageMode(mode, options) {
         const normalizedMode = normalizeLanguageMode(mode);
         applyI18n(normalizedMode);
         syncCommunityAction(normalizedMode);
         updateLanguageOptionState(normalizedMode);
+        if (options && options.persist) {
+          localStorage.setItem(LANGUAGE_STORAGE_KEY, normalizedMode);
+        }
       }
 
       function setupQrcodeModal() {
@@ -1346,35 +1420,41 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         });
       }
 
-      const languageToggle = document.getElementById("language-toggle");
-      const languageMenu = document.getElementById("language-menu");
-      if (languageToggle && languageMenu) {
-        languageMenu.setAttribute("data-open", "false");
-        languageToggle.addEventListener("click", (event) => {
-          event.stopPropagation();
-          setLanguageMenuOpen(languageToggle.getAttribute("aria-expanded") !== "true");
-        });
-        languageMenu.addEventListener("click", (event) => {
-          const target = event.target instanceof HTMLElement ? event.target.closest("[data-lang-value]") : null;
-          if (!target) return;
-          const next = target.getAttribute("data-lang-value") || getSystemLocale();
-          applyLanguageMode(next);
-          setLanguageMenuOpen(false);
-        });
-        document.addEventListener("click", (event) => {
-          if (!(event.target instanceof Node)) return;
-          if (!languageMenu.contains(event.target) && !languageToggle.contains(event.target)) {
-            setLanguageMenuOpen(false);
-          }
-        });
-        document.addEventListener("keydown", (event) => {
-          if (event.key === "Escape") {
-            setLanguageMenuOpen(false);
-          }
-        });
+      const initialLanguageMenu = document.getElementById("language-menu");
+      if (initialLanguageMenu) {
+        initialLanguageMenu.setAttribute("data-open", "false");
       }
+      document.addEventListener("click", (event) => {
+        const target = event.target instanceof HTMLElement ? event.target : null;
+        if (!target) return;
+        const languageToggle = target.closest("#language-toggle");
+        const languageMenu = document.getElementById("language-menu");
+        if (languageToggle) {
+          event.stopPropagation();
+          const expanded = languageToggle.getAttribute("aria-expanded") === "true";
+          setLanguageMenuOpen(!expanded);
+          return;
+        }
+        const languageOption = target.closest("#language-menu [data-lang-value]");
+        if (languageOption) {
+          const next = languageOption.getAttribute("data-lang-value") || getSystemLocale();
+          applyLanguageMode(next, { persist: true });
+          setLanguageMenuOpen(false);
+          return;
+        }
+        const activeLanguageToggle = document.getElementById("language-toggle");
+        if (!languageMenu || !activeLanguageToggle) return;
+        if (!languageMenu.contains(target) && !activeLanguageToggle.contains(target)) {
+          setLanguageMenuOpen(false);
+        }
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          setLanguageMenuOpen(false);
+        }
+      });
 
-      applyLanguageMode(getSystemLocale());
+      applyLanguageMode(localStorage.getItem(LANGUAGE_STORAGE_KEY) || getSystemLocale());
       setupQrcodeModal();
 
       function setupAccordionAnimations() {

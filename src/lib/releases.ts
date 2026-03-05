@@ -8,11 +8,18 @@ export type ReleaseItem = {
   prerelease: boolean;
 };
 
-export type ParsedReleaseBody = {
-  tags: string[];
+export type ReleaseLocaleContent = {
   summary: string;
   features: string[];
   bugFixes: string[];
+};
+
+export type ParsedReleaseBody = {
+  tags: string[];
+  locales: {
+    "zh-CN": ReleaseLocaleContent;
+    en: ReleaseLocaleContent;
+  };
 };
 
 type GitHubRelease = {
@@ -81,30 +88,6 @@ export function formatDate(
   return new Intl.DateTimeFormat(locale, options).format(dt);
 }
 
-function normalizeHeading(
-  heading: string,
-): "features" | "bugFixes" | "summary" | null {
-  const lower = heading.trim().toLowerCase();
-
-  if (lower === "summary" || lower === "##summary" || lower.includes("summary")) {
-    return "summary";
-  }
-
-  if (
-    lower.includes("feature") ||
-    lower.includes("enhancement") ||
-    lower.includes("improvement")
-  ) {
-    return "features";
-  }
-
-  if (lower.includes("bug") || lower.includes("fix") || lower.includes("hotfix")) {
-    return "bugFixes";
-  }
-
-  return null;
-}
-
 function parseInlineTags(raw: string): string[] {
   return raw
     .split(/[,|/]/g)
@@ -116,14 +99,84 @@ function toListItem(raw: string): string {
   return raw.replace(/^[-*]\s+/, "").trim();
 }
 
+function appendListItem(list: string[], line: string): void {
+  const trimmed = line.trim();
+  if (!trimmed) return;
+
+  if (/^[-*]\s+/.test(trimmed) || list.length === 0) {
+    list.push(toListItem(trimmed));
+    return;
+  }
+
+  list[list.length - 1] = `${list[list.length - 1]} ${trimmed}`.trim();
+}
+
+function detectLanguageFromHeading(heading: string): "zh-CN" | "en" | null {
+  const lower = heading.trim().toLowerCase();
+
+  if (
+    lower === "中文" ||
+    lower === "简体中文" ||
+    lower === "簡體中文" ||
+    lower.includes("chinese") ||
+    lower.includes("zh-cn")
+  ) {
+    return "zh-CN";
+  }
+
+  if (lower === "english" || lower === "en" || lower.includes("english")) {
+    return "en";
+  }
+
+  return null;
+}
+
+function detectSectionFromHeading(
+  heading: string,
+): "summary" | "features" | "bugFixes" | null {
+  const lower = heading.trim().toLowerCase();
+
+  if (lower.includes("summary") || lower.includes("摘要")) {
+    return "summary";
+  }
+
+  if (lower.includes("feature") || lower.includes("enhancement") || lower.includes("improvement") || lower.includes("新功能")) {
+    return "features";
+  }
+
+  if (lower.includes("bug") || lower.includes("fix") || lower.includes("hotfix") || lower.includes("修复") || lower.includes("修正")) {
+    return "bugFixes";
+  }
+
+  return null;
+}
+
+function createEmptyLocaleContent(): ReleaseLocaleContent {
+  return {
+    summary: "",
+    features: [],
+    bugFixes: [],
+  };
+}
+
 export function parseReleaseBody(body: string): ParsedReleaseBody {
   const lines = body.split(/\r?\n/);
-  const features: string[] = [];
-  const bugFixes: string[] = [];
-  const summaryLines: string[] = [];
-  let section: "features" | "bugFixes" | "summary" | null = null;
-  let summary = "";
+  const summaryLines: Record<"zh-CN" | "en", string[]> = {
+    "zh-CN": [],
+    en: [],
+  };
+  const features: Record<"zh-CN" | "en", string[]> = {
+    "zh-CN": [],
+    en: [],
+  };
+  const bugFixes: Record<"zh-CN" | "en", string[]> = {
+    "zh-CN": [],
+    en: [],
+  };
+
   let tags: string[] = [];
+  let locale: "zh-CN" | "en" = "zh-CN";
+  let section: "summary" | "features" | "bugFixes" = "summary";
 
   for (const line of lines) {
     const trimmed = line.trim();
@@ -134,68 +187,74 @@ export function parseReleaseBody(body: string): ParsedReleaseBody {
       continue;
     }
 
-    const summaryMatch = trimmed.match(/^summary\s*:\s*(.+)$/i);
-    if (summaryMatch && !summary) {
-      summary = summaryMatch[1].trim();
+    const summaryLabelMatch = trimmed.match(/^(summary|摘要)\s*[:：]\s*(.+)$/i);
+    if (summaryLabelMatch) {
+      summaryLines[locale].push(summaryLabelMatch[2].trim());
       continue;
     }
 
     const headingMatch = trimmed.match(/^##+\s+(.+)$/);
     if (headingMatch) {
-      section = normalizeHeading(headingMatch[1]);
+      const heading = headingMatch[1].trim();
+      const localeHeading = detectLanguageFromHeading(heading);
+      if (localeHeading) {
+        locale = localeHeading;
+        section = "summary";
+        continue;
+      }
+
+      const sectionHeading = detectSectionFromHeading(heading);
+      if (sectionHeading) {
+        section = sectionHeading;
+      }
       continue;
     }
 
     if (!trimmed) {
-      if (section === "summary") {
-        summaryLines.push("");
+      if (section === "summary" && summaryLines[locale].length > 0) {
+        summaryLines[locale].push("");
       }
       continue;
     }
 
     if (section === "features") {
-      if (/^[-*]\s+/.test(trimmed) || features.length === 0) {
-        features.push(toListItem(trimmed));
-      } else {
-        features[features.length - 1] = `${features[features.length - 1]} ${trimmed}`.trim();
-      }
+      appendListItem(features[locale], line);
       continue;
     }
 
     if (section === "bugFixes") {
-      if (/^[-*]\s+/.test(trimmed) || bugFixes.length === 0) {
-        bugFixes.push(toListItem(trimmed));
-      } else {
-        bugFixes[bugFixes.length - 1] = `${bugFixes[bugFixes.length - 1]} ${trimmed}`.trim();
-      }
+      appendListItem(bugFixes[locale], line);
       continue;
     }
 
-    if (section === "summary") {
-      summaryLines.push(line);
+    summaryLines[locale].push(line);
+  }
+
+  const parsed: ParsedReleaseBody = {
+    tags,
+    locales: {
+      "zh-CN": createEmptyLocaleContent(),
+      en: createEmptyLocaleContent(),
+    },
+  };
+
+  parsed.locales["zh-CN"].summary = summaryLines["zh-CN"].join("\n").trim();
+  parsed.locales["zh-CN"].features = features["zh-CN"];
+  parsed.locales["zh-CN"].bugFixes = bugFixes["zh-CN"];
+
+  parsed.locales.en.summary = summaryLines.en.join("\n").trim();
+  parsed.locales.en.features = features.en;
+  parsed.locales.en.bugFixes = bugFixes.en;
+
+  if (!parsed.locales["zh-CN"].summary && !parsed.locales["zh-CN"].features.length && !parsed.locales["zh-CN"].bugFixes.length) {
+    const fallback = body
+      .split(/\r?\n/)
+      .find((line) => line.trim() && !/^tags?\s*:/i.test(line.trim()) && !/^##+\s+/.test(line.trim()))
+      ?.trim();
+    if (fallback) {
+      parsed.locales["zh-CN"].summary = fallback;
     }
   }
 
-  if (!summary && summaryLines.length > 0) {
-    summary = summaryLines.join("\n").trim();
-  }
-
-  if (!summary) {
-    summary = body
-      .split(/\r?\n/)
-      .find(
-        (line) =>
-          line.trim() &&
-          !/^tags?\s*:/i.test(line.trim()) &&
-          !/^##+\s+/.test(line.trim()),
-      )
-      ?.trim() || "";
-  }
-
-  return {
-    tags,
-    summary,
-    features,
-    bugFixes,
-  };
+  return parsed;
 }

@@ -15,10 +15,6 @@ function renderMdBlock(markdown: string): string {
   return marked.parse(markdown || "");
 }
 
-function getVersionLabel(tag: string): string {
-  const normalized = tag.replace(/^v/i, "");
-  return normalized.length > 10 ? normalized.slice(0, 10) : normalized;
-}
 ---
 
 <html lang="en">
@@ -228,6 +224,14 @@ function getVersionLabel(tag: string): string {
         font-size: 15px;
       }
 
+      :global(.entry-summary p) {
+        margin: 0 0 10px;
+      }
+
+      :global(.entry-summary p:last-child) {
+        margin-bottom: 0;
+      }
+
       :global(.entry-summary a) {
         color: #175cd3;
         text-decoration: none;
@@ -296,48 +300,6 @@ function getVersionLabel(tag: string): string {
       }
 
       :global(.accordion-list code) {
-        font-size: 12px;
-        background: #f2f4f7;
-        border: 1px solid #e4e7ec;
-        border-radius: 6px;
-        padding: 1px 5px;
-      }
-
-      .entry-notes {
-        margin-top: 12px;
-        color: #344054;
-        line-height: 1.72;
-        font-size: 15px;
-      }
-
-      :global(.entry-notes p) {
-        margin: 0 0 10px;
-      }
-
-      :global(.entry-notes p:last-child) {
-        margin-bottom: 0;
-      }
-
-      :global(.entry-notes ul),
-      :global(.entry-notes ol) {
-        margin: 0 0 10px;
-        padding-left: 20px;
-      }
-
-      :global(.entry-notes li + li) {
-        margin-top: 6px;
-      }
-
-      :global(.entry-notes a) {
-        color: #175cd3;
-        text-decoration: none;
-      }
-
-      :global(.entry-notes a:hover) {
-        text-decoration: underline;
-      }
-
-      :global(.entry-notes code) {
         font-size: 12px;
         background: #f2f4f7;
         border: 1px solid #e4e7ec;
@@ -450,7 +412,7 @@ function getVersionLabel(tag: string): string {
                   <aside class="entry-side">
                     <div class="entry-side-sticky">
                       <time class="entry-date">{formatDate(item.date)}</time>
-                      <div class="entry-version">{getVersionLabel(item.tag)}</div>
+                      <div class="entry-version">{item.tag}</div>
                     </div>
                   </aside>
 
@@ -460,14 +422,12 @@ function getVersionLabel(tag: string): string {
                       <h2 class="entry-title">{item.name}</h2>
 
                       <div class="chip-row">
-                        <span class="chip">{item.tag}</span>
-                        {item.prerelease && <span class="chip">Pre-release</span>}
                         {item.parsed.tags.map((releaseTag) => (
                           <span class="chip">{releaseTag}</span>
                         ))}
                       </div>
 
-                      {item.parsed.summary && <div class="entry-summary" set:html={renderMdInline(item.parsed.summary)}></div>}
+                      {item.parsed.summary && <div class="entry-summary" set:html={renderMdBlock(item.parsed.summary)}></div>}
 
                       {(item.parsed.features.length > 0 || item.parsed.bugFixes.length > 0) && (
                         <div class="accordion-group">
@@ -494,8 +454,6 @@ function getVersionLabel(tag: string): string {
                           )}
                         </div>
                       )}
-
-                      {item.parsed.notes && <div class="entry-notes" set:html={renderMdBlock(item.parsed.notes)}></div>}
 
                       <div class="entry-link">
                         <a href={item.url} target="_blank" rel="noreferrer">Read on GitHub</a>

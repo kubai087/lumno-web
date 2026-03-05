@@ -13,7 +13,6 @@ export type ParsedReleaseBody = {
   summary: string;
   features: string[];
   bugFixes: string[];
-  notes: string;
 };
 
 type GitHubRelease = {
@@ -82,8 +81,14 @@ export function formatDate(
   return new Intl.DateTimeFormat(locale, options).format(dt);
 }
 
-function normalizeHeading(heading: string): "features" | "bugFixes" | "notes" | null {
+function normalizeHeading(
+  heading: string,
+): "features" | "bugFixes" | "summary" | null {
   const lower = heading.trim().toLowerCase();
+
+  if (lower === "summary" || lower === "##summary" || lower.includes("summary")) {
+    return "summary";
+  }
 
   if (
     lower.includes("feature") ||
@@ -95,15 +100,6 @@ function normalizeHeading(heading: string): "features" | "bugFixes" | "notes" | 
 
   if (lower.includes("bug") || lower.includes("fix") || lower.includes("hotfix")) {
     return "bugFixes";
-  }
-
-  if (
-    lower.includes("note") ||
-    lower.includes("detail") ||
-    lower.includes("changes") ||
-    lower.includes("misc")
-  ) {
-    return "notes";
   }
 
   return null;
@@ -124,8 +120,8 @@ export function parseReleaseBody(body: string): ParsedReleaseBody {
   const lines = body.split(/\r?\n/);
   const features: string[] = [];
   const bugFixes: string[] = [];
-  const notesLines: string[] = [];
-  let section: "features" | "bugFixes" | "notes" | null = null;
+  const summaryLines: string[] = [];
+  let section: "features" | "bugFixes" | "summary" | null = null;
   let summary = "";
   let tags: string[] = [];
 
@@ -151,8 +147,8 @@ export function parseReleaseBody(body: string): ParsedReleaseBody {
     }
 
     if (!trimmed) {
-      if (section === "notes") {
-        notesLines.push("");
+      if (section === "summary") {
+        summaryLines.push("");
       }
       continue;
     }
@@ -175,23 +171,31 @@ export function parseReleaseBody(body: string): ParsedReleaseBody {
       continue;
     }
 
-    if (section === "notes") {
-      notesLines.push(line);
+    if (section === "summary") {
+      summaryLines.push(line);
     }
   }
 
-  if (!summary) {
-    summary = body.split(/\r?\n/).find((line) => line.trim())?.trim() || "";
+  if (!summary && summaryLines.length > 0) {
+    summary = summaryLines.join("\n").trim();
   }
 
-  const notes = notesLines.join("\n").trim();
-  const hasStructuredContent = features.length > 0 || bugFixes.length > 0 || notes.length > 0;
+  if (!summary) {
+    summary = body
+      .split(/\r?\n/)
+      .find(
+        (line) =>
+          line.trim() &&
+          !/^tags?\s*:/i.test(line.trim()) &&
+          !/^##+\s+/.test(line.trim()),
+      )
+      ?.trim() || "";
+  }
 
   return {
     tags,
     summary,
     features,
     bugFixes,
-    notes: hasStructuredContent ? notes : body.trim(),
   };
 }

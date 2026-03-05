@@ -437,12 +437,39 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
       }
 
       .actions {
-        position: absolute;
-        left: clamp(56px, 9vw, 132px);
-        bottom: clamp(28px, 7vh, 86px);
         display: flex;
         align-items: center;
         gap: 14px;
+      }
+
+      .top-nav {
+        position: fixed;
+        top: 18px;
+        left: 36px;
+        right: 24px;
+        z-index: 20;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+
+      .top-nav-brand {
+        display: inline-flex;
+        align-items: center;
+        text-decoration: none;
+      }
+
+      .top-nav-brand img {
+        display: block;
+        height: 24px;
+        width: auto;
+      }
+
+      .top-actions {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
       }
 
       .pill-btn {
@@ -592,31 +619,143 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
         line-height: 1;
       }
 
+      .pill-btn-icon-only {
+        width: 36px;
+        min-width: 36px;
+        height: 36px;
+        padding: 0;
+        justify-content: center;
+      }
+
+      .pill-btn-dark {
+        position: relative;
+        border: none;
+        color: #ffffff;
+        background: linear-gradient(180deg, #404859 0%, #273042 100%);
+        box-shadow:
+          0 10px 3px rgba(0, 0, 0, 0),
+          0 6px 2px rgba(0, 0, 0, 0.008),
+          0 3px 2px rgba(0, 0, 0, 0.035),
+          0 2px 2px rgba(0, 0, 0, 0.065),
+          0 0 1px rgba(0, 0, 0, 0.075);
+      }
+
+      .pill-btn-dark::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        box-shadow:
+          inset 0 0 0 1px #040404,
+          inset 0 1px 0 rgba(255, 255, 255, 0.52),
+          inset 0 1px 2.4px rgba(255, 255, 255, 0.36);
+      }
+
+      .pill-btn-dark::after {
+        display: none;
+      }
+
+      @media (hover: hover) and (pointer: fine) {
+        .pill-btn-dark:hover {
+          border-color: transparent;
+          color: #ffffff;
+          background: linear-gradient(180deg, #475164 0%, #2c374b 100%);
+          box-shadow:
+            0 10px 3px rgba(0, 0, 0, 0),
+            0 6px 2px rgba(0, 0, 0, 0.01),
+            0 3px 2px rgba(0, 0, 0, 0.04),
+            0 2px 2px rgba(0, 0, 0, 0.07),
+            0 0 1px rgba(0, 0, 0, 0.08);
+        }
+      }
+
+      .pill-btn-dark:active {
+        color: #ffffff;
+        background: linear-gradient(180deg, #364052 0%, #212a3a 100%);
+        box-shadow:
+          0 4px 6px rgba(0, 0, 0, 0.2),
+          0 1px 2px rgba(0, 0, 0, 0.18);
+      }
+
       .lang-control {
         position: fixed;
-        top: 24px;
         right: 24px;
-        z-index: 10;
+        bottom: 24px;
+        z-index: 22;
+        width: 38px;
       }
 
       .lang-toggle {
-        width: 42px;
-        min-width: 42px;
-        height: 42px;
+        width: 38px;
+        min-width: 38px;
+        height: 38px;
+        border-radius: 999px;
+        border: 1px solid transparent;
+        background: transparent;
+        box-shadow: none;
         padding: 0;
+        display: inline-flex;
+        align-items: center;
         justify-content: center;
+        gap: 0;
         cursor: pointer;
       }
 
       .lang-toggle i {
-        font-size: 20px;
+        font-size: 16px;
         line-height: 1;
+      }
+
+      .lang-select-prefix {
+        width: 18px;
+        height: 18px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .lang-current-label {
+        display: none;
+        flex: 1 1 auto;
+        min-width: 0;
+        font-size: 14px;
+        color: #4b545f;
+        text-align: left;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .lang-select-arrow {
+        display: none;
+        width: 16px;
+        height: 16px;
+        align-items: center;
+        justify-content: center;
+        color: #768095;
+      }
+
+      @media (hover: hover) and (pointer: fine) {
+        .lang-toggle:hover {
+          border-color: #d2d8df;
+          background: rgba(255, 255, 255, 0.72);
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+        }
+      }
+
+      .lang-toggle:active {
+        border-color: #ccd3db;
+        background: rgba(255, 255, 255, 0.78);
+        box-shadow: none;
       }
 
       .lang-menu {
         position: absolute;
-        top: calc(100% + 8px);
         right: 0;
+        bottom: calc(100% + 8px);
+        top: auto;
+        z-index: 36;
         min-width: 180px;
         background: #fff;
         border: 1px solid #e2e2e2;
@@ -627,20 +766,18 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
         gap: 4px;
         box-shadow: 0 14px 28px rgba(0, 0, 0, 0.12);
         opacity: 0;
-        transform: translateY(-6px) scale(0.97);
-        transform-origin: top right;
+        visibility: hidden;
+        transform: translateY(6px) scale(0.97);
+        transform-origin: bottom right;
         pointer-events: none;
         transition: opacity 180ms ease, transform 180ms ease;
-      }
-
-      .lang-menu[hidden] {
-        display: none;
       }
 
       .lang-menu[data-open="true"] {
         opacity: 1;
         transform: translateY(0) scale(1);
         pointer-events: auto;
+        visibility: visible;
       }
 
       .lang-option {
@@ -1236,7 +1373,7 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
           flex-direction: column;
           min-height: 100vh;
           justify-content: flex-start;
-          padding: 112px 0 18px;
+          padding: 112px 0 44px;
         }
 
         .left-pane,
@@ -1292,11 +1429,9 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
         }
 
         .actions {
-          position: static;
-          margin-top: 60px;
-          margin-bottom: 24px;
+          margin: 0;
           flex-wrap: wrap;
-          justify-content: center;
+          justify-content: flex-start;
           gap: 10px;
         }
 
@@ -1353,9 +1488,63 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
           line-height: 1.32;
         }
 
-        .lang-control {
-          top: 16px;
+        .top-nav {
+          top: 14px;
+          left: 16px;
           right: 16px;
+          gap: 10px;
+        }
+
+        .top-nav-brand img {
+          height: 21px;
+        }
+
+        .top-actions {
+          max-width: calc(100vw - 180px);
+          flex-wrap: wrap;
+          justify-content: flex-end;
+        }
+
+        .lang-control {
+          position: relative;
+          width: min(92vw, 420px);
+          margin: 28px auto 24px;
+        }
+
+        .lang-toggle {
+          width: 100%;
+          min-width: 0;
+          min-height: 40px;
+          border-radius: 10px;
+          border: 1px solid #dbe1e8;
+          background: #ffffff;
+          box-shadow: 0 6px 18px rgba(14, 24, 38, 0.08);
+          padding: 0 12px;
+          justify-content: space-between;
+          gap: 10px;
+        }
+
+        .lang-current-label,
+        .lang-select-arrow {
+          display: inline-flex;
+        }
+
+        .lang-current-label {
+          display: block;
+        }
+
+        .lang-menu {
+          width: 100%;
+          min-width: 0;
+          top: auto;
+          bottom: calc(100% + 8px);
+          background: #ffffff;
+          border-color: #d8dee7;
+          box-shadow: 0 12px 24px rgba(12, 20, 33, 0.16);
+          backdrop-filter: none;
+          -webkit-backdrop-filter: none;
+          transform: translateY(6px) scale(0.97);
+          transform-origin: bottom right;
         }
       }
 
@@ -1363,6 +1552,7 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
         .onboarding {
           justify-content: flex-start;
           padding-top: 120px;
+          padding-bottom: 52px;
         }
 
         .left-pane {
@@ -1415,9 +1605,53 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
           font-size: 11px;
         }
 
+        .top-nav {
+          top: 12px;
+          left: 14px;
+          right: 14px;
+        }
+
+        .top-nav-brand img {
+          height: 18px;
+        }
+
+        .top-actions {
+          max-width: calc(100vw - 124px);
+          gap: 6px;
+        }
+
         .actions {
-          margin-top: 80px;
-          margin-bottom: 56px;
+          gap: 8px;
+        }
+
+        .actions .pill-btn {
+          width: 36px;
+          min-width: 36px;
+          height: 36px;
+          padding: 0;
+          justify-content: center;
+          gap: 0;
+        }
+
+        .actions .pill-btn span {
+          display: none;
+        }
+
+        .lang-control {
+          width: min(76vw, 280px);
+          margin: 22px auto 20px;
+        }
+
+        .lang-menu {
+          left: 0;
+          right: 0;
+          width: 100%;
+          transform: translateY(6px) scale(0.97);
+          transform-origin: bottom center;
+        }
+
+        .lang-menu[data-open="true"] {
+          transform: translateY(0) scale(1);
         }
 
         .feature-grid {
@@ -1503,7 +1737,36 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
     </style>
   </head>
   <body>
-    <LanguageMenu client:load />
+    <header class="top-nav">
+      <a class="top-nav-brand" href="/" aria-label="Lumno">
+        <img src="/assets/lumno-title-figma.svg" alt="Lumno" draggable="false" />
+      </a>
+      <div class="top-actions">
+        <div class="actions" data-node-id="3358:77">
+          <a class="pill-btn pill-btn-selected pill-btn-icon-only" href="https://github.com/kubai087/lumno-extension" target="_blank" rel="noreferrer noopener" aria-label="访问 Lumno GitHub 仓库" data-i18n-aria-label="settings_aria">
+            <i class="ri-github-fill" aria-hidden="true"></i>
+          </a>
+          <a class="pill-btn pill-btn-selected" href="/release/" aria-label="查看更新日志" data-i18n-aria-label="release_aria">
+            <i class="ri-file-list-3-line" aria-hidden="true"></i>
+            <span data-i18n="view_release">更新日志</span>
+          </a>
+          <a
+            class="pill-btn pill-btn-selected pill-btn-dark"
+            href="https://discord.gg/2u9sg7ZNkJ"
+            target="_blank"
+            rel="noreferrer noopener"
+            aria-label="反馈 & 提需"
+            data-i18n-aria-label="discord_aria"
+            data-node-id="3358:42"
+            data-community-entry
+            data-discord-href="https://discord.gg/2u9sg7ZNkJ"
+          >
+            <i class="ri-discord-fill" aria-hidden="true" data-community-icon></i>
+            <span data-i18n="join_discord">反馈 & 提需</span>
+          </a>
+        </div>
+      </div>
+    </header>
     <main class="onboarding" data-node-id="3152:2">
       <section class="left-pane">
         <div class="left-main">
@@ -1594,34 +1857,10 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
                 draggable="false"
               />
             </a>
-            <p class="shortcut-store-note" data-i18n="cws_support_note">支持 Dia \ Edge 等 Chromium 浏览器</p>
+            <p class="shortcut-store-note" data-i18n="cws_support_note">支持 Dia \ Edge</p>
           </div>
         </div>
 
-        <div class="actions" data-node-id="3358:77">
-          <a
-            class="pill-btn pill-btn-selected"
-            href="https://discord.gg/2u9sg7ZNkJ"
-            target="_blank"
-            rel="noreferrer noopener"
-            aria-label="反馈 & 提需"
-            data-i18n-aria-label="discord_aria"
-            data-node-id="3358:42"
-            data-community-entry
-            data-discord-href="https://discord.gg/2u9sg7ZNkJ"
-          >
-            <i class="ri-discord-fill" aria-hidden="true" data-community-icon></i>
-            <span data-i18n="join_discord">反馈 & 提需</span>
-          </a>
-          <a class="pill-btn pill-btn-selected" href="https://github.com/kubai087/lumno-extension" target="_blank" rel="noreferrer noopener" aria-label="访问 Lumno GitHub 仓库" data-i18n-aria-label="settings_aria">
-            <i class="ri-github-fill" aria-hidden="true"></i>
-            <span data-i18n="go_settings">访问 GitHub 仓库</span>
-          </a>
-          <a class="pill-btn pill-btn-selected" href="/release/" aria-label="查看更新日志" data-i18n-aria-label="release_aria">
-            <i class="ri-file-list-3-line" aria-hidden="true"></i>
-            <span data-i18n="view_release">更新日志</span>
-          </a>
-        </div>
       </section>
 
       <section class="right-pane" aria-hidden="true">
@@ -1630,6 +1869,7 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
         <FeatureGrid />
       </section>
     </main>
+    <LanguageMenu client:load />
     <div id="community-qrcode-modal" class="qrcode-modal" hidden>
       <div class="qrcode-modal-backdrop" data-close-qrcode-modal></div>
       <div class="qrcode-modal-panel" role="dialog" aria-modal="true" aria-labelledby="community-qrcode-title">
@@ -1668,7 +1908,7 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
           view_release: "更新日志",
           cws_badge_aria: "在 Chrome 应用商店中安装 Lumno",
           cws_badge_alt: "在 Chrome 应用商店中获取",
-          cws_support_note: "支持 Dia \\ Edge 等 Chromium 浏览器",
+          cws_support_note: "支持 Dia \\ Edge",
           feature_search_title: "搜索任意浏览器网页",
           feature_search_desc: "支持书签、历史、已打开网页、最常访问",
           feature_sitesearch_title: "自定义站内搜索",
@@ -1704,7 +1944,7 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
           view_release: "更新日誌",
           cws_badge_aria: "在 Chrome 線上應用程式商店安裝 Lumno",
           cws_badge_alt: "在 Chrome 線上應用程式商店中取得",
-          cws_support_note: "支援 Dia \\ Edge 等 Chromium 瀏覽器",
+          cws_support_note: "支援 Dia \\ Edge",
           feature_search_title: "搜尋任意瀏覽器網頁",
           feature_search_desc: "支援書籤、歷史、已開啟網頁、最常造訪",
           feature_sitesearch_title: "自訂站內搜尋",
@@ -1740,7 +1980,7 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
           view_release: "更新日誌",
           cws_badge_aria: "在 Chrome 線上應用程式商店安裝 Lumno",
           cws_badge_alt: "在 Chrome 線上應用程式商店中取得",
-          cws_support_note: "支援 Dia \\ Edge 等 Chromium 瀏覽器",
+          cws_support_note: "支援 Dia \\ Edge",
           feature_search_title: "搜尋任意瀏覽器網頁",
           feature_search_desc: "支援書籤、歷史、已開啟網頁、最常造訪",
           feature_sitesearch_title: "自訂站內搜尋",
@@ -1765,9 +2005,9 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
           language_zh_tw: "繁體中文",
           language_zh_hk: "繁體中文",
           language_en: "English",
-          join_discord: "Feedback & Requests",
+          join_discord: "Feedback & Feature Requests",
           go_settings: "View on GitHub",
-          discord_aria: "Feedback and requests",
+          discord_aria: "Feedback and feature requests",
           qrcode_title: "WeChat Group QR Code",
           qrcode_image_alt: "Lumno WeChat group QR code",
           qrcode_close_aria: "Close QR code dialog",
@@ -1776,7 +2016,7 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
           view_release: "Release Notes",
           cws_badge_aria: "Install Lumno from Chrome Web Store",
           cws_badge_alt: "Get it from Chrome Web Store",
-          cws_support_note: "Supports Dia \\ Edge and other Chromium browsers",
+          cws_support_note: "Supports Dia \\ Edge",
           feature_search_title: "Search Any Browser Page",
           feature_search_desc: "Bookmarks, history, open tabs, and most visited",
           feature_sitesearch_title: "Custom Site Search",
@@ -1794,27 +2034,25 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
         const languageMenu = document.getElementById("language-menu");
         const languageToggle = document.getElementById("language-toggle");
         if (!languageMenu || !languageToggle) return;
-        if (!open) {
-          languageMenu.setAttribute("data-open", "false");
-          window.setTimeout(() => {
-            if (languageMenu.getAttribute("data-open") === "false") {
-              languageMenu.hidden = true;
-            }
-          }, 180);
-        } else {
-          languageMenu.hidden = false;
-          requestAnimationFrame(() => languageMenu.setAttribute("data-open", "true"));
-        }
+        languageMenu.setAttribute("data-open", open ? "true" : "false");
         languageToggle.setAttribute("aria-expanded", open ? "true" : "false");
       }
 
       function updateLanguageOptionState(mode) {
+        let activeLabel = "";
         document.querySelectorAll("[data-lang-value]").forEach((node) => {
           const value = node.getAttribute("data-lang-value") || getSystemLocale();
           const isActive = value === mode;
           node.classList.toggle("is-active", isActive);
           node.setAttribute("aria-checked", isActive ? "true" : "false");
+          if (isActive) {
+            activeLabel = (node.textContent || "").trim();
+          }
         });
+        const currentLabel = document.getElementById("language-current-label");
+        if (currentLabel && activeLabel) {
+          currentLabel.textContent = activeLabel;
+        }
       }
 
       function normalizeLocale(locale) {
@@ -1974,33 +2212,39 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
         }
       });
 
-      const languageToggle = document.getElementById("language-toggle");
-      const languageMenu = document.getElementById("language-menu");
-      if (languageToggle && languageMenu) {
-        languageMenu.setAttribute("data-open", "false");
-        languageToggle.addEventListener("click", (event) => {
+      const initialLanguageMenu = document.getElementById("language-menu");
+      if (initialLanguageMenu) {
+        initialLanguageMenu.setAttribute("data-open", "false");
+      }
+      document.addEventListener("click", (event) => {
+        const target = event.target instanceof HTMLElement ? event.target : null;
+        if (!target) return;
+        const languageToggle = target.closest("#language-toggle");
+        const languageMenu = document.getElementById("language-menu");
+        if (languageToggle) {
           event.stopPropagation();
-          setLanguageMenuOpen(languageToggle.getAttribute("aria-expanded") !== "true");
-        });
-        languageMenu.addEventListener("click", (event) => {
-          const target = event.target instanceof HTMLElement ? event.target.closest("[data-lang-value]") : null;
-          if (!target) return;
-          const next = target.getAttribute("data-lang-value") || getSystemLocale();
+          const expanded = languageToggle.getAttribute("aria-expanded") === "true";
+          setLanguageMenuOpen(!expanded);
+          return;
+        }
+        const languageOption = target.closest("#language-menu [data-lang-value]");
+        if (languageOption) {
+          const next = languageOption.getAttribute("data-lang-value") || getSystemLocale();
           applyLanguageMode(next, { persist: true });
           setLanguageMenuOpen(false);
-        });
-        document.addEventListener("click", (event) => {
-          if (!(event.target instanceof Node)) return;
-          if (!languageMenu.contains(event.target) && !languageToggle.contains(event.target)) {
-            setLanguageMenuOpen(false);
-          }
-        });
-        document.addEventListener("keydown", (event) => {
-          if (event.key === "Escape") {
-            setLanguageMenuOpen(false);
-          }
-        });
-      }
+          return;
+        }
+        const activeLanguageToggle = document.getElementById("language-toggle");
+        if (!languageMenu || !activeLanguageToggle) return;
+        if (!languageMenu.contains(target) && !activeLanguageToggle.contains(target)) {
+          setLanguageMenuOpen(false);
+        }
+      });
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          setLanguageMenuOpen(false);
+        }
+      });
       applyLanguageMode(localStorage.getItem(LANGUAGE_STORAGE_KEY) || getSystemLocale());
       setupQrcodeModal();
       applySafariBrowserClass();

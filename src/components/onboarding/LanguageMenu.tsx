@@ -10,16 +10,24 @@ export default function LanguageMenu() {
     >
       <button
         id="language-toggle"
-        className="pill-btn pill-btn-selected lang-toggle"
+        className="lang-toggle lang-select-toggle"
         type="button"
         data-i18n-aria-label="language_select_aria"
         aria-label="语言"
         aria-haspopup="menu"
         aria-expanded="false"
       >
-        <i className="ri-global-line" aria-hidden="true"></i>
+        <span className="lang-select-prefix">
+          <i className="ri-global-line" aria-hidden="true"></i>
+        </span>
+        <span id="language-current-label" className="lang-current-label" data-i18n="language_zh_cn">
+          简体中文
+        </span>
+        <span className="lang-select-arrow" aria-hidden="true">
+          <i className="ri-arrow-down-s-line"></i>
+        </span>
       </button>
-      <div id="language-menu" className="lang-menu" role="menu" hidden>
+      <div id="language-menu" className="lang-menu" role="menu" data-open="false">
         <button className="lang-option" type="button" role="menuitemradio" data-lang-value="zh-CN" data-i18n="language_zh_cn">
           简体中文
         </button>

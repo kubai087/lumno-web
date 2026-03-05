@@ -350,11 +350,15 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
       .banner-overlay {
         position: absolute;
         inset: 0;
-        display: flex;
+        display: none;
         align-items: center;
         justify-content: center;
         padding: 12px;
         pointer-events: none;
+      }
+
+      body[data-release-entry="ext"] .banner-overlay {
+        display: flex;
       }
 
       .banner-title {
@@ -934,7 +938,9 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
       const I18N_MESSAGES = {
         "zh-CN": {
           page_title: "Lumno 更新日志｜Lumno 聚焦搜索&新标签页",
+          page_title_ext: "Lumno 已更新至 {version}",
           banner_title: "🎉已更新至新版本！",
+          banner_title_ext: "🎉您已更新至 {version}",
           brand_home_aria: "回到 Lumno 首页",
           join_discord: "加入 Discord",
           discord_aria: "加入 Discord 频道",
@@ -955,7 +961,9 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         },
         en: {
           page_title: "Lumno Changelog｜Lumno - The Ultimate Browser Command Bar",
+          page_title_ext: "Lumno Updated to {version}",
           banner_title: "🎉You're on the latest version!",
+          banner_title_ext: "🎉Updated to {version}",
           brand_home_aria: "Back to Lumno home",
           join_discord: "Join Discord",
           discord_aria: "Join Discord channel",
@@ -1021,6 +1029,25 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         );
       }
 
+      function formatVersionToken(raw) {
+        const value = String(raw || "").trim();
+        if (!value) return "";
+        return /^v/i.test(value) ? value : `v${value}`;
+      }
+
+      function getEntryContext() {
+        const params = new URLSearchParams(window.location.search);
+        const entry = (params.get("entry") || "").trim().toLowerCase();
+        const reason = (params.get("reason") || "").trim().toLowerCase();
+        const version = formatVersionToken(params.get("version") || "");
+        const isExtensionEntry = entry === "ext";
+        return { isExtensionEntry, reason, version };
+      }
+
+      function withVersion(template, version) {
+        return String(template || "").replace("{version}", version || "");
+      }
+
       function updateLanguageOptionState(mode) {
         document.querySelectorAll("[data-lang-value]").forEach((node) => {
           const value = node.getAttribute("data-lang-value") || getSystemLocale();
@@ -1034,11 +1061,21 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         const resolvedLocale = I18N_MESSAGES[locale] ? locale : FALLBACK_LOCALE;
         document.documentElement.lang = resolvedLocale;
         document.body.setAttribute("data-release-locale", resolvedLocale);
+        const entryContext = getEntryContext();
+        document.body.setAttribute("data-release-entry", entryContext.isExtensionEntry ? "ext" : "web");
 
         document.querySelectorAll("[data-i18n]").forEach((node) => {
           const key = node.getAttribute("data-i18n");
           if (!key) return;
-          const value = getMessage(resolvedLocale, key);
+          let value = getMessage(resolvedLocale, key);
+          if (key === "page_title" && entryContext.isExtensionEntry) {
+            value = withVersion(getMessage(resolvedLocale, "page_title_ext"), entryContext.version);
+          }
+          if (key === "banner_title") {
+            value = entryContext.isExtensionEntry
+              ? withVersion(getMessage(resolvedLocale, "banner_title_ext"), entryContext.version)
+              : "";
+          }
           if (node.tagName === "TITLE") {
             document.title = value;
             return;
@@ -1161,7 +1198,13 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         requestAnimationFrame(frame);
       }
 
-      window.setTimeout(() => fireIntroConfetti(), 280);
+      const entryContext = getEntryContext();
+      if (entryContext.isExtensionEntry) {
+        window.setTimeout(() => fireIntroConfetti(), 280);
+        if (window.history && typeof window.history.replaceState === "function") {
+          window.history.replaceState({}, "", "/release/");
+        }
+      }
     </script>
   </body>
 </html>

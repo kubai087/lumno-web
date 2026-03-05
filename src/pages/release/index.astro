@@ -646,16 +646,8 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
       }
 
       .accordion-panel {
-        display: grid;
-        grid-template-rows: 0fr;
-        opacity: 0;
-        transition:
-          grid-template-rows 240ms ease,
-          opacity 220ms ease;
-      }
-
-      .accordion[open] .accordion-panel {
-        grid-template-rows: 1fr;
+        overflow: hidden;
+        height: auto;
         opacity: 1;
       }
 
@@ -871,9 +863,9 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
               <a class="social-btn social-btn-icon" href="https://x.com/kubai087" target="_blank" rel="noreferrer noopener" aria-label="Visit X profile" data-i18n-aria-label="x_aria">
                 <i class="ri-twitter-x-fill" aria-hidden="true"></i>
               </a>
-              <a class="social-btn social-btn-discord" href="https://discord.gg/2u9sg7ZNkJ" target="_blank" rel="noreferrer noopener" aria-label="Join Discord channel" data-i18n-aria-label="discord_aria">
+              <a class="social-btn social-btn-discord" href="https://discord.gg/2u9sg7ZNkJ" target="_blank" rel="noreferrer noopener" aria-label="Feedback & Requests" data-i18n-aria-label="discord_aria">
                 <i class="ri-discord-fill" aria-hidden="true"></i>
-                <span data-i18n="join_discord">Join Discord</span>
+                <span data-i18n="join_discord">Feedback & Requests</span>
               </a>
             </nav>
           </div>
@@ -1044,8 +1036,8 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
           banner_title: "已更新至新版本！",
           banner_title_ext: "您已更新至 {version}",
           brand_home_aria: "回到 Lumno 首页",
-          join_discord: "加入 Discord",
-          discord_aria: "加入 Discord 频道",
+          join_discord: "反馈 & 提需",
+          discord_aria: "反馈与提需",
           github_repo_aria: "访问 Lumno GitHub 仓库",
           x_aria: "访问 Lumno X 主页",
           language_select_aria: "语言",
@@ -1067,8 +1059,8 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
           banner_title: "You're on the latest version!",
           banner_title_ext: "Updated to {version}",
           brand_home_aria: "Back to Lumno home",
-          join_discord: "Join Discord",
-          discord_aria: "Join Discord channel",
+          join_discord: "Feedback & Requests",
+          discord_aria: "Feedback and requests",
           github_repo_aria: "Visit Lumno GitHub repository",
           x_aria: "Visit Lumno X profile",
           language_select_aria: "Language",
@@ -1234,6 +1226,82 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
       }
 
       applyLanguageMode(getSystemLocale());
+
+      function setupAccordionAnimations() {
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const accordions = document.querySelectorAll(".accordion");
+        accordions.forEach((accordion) => {
+          if (!(accordion instanceof HTMLDetailsElement)) return;
+          const summary = accordion.querySelector("summary");
+          const panel = accordion.querySelector(".accordion-panel");
+          if (!(summary instanceof HTMLElement) || !(panel instanceof HTMLElement)) return;
+
+          panel.style.overflow = "hidden";
+          panel.style.height = accordion.open ? "auto" : "0px";
+          panel.style.opacity = accordion.open ? "1" : "0";
+
+          summary.addEventListener("click", (event) => {
+            event.preventDefault();
+            if (accordion.dataset.animating === "true") return;
+
+            const isOpen = accordion.open;
+            if (reduceMotion) {
+              accordion.open = !isOpen;
+              panel.style.height = accordion.open ? "auto" : "0px";
+              panel.style.opacity = accordion.open ? "1" : "0";
+              return;
+            }
+
+            accordion.dataset.animating = "true";
+            panel.style.transition = "height 260ms cubic-bezier(0.22, 1, 0.36, 1), opacity 200ms ease";
+
+            if (isOpen) {
+              const startHeight = panel.scrollHeight;
+              panel.style.height = `${startHeight}px`;
+              panel.style.opacity = "1";
+
+              requestAnimationFrame(() => {
+                panel.style.height = "0px";
+                panel.style.opacity = "0";
+              });
+
+              const onCloseEnd = (transitionEvent) => {
+                if (transitionEvent.propertyName !== "height") return;
+                panel.removeEventListener("transitionend", onCloseEnd);
+                accordion.open = false;
+                panel.style.transition = "";
+                panel.style.height = "0px";
+                panel.style.opacity = "0";
+                delete accordion.dataset.animating;
+              };
+              panel.addEventListener("transitionend", onCloseEnd);
+              return;
+            }
+
+            accordion.open = true;
+            panel.style.height = "0px";
+            panel.style.opacity = "0";
+            const endHeight = panel.scrollHeight;
+
+            requestAnimationFrame(() => {
+              panel.style.height = `${endHeight}px`;
+              panel.style.opacity = "1";
+            });
+
+            const onOpenEnd = (transitionEvent) => {
+              if (transitionEvent.propertyName !== "height") return;
+              panel.removeEventListener("transitionend", onOpenEnd);
+              panel.style.transition = "";
+              panel.style.height = "auto";
+              panel.style.opacity = "1";
+              delete accordion.dataset.animating;
+            };
+            panel.addEventListener("transitionend", onOpenEnd);
+          });
+        });
+      }
+
+      setupAccordionAnimations();
 
       function fireIntroConfetti() {
         const canvas = document.createElement("canvas");

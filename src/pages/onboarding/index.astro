@@ -492,6 +492,7 @@ import LanguageMenu from "../../components/onboarding/LanguageMenu";
       }
 
       .pill-btn .ri-discord-fill,
+      .pill-btn .ri-wechat-fill,
       .pill-btn .ri-settings-6-line,
       .pill-btn .ri-github-fill {
         width: 18px;
@@ -575,6 +576,62 @@ import LanguageMenu from "../../components/onboarding/LanguageMenu";
         background: #eaf3ff;
         color: #2a5da7;
         font-weight: 600;
+      }
+
+      .qrcode-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 30;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      .qrcode-modal[hidden] {
+        display: none;
+      }
+
+      .qrcode-modal-backdrop {
+        position: absolute;
+        inset: 0;
+        background: rgba(8, 12, 20, 0.6);
+      }
+
+      .qrcode-modal-panel {
+        position: relative;
+        width: min(92vw, 380px);
+        border-radius: 16px;
+        background: #ffffff;
+        box-shadow: 0 24px 42px rgba(16, 23, 38, 0.26);
+        padding: 20px;
+      }
+
+      .qrcode-modal-close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 32px;
+        height: 32px;
+        border: none;
+        border-radius: 999px;
+        background: #f2f4f8;
+        color: #212733;
+        cursor: pointer;
+      }
+
+      .qrcode-modal-title {
+        margin: 0 34px 12px 0;
+        font-size: 16px;
+        line-height: 1.35;
+        font-weight: 600;
+        color: #0f1725;
+      }
+
+      .qrcode-modal-image {
+        display: block;
+        width: 100%;
+        border-radius: 12px;
       }
 
       .right-pane {
@@ -1335,8 +1392,18 @@ import LanguageMenu from "../../components/onboarding/LanguageMenu";
         </div>
 
         <div class="actions" data-node-id="3358:77">
-          <a class="pill-btn pill-btn-selected" href="https://discord.gg/2u9sg7ZNkJ" target="_blank" rel="noreferrer noopener" aria-label="反馈 & 提需" data-i18n-aria-label="discord_aria" data-node-id="3358:42">
-            <i class="ri-discord-fill" aria-hidden="true"></i>
+          <a
+            class="pill-btn pill-btn-selected"
+            href="https://discord.gg/2u9sg7ZNkJ"
+            target="_blank"
+            rel="noreferrer noopener"
+            aria-label="反馈 & 提需"
+            data-i18n-aria-label="discord_aria"
+            data-node-id="3358:42"
+            data-community-entry
+            data-discord-href="https://discord.gg/2u9sg7ZNkJ"
+          >
+            <i class="ri-discord-fill" aria-hidden="true" data-community-icon></i>
             <span data-i18n="join_discord">反馈 & 提需</span>
           </a>
           <a class="pill-btn pill-btn-selected" href="https://github.com/kubai087/lumno-extension" target="_blank" rel="noreferrer noopener" aria-label="访问 Lumno GitHub 仓库" data-i18n-aria-label="settings_aria">
@@ -1352,9 +1419,20 @@ import LanguageMenu from "../../components/onboarding/LanguageMenu";
         <FeatureGrid client:load />
       </section>
     </main>
+    <div id="community-qrcode-modal" class="qrcode-modal" hidden>
+      <div class="qrcode-modal-backdrop" data-close-qrcode-modal></div>
+      <div class="qrcode-modal-panel" role="dialog" aria-modal="true" aria-labelledby="community-qrcode-title">
+        <button class="qrcode-modal-close" type="button" aria-label="关闭" data-i18n-aria-label="qrcode_close_aria" data-close-qrcode-modal>
+          <i class="ri-close-line" aria-hidden="true"></i>
+        </button>
+        <h2 id="community-qrcode-title" class="qrcode-modal-title" data-i18n="qrcode_title">微信群二维码</h2>
+        <img class="qrcode-modal-image" src="/qrcode.JPG" alt="微信群二维码" data-i18n-alt="qrcode_image_alt" loading="lazy" />
+      </div>
+    </div>
     <script>
       const LANGUAGE_STORAGE_KEY = "_x_extension_language_2024_unique_";
       const FALLBACK_LOCALE = "zh-CN";
+      const ZH_CN_LOCALE = "zh-CN";
       const I18N_MESSAGES = {
         "zh-CN": {
           page_title: "欢迎使用 Lumno！｜Lumno 聚焦搜索&新标签页",
@@ -1371,6 +1449,9 @@ import LanguageMenu from "../../components/onboarding/LanguageMenu";
           join_discord: "反馈 & 提需",
           go_settings: "访问 GitHub 仓库",
           discord_aria: "反馈与提需",
+          qrcode_title: "微信群二维码",
+          qrcode_image_alt: "Lumno 微信群二维码",
+          qrcode_close_aria: "关闭二维码弹窗",
           settings_aria: "访问 Lumno GitHub 仓库",
           feature_search_title: "搜索任意浏览器网页",
           feature_search_desc: "支持书签、历史、已打开网页、最常访问",
@@ -1399,6 +1480,9 @@ import LanguageMenu from "../../components/onboarding/LanguageMenu";
           join_discord: "反饋 & 提需",
           go_settings: "造訪 GitHub 倉庫",
           discord_aria: "反饋與提需",
+          qrcode_title: "微信群二維碼",
+          qrcode_image_alt: "Lumno 微信群二維碼",
+          qrcode_close_aria: "關閉二維碼彈窗",
           settings_aria: "造訪 Lumno GitHub 倉庫",
           feature_search_title: "搜尋任意瀏覽器網頁",
           feature_search_desc: "支援書籤、歷史、已開啟網頁、最常造訪",
@@ -1427,6 +1511,9 @@ import LanguageMenu from "../../components/onboarding/LanguageMenu";
           join_discord: "反饋 & 提需",
           go_settings: "造訪 GitHub 倉庫",
           discord_aria: "反饋與提需",
+          qrcode_title: "微信群二維碼",
+          qrcode_image_alt: "Lumno 微信群二維碼",
+          qrcode_close_aria: "關閉二維碼彈窗",
           settings_aria: "造訪 Lumno GitHub 倉庫",
           feature_search_title: "搜尋任意瀏覽器網頁",
           feature_search_desc: "支援書籤、歷史、已開啟網頁、最常造訪",
@@ -1455,6 +1542,9 @@ import LanguageMenu from "../../components/onboarding/LanguageMenu";
           join_discord: "Feedback & Requests",
           go_settings: "View on GitHub",
           discord_aria: "Feedback and requests",
+          qrcode_title: "WeChat Group QR Code",
+          qrcode_image_alt: "Lumno WeChat group QR code",
+          qrcode_close_aria: "Close QR code dialog",
           settings_aria: "Open Lumno GitHub repository",
           feature_search_title: "Search Any Browser Page",
           feature_search_desc: "Bookmarks, history, open tabs, and most visited",
@@ -1546,6 +1636,7 @@ import LanguageMenu from "../../components/onboarding/LanguageMenu";
       function applyI18n(locale) {
         const resolvedLocale = I18N_MESSAGES[locale] ? locale : FALLBACK_LOCALE;
         document.documentElement.lang = resolvedLocale;
+        document.body.setAttribute("data-locale", resolvedLocale);
         document.body.classList.toggle("is-locale-en", resolvedLocale === "en");
         document.querySelectorAll("[data-i18n]").forEach((node) => {
           const key = node.getAttribute("data-i18n");
@@ -1569,13 +1660,68 @@ import LanguageMenu from "../../components/onboarding/LanguageMenu";
         });
       }
 
+      function syncCommunityAction(locale) {
+        const entry = document.querySelector("[data-community-entry]");
+        if (!(entry instanceof HTMLAnchorElement)) return;
+        const icon = entry.querySelector("[data-community-icon]");
+        const discordHref = entry.dataset.discordHref || "https://discord.gg/2u9sg7ZNkJ";
+        const isZhCn = locale === ZH_CN_LOCALE;
+
+        entry.href = isZhCn ? "#" : discordHref;
+        if (isZhCn) {
+          entry.removeAttribute("target");
+          entry.removeAttribute("rel");
+        } else {
+          entry.setAttribute("target", "_blank");
+          entry.setAttribute("rel", "noreferrer noopener");
+        }
+
+        if (icon instanceof HTMLElement) {
+          icon.classList.toggle("ri-wechat-fill", isZhCn);
+          icon.classList.toggle("ri-discord-fill", !isZhCn);
+        }
+      }
+
       function applyLanguageMode(mode, options) {
         const normalizedMode = normalizeLanguageMode(mode);
         applyI18n(normalizedMode);
+        syncCommunityAction(normalizedMode);
         updateLanguageOptionState(normalizedMode);
         if (options && options.persist) {
           localStorage.setItem(LANGUAGE_STORAGE_KEY, normalizedMode);
         }
+      }
+
+      function setupQrcodeModal() {
+        const entry = document.querySelector("[data-community-entry]");
+        const modal = document.getElementById("community-qrcode-modal");
+        if (!(entry instanceof HTMLAnchorElement) || !(modal instanceof HTMLDivElement)) return;
+
+        const close = () => {
+          modal.hidden = true;
+          document.body.style.removeProperty("overflow");
+        };
+
+        const open = () => {
+          modal.hidden = false;
+          document.body.style.overflow = "hidden";
+        };
+
+        entry.addEventListener("click", (event) => {
+          const currentLocale = document.body.getAttribute("data-locale") || FALLBACK_LOCALE;
+          if (currentLocale !== ZH_CN_LOCALE) return;
+          event.preventDefault();
+          open();
+        });
+
+        modal.addEventListener("click", (event) => {
+          const target = event.target instanceof HTMLElement ? event.target.closest("[data-close-qrcode-modal]") : null;
+          if (target) close();
+        });
+
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape" && !modal.hidden) close();
+        });
       }
 
       document.addEventListener("dragstart", (event) => {
@@ -1612,6 +1758,7 @@ import LanguageMenu from "../../components/onboarding/LanguageMenu";
         });
       }
       applyLanguageMode(localStorage.getItem(LANGUAGE_STORAGE_KEY) || getSystemLocale());
+      setupQrcodeModal();
 
       const modifierKeyEl = document.getElementById("shortcut-modifier-key");
       if (modifierKeyEl) {

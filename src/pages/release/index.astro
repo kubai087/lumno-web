@@ -7,6 +7,12 @@ const releases = (await fetchReleases()).map((item) => ({
   parsed: parseReleaseBody(item.body),
 }));
 
+const chromeStoreVersion = String(
+  import.meta.env.PUBLIC_CHROME_STORE_VERSION ||
+    import.meta.env.CHROME_STORE_VERSION ||
+    "",
+).trim();
+
 function renderMdInline(markdown: string): string {
   return marked.parseInline(markdown || "");
 }
@@ -18,6 +24,33 @@ function renderMdBlock(markdown: string): string {
 function hasLocaleContent(content: ReleaseLocaleContent): boolean {
   return Boolean(content.summary || content.features.length > 0 || content.bugFixes.length > 0);
 }
+
+function normalizeVersion(raw: string): number[] {
+  const parts = String(raw || "")
+    .replace(/^[^\d]*/, "")
+    .match(/\d+/g);
+  return (parts || []).map((part) => Number(part));
+}
+
+function compareVersion(a: string, b: string): number {
+  const pa = normalizeVersion(a);
+  const pb = normalizeVersion(b);
+  const length = Math.max(pa.length, pb.length);
+  for (let i = 0; i < length; i += 1) {
+    const va = pa[i] || 0;
+    const vb = pb[i] || 0;
+    if (va > vb) return 1;
+    if (va < vb) return -1;
+  }
+  return 0;
+}
+
+function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_reviewing" {
+  if (!chromeStoreVersion) return "chrome_reviewing";
+  return compareVersion(chromeStoreVersion, tag) >= 0
+    ? "chrome_published"
+    : "chrome_reviewing";
+}
 ---
 
 <html lang="en">
@@ -27,6 +60,7 @@ function hasLocaleContent(content: ReleaseLocaleContent): boolean {
     <title data-i18n="page_title">Lumno Changelog</title>
     <meta name="description" content="Lumno changelog synced from GitHub Releases." />
     <link rel="icon" type="image/png" href="/resource_commited/fav.png" />
+    <link rel="stylesheet" href="/onboarding/assets/remixicon.css" />
     <style>
       :root {
         --bg: #ffffff;
@@ -274,6 +308,33 @@ function hasLocaleContent(content: ReleaseLocaleContent): boolean {
         font-weight: 500;
       }
 
+      .chip-status {
+        gap: 5px;
+        padding-left: 8px;
+      }
+
+      .chip-status i {
+        font-size: 13px;
+      }
+
+      .chip-github {
+        border-color: #d0d5dd;
+        background: #f8fafc;
+        color: #334155;
+      }
+
+      .chip-chrome.is-published {
+        border-color: #a3e5c8;
+        background: #ecfdf3;
+        color: #027a48;
+      }
+
+      .chip-chrome.is-reviewing {
+        border-color: #ffd19a;
+        background: #fff8eb;
+        color: #b54708;
+      }
+
       .entry-localized {
         display: none;
       }
@@ -345,13 +406,30 @@ function hasLocaleContent(content: ReleaseLocaleContent): boolean {
         content: "+";
         float: right;
         color: #667085;
+        transition: transform 220ms ease;
       }
 
       .accordion[open] > summary::after {
         content: "−";
+        transform: rotate(180deg);
+      }
+
+      .accordion-panel {
+        display: grid;
+        grid-template-rows: 0fr;
+        opacity: 0;
+        transition:
+          grid-template-rows 240ms ease,
+          opacity 220ms ease;
+      }
+
+      .accordion[open] .accordion-panel {
+        grid-template-rows: 1fr;
+        opacity: 1;
       }
 
       .accordion-list {
+        overflow: hidden;
         margin: 0;
         padding: 10px 16px 14px 30px;
         color: #344054;
@@ -531,6 +609,14 @@ function hasLocaleContent(content: ReleaseLocaleContent): boolean {
                           {item.parsed.tags.map((releaseTag) => (
                             <span class="chip">{releaseTag}</span>
                           ))}
+                          <span class="chip chip-status chip-github">
+                            <i class="ri-github-fill" aria-hidden="true"></i>
+                            <span data-i18n="github_published">Published</span>
+                          </span>
+                          <span class={`chip chip-status chip-chrome ${getChromeStatusI18nKey(item.tag) === "chrome_published" ? "is-published" : "is-reviewing"}`}>
+                            <i class="ri-chrome-fill" aria-hidden="true"></i>
+                            <span data-i18n={getChromeStatusI18nKey(item.tag)}>In Review</span>
+                          </span>
                         </div>
 
                         <div class="entry-localized" data-release-locale="zh-CN">
@@ -541,22 +627,26 @@ function hasLocaleContent(content: ReleaseLocaleContent): boolean {
                               {zhContent.features.length > 0 && (
                                 <details class="accordion" open>
                                   <summary data-i18n="features_label" data-count={zhContent.features.length}>Features ({zhContent.features.length})</summary>
-                                  <ul class="accordion-list">
-                                    {zhContent.features.map((feature) => (
-                                      <li set:html={renderMdInline(feature)}></li>
-                                    ))}
-                                  </ul>
+                                  <div class="accordion-panel">
+                                    <ul class="accordion-list">
+                                      {zhContent.features.map((feature) => (
+                                        <li set:html={renderMdInline(feature)}></li>
+                                      ))}
+                                    </ul>
+                                  </div>
                                 </details>
                               )}
 
                               {zhContent.bugFixes.length > 0 && (
                                 <details class="accordion" open>
                                   <summary data-i18n="bug_fixes_label" data-count={zhContent.bugFixes.length}>Bug Fixes ({zhContent.bugFixes.length})</summary>
-                                  <ul class="accordion-list">
-                                    {zhContent.bugFixes.map((fix) => (
-                                      <li set:html={renderMdInline(fix)}></li>
-                                    ))}
-                                  </ul>
+                                  <div class="accordion-panel">
+                                    <ul class="accordion-list">
+                                      {zhContent.bugFixes.map((fix) => (
+                                        <li set:html={renderMdInline(fix)}></li>
+                                      ))}
+                                    </ul>
+                                  </div>
                                 </details>
                               )}
                             </div>
@@ -571,22 +661,26 @@ function hasLocaleContent(content: ReleaseLocaleContent): boolean {
                               {enContent.features.length > 0 && (
                                 <details class="accordion" open>
                                   <summary data-i18n="features_label" data-count={enContent.features.length}>Features ({enContent.features.length})</summary>
-                                  <ul class="accordion-list">
-                                    {enContent.features.map((feature) => (
-                                      <li set:html={renderMdInline(feature)}></li>
-                                    ))}
-                                  </ul>
+                                  <div class="accordion-panel">
+                                    <ul class="accordion-list">
+                                      {enContent.features.map((feature) => (
+                                        <li set:html={renderMdInline(feature)}></li>
+                                      ))}
+                                    </ul>
+                                  </div>
                                 </details>
                               )}
 
                               {enContent.bugFixes.length > 0 && (
                                 <details class="accordion" open>
                                   <summary data-i18n="bug_fixes_label" data-count={enContent.bugFixes.length}>Bug Fixes ({enContent.bugFixes.length})</summary>
-                                  <ul class="accordion-list">
-                                    {enContent.bugFixes.map((fix) => (
-                                      <li set:html={renderMdInline(fix)}></li>
-                                    ))}
-                                  </ul>
+                                  <div class="accordion-panel">
+                                    <ul class="accordion-list">
+                                      {enContent.bugFixes.map((fix) => (
+                                        <li set:html={renderMdInline(fix)}></li>
+                                      ))}
+                                    </ul>
+                                  </div>
                                 </details>
                               )}
                             </div>
@@ -632,6 +726,10 @@ function hasLocaleContent(content: ReleaseLocaleContent): boolean {
           language_en: "English",
           features_label: "新功能",
           bug_fixes_label: "问题修复",
+          github_published: "已发布",
+          github_unpublished: "未发布",
+          chrome_published: "已发布",
+          chrome_reviewing: "审核中",
           read_on_github: "在 GitHub 查看",
           no_releases_title: "暂无发布记录",
           no_releases_desc: "创建 GitHub Release 后，将在下一次部署时自动显示。"
@@ -648,6 +746,10 @@ function hasLocaleContent(content: ReleaseLocaleContent): boolean {
           language_en: "English",
           features_label: "Features",
           bug_fixes_label: "Bug Fixes",
+          github_published: "Published",
+          github_unpublished: "Not Published",
+          chrome_published: "Published",
+          chrome_reviewing: "In Review",
           read_on_github: "Read on GitHub",
           no_releases_title: "No releases yet",
           no_releases_desc: "Create a GitHub Release and it will appear here on next deploy."

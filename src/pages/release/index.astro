@@ -21,7 +21,7 @@ function renderMdBlock(markdown: string): string {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lumno Changelog</title>
+    <title data-i18n="page_title">Lumno Changelog</title>
     <meta name="description" content="Lumno changelog synced from GitHub Releases." />
     <link rel="icon" type="image/svg+xml" href="/onboarding/assets/logo.svg" />
     <style>
@@ -68,18 +68,75 @@ function renderMdBlock(markdown: string): string {
       .brand {
         display: inline-flex;
         align-items: center;
-        gap: 10px;
         text-decoration: none;
       }
 
-      .brand-icon {
-        width: 30px;
-        height: 30px;
+      .brand-logo {
+        width: 136px;
+        height: auto;
+        display: block;
       }
 
-      .brand-wordmark {
-        width: 104px;
-        height: auto;
+      .header-controls {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .lang-control {
+        position: relative;
+      }
+
+      .lang-toggle {
+        border: 1px solid var(--line);
+        background: #fff;
+        color: #344054;
+        border-radius: 8px;
+        height: 32px;
+        min-width: 32px;
+        padding: 0 9px;
+        cursor: pointer;
+        font-size: 14px;
+      }
+
+      .lang-menu {
+        position: absolute;
+        top: calc(100% + 6px);
+        right: 0;
+        min-width: 132px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: #fff;
+        box-shadow: 0 10px 20px rgba(16, 24, 40, 0.09);
+        padding: 6px;
+        z-index: 20;
+      }
+
+      .lang-menu[hidden] {
+        display: none;
+      }
+
+      .lang-option {
+        width: 100%;
+        border: 0;
+        background: transparent;
+        border-radius: 8px;
+        text-align: left;
+        padding: 7px 9px;
+        color: #3f4650;
+        font-family: inherit;
+        font-size: 13px;
+        cursor: pointer;
+      }
+
+      .lang-option:hover {
+        background: #f3f5f7;
+      }
+
+      .lang-option.is-active {
+        background: #eaf3ff;
+        color: #2a5da7;
+        font-weight: 600;
       }
 
       .header-links {
@@ -344,8 +401,16 @@ function renderMdBlock(markdown: string): string {
       @media (max-width: 767px) {
         .header-inner {
           padding: 14px 16px;
-          align-items: flex-start;
+          align-items: center;
           flex-direction: column;
+        }
+
+        .header-controls {
+          width: 100%;
+          justify-content: space-between;
+          align-items: flex-start;
+          gap: 8px;
+          flex-wrap: wrap;
         }
 
         main {
@@ -375,15 +440,40 @@ function renderMdBlock(markdown: string): string {
     <header class="header">
       <div class="container">
         <div class="header-inner">
-          <a class="brand" href="/" aria-label="Lumno home">
-            <img class="brand-icon" src="/onboarding/assets/logo.svg" alt="Lumno" draggable="false" />
-            <img class="brand-wordmark" src="/onboarding/assets/textlogo.svg" alt="Lumno" draggable="false" />
+          <a class="brand" href="/" data-i18n-aria-label="brand_home_aria" aria-label="Lumno home">
+            <img class="brand-logo" src="/resource_commited/logo.png" alt="Lumno" draggable="false" />
           </a>
-          <nav class="header-links" aria-label="Changelog links">
-            <a class="header-link" href="/">Home</a>
-            <a class="header-link" href="/onboarding/">Onboarding</a>
-            <a class="header-link" href="https://github.com/kubai087/lumno-extension/releases" target="_blank" rel="noreferrer">GitHub Releases</a>
-          </nav>
+          <div class="header-controls">
+            <nav class="header-links" data-i18n-aria-label="changelog_links_aria" aria-label="Changelog links">
+              <a class="header-link" href="/" data-i18n="nav_home">Home</a>
+              <a class="header-link" href="/onboarding/" data-i18n="nav_onboarding">Onboarding</a>
+              <a class="header-link" href="https://github.com/kubai087/lumno-extension/releases" target="_blank" rel="noreferrer" data-i18n="nav_github_releases">GitHub Releases</a>
+            </nav>
+            <div class="lang-control">
+              <button
+                id="language-toggle"
+                class="lang-toggle"
+                type="button"
+                data-i18n-aria-label="language_select_aria"
+                aria-label="Language"
+                aria-haspopup="menu"
+                aria-expanded="false"
+              >
+                🌐
+              </button>
+              <div id="language-menu" class="lang-menu" role="menu" hidden>
+                <button class="lang-option" type="button" role="menuitemradio" data-lang-value="zh-CN" data-i18n="language_zh_cn">
+                  简体中文
+                </button>
+                <button class="lang-option" type="button" role="menuitemradio" data-lang-value="zh-TW" data-i18n="language_zh_tw">
+                  繁體中文
+                </button>
+                <button class="lang-option" type="button" role="menuitemradio" data-lang-value="en" data-i18n="language_en">
+                  English
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </header>
@@ -419,7 +509,7 @@ function renderMdBlock(markdown: string): string {
                         <div class="accordion-group">
                           {item.parsed.features.length > 0 && (
                             <details class="accordion" open>
-                              <summary>Features ({item.parsed.features.length})</summary>
+                              <summary data-i18n="features_label" data-count={item.parsed.features.length}>Features ({item.parsed.features.length})</summary>
                               <ul class="accordion-list">
                                 {item.parsed.features.map((feature) => (
                                   <li set:html={renderMdInline(feature)}></li>
@@ -430,7 +520,7 @@ function renderMdBlock(markdown: string): string {
 
                           {item.parsed.bugFixes.length > 0 && (
                             <details class="accordion" open>
-                              <summary>Bug Fixes ({item.parsed.bugFixes.length})</summary>
+                              <summary data-i18n="bug_fixes_label" data-count={item.parsed.bugFixes.length}>Bug Fixes ({item.parsed.bugFixes.length})</summary>
                               <ul class="accordion-list">
                                 {item.parsed.bugFixes.map((fix) => (
                                   <li set:html={renderMdInline(fix)}></li>
@@ -442,7 +532,7 @@ function renderMdBlock(markdown: string): string {
                       )}
 
                       <div class="entry-link">
-                        <a href={item.url} target="_blank" rel="noreferrer">Read on GitHub</a>
+                        <a href={item.url} target="_blank" rel="noreferrer" data-i18n="read_on_github">Read on GitHub</a>
                       </div>
                     </div>
                   </div>
@@ -454,8 +544,8 @@ function renderMdBlock(markdown: string): string {
               <div class="entry-wrap">
                 <div class="entry-main">
                   <div class="entry-content">
-                    <h2 class="entry-title">No releases yet</h2>
-                    <div class="entry-summary">Create a GitHub Release and it will appear here on next deploy.</div>
+                    <h2 class="entry-title" data-i18n="no_releases_title">No releases yet</h2>
+                    <div class="entry-summary" data-i18n="no_releases_desc">Create a GitHub Release and it will appear here on next deploy.</div>
                   </div>
                 </div>
               </div>
@@ -464,5 +554,178 @@ function renderMdBlock(markdown: string): string {
         }
       </section>
     </main>
+    <script>
+      const LANGUAGE_STORAGE_KEY = "_x_extension_language_2024_unique_";
+      const FALLBACK_LOCALE = "zh-CN";
+      const I18N_MESSAGES = {
+        "zh-CN": {
+          page_title: "Lumno 更新日志",
+          nav_home: "首页",
+          nav_onboarding: "引导页",
+          nav_github_releases: "GitHub Releases",
+          changelog_links_aria: "更新日志链接",
+          brand_home_aria: "回到 Lumno 首页",
+          language_select_aria: "语言",
+          language_zh_cn: "简体中文",
+          language_zh_tw: "繁體中文",
+          language_en: "English",
+          features_label: "新功能",
+          bug_fixes_label: "问题修复",
+          read_on_github: "在 GitHub 查看",
+          no_releases_title: "暂无发布记录",
+          no_releases_desc: "创建 GitHub Release 后，将在下一次部署时自动显示。"
+        },
+        "zh-TW": {
+          page_title: "Lumno 更新日誌",
+          nav_home: "首頁",
+          nav_onboarding: "引導頁",
+          nav_github_releases: "GitHub Releases",
+          changelog_links_aria: "更新日誌連結",
+          brand_home_aria: "回到 Lumno 首頁",
+          language_select_aria: "語言",
+          language_zh_cn: "简体中文",
+          language_zh_tw: "繁體中文",
+          language_en: "English",
+          features_label: "新功能",
+          bug_fixes_label: "問題修復",
+          read_on_github: "在 GitHub 查看",
+          no_releases_title: "暫無發佈記錄",
+          no_releases_desc: "建立 GitHub Release 後，將在下一次部署時自動顯示。"
+        },
+        en: {
+          page_title: "Lumno Changelog",
+          nav_home: "Home",
+          nav_onboarding: "Onboarding",
+          nav_github_releases: "GitHub Releases",
+          changelog_links_aria: "Changelog links",
+          brand_home_aria: "Back to Lumno home",
+          language_select_aria: "Language",
+          language_zh_cn: "简体中文",
+          language_zh_tw: "繁體中文",
+          language_en: "English",
+          features_label: "Features",
+          bug_fixes_label: "Bug Fixes",
+          read_on_github: "Read on GitHub",
+          no_releases_title: "No releases yet",
+          no_releases_desc: "Create a GitHub Release and it will appear here on next deploy."
+        }
+      };
+
+      function setLanguageMenuOpen(open) {
+        const languageMenu = document.getElementById("language-menu");
+        const languageToggle = document.getElementById("language-toggle");
+        if (!languageMenu || !languageToggle) return;
+        languageMenu.hidden = !open;
+        languageToggle.setAttribute("aria-expanded", open ? "true" : "false");
+      }
+
+      function normalizeLocale(locale) {
+        const raw = String(locale || "").trim();
+        if (!raw) return "en";
+        const lower = raw.toLowerCase();
+        if (lower.startsWith("zh")) {
+          if (lower.includes("tw") || lower.includes("hk") || lower.includes("mo") || lower.includes("hant")) {
+            return "zh-TW";
+          }
+          return "zh-CN";
+        }
+        return "en";
+      }
+
+      function getSystemLocale() {
+        const firstPreferred = Array.isArray(navigator.languages) && navigator.languages.length ? navigator.languages[0] : navigator.language;
+        return normalizeLocale(firstPreferred || "en");
+      }
+
+      function normalizeLanguageMode(mode) {
+        const raw = String(mode || "").trim();
+        if (!raw) return getSystemLocale();
+        if (raw.toLowerCase() === "system") return getSystemLocale();
+        return normalizeLocale(raw);
+      }
+
+      function getMessage(locale, key) {
+        return (
+          (I18N_MESSAGES[locale] && I18N_MESSAGES[locale][key]) ||
+          (I18N_MESSAGES[FALLBACK_LOCALE] && I18N_MESSAGES[FALLBACK_LOCALE][key]) ||
+          key
+        );
+      }
+
+      function updateLanguageOptionState(mode) {
+        document.querySelectorAll("[data-lang-value]").forEach((node) => {
+          const value = node.getAttribute("data-lang-value") || getSystemLocale();
+          const isActive = value === mode;
+          node.classList.toggle("is-active", isActive);
+          node.setAttribute("aria-checked", isActive ? "true" : "false");
+        });
+      }
+
+      function applyI18n(locale) {
+        const resolvedLocale = I18N_MESSAGES[locale] ? locale : FALLBACK_LOCALE;
+        document.documentElement.lang = resolvedLocale;
+        document.querySelectorAll("[data-i18n]").forEach((node) => {
+          const key = node.getAttribute("data-i18n");
+          if (!key) return;
+          const value = getMessage(resolvedLocale, key);
+          if (node.tagName === "TITLE") {
+            document.title = value;
+            return;
+          }
+
+          const count = node.getAttribute("data-count");
+          if (count && (key === "features_label" || key === "bug_fixes_label")) {
+            node.textContent = `${value} (${count})`;
+            return;
+          }
+
+          node.textContent = value;
+        });
+
+        document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
+          const key = node.getAttribute("data-i18n-aria-label");
+          if (!key) return;
+          node.setAttribute("aria-label", getMessage(resolvedLocale, key));
+        });
+      }
+
+      function applyLanguageMode(mode, options) {
+        const normalizedMode = normalizeLanguageMode(mode);
+        applyI18n(normalizedMode);
+        updateLanguageOptionState(normalizedMode);
+        if (options && options.persist) {
+          localStorage.setItem(LANGUAGE_STORAGE_KEY, normalizedMode);
+        }
+      }
+
+      const languageToggle = document.getElementById("language-toggle");
+      const languageMenu = document.getElementById("language-menu");
+      if (languageToggle && languageMenu) {
+        languageToggle.addEventListener("click", (event) => {
+          event.stopPropagation();
+          setLanguageMenuOpen(languageMenu.hidden);
+        });
+        languageMenu.addEventListener("click", (event) => {
+          const target = event.target instanceof HTMLElement ? event.target.closest("[data-lang-value]") : null;
+          if (!target) return;
+          const next = target.getAttribute("data-lang-value") || getSystemLocale();
+          applyLanguageMode(next, { persist: true });
+          setLanguageMenuOpen(false);
+        });
+        document.addEventListener("click", (event) => {
+          if (!(event.target instanceof Node)) return;
+          if (!languageMenu.contains(event.target) && !languageToggle.contains(event.target)) {
+            setLanguageMenuOpen(false);
+          }
+        });
+        document.addEventListener("keydown", (event) => {
+          if (event.key === "Escape") {
+            setLanguageMenuOpen(false);
+          }
+        });
+      }
+
+      applyLanguageMode(localStorage.getItem(LANGUAGE_STORAGE_KEY) || getSystemLocale());
+    </script>
   </body>
 </html>

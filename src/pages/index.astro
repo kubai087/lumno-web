@@ -1612,12 +1612,16 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
         }
 
         .top-nav {
-          top: 12px;
-          left: 14px;
-          right: 14px;
-          padding: 7px 8px;
-          border-radius: 10px;
-          border: 1px solid #dbe1e8;
+          top: 0;
+          left: 0;
+          right: 0;
+          padding-top: calc(env(safe-area-inset-top, 0px) + 10px);
+          padding-right: 14px;
+          padding-bottom: 8px;
+          padding-left: 14px;
+          border-radius: 0;
+          border: 0;
+          border-bottom: 1px solid #dbe1e8;
           background: #fafafa;
         }
 

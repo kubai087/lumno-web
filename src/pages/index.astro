@@ -1370,6 +1370,17 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
       }
 
       @media (max-width: 1080px) {
+        .top-nav {
+          background: transparent;
+          box-shadow: none;
+          border: 0;
+          transition: background-color 160ms ease;
+        }
+
+        body.has-nav-overlap .top-nav {
+          background: #fafafa;
+        }
+
         .onboarding {
           flex-direction: column;
           min-height: 100vh;
@@ -1623,8 +1634,7 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
           padding-left: 14px;
           border-radius: 0;
           border: 0;
-          border-bottom: 1px solid #dbe1e8;
-          background: #fafafa;
+          background: transparent;
         }
 
         .top-nav-brand img {
@@ -2264,6 +2274,23 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
       applyLanguageMode(localStorage.getItem(LANGUAGE_STORAGE_KEY) || getSystemLocale());
       setupQrcodeModal();
       applySafariBrowserClass();
+
+      function syncTopNavOverlapState() {
+        const shouldApply = window.matchMedia("(max-width: 1080px)").matches;
+        const topNav = document.querySelector(".top-nav");
+        const mainContent = document.querySelector(".onboarding");
+        if (!shouldApply || !(topNav instanceof HTMLElement) || !(mainContent instanceof HTMLElement)) {
+          document.body.classList.remove("has-nav-overlap");
+          return;
+        }
+        const navBottom = topNav.getBoundingClientRect().bottom;
+        const contentTop = mainContent.getBoundingClientRect().top;
+        document.body.classList.toggle("has-nav-overlap", contentTop < navBottom - 1);
+      }
+
+      syncTopNavOverlapState();
+      window.addEventListener("scroll", syncTopNavOverlapState, { passive: true });
+      window.addEventListener("resize", syncTopNavOverlapState, { passive: true });
 
       const modifierKeyEl = document.getElementById("shortcut-modifier-key");
       if (modifierKeyEl) {

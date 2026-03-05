@@ -673,14 +673,48 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         margin-top: 12px;
       }
 
-      .entry-link a {
+      .entry-link-btn {
+        height: 34px;
+        padding: 0 12px;
+        border-radius: 999px;
+        border: 1px solid #d0d5dd;
+        background: #ffffff;
         color: #175cd3;
         text-decoration: none;
         font-size: 14px;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        transition:
+          transform 180ms ease,
+          box-shadow 180ms ease,
+          border-color 180ms ease,
+          background 180ms ease;
       }
 
-      .entry-link a:hover {
-        text-decoration: underline;
+      .entry-link-btn i {
+        font-size: 14px;
+      }
+
+      @media (hover: hover) and (pointer: fine) {
+        .entry-link-btn:hover {
+          transform: translateY(-1px);
+          border-color: #bfc5cf;
+          background: #f8fbff;
+          box-shadow: 0 8px 18px rgba(23, 92, 211, 0.12);
+        }
+      }
+
+      .entry-link-btn:active {
+        transform: translateY(0);
+        box-shadow: none;
+      }
+
+      .entry-link-btn:focus-visible {
+        outline: 2px solid rgba(23, 92, 211, 0.28);
+        outline-offset: 2px;
       }
 
       .empty .entry-main::before,
@@ -716,19 +750,38 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         .header-inner {
           padding: 14px 16px;
           align-items: center;
-          flex-direction: column;
+          justify-content: space-between;
+          flex-direction: row;
+          gap: 10px;
         }
 
         .header-controls {
-          width: 100%;
-          justify-content: space-between;
+          width: auto;
+          margin-left: auto;
           align-items: center;
-          gap: 8px;
-          flex-wrap: wrap;
+          justify-content: flex-end;
+          gap: 6px;
+          flex-wrap: nowrap;
+        }
+
+        .lang-control {
+          display: none;
         }
 
         .header-actions {
-          margin-left: auto;
+          margin-left: 0;
+          gap: 6px;
+        }
+
+        .social-btn-icon,
+        .social-btn-discord {
+          width: 36px;
+          min-width: 36px;
+          padding: 0;
+        }
+
+        .social-btn-discord span {
+          display: none;
         }
 
         main {
@@ -928,7 +981,10 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
                         </div>
 
                         <div class="entry-link">
-                          <a href={item.url} target="_blank" rel="noreferrer" data-i18n="read_on_github">Read on GitHub</a>
+                          <a class="entry-link-btn" href={item.url} target="_blank" rel="noreferrer noopener">
+                            <span data-i18n="read_on_github">Read on GitHub</span>
+                            <i class="ri-external-link-line" aria-hidden="true"></i>
+                          </a>
                         </div>
                       </div>
                     </div>

@@ -18,10 +18,6 @@ function renderMdBlock(markdown: string): string {
 function hasLocaleContent(content: ReleaseLocaleContent): boolean {
   return Boolean(content.summary || content.features.length > 0 || content.bugFixes.length > 0);
 }
-
-function getEnContent(parsed: ParsedReleaseBody): ReleaseLocaleContent {
-  return hasLocaleContent(parsed.locales.en) ? parsed.locales.en : parsed.locales["zh-CN"];
-}
 ---
 
 <html lang="en">
@@ -514,7 +510,7 @@ function getEnContent(parsed: ParsedReleaseBody): ReleaseLocaleContent {
           releases.length > 0 ? (
             releases.map((item) => {
               const zhContent = item.parsed.locales["zh-CN"];
-              const enContent = getEnContent(item.parsed);
+              const enContent = item.parsed.locales.en;
 
               return (
                 <article class="entry">

@@ -1,6 +1,7 @@
 node_modules
 .astro
 dist
+resource_commited/
 
 # macOS Finder metadata
 .DS_Store

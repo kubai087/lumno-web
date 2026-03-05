@@ -226,6 +226,12 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
         animation: x-hero-enter 620ms cubic-bezier(0.22, 1, 0.36, 1) 300ms forwards;
       }
 
+      .shortcut-line-store {
+        gap: 10px;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
       .shortcut-store-link {
         display: inline-flex;
         align-items: center;
@@ -235,6 +241,14 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
         width: 248px;
         height: 75px;
         display: block;
+      }
+
+      .shortcut-store-note {
+        margin: 0;
+        color: #707887;
+        font-size: 14px;
+        line-height: 1.35;
+        font-weight: 400;
       }
 
       .text-shimmer {
@@ -567,7 +581,8 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
       .pill-btn .ri-discord-fill,
       .pill-btn .ri-wechat-fill,
       .pill-btn .ri-settings-6-line,
-      .pill-btn .ri-github-fill {
+      .pill-btn .ri-github-fill,
+      .pill-btn .ri-file-list-3-line {
         width: 18px;
         height: 18px;
         display: inline-flex;
@@ -1263,6 +1278,14 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
           justify-content: center;
         }
 
+        .shortcut-line-store {
+          align-items: center;
+        }
+
+        .shortcut-store-note {
+          text-align: center;
+        }
+
         .shortcut-store-badge {
           width: min(68vw, 248px);
           height: auto;
@@ -1379,9 +1402,17 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
           justify-content: center;
         }
 
+        .shortcut-line-store {
+          row-gap: 10px;
+        }
+
         .shortcut-store-badge {
           width: min(74vw, 248px);
           height: auto;
+        }
+
+        .shortcut-store-note {
+          font-size: 13px;
         }
 
         .actions {
@@ -1546,7 +1577,7 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
             <p class="subtitle" data-i18n="subtitle">开源浏览器聚焦搜索 &amp; 极简新标签页</p>
           </div>
 
-          <div class="shortcut-line" data-node-id="3364:535">
+          <div class="shortcut-line shortcut-line-store" data-node-id="3364:535">
             <a
               class="shortcut-store-link"
               href="https://chromewebstore.google.com/detail/nggfkkbmogmadfoikakkfegkoilfcfao"
@@ -1563,6 +1594,7 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
                 draggable="false"
               />
             </a>
+            <p class="shortcut-store-note" data-i18n="cws_support_note">支持 Dia \ Edge 等 Chromium 浏览器</p>
           </div>
         </div>
 
@@ -1584,6 +1616,10 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
           <a class="pill-btn pill-btn-selected" href="https://github.com/kubai087/lumno-extension" target="_blank" rel="noreferrer noopener" aria-label="访问 Lumno GitHub 仓库" data-i18n-aria-label="settings_aria">
             <i class="ri-github-fill" aria-hidden="true"></i>
             <span data-i18n="go_settings">访问 GitHub 仓库</span>
+          </a>
+          <a class="pill-btn pill-btn-selected" href="/release/" aria-label="查看更新日志" data-i18n-aria-label="release_aria">
+            <i class="ri-file-list-3-line" aria-hidden="true"></i>
+            <span data-i18n="view_release">更新日志</span>
           </a>
         </div>
       </section>
@@ -1628,8 +1664,11 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
           qrcode_image_alt: "Lumno 微信群二维码",
           qrcode_close_aria: "关闭二维码弹窗",
           settings_aria: "访问 Lumno GitHub 仓库",
+          release_aria: "查看更新日志页面",
+          view_release: "更新日志",
           cws_badge_aria: "在 Chrome 应用商店中安装 Lumno",
           cws_badge_alt: "在 Chrome 应用商店中获取",
+          cws_support_note: "支持 Dia \\ Edge 等 Chromium 浏览器",
           feature_search_title: "搜索任意浏览器网页",
           feature_search_desc: "支持书签、历史、已打开网页、最常访问",
           feature_sitesearch_title: "自定义站内搜索",
@@ -1661,8 +1700,11 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
           qrcode_image_alt: "Lumno 微信群二維碼",
           qrcode_close_aria: "關閉二維碼彈窗",
           settings_aria: "造訪 Lumno GitHub 倉庫",
+          release_aria: "查看更新日誌頁面",
+          view_release: "更新日誌",
           cws_badge_aria: "在 Chrome 線上應用程式商店安裝 Lumno",
           cws_badge_alt: "在 Chrome 線上應用程式商店中取得",
+          cws_support_note: "支援 Dia \\ Edge 等 Chromium 瀏覽器",
           feature_search_title: "搜尋任意瀏覽器網頁",
           feature_search_desc: "支援書籤、歷史、已開啟網頁、最常造訪",
           feature_sitesearch_title: "自訂站內搜尋",
@@ -1694,8 +1736,11 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
           qrcode_image_alt: "Lumno 微信群二維碼",
           qrcode_close_aria: "關閉二維碼彈窗",
           settings_aria: "造訪 Lumno GitHub 倉庫",
+          release_aria: "查看更新日誌頁面",
+          view_release: "更新日誌",
           cws_badge_aria: "在 Chrome 線上應用程式商店安裝 Lumno",
           cws_badge_alt: "在 Chrome 線上應用程式商店中取得",
+          cws_support_note: "支援 Dia \\ Edge 等 Chromium 瀏覽器",
           feature_search_title: "搜尋任意瀏覽器網頁",
           feature_search_desc: "支援書籤、歷史、已開啟網頁、最常造訪",
           feature_sitesearch_title: "自訂站內搜尋",
@@ -1727,8 +1772,11 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
           qrcode_image_alt: "Lumno WeChat group QR code",
           qrcode_close_aria: "Close QR code dialog",
           settings_aria: "Open Lumno GitHub repository",
+          release_aria: "Open release notes page",
+          view_release: "Release Notes",
           cws_badge_aria: "Install Lumno from Chrome Web Store",
           cws_badge_alt: "Get it from Chrome Web Store",
+          cws_support_note: "Supports Dia \\ Edge and other Chromium browsers",
           feature_search_title: "Search Any Browser Page",
           feature_search_desc: "Bookmarks, history, open tabs, and most visited",
           feature_sitesearch_title: "Custom Site Search",

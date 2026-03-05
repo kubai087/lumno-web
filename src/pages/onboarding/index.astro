@@ -216,7 +216,7 @@ import logoIconSvg from "../../assets/onboarding/logo.svg?raw";
         margin-top: 0;
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 16px;
         color: #3c4455;
         font-size: 18px;
         font-weight: 500;
@@ -229,6 +229,7 @@ import logoIconSvg from "../../assets/onboarding/logo.svg?raw";
       .text-shimmer {
         position: relative;
         display: inline-block;
+        font-weight: 400;
         background-image: linear-gradient(
           110deg,
           rgba(60, 68, 85, 0.88) 0%,
@@ -332,7 +333,7 @@ import logoIconSvg from "../../assets/onboarding/logo.svg?raw";
       .kbd-group {
         display: inline-flex;
         align-items: center;
-        gap: 6px;
+        gap: 4px;
       }
 
       kbd {
@@ -349,8 +350,15 @@ import logoIconSvg from "../../assets/onboarding/logo.svg?raw";
         font-weight: 500;
         color: #000;
         background: linear-gradient(180deg, #ededed 0%, #ffffff 100%);
-        box-shadow: 0 4px 0 #000, inset 0 -1px 4px rgba(255, 255, 255, 0.33);
+        box-shadow: 0 5px 0 #000, inset 0 -2px 5px rgba(255, 255, 255, 0.34);
+        text-shadow: 0 1px 0 rgba(255, 255, 255, 0.42);
         transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
+      }
+
+      .kbd-key-trigger {
+        text-shadow:
+          0 1px 0 rgba(255, 255, 255, 0.42),
+          0 0 1px rgba(0, 0, 0, 0.26);
       }
 
       .is-entered .kbd-key-modifier {
@@ -367,18 +375,18 @@ import logoIconSvg from "../../assets/onboarding/logo.svg?raw";
         100% {
           transform: translateY(0);
           background: linear-gradient(180deg, #ededed 0%, #ffffff 100%);
-          box-shadow: 0 4px 0 #000, inset 0 -1px 4px rgba(255, 255, 255, 0.33);
+          box-shadow: 0 5px 0 #000, inset 0 -2px 5px rgba(255, 255, 255, 0.34);
         }
         25.2%,
         26.8% {
           transform: translateY(2px);
           background: linear-gradient(180deg, #e2e2e2 0%, #f2f2f2 100%);
-          box-shadow: 0 2px 0 #000, inset 0 -1px 2px rgba(255, 255, 255, 0.2);
+          box-shadow: 0 3px 0 #000, inset 0 -1px 3px rgba(255, 255, 255, 0.22);
         }
         27.6% {
           transform: translateY(-1px);
           background: linear-gradient(180deg, #f1f1f1 0%, #ffffff 100%);
-          box-shadow: 0 5px 0 #000, inset 0 -1px 4px rgba(255, 255, 255, 0.35);
+          box-shadow: 0 6px 0 #000, inset 0 -2px 5px rgba(255, 255, 255, 0.36);
         }
       }
 
@@ -388,18 +396,18 @@ import logoIconSvg from "../../assets/onboarding/logo.svg?raw";
         100% {
           transform: translateY(0);
           background: linear-gradient(180deg, #ededed 0%, #ffffff 100%);
-          box-shadow: 0 4px 0 #000, inset 0 -1px 4px rgba(255, 255, 255, 0.33);
+          box-shadow: 0 5px 0 #000, inset 0 -2px 5px rgba(255, 255, 255, 0.34);
         }
         27.6%,
         29.2% {
           transform: translateY(2px);
           background: linear-gradient(180deg, #e2e2e2 0%, #f2f2f2 100%);
-          box-shadow: 0 2px 0 #000, inset 0 -1px 2px rgba(255, 255, 255, 0.2);
+          box-shadow: 0 3px 0 #000, inset 0 -1px 3px rgba(255, 255, 255, 0.22);
         }
         30% {
           transform: translateY(-1px);
           background: linear-gradient(180deg, #f1f1f1 0%, #ffffff 100%);
-          box-shadow: 0 5px 0 #000, inset 0 -1px 4px rgba(255, 255, 255, 0.35);
+          box-shadow: 0 6px 0 #000, inset 0 -2px 5px rgba(255, 255, 255, 0.36);
         }
       }
 
@@ -720,6 +728,12 @@ import logoIconSvg from "../../assets/onboarding/logo.svg?raw";
         transform: none;
         width: 590px;
         height: 491px;
+      }
+
+      .is-safari .feature-card {
+        box-shadow:
+          0 7px 15px rgba(0, 0, 0, 0.02),
+          0 28px 28px rgba(0, 0, 0, 0.02);
       }
 
       .is-safari .logo-lockup {

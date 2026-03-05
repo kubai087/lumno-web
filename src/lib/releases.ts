@@ -8,6 +8,14 @@ export type ReleaseItem = {
   prerelease: boolean;
 };
 
+export type ParsedReleaseBody = {
+  tags: string[];
+  summary: string;
+  features: string[];
+  bugFixes: string[];
+  notes: string;
+};
+
 type GitHubRelease = {
   id: number;
   name: string | null;
@@ -19,7 +27,7 @@ type GitHubRelease = {
 };
 
 const REPO_OWNER = "kubai087";
-const REPO_NAME = "lumno-web";
+const REPO_NAME = "lumno-extension";
 
 export async function fetchReleases(): Promise<ReleaseItem[]> {
   try {
@@ -72,4 +80,110 @@ export function formatDate(
   if (Number.isNaN(dt.getTime())) return "Unknown date";
 
   return new Intl.DateTimeFormat(locale, options).format(dt);
+}
+
+function normalizeHeading(heading: string): "features" | "bugFixes" | "notes" | null {
+  const lower = heading.trim().toLowerCase();
+
+  if (
+    lower.includes("feature") ||
+    lower.includes("enhancement") ||
+    lower.includes("improvement")
+  ) {
+    return "features";
+  }
+
+  if (lower.includes("bug") || lower.includes("fix") || lower.includes("hotfix")) {
+    return "bugFixes";
+  }
+
+  if (
+    lower.includes("note") ||
+    lower.includes("detail") ||
+    lower.includes("changes") ||
+    lower.includes("misc")
+  ) {
+    return "notes";
+  }
+
+  return null;
+}
+
+function parseInlineTags(raw: string): string[] {
+  return raw
+    .split(/[,|/]/g)
+    .map((item) => item.trim().replace(/^#/, ""))
+    .filter(Boolean);
+}
+
+function toListItem(raw: string): string {
+  return raw.replace(/^[-*]\s+/, "").trim();
+}
+
+export function parseReleaseBody(body: string): ParsedReleaseBody {
+  const lines = body.split(/\r?\n/);
+  const features: string[] = [];
+  const bugFixes: string[] = [];
+  const notesLines: string[] = [];
+  let section: "features" | "bugFixes" | "notes" | null = null;
+  let summary = "";
+  let tags: string[] = [];
+
+  for (const line of lines) {
+    const trimmed = line.trim();
+
+    const tagsMatch = trimmed.match(/^tags?\s*:\s*(.+)$/i);
+    if (tagsMatch && tags.length === 0) {
+      tags = parseInlineTags(tagsMatch[1]);
+      continue;
+    }
+
+    const summaryMatch = trimmed.match(/^summary\s*:\s*(.+)$/i);
+    if (summaryMatch && !summary) {
+      summary = summaryMatch[1].trim();
+      continue;
+    }
+
+    const headingMatch = trimmed.match(/^##+\s+(.+)$/);
+    if (headingMatch) {
+      section = normalizeHeading(headingMatch[1]);
+      continue;
+    }
+
+    if (!trimmed) {
+      if (section === "notes") {
+        notesLines.push("");
+      }
+      continue;
+    }
+
+    if (section === "features") {
+      features.push(toListItem(trimmed));
+      continue;
+    }
+
+    if (section === "bugFixes") {
+      bugFixes.push(toListItem(trimmed));
+      continue;
+    }
+
+    if (section === "notes") {
+      notesLines.push(line);
+    }
+  }
+
+  if (!summary) {
+    summary = body.split(/\r?\n/).find((line) => line.trim())?.trim() || "";
+  }
+
+  const notes = notesLines.join("\n").trim();
+  const hasStructuredContent = features.length > 0 || bugFixes.length > 0 || notes.length > 0;
+
+  return {
+    tags,
+    summary,
+    features,
+    bugFixes,
+    notes: hasStructuredContent ? notes : body.trim(),
+  };
 }

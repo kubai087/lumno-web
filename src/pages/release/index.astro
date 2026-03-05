@@ -1,45 +1,32 @@
 ---
-import { fetchReleases, formatDate } from "../../lib/releases";
+import { fetchReleases, formatDate, parseReleaseBody } from "../../lib/releases";
 
-const releases = await fetchReleases();
+const releases = (await fetchReleases()).map((item) => ({
+  ...item,
+  parsed: parseReleaseBody(item.body),
+}));
 
 function getVersionLabel(tag: string): string {
   const normalized = tag.replace(/^v/i, "");
   return normalized.length > 10 ? normalized.slice(0, 10) : normalized;
 }
-
-const dateOptions: Intl.DateTimeFormatOptions = {
-  year: "numeric",
-  month: "2-digit",
-  day: "2-digit",
-};
 ---
 
-<html lang="zh-CN">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Lumno 更新日志</title>
-    <meta name="description" content="Lumno 更新日志，构建时自动同步 GitHub Releases。" />
-    <link rel="icon" type="image/svg+xml" href="/onboarding/assets/logo.svg" />
+    <title>Lumno Changelog</title>
+    <meta name="description" content="Lumno changelog synced from GitHub Releases." />
     <style>
-      @font-face {
-        font-family: "Open Sans";
-        src: url("/onboarding/assets/OpenSans-VariableFont-wdth-wght.ttf") format("truetype");
-        font-style: normal;
-        font-weight: 300 800;
-        font-display: swap;
-      }
-
       :root {
-        --bg: #fafafa;
-        --text-main: #2d3138;
-        --text-sub: #898989;
-        --border-soft: #e2e2e2;
-        --surface: #ffffff;
-        --surface-soft: #f9f9f9;
-        --chip-bg: #f3f6fb;
-        --dot: #3c4455;
+        --bg: #ffffff;
+        --text: #101828;
+        --muted: #667085;
+        --line: #eaecf0;
+        --card: #ffffff;
+        --chip-bg: #f9fafb;
+        --chip-text: #475467;
       }
 
       * {
@@ -51,403 +38,412 @@ const dateOptions: Intl.DateTimeFormatOptions = {
         margin: 0;
         min-height: 100%;
         background: var(--bg);
-        color: var(--text-main);
-        font-family: "Open Sans", "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
-      }
-
-      body {
-        position: relative;
-        overflow-x: hidden;
-      }
-
-      body::before {
-        content: "";
-        position: fixed;
-        inset: 0;
-        pointer-events: none;
-        background:
-          radial-gradient(circle at 6% 8%, rgba(121, 195, 242, 0.2), transparent 28%),
-          radial-gradient(circle at 88% 92%, rgba(217, 232, 255, 0.25), transparent 34%);
-      }
-
-      body::after {
-        content: "";
-        position: fixed;
-        inset: 0;
-        pointer-events: none;
-        background: url("/onboarding/assets/frame234-bg.png") center / cover no-repeat;
-        opacity: 0.1;
+        color: var(--text);
+        font-family: "Inter", "SF Pro Text", "Segoe UI", system-ui, sans-serif;
       }
 
       .header {
-        position: sticky;
-        top: 0;
-        z-index: 20;
-        backdrop-filter: blur(10px);
-        background: rgba(250, 250, 250, 0.86);
-        border-bottom: 1px solid rgba(226, 226, 226, 0.72);
+        border-bottom: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
+      }
+
+      .container {
+        max-width: 1024px;
+        margin: 0 auto;
       }
 
       .header-inner {
-        max-width: 1060px;
-        margin: 0 auto;
-        padding: 12px 22px;
+        padding: 12px;
         display: flex;
         align-items: center;
         justify-content: space-between;
         gap: 12px;
       }
 
-      .brand {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        text-decoration: none;
-        color: inherit;
-      }
-
-      .brand-logo {
-        width: 34px;
-        height: 34px;
-      }
-
-      .brand-wordmark {
-        width: 106px;
-        height: auto;
+      .header-title {
+        margin: 0;
+        font-size: 32px;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        font-weight: 600;
       }
 
       .header-links {
         display: flex;
-        gap: 14px;
-        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
       }
 
       .header-link {
-        font-size: 14px;
-        color: #475163;
         text-decoration: none;
+        color: var(--muted);
+        font-size: 14px;
       }
 
       .header-link:hover {
-        color: #2d3138;
+        color: var(--text);
       }
 
       main {
-        position: relative;
-        z-index: 1;
-        max-width: 1060px;
-        margin: 0 auto;
-        padding: 38px 22px 80px;
+        padding: 30px 24px 60px;
       }
 
-      .hero {
-        margin-bottom: 28px;
-        opacity: 0;
-        transform: translateY(12px);
-        filter: blur(5px);
-        animation: fade-up 540ms cubic-bezier(0.22, 1, 0.36, 1) 60ms forwards;
+      .template-note {
+        margin: 0 0 26px;
+        padding: 12px 14px;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        color: #344054;
+        font-size: 14px;
+        background: #fcfcfd;
       }
 
-      .hero-title {
-        margin: 0;
-        font-size: clamp(34px, 4.2vw, 46px);
-        line-height: 1.14;
-        font-weight: 550;
-        letter-spacing: 0.2px;
-        background: linear-gradient(180deg, #000000 0%, #666666 100%);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
+      .template-note a {
+        color: #175cd3;
+        text-decoration: none;
       }
 
-      .hero-subtitle {
-        margin: 10px 0 0;
-        color: var(--text-sub);
-        font-size: 15px;
-        line-height: 1.55;
+      .template-note a:hover {
+        text-decoration: underline;
       }
 
       .timeline {
-        display: grid;
-        gap: 8px;
+        position: relative;
       }
 
       .entry {
-        display: grid;
-        grid-template-columns: 180px minmax(0, 1fr);
-        column-gap: 30px;
-        opacity: 0;
-        transform: translateY(16px);
-        filter: blur(5px);
-        animation: fade-up 520ms cubic-bezier(0.22, 1, 0.36, 1) var(--delay, 0ms) forwards;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      .entry-wrap {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
       }
 
       .entry-side {
-        padding-top: 4px;
+        flex-shrink: 0;
       }
 
       .entry-side-sticky {
-        position: sticky;
-        top: 78px;
-        padding-bottom: 24px;
+        padding-bottom: 36px;
       }
 
       .entry-date {
-        margin: 0 0 10px;
-        color: #767f8f;
+        margin: 0 0 12px;
+        color: var(--muted);
         font-size: 14px;
-        letter-spacing: 0.2px;
+        font-weight: 500;
       }
 
       .entry-version {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        min-width: 44px;
-        min-height: 44px;
+        min-width: 40px;
+        height: 40px;
         padding: 0 10px;
-        border-radius: 12px;
-        border: 1px solid var(--border-soft);
-        background: linear-gradient(180deg, var(--surface) 0%, var(--surface-soft) 100%);
-        box-shadow:
-          0 1px 2px rgba(0, 0, 0, 0.04),
-          0 6px 16px rgba(0, 0, 0, 0.03);
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--card);
+        color: var(--text);
         font-size: 13px;
         font-weight: 700;
-        color: #2f3745;
       }
 
       .entry-main {
+        flex: 1;
         position: relative;
-        padding: 0 0 24px 24px;
+        padding-bottom: 40px;
       }
 
       .entry-main::before {
         content: "";
         position: absolute;
         left: 0;
-        top: 2px;
-        bottom: -8px;
+        top: 9px;
         width: 1px;
-        background: linear-gradient(180deg, rgba(196, 205, 220, 0.9) 0%, rgba(226, 226, 226, 0.35) 100%);
+        height: calc(100% - 9px);
+        background: var(--line);
       }
 
       .entry-dot {
         position: absolute;
         left: -5px;
-        top: 13px;
+        top: 8px;
         width: 10px;
         height: 10px;
         border-radius: 999px;
-        background: var(--dot);
-        box-shadow: 0 0 0 4px rgba(60, 68, 85, 0.12);
+        background: #111827;
       }
 
-      .entry-card {
-        border-radius: 14px;
-        border: 1px solid var(--border-soft);
-        background: linear-gradient(180deg, var(--surface) 0%, var(--surface-soft) 100%);
-        box-shadow:
-          0 2px 4px rgba(0, 0, 0, 0.03),
-          0 14px 30px rgba(0, 0, 0, 0.03);
-        padding: 18px 20px 20px;
-      }
-
-      .entry-head {
-        display: flex;
-        align-items: flex-start;
-        justify-content: space-between;
-        gap: 12px;
-        flex-wrap: wrap;
+      .entry-content {
+        padding-left: 30px;
       }
 
       .entry-title {
         margin: 0;
-        font-size: clamp(21px, 2.2vw, 27px);
+        font-size: 30px;
         line-height: 1.2;
-        letter-spacing: 0.1px;
-        color: #121723;
+        letter-spacing: -0.02em;
+        font-weight: 600;
+        text-wrap: balance;
       }
 
       .chip-row {
-        margin-top: 10px;
+        margin-top: 12px;
         display: flex;
         flex-wrap: wrap;
         gap: 8px;
       }
 
       .chip {
-        height: 26px;
         display: inline-flex;
         align-items: center;
+        justify-content: center;
+        height: 24px;
         padding: 0 10px;
         border-radius: 999px;
-        border: 1px solid var(--border-soft);
+        border: 1px solid var(--line);
         background: var(--chip-bg);
-        color: #4e586d;
+        color: var(--chip-text);
         font-size: 12px;
-        font-weight: 600;
+        font-weight: 500;
       }
 
-      .chip.is-pre {
-        border-color: #ffd8b6;
-        background: #fff5eb;
-        color: #9a4a00;
+      .entry-summary {
+        margin-top: 16px;
+        color: #344054;
+        line-height: 1.7;
+        font-size: 15px;
       }
 
-      .entry-body {
+      .accordion-group {
         margin-top: 14px;
-        color: #3c4455;
-        line-height: 1.68;
+        display: grid;
+        gap: 10px;
+      }
+
+      .accordion {
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        background: #ffffff;
+        overflow: hidden;
+      }
+
+      .accordion > summary {
+        cursor: pointer;
+        padding: 10px 12px;
         font-size: 14px;
+        font-weight: 600;
+        color: #1d2939;
+        background: #f9fafb;
+        list-style: none;
+      }
+
+      .accordion > summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .accordion > summary::after {
+        content: "+";
+        float: right;
+        color: #667085;
+      }
+
+      .accordion[open] > summary::after {
+        content: "−";
+      }
+
+      .accordion-list {
+        margin: 0;
+        padding: 10px 16px 14px 30px;
+        color: #344054;
+        font-size: 14px;
+        line-height: 1.65;
+      }
+
+      .accordion-list li + li {
+        margin-top: 8px;
+      }
+
+      .entry-notes {
+        margin-top: 12px;
+        color: #344054;
+        line-height: 1.72;
+        font-size: 15px;
         white-space: pre-wrap;
-        word-break: break-word;
       }
 
       .entry-link {
-        margin-top: 14px;
+        margin-top: 12px;
       }
 
       .entry-link a {
-        color: #3c4455;
+        color: #175cd3;
         text-decoration: none;
-        border-bottom: 1px dashed rgba(60, 68, 85, 0.45);
+        font-size: 14px;
       }
 
       .entry-link a:hover {
-        color: #141922;
-        border-bottom-color: rgba(20, 25, 34, 0.5);
+        text-decoration: underline;
       }
 
-      .empty {
-        padding: 22px;
+      .empty .entry-main::before,
+      .empty .entry-dot {
+        display: none;
       }
 
-      @media (max-width: 960px) {
-        .entry {
-          grid-template-columns: 1fr;
-          gap: 10px;
+      @media (min-width: 768px) {
+        .entry-wrap {
+          flex-direction: row;
+          gap: 0;
+        }
+
+        .entry-side {
+          width: 192px;
         }
 
         .entry-side-sticky {
-          position: static;
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          padding-bottom: 0;
-        }
-
-        .entry-date {
-          margin: 0;
+          position: sticky;
+          top: 32px;
         }
 
         .entry-main {
+          padding-left: 32px;
+        }
+
+        .entry-content {
           padding-left: 0;
+        }
+      }
+
+      @media (max-width: 767px) {
+        .header-inner {
+          padding: 14px 16px;
+          align-items: flex-start;
+          flex-direction: column;
+        }
+
+        .header-title {
+          font-size: 28px;
+        }
+
+        main {
+          padding: 22px 16px 44px;
         }
 
         .entry-main::before,
         .entry-dot {
           display: none;
         }
-      }
 
-      @media (max-width: 680px) {
-        .header-inner,
-        main {
-          padding-left: 16px;
-          padding-right: 16px;
+        .entry-main {
+          padding-bottom: 34px;
         }
 
-        .header-links {
-          gap: 10px;
+        .entry-content {
+          padding-left: 0;
         }
 
-        .header-link {
-          font-size: 13px;
-        }
-
-        .hero-title {
-          font-size: clamp(29px, 9.5vw, 40px);
-        }
-
-        .entry-card {
-          padding: 16px;
-        }
-      }
-
-      @keyframes fade-up {
-        from {
-          opacity: 0;
-          transform: translateY(16px);
-          filter: blur(5px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-          filter: blur(0);
+        .entry-title {
+          font-size: 25px;
         }
       }
     </style>
   </head>
   <body>
     <header class="header">
-      <div class="header-inner">
-        <a class="brand" href="/">
-          <img class="brand-logo" src="/onboarding/assets/logo.svg" alt="Lumno" draggable="false" />
-          <img class="brand-wordmark" src="/onboarding/assets/textlogo.svg" alt="Lumno" draggable="false" />
-        </a>
-        <nav class="header-links" aria-label="release links">
-          <a class="header-link" href="/">首页</a>
-          <a class="header-link" href="/onboarding/">Onboarding</a>
-          <a class="header-link" href="https://github.com/kubai087/lumno-web/releases" target="_blank" rel="noreferrer">GitHub Releases</a>
-        </nav>
+      <div class="container">
+        <div class="header-inner">
+          <h1 class="header-title">Changelog</h1>
+          <nav class="header-links" aria-label="Changelog links">
+            <a class="header-link" href="/">Home</a>
+            <a class="header-link" href="/onboarding/">Onboarding</a>
+            <a class="header-link" href="https://github.com/kubai087/lumno-extension/releases" target="_blank" rel="noreferrer">GitHub Releases</a>
+          </nav>
+        </div>
       </div>
     </header>
 
-    <main>
-      <section class="hero">
-        <h1 class="hero-title">Lumno 更新日志</h1>
-        <p class="hero-subtitle">基于 GitHub Releases 自动同步，页面结构参考 Magic UI 的 Changelog 模板，并对齐 onboarding 的视觉语言。</p>
-      </section>
+    <main class="container">
+      <p class="template-note">
+        Use release template: <a href="https://github.com/kubai087/lumno-web/blob/main/.github/RELEASE_TEMPLATE.md" target="_blank" rel="noreferrer">.github/RELEASE_TEMPLATE.md</a>
+      </p>
 
       <section class="timeline">
         {
           releases.length > 0 ? (
-            releases.map((item, index) => (
-              <article class="entry" style={`--delay: ${Math.min(index * 80, 500)}ms`}>
-                <div class="entry-side">
-                  <div class="entry-side-sticky">
-                    <time class="entry-date">{formatDate(item.date, "zh-CN", dateOptions)}</time>
-                    <div class="entry-version">{getVersionLabel(item.tag)}</div>
-                  </div>
-                </div>
+            releases.map((item) => (
+              <article class="entry">
+                <div class="entry-wrap">
+                  <aside class="entry-side">
+                    <div class="entry-side-sticky">
+                      <time class="entry-date">{formatDate(item.date)}</time>
+                      <div class="entry-version">{getVersionLabel(item.tag)}</div>
+                    </div>
+                  </aside>
 
-                <div class="entry-main">
-                  <span class="entry-dot" aria-hidden="true"></span>
-                  <div class="entry-card">
-                    <div class="entry-head">
+                  <div class="entry-main">
+                    <span class="entry-dot" aria-hidden="true"></span>
+                    <div class="entry-content">
                       <h2 class="entry-title">{item.name}</h2>
-                    </div>
 
-                    <div class="chip-row">
-                      <span class="chip">{item.tag}</span>
-                      {item.prerelease && <span class="chip is-pre">Pre-release</span>}
-                    </div>
+                      <div class="chip-row">
+                        <span class="chip">{item.tag}</span>
+                        {item.prerelease && <span class="chip">Pre-release</span>}
+                        {item.parsed.tags.map((releaseTag) => (
+                          <span class="chip">{releaseTag}</span>
+                        ))}
+                      </div>
 
-                    <div class="entry-body">{item.body || "本次发布未填写更新说明。"}</div>
-                    <div class="entry-link">
-                      <a href={item.url} target="_blank" rel="noreferrer">在 GitHub 查看完整发布说明</a>
+                      {item.parsed.summary && <div class="entry-summary">{item.parsed.summary}</div>}
+
+                      {(item.parsed.features.length > 0 || item.parsed.bugFixes.length > 0) && (
+                        <div class="accordion-group">
+                          {item.parsed.features.length > 0 && (
+                            <details class="accordion" open>
+                              <summary>Features ({item.parsed.features.length})</summary>
+                              <ul class="accordion-list">
+                                {item.parsed.features.map((feature) => (
+                                  <li>{feature}</li>
+                                ))}
+                              </ul>
+                            </details>
+                          )}
+
+                          {item.parsed.bugFixes.length > 0 && (
+                            <details class="accordion" open>
+                              <summary>Bug Fixes ({item.parsed.bugFixes.length})</summary>
+                              <ul class="accordion-list">
+                                {item.parsed.bugFixes.map((fix) => (
+                                  <li>{fix}</li>
+                                ))}
+                              </ul>
+                            </details>
+                          )}
+                        </div>
+                      )}
+
+                      {item.parsed.notes && <div class="entry-notes">{item.parsed.notes}</div>}
+
+                      <div class="entry-link">
+                        <a href={item.url} target="_blank" rel="noreferrer">Read on GitHub</a>
+                      </div>
                     </div>
                   </div>
                 </div>
               </article>
             ))
           ) : (
-            <article class="entry" style="--delay: 0ms">
-              <div class="entry-main" style="padding-left:0">
-                <div class="entry-card empty">
-                  <h2 class="entry-title">暂无发布记录</h2>
-                  <div class="entry-body">创建 GitHub Release 后，将在下次构建时自动出现在这里。</div>
+            <article class="entry empty">
+              <div class="entry-wrap">
+                <div class="entry-main">
+                  <div class="entry-content">
+                    <h2 class="entry-title">No releases yet</h2>
+                    <div class="entry-summary">Create a GitHub Release and it will appear here on next deploy.</div>
+                  </div>
                 </div>
               </div>
             </article>

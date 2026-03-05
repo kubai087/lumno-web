@@ -446,9 +446,9 @@ import logoIconSvg from "../../assets/onboarding/logo.svg?raw";
         position: absolute;
         inset: -8px -10px;
         border-radius: 14px;
-        border: 1px solid rgba(219, 225, 232, 0.9);
-        background: rgba(250, 250, 250, 0.86);
-        box-shadow: 0 10px 24px rgba(12, 20, 33, 0.08);
+        border: 1px solid rgba(216, 222, 231, 0.95);
+        background: rgba(250, 250, 250, 0.96);
+        box-shadow: 0 12px 28px rgba(12, 20, 33, 0.1);
         backdrop-filter: blur(8px);
         -webkit-backdrop-filter: blur(8px);
         opacity: 0;
@@ -2234,8 +2234,14 @@ import logoIconSvg from "../../assets/onboarding/logo.svg?raw";
       applySafariBrowserClass();
 
       function syncTopNavOverflowBackground() {
-        const hasHorizontalScroll = document.documentElement.scrollWidth - window.innerWidth > 1;
-        document.body.classList.toggle("has-horizontal-scroll", hasHorizontalScroll);
+        const topNav = document.querySelector(".top-nav");
+        const pageHorizontalOverflow =
+          document.documentElement.scrollWidth - document.documentElement.clientWidth > 1 ||
+          document.body.scrollWidth - document.body.clientWidth > 1;
+        const navHorizontalOverflow =
+          topNav instanceof HTMLElement &&
+          (topNav.scrollWidth - topNav.clientWidth > 1 || topNav.getBoundingClientRect().height > 52);
+        document.body.classList.toggle("has-horizontal-scroll", pageHorizontalOverflow || navHorizontalOverflow);
       }
 
       syncTopNavOverflowBackground();

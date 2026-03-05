@@ -357,8 +357,8 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         font-size: clamp(22px, 3.2vw, 34px);
         line-height: 1.1;
         letter-spacing: -0.02em;
-        color: #ffffff;
-        text-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+        color: #111827;
+        text-shadow: 0 8px 24px rgba(255, 255, 255, 0.35);
         transform: translateY(10px) scale(0.94);
         opacity: 0;
         animation: banner-pop 620ms cubic-bezier(0.22, 1, 0.36, 1) 120ms forwards;
@@ -1149,13 +1149,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         requestAnimationFrame(frame);
       }
 
-      try {
-        const key = "lumno_release_confetti_once_v1";
-        if (!localStorage.getItem(key)) {
-          localStorage.setItem(key, "1");
-          window.setTimeout(() => fireIntroConfetti(), 280);
-        }
-      } catch (_) {}
+      window.setTimeout(() => fireIntroConfetti(), 280);
     </script>
   </body>
 </html>

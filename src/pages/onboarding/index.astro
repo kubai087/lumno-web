@@ -622,27 +622,6 @@ import LanguageMenu from "../../components/onboarding/LanguageMenu";
         }
       }
 
-      .feature-card.is-active {
-        transform: translateY(-4px);
-        box-shadow:
-          0 12px 24px rgba(0, 0, 0, 0.05),
-          0 4px 8px rgba(0, 0, 0, 0.03);
-      }
-
-      .right-pane.is-manual-hover .feature-card.is-active:not(:hover) {
-        transform: none;
-        box-shadow: none;
-      }
-
-      @media (hover: hover) and (pointer: fine) {
-        .right-pane.is-manual-hover .feature-card:hover {
-          transform: translateY(-4px);
-          box-shadow:
-            0 12px 24px rgba(0, 0, 0, 0.05),
-            0 4px 8px rgba(0, 0, 0, 0.03);
-        }
-      }
-
       .card-title-wrap {
         padding: 24px 22px 0;
         flex: 1 1 auto;
@@ -1616,50 +1595,9 @@ import LanguageMenu from "../../components/onboarding/LanguageMenu";
         modifierKeyEl.textContent = isWindows ? "Ctrl" : "⌘";
       }
 
-      const rightPaneEl = document.querySelector(".right-pane");
-      const cards = Array.from(document.querySelectorAll(".feature-card"));
-      if (rightPaneEl && cards.length > 1) {
-        const RIGHT_AUTOPLAY_INTERVAL_MS = 1500;
-        const LEFT_ENTER_TOTAL_MS = 1000;
-        let activeIndex = 0;
-        let autoplayTimer = null;
-        let paused = false;
-
-        const renderActiveCard = () => {
-          cards.forEach((card, index) => {
-            card.classList.toggle("is-active", index === activeIndex);
-          });
-        };
-
-        const nextCard = () => {
-          if (paused) return;
-          activeIndex = (activeIndex + 1) % cards.length;
-          renderActiveCard();
-        };
-
-        const startAutoplay = () => {
-          if (autoplayTimer) clearInterval(autoplayTimer);
-          autoplayTimer = setInterval(nextCard, RIGHT_AUTOPLAY_INTERVAL_MS);
-        };
-
-        cards.forEach((card) => card.classList.remove("is-active"));
-
-        window.setTimeout(() => {
-          document.body.classList.add("is-entered");
-          renderActiveCard();
-          startAutoplay();
-        }, LEFT_ENTER_TOTAL_MS);
-
-        rightPaneEl.addEventListener("mouseenter", () => {
-          paused = true;
-          rightPaneEl.classList.add("is-manual-hover");
-        });
-
-        rightPaneEl.addEventListener("mouseleave", () => {
-          paused = false;
-          rightPaneEl.classList.remove("is-manual-hover");
-        });
-      }
+      window.setTimeout(() => {
+        document.body.classList.add("is-entered");
+      }, 1000);
 
     </script>
   </body>

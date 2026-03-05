@@ -229,6 +229,13 @@ export function parseReleaseBody(body: string): ParsedReleaseBody {
       continue;
     }
 
+    // Preferred delimiter between Chinese and English blocks.
+    if (trimmed === "--") {
+      locale = "en";
+      section = "summary";
+      continue;
+    }
+
     const headingMatch = trimmed.match(/^##+\s+(.+)$/);
     if (headingMatch) {
       const heading = headingMatch[1].trim();

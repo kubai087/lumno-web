@@ -65,12 +65,21 @@ function renderMdBlock(markdown: string): string {
         gap: 12px;
       }
 
-      .header-title {
-        margin: 0;
-        font-size: 32px;
-        line-height: 1.2;
-        letter-spacing: -0.02em;
-        font-weight: 600;
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+      }
+
+      .brand-icon {
+        width: 30px;
+        height: 30px;
+      }
+
+      .brand-wordmark {
+        width: 104px;
+        height: auto;
       }
 
       .header-links {
@@ -339,10 +348,6 @@ function renderMdBlock(markdown: string): string {
           flex-direction: column;
         }
 
-        .header-title {
-          font-size: 28px;
-        }
-
         main {
           padding: 22px 16px 44px;
         }
@@ -370,7 +375,10 @@ function renderMdBlock(markdown: string): string {
     <header class="header">
       <div class="container">
         <div class="header-inner">
-          <h1 class="header-title">Changelog</h1>
+          <a class="brand" href="/" aria-label="Lumno home">
+            <img class="brand-icon" src="/onboarding/assets/logo.svg" alt="Lumno" draggable="false" />
+            <img class="brand-wordmark" src="/onboarding/assets/textlogo.svg" alt="Lumno" draggable="false" />
+          </a>
           <nav class="header-links" aria-label="Changelog links">
             <a class="header-link" href="/">Home</a>
             <a class="header-link" href="/onboarding/">Onboarding</a>

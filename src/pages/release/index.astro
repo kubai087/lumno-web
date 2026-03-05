@@ -366,7 +366,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         font-family: "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif;
         font-size: clamp(32px, 5.2vw, 40px);
         font-weight: 500;
-        line-height: normal;
+        line-height: 1;
         letter-spacing: 0;
         color: #111827;
         text-shadow: none;
@@ -385,8 +385,12 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
       }
 
       .banner-title-emoji {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1;
+        font-size: 0.95em;
         color: initial;
-        transform: translateY(10px) scale(0.94);
       }
 
       .banner-title {

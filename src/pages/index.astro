@@ -455,30 +455,6 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
         gap: 16px;
       }
 
-      .top-nav::before {
-        content: "";
-        position: absolute;
-        inset: -8px -10px;
-        border-radius: 14px;
-        border: 1px solid rgba(216, 222, 231, 0.95);
-        background: rgba(250, 250, 250, 0.96);
-        box-shadow: 0 12px 28px rgba(12, 20, 33, 0.1);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 180ms ease;
-      }
-
-      body.has-horizontal-scroll .top-nav::before {
-        opacity: 1;
-      }
-
-      .top-nav > * {
-        position: relative;
-        z-index: 1;
-      }
-
       .top-nav-brand {
         display: inline-flex;
         align-items: center;
@@ -1639,6 +1615,10 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
           top: 12px;
           left: 14px;
           right: 14px;
+          padding: 7px 8px;
+          border-radius: 10px;
+          border: 1px solid #dbe1e8;
+          background: #fafafa;
         }
 
         .top-nav-brand img {
@@ -2278,20 +2258,6 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
       applyLanguageMode(localStorage.getItem(LANGUAGE_STORAGE_KEY) || getSystemLocale());
       setupQrcodeModal();
       applySafariBrowserClass();
-
-      function syncTopNavOverflowBackground() {
-        const topNav = document.querySelector(".top-nav");
-        const pageHorizontalOverflow =
-          document.documentElement.scrollWidth - document.documentElement.clientWidth > 1 ||
-          document.body.scrollWidth - document.body.clientWidth > 1;
-        const navHorizontalOverflow =
-          topNav instanceof HTMLElement &&
-          (topNav.scrollWidth - topNav.clientWidth > 1 || topNav.getBoundingClientRect().height > 52);
-        document.body.classList.toggle("has-horizontal-scroll", pageHorizontalOverflow || navHorizontalOverflow);
-      }
-
-      syncTopNavOverflowBackground();
-      window.addEventListener("resize", syncTopNavOverflowBackground, { passive: true });
 
       const modifierKeyEl = document.getElementById("shortcut-modifier-key");
       if (modifierKeyEl) {

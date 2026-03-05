@@ -66,7 +66,7 @@ export default function FeatureGrid() {
             <h2 className="card-title">
               <span data-i18n="feature_labs_title">实验室功能</span> <span className="title-strong" data-i18n="feature_labs_title_strong">&amp; 精美 UI</span>
             </h2>
-            <img className="title-badge" src="/onboarding/assets/badge-selected.svg" alt="Beta" data-i18n-alt="beta_alt" />
+            <img className="title-badge" src="/assets/badge-selected.svg" alt="Beta" data-i18n-alt="beta_alt" />
           </div>
           <p className="card-desc" data-i18n="feature_labs_desc">
             更多玩法，敬请期待

@@ -201,6 +201,20 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         padding: 30px 24px 60px;
       }
 
+      .top-banner {
+        margin: 0 0 24px;
+        border-radius: 16px;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        background: #f8fafc;
+      }
+
+      .top-banner img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
       .timeline {
         position: relative;
       }
@@ -589,6 +603,9 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
     </header>
 
     <main class="container">
+      <div class="top-banner">
+        <img src="/resource_commited/banner.jpg" alt="Lumno banner" loading="lazy" />
+      </div>
       <section class="timeline">
         {
           releases.length > 0 ? (

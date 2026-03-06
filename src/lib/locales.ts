@@ -14,6 +14,7 @@ export const LOCALE_CONFIG = [
 export type SupportedLocale = (typeof LOCALE_CONFIG)[number]["code"];
 
 export const SUPPORTED_UI_LANGUAGES = LOCALE_CONFIG.map((item) => item.code) as SupportedLocale[];
+export const SUPPORTED_ONBOARDING_LANGUAGES = ["zh-CN", "zh-TW", "en"] as const;
 
 function normalizeBasePath(basePath: string): string {
   const trimmed = String(basePath || "/").trim();
@@ -40,8 +41,19 @@ export function buildRouteLanguageMap(basePath: string): Record<SupportedLocale,
   ) as Record<SupportedLocale, string>;
 }
 
+export function buildScopedRouteLanguageMap(
+  basePath: string,
+  locales: readonly SupportedLocale[],
+): Record<string, string> {
+  return Object.fromEntries(locales.map((locale) => [locale, buildLocalizedPath(locale, basePath)]));
+}
+
 export function getNonDefaultLocales(): SupportedLocale[] {
   return SUPPORTED_UI_LANGUAGES.filter((locale) => locale !== DEFAULT_LOCALE);
+}
+
+export function getScopedNonDefaultLocales(locales: readonly SupportedLocale[]): SupportedLocale[] {
+  return locales.filter((locale) => locale !== DEFAULT_LOCALE) as SupportedLocale[];
 }
 
 export function resolveLocaleFromSegment(segment: string): SupportedLocale | null {

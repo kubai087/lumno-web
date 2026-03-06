@@ -11,11 +11,11 @@ import {
   buildWebPageSchema,
 } from "../../lib/seo";
 import { buildEntryContextConfig } from "../../lib/entry-context";
-import { DEFAULT_LOCALE, buildRouteLanguageMap } from "../../lib/locales";
+import { DEFAULT_LOCALE, SUPPORTED_ONBOARDING_LANGUAGES, buildScopedRouteLanguageMap } from "../../lib/locales";
 
 const forcedLocale = Astro.props.forcedLocale ?? null;
 const seoPath = Astro.props.seoPath || "/onboarding/";
-const routeLanguageMap = Astro.props.routeLanguageMap || buildRouteLanguageMap("/onboarding/");
+const routeLanguageMap = Astro.props.routeLanguageMap || buildScopedRouteLanguageMap("/onboarding/", SUPPORTED_ONBOARDING_LANGUAGES);
 const entryContextConfig = buildEntryContextConfig();
 const uiLocale = forcedLocale || DEFAULT_LOCALE;
 const alternateLinks = [
@@ -29,21 +29,11 @@ const ogLocale = {
   "zh-CN": "zh_CN",
   "zh-TW": "zh_TW",
   en: "en_US",
-  ja: "ja_JP",
-  ko: "ko_KR",
-  fr: "fr_FR",
-  de: "de_DE",
-  es: "es_ES",
 }[uiLocale] || "en_US";
 const pageTitleByLocale = {
   "zh-CN": "Lumno 安装引导｜浏览器命令栏与新标签页快速开始",
   "zh-TW": "Lumno 安裝引導｜瀏覽器命令欄與新分頁快速開始",
   en: "Lumno Onboarding | Browser Command Bar Quick Start",
-  ja: "Lumno セットアップ｜ブラウザコマンドバーと新規タブのクイックスタート",
-  ko: "Lumno 시작하기 | 브라우저 커맨드바와 새 탭 빠른 시작",
-  fr: "Prise en main de Lumno | Démarrage rapide de la barre de commandes et du nouvel onglet",
-  de: "Lumno Einstieg | Schnellstart für Befehlsleiste und neuen Tab",
-  es: "Primeros pasos con Lumno | Inicio rápido de la barra de comandos y la nueva pestaña",
 };
 const pageDescriptionByLocale = {
   "zh-CN":
@@ -52,16 +42,6 @@ const pageDescriptionByLocale = {
     "了解如何使用 Lumno 瀏覽器命令欄與快捷命令浮層，快速搜尋分頁、書籤、歷史紀錄與站內內容，並在 Chrome、Edge、Dia 中延續熟悉的高效率搜尋體驗。",
   en:
     "Learn how to use Lumno's focus search and command-bar workflow to search tabs, bookmarks, history, and site content more efficiently on Chrome, Edge, and Dia.",
-  ja:
-    "Lumno のフォーカス検索とコマンドバーで、Chrome、Edge、Dia のタブ、ブックマーク、履歴、サイト内コンテンツをすばやく検索できます。",
-  ko:
-    "Lumno의 포커스 검색과 커맨드바 워크플로를 사용해 Chrome, Edge, Dia에서 탭, 북마크, 방문 기록, 사이트 콘텐츠를 더 효율적으로 검색하는 방법을 알아보세요.",
-  fr:
-    "Découvrez comment utiliser la recherche ciblée et le flux de barre de commandes de Lumno pour retrouver plus efficacement onglets, favoris, historique et contenus de site sur Chrome, Edge et Dia.",
-  de:
-    "Erfahre, wie du mit Lumno Fokus-Suche und Befehlsleisten-Workflow Tabs, Lesezeichen, Verlauf und Seiteninhalte in Chrome, Edge und Dia schneller durchsuchen kannst.",
-  es:
-    "Aprende a usar la búsqueda focalizada y el flujo con barra de comandos de Lumno para encontrar con más rapidez pestañas, marcadores, historial y contenido dentro de sitios en Chrome, Edge y Dia.",
 };
 const pageTitle = pageTitleByLocale[uiLocale] || pageTitleByLocale[DEFAULT_LOCALE];
 const pageDescription = pageDescriptionByLocale[uiLocale] || pageDescriptionByLocale[DEFAULT_LOCALE];
@@ -76,138 +56,89 @@ const initialUi = {
   "zh-CN": {
     viewRelease: "更新日志",
     joinDiscord: "反馈 & 提需",
-    shortcutSettings: "设置快捷键",
+    shortcutGuideTitle: "快速启用 Lumno 聚焦搜索",
+    shortcutCopy: "复制",
+    shortcutCopied: "已复制",
     titleWelcome: "欢迎使用",
     subtitle: "开源浏览器聚焦搜索 & 极简新标签页",
     settingsAria: "访问 Lumno GitHub 仓库",
-    shortcutSettingsAria: "打开浏览器扩展快捷键设置",
+    shortcutCopyAria: "复制扩展快捷键设置地址",
     releaseAria: "查看更新日志页面",
     discordAria: "反馈与提需",
     qrcodeTitle: "微信群二维码",
     qrcodeImageAlt: "Lumno 微信群二维码",
     qrcodeCloseAria: "关闭二维码弹窗",
     logoIconAlt: "Lumno 图标",
+    shortcutStep1: "复制上方地址，粘贴到地址栏并访问。",
+    shortcutStep2: "找到 Lumno。",
+    shortcutStep3Prefix: "将",
+    shortcutCommandLabel: "唤起聚焦搜索窗口",
+    shortcutStep3Suffix: "一栏的快捷键设置为你想要的。",
+    shortcutStep4Prefix: "对于 Dia 用户，如果快捷键设置后不生效，可以将右侧的",
+    shortcutBrowserScopeLabel: "在 Dia 中",
+    shortcutStep4Middle: "改为",
+    shortcutGlobalScopeLabel: "全局",
+    shortcutStep4Suffix: "。",
     languageLabel: "简体中文",
     languageSelectAria: "语言",
   },
   "zh-TW": {
     viewRelease: "更新日誌",
     joinDiscord: "反饋 & 提需",
-    shortcutSettings: "設定快捷鍵",
+    shortcutGuideTitle: "快速啟用 Lumno 聚焦搜尋",
+    shortcutCopy: "複製",
+    shortcutCopied: "已複製",
     titleWelcome: "歡迎使用",
     subtitle: "開源瀏覽器聚焦搜尋 & 極簡新分頁",
     settingsAria: "造訪 Lumno GitHub 倉庫",
-    shortcutSettingsAria: "開啟瀏覽器擴充功能快捷鍵設定",
+    shortcutCopyAria: "複製擴充功能快捷鍵設定網址",
     releaseAria: "查看更新日誌頁面",
     discordAria: "反饋與提需",
     qrcodeTitle: "微信群二維碼",
     qrcodeImageAlt: "Lumno 微信群二維碼",
     qrcodeCloseAria: "關閉二維碼彈窗",
     logoIconAlt: "Lumno 圖示",
+    shortcutStep1: "複製上方網址，貼到網址列後開啟。",
+    shortcutStep2: "找到 Lumno。",
+    shortcutStep3Prefix: "將",
+    shortcutCommandLabel: "喚起聚焦搜尋視窗",
+    shortcutStep3Suffix: "這一欄的快捷鍵設成你想要的。",
+    shortcutStep4Prefix: "對於 Dia 使用者，如果快捷鍵設定後仍未生效，可以將右側的",
+    shortcutBrowserScopeLabel: "在 Dia 中",
+    shortcutStep4Middle: "改為",
+    shortcutGlobalScopeLabel: "全域",
+    shortcutStep4Suffix: "。",
     languageLabel: "繁體中文",
     languageSelectAria: "語言",
   },
   en: {
     viewRelease: "Release Notes",
     joinDiscord: "Feedback & Requests",
-    shortcutSettings: "Set shortcuts",
+    shortcutGuideTitle: "Quickly enable Lumno Focus Search",
+    shortcutCopy: "Copy",
+    shortcutCopied: "Copied",
     titleWelcome: "Welcome to",
     subtitle: "An open-source browser extension for focus search and a minimalist new tab.",
     settingsAria: "Open the Lumno GitHub repository",
-    shortcutSettingsAria: "Open browser extension shortcut settings",
+    shortcutCopyAria: "Copy the extension shortcut settings address",
     releaseAria: "Open the release notes page",
     discordAria: "Feedback and requests",
     qrcodeTitle: "WeChat group QR code",
     qrcodeImageAlt: "Lumno WeChat group QR code",
     qrcodeCloseAria: "Close QR code dialog",
     logoIconAlt: "Lumno icon",
+    shortcutStep1: "Copy the address above, paste it into the address bar, and open it.",
+    shortcutStep2: "Find Lumno.",
+    shortcutStep3Prefix: "Set the shortcut for",
+    shortcutCommandLabel: "Open Focus Search Window",
+    shortcutStep3Suffix: "to whatever you want.",
+    shortcutStep4Prefix: "If you're using Dia and the shortcut still doesn't work, change",
+    shortcutBrowserScopeLabel: "In Dia",
+    shortcutStep4Middle: "to",
+    shortcutGlobalScopeLabel: "Global",
+    shortcutStep4Suffix: ".",
     languageLabel: "English",
     languageSelectAria: "Language",
-  },
-  ja: {
-    viewRelease: "リリースノート",
-    joinDiscord: "フィードバックと要望",
-    shortcutSettings: "ショートカットを設定",
-    titleWelcome: "ようこそ",
-    subtitle: "フォーカス検索とミニマルな新規タブを備えたオープンソースのブラウザ拡張。",
-    settingsAria: "Lumno の GitHub リポジトリを開く",
-    shortcutSettingsAria: "ブラウザ拡張機能のショートカット設定を開く",
-    releaseAria: "リリースノートを開く",
-    discordAria: "フィードバックと要望",
-    qrcodeTitle: "WeChat グループの QR コード",
-    qrcodeImageAlt: "Lumno WeChat グループの QR コード",
-    qrcodeCloseAria: "QR コードダイアログを閉じる",
-    logoIconAlt: "Lumno アイコン",
-    languageLabel: "日本語",
-    languageSelectAria: "言語",
-  },
-  ko: {
-    viewRelease: "릴리스 노트",
-    joinDiscord: "피드백 및 요청",
-    shortcutSettings: "단축키 설정",
-    titleWelcome: "환영합니다",
-    subtitle: "포커스 검색과 미니멀 새 탭을 담은 오픈소스 브라우저 확장 프로그램.",
-    settingsAria: "Lumno GitHub 저장소 열기",
-    shortcutSettingsAria: "브라우저 확장 프로그램 단축키 설정 열기",
-    releaseAria: "릴리스 노트 열기",
-    discordAria: "피드백 및 요청",
-    qrcodeTitle: "WeChat 그룹 QR 코드",
-    qrcodeImageAlt: "Lumno WeChat 그룹 QR 코드",
-    qrcodeCloseAria: "QR 코드 대화상자 닫기",
-    logoIconAlt: "Lumno 아이콘",
-    languageLabel: "한국어",
-    languageSelectAria: "언어",
-  },
-  fr: {
-    viewRelease: "Notes de version",
-    joinDiscord: "Retours et demandes",
-    shortcutSettings: "Configurer les raccourcis",
-    titleWelcome: "Bienvenue",
-    subtitle: "Une extension open source pour la recherche ciblée et un nouvel onglet minimaliste.",
-    settingsAria: "Ouvrir le dépôt GitHub de Lumno",
-    shortcutSettingsAria: "Ouvrir les réglages des raccourcis de l'extension du navigateur",
-    releaseAria: "Ouvrir les notes de version",
-    discordAria: "Retours et demandes",
-    qrcodeTitle: "QR code du groupe WeChat",
-    qrcodeImageAlt: "QR code du groupe WeChat de Lumno",
-    qrcodeCloseAria: "Fermer la fenêtre du QR code",
-    logoIconAlt: "Icône Lumno",
-    languageLabel: "Français",
-    languageSelectAria: "Langue",
-  },
-  de: {
-    viewRelease: "Versionshinweise",
-    joinDiscord: "Feedback und Wünsche",
-    shortcutSettings: "Tastenkürzel festlegen",
-    titleWelcome: "Willkommen",
-    subtitle: "Eine Open-Source-Browsererweiterung für Fokus-Suche und einen minimalistischen neuen Tab.",
-    settingsAria: "Lumno-GitHub-Repository öffnen",
-    shortcutSettingsAria: "Einstellungen für Erweiterungs-Tastenkürzel im Browser öffnen",
-    releaseAria: "Versionshinweise öffnen",
-    discordAria: "Feedback und Wünsche",
-    qrcodeTitle: "WeChat-Gruppen-QR-Code",
-    qrcodeImageAlt: "Lumno WeChat-Gruppen-QR-Code",
-    qrcodeCloseAria: "QR-Code-Dialog schließen",
-    logoIconAlt: "Lumno-Symbol",
-    languageLabel: "Deutsch",
-    languageSelectAria: "Sprache",
-  },
-  es: {
-    viewRelease: "Notas de versión",
-    joinDiscord: "Comentarios y solicitudes",
-    shortcutSettings: "Configurar atajos",
-    titleWelcome: "Te damos la bienvenida",
-    subtitle: "Una extensión de navegador de código abierto para búsqueda focalizada y una nueva pestaña minimalista.",
-    settingsAria: "Abrir el repositorio de Lumno en GitHub",
-    shortcutSettingsAria: "Abrir la configuración de atajos de la extensión del navegador",
-    releaseAria: "Abrir las notas de versión",
-    discordAria: "Comentarios y solicitudes",
-    qrcodeTitle: "Código QR del grupo de WeChat",
-    qrcodeImageAlt: "Código QR del grupo de WeChat de Lumno",
-    qrcodeCloseAria: "Cerrar el cuadro del código QR",
-    logoIconAlt: "Icono de Lumno",
-    languageLabel: "Español",
-    languageSelectAria: "Idioma",
   },
 }[uiLocale];
 const featureMessages = {
@@ -245,66 +176,6 @@ const featureMessages = {
     labsTitle: "Labs features",
     labsTitleStrong: "& refined UI",
     labsDesc: "More experiments are on the way",
-    betaAlt: "Beta",
-  },
-  ja: {
-    searchTitle: "ブラウザ内のページをすばやく検索",
-    searchDesc: "ブックマーク、履歴、開いているページ、よく使うサイトをまとめて検索",
-    siteSearchTitle: "サイト内検索をカスタマイズ",
-    siteSearchDesc: "よく使うサイトの検索を内蔵。Tabですぐにサイト内検索を開始",
-    newTabTitle: "ミニマルな新規タブ",
-    newTabDesc: "ブックマークとよく使うページをカードで整理",
-    labsTitle: "Labs 機能",
-    labsTitleStrong: "& 洗練された UI",
-    labsDesc: "さらに多くの実験的機能を準備中です",
-    betaAlt: "Beta",
-  },
-  ko: {
-    searchTitle: "브라우저의 모든 페이지 검색",
-    searchDesc: "북마크, 방문 기록, 열려 있는 페이지, 자주 찾는 사이트를 검색",
-    siteSearchTitle: "사이트 검색 맞춤 설정",
-    siteSearchDesc: "자주 쓰는 사이트 검색이 기본 내장되어 Tab으로 바로 시작할 수 있습니다",
-    newTabTitle: "미니멀 새 탭",
-    newTabDesc: "북마크와 자주 쓰는 페이지를 카드 형태로 정리",
-    labsTitle: "실험실 기능",
-    labsTitleStrong: "& 세련된 UI",
-    labsDesc: "더 많은 실험 기능을 준비 중입니다",
-    betaAlt: "Beta",
-  },
-  fr: {
-    searchTitle: "Rechercher n’importe quelle page dans votre navigateur",
-    searchDesc: "Recherchez favoris, historique, pages ouvertes et sites fréquemment visités",
-    siteSearchTitle: "Personnaliser la recherche sur site",
-    siteSearchDesc: "Raccourcis de recherche intégrés. Appuyez sur Tab pour lancer une recherche sur site",
-    newTabTitle: "Nouvel onglet minimaliste",
-    newTabDesc: "Gardez vos favoris et pages utiles dans des cartes claires",
-    labsTitle: "Fonctions Labs",
-    labsTitleStrong: "& interface soignée",
-    labsDesc: "D’autres expérimentations arrivent bientôt",
-    betaAlt: "Beta",
-  },
-  de: {
-    searchTitle: "Beliebige Seiten im Browser durchsuchen",
-    searchDesc: "Durchsuche Lesezeichen, Verlauf, geöffnete Seiten und häufig besuchte Websites",
-    siteSearchTitle: "Seitensuche anpassen",
-    siteSearchDesc: "Integrierte Website-Suche. Mit Tab startest du die Seitensuche sofort",
-    newTabTitle: "Minimalistischer neuer Tab",
-    newTabDesc: "Behalte Lesezeichen und wichtige Seiten in klaren Karten im Blick",
-    labsTitle: "Labs-Funktionen",
-    labsTitleStrong: "& verfeinertes UI",
-    labsDesc: "Weitere Experimente sind unterwegs",
-    betaAlt: "Beta",
-  },
-  es: {
-    searchTitle: "Busca cualquier página en tu navegador",
-    searchDesc: "Busca marcadores, historial, páginas abiertas y sitios que visitas con frecuencia",
-    siteSearchTitle: "Personaliza la búsqueda dentro de sitios",
-    siteSearchDesc: "Atajos de búsqueda integrados. Pulsa Tab para buscar dentro de un sitio al instante",
-    newTabTitle: "Nueva pestaña minimalista",
-    newTabDesc: "Mantén marcadores y páginas útiles en tarjetas limpias",
-    labsTitle: "Funciones Labs",
-    labsTitleStrong: "& interfaz cuidada",
-    labsDesc: "Más experimentos están en camino",
     betaAlt: "Beta",
   },
 }[uiLocale];
@@ -543,15 +414,125 @@ const structuredData = [
         display: flex;
         align-items: center;
         justify-content: flex-start;
+        width: 100%;
+        max-width: 560px;
         opacity: 0;
         transform: translateX(-24px);
         filter: blur(6px);
         animation: x-hero-enter 620ms cubic-bezier(0.22, 1, 0.36, 1) 300ms forwards;
       }
 
-      .shortcut-line .pill-btn-dark {
-        min-height: 40px;
-        padding: 0 16px;
+      .shortcut-guide {
+        width: 100%;
+        padding: 18px;
+        border: 1px solid rgba(36, 40, 47, 0.08);
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.76);
+        box-shadow: 0 18px 44px rgba(15, 23, 42, 0.08);
+        backdrop-filter: blur(18px);
+      }
+
+      .shortcut-guide-title {
+        margin: 0 0 12px;
+        color: #111827;
+        font-size: 17px;
+        line-height: 1.4;
+        font-weight: 600;
+      }
+
+      .shortcut-code-block {
+        position: relative;
+        margin: 0;
+        padding: 14px 54px 14px 16px;
+        border: 1px solid #d0d7de;
+        border-radius: 12px;
+        background: #f6f8fa;
+        color: #24292f;
+        overflow: hidden;
+      }
+
+      .shortcut-code {
+        display: block;
+        margin: 0;
+        font-family: ui-monospace, SFMono-Regular, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 14px;
+        line-height: 1.5;
+        white-space: normal;
+        word-break: break-all;
+      }
+
+      .shortcut-copy-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        min-width: 34px;
+        height: 34px;
+        border: 1px solid rgba(208, 215, 222, 0.96);
+        border-radius: 8px;
+        padding: 0 10px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        background: rgba(255, 255, 255, 0.92);
+        color: #57606a;
+        opacity: 0;
+        transform: translateY(-2px);
+        transition:
+          opacity 0.18s ease,
+          transform 0.18s ease,
+          background 0.18s ease,
+          border-color 0.18s ease,
+          color 0.18s ease;
+        cursor: pointer;
+      }
+
+      .shortcut-copy-btn i {
+        font-size: 15px;
+        line-height: 1;
+      }
+
+      .shortcut-copy-label {
+        font-size: 12px;
+        line-height: 1;
+        font-weight: 600;
+      }
+
+      .shortcut-code-block:hover .shortcut-copy-btn,
+      .shortcut-code-block:focus-within .shortcut-copy-btn {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .shortcut-copy-btn:focus-visible {
+        outline: 2px solid rgba(9, 105, 218, 0.35);
+        outline-offset: 2px;
+        opacity: 1;
+      }
+
+      .shortcut-copy-btn.is-copied {
+        opacity: 1;
+        transform: translateY(0);
+        border-color: rgba(31, 136, 61, 0.24);
+        background: #dafbe1;
+        color: #1a7f37;
+      }
+
+      .shortcut-steps {
+        margin: 14px 0 0;
+        padding-left: 20px;
+        color: #3c4455;
+        font-size: 14px;
+        line-height: 1.65;
+      }
+
+      .shortcut-steps li + li {
+        margin-top: 8px;
+      }
+
+      .shortcut-quote {
+        font-weight: 600;
+        color: #111827;
       }
 
       .shortcut-store-link {
@@ -932,7 +913,6 @@ const structuredData = [
 
       .pill-btn .ri-discord-fill,
       .pill-btn .ri-wechat-fill,
-      .pill-btn .ri-keyboard-line,
       .pill-btn .ri-settings-6-line,
       .pill-btn .ri-github-fill,
       .pill-btn .ri-file-list-3-line {
@@ -1765,8 +1745,11 @@ const structuredData = [
 
         .shortcut-line {
           margin-top: 22px;
-          font-size: 17px;
           justify-content: center;
+        }
+
+        .shortcut-guide {
+          padding: 16px;
         }
 
         .shortcut-store-badge {
@@ -1978,9 +1961,32 @@ const structuredData = [
 
         .shortcut-line {
           flex-wrap: wrap;
-          row-gap: 8px;
-          font-size: 16px;
           justify-content: center;
+        }
+
+        .shortcut-guide {
+          padding: 14px;
+          border-radius: 18px;
+        }
+
+        .shortcut-guide-title {
+          font-size: 16px;
+        }
+
+        .shortcut-code-block {
+          padding-right: 16px;
+          padding-bottom: 54px;
+        }
+
+        .shortcut-copy-btn {
+          opacity: 1;
+          top: auto;
+          bottom: 10px;
+          transform: none;
+        }
+
+        .shortcut-steps {
+          font-size: 13px;
         }
 
         .shortcut-store-badge {
@@ -2231,16 +2237,32 @@ const structuredData = [
           </div>
 
           <div class="shortcut-line" data-node-id="3364:535">
-            <a
-              class="pill-btn pill-btn-selected pill-btn-dark"
-              href="chrome://extensions/shortcuts"
-              aria-label={initialUi.shortcutSettingsAria}
-              data-i18n-aria-label="shortcut_settings_aria"
-              data-shortcut-settings-link
-            >
-              <i class="ri-keyboard-line" aria-hidden="true"></i>
-              <span data-i18n="shortcut_settings">{initialUi.shortcutSettings}</span>
-            </a>
+            <section class="shortcut-guide" aria-labelledby="shortcut-guide-title">
+              <h2 id="shortcut-guide-title" class="shortcut-guide-title" data-i18n="shortcut_guide_title">{initialUi.shortcutGuideTitle}</h2>
+              <div class="shortcut-code-block">
+                <code id="shortcut-settings-url" class="shortcut-code">chrome://extensions/shortcuts</code>
+                <button class="shortcut-copy-btn" type="button" aria-label={initialUi.shortcutCopyAria} data-i18n-aria-label="shortcut_copy_aria" data-shortcut-copy-button>
+                  <i class="ri-file-copy-line" aria-hidden="true" data-shortcut-copy-icon></i>
+                  <span class="shortcut-copy-label" data-shortcut-copy-label data-i18n="shortcut_copy">{initialUi.shortcutCopy}</span>
+                </button>
+              </div>
+              <ol class="shortcut-steps">
+                <li data-i18n="shortcut_step_1">{initialUi.shortcutStep1}</li>
+                <li data-i18n="shortcut_step_2">{initialUi.shortcutStep2}</li>
+                <li>
+                  <span data-i18n="shortcut_step_3_prefix">{initialUi.shortcutStep3Prefix}</span>
+                  <span class="shortcut-quote" data-i18n="shortcut_command_label">{initialUi.shortcutCommandLabel}</span>
+                  <span data-i18n="shortcut_step_3_suffix">{initialUi.shortcutStep3Suffix}</span>
+                </li>
+                <li>
+                  <span data-i18n="shortcut_step_4_prefix">{initialUi.shortcutStep4Prefix}</span>
+                  <span class="shortcut-quote" data-i18n="shortcut_browser_scope_label">{initialUi.shortcutBrowserScopeLabel}</span>
+                  <span data-i18n="shortcut_step_4_middle">{initialUi.shortcutStep4Middle}</span>
+                  <span class="shortcut-quote" data-i18n="shortcut_global_scope_label">{initialUi.shortcutGlobalScopeLabel}</span>
+                  <span data-i18n="shortcut_step_4_suffix">{initialUi.shortcutStep4Suffix}</span>
+                </li>
+              </ol>
+            </section>
           </div>
         </div>
       </section>
@@ -2251,7 +2273,11 @@ const structuredData = [
         <FeatureGrid messages={featureMessages} />
       </section>
     </main>
-    <LanguageMenu currentLabel={initialUi.languageLabel} toggleAriaLabel={initialUi.languageSelectAria} />
+    <LanguageMenu
+      currentLabel={initialUi.languageLabel}
+      toggleAriaLabel={initialUi.languageSelectAria}
+      locales={Array.from(SUPPORTED_ONBOARDING_LANGUAGES)}
+    />
     <div id="community-qrcode-modal" class="qrcode-modal" hidden>
       <div class="qrcode-modal-backdrop" data-close-qrcode-modal></div>
       <div class="qrcode-modal-panel" role="dialog" aria-modal="true" aria-labelledby="community-qrcode-title">
@@ -2279,19 +2305,26 @@ const structuredData = [
           page_title: "Lumno 安装引导｜浏览器命令栏与新标签页快速开始",
           title_welcome: "欢迎使用",
           subtitle: "开源浏览器聚焦搜索 & 极简新标签页",
-          shortcut_settings: "设置快捷键",
-          shortcut_settings_aria: "打开浏览器扩展快捷键设置",
+          shortcut_guide_title: "快速启用 Lumno 聚焦搜索",
+          shortcut_copy: "复制",
+          shortcut_copied: "已复制",
+          shortcut_copy_aria: "复制扩展快捷键设置地址",
+          shortcut_step_1: "复制上方地址，粘贴到地址栏并访问。",
+          shortcut_step_2: "找到 Lumno。",
+          shortcut_step_3_prefix: "将",
+          shortcut_command_label: "唤起聚焦搜索窗口",
+          shortcut_step_3_suffix: "一栏的快捷键设置为你想要的。",
+          shortcut_step_4_prefix: "对于 Dia 用户，如果快捷键设置后不生效，可以将右侧的",
+          shortcut_browser_scope_label: "在 Dia 中",
+          shortcut_step_4_middle: "改为",
+          shortcut_global_scope_label: "全局",
+          shortcut_step_4_suffix: "。",
           language_select_aria: "语言",
           language_system: "跟随浏览器语言",
           language_zh_cn: "简体中文",
           language_zh_tw: "繁體中文",
           language_zh_hk: "繁體中文",
           language_en: "English",
-          language_ja: "日本語",
-          language_ko: "한국어",
-          language_fr: "Français",
-          language_de: "Deutsch",
-          language_es: "Español",
           join_discord: "反馈 & 提需",
           go_settings: "访问 GitHub 仓库",
           discord_aria: "反馈与提需",
@@ -2320,19 +2353,26 @@ const structuredData = [
           page_title: "Lumno 安裝引導｜瀏覽器命令欄與新分頁快速開始",
           title_welcome: "歡迎使用",
           subtitle: "開源瀏覽器聚焦搜尋 & 極簡新分頁",
-          shortcut_settings: "設定快捷鍵",
-          shortcut_settings_aria: "開啟瀏覽器擴充功能快捷鍵設定",
+          shortcut_guide_title: "快速啟用 Lumno 聚焦搜尋",
+          shortcut_copy: "複製",
+          shortcut_copied: "已複製",
+          shortcut_copy_aria: "複製擴充功能快捷鍵設定網址",
+          shortcut_step_1: "複製上方網址，貼到網址列後開啟。",
+          shortcut_step_2: "找到 Lumno。",
+          shortcut_step_3_prefix: "將",
+          shortcut_command_label: "喚起聚焦搜尋視窗",
+          shortcut_step_3_suffix: "這一欄的快捷鍵設成你想要的。",
+          shortcut_step_4_prefix: "對於 Dia 使用者，如果快捷鍵設定後仍未生效，可以將右側的",
+          shortcut_browser_scope_label: "在 Dia 中",
+          shortcut_step_4_middle: "改為",
+          shortcut_global_scope_label: "全域",
+          shortcut_step_4_suffix: "。",
           language_select_aria: "語言",
           language_system: "跟隨瀏覽器語言",
           language_zh_cn: "簡體中文",
           language_zh_tw: "繁體中文",
           language_zh_hk: "繁體中文",
           language_en: "English",
-          language_ja: "日本語",
-          language_ko: "한국어",
-          language_fr: "Français",
-          language_de: "Deutsch",
-          language_es: "Español",
           join_discord: "反饋 & 提需",
           go_settings: "造訪 GitHub 倉庫",
           discord_aria: "反饋與提需",
@@ -2361,19 +2401,26 @@ const structuredData = [
           page_title: "Lumno 安裝引導｜瀏覽器命令欄與新分頁快速開始",
           title_welcome: "歡迎使用",
           subtitle: "開源瀏覽器聚焦搜尋 & 極簡新分頁",
-          shortcut_settings: "設定快捷鍵",
-          shortcut_settings_aria: "開啟瀏覽器擴充功能快捷鍵設定",
+          shortcut_guide_title: "快速啟用 Lumno 聚焦搜尋",
+          shortcut_copy: "複製",
+          shortcut_copied: "已複製",
+          shortcut_copy_aria: "複製擴充功能快捷鍵設定網址",
+          shortcut_step_1: "複製上方網址，貼到網址列後開啟。",
+          shortcut_step_2: "找到 Lumno。",
+          shortcut_step_3_prefix: "將",
+          shortcut_command_label: "喚起聚焦搜尋視窗",
+          shortcut_step_3_suffix: "這一欄的快捷鍵設成你想要的。",
+          shortcut_step_4_prefix: "對於 Dia 使用者，如果快捷鍵設定後仍未生效，可以將右側的",
+          shortcut_browser_scope_label: "在 Dia 中",
+          shortcut_step_4_middle: "改為",
+          shortcut_global_scope_label: "全域",
+          shortcut_step_4_suffix: "。",
           language_select_aria: "語言",
           language_system: "跟隨瀏覽器語言",
           language_zh_cn: "简体中文",
           language_zh_tw: "繁體中文",
           language_zh_hk: "繁體中文",
           language_en: "English",
-          language_ja: "日本語",
-          language_ko: "한국어",
-          language_fr: "Français",
-          language_de: "Deutsch",
-          language_es: "Español",
           join_discord: "反饋 & 提需",
           go_settings: "造訪 GitHub 倉庫",
           discord_aria: "反饋與提需",
@@ -2402,19 +2449,26 @@ const structuredData = [
           page_title: "Lumno Onboarding | Browser Command Bar Quick Start",
           title_welcome: "Welcome to",
           subtitle: "An open-source browser extension for focus search and a minimalist new tab.",
-          shortcut_settings: "Set shortcuts",
-          shortcut_settings_aria: "Open browser extension shortcut settings",
+          shortcut_guide_title: "Quickly enable Lumno Focus Search",
+          shortcut_copy: "Copy",
+          shortcut_copied: "Copied",
+          shortcut_copy_aria: "Copy the extension shortcut settings address",
+          shortcut_step_1: "Copy the address above, paste it into the address bar, and open it.",
+          shortcut_step_2: "Find Lumno.",
+          shortcut_step_3_prefix: "Set the shortcut for",
+          shortcut_command_label: "Open Focus Search Window",
+          shortcut_step_3_suffix: "to whatever you want.",
+          shortcut_step_4_prefix: "If you're using Dia and the shortcut still doesn't work, change",
+          shortcut_browser_scope_label: "In Dia",
+          shortcut_step_4_middle: "to",
+          shortcut_global_scope_label: "Global",
+          shortcut_step_4_suffix: ".",
           language_select_aria: "Language",
           language_system: "Follow browser language",
           language_zh_cn: "简体中文",
           language_zh_tw: "繁體中文",
           language_zh_hk: "繁體中文",
           language_en: "English",
-          language_ja: "日本語",
-          language_ko: "한국어",
-          language_fr: "Français",
-          language_de: "Deutsch",
-          language_es: "Español",
           join_discord: "Feedback & Requests",
           go_settings: "View on GitHub",
           discord_aria: "Feedback and requests",
@@ -2471,11 +2525,6 @@ const structuredData = [
           }
           return "zh-CN";
         }
-        if (lower.startsWith("ja")) return "ja";
-        if (lower.startsWith("ko")) return "ko";
-        if (lower.startsWith("fr")) return "fr";
-        if (lower.startsWith("de")) return "de";
-        if (lower.startsWith("es")) return "es";
         return "en";
       }
 
@@ -2485,11 +2534,6 @@ const structuredData = [
         const lower = raw.toLowerCase();
         if (lower === "system") return getSystemLocale();
         if (lower === "en" || lower.startsWith("en-") || lower.startsWith("en_")) return "en";
-        if (lower === "ja" || lower.startsWith("ja-") || lower.startsWith("ja_")) return "ja";
-        if (lower === "ko" || lower.startsWith("ko-") || lower.startsWith("ko_")) return "ko";
-        if (lower === "fr" || lower.startsWith("fr-") || lower.startsWith("fr_")) return "fr";
-        if (lower === "de" || lower.startsWith("de-") || lower.startsWith("de_")) return "de";
-        if (lower === "es" || lower.startsWith("es-") || lower.startsWith("es_")) return "es";
         if (lower === "zh-hk" || lower === "zh_hk") return "zh-TW";
         if (lower === "zh-tw" || lower === "zh_tw" || lower === "zh-mo" || lower === "zh_mo" || lower.includes("hant")) {
           return "zh-TW";
@@ -2497,7 +2541,7 @@ const structuredData = [
         if (lower === "zh-cn" || lower === "zh_cn" || lower === "zh-hans" || lower === "zh_hans" || lower.startsWith("zh")) {
           return "zh-CN";
         }
-        return getSystemLocale();
+        return "en";
       }
 
       function getSystemLocale() {
@@ -2587,11 +2631,13 @@ const structuredData = [
         if (!I18N_MESSAGES[normalizedMode]) {
           document.documentElement.lang = normalizedMode;
           syncCommunityAction(normalizedMode);
+          syncShortcutGuide(normalizedMode);
           updateLanguageOptionState(normalizedMode);
           return;
         }
         applyI18n(normalizedMode);
         syncCommunityAction(normalizedMode);
+        syncShortcutGuide(normalizedMode);
         updateLanguageOptionState(normalizedMode);
       }
 
@@ -2721,13 +2767,70 @@ const structuredData = [
         return `${scheme}://extensions/shortcuts`;
       }
 
-      const shortcutSettingsLink = document.querySelector("[data-shortcut-settings-link]");
-      if (shortcutSettingsLink instanceof HTMLAnchorElement) {
-        const shortcutSettingsUrl = getBrowserShortcutSettingsUrl();
-        shortcutSettingsLink.href = shortcutSettingsUrl;
-        shortcutSettingsLink.addEventListener("click", (event) => {
-          event.preventDefault();
-          window.location.assign(getBrowserShortcutSettingsUrl());
+      function syncShortcutGuide(locale) {
+        const urlNode = document.getElementById("shortcut-settings-url");
+        if (urlNode) {
+          urlNode.textContent = getBrowserShortcutSettingsUrl();
+        }
+
+        const copyButton = document.querySelector("[data-shortcut-copy-button]");
+        const copyLabel = document.querySelector("[data-shortcut-copy-label]");
+        const copyIcon = document.querySelector("[data-shortcut-copy-icon]");
+        if (copyButton instanceof HTMLButtonElement) {
+          copyButton.classList.remove("is-copied");
+        }
+        if (copyLabel) {
+          copyLabel.textContent = getMessage(locale, "shortcut_copy");
+        }
+        if (copyIcon instanceof HTMLElement) {
+          copyIcon.className = "ri-file-copy-line";
+          copyIcon.setAttribute("aria-hidden", "true");
+        }
+      }
+
+      async function copyShortcutSettingsUrl() {
+        const url = getBrowserShortcutSettingsUrl();
+        if (navigator.clipboard?.writeText) {
+          await navigator.clipboard.writeText(url);
+          return;
+        }
+
+        const helper = document.createElement("textarea");
+        helper.value = url;
+        helper.setAttribute("readonly", "");
+        helper.style.position = "absolute";
+        helper.style.opacity = "0";
+        helper.style.pointerEvents = "none";
+        document.body.appendChild(helper);
+        helper.select();
+        document.execCommand("copy");
+        helper.remove();
+      }
+
+      const shortcutCopyButton = document.querySelector("[data-shortcut-copy-button]");
+      const shortcutCopyLabel = document.querySelector("[data-shortcut-copy-label]");
+      const shortcutCopyIcon = document.querySelector("[data-shortcut-copy-icon]");
+      let shortcutCopyResetTimer = 0;
+      if (shortcutCopyButton instanceof HTMLButtonElement) {
+        shortcutCopyButton.addEventListener("click", async () => {
+          try {
+            await copyShortcutSettingsUrl();
+            const currentLocale = document.body.getAttribute("data-locale") || FALLBACK_LOCALE;
+            shortcutCopyButton.classList.add("is-copied");
+            if (shortcutCopyLabel) {
+              shortcutCopyLabel.textContent = getMessage(currentLocale, "shortcut_copied");
+            }
+            if (shortcutCopyIcon instanceof HTMLElement) {
+              shortcutCopyIcon.className = "ri-check-line";
+              shortcutCopyIcon.setAttribute("aria-hidden", "true");
+            }
+            window.clearTimeout(shortcutCopyResetTimer);
+            shortcutCopyResetTimer = window.setTimeout(() => {
+              syncShortcutGuide(document.body.getAttribute("data-locale") || FALLBACK_LOCALE);
+            }, 1800);
+          } catch (error) {
+            console.error("Failed to copy shortcut settings URL.", error);
+          }
         });
       }
 

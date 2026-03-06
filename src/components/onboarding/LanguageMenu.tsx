@@ -1,9 +1,26 @@
 interface Props {
   currentLabel?: string;
   toggleAriaLabel?: string;
+  locales?: Array<"zh-CN" | "zh-TW" | "en" | "ja" | "ko" | "fr" | "de" | "es">;
 }
 
-export default function LanguageMenu({ currentLabel = "简体中文", toggleAriaLabel = "语言" }: Props) {
+const LANGUAGE_OPTIONS = [
+  { value: "zh-CN", label: "简体中文", i18n: "language_zh_cn" },
+  { value: "zh-TW", label: "繁體中文", i18n: "language_zh_tw" },
+  { value: "en", label: "English", i18n: "language_en" },
+  { value: "ja", label: "日本語", i18n: "language_ja" },
+  { value: "ko", label: "한국어", i18n: "language_ko" },
+  { value: "fr", label: "Français", i18n: "language_fr" },
+  { value: "de", label: "Deutsch", i18n: "language_de" },
+  { value: "es", label: "Español", i18n: "language_es" },
+] as const;
+
+export default function LanguageMenu({ currentLabel = "简体中文", toggleAriaLabel = "语言", locales }: Props) {
+  const enabledLocales = locales?.length ? new Set(locales) : null;
+  const options = enabledLocales
+    ? LANGUAGE_OPTIONS.filter((option) => enabledLocales.has(option.value))
+    : LANGUAGE_OPTIONS;
+
   return (
     <div className="lang-control">
       <button
@@ -26,30 +43,18 @@ export default function LanguageMenu({ currentLabel = "简体中文", toggleAria
         </span>
       </button>
       <div id="language-menu" className="lang-menu" role="menu" data-open="false">
-        <button className="lang-option" type="button" role="menuitemradio" data-lang-value="zh-CN" data-i18n="language_zh_cn">
-          简体中文
-        </button>
-        <button className="lang-option" type="button" role="menuitemradio" data-lang-value="zh-TW" data-i18n="language_zh_tw">
-          繁體中文
-        </button>
-        <button className="lang-option" type="button" role="menuitemradio" data-lang-value="en" data-i18n="language_en">
-          English
-        </button>
-        <button className="lang-option" type="button" role="menuitemradio" data-lang-value="ja" data-i18n="language_ja">
-          日本語
-        </button>
-        <button className="lang-option" type="button" role="menuitemradio" data-lang-value="ko" data-i18n="language_ko">
-          한국어
-        </button>
-        <button className="lang-option" type="button" role="menuitemradio" data-lang-value="fr" data-i18n="language_fr">
-          Français
-        </button>
-        <button className="lang-option" type="button" role="menuitemradio" data-lang-value="de" data-i18n="language_de">
-          Deutsch
-        </button>
-        <button className="lang-option" type="button" role="menuitemradio" data-lang-value="es" data-i18n="language_es">
-          Español
-        </button>
+        {options.map((option) => (
+          <button
+            key={option.value}
+            className="lang-option"
+            type="button"
+            role="menuitemradio"
+            data-lang-value={option.value}
+            data-i18n={option.i18n}
+          >
+            {option.label}
+          </button>
+        ))}
       </div>
     </div>
   );

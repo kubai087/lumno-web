@@ -1,9 +1,15 @@
 ---
 import Page from "../../onboarding/index.astro";
-import { buildLocalizedPath, buildRouteLanguageMap, getNonDefaultLocales, resolveLocaleFromSegment } from "../../../lib/locales";
+import {
+  SUPPORTED_ONBOARDING_LANGUAGES,
+  buildLocalizedPath,
+  buildScopedRouteLanguageMap,
+  getScopedNonDefaultLocales,
+  resolveLocaleFromSegment,
+} from "../../../lib/locales";
 
 export function getStaticPaths() {
-  return getNonDefaultLocales().map((locale) => ({
+  return getScopedNonDefaultLocales(SUPPORTED_ONBOARDING_LANGUAGES).map((locale) => ({
     params: {
       locale: buildLocalizedPath(locale, "/").replaceAll("/", "") || locale.toLowerCase(),
     },
@@ -12,7 +18,7 @@ export function getStaticPaths() {
 
 const locale = resolveLocaleFromSegment(Astro.params.locale || "");
 
-if (!locale) {
+if (!locale || !SUPPORTED_ONBOARDING_LANGUAGES.includes(locale)) {
   throw new Error(`Unsupported locale: ${Astro.params.locale}`);
 }
 ---
@@ -20,5 +26,5 @@ if (!locale) {
 <Page
   forcedLocale={locale}
   seoPath={buildLocalizedPath(locale, "/onboarding/")}
-  routeLanguageMap={buildRouteLanguageMap("/onboarding/")}
+  routeLanguageMap={buildScopedRouteLanguageMap("/onboarding/", SUPPORTED_ONBOARDING_LANGUAGES)}
 />

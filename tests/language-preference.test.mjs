@@ -53,6 +53,7 @@ test("release uses the shared language preference helper", () => {
   assert.match(source, /import "\.\.\/\.\.\/scripts\/language-preference"/);
   assert.match(source, /import "\.\.\/\.\.\/scripts\/language-runtime"/);
   assert.match(source, /window\.__lumnoLanguageRuntime\.setupLanguageRuntime\(/);
+  assert.match(source, /shouldRedirect:\s*\(\)\s*=>\s*!INITIAL_ENTRY_CONTEXT\.isExtensionEntry/);
   assert.doesNotMatch(source, /function applyLanguageMode\(mode, options\)/);
 });
 

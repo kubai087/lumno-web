@@ -1790,6 +1790,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
           normalizeLanguageMode,
           routeLanguageMap: ROUTE_LANGUAGE_MAP,
           languageStorageKey: LANGUAGE_STORAGE_KEY,
+          shouldRedirect: () => !INITIAL_ENTRY_CONTEXT.isExtensionEntry,
           applyResolvedLanguage,
         });
       }

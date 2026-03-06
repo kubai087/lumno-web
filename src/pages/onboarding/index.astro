@@ -243,7 +243,7 @@ const featureMessages = {
     newTabTitle: "Minimalist new tab",
     newTabDesc: "Keep bookmarks and frequently used pages in clean card layouts",
     labsTitle: "Labs features",
-    labsTitleStrong: "& polished UI",
+    labsTitleStrong: "& refined UI",
     labsDesc: "More experiments are on the way",
     betaAlt: "Beta",
   },
@@ -2426,7 +2426,7 @@ const structuredData = [
           feature_newtab_title: "Minimalist new tab",
           feature_newtab_desc: "Keep bookmarks and frequently used pages in clean card layouts",
           feature_labs_title: "Labs features",
-          feature_labs_title_strong: "& polished UI",
+          feature_labs_title_strong: "& refined UI",
           feature_labs_desc: "More experiments are on the way",
           beta_alt: "Beta",
           logo_icon_alt: "Lumno icon"
@@ -2512,11 +2512,13 @@ const structuredData = [
         const reason = (params.get("reason") || "").trim().toLowerCase();
         const version = (params.get("version") || "").trim();
         const source = (params.get("source") || "").trim().toLowerCase();
+        const hasExtensionEntryKey = ENTRY_CONTEXT_CONFIG.extensionEntryKeys.some((key) => params.has(key));
         const isExtensionEntry =
           ENTRY_CONTEXT_CONFIG.extensionEntryValues.includes(entry) ||
           ENTRY_CONTEXT_CONFIG.extensionEntryValues.includes(source) ||
           Boolean(reason) ||
-          Boolean(version);
+          Boolean(version) ||
+          hasExtensionEntryKey;
         return { isExtensionEntry };
       }
 

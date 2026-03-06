@@ -1667,11 +1667,13 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         const versionFromParam = rawVersion ? (/^v/i.test(rawVersion) ? rawVersion : `v${rawVersion}`) : "";
         const fallbackVersion = ENTRY_CONTEXT_CONFIG.latestVersion || "";
         const version = versionFromParam || fallbackVersion;
+        const hasExtensionEntryKey = ENTRY_CONTEXT_CONFIG.extensionEntryKeys.some((key) => params.has(key));
         const isExtensionEntry =
           ENTRY_CONTEXT_CONFIG.extensionEntryValues.includes(entry) ||
           ENTRY_CONTEXT_CONFIG.extensionEntryValues.includes(source) ||
           Boolean(reason) ||
-          Boolean(versionFromParam);
+          Boolean(versionFromParam) ||
+          hasExtensionEntryKey;
         return { isExtensionEntry, reason, version };
       }
 
@@ -1995,7 +1997,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
       if (entryContext.isExtensionEntry) {
         window.setTimeout(() => fireIntroConfetti(), 280);
         if (window.history && typeof window.history.replaceState === "function") {
-          window.history.replaceState({}, "", "/release/");
+          window.history.replaceState({}, "", window.location.pathname);
         }
       }
     </script>

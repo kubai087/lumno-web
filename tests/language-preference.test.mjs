@@ -54,7 +54,14 @@ test("release uses the shared language preference helper", () => {
   assert.match(source, /import "\.\.\/\.\.\/scripts\/language-runtime"/);
   assert.match(source, /window\.__lumnoLanguageRuntime\.setupLanguageRuntime\(/);
   assert.match(source, /shouldRedirect:\s*\(\)\s*=>\s*!INITIAL_ENTRY_CONTEXT\.isExtensionEntry/);
+  assert.match(source, /window\.history\.replaceState\(\{\},\s*"",\s*window\.location\.pathname\)/);
   assert.doesNotMatch(source, /function applyLanguageMode\(mode, options\)/);
+});
+
+test("entry context config keeps extension entry key coverage", () => {
+  const source = fs.readFileSync(path.join(workspaceRoot, "src/lib/entry-context.ts"), "utf8");
+  assert.match(source, /EXTENSION_ENTRY_KEYS = \["entry", "source", "reason", "version", "updated", "upgrade", "install", "from", "context"\]/);
+  assert.match(source, /latestVersion: formatVersionToken\(latestVersion \|\| ""\)/);
 });
 
 test("homepage uses the shared language preference helper too", () => {

@@ -1,0 +1,82 @@
+---
+import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_TITLE, SITE_URL } from "../lib/seo";
+
+type StructuredData = Record<string, unknown>;
+
+interface Props {
+  title: string;
+  description: string;
+  path: string;
+  keywords?: string[];
+  alternates?: Array<{
+    hreflang: string;
+    href: string;
+  }>;
+  image?: string;
+  type?: string;
+  locale?: string;
+  noindex?: boolean;
+  i18nTitleKey?: string;
+  structuredData?: StructuredData | StructuredData[];
+}
+
+const {
+  title,
+  description,
+  path,
+  keywords = [],
+  alternates = [],
+  image = DEFAULT_OG_IMAGE,
+  type = "website",
+  locale = "zh_CN",
+  noindex = false,
+  i18nTitleKey,
+  structuredData = [],
+} = Astro.props;
+
+const canonicalUrl = new URL(path, SITE_URL).toString();
+const imageUrl = new URL(image, SITE_URL).toString();
+const robots = noindex
+  ? "noindex, nofollow, noarchive"
+  : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
+const schemaItems = Array.isArray(structuredData) ? structuredData : [structuredData];
+const keywordContent = keywords.join(", ");
+---
+
+<title data-i18n={i18nTitleKey}>{title}</title>
+<meta name="description" content={description} />
+<meta name="robots" content={robots} />
+<meta name="author" content="Lumno" />
+<meta name="generator" content="Astro" />
+<meta name="application-name" content={SITE_NAME} />
+<meta name="apple-mobile-web-app-title" content={SITE_NAME} />
+<meta name="theme-color" content="#fafafa" />
+{keywordContent ? <meta name="keywords" content={keywordContent} /> : null}
+<link rel="canonical" href={canonicalUrl} />
+{alternates.map((item) => (
+  <link rel="alternate" hreflang={item.hreflang} href={item.href} />
+))}
+
+<meta property="og:site_name" content={SITE_NAME} />
+<meta property="og:type" content={type} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:image" content={imageUrl} />
+<meta property="og:locale" content={locale} />
+{alternates
+  .filter((item) => item.hreflang !== "x-default")
+  .map((item) => (
+    <meta property="og:locale:alternate" content={item.hreflang.replace("-", "_")} />
+  ))}
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageUrl} />
+<meta name="twitter:site" content="@Kubai087" />
+<meta name="twitter:creator" content="@Kubai087" />
+
+{schemaItems.map((item) => (
+  <script type="application/ld+json" set:html={JSON.stringify(item)} />
+))}

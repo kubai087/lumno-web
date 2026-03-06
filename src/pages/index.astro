@@ -1,15 +1,182 @@
 ---
+import SeoHead from "../components/SeoHead.astro";
 import FeatureGrid from "../components/onboarding/FeatureGrid";
 import LanguageMenu from "../components/onboarding/LanguageMenu";
 import logoIconSvg from "../assets/onboarding/logo.svg?raw";
+import {
+  SITE_URL,
+  buildKeywords,
+  buildOrganizationSchema,
+  buildSoftwareApplicationSchema,
+  buildWebPageSchema,
+} from "../lib/seo";
+
+const forcedLocale = Astro.props.forcedLocale || "zh-CN";
+const seoPath = Astro.props.seoPath || "/";
+const routeLanguageMap = Astro.props.routeLanguageMap || {
+  "zh-CN": "/",
+  "zh-TW": "/zh-tw/",
+  en: "/en/",
+};
+const uiLocale = forcedLocale === "en" ? "en" : forcedLocale === "zh-TW" ? "zh-TW" : "zh-CN";
+const alternateLinks = [
+  { hreflang: "zh-CN", href: new URL(routeLanguageMap["zh-CN"], SITE_URL).toString() },
+  { hreflang: "zh-TW", href: new URL(routeLanguageMap["zh-TW"], SITE_URL).toString() },
+  { hreflang: "en", href: new URL(routeLanguageMap.en, SITE_URL).toString() },
+  { hreflang: "x-default", href: new URL("/", SITE_URL).toString() },
+];
+const ogLocale = forcedLocale === "zh-TW" ? "zh_TW" : forcedLocale === "en" ? "en_US" : "zh_CN";
+const pageTitleByLocale = {
+  "zh-CN": "Lumno｜浏览器命令栏、聚焦搜索与极简新标签页",
+  "zh-TW": "Lumno｜瀏覽器命令欄、聚焦搜尋與極簡新分頁",
+  en: "Lumno | Browser Command Bar, Focus Search & Minimal New Tab",
+};
+const pageDescriptionByLocale = {
+  "zh-CN":
+    "Lumno 是一款开源浏览器命令栏与快捷命令浮层，支持搜索标签页、书签、历史记录和站内内容，并提供极简新标签页体验，适用于 Chrome、Edge、Dia 等浏览器，也适合从 Arc 迁移后的高效搜索工作流。",
+  "zh-TW":
+    "Lumno 是一款開源瀏覽器命令欄與快捷命令浮層，支援搜尋分頁、書籤、歷史紀錄與站內內容，並提供極簡新分頁體驗，適用於 Chrome、Edge、Dia 等瀏覽器，也適合從 Arc 遷移後延續高效率搜尋流程。",
+  en:
+    "Lumno is an open-source browser command bar and focus search extension for tabs, bookmarks, history, and site search, with a minimalist new tab experience for Chrome, Edge, Dia, and Arc-style migration workflows.",
+};
+const pageTitle = pageTitleByLocale[forcedLocale] || pageTitleByLocale["zh-CN"];
+const pageDescription = pageDescriptionByLocale[forcedLocale] || pageDescriptionByLocale["zh-CN"];
+const pageKeywords = buildKeywords([
+  "浏览器快捷启动器",
+  "Arc 浏览器迁移",
+  "Arc 替代",
+  "Arc 风格搜索",
+  "command bar",
+  "command palette",
+  "tab search",
+  "bookmark search",
+  "history search",
+]);
+const initialUi = {
+  "zh-CN": {
+    viewRelease: "更新日志",
+    joinDiscord: "反馈 & 提需",
+    titleWelcome: "欢迎使用",
+    subtitle: "开源浏览器聚焦搜索 & 极简新标签页",
+    languageLabel: "简体中文",
+    settingsAria: "访问 Lumno GitHub 仓库",
+    releaseAria: "查看更新日志页面",
+    discordAria: "反馈与提需",
+    qrcodeTitle: "微信群二维码",
+    qrcodeImageAlt: "Lumno 微信群二维码",
+    qrcodeCloseAria: "关闭二维码弹窗",
+    cwsBadgeAria: "在 Chrome 应用商店中安装 Lumno",
+    cwsBadgeAlt: "在 Chrome 应用商店中获取",
+    logoIconAlt: "Lumno 图标",
+    cwsSupportNote: "支持 Dia \\ Edge",
+    tooltipAria: "关于 Arc 迁移支持",
+    supportTooltip: "为从 Arc 迁移到 Dia 或 Chrome 的用户保留熟悉的命令栏搜索体验。Lumno 受 Arc 式交互启发，但与 Arc 无关联。",
+  },
+  "zh-TW": {
+    viewRelease: "更新日誌",
+    joinDiscord: "反饋 & 提需",
+    titleWelcome: "歡迎使用",
+    subtitle: "開源瀏覽器聚焦搜尋 & 極簡新分頁",
+    languageLabel: "繁體中文",
+    settingsAria: "造訪 Lumno GitHub 倉庫",
+    releaseAria: "查看更新日誌頁面",
+    discordAria: "反饋與提需",
+    qrcodeTitle: "微信群二維碼",
+    qrcodeImageAlt: "Lumno 微信群二維碼",
+    qrcodeCloseAria: "關閉二維碼彈窗",
+    cwsBadgeAria: "在 Chrome 線上應用程式商店安裝 Lumno",
+    cwsBadgeAlt: "在 Chrome 線上應用程式商店中取得",
+    logoIconAlt: "Lumno 圖示",
+    cwsSupportNote: "支援 Dia \\ Edge",
+    tooltipAria: "關於 Arc 遷移支援",
+    supportTooltip: "為從 Arc 遷移到 Dia 或 Chrome 的使用者保留熟悉的命令欄搜尋體驗。Lumno 受 Arc 式互動啟發，但與 Arc 無關聯。",
+  },
+  en: {
+    viewRelease: "Release Notes",
+    joinDiscord: "Feedback & Requests",
+    titleWelcome: "Welcome to",
+    subtitle: "An open-source browser extension for focus search and a minimalist new tab.",
+    languageLabel: "English",
+    settingsAria: "Open the Lumno GitHub repository",
+    releaseAria: "Open the release notes page",
+    discordAria: "Feedback and requests",
+    qrcodeTitle: "WeChat group QR code",
+    qrcodeImageAlt: "Lumno WeChat group QR code",
+    qrcodeCloseAria: "Close QR code dialog",
+    cwsBadgeAria: "Install Lumno from the Chrome Web Store",
+    cwsBadgeAlt: "Get it from the Chrome Web Store",
+    logoIconAlt: "Lumno icon",
+    cwsSupportNote: "Supports Dia \\ Edge",
+    tooltipAria: "About Arc migration support",
+    supportTooltip: "Keeps a familiar command-bar search workflow for people moving from Arc to Dia or Chrome. Lumno is inspired by Arc-like interactions, but is not affiliated with Arc.",
+  },
+}[uiLocale];
+const featureMessages = {
+  "zh-CN": {
+    searchTitle: "搜索浏览器中的任意页面",
+    searchDesc: "支持书签、历史记录、已打开页面和最常访问",
+    siteSearchTitle: "自定义站内搜索",
+    siteSearchDesc: "内置常用站点，按 Tab 一键发起站内搜索",
+    newTabTitle: "极简新标签页",
+    newTabDesc: "展示书签与常用网页卡片",
+    labsTitle: "实验室功能",
+    labsTitleStrong: "& 精美 UI",
+    labsDesc: "更多玩法，敬请期待",
+    betaAlt: "Beta",
+  },
+  "zh-TW": {
+    searchTitle: "搜尋瀏覽器中的任意頁面",
+    searchDesc: "支援書籤、歷史紀錄、已開啟頁面與最常造訪",
+    siteSearchTitle: "自訂站內搜尋",
+    siteSearchDesc: "內建常用站點，按 Tab 一鍵發起站內搜尋",
+    newTabTitle: "極簡新分頁",
+    newTabDesc: "展示書籤與常用網頁卡片",
+    labsTitle: "實驗室功能",
+    labsTitleStrong: "& 精緻 UI",
+    labsDesc: "更多玩法，敬請期待",
+    betaAlt: "Beta",
+  },
+  en: {
+    searchTitle: "Search any page in your browser",
+    searchDesc: "Search bookmarks, history, open pages, and frequently visited sites",
+    siteSearchTitle: "Custom site search",
+    siteSearchDesc: "Built-in site engines for instant site search with Tab",
+    newTabTitle: "Minimalist new tab",
+    newTabDesc: "Keep bookmarks and frequently used pages in clean card layouts",
+    labsTitle: "Labs features",
+    labsTitleStrong: "& polished UI",
+    labsDesc: "More experiments are on the way",
+    betaAlt: "Beta",
+  },
+}[uiLocale];
+const structuredData = [
+  buildOrganizationSchema(),
+  buildSoftwareApplicationSchema({
+    description: pageDescription,
+  }),
+  buildWebPageSchema({
+    name: pageTitle,
+    description: pageDescription,
+    path: seoPath,
+  }),
+];
 ---
 
 <!doctype html>
-<html lang="zh-CN">
+<html lang={forcedLocale}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title data-i18n="page_title">Lumno - 聚焦搜索&新标签页</title>
+    <SeoHead
+      title={pageTitle}
+      description={pageDescription}
+      path={seoPath}
+      keywords={pageKeywords}
+      alternates={alternateLinks}
+      locale={ogLocale}
+      i18nTitleKey="page_title_ui"
+      structuredData={structuredData}
+    />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
@@ -202,6 +369,19 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
         font-weight: 400;
       }
 
+      .migration-note {
+        margin: 14px 0 0;
+        max-width: 420px;
+        color: #6e7683;
+        font-size: 14px;
+        line-height: 1.55;
+      }
+
+      .migration-note strong {
+        color: #3c4455;
+        font-weight: 600;
+      }
+
       .is-locale-en .subtitle {
         white-space: normal;
         overflow-wrap: anywhere;
@@ -246,10 +426,105 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
 
       .shortcut-store-note {
         margin: 0;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
         color: #707887;
         font-size: 12px;
         line-height: 1.35;
         font-weight: 400;
+      }
+
+      .support-tooltip {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+      }
+
+      .support-tooltip-trigger {
+        width: 16px;
+        height: 16px;
+        padding: 0;
+        border: 1px solid rgba(112, 120, 135, 0.28);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.8);
+        color: #707887;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        cursor: help;
+        transition:
+          border-color 0.18s ease,
+          color 0.18s ease,
+          background-color 0.18s ease;
+      }
+
+      .support-tooltip-trigger i {
+        font-size: 11px;
+        line-height: 1;
+      }
+
+      .support-tooltip-trigger:focus-visible {
+        outline: 2px solid rgba(53, 120, 203, 0.22);
+        outline-offset: 2px;
+      }
+
+      .support-tooltip-trigger:hover,
+      .support-tooltip-trigger:focus-visible {
+        color: #4b545f;
+        border-color: rgba(75, 84, 95, 0.35);
+        background: rgba(255, 255, 255, 0.96);
+      }
+
+      .support-tooltip-bubble {
+        position: absolute;
+        left: calc(100% + 10px);
+        top: 50%;
+        z-index: 8;
+        width: min(300px, calc(100vw - 48px));
+        padding: 10px 12px;
+        border: 1px solid rgba(214, 219, 227, 0.95);
+        border-radius: 12px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(247, 249, 252, 0.98) 100%);
+        box-shadow:
+          0 16px 36px rgba(17, 24, 39, 0.08),
+          0 3px 10px rgba(17, 24, 39, 0.05);
+        color: #556070;
+        font-size: 12px;
+        line-height: 1.5;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-50%) translateX(-6px);
+        transition:
+          opacity 0.18s ease,
+          transform 0.18s ease,
+          visibility 0.18s ease;
+        pointer-events: none;
+      }
+
+      .support-tooltip-bubble strong {
+        color: #3c4455;
+        font-weight: 600;
+      }
+
+      .support-tooltip-bubble::before {
+        content: "";
+        position: absolute;
+        left: -6px;
+        top: 50%;
+        width: 10px;
+        height: 10px;
+        border-left: 1px solid rgba(214, 219, 227, 0.95);
+        border-bottom: 1px solid rgba(214, 219, 227, 0.95);
+        background: rgba(252, 253, 254, 0.98);
+        transform: translateY(-50%) rotate(45deg);
+      }
+
+      .support-tooltip:hover .support-tooltip-bubble,
+      .support-tooltip:focus-within .support-tooltip-bubble {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(-50%) translateX(0);
       }
 
       .text-shimmer {
@@ -1782,33 +2057,33 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
       }
     </style>
   </head>
-  <body>
+  <body data-locale={uiLocale} class:list={{ "is-locale-en": uiLocale === "en" }}>
     <header class="top-nav">
       <a class="top-nav-brand" href="/" aria-label="Lumno">
         <img src="/assets/lumno-title-figma.svg" alt="Lumno" draggable="false" />
       </a>
       <div class="top-actions">
         <div class="actions" data-node-id="3358:77">
-          <a class="pill-btn pill-btn-selected pill-btn-icon-only" href="https://github.com/kubai087/lumno-extension" target="_blank" rel="noreferrer noopener" aria-label="访问 Lumno GitHub 仓库" data-i18n-aria-label="settings_aria">
+          <a class="pill-btn pill-btn-selected pill-btn-icon-only" href="https://github.com/kubai087/lumno-extension" target="_blank" rel="noreferrer noopener" aria-label={initialUi.settingsAria} data-i18n-aria-label="settings_aria">
             <i class="ri-github-fill" aria-hidden="true"></i>
           </a>
-          <a class="pill-btn pill-btn-selected" href="/release/" aria-label="查看更新日志" data-i18n-aria-label="release_aria">
+          <a class="pill-btn pill-btn-selected" href="/release/" aria-label={initialUi.releaseAria} data-i18n-aria-label="release_aria">
             <i class="ri-file-list-3-line" aria-hidden="true"></i>
-            <span data-i18n="view_release">更新日志</span>
+            <span data-i18n="view_release">{initialUi.viewRelease}</span>
           </a>
           <a
             class="pill-btn pill-btn-selected pill-btn-dark"
             href="https://discord.gg/2u9sg7ZNkJ"
             target="_blank"
             rel="noreferrer noopener"
-            aria-label="反馈 & 提需"
+            aria-label={initialUi.discordAria}
             data-i18n-aria-label="discord_aria"
             data-node-id="3358:42"
             data-community-entry
             data-discord-href="https://discord.gg/2u9sg7ZNkJ"
           >
             <i class="ri-discord-fill" aria-hidden="true" data-community-icon></i>
-            <span data-i18n="join_discord">反馈 & 提需</span>
+            <span data-i18n="join_discord">{initialUi.joinDiscord}</span>
           </a>
         </div>
       </div>
@@ -1818,10 +2093,10 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
         <div class="left-main">
           <div class="hero">
             <div class="title-row">
-              <h1 class="title" data-i18n="title_welcome">欢迎使用</h1>
+              <h1 class="title" data-i18n="title_welcome">{initialUi.titleWelcome}</h1>
               <div class="logo-lockup">
                 <span class="logo-icon-wrap">
-                  <span class="logo-icon mark-svg" role="img" aria-label="Lumno 图标" data-i18n-aria-label="logo_icon_alt" set:html={logoIconSvg}></span>
+                  <span class="logo-icon mark-svg" role="img" aria-label={initialUi.logoIconAlt} data-i18n-aria-label="logo_icon_alt" set:html={logoIconSvg}></span>
                 </span>
                 <span class="logo-wordmark-wrap">
                   <img class="logo-wordmark mark-svg" src="/assets/textlogo.svg" alt="Lumno" draggable="false" />
@@ -1883,7 +2158,7 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
                 </span>
               </div>
             </div>
-            <p class="subtitle" data-i18n="subtitle">开源浏览器聚焦搜索 &amp; 极简新标签页</p>
+            <p class="subtitle" data-i18n="subtitle">{initialUi.subtitle}</p>
           </div>
 
           <div class="shortcut-line shortcut-line-store" data-node-id="3364:535">
@@ -1892,18 +2167,28 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
               href="https://chromewebstore.google.com/detail/nggfkkbmogmadfoikakkfegkoilfcfao"
               target="_blank"
               rel="noreferrer noopener"
-              aria-label="Get it from Chrome Web Store"
+              aria-label={initialUi.cwsBadgeAria}
               data-i18n-aria-label="cws_badge_aria"
             >
               <img
                 class="shortcut-store-badge mark-svg"
                 src="/assets/chrome-web-store-large-bordered.png"
-                alt="Get it from Chrome Web Store"
+                alt={initialUi.cwsBadgeAlt}
                 data-i18n-alt="cws_badge_alt"
                 draggable="false"
               />
             </a>
-            <p class="shortcut-store-note" data-i18n="cws_support_note">支持 Dia \ Edge</p>
+            <p class="shortcut-store-note">
+              <span data-i18n="cws_support_note">{initialUi.cwsSupportNote}</span>
+              <span class="support-tooltip">
+                <button class="support-tooltip-trigger" type="button" aria-label={initialUi.tooltipAria} data-i18n-aria-label="support_tooltip_aria">
+                  <i class="ri-question-line" aria-hidden="true"></i>
+                </button>
+                <span class="support-tooltip-bubble" role="tooltip" data-i18n-html="support_tooltip">
+                  {initialUi.supportTooltip}
+                </span>
+              </span>
+            </p>
           </div>
         </div>
 
@@ -1912,26 +2197,29 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
       <section class="right-pane" aria-hidden="true">
         <div class="right-bg"></div>
 
-        <FeatureGrid />
+        <FeatureGrid messages={featureMessages} />
       </section>
     </main>
-    <LanguageMenu />
+    <LanguageMenu currentLabel={initialUi.languageLabel} />
     <div id="community-qrcode-modal" class="qrcode-modal" hidden>
       <div class="qrcode-modal-backdrop" data-close-qrcode-modal></div>
       <div class="qrcode-modal-panel" role="dialog" aria-modal="true" aria-labelledby="community-qrcode-title">
-        <button class="qrcode-modal-close" type="button" aria-label="关闭" data-i18n-aria-label="qrcode_close_aria" data-close-qrcode-modal>
+        <button class="qrcode-modal-close" type="button" aria-label={initialUi.qrcodeCloseAria} data-i18n-aria-label="qrcode_close_aria" data-close-qrcode-modal>
           <i class="ri-close-line" aria-hidden="true"></i>
         </button>
-        <h2 id="community-qrcode-title" class="qrcode-modal-title" data-i18n="qrcode_title">微信群二维码</h2>
-        <img class="qrcode-modal-image" src="/qrcode.JPG" alt="微信群二维码" data-i18n-alt="qrcode_image_alt" loading="lazy" />
+        <h2 id="community-qrcode-title" class="qrcode-modal-title" data-i18n="qrcode_title">{initialUi.qrcodeTitle}</h2>
+        <img class="qrcode-modal-image" src="/qrcode.JPG" alt={initialUi.qrcodeImageAlt} data-i18n-alt="qrcode_image_alt" loading="lazy" />
       </div>
     </div>
-    <script>
+    <script define:vars={{ forcedLocale, routeLanguageMap }}>
+      const FORCED_LOCALE = forcedLocale;
+      const ROUTE_LANGUAGE_MAP = routeLanguageMap;
       const LANGUAGE_STORAGE_KEY = "_x_extension_language_2024_unique_";
       const FALLBACK_LOCALE = "zh-CN";
       const ZH_CN_LOCALE = "zh-CN";
       const I18N_MESSAGES = {
         "zh-CN": {
+          page_title_ui: "Lumno - 聚焦搜索&新标签页",
           page_title: "Lumno - 聚焦搜索&新标签页",
           title_welcome: "欢迎使用",
           subtitle: "开源浏览器聚焦搜索 & 极简新标签页",
@@ -1955,12 +2243,14 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
           cws_badge_aria: "在 Chrome 应用商店中安装 Lumno",
           cws_badge_alt: "在 Chrome 应用商店中获取",
           cws_support_note: "支持 Dia \\ Edge",
-          feature_search_title: "搜索任意浏览器网页",
-          feature_search_desc: "支持书签、历史、已打开网页、最常访问",
+          support_tooltip_aria: "关于 Arc 迁移支持",
+          support_tooltip: "为从 Arc 迁移到 Dia 或 Chrome 的用户保留熟悉的命令栏搜索体验。<strong>Lumno 受 Arc 式交互启发，但与 Arc 无关联。</strong>",
+          feature_search_title: "搜索浏览器中的任意页面",
+          feature_search_desc: "支持书签、历史记录、已打开页面和最常访问",
           feature_sitesearch_title: "自定义站内搜索",
-          feature_sitesearch_desc: "内置常用网站列表，Tab 一键搜索",
+          feature_sitesearch_desc: "内置常用站点，按 Tab 一键发起站内搜索",
           feature_newtab_title: "极简新标签页",
-          feature_newtab_desc: "展示书签与网页卡片",
+          feature_newtab_desc: "展示书签与常用网页卡片",
           feature_labs_title: "实验室功能",
           feature_labs_title_strong: "& 精美 UI",
           feature_labs_desc: "更多玩法，敬请期待",
@@ -1968,6 +2258,7 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
           logo_icon_alt: "Lumno 图标"
         },
         "zh-TW": {
+          page_title_ui: "Lumno - 聚焦搜尋&新分頁",
           page_title: "Lumno - 聚焦搜尋&新分頁",
           title_welcome: "歡迎使用",
           subtitle: "開源瀏覽器聚焦搜尋 & 極簡新分頁",
@@ -1991,19 +2282,22 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
           cws_badge_aria: "在 Chrome 線上應用程式商店安裝 Lumno",
           cws_badge_alt: "在 Chrome 線上應用程式商店中取得",
           cws_support_note: "支援 Dia \\ Edge",
-          feature_search_title: "搜尋任意瀏覽器網頁",
-          feature_search_desc: "支援書籤、歷史、已開啟網頁、最常造訪",
+          support_tooltip_aria: "關於 Arc 遷移支援",
+          support_tooltip: "為從 Arc 遷移到 Dia 或 Chrome 的使用者保留熟悉的命令欄搜尋體驗。<strong>Lumno 受 Arc 式互動啟發，但與 Arc 無關聯。</strong>",
+          feature_search_title: "搜尋瀏覽器中的任意頁面",
+          feature_search_desc: "支援書籤、歷史紀錄、已開啟頁面與最常造訪",
           feature_sitesearch_title: "自訂站內搜尋",
-          feature_sitesearch_desc: "內建常用網站列表，Tab 一鍵搜尋",
+          feature_sitesearch_desc: "內建常用站點，按 Tab 一鍵發起站內搜尋",
           feature_newtab_title: "極簡新分頁",
-          feature_newtab_desc: "展示書籤與網頁卡片",
+          feature_newtab_desc: "展示書籤與常用網頁卡片",
           feature_labs_title: "實驗室功能",
-          feature_labs_title_strong: "& 精美 UI",
+          feature_labs_title_strong: "& 精緻 UI",
           feature_labs_desc: "更多玩法，敬請期待",
           beta_alt: "Beta",
           logo_icon_alt: "Lumno 圖示"
         },
         "zh-HK": {
+          page_title_ui: "Lumno - 聚焦搜尋&新分頁",
           page_title: "Lumno - 聚焦搜尋&新分頁",
           title_welcome: "歡迎使用",
           subtitle: "開源瀏覽器聚焦搜尋 & 極簡新分頁",
@@ -2027,22 +2321,25 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
           cws_badge_aria: "在 Chrome 線上應用程式商店安裝 Lumno",
           cws_badge_alt: "在 Chrome 線上應用程式商店中取得",
           cws_support_note: "支援 Dia \\ Edge",
-          feature_search_title: "搜尋任意瀏覽器網頁",
-          feature_search_desc: "支援書籤、歷史、已開啟網頁、最常造訪",
+          support_tooltip_aria: "關於 Arc 遷移支援",
+          support_tooltip: "為從 Arc 遷移到 Dia 或 Chrome 的使用者保留熟悉的命令欄搜尋體驗。<strong>Lumno 受 Arc 式互動啟發，但與 Arc 無關聯。</strong>",
+          feature_search_title: "搜尋瀏覽器中的任意頁面",
+          feature_search_desc: "支援書籤、歷史紀錄、已開啟頁面與最常造訪",
           feature_sitesearch_title: "自訂站內搜尋",
-          feature_sitesearch_desc: "內建常用網站列表，Tab 一鍵搜尋",
+          feature_sitesearch_desc: "內建常用站點，按 Tab 一鍵發起站內搜尋",
           feature_newtab_title: "極簡新分頁",
-          feature_newtab_desc: "展示書籤與網頁卡片",
+          feature_newtab_desc: "展示書籤與常用網頁卡片",
           feature_labs_title: "實驗室功能",
-          feature_labs_title_strong: "& 精美 UI",
+          feature_labs_title_strong: "& 精緻 UI",
           feature_labs_desc: "更多玩法，敬請期待",
           beta_alt: "Beta",
           logo_icon_alt: "Lumno 圖示"
         },
         en: {
+          page_title_ui: "Lumno - The Ultimate Browser Command Bar",
           page_title: "Lumno - The Ultimate Browser Command Bar",
           title_welcome: "Welcome to",
-          subtitle: "An open-source browser extension for Command Bar search and a minimalist new tab.",
+          subtitle: "An open-source browser extension for focus search and a minimalist new tab.",
           shortcut_press: "Press",
           shortcut_invoke: "to launch",
           language_select_aria: "Language",
@@ -2063,15 +2360,17 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
           cws_badge_aria: "Install Lumno from Chrome Web Store",
           cws_badge_alt: "Get it from Chrome Web Store",
           cws_support_note: "Supports Dia \\ Edge",
-          feature_search_title: "Search Any Browser Page",
-          feature_search_desc: "Bookmarks, history, open tabs, and most visited",
-          feature_sitesearch_title: "Custom Site Search",
-          feature_sitesearch_desc: "Built-in engines that support site-search queries",
-          feature_newtab_title: "Minimalist New Tab",
-          feature_newtab_desc: "Pin bookmarks plus recent or most-visited cards",
-          feature_labs_title: "Labs Features",
-          feature_labs_title_strong: "& Refined UI",
-          feature_labs_desc: "More features are on the way",
+          support_tooltip_aria: "About Arc migration support",
+          support_tooltip: "Keeps a familiar command-bar search workflow for people moving from Arc to Dia or Chrome. <strong>Lumno is inspired by Arc-like interactions, but is not affiliated with Arc.</strong>",
+          feature_search_title: "Search any page in your browser",
+          feature_search_desc: "Search bookmarks, history, open pages, and frequently visited sites",
+          feature_sitesearch_title: "Custom site search",
+          feature_sitesearch_desc: "Built-in site engines for instant site search with Tab",
+          feature_newtab_title: "Minimalist new tab",
+          feature_newtab_desc: "Keep bookmarks and frequently used pages in clean card layouts",
+          feature_labs_title: "Labs features",
+          feature_labs_title_strong: "& polished UI",
+          feature_labs_desc: "More experiments are on the way",
           beta_alt: "Beta",
           logo_icon_alt: "Lumno icon"
         }
@@ -2166,6 +2465,11 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
             node.setAttribute("data-shimmer-text", value);
           }
         });
+        document.querySelectorAll("[data-i18n-html]").forEach((node) => {
+          const key = node.getAttribute("data-i18n-html");
+          if (!key) return;
+          node.innerHTML = getMessage(resolvedLocale, key);
+        });
         document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
           const key = node.getAttribute("data-i18n-aria-label");
           if (!key) return;
@@ -2202,6 +2506,20 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
 
       function applyLanguageMode(mode, options) {
         const normalizedMode = normalizeLanguageMode(mode);
+        const targetPath = ROUTE_LANGUAGE_MAP[normalizedMode];
+        const currentPath = window.location.pathname;
+        if (targetPath && currentPath !== targetPath) {
+          if (options && options.persist) {
+            try {
+              localStorage.setItem(LANGUAGE_STORAGE_KEY, normalizedMode);
+            } catch (_error) {
+              // Ignore storage write errors (private mode / blocked storage).
+            }
+          }
+          const nextUrl = `${targetPath}${window.location.search}${window.location.hash}`;
+          window.location.assign(nextUrl);
+          return;
+        }
         applyI18n(normalizedMode);
         syncCommunityAction(normalizedMode);
         updateLanguageOptionState(normalizedMode);
@@ -2215,11 +2533,8 @@ import logoIconSvg from "../assets/onboarding/logo.svg?raw";
       }
 
       function getInitialLanguageMode() {
-        try {
-          return localStorage.getItem(LANGUAGE_STORAGE_KEY) || getSystemLocale();
-        } catch (_error) {
-          return getSystemLocale();
-        }
+        if (FORCED_LOCALE) return FORCED_LOCALE;
+        return getSystemLocale();
       }
 
       function setupQrcodeModal() {

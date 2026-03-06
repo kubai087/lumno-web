@@ -1,4 +1,8 @@
-export default function LanguageMenu() {
+interface Props {
+  currentLabel?: string;
+}
+
+export default function LanguageMenu({ currentLabel = "简体中文" }: Props) {
   return (
     <div className="lang-control">
       <button
@@ -13,8 +17,8 @@ export default function LanguageMenu() {
         <span className="lang-select-prefix">
           <i className="ri-global-line" aria-hidden="true"></i>
         </span>
-        <span id="language-current-label" className="lang-current-label" data-i18n="language_zh_cn">
-          简体中文
+        <span id="language-current-label" className="lang-current-label">
+          {currentLabel}
         </span>
         <span className="lang-select-arrow" aria-hidden="true">
           <i className="ri-arrow-down-s-line"></i>

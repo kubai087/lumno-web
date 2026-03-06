@@ -1,6 +1,6 @@
 export const SITE_URL = "https://lumno.kubai.design";
 export const SITE_NAME = "Lumno";
-export const SITE_TITLE = "Lumno | Browser Command Bar, Focus Search & Minimal New Tab";
+export const SITE_TITLE = "Lumno | Focus Search, Browser Command Bar & Minimal New Tab";
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/assets/logo@3x.png`;
 export const CHROME_STORE_URL =
   "https://chromewebstore.google.com/detail/lumno-%E5%85%A8%E5%B1%80%E5%BF%AB%E6%8D%B7%E5%91%BD%E4%BB%A4%E6%B5%AE%E5%B1%82/nggfkkbmogmadfoikakkfegkoilfcfao";
@@ -123,10 +123,10 @@ export function buildSoftwareApplicationSchema({
     softwareVersion: version || undefined,
     availableLanguage: SUPPORTED_UI_LANGUAGES,
     featureList: [
-      "Search open tabs, bookmarks, history, and most visited pages",
-      "Custom site search from a browser command bar",
-      "Minimal new tab page for bookmarks and web cards",
-      "Supports Chrome, Edge, Dia, and Chromium-based browsers",
+      "Search tabs, bookmarks, history, and frequently visited pages",
+      "Use built-in site engines to start site search instantly with Tab",
+      "Keep a minimalist new tab with bookmarks and useful page cards",
+      "Works on Chrome, Edge, Dia, and other Chromium-based browsers",
     ],
     author: {
       "@type": "Person",

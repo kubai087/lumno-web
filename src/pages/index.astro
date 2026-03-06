@@ -3,6 +3,7 @@ import SeoHead from "../components/SeoHead.astro";
 import FeatureGrid from "../components/onboarding/FeatureGrid";
 import LanguageMenu from "../components/onboarding/LanguageMenu";
 import logoIconSvg from "../assets/onboarding/logo.svg?raw";
+import topWordmarkSvg from "../assets/lumno-title-figma.svg?raw";
 import {
   SITE_URL,
   buildKeywords,
@@ -1003,10 +1004,21 @@ const structuredData = [
         text-decoration: none;
       }
 
-      .top-nav-brand img {
+      .top-nav-brand-mark {
         display: block;
         height: 24px;
         width: auto;
+      }
+
+      .top-nav-brand-mark :global(svg) {
+        display: block;
+        width: auto;
+        height: 100%;
+        shape-rendering: geometricPrecision;
+      }
+
+      .is-safari .top-nav-brand-mark {
+        transform: translateZ(0);
       }
 
       .top-actions {
@@ -1235,14 +1247,26 @@ const structuredData = [
         height: 38px;
         border-radius: 999px;
         border: 1px solid transparent;
+        appearance: none;
+        -webkit-appearance: none;
         background: transparent;
         box-shadow: none;
+        color: #4b545f;
+        -webkit-text-fill-color: currentColor;
         padding: 0;
         display: inline-flex;
         align-items: center;
         justify-content: center;
         gap: 0;
         cursor: pointer;
+      }
+
+      .lang-toggle,
+      .lang-toggle i,
+      .lang-select-prefix,
+      .lang-select-arrow {
+        color: inherit;
+        -webkit-text-fill-color: currentColor;
       }
 
       .lang-toggle i {
@@ -2055,7 +2079,7 @@ const structuredData = [
           padding-bottom: 8px;
         }
 
-        .top-nav-brand img {
+        .top-nav-brand-mark {
           height: 21px;
         }
 
@@ -2222,7 +2246,7 @@ const structuredData = [
           background: transparent;
         }
 
-        .top-nav-brand img {
+        .top-nav-brand-mark {
           height: 18px;
         }
 
@@ -2350,7 +2374,7 @@ const structuredData = [
   <body data-locale={uiLocale} class:list={{ "is-locale-en": uiLocale === "en" }}>
     <header class="top-nav">
       <a class="top-nav-brand" href="/" aria-label="Lumno">
-        <img src="/assets/lumno-title-figma.svg" alt="Lumno" draggable="false" />
+        <span class="top-nav-brand-mark" role="img" aria-label="Lumno" set:html={topWordmarkSvg}></span>
       </a>
       <div class="top-actions">
         <div class="actions" data-node-id="3358:77">

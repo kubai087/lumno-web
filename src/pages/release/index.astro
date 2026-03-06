@@ -529,9 +529,12 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         height: 38px;
         border-radius: 999px;
         border: 1px solid transparent;
+        appearance: none;
+        -webkit-appearance: none;
         background: transparent;
         box-shadow: none;
         color: #4b545f;
+        -webkit-text-fill-color: currentColor;
         cursor: pointer;
         font-size: 16px;
         padding: 0;
@@ -540,6 +543,14 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         justify-content: center;
         gap: 0;
         transition: border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
+      }
+
+      .lang-toggle,
+      .lang-toggle i,
+      .lang-select-prefix,
+      .lang-select-arrow {
+        color: inherit;
+        -webkit-text-fill-color: currentColor;
       }
 
       .lang-toggle i {

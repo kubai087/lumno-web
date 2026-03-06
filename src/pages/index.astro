@@ -2857,14 +2857,17 @@ const structuredData = [
         updateLanguageOptionState(normalizedMode);
       }
 
-      const languageRuntime = window.__lumnoLanguageRuntime.setupLanguageRuntime({
-        forcedLocale: FORCED_LOCALE,
-        getSystemLocale,
-        normalizeLanguageMode,
-        routeLanguageMap: ROUTE_LANGUAGE_MAP,
-        languageStorageKey: LANGUAGE_STORAGE_KEY,
-        applyResolvedLanguage,
-      });
+      function initLanguageRuntime() {
+        if (!window.__lumnoLanguagePreference || !window.__lumnoLanguageRuntime) return null;
+        return window.__lumnoLanguageRuntime.setupLanguageRuntime({
+          forcedLocale: FORCED_LOCALE,
+          getSystemLocale,
+          normalizeLanguageMode,
+          routeLanguageMap: ROUTE_LANGUAGE_MAP,
+          languageStorageKey: LANGUAGE_STORAGE_KEY,
+          applyResolvedLanguage,
+        });
+      }
 
       function setupQrcodeModal() {
         const entry = document.querySelector("[data-community-entry]");
@@ -2914,10 +2917,27 @@ const structuredData = [
         }
       });
 
-      languageRuntime.applyLanguageMode(languageRuntime.getInitialLanguageMode());
-      window.addEventListener("load", () => {
+      function bootLanguageRuntime() {
+        const languageRuntime = initLanguageRuntime();
+        if (!languageRuntime) return false;
         languageRuntime.applyLanguageMode(languageRuntime.getInitialLanguageMode());
-      }, { once: true });
+        window.addEventListener("load", () => {
+          languageRuntime.applyLanguageMode(languageRuntime.getInitialLanguageMode());
+        }, { once: true });
+        return true;
+      }
+
+      if (!bootLanguageRuntime()) {
+        const retryBootLanguageRuntime = () => {
+          if (bootLanguageRuntime()) {
+            window.removeEventListener("lumno:language-runtime-ready", retryBootLanguageRuntime);
+            window.removeEventListener("lumno:language-preference-ready", retryBootLanguageRuntime);
+          }
+        };
+        window.addEventListener("lumno:language-runtime-ready", retryBootLanguageRuntime);
+        window.addEventListener("lumno:language-preference-ready", retryBootLanguageRuntime);
+      }
+
       setupQrcodeModal();
       applySafariBrowserClass();
 

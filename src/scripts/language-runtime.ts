@@ -117,6 +117,8 @@ window.__lumnoLanguageRuntime = {
   setupLanguageRuntime,
 };
 
+window.dispatchEvent(new CustomEvent("lumno:language-runtime-ready"));
+
 declare global {
   interface Window {
     __lumnoLanguageRuntime: {

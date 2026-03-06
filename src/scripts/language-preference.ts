@@ -27,6 +27,8 @@ window.__lumnoLanguagePreference = {
   resolveInitialLanguageMode: resolvePageInitialLanguageMode,
 };
 
+window.dispatchEvent(new CustomEvent("lumno:language-preference-ready"));
+
 declare global {
   interface Window {
     __lumnoLanguagePreference: {

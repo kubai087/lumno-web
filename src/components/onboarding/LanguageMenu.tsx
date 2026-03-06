@@ -1,18 +1,13 @@
 interface Props {
   currentLabel?: string;
   toggleAriaLabel?: string;
-  locales?: Array<"zh-CN" | "zh-TW" | "en" | "ja" | "ko" | "fr" | "de" | "es">;
+  locales?: Array<"zh-CN" | "zh-TW" | "en">;
 }
 
 const LANGUAGE_OPTIONS = [
   { value: "zh-CN", label: "简体中文", i18n: "language_zh_cn" },
   { value: "zh-TW", label: "繁體中文", i18n: "language_zh_tw" },
   { value: "en", label: "English", i18n: "language_en" },
-  { value: "ja", label: "日本語", i18n: "language_ja" },
-  { value: "ko", label: "한국어", i18n: "language_ko" },
-  { value: "fr", label: "Français", i18n: "language_fr" },
-  { value: "de", label: "Deutsch", i18n: "language_de" },
-  { value: "es", label: "Español", i18n: "language_es" },
 ] as const;
 
 export default function LanguageMenu({ currentLabel = "简体中文", toggleAriaLabel = "语言", locales }: Props) {

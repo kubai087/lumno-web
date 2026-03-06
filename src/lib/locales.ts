@@ -4,11 +4,6 @@ export const LOCALE_CONFIG = [
   { code: "zh-CN", segment: "" },
   { code: "zh-TW", segment: "zh-tw" },
   { code: "en", segment: "en" },
-  { code: "ja", segment: "ja" },
-  { code: "ko", segment: "ko" },
-  { code: "fr", segment: "fr" },
-  { code: "de", segment: "de" },
-  { code: "es", segment: "es" },
 ] as const;
 
 export type SupportedLocale = (typeof LOCALE_CONFIG)[number]["code"];

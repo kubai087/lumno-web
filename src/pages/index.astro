@@ -637,7 +637,7 @@ const structuredData = [
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        cursor: help;
+        cursor: pointer;
         transition:
           border-color 0.18s ease,
           color 0.18s ease,
@@ -710,6 +710,43 @@ const structuredData = [
         opacity: 1;
         visibility: visible;
         transform: translateY(-50%) translateX(0);
+      }
+
+      @media (max-width: 860px) {
+        .support-tooltip-bubble {
+          left: auto;
+          right: 0;
+          top: calc(100% + 12px);
+          width: min(320px, calc(100vw - 32px));
+          transform: translateY(-6px);
+        }
+
+        .support-tooltip-bubble::before {
+          left: auto;
+          right: 10px;
+          top: -6px;
+          border-left: 1px solid rgba(214, 219, 227, 0.95);
+          border-bottom: none;
+          border-right: 1px solid rgba(214, 219, 227, 0.95);
+          border-top: 1px solid rgba(214, 219, 227, 0.95);
+          transform: rotate(-45deg);
+        }
+
+        .support-tooltip:hover .support-tooltip-bubble,
+        .support-tooltip:focus-within .support-tooltip-bubble {
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 560px) {
+        .support-tooltip-bubble {
+          right: -8px;
+          width: min(320px, calc(100vw - 24px));
+        }
+
+        .support-tooltip-bubble::before {
+          right: 18px;
+        }
       }
 
       .text-shimmer {

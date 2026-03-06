@@ -408,6 +408,7 @@ const structuredData = [
         position: relative;
         width: 40%;
         min-width: 560px;
+        z-index: 2;
         padding-left: clamp(56px, 9vw, 132px);
         padding-right: 48px;
       }
@@ -624,6 +625,7 @@ const structuredData = [
         position: relative;
         display: inline-flex;
         align-items: center;
+        z-index: 12;
       }
 
       .support-tooltip-trigger {
@@ -665,7 +667,7 @@ const structuredData = [
         position: absolute;
         left: calc(100% + 10px);
         top: 50%;
-        z-index: 8;
+        z-index: 24;
         width: min(300px, calc(100vw - 48px));
         padding: 10px 12px;
         border: 1px solid rgba(214, 219, 227, 0.95);
@@ -695,14 +697,27 @@ const structuredData = [
       .support-tooltip-bubble::before {
         content: "";
         position: absolute;
-        left: -6px;
+        left: -9px;
         top: 50%;
-        width: 10px;
-        height: 10px;
-        border-left: 1px solid rgba(214, 219, 227, 0.95);
-        border-bottom: 1px solid rgba(214, 219, 227, 0.95);
-        background: rgba(252, 253, 254, 0.98);
-        transform: translateY(-50%) rotate(45deg);
+        width: 0;
+        height: 0;
+        border-top: 8px solid transparent;
+        border-bottom: 8px solid transparent;
+        border-right: 9px solid rgba(214, 219, 227, 0.95);
+        transform: translateY(-50%);
+      }
+
+      .support-tooltip-bubble::after {
+        content: "";
+        position: absolute;
+        left: -7px;
+        top: 50%;
+        width: 0;
+        height: 0;
+        border-top: 7px solid transparent;
+        border-bottom: 7px solid transparent;
+        border-right: 8px solid rgba(252, 253, 254, 0.98);
+        transform: translateY(-50%);
       }
 
       .support-tooltip:hover .support-tooltip-bubble,
@@ -723,13 +738,28 @@ const structuredData = [
 
         .support-tooltip-bubble::before {
           left: auto;
-          right: 10px;
-          top: -6px;
-          border-left: 1px solid rgba(214, 219, 227, 0.95);
-          border-bottom: none;
-          border-right: 1px solid rgba(214, 219, 227, 0.95);
-          border-top: 1px solid rgba(214, 219, 227, 0.95);
-          transform: rotate(-45deg);
+          right: 12px;
+          top: -9px;
+          width: 0;
+          height: 0;
+          border-left: 9px solid transparent;
+          border-right: 9px solid transparent;
+          border-top: 0;
+          border-bottom: 9px solid rgba(214, 219, 227, 0.95);
+          transform: none;
+        }
+
+        .support-tooltip-bubble::after {
+          left: auto;
+          right: 14px;
+          top: -7px;
+          width: 0;
+          height: 0;
+          border-left: 7px solid transparent;
+          border-right: 7px solid transparent;
+          border-top: 0;
+          border-bottom: 8px solid rgba(252, 253, 254, 0.98);
+          transform: none;
         }
 
         .support-tooltip:hover .support-tooltip-bubble,
@@ -740,12 +770,27 @@ const structuredData = [
 
       @media (max-width: 560px) {
         .support-tooltip-bubble {
-          right: -8px;
+          left: 50%;
+          right: auto;
           width: min(320px, calc(100vw - 24px));
+          transform: translateX(-50%) translateY(-6px);
         }
 
         .support-tooltip-bubble::before {
-          right: 18px;
+          left: 50%;
+          right: auto;
+          transform: translateX(-50%);
+        }
+
+        .support-tooltip-bubble::after {
+          left: 50%;
+          right: auto;
+          transform: translateX(-50%);
+        }
+
+        .support-tooltip:hover .support-tooltip-bubble,
+        .support-tooltip:focus-within .support-tooltip-bubble {
+          transform: translateX(-50%) translateY(0);
         }
       }
 

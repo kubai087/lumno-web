@@ -56,7 +56,7 @@ const initialUi = {
   "zh-CN": {
     viewRelease: "更新日志",
     joinDiscord: "反馈 & 提需",
-    shortcutGuideTitle: "快速启用 Lumno 聚焦搜索",
+    shortcutGuideTitle: "✨ 快速启用 Lumno 聚焦搜索",
     shortcutCopy: "复制",
     shortcutCopied: "已复制",
     titleWelcome: "欢迎使用",
@@ -69,23 +69,24 @@ const initialUi = {
     qrcodeImageAlt: "Lumno 微信群二维码",
     qrcodeCloseAria: "关闭二维码弹窗",
     logoIconAlt: "Lumno 图标",
-    shortcutStep1: "复制上方地址，粘贴到地址栏并访问。",
-    shortcutStep2: "找到 Lumno。",
-    shortcutStep3Prefix: "将",
+    shortcutStep1: "复制上方浏览器快捷键设置页地址，粘贴到地址栏并回车访问。",
+    shortcutStep2: "在网页中找到 Lumno。",
+    shortcutStep3Prefix: "设置/修改「",
     shortcutCommandLabel: "唤起聚焦搜索窗口",
-    shortcutStep3Suffix: "一栏的快捷键设置为你想要的。",
-    shortcutStep4Prefix: "对于 Dia 用户，如果快捷键设置后不生效，可以将右侧的",
+    shortcutStep3Suffix: "」一栏的快捷键。",
+    shortcutStep4: "用上述快捷键唤起 Lumno，即可实现网页聚焦搜索。",
+    shortcutNotePrefix: "注：对于 Dia 用户，如果快捷键设置后不生效，可以将右侧的 ",
     shortcutBrowserScopeLabel: "在 Dia 中",
-    shortcutStep4Middle: "改为",
+    shortcutNoteMiddle: " 改为 ",
     shortcutGlobalScopeLabel: "全局",
-    shortcutStep4Suffix: "。",
+    shortcutNoteSuffix: " 。",
     languageLabel: "简体中文",
     languageSelectAria: "语言",
   },
   "zh-TW": {
     viewRelease: "更新日誌",
     joinDiscord: "反饋 & 提需",
-    shortcutGuideTitle: "快速啟用 Lumno 聚焦搜尋",
+    shortcutGuideTitle: "✨ 快速啟用 Lumno 聚焦搜尋",
     shortcutCopy: "複製",
     shortcutCopied: "已複製",
     titleWelcome: "歡迎使用",
@@ -98,23 +99,24 @@ const initialUi = {
     qrcodeImageAlt: "Lumno 微信群二維碼",
     qrcodeCloseAria: "關閉二維碼彈窗",
     logoIconAlt: "Lumno 圖示",
-    shortcutStep1: "複製上方網址，貼到網址列後開啟。",
-    shortcutStep2: "找到 Lumno。",
-    shortcutStep3Prefix: "將",
+    shortcutStep1: "複製上方瀏覽器快捷鍵設定頁網址，貼到網址列後按 Enter 開啟。",
+    shortcutStep2: "在網頁中找到 Lumno。",
+    shortcutStep3Prefix: "設定/修改「",
     shortcutCommandLabel: "喚起聚焦搜尋視窗",
-    shortcutStep3Suffix: "這一欄的快捷鍵設成你想要的。",
-    shortcutStep4Prefix: "對於 Dia 使用者，如果快捷鍵設定後仍未生效，可以將右側的",
+    shortcutStep3Suffix: "」這一欄的快捷鍵。",
+    shortcutStep4: "使用上述快捷鍵喚起 Lumno，即可進行網頁聚焦搜尋。",
+    shortcutNotePrefix: "註：對於 Dia 使用者，如果快捷鍵設定後仍未生效，可以將右側的 ",
     shortcutBrowserScopeLabel: "在 Dia 中",
-    shortcutStep4Middle: "改為",
+    shortcutNoteMiddle: " 改為 ",
     shortcutGlobalScopeLabel: "全域",
-    shortcutStep4Suffix: "。",
+    shortcutNoteSuffix: " 。",
     languageLabel: "繁體中文",
     languageSelectAria: "語言",
   },
   en: {
     viewRelease: "Release Notes",
     joinDiscord: "Feedback & Requests",
-    shortcutGuideTitle: "Quickly enable Lumno Focus Search",
+    shortcutGuideTitle: "✨ Quickly enable Lumno Focus Search",
     shortcutCopy: "Copy",
     shortcutCopied: "Copied",
     titleWelcome: "Welcome to",
@@ -129,14 +131,15 @@ const initialUi = {
     logoIconAlt: "Lumno icon",
     shortcutStep1: "Copy the address above, paste it into the address bar, and open it.",
     shortcutStep2: "Find Lumno.",
-    shortcutStep3Prefix: "Set the shortcut for",
+    shortcutStep3Prefix: "Set or update the shortcut for ",
     shortcutCommandLabel: "Open command bar",
-    shortcutStep3Suffix: "to whatever you want.",
-    shortcutStep4Prefix: "If you're using Dia and the shortcut still doesn't work, change",
+    shortcutStep3Suffix: ".",
+    shortcutStep4: "Use that shortcut to open Lumno and start focus search on the page.",
+    shortcutNotePrefix: "Note: If you're using Dia and the shortcut still doesn't work, change ",
     shortcutBrowserScopeLabel: "In Dia",
-    shortcutStep4Middle: "to",
+    shortcutNoteMiddle: " to ",
     shortcutGlobalScopeLabel: "Global",
-    shortcutStep4Suffix: ".",
+    shortcutNoteSuffix: ".",
     languageLabel: "English",
     languageSelectAria: "Language",
   },
@@ -463,7 +466,7 @@ const structuredData = [
 
       .shortcut-copy-btn {
         position: absolute;
-        top: 10px;
+        top: 50%;
         right: 10px;
         min-width: 34px;
         height: 34px;
@@ -477,7 +480,7 @@ const structuredData = [
         background: rgba(255, 255, 255, 0.92);
         color: #57606a;
         opacity: 0;
-        transform: translateY(-2px);
+        transform: translateY(calc(-50% - 2px));
         transition:
           opacity 0.18s ease,
           transform 0.18s ease,
@@ -501,7 +504,7 @@ const structuredData = [
       .shortcut-code-block:hover .shortcut-copy-btn,
       .shortcut-code-block:focus-within .shortcut-copy-btn {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(-50%);
       }
 
       .shortcut-copy-btn:focus-visible {
@@ -512,7 +515,7 @@ const structuredData = [
 
       .shortcut-copy-btn.is-copied {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(-50%);
         border-color: rgba(31, 136, 61, 0.24);
         background: #dafbe1;
         color: #1a7f37;
@@ -528,6 +531,13 @@ const structuredData = [
 
       .shortcut-steps li + li {
         margin-top: 8px;
+      }
+
+      .shortcut-note {
+        margin: 12px 0 0;
+        color: #3c4455;
+        font-size: 14px;
+        line-height: 1.65;
       }
 
       .shortcut-quote {
@@ -1980,9 +1990,9 @@ const structuredData = [
 
         .shortcut-copy-btn {
           opacity: 1;
-          top: auto;
-          bottom: 10px;
-          transform: none;
+          top: 50%;
+          bottom: auto;
+          transform: translateY(-50%);
         }
 
         .shortcut-steps {
@@ -2254,14 +2264,15 @@ const structuredData = [
                   <span class="shortcut-quote" data-i18n="shortcut_command_label">{initialUi.shortcutCommandLabel}</span>
                   <span data-i18n="shortcut_step_3_suffix">{initialUi.shortcutStep3Suffix}</span>
                 </li>
-                <li>
-                  <span data-i18n="shortcut_step_4_prefix">{initialUi.shortcutStep4Prefix}</span>
-                  <span class="shortcut-quote" data-i18n="shortcut_browser_scope_label">{initialUi.shortcutBrowserScopeLabel}</span>
-                  <span data-i18n="shortcut_step_4_middle">{initialUi.shortcutStep4Middle}</span>
-                  <span class="shortcut-quote" data-i18n="shortcut_global_scope_label">{initialUi.shortcutGlobalScopeLabel}</span>
-                  <span data-i18n="shortcut_step_4_suffix">{initialUi.shortcutStep4Suffix}</span>
-                </li>
+                <li data-i18n="shortcut_step_4">{initialUi.shortcutStep4}</li>
               </ol>
+              <p class="shortcut-note">
+                  <span data-i18n="shortcut_note_prefix">{initialUi.shortcutNotePrefix}</span>
+                  <span class="shortcut-quote" data-i18n="shortcut_browser_scope_label">{initialUi.shortcutBrowserScopeLabel}</span>
+                  <span data-i18n="shortcut_note_middle">{initialUi.shortcutNoteMiddle}</span>
+                  <span class="shortcut-quote" data-i18n="shortcut_global_scope_label">{initialUi.shortcutGlobalScopeLabel}</span>
+                  <span data-i18n="shortcut_note_suffix">{initialUi.shortcutNoteSuffix}</span>
+              </p>
             </section>
           </div>
         </div>
@@ -2305,20 +2316,21 @@ const structuredData = [
           page_title: "Lumno 安装引导｜浏览器命令栏与新标签页快速开始",
           title_welcome: "欢迎使用",
           subtitle: "开源浏览器聚焦搜索 & 极简新标签页",
-          shortcut_guide_title: "快速启用 Lumno 聚焦搜索",
+          shortcut_guide_title: "✨ 快速启用 Lumno 聚焦搜索",
           shortcut_copy: "复制",
           shortcut_copied: "已复制",
           shortcut_copy_aria: "复制扩展快捷键设置地址",
-          shortcut_step_1: "复制上方地址，粘贴到地址栏并访问。",
-          shortcut_step_2: "找到 Lumno。",
-          shortcut_step_3_prefix: "将",
+          shortcut_step_1: "复制上方浏览器快捷键设置页地址，粘贴到地址栏并回车访问。",
+          shortcut_step_2: "在网页中找到 Lumno。",
+          shortcut_step_3_prefix: "设置/修改「",
           shortcut_command_label: "唤起聚焦搜索窗口",
-          shortcut_step_3_suffix: "一栏的快捷键设置为你想要的。",
-          shortcut_step_4_prefix: "对于 Dia 用户，如果快捷键设置后不生效，可以将右侧的",
+          shortcut_step_3_suffix: "」一栏的快捷键。",
+          shortcut_step_4: "用上述快捷键唤起 Lumno，即可实现网页聚焦搜索。",
+          shortcut_note_prefix: "注：对于 Dia 用户，如果快捷键设置后不生效，可以将右侧的 ",
           shortcut_browser_scope_label: "在 Dia 中",
-          shortcut_step_4_middle: "改为",
+          shortcut_note_middle: " 改为 ",
           shortcut_global_scope_label: "全局",
-          shortcut_step_4_suffix: "。",
+          shortcut_note_suffix: " 。",
           language_select_aria: "语言",
           language_system: "跟随浏览器语言",
           language_zh_cn: "简体中文",
@@ -2352,20 +2364,21 @@ const structuredData = [
           page_title: "Lumno 安裝引導｜瀏覽器命令欄與新分頁快速開始",
           title_welcome: "歡迎使用",
           subtitle: "開源瀏覽器聚焦搜尋 & 極簡新分頁",
-          shortcut_guide_title: "快速啟用 Lumno 聚焦搜尋",
+          shortcut_guide_title: "✨ 快速啟用 Lumno 聚焦搜尋",
           shortcut_copy: "複製",
           shortcut_copied: "已複製",
           shortcut_copy_aria: "複製擴充功能快捷鍵設定網址",
-          shortcut_step_1: "複製上方網址，貼到網址列後開啟。",
-          shortcut_step_2: "找到 Lumno。",
-          shortcut_step_3_prefix: "將",
+          shortcut_step_1: "複製上方瀏覽器快捷鍵設定頁網址，貼到網址列後按 Enter 開啟。",
+          shortcut_step_2: "在網頁中找到 Lumno。",
+          shortcut_step_3_prefix: "設定/修改「",
           shortcut_command_label: "喚起聚焦搜尋視窗",
-          shortcut_step_3_suffix: "這一欄的快捷鍵設成你想要的。",
-          shortcut_step_4_prefix: "對於 Dia 使用者，如果快捷鍵設定後仍未生效，可以將右側的",
+          shortcut_step_3_suffix: "」這一欄的快捷鍵。",
+          shortcut_step_4: "使用上述快捷鍵喚起 Lumno，即可進行網頁聚焦搜尋。",
+          shortcut_note_prefix: "註：對於 Dia 使用者，如果快捷鍵設定後仍未生效，可以將右側的 ",
           shortcut_browser_scope_label: "在 Dia 中",
-          shortcut_step_4_middle: "改為",
+          shortcut_note_middle: " 改為 ",
           shortcut_global_scope_label: "全域",
-          shortcut_step_4_suffix: "。",
+          shortcut_note_suffix: " 。",
           language_select_aria: "語言",
           language_system: "跟隨瀏覽器語言",
           language_zh_cn: "簡體中文",
@@ -2399,20 +2412,21 @@ const structuredData = [
           page_title: "Lumno Onboarding | Browser Command Bar Quick Start",
           title_welcome: "Welcome to",
           subtitle: "An open-source browser extension for focus search and a minimalist new tab.",
-          shortcut_guide_title: "Quickly enable Lumno Focus Search",
+          shortcut_guide_title: "✨ Quickly enable Lumno Focus Search",
           shortcut_copy: "Copy",
           shortcut_copied: "Copied",
           shortcut_copy_aria: "Copy the extension shortcut settings address",
           shortcut_step_1: "Copy the address above, paste it into the address bar, and open it.",
           shortcut_step_2: "Find Lumno.",
-          shortcut_step_3_prefix: "Set the shortcut for",
+          shortcut_step_3_prefix: "Set or update the shortcut for ",
           shortcut_command_label: "Open command bar",
-          shortcut_step_3_suffix: "to whatever you want.",
-          shortcut_step_4_prefix: "If you're using Dia and the shortcut still doesn't work, change",
+          shortcut_step_3_suffix: ".",
+          shortcut_step_4: "Use that shortcut to open Lumno and start focus search on the page.",
+          shortcut_note_prefix: "Note: If you're using Dia and the shortcut still doesn't work, change ",
           shortcut_browser_scope_label: "In Dia",
-          shortcut_step_4_middle: "to",
+          shortcut_note_middle: " to ",
           shortcut_global_scope_label: "Global",
-          shortcut_step_4_suffix: ".",
+          shortcut_note_suffix: ".",
           language_select_aria: "Language",
           language_system: "Follow browser language",
           language_zh_cn: "简体中文",

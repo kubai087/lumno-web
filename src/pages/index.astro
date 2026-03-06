@@ -10,12 +10,12 @@ import {
   buildSoftwareApplicationSchema,
   buildWebPageSchema,
 } from "../lib/seo";
-import { buildRouteLanguageMap } from "../lib/locales";
+import { DEFAULT_LOCALE, buildRouteLanguageMap } from "../lib/locales";
 
-const forcedLocale = Astro.props.forcedLocale || "zh-CN";
+const forcedLocale = Astro.props.forcedLocale ?? null;
 const seoPath = Astro.props.seoPath || "/";
 const routeLanguageMap = Astro.props.routeLanguageMap || buildRouteLanguageMap("/");
-const uiLocale = forcedLocale;
+const uiLocale = forcedLocale || DEFAULT_LOCALE;
 const alternateLinks = [
   ...Object.entries(routeLanguageMap).map(([hreflang, href]) => ({
     hreflang,
@@ -32,7 +32,7 @@ const ogLocale = {
   fr: "fr_FR",
   de: "de_DE",
   es: "es_ES",
-}[forcedLocale] || "en_US";
+}[uiLocale] || "en_US";
 const pageTitleByLocale = {
   "zh-CN": "Lumno｜浏览器命令栏、聚焦搜索与极简新标签页",
   "zh-TW": "Lumno｜瀏覽器命令欄、聚焦搜尋與極簡新分頁",
@@ -61,8 +61,8 @@ const pageDescriptionByLocale = {
   es:
     "Lumno es una extensión de navegador de código abierto para búsqueda focalizada, flujos de trabajo con barra de comandos y una nueva pestaña minimalista. Busca rápidamente pestañas, marcadores, historial y contenido dentro de sitios en Chrome, Edge y Dia, manteniendo una experiencia familiar si vienes de Arc.",
 };
-const pageTitle = pageTitleByLocale[forcedLocale] || pageTitleByLocale["zh-CN"];
-const pageDescription = pageDescriptionByLocale[forcedLocale] || pageDescriptionByLocale["zh-CN"];
+const pageTitle = pageTitleByLocale[uiLocale] || pageTitleByLocale[DEFAULT_LOCALE];
+const pageDescription = pageDescriptionByLocale[uiLocale] || pageDescriptionByLocale[DEFAULT_LOCALE];
 const pageKeywords = buildKeywords([
   "浏览器快捷启动器",
   "Arc 浏览器迁移",
@@ -348,7 +348,7 @@ const structuredData = [
 ---
 
 <!doctype html>
-<html lang={forcedLocale}>
+<html lang={uiLocale}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />

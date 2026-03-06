@@ -1,3 +1,5 @@
+import * as OpenCC from "opencc-js";
+
 export type ReleaseItem = {
   id: number;
   name: string;
@@ -18,6 +20,7 @@ export type ParsedReleaseBody = {
   tags: string[];
   locales: {
     "zh-CN": ReleaseLocaleContent;
+    "zh-TW": ReleaseLocaleContent;
     en: ReleaseLocaleContent;
   };
 };
@@ -34,6 +37,7 @@ type GitHubRelease = {
 
 const REPO_OWNER = "kubai087";
 const REPO_NAME = "lumno-extension";
+const cnToTw = OpenCC.Converter({ from: "cn", to: "tw" });
 
 export async function fetchReleases(): Promise<ReleaseItem[]> {
   try {
@@ -170,6 +174,14 @@ function createEmptyLocaleContent(): ReleaseLocaleContent {
   };
 }
 
+function convertLocaleContentToTraditional(content: ReleaseLocaleContent): ReleaseLocaleContent {
+  return {
+    summary: content.summary ? cnToTw(content.summary) : "",
+    features: content.features.map((item) => cnToTw(item)),
+    bugFixes: content.bugFixes.map((item) => cnToTw(item)),
+  };
+}
+
 export function parseReleaseBody(body: string): ParsedReleaseBody {
   const lines = body.split(/\r?\n/);
   const summaryLines: Record<"zh-CN" | "en", string[]> = {
@@ -280,6 +292,7 @@ export function parseReleaseBody(body: string): ParsedReleaseBody {
     tags,
     locales: {
       "zh-CN": createEmptyLocaleContent(),
+      "zh-TW": createEmptyLocaleContent(),
       en: createEmptyLocaleContent(),
     },
   };
@@ -301,6 +314,8 @@ export function parseReleaseBody(body: string): ParsedReleaseBody {
       parsed.locales["zh-CN"].summary = fallback;
     }
   }
+
+  parsed.locales["zh-TW"] = convertLocaleContentToTraditional(parsed.locales["zh-CN"]);
 
   return parsed;
 }

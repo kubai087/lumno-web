@@ -21,7 +21,7 @@ const seoPath = Astro.props.seoPath || "/release/";
 const routeLanguageMap = Astro.props.routeLanguageMap || buildRouteLanguageMap("/release/");
 const entryContextConfig = buildEntryContextConfig(latestReleaseVersion);
 const uiLocale = forcedLocale || DEFAULT_LOCALE;
-const releaseContentLocale = uiLocale === "zh-CN" || uiLocale === "zh-TW" ? "zh-CN" : "en";
+const releaseContentLocale = uiLocale === "zh-TW" ? "zh-TW" : uiLocale === "zh-CN" ? "zh-CN" : "en";
 const alternateLinks = [
   ...Object.entries(routeLanguageMap).map(([hreflang, href]) => ({
     hreflang,
@@ -816,6 +816,10 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         display: block;
       }
 
+      body[data-release-content-locale="zh-TW"] .entry-localized[data-release-locale="zh-TW"] {
+        display: block;
+      }
+
       body[data-release-content-locale="en"] .entry-localized[data-release-locale="en"] {
         display: block;
       }
@@ -1181,6 +1185,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
           releases.length > 0 ? (
             releases.map((item) => {
               const zhContent = item.parsed.locales["zh-CN"];
+              const zhTwContent = item.parsed.locales["zh-TW"];
               const enContent = item.parsed.locales.en;
               const chromeStatusKey = getChromeStatusI18nKey(item.tag);
 
@@ -1249,6 +1254,40 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
                                   <div class="accordion-panel">
                                     <ul class="accordion-list">
                                       {zhContent.bugFixes.map((fix) => (
+                                        <li set:html={renderMdInline(fix)}></li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                </details>
+                              )}
+                            </div>
+                          )}
+                        </div>
+
+                        <div class="entry-localized" data-release-locale="zh-TW">
+                          {zhTwContent.summary && <div class="entry-summary" set:html={renderMdBlock(zhTwContent.summary)}></div>}
+
+                          {(zhTwContent.features.length > 0 || zhTwContent.bugFixes.length > 0) && (
+                            <div class="accordion-group">
+                              {zhTwContent.features.length > 0 && (
+                                <details class="accordion" open>
+                                  <summary data-i18n="features_label" data-count={zhTwContent.features.length}>Features ({zhTwContent.features.length})</summary>
+                                  <div class="accordion-panel">
+                                    <ul class="accordion-list">
+                                      {zhTwContent.features.map((feature) => (
+                                        <li set:html={renderMdInline(feature)}></li>
+                                      ))}
+                                    </ul>
+                                  </div>
+                                </details>
+                              )}
+
+                              {zhTwContent.bugFixes.length > 0 && (
+                                <details class="accordion" open>
+                                  <summary data-i18n="bug_fixes_label" data-count={zhTwContent.bugFixes.length}>Bug Fixes ({zhTwContent.bugFixes.length})</summary>
+                                  <div class="accordion-panel">
+                                    <ul class="accordion-list">
+                                      {zhTwContent.bugFixes.map((fix) => (
                                         <li set:html={renderMdInline(fix)}></li>
                                       ))}
                                     </ul>
@@ -1539,7 +1578,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         const resolvedLocale = I18N_MESSAGES[locale] ? locale : FALLBACK_LOCALE;
         document.documentElement.lang = resolvedLocale;
         document.body.setAttribute("data-release-locale", resolvedLocale);
-        document.body.setAttribute("data-release-content-locale", resolvedLocale === "zh-CN" || resolvedLocale === "zh-TW" ? "zh-CN" : "en");
+        document.body.setAttribute("data-release-content-locale", resolvedLocale === "zh-TW" ? "zh-TW" : resolvedLocale === "zh-CN" ? "zh-CN" : "en");
         const entryContext = INITIAL_ENTRY_CONTEXT;
         document.body.setAttribute("data-release-entry", entryContext.isExtensionEntry ? "ext" : "web");
 
@@ -1609,7 +1648,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         if (!I18N_MESSAGES[normalizedMode]) {
           document.documentElement.lang = normalizedMode;
           document.body.setAttribute("data-release-locale", normalizedMode);
-          document.body.setAttribute("data-release-content-locale", normalizedMode === "zh-CN" || normalizedMode === "zh-TW" ? "zh-CN" : "en");
+          document.body.setAttribute("data-release-content-locale", normalizedMode === "zh-TW" ? "zh-TW" : normalizedMode === "zh-CN" ? "zh-CN" : "en");
           syncCommunityAction(normalizedMode);
           updateLanguageOptionState(normalizedMode);
           return;

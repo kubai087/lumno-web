@@ -1,8 +1,9 @@
 interface Props {
   currentLabel?: string;
+  toggleAriaLabel?: string;
 }
 
-export default function LanguageMenu({ currentLabel = "简体中文" }: Props) {
+export default function LanguageMenu({ currentLabel = "简体中文", toggleAriaLabel = "语言" }: Props) {
   return (
     <div className="lang-control">
       <button
@@ -10,7 +11,7 @@ export default function LanguageMenu({ currentLabel = "简体中文" }: Props) {
         className="lang-toggle lang-select-toggle"
         type="button"
         data-i18n-aria-label="language_select_aria"
-        aria-label="语言"
+        aria-label={toggleAriaLabel}
         aria-haspopup="menu"
         aria-expanded="false"
       >
@@ -33,6 +34,21 @@ export default function LanguageMenu({ currentLabel = "简体中文" }: Props) {
         </button>
         <button className="lang-option" type="button" role="menuitemradio" data-lang-value="en" data-i18n="language_en">
           English
+        </button>
+        <button className="lang-option" type="button" role="menuitemradio" data-lang-value="ja" data-i18n="language_ja">
+          日本語
+        </button>
+        <button className="lang-option" type="button" role="menuitemradio" data-lang-value="ko" data-i18n="language_ko">
+          한국어
+        </button>
+        <button className="lang-option" type="button" role="menuitemradio" data-lang-value="fr" data-i18n="language_fr">
+          Français
+        </button>
+        <button className="lang-option" type="button" role="menuitemradio" data-lang-value="de" data-i18n="language_de">
+          Deutsch
+        </button>
+        <button className="lang-option" type="button" role="menuitemradio" data-lang-value="es" data-i18n="language_es">
+          Español
         </button>
       </div>
     </div>

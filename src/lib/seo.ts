@@ -1,10 +1,11 @@
+import { SUPPORTED_UI_LANGUAGES } from "./locales";
+
 export const SITE_URL = "https://lumno.kubai.design";
 export const SITE_NAME = "Lumno";
 export const SITE_TITLE = "Lumno | Focus Search, Browser Command Bar & Minimal New Tab";
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/assets/logo@3x.png`;
 export const CHROME_STORE_URL =
   "https://chromewebstore.google.com/detail/lumno-%E5%85%A8%E5%B1%80%E5%BF%AB%E6%8D%B7%E5%91%BD%E4%BB%A4%E6%B5%AE%E5%B1%82/nggfkkbmogmadfoikakkfegkoilfcfao";
-export const SUPPORTED_UI_LANGUAGES = ["zh-CN", "zh-TW", "en"];
 
 const CORE_KEYWORDS = [
   "Lumno",

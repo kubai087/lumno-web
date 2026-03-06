@@ -9,26 +9,38 @@ import {
   buildSoftwareApplicationSchema,
   buildWebPageSchema,
 } from "../../lib/seo";
+import { buildRouteLanguageMap } from "../../lib/locales";
 
 const forcedLocale = Astro.props.forcedLocale || "zh-CN";
 const seoPath = Astro.props.seoPath || "/onboarding/";
-const routeLanguageMap = Astro.props.routeLanguageMap || {
-  "zh-CN": "/onboarding/",
-  "zh-TW": "/zh-tw/onboarding/",
-  en: "/en/onboarding/",
-};
-const uiLocale = forcedLocale === "en" ? "en" : forcedLocale === "zh-TW" ? "zh-TW" : "zh-CN";
+const routeLanguageMap = Astro.props.routeLanguageMap || buildRouteLanguageMap("/onboarding/");
+const uiLocale = forcedLocale;
 const alternateLinks = [
-  { hreflang: "zh-CN", href: new URL(routeLanguageMap["zh-CN"], SITE_URL).toString() },
-  { hreflang: "zh-TW", href: new URL(routeLanguageMap["zh-TW"], SITE_URL).toString() },
-  { hreflang: "en", href: new URL(routeLanguageMap.en, SITE_URL).toString() },
+  ...Object.entries(routeLanguageMap).map(([hreflang, href]) => ({
+    hreflang,
+    href: new URL(href, SITE_URL).toString(),
+  })),
   { hreflang: "x-default", href: new URL("/onboarding/", SITE_URL).toString() },
 ];
-const ogLocale = forcedLocale === "zh-TW" ? "zh_TW" : forcedLocale === "en" ? "en_US" : "zh_CN";
+const ogLocale = {
+  "zh-CN": "zh_CN",
+  "zh-TW": "zh_TW",
+  en: "en_US",
+  ja: "ja_JP",
+  ko: "ko_KR",
+  fr: "fr_FR",
+  de: "de_DE",
+  es: "es_ES",
+}[forcedLocale] || "en_US";
 const pageTitleByLocale = {
   "zh-CN": "Lumno 安装引导｜浏览器命令栏与新标签页快速开始",
   "zh-TW": "Lumno 安裝引導｜瀏覽器命令欄與新分頁快速開始",
   en: "Lumno Onboarding | Browser Command Bar Quick Start",
+  ja: "Lumno セットアップ｜ブラウザコマンドバーと新規タブのクイックスタート",
+  ko: "Lumno 시작하기 | 브라우저 커맨드바와 새 탭 빠른 시작",
+  fr: "Prise en main de Lumno | Démarrage rapide de la barre de commandes et du nouvel onglet",
+  de: "Lumno Einstieg | Schnellstart für Befehlsleiste und neuen Tab",
+  es: "Primeros pasos con Lumno | Inicio rápido de la barra de comandos y la nueva pestaña",
 };
 const pageDescriptionByLocale = {
   "zh-CN":
@@ -37,6 +49,16 @@ const pageDescriptionByLocale = {
     "了解如何使用 Lumno 瀏覽器命令欄與快捷命令浮層，快速搜尋分頁、書籤、歷史紀錄與站內內容，並在 Chrome、Edge、Dia 中延續熟悉的高效率搜尋體驗。",
   en:
     "Learn how to use Lumno's focus search and command-bar workflow to search tabs, bookmarks, history, and site content more efficiently on Chrome, Edge, and Dia.",
+  ja:
+    "Lumno のフォーカス検索とコマンドバー操作を使って、Chrome、Edge、Dia でタブ、ブックマーク、履歴、サイト内コンテンツをより素早く検索する方法を紹介します。",
+  ko:
+    "Lumno의 포커스 검색과 커맨드바 워크플로를 사용해 Chrome, Edge, Dia에서 탭, 북마크, 방문 기록, 사이트 콘텐츠를 더 효율적으로 검색하는 방법을 알아보세요.",
+  fr:
+    "Découvrez comment utiliser la recherche ciblée et le flux de barre de commandes de Lumno pour retrouver plus efficacement onglets, favoris, historique et contenus de site sur Chrome, Edge et Dia.",
+  de:
+    "Erfahre, wie du mit Lumno Fokus-Suche und Befehlsleisten-Workflow Tabs, Lesezeichen, Verlauf und Seiteninhalte in Chrome, Edge und Dia schneller durchsuchen kannst.",
+  es:
+    "Aprende a usar la búsqueda focalizada y el flujo con barra de comandos de Lumno para encontrar con más rapidez pestañas, marcadores, historial y contenido dentro de sitios en Chrome, Edge y Dia.",
 };
 const pageTitle = pageTitleByLocale[forcedLocale] || pageTitleByLocale["zh-CN"];
 const pageDescription = pageDescriptionByLocale[forcedLocale] || pageDescriptionByLocale["zh-CN"];
@@ -63,6 +85,7 @@ const initialUi = {
     shortcutPress: "按下",
     shortcutInvoke: "唤起",
     languageLabel: "简体中文",
+    languageSelectAria: "语言",
   },
   "zh-TW": {
     viewRelease: "更新日誌",
@@ -79,6 +102,7 @@ const initialUi = {
     shortcutPress: "按下",
     shortcutInvoke: "喚起",
     languageLabel: "繁體中文",
+    languageSelectAria: "語言",
   },
   en: {
     viewRelease: "Release Notes",
@@ -95,6 +119,92 @@ const initialUi = {
     shortcutPress: "Press",
     shortcutInvoke: "to open",
     languageLabel: "English",
+    languageSelectAria: "Language",
+  },
+  ja: {
+    viewRelease: "リリースノート",
+    joinDiscord: "フィードバックと要望",
+    titleWelcome: "Lumno へようこそ",
+    subtitle: "フォーカス検索とミニマルな新規タブを備えたオープンソースのブラウザ拡張。",
+    settingsAria: "Lumno の GitHub リポジトリを開く",
+    releaseAria: "リリースノートを開く",
+    discordAria: "フィードバックと要望",
+    qrcodeTitle: "WeChat グループの QR コード",
+    qrcodeImageAlt: "Lumno WeChat グループの QR コード",
+    qrcodeCloseAria: "QR コードダイアログを閉じる",
+    logoIconAlt: "Lumno アイコン",
+    shortcutPress: "押して",
+    shortcutInvoke: "開く",
+    languageLabel: "日本語",
+    languageSelectAria: "言語",
+  },
+  ko: {
+    viewRelease: "릴리스 노트",
+    joinDiscord: "피드백 및 요청",
+    titleWelcome: "Lumno에 오신 것을 환영합니다",
+    subtitle: "포커스 검색과 미니멀 새 탭을 담은 오픈소스 브라우저 확장 프로그램.",
+    settingsAria: "Lumno GitHub 저장소 열기",
+    releaseAria: "릴리스 노트 열기",
+    discordAria: "피드백 및 요청",
+    qrcodeTitle: "WeChat 그룹 QR 코드",
+    qrcodeImageAlt: "Lumno WeChat 그룹 QR 코드",
+    qrcodeCloseAria: "QR 코드 대화상자 닫기",
+    logoIconAlt: "Lumno 아이콘",
+    shortcutPress: "눌러서",
+    shortcutInvoke: "열기",
+    languageLabel: "한국어",
+    languageSelectAria: "언어",
+  },
+  fr: {
+    viewRelease: "Notes de version",
+    joinDiscord: "Retours et demandes",
+    titleWelcome: "Bienvenue sur Lumno",
+    subtitle: "Une extension open source pour la recherche ciblée et un nouvel onglet minimaliste.",
+    settingsAria: "Ouvrir le dépôt GitHub de Lumno",
+    releaseAria: "Ouvrir les notes de version",
+    discordAria: "Retours et demandes",
+    qrcodeTitle: "QR code du groupe WeChat",
+    qrcodeImageAlt: "QR code du groupe WeChat de Lumno",
+    qrcodeCloseAria: "Fermer la fenêtre du QR code",
+    logoIconAlt: "Icône Lumno",
+    shortcutPress: "Appuyez sur",
+    shortcutInvoke: "pour ouvrir",
+    languageLabel: "Français",
+    languageSelectAria: "Langue",
+  },
+  de: {
+    viewRelease: "Versionshinweise",
+    joinDiscord: "Feedback und Wünsche",
+    titleWelcome: "Willkommen bei Lumno",
+    subtitle: "Eine Open-Source-Browsererweiterung für Fokus-Suche und einen minimalistischen neuen Tab.",
+    settingsAria: "Lumno-GitHub-Repository öffnen",
+    releaseAria: "Versionshinweise öffnen",
+    discordAria: "Feedback und Wünsche",
+    qrcodeTitle: "WeChat-Gruppen-QR-Code",
+    qrcodeImageAlt: "Lumno WeChat-Gruppen-QR-Code",
+    qrcodeCloseAria: "QR-Code-Dialog schließen",
+    logoIconAlt: "Lumno-Symbol",
+    shortcutPress: "Drücke",
+    shortcutInvoke: "zum Öffnen",
+    languageLabel: "Deutsch",
+    languageSelectAria: "Sprache",
+  },
+  es: {
+    viewRelease: "Notas de versión",
+    joinDiscord: "Comentarios y solicitudes",
+    titleWelcome: "Te damos la bienvenida a Lumno",
+    subtitle: "Una extensión de navegador de código abierto para búsqueda focalizada y una nueva pestaña minimalista.",
+    settingsAria: "Abrir el repositorio de Lumno en GitHub",
+    releaseAria: "Abrir las notas de versión",
+    discordAria: "Comentarios y solicitudes",
+    qrcodeTitle: "Código QR del grupo de WeChat",
+    qrcodeImageAlt: "Código QR del grupo de WeChat de Lumno",
+    qrcodeCloseAria: "Cerrar el cuadro del código QR",
+    logoIconAlt: "Icono de Lumno",
+    shortcutPress: "Pulsa",
+    shortcutInvoke: "para abrir",
+    languageLabel: "Español",
+    languageSelectAria: "Idioma",
   },
 }[uiLocale];
 const featureMessages = {
@@ -126,12 +236,72 @@ const featureMessages = {
     searchTitle: "Search any page in your browser",
     searchDesc: "Search bookmarks, history, open pages, and frequently visited sites",
     siteSearchTitle: "Custom site search",
-    siteSearchDesc: "Built-in site engines for instant site search with Tab",
+    siteSearchDesc: "Built-in site search shortcuts. Press Tab to search instantly",
     newTabTitle: "Minimalist new tab",
     newTabDesc: "Keep bookmarks and frequently used pages in clean card layouts",
     labsTitle: "Labs features",
     labsTitleStrong: "& polished UI",
     labsDesc: "More experiments are on the way",
+    betaAlt: "Beta",
+  },
+  ja: {
+    searchTitle: "ブラウザ内のあらゆるページを検索",
+    searchDesc: "ブックマーク、履歴、開いているページ、よく使うサイトを検索",
+    siteSearchTitle: "サイト内検索をカスタマイズ",
+    siteSearchDesc: "よく使うサイト検索を内蔵。Tab ですぐにサイト内検索を始められます",
+    newTabTitle: "ミニマルな新規タブ",
+    newTabDesc: "ブックマークとよく使うページをカードで整理",
+    labsTitle: "Labs 機能",
+    labsTitleStrong: "& 洗練された UI",
+    labsDesc: "さらに多くの実験的機能を準備中です",
+    betaAlt: "Beta",
+  },
+  ko: {
+    searchTitle: "브라우저의 모든 페이지 검색",
+    searchDesc: "북마크, 방문 기록, 열려 있는 페이지, 자주 찾는 사이트를 검색",
+    siteSearchTitle: "사이트 검색 맞춤 설정",
+    siteSearchDesc: "자주 쓰는 사이트 검색이 기본 내장되어 Tab으로 바로 시작할 수 있습니다",
+    newTabTitle: "미니멀 새 탭",
+    newTabDesc: "북마크와 자주 쓰는 페이지를 카드 형태로 정리",
+    labsTitle: "실험실 기능",
+    labsTitleStrong: "& 세련된 UI",
+    labsDesc: "더 많은 실험 기능을 준비 중입니다",
+    betaAlt: "Beta",
+  },
+  fr: {
+    searchTitle: "Rechercher n’importe quelle page dans votre navigateur",
+    searchDesc: "Recherchez favoris, historique, pages ouvertes et sites fréquemment visités",
+    siteSearchTitle: "Personnaliser la recherche sur site",
+    siteSearchDesc: "Raccourcis de recherche intégrés. Appuyez sur Tab pour lancer une recherche sur site",
+    newTabTitle: "Nouvel onglet minimaliste",
+    newTabDesc: "Gardez vos favoris et pages utiles dans des cartes claires",
+    labsTitle: "Fonctions Labs",
+    labsTitleStrong: "& interface soignée",
+    labsDesc: "D’autres expérimentations arrivent bientôt",
+    betaAlt: "Beta",
+  },
+  de: {
+    searchTitle: "Beliebige Seiten im Browser durchsuchen",
+    searchDesc: "Durchsuche Lesezeichen, Verlauf, geöffnete Seiten und häufig besuchte Websites",
+    siteSearchTitle: "Seitensuche anpassen",
+    siteSearchDesc: "Integrierte Website-Suche. Mit Tab startest du die Seitensuche sofort",
+    newTabTitle: "Minimalistischer neuer Tab",
+    newTabDesc: "Behalte Lesezeichen und wichtige Seiten in klaren Karten im Blick",
+    labsTitle: "Labs-Funktionen",
+    labsTitleStrong: "& verfeinertes UI",
+    labsDesc: "Weitere Experimente sind unterwegs",
+    betaAlt: "Beta",
+  },
+  es: {
+    searchTitle: "Busca cualquier página en tu navegador",
+    searchDesc: "Busca marcadores, historial, páginas abiertas y sitios que visitas con frecuencia",
+    siteSearchTitle: "Personaliza la búsqueda dentro de sitios",
+    siteSearchDesc: "Atajos de búsqueda integrados. Pulsa Tab para buscar dentro de un sitio al instante",
+    newTabTitle: "Nueva pestaña minimalista",
+    newTabDesc: "Mantén marcadores y páginas útiles en tarjetas limpias",
+    labsTitle: "Funciones Labs",
+    labsTitleStrong: "& interfaz cuidada",
+    labsDesc: "Más experimentos están en camino",
     betaAlt: "Beta",
   },
 }[uiLocale];
@@ -2025,7 +2195,7 @@ const structuredData = [
         <FeatureGrid messages={featureMessages} />
       </section>
     </main>
-    <LanguageMenu currentLabel={initialUi.languageLabel} />
+    <LanguageMenu currentLabel={initialUi.languageLabel} toggleAriaLabel={initialUi.languageSelectAria} />
     <div id="community-qrcode-modal" class="qrcode-modal" hidden>
       <div class="qrcode-modal-backdrop" data-close-qrcode-modal></div>
       <div class="qrcode-modal-panel" role="dialog" aria-modal="true" aria-labelledby="community-qrcode-title">
@@ -2056,6 +2226,11 @@ const structuredData = [
           language_zh_tw: "繁體中文",
           language_zh_hk: "繁體中文",
           language_en: "English",
+          language_ja: "日本語",
+          language_ko: "한국어",
+          language_fr: "Français",
+          language_de: "Deutsch",
+          language_es: "Español",
           join_discord: "反馈 & 提需",
           go_settings: "访问 GitHub 仓库",
           discord_aria: "反馈与提需",
@@ -2092,6 +2267,11 @@ const structuredData = [
           language_zh_tw: "繁體中文",
           language_zh_hk: "繁體中文",
           language_en: "English",
+          language_ja: "日本語",
+          language_ko: "한국어",
+          language_fr: "Français",
+          language_de: "Deutsch",
+          language_es: "Español",
           join_discord: "反饋 & 提需",
           go_settings: "造訪 GitHub 倉庫",
           discord_aria: "反饋與提需",
@@ -2128,6 +2308,11 @@ const structuredData = [
           language_zh_tw: "繁體中文",
           language_zh_hk: "繁體中文",
           language_en: "English",
+          language_ja: "日本語",
+          language_ko: "한국어",
+          language_fr: "Français",
+          language_de: "Deutsch",
+          language_es: "Español",
           join_discord: "反饋 & 提需",
           go_settings: "造訪 GitHub 倉庫",
           discord_aria: "反饋與提需",
@@ -2164,6 +2349,11 @@ const structuredData = [
           language_zh_tw: "繁體中文",
           language_zh_hk: "繁體中文",
           language_en: "English",
+          language_ja: "日本語",
+          language_ko: "한국어",
+          language_fr: "Français",
+          language_de: "Deutsch",
+          language_es: "Español",
           join_discord: "Feedback & Requests",
           go_settings: "View on GitHub",
           discord_aria: "Feedback and requests",
@@ -2228,6 +2418,11 @@ const structuredData = [
           }
           return "zh-CN";
         }
+        if (lower.startsWith("ja")) return "ja";
+        if (lower.startsWith("ko")) return "ko";
+        if (lower.startsWith("fr")) return "fr";
+        if (lower.startsWith("de")) return "de";
+        if (lower.startsWith("es")) return "es";
         return "en";
       }
 
@@ -2237,6 +2432,11 @@ const structuredData = [
         const lower = raw.toLowerCase();
         if (lower === "system") return getSystemLocale();
         if (lower === "en" || lower.startsWith("en-") || lower.startsWith("en_")) return "en";
+        if (lower === "ja" || lower.startsWith("ja-") || lower.startsWith("ja_")) return "ja";
+        if (lower === "ko" || lower.startsWith("ko-") || lower.startsWith("ko_")) return "ko";
+        if (lower === "fr" || lower.startsWith("fr-") || lower.startsWith("fr_")) return "fr";
+        if (lower === "de" || lower.startsWith("de-") || lower.startsWith("de_")) return "de";
+        if (lower === "es" || lower.startsWith("es-") || lower.startsWith("es_")) return "es";
         if (lower === "zh-hk" || lower === "zh_hk") return "zh-TW";
         if (lower === "zh-tw" || lower === "zh_tw" || lower === "zh-mo" || lower === "zh_mo" || lower.includes("hant")) {
           return "zh-TW";
@@ -2326,6 +2526,13 @@ const structuredData = [
           }
           const nextUrl = `${targetPath}${window.location.search}${window.location.hash}`;
           window.location.assign(nextUrl);
+          return;
+        }
+        if (!I18N_MESSAGES[normalizedMode]) {
+          document.documentElement.lang = normalizedMode;
+          syncCommunityAction(normalizedMode);
+          updateLanguageOptionState(normalizedMode);
+          setLanguageMenuOpen(false);
           return;
         }
         applyI18n(normalizedMode);

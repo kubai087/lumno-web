@@ -8,6 +8,7 @@ import {
   buildSoftwareApplicationSchema,
   buildWebPageSchema,
 } from "../../lib/seo";
+import { buildRouteLanguageMap } from "../../lib/locales";
 
 const releases = (await fetchReleases()).map((item) => ({
   ...item,
@@ -16,19 +17,26 @@ const releases = (await fetchReleases()).map((item) => ({
 const latestReleaseVersion = String(releases[0]?.tag || "").trim();
 const forcedLocale = Astro.props.forcedLocale || "zh-CN";
 const seoPath = Astro.props.seoPath || "/release/";
-const routeLanguageMap = Astro.props.routeLanguageMap || {
-  "zh-CN": "/release/",
-  en: "/en/release/",
-  "zh-TW": "/zh-tw/release/",
-};
-const uiLocale = forcedLocale === "en" ? "en" : forcedLocale === "zh-TW" ? "zh-TW" : "zh-CN";
+const routeLanguageMap = Astro.props.routeLanguageMap || buildRouteLanguageMap("/release/");
+const uiLocale = forcedLocale;
+const releaseContentLocale = forcedLocale === "zh-CN" || forcedLocale === "zh-TW" ? "zh-CN" : "en";
 const alternateLinks = [
-  { hreflang: "zh-CN", href: new URL(routeLanguageMap["zh-CN"], SITE_URL).toString() },
-  { hreflang: "zh-TW", href: new URL(routeLanguageMap["zh-TW"], SITE_URL).toString() },
-  { hreflang: "en", href: new URL(routeLanguageMap.en, SITE_URL).toString() },
+  ...Object.entries(routeLanguageMap).map(([hreflang, href]) => ({
+    hreflang,
+    href: new URL(href, SITE_URL).toString(),
+  })),
   { hreflang: "x-default", href: new URL("/release/", SITE_URL).toString() },
 ];
-const ogLocale = forcedLocale === "zh-TW" ? "zh_TW" : forcedLocale === "en" ? "en_US" : "zh_CN";
+const ogLocale = {
+  "zh-CN": "zh_CN",
+  "zh-TW": "zh_TW",
+  en: "en_US",
+  ja: "ja_JP",
+  ko: "ko_KR",
+  fr: "fr_FR",
+  de: "de_DE",
+  es: "es_ES",
+}[forcedLocale] || "en_US";
 const pageTitleByLocale = {
   "zh-CN": latestReleaseVersion
     ? `Lumno 更新日志｜v${latestReleaseVersion} 与浏览器命令栏发布记录`
@@ -39,6 +47,21 @@ const pageTitleByLocale = {
   en: latestReleaseVersion
     ? `Lumno Changelog | v${latestReleaseVersion} Browser Command Bar Release Notes`
     : "Lumno Changelog | Browser Command Bar Release Notes",
+  ja: latestReleaseVersion
+    ? `Lumno リリースノート｜v${latestReleaseVersion} ブラウザコマンドバーの更新`
+    : "Lumno リリースノート｜ブラウザコマンドバーの更新",
+  ko: latestReleaseVersion
+    ? `Lumno 릴리스 노트 | v${latestReleaseVersion} 브라우저 커맨드바 업데이트`
+    : "Lumno 릴리스 노트 | 브라우저 커맨드바 업데이트",
+  fr: latestReleaseVersion
+    ? `Notes de version Lumno | v${latestReleaseVersion} et mises à jour de la barre de commandes`
+    : "Notes de version Lumno | Mises à jour de la barre de commandes",
+  de: latestReleaseVersion
+    ? `Lumno Versionshinweise | v${latestReleaseVersion} und Updates zur Befehlsleiste`
+    : "Lumno Versionshinweise | Updates zur Befehlsleiste",
+  es: latestReleaseVersion
+    ? `Notas de versión de Lumno | v${latestReleaseVersion} y novedades de la barra de comandos`
+    : "Notas de versión de Lumno | Novedades de la barra de comandos",
 };
 const pageDescriptionByLocale = {
   "zh-CN": latestReleaseVersion
@@ -50,6 +73,21 @@ const pageDescriptionByLocale = {
   en: latestReleaseVersion
     ? `Follow Lumno release notes for focus search, browser command bar, and minimalist new tab updates. The latest version is v${latestReleaseVersion}.`
     : "Follow Lumno release notes for focus search, browser command bar, and minimalist new tab updates.",
+  ja: latestReleaseVersion
+    ? `Lumno のフォーカス検索、ブラウザコマンドバー、ミニマルな新規タブに関する更新情報を確認できます。最新バージョンは v${latestReleaseVersion} です。`
+    : "Lumno のフォーカス検索、ブラウザコマンドバー、ミニマルな新規タブに関する更新情報を確認できます。",
+  ko: latestReleaseVersion
+    ? `Lumno의 포커스 검색, 브라우저 커맨드바, 미니멀 새 탭 업데이트를 확인하세요. 최신 버전은 v${latestReleaseVersion}입니다.`
+    : "Lumno의 포커스 검색, 브라우저 커맨드바, 미니멀 새 탭 업데이트를 확인하세요.",
+  fr: latestReleaseVersion
+    ? `Retrouvez les mises à jour de Lumno pour la recherche ciblée, la barre de commandes et le nouvel onglet minimaliste. La dernière version est v${latestReleaseVersion}.`
+    : "Retrouvez les mises à jour de Lumno pour la recherche ciblée, la barre de commandes et le nouvel onglet minimaliste.",
+  de: latestReleaseVersion
+    ? `Verfolge die Lumno-Updates für Fokus-Suche, Befehlsleiste und minimalistischen neuen Tab. Die aktuelle Version ist v${latestReleaseVersion}.`
+    : "Verfolge die Lumno-Updates für Fokus-Suche, Befehlsleiste und minimalistischen neuen Tab.",
+  es: latestReleaseVersion
+    ? `Consulta las novedades de Lumno para búsqueda focalizada, barra de comandos y nueva pestaña minimalista. La versión más reciente es la v${latestReleaseVersion}.`
+    : "Consulta las novedades de Lumno para búsqueda focalizada, barra de comandos y nueva pestaña minimalista.",
 };
 const pageTitle = pageTitleByLocale[forcedLocale] || pageTitleByLocale["zh-CN"];
 const pageDescription = pageDescriptionByLocale[forcedLocale] || pageDescriptionByLocale["zh-CN"];
@@ -115,6 +153,96 @@ const initialUi = {
     qrcodeTitle: "WeChat group QR code",
     qrcodeImageAlt: "Lumno WeChat group QR code",
     qrcodeCloseAria: "Close QR code dialog",
+  },
+  ja: {
+    joinDiscord: "フィードバックと要望",
+    bannerTitle: "最新バージョンを使用中です",
+    brandHomeAria: "Lumno ホームに戻る",
+    brandLogoAlt: "Lumno",
+    githubRepoAria: "Lumno の GitHub リポジトリを開く",
+    xAria: "X で Lumno を見る",
+    discordAria: "フィードバックと要望",
+    bannerAlt: "Lumno バナー",
+    languageSelectAria: "言語",
+    readOnGithub: "GitHub で見る",
+    languageLabel: "日本語",
+    noReleasesTitle: "まだリリースはありません",
+    noReleasesDesc: "GitHub Release を公開すると、次回デプロイ後にここへ表示されます。",
+    qrcodeTitle: "WeChat グループの QR コード",
+    qrcodeImageAlt: "Lumno WeChat グループの QR コード",
+    qrcodeCloseAria: "QR コードダイアログを閉じる",
+  },
+  ko: {
+    joinDiscord: "피드백 및 요청",
+    bannerTitle: "최신 버전을 사용 중입니다",
+    brandHomeAria: "Lumno 홈으로 돌아가기",
+    brandLogoAlt: "Lumno",
+    githubRepoAria: "Lumno GitHub 저장소 열기",
+    xAria: "X에서 Lumno 보기",
+    discordAria: "피드백 및 요청",
+    bannerAlt: "Lumno 배너",
+    languageSelectAria: "언어",
+    readOnGithub: "GitHub에서 보기",
+    languageLabel: "한국어",
+    noReleasesTitle: "아직 릴리스가 없습니다",
+    noReleasesDesc: "GitHub Release를 게시하면 다음 배포 후 여기에 표시됩니다.",
+    qrcodeTitle: "WeChat 그룹 QR 코드",
+    qrcodeImageAlt: "Lumno WeChat 그룹 QR 코드",
+    qrcodeCloseAria: "QR 코드 대화상자 닫기",
+  },
+  fr: {
+    joinDiscord: "Retours et demandes",
+    bannerTitle: "Vous êtes à jour",
+    brandHomeAria: "Retour à l’accueil de Lumno",
+    brandLogoAlt: "Lumno",
+    githubRepoAria: "Ouvrir le dépôt GitHub de Lumno",
+    xAria: "Voir Lumno sur X",
+    discordAria: "Retours et demandes",
+    bannerAlt: "Bannière Lumno",
+    languageSelectAria: "Langue",
+    readOnGithub: "Voir sur GitHub",
+    languageLabel: "Français",
+    noReleasesTitle: "Aucune version pour le moment",
+    noReleasesDesc: "Publiez une GitHub Release et elle apparaîtra ici après le prochain déploiement.",
+    qrcodeTitle: "QR code du groupe WeChat",
+    qrcodeImageAlt: "QR code du groupe WeChat de Lumno",
+    qrcodeCloseAria: "Fermer la fenêtre du QR code",
+  },
+  de: {
+    joinDiscord: "Feedback und Wünsche",
+    bannerTitle: "Du bist auf dem neuesten Stand",
+    brandHomeAria: "Zurück zur Lumno-Startseite",
+    brandLogoAlt: "Lumno",
+    githubRepoAria: "Lumno-GitHub-Repository öffnen",
+    xAria: "Lumno auf X ansehen",
+    discordAria: "Feedback und Wünsche",
+    bannerAlt: "Lumno-Banner",
+    languageSelectAria: "Sprache",
+    readOnGithub: "Auf GitHub ansehen",
+    languageLabel: "Deutsch",
+    noReleasesTitle: "Noch keine Releases",
+    noReleasesDesc: "Veröffentliche ein GitHub Release, dann erscheint es nach dem nächsten Deploy hier.",
+    qrcodeTitle: "WeChat-Gruppen-QR-Code",
+    qrcodeImageAlt: "Lumno WeChat-Gruppen-QR-Code",
+    qrcodeCloseAria: "QR-Code-Dialog schließen",
+  },
+  es: {
+    joinDiscord: "Comentarios y solicitudes",
+    bannerTitle: "Ya tienes la versión más reciente",
+    brandHomeAria: "Volver a la página principal de Lumno",
+    brandLogoAlt: "Lumno",
+    githubRepoAria: "Abrir el repositorio de Lumno en GitHub",
+    xAria: "Ver Lumno en X",
+    discordAria: "Comentarios y solicitudes",
+    bannerAlt: "Banner de Lumno",
+    languageSelectAria: "Idioma",
+    readOnGithub: "Ver en GitHub",
+    languageLabel: "Español",
+    noReleasesTitle: "Aún no hay versiones publicadas",
+    noReleasesDesc: "Publica una GitHub Release y aparecerá aquí después del próximo despliegue.",
+    qrcodeTitle: "Código QR del grupo de WeChat",
+    qrcodeImageAlt: "Código QR del grupo de WeChat de Lumno",
+    qrcodeCloseAria: "Cerrar el cuadro del código QR",
   },
 }[uiLocale];
 const structuredData = [
@@ -227,7 +355,12 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         font: inherit;
       }
 
-      body[data-release-locale="en"] {
+      body[data-release-locale="en"],
+      body[data-release-locale="ja"],
+      body[data-release-locale="ko"],
+      body[data-release-locale="fr"],
+      body[data-release-locale="de"],
+      body[data-release-locale="es"] {
         font-family: "Open Sans", "Segoe UI", system-ui, sans-serif;
       }
 
@@ -796,19 +929,15 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         display: none;
       }
 
-      body[data-release-locale="zh-CN"] .entry-localized[data-release-locale="zh-CN"] {
+      body[data-release-content-locale="zh-CN"] .entry-localized[data-release-locale="zh-CN"] {
         display: block;
       }
 
-      body[data-release-locale="zh-TW"] .entry-localized[data-release-locale="zh-CN"] {
+      body[data-release-content-locale="en"] .entry-localized[data-release-locale="en"] {
         display: block;
       }
 
-      body[data-release-locale="en"] .entry-localized[data-release-locale="en"] {
-        display: block;
-      }
-
-      body:not([data-release-locale]) .entry-localized[data-release-locale="zh-CN"] {
+      body:not([data-release-content-locale]) .entry-localized[data-release-locale="zh-CN"] {
         display: block;
       }
 
@@ -1113,7 +1242,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
       }
     </style>
   </head>
-  <body data-release-locale={uiLocale}>
+  <body data-release-locale={uiLocale} data-release-content-locale={releaseContentLocale}>
     <header class="header">
       <div class="container">
         <div class="header-inner">
@@ -1336,6 +1465,21 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         <button class="lang-option" type="button" role="menuitemradio" data-lang-value="en" data-i18n="language_en">
           English
         </button>
+        <button class="lang-option" type="button" role="menuitemradio" data-lang-value="ja" data-i18n="language_ja">
+          日本語
+        </button>
+        <button class="lang-option" type="button" role="menuitemradio" data-lang-value="ko" data-i18n="language_ko">
+          한국어
+        </button>
+        <button class="lang-option" type="button" role="menuitemradio" data-lang-value="fr" data-i18n="language_fr">
+          Français
+        </button>
+        <button class="lang-option" type="button" role="menuitemradio" data-lang-value="de" data-i18n="language_de">
+          Deutsch
+        </button>
+        <button class="lang-option" type="button" role="menuitemradio" data-lang-value="es" data-i18n="language_es">
+          Español
+        </button>
       </div>
     </div>
     <div id="community-qrcode-modal" class="qrcode-modal" hidden>
@@ -1374,6 +1518,11 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
           language_zh_cn: "简体中文",
           language_zh_tw: "繁體中文",
           language_en: "English",
+          language_ja: "日本語",
+          language_ko: "한국어",
+          language_fr: "Français",
+          language_de: "Deutsch",
+          language_es: "Español",
           features_label: "新功能",
           bug_fixes_label: "问题修复",
           github_published: "已发布",
@@ -1403,6 +1552,11 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
           language_zh_cn: "簡體中文",
           language_zh_tw: "繁體中文",
           language_en: "English",
+          language_ja: "日本語",
+          language_ko: "한국어",
+          language_fr: "Français",
+          language_de: "Deutsch",
+          language_es: "Español",
           features_label: "新功能",
           bug_fixes_label: "問題修復",
           github_published: "已發布",
@@ -1432,6 +1586,11 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
           language_zh_cn: "简体中文",
           language_zh_tw: "繁體中文",
           language_en: "English",
+          language_ja: "日本語",
+          language_ko: "한국어",
+          language_fr: "Français",
+          language_de: "Deutsch",
+          language_es: "Español",
           features_label: "Features",
           bug_fixes_label: "Bug Fixes",
           github_published: "Published",
@@ -1461,6 +1620,11 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
           }
           return "zh-CN";
         }
+        if (raw.startsWith("ja")) return "ja";
+        if (raw.startsWith("ko")) return "ko";
+        if (raw.startsWith("fr")) return "fr";
+        if (raw.startsWith("de")) return "de";
+        if (raw.startsWith("es")) return "es";
         return "en";
       }
 
@@ -1528,6 +1692,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         const resolvedLocale = I18N_MESSAGES[locale] ? locale : FALLBACK_LOCALE;
         document.documentElement.lang = resolvedLocale;
         document.body.setAttribute("data-release-locale", resolvedLocale);
+        document.body.setAttribute("data-release-content-locale", resolvedLocale === "zh-CN" || resolvedLocale === "zh-TW" ? "zh-CN" : "en");
         const entryContext = INITIAL_ENTRY_CONTEXT;
         document.body.setAttribute("data-release-entry", entryContext.isExtensionEntry ? "ext" : "web");
 
@@ -1607,6 +1772,15 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
           }
           const nextUrl = `${targetPath}${window.location.search}${window.location.hash}`;
           window.location.assign(nextUrl);
+          return;
+        }
+        if (!I18N_MESSAGES[normalizedMode]) {
+          document.documentElement.lang = normalizedMode;
+          document.body.setAttribute("data-release-locale", normalizedMode);
+          document.body.setAttribute("data-release-content-locale", normalizedMode === "zh-CN" || normalizedMode === "zh-TW" ? "zh-CN" : "en");
+          syncCommunityAction(normalizedMode);
+          updateLanguageOptionState(normalizedMode);
+          setLanguageMenuOpen(false);
           return;
         }
         applyI18n(normalizedMode);

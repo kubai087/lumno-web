@@ -1,6 +1,6 @@
 # Lumno Web Agent Notes
 
-Last updated: 2026-03-05
+Last updated: 2026-03-06
 
 ## Confirmed Tech Direction
 
@@ -24,6 +24,44 @@ Last updated: 2026-03-05
   - `/` for product homepage and feature intro
   - `/onboarding` for post-install onboarding
   - `/release` for changelog/release notes
+
+## Multilingual SEO Workflow
+
+- Keep multilingual SEO routes static and indexable:
+  - default routes stay on `/`, `/onboarding`, `/release`
+  - localized routes use explicit paths such as `/en/...` and `/zh-tw/...`
+- Do not let extension entry pages depend on stored language for first render:
+  - onboarding / release entry behavior should still resolve from browser language by default
+  - explicit localized routes should stay pinned to their locale
+- Separate UI copy from SEO metadata:
+  - page body copy, runtime i18n titles, and SEO `<title>/<meta>` must not share the same key when their wording differs
+  - keep `page_title_ui` and SEO title/description independent when needed
+- Prefer SSR/static localized copy for anything visible above the fold:
+  - hero title/subtitle
+  - feature card titles and descriptions
+  - language menu current label
+  - key CTA labels where practical
+- Keep accessibility text localized too:
+  - `aria-label`, `alt`, modal titles, tooltip labels, and similar helper text should match the route locale in static HTML whenever possible
+- Translation quality rules:
+  - Simplified Chinese is the source-of-truth baseline
+  - Traditional Chinese should be idiomatic, not mechanically converted
+  - English should read like product copy, not literal translation or keyword stuffing
+  - When adding new locales or pages, prefer concise, benefit-led phrasing similar to Apple / Google product pages, but never mimic branded wording
+- Multilingual expansion should stay within the existing three page types unless Kevin explicitly asks for new page types:
+  - `/`
+  - `/onboarding`
+  - `/release`
+  - add language variants and localized metadata, but do not introduce extra landing-page categories by default
+- When extending language coverage, keep the existing search intents consistent across locales:
+  - browser command bar
+  - focus search
+  - tab search
+  - bookmark search
+  - history search
+  - site search
+  - minimalist new tab
+  - Arc migration / alternatives for Dia or Chrome
 
 ## Implementation Status
 

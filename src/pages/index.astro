@@ -51,7 +51,7 @@ const pageDescriptionByLocale = {
   en:
     "Lumno is an open-source browser extension for focus search, command-bar workflows, and a minimalist new tab. Search tabs, bookmarks, history, and site content on Chrome, Edge, and Dia, with migration-friendly workflows for former Arc users.",
   ja:
-    "Lumno は、フォーカス検索、コマンドバー操作、ミニマルな新規タブをまとめて使えるオープンソースのブラウザ拡張です。Chrome、Edge、Dia でタブ、ブックマーク、履歴、サイト内コンテンツをすばやく検索でき、Arc から移行したあとも馴染みのある操作感を保てます。",
+    "Lumno は、フォーカス検索、コマンドバー、ミニマルな新規タブを備えたオープンソースのブラウザ拡張です。Chrome、Edge、Dia で、タブ、ブックマーク、履歴、サイト内コンテンツをすばやく検索できます。Arc から移行したあとも、馴染みのある操作感を保てます。",
   ko:
     "Lumno는 포커스 검색, 커맨드바 워크플로, 미니멀 새 탭을 제공하는 오픈소스 브라우저 확장 프로그램입니다. Chrome, Edge, Dia에서 탭, 북마크, 방문 기록, 사이트 콘텐츠를 빠르게 찾을 수 있고 Arc에서 옮겨온 뒤에도 익숙한 흐름을 이어갈 수 있습니다.",
   fr:
@@ -138,7 +138,7 @@ const initialUi = {
   ja: {
     viewRelease: "リリースノート",
     joinDiscord: "フィードバックと要望",
-    titleWelcome: "Lumno へようこそ",
+    titleWelcome: "ようこそ",
     subtitle: "フォーカス検索とミニマルな新規タブを備えたオープンソースのブラウザ拡張。",
     languageLabel: "日本語",
     languageSelectAria: "言語",
@@ -153,12 +153,12 @@ const initialUi = {
     logoIconAlt: "Lumno アイコン",
     cwsSupportNote: "Dia と Edge に対応",
     tooltipAria: "Arc 移行サポートについて",
-    supportTooltip: "Arc から Dia や Chrome に移行した人でも、馴染みのあるコマンドバー検索をそのまま使えます。Lumno は Arc 的な操作感に着想を得ていますが、Arc とは無関係です。",
+    supportTooltip: "Arc から Dia や Chrome に移行したあとも、馴染みのあるコマンドバー検索をそのまま使えます。Lumno は Arc 風の操作感に着想を得ていますが、Arc とは無関係です。",
   },
   ko: {
     viewRelease: "릴리스 노트",
     joinDiscord: "피드백 및 요청",
-    titleWelcome: "Lumno에 오신 것을 환영합니다",
+    titleWelcome: "환영합니다",
     subtitle: "포커스 검색과 미니멀 새 탭을 담은 오픈소스 브라우저 확장 프로그램.",
     languageLabel: "한국어",
     languageSelectAria: "언어",
@@ -178,7 +178,7 @@ const initialUi = {
   fr: {
     viewRelease: "Notes de version",
     joinDiscord: "Retours et demandes",
-    titleWelcome: "Bienvenue sur Lumno",
+    titleWelcome: "Bienvenue",
     subtitle: "Une extension open source pour la recherche ciblée et un nouvel onglet minimaliste.",
     languageLabel: "Français",
     languageSelectAria: "Langue",
@@ -198,7 +198,7 @@ const initialUi = {
   de: {
     viewRelease: "Versionshinweise",
     joinDiscord: "Feedback und Wünsche",
-    titleWelcome: "Willkommen bei Lumno",
+    titleWelcome: "Willkommen",
     subtitle: "Eine Open-Source-Browsererweiterung für Fokus-Suche und einen minimalistischen neuen Tab.",
     languageLabel: "Deutsch",
     languageSelectAria: "Sprache",
@@ -218,7 +218,7 @@ const initialUi = {
   es: {
     viewRelease: "Notas de versión",
     joinDiscord: "Comentarios y solicitudes",
-    titleWelcome: "Te damos la bienvenida a Lumno",
+    titleWelcome: "Te damos la bienvenida",
     subtitle: "Una extensión de navegador de código abierto para búsqueda focalizada y una nueva pestaña minimalista.",
     languageLabel: "Español",
     languageSelectAria: "Idioma",
@@ -274,15 +274,15 @@ const featureMessages = {
     betaAlt: "Beta",
   },
   ja: {
-    searchTitle: "ブラウザ内のあらゆるページを検索",
-    searchDesc: "ブックマーク、履歴、開いているページ、よく使うサイトを検索",
+    searchTitle: "ブラウザ内のページをすばやく検索",
+    searchDesc: "ブックマーク、履歴、開いているページ、よく使うサイトをまとめて検索",
     siteSearchTitle: "サイト内検索をカスタマイズ",
-    siteSearchDesc: "よく使うサイト検索を内蔵。Tab ですぐにサイト内検索を始められます",
+    siteSearchDesc: "よく使うサイトの検索を内蔵。Tabですぐにサイト内検索を開始",
     newTabTitle: "ミニマルな新規タブ",
     newTabDesc: "ブックマークとよく使うページをカードで整理",
     labsTitle: "Labs 機能",
     labsTitleStrong: "& 洗練された UI",
-    labsDesc: "さらに多くの実験的機能を準備中です",
+    labsDesc: "さらに多くの実験的な機能を準備中です",
     betaAlt: "Beta",
   },
   ko: {
@@ -2126,6 +2126,29 @@ const structuredData = [
           -webkit-backdrop-filter: none;
           transform: translateY(6px) scale(0.97);
           transform-origin: bottom center;
+        }
+      }
+
+      @media (max-width: 1080px) and (orientation: landscape) {
+        .top-nav {
+          top: 0;
+          left: 0;
+          right: 0;
+          gap: 10px;
+          padding-top: calc(env(safe-area-inset-top, 0px) + 8px);
+          padding-right: calc(env(safe-area-inset-right, 0px) + 16px);
+          padding-bottom: 8px;
+          padding-left: calc(env(safe-area-inset-left, 0px) + 16px);
+          border-radius: 0;
+          background: rgba(250, 250, 250, 0.94);
+          border-bottom: 1px solid rgba(221, 227, 236, 0.9);
+          box-shadow: 0 8px 24px rgba(18, 28, 44, 0.08);
+          backdrop-filter: saturate(160%) blur(14px);
+          -webkit-backdrop-filter: saturate(160%) blur(14px);
+        }
+
+        body.has-nav-overlap .top-nav {
+          background: rgba(250, 250, 250, 0.98);
         }
       }
 

@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "npm run test && astro build",
     "preview": "astro preview",
-    "check": "astro check"
+    "check": "astro check",
+    "test": "node --test"
   },
   "dependencies": {
     "@astrojs/react": "^4.4.0",

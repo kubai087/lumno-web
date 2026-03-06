@@ -8,6 +8,7 @@ import {
   buildSoftwareApplicationSchema,
   buildWebPageSchema,
 } from "../../lib/seo";
+import { buildEntryContextConfig } from "../../lib/entry-context";
 import { DEFAULT_LOCALE, buildRouteLanguageMap } from "../../lib/locales";
 
 const releases = (await fetchReleases()).map((item) => ({
@@ -18,6 +19,7 @@ const latestReleaseVersion = String(releases[0]?.tag || "").trim();
 const forcedLocale = Astro.props.forcedLocale ?? null;
 const seoPath = Astro.props.seoPath || "/release/";
 const routeLanguageMap = Astro.props.routeLanguageMap || buildRouteLanguageMap("/release/");
+const entryContextConfig = buildEntryContextConfig(latestReleaseVersion);
 const uiLocale = forcedLocale || DEFAULT_LOCALE;
 const releaseContentLocale = uiLocale === "zh-CN" || uiLocale === "zh-TW" ? "zh-CN" : "en";
 const alternateLinks = [
@@ -1503,10 +1505,15 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         <img class="qrcode-modal-image" src="/qrcode.JPG" alt={initialUi.qrcodeImageAlt} data-i18n-alt="qrcode_image_alt" loading="lazy" />
       </div>
     </div>
-    <script define:vars={{ latestReleaseVersion, forcedLocale, routeLanguageMap }}>
+    <script>
+      import "../../scripts/language-preference";
+      import "../../scripts/language-runtime";
+    </script>
+    <script define:vars={{ forcedLocale, routeLanguageMap, entryContextConfig }}>
       const LANGUAGE_STORAGE_KEY = "_x_extension_language_2024_unique_";
       const FORCED_LOCALE = forcedLocale;
       const ROUTE_LANGUAGE_MAP = routeLanguageMap;
+      const ENTRY_CONTEXT_CONFIG = entryContextConfig;
       const FALLBACK_LOCALE = "zh-CN";
       const ZH_CN_LOCALE = "zh-CN";
       const I18N_MESSAGES = {
@@ -1614,14 +1621,6 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         }
       };
 
-      function setLanguageMenuOpen(open) {
-        const languageMenu = document.getElementById("language-menu");
-        const languageToggle = document.getElementById("language-toggle");
-        if (!languageMenu || !languageToggle) return;
-        languageMenu.setAttribute("data-open", open ? "true" : "false");
-        languageToggle.setAttribute("aria-expanded", open ? "true" : "false");
-      }
-
       function normalizeLocale(locale) {
         const raw = String(locale || "").trim().toLowerCase();
         if (!raw) return "en";
@@ -1659,20 +1658,20 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         );
       }
 
-      function formatVersionToken(raw) {
-        const value = String(raw || "").trim();
-        if (!value) return "";
-        return /^v/i.test(value) ? value : `v${value}`;
-      }
-
       function getEntryContext() {
         const params = new URLSearchParams(window.location.search);
         const entry = (params.get("entry") || "").trim().toLowerCase();
+        const source = (params.get("source") || "").trim().toLowerCase();
         const reason = (params.get("reason") || "").trim().toLowerCase();
-        const versionFromParam = formatVersionToken(params.get("version") || "");
-        const fallbackVersion = formatVersionToken(latestReleaseVersion || "");
+        const rawVersion = String(params.get("version") || "").trim();
+        const versionFromParam = rawVersion ? (/^v/i.test(rawVersion) ? rawVersion : `v${rawVersion}`) : "";
+        const fallbackVersion = ENTRY_CONTEXT_CONFIG.latestVersion || "";
         const version = versionFromParam || fallbackVersion;
-        const isExtensionEntry = entry === "ext" || Boolean(reason) || Boolean(versionFromParam);
+        const isExtensionEntry =
+          ENTRY_CONTEXT_CONFIG.extensionEntryValues.includes(entry) ||
+          ENTRY_CONTEXT_CONFIG.extensionEntryValues.includes(source) ||
+          Boolean(reason) ||
+          Boolean(versionFromParam);
         return { isExtensionEntry, reason, version };
       }
 
@@ -1769,47 +1768,28 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         }
       }
 
-      function applyLanguageMode(mode, options) {
-        const normalizedMode = normalizeLanguageMode(mode);
-        const targetPath = ROUTE_LANGUAGE_MAP[normalizedMode];
-        const currentPath = window.location.pathname;
-        if (targetPath && currentPath !== targetPath) {
-          if (options && options.persist) {
-            try {
-              localStorage.setItem(LANGUAGE_STORAGE_KEY, normalizedMode);
-            } catch (_error) {
-              // Ignore storage write errors (private mode / blocked storage).
-            }
-          }
-          const nextUrl = `${targetPath}${window.location.search}${window.location.hash}`;
-          window.location.assign(nextUrl);
-          return;
-        }
+      function applyResolvedLanguage(normalizedMode) {
         if (!I18N_MESSAGES[normalizedMode]) {
           document.documentElement.lang = normalizedMode;
           document.body.setAttribute("data-release-locale", normalizedMode);
           document.body.setAttribute("data-release-content-locale", normalizedMode === "zh-CN" || normalizedMode === "zh-TW" ? "zh-CN" : "en");
           syncCommunityAction(normalizedMode);
           updateLanguageOptionState(normalizedMode);
-          setLanguageMenuOpen(false);
           return;
         }
         applyI18n(normalizedMode);
         syncCommunityAction(normalizedMode);
         updateLanguageOptionState(normalizedMode);
-        if (options && options.persist) {
-          try {
-            localStorage.setItem(LANGUAGE_STORAGE_KEY, normalizedMode);
-          } catch (_error) {
-            // Ignore storage write errors (private mode / blocked storage).
-          }
-        }
       }
 
-      function getInitialLanguageMode() {
-        if (FORCED_LOCALE) return FORCED_LOCALE;
-        return getSystemLocale();
-      }
+      const languageRuntime = window.__lumnoLanguageRuntime.setupLanguageRuntime({
+        forcedLocale: FORCED_LOCALE,
+        getSystemLocale,
+        normalizeLanguageMode,
+        routeLanguageMap: ROUTE_LANGUAGE_MAP,
+        languageStorageKey: LANGUAGE_STORAGE_KEY,
+        applyResolvedLanguage,
+      });
 
       function setupQrcodeModal() {
         const entry = document.querySelector("[data-community-entry]");
@@ -1843,43 +1823,9 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         });
       }
 
-      const initialLanguageMenu = document.getElementById("language-menu");
-      if (initialLanguageMenu) {
-        initialLanguageMenu.setAttribute("data-open", "false");
-      }
-      document.addEventListener("click", (event) => {
-        const target = event.target instanceof HTMLElement ? event.target : null;
-        if (!target) return;
-        const languageToggle = target.closest("#language-toggle");
-        const languageMenu = document.getElementById("language-menu");
-        if (languageToggle) {
-          event.stopPropagation();
-          const expanded = languageToggle.getAttribute("aria-expanded") === "true";
-          setLanguageMenuOpen(!expanded);
-          return;
-        }
-        const languageOption = target.closest("#language-menu [data-lang-value]");
-        if (languageOption) {
-          const next = languageOption.getAttribute("data-lang-value") || getSystemLocale();
-          applyLanguageMode(next, { persist: true });
-          setLanguageMenuOpen(false);
-          return;
-        }
-        const activeLanguageToggle = document.getElementById("language-toggle");
-        if (!languageMenu || !activeLanguageToggle) return;
-        if (!languageMenu.contains(target) && !activeLanguageToggle.contains(target)) {
-          setLanguageMenuOpen(false);
-        }
-      });
-      document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape") {
-          setLanguageMenuOpen(false);
-        }
-      });
-
-      applyLanguageMode(getInitialLanguageMode());
+      languageRuntime.applyLanguageMode(languageRuntime.getInitialLanguageMode());
       window.addEventListener("load", () => {
-        applyLanguageMode(getInitialLanguageMode());
+        languageRuntime.applyLanguageMode(languageRuntime.getInitialLanguageMode());
       }, { once: true });
       setupQrcodeModal();
 

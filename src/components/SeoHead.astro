@@ -39,6 +39,8 @@ const imageUrl = new URL(image, SITE_URL).toString();
 const gaId = String(import.meta.env.PUBLIC_GA_ID || "").trim();
 const googleSiteVerification = String(import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION || "").trim();
 const bingSiteVerification = String(import.meta.env.PUBLIC_BING_SITE_VERIFICATION || "").trim();
+const baiduSiteVerification = String(import.meta.env.PUBLIC_BAIDU_SITE_VERIFICATION || "").trim();
+const sogouSiteVerification = String(import.meta.env.PUBLIC_SOGOU_SITE_VERIFICATION || "").trim();
 const robots = noindex
   ? "noindex, nofollow, noarchive"
   : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
@@ -56,6 +58,8 @@ const keywordContent = keywords.join(", ");
 <meta name="theme-color" content="#fafafa" />
 {googleSiteVerification ? <meta name="google-site-verification" content={googleSiteVerification} /> : null}
 {bingSiteVerification ? <meta name="msvalidate.01" content={bingSiteVerification} /> : null}
+{baiduSiteVerification ? <meta name="baidu-site-verification" content={baiduSiteVerification} /> : null}
+{sogouSiteVerification ? <meta name="sogou_site_verification" content={sogouSiteVerification} /> : null}
 {keywordContent ? <meta name="keywords" content={keywordContent} /> : null}
 <link rel="canonical" href={canonicalUrl} />
 {alternates.map((item) => (

@@ -26,11 +26,33 @@ npm run preview
 
 ## 埋点（GA4）
 
-首页支持 GA4。部署时设置环境变量：
+全站支持 GA4。部署时设置环境变量：
 
 - `PUBLIC_GA_ID`：例如 `G-XXXXXXXXXX`
 
 未设置时会自动跳过埋点脚本注入。
+
+当前会追踪的关键点击包括：
+
+- Chrome Web Store 安装入口
+- GitHub 仓库入口
+- Discord 社区入口
+- `/release/` 页面内的 GitHub Release 外链
+
+## 站长平台验证
+
+如需接入搜索引擎站长平台，可在部署时设置：
+
+- `PUBLIC_GOOGLE_SITE_VERIFICATION`
+- `PUBLIC_BING_SITE_VERIFICATION`
+
+未设置时不会输出对应验证 meta 标签。
+
+如果使用 GitHub Pages 工作流部署，请在仓库 `Settings -> Secrets and variables -> Actions` 中添加同名 secrets：
+
+- `PUBLIC_GA_ID`
+- `PUBLIC_GOOGLE_SITE_VERIFICATION`
+- `PUBLIC_BING_SITE_VERIFICATION`
 
 ## Release 数据源配置（可选）
 

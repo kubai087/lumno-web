@@ -95,6 +95,22 @@ export function buildOrganizationSchema() {
   };
 }
 
+export function buildWebSiteSchema() {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: SITE_NAME,
+    alternateName: PRODUCT_ALTERNATE_NAMES,
+    url: SITE_URL,
+    inLanguage: SUPPORTED_UI_LANGUAGES,
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: SITE_URL,
+    },
+  };
+}
+
 export function buildSoftwareApplicationSchema({
   description,
   version,

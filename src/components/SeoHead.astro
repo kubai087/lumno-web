@@ -36,6 +36,9 @@ const {
 
 const canonicalUrl = new URL(path, SITE_URL).toString();
 const imageUrl = new URL(image, SITE_URL).toString();
+const gaId = String(import.meta.env.PUBLIC_GA_ID || "").trim();
+const googleSiteVerification = String(import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION || "").trim();
+const bingSiteVerification = String(import.meta.env.PUBLIC_BING_SITE_VERIFICATION || "").trim();
 const robots = noindex
   ? "noindex, nofollow, noarchive"
   : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
@@ -51,6 +54,8 @@ const keywordContent = keywords.join(", ");
 <meta name="application-name" content={SITE_NAME} />
 <meta name="apple-mobile-web-app-title" content={SITE_NAME} />
 <meta name="theme-color" content="#fafafa" />
+{googleSiteVerification ? <meta name="google-site-verification" content={googleSiteVerification} /> : null}
+{bingSiteVerification ? <meta name="msvalidate.01" content={bingSiteVerification} /> : null}
 {keywordContent ? <meta name="keywords" content={keywordContent} /> : null}
 <link rel="canonical" href={canonicalUrl} />
 {alternates.map((item) => (
@@ -80,3 +85,33 @@ const keywordContent = keywords.join(", ");
 {schemaItems.map((item) => (
   <script type="application/ld+json" set:html={JSON.stringify(item)} />
 ))}
+
+{gaId ? <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script> : null}
+{gaId ? (
+  <script is:inline define:vars={{ gaId }}>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      window.dataLayer.push(arguments);
+    }
+    window.gtag = window.gtag || gtag;
+    window.gtag("js", new Date());
+    window.gtag("config", gaId, {
+      page_path: window.location.pathname + window.location.search,
+      anonymize_ip: true,
+    });
+
+    document.addEventListener("click", (event) => {
+      const target = event.target instanceof Element ? event.target.closest("[data-analytics-event]") : null;
+      if (!target) return;
+      const eventName = target.getAttribute("data-analytics-event");
+      if (!eventName) return;
+
+      window.gtag("event", eventName, {
+        event_category: target.getAttribute("data-analytics-category") || "engagement",
+        event_label: target.getAttribute("data-analytics-label") || target.getAttribute("href") || "",
+        destination: target.getAttribute("href") || "",
+        page_location: window.location.href,
+      });
+    });
+  </script>
+) : null}

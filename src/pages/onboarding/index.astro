@@ -2144,15 +2144,15 @@ const structuredData = [
   </head>
   <body data-locale={uiLocale} class:list={{ "is-locale-en": uiLocale === "en" }}>
     <header class="top-nav">
-      <a class="top-nav-brand" href="/" aria-label="Lumno">
+      <a class="top-nav-brand" href="/" aria-label="Lumno" data-analytics-event="select_home_brand" data-analytics-category="navigation" data-analytics-label="onboarding_brand">
         <span class="top-nav-brand-mark" role="img" aria-label="Lumno" set:html={topWordmarkSvg}></span>
       </a>
       <div class="top-actions">
         <div class="actions" data-node-id="3358:77">
-          <a class="pill-btn pill-btn-selected pill-btn-icon-only" href="https://github.com/kubai087/lumno-extension" target="_blank" rel="noreferrer noopener" aria-label={initialUi.settingsAria} data-i18n-aria-label="settings_aria">
+          <a class="pill-btn pill-btn-selected pill-btn-icon-only" href="https://github.com/kubai087/lumno-extension" target="_blank" rel="noreferrer noopener" aria-label={initialUi.settingsAria} data-i18n-aria-label="settings_aria" data-analytics-event="open_github_repo" data-analytics-category="cta" data-analytics-label="onboarding_header_github">
             <i class="ri-github-fill" aria-hidden="true"></i>
           </a>
-          <a class="pill-btn pill-btn-selected" href="/release/" aria-label={initialUi.releaseAria} data-i18n-aria-label="release_aria">
+          <a class="pill-btn pill-btn-selected" href="/release/" aria-label={initialUi.releaseAria} data-i18n-aria-label="release_aria" data-analytics-event="open_release_page" data-analytics-category="navigation" data-analytics-label="onboarding_header_release">
             <i class="ri-file-list-3-line" aria-hidden="true"></i>
             <span data-i18n="view_release">{initialUi.viewRelease}</span>
           </a>
@@ -2166,6 +2166,9 @@ const structuredData = [
             data-node-id="3358:42"
             data-community-entry
             data-discord-href="https://discord.gg/2u9sg7ZNkJ"
+            data-analytics-event="join_community"
+            data-analytics-category="cta"
+            data-analytics-label="onboarding_header_discord"
           >
             <i class="ri-discord-fill" aria-hidden="true" data-community-icon></i>
             <span data-i18n="join_discord">{initialUi.joinDiscord}</span>

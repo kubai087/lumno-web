@@ -1133,15 +1133,15 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
     <header class="header">
       <div class="container">
         <div class="header-inner">
-          <a class="brand" href="/" data-i18n-aria-label="brand_home_aria" aria-label={initialUi.brandHomeAria}>
+          <a class="brand" href="/" data-i18n-aria-label="brand_home_aria" aria-label={initialUi.brandHomeAria} data-analytics-event="select_home_brand" data-analytics-category="navigation" data-analytics-label="release_brand">
             <img class="brand-logo" src="/resource_commited/logo.png" alt={initialUi.brandLogoAlt} draggable="false" />
           </a>
           <div class="header-controls">
             <nav class="header-actions">
-              <a class="social-btn social-btn-icon" href="https://github.com/kubai087/lumno-extension" target="_blank" rel="noreferrer noopener" aria-label={initialUi.githubRepoAria} data-i18n-aria-label="github_repo_aria">
+              <a class="social-btn social-btn-icon" href="https://github.com/kubai087/lumno-extension" target="_blank" rel="noreferrer noopener" aria-label={initialUi.githubRepoAria} data-i18n-aria-label="github_repo_aria" data-analytics-event="open_github_repo" data-analytics-category="cta" data-analytics-label="release_header_github">
                 <i class="ri-github-fill" aria-hidden="true"></i>
               </a>
-              <a class="social-btn social-btn-icon" href="https://x.com/kubai087" target="_blank" rel="noreferrer noopener" aria-label={initialUi.xAria} data-i18n-aria-label="x_aria">
+              <a class="social-btn social-btn-icon" href="https://x.com/kubai087" target="_blank" rel="noreferrer noopener" aria-label={initialUi.xAria} data-i18n-aria-label="x_aria" data-analytics-event="open_x_profile" data-analytics-category="cta" data-analytics-label="release_header_x">
                 <i class="ri-twitter-x-fill" aria-hidden="true"></i>
               </a>
               <a
@@ -1153,6 +1153,9 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
                 data-i18n-aria-label="discord_aria"
                 data-community-entry
                 data-discord-href="https://discord.gg/2u9sg7ZNkJ"
+                data-analytics-event="join_community"
+                data-analytics-category="cta"
+                data-analytics-label="release_header_discord"
               >
                 <i class="ri-discord-fill" aria-hidden="true" data-community-icon></i>
                 <span data-i18n="join_discord">{initialUi.joinDiscord}</span>
@@ -1218,6 +1221,9 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
                               href="https://chromewebstore.google.com/detail/nggfkkbmogmadfoikakkfegkoilfcfao"
                               target="_blank"
                               rel="noreferrer"
+                              data-analytics-event="open_chrome_web_store"
+                              data-analytics-category="cta"
+                              data-analytics-label={`release_chrome_status_${item.tag}`}
                             >
                               <i class="ri-chrome-fill" aria-hidden="true"></i>
                               <span data-i18n={chromeStatusKey}>Published</span>
@@ -1333,7 +1339,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
                         </div>
 
                         <div class="entry-link">
-                          <a class="entry-link-btn" href={item.url} target="_blank" rel="noreferrer noopener">
+                          <a class="entry-link-btn" href={item.url} target="_blank" rel="noreferrer noopener" data-analytics-event="open_github_release" data-analytics-category="cta" data-analytics-label={`release_notes_${item.tag}`}>
                             <span data-i18n="read_on_github">{initialUi.readOnGithub}</span>
                             <i class="ri-external-link-line" aria-hidden="true"></i>
                           </a>

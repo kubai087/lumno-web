@@ -41,6 +41,9 @@ jobs:
           GITHUB_RELEASES_OWNER: kubai087
           GITHUB_RELEASES_REPO: lumno-extension
           GITHUB_RELEASES_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PUBLIC_GA_ID: ${{ secrets.PUBLIC_GA_ID }}
+          PUBLIC_GOOGLE_SITE_VERIFICATION: ${{ secrets.PUBLIC_GOOGLE_SITE_VERIFICATION }}
+          PUBLIC_BING_SITE_VERIFICATION: ${{ secrets.PUBLIC_BING_SITE_VERIFICATION }}
         run: npm run build
 
       - name: Configure Pages

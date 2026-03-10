@@ -852,6 +852,31 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         text-decoration: underline;
       }
 
+      :global(.entry-summary code) {
+        font-size: 0.95em;
+        font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        background: #f2f4f7;
+        border: 1px solid #e4e7ec;
+        border-radius: 6px;
+        padding: 1px 5px;
+      }
+
+      :global(.entry-summary pre) {
+        margin: 12px 0;
+        padding: 10px 12px;
+        background: #f8fafc;
+        border: 1px solid #e4e7ec;
+        border-radius: 10px;
+        overflow-x: auto;
+      }
+
+      :global(.entry-summary pre code) {
+        display: block;
+        padding: 0;
+        border: 0;
+        background: transparent;
+      }
+
       .accordion-group {
         margin-top: 14px;
         display: grid;

@@ -18,6 +18,7 @@ const seoPath = Astro.props.seoPath || "/onboarding/";
 const routeLanguageMap = Astro.props.routeLanguageMap || buildScopedRouteLanguageMap("/onboarding/", SUPPORTED_ONBOARDING_LANGUAGES);
 const entryContextConfig = buildEntryContextConfig();
 const uiLocale = forcedLocale || DEFAULT_LOCALE;
+const WORDMARK_TEXT = "Lumno";
 const alternateLinks = [
   ...Object.entries(routeLanguageMap).map(([hreflang, href]) => ({
     hreflang,
@@ -302,7 +303,7 @@ const structuredData = [
         display: inline-flex;
         align-items: center;
         gap: 10px;
-        transform: translateY(-5px);
+        transform: translateY(-2px);
       }
 
       .logo-icon-wrap {
@@ -338,8 +339,9 @@ const structuredData = [
         --wordmark-width: 182px;
         position: relative;
         width: var(--wordmark-width);
-        height: calc(var(--wordmark-width) * 43 / 165);
+        height: calc(var(--wordmark-width) * 47 / 165);
         flex: none;
+        overflow: visible;
       }
 
       .logo-wordmark {
@@ -390,6 +392,18 @@ const structuredData = [
         user-select: none;
         -webkit-user-select: none;
         pointer-events: none;
+      }
+
+      .seo-wordmark-text {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
       }
 
       .subtitle {
@@ -2186,8 +2200,8 @@ const structuredData = [
                 <span class="logo-icon-wrap">
                   <span class="logo-icon mark-svg" role="img" aria-label={initialUi.logoIconAlt} data-i18n-aria-label="logo_icon_alt" set:html={logoIconSvg}></span>
                 </span>
-                <span class="logo-wordmark-wrap">
-                  <img class="logo-wordmark mark-svg" src="/assets/textlogo.svg" alt="Lumno" draggable="false" />
+                <span class="logo-wordmark-wrap" aria-hidden="true">
+                  <img class="logo-wordmark mark-svg" src="/assets/textlogo.svg" alt="" draggable="false" />
                   <span class="logo-butterfly-stage" aria-hidden="true">
                     <svg class="logo-butterfly logo-butterfly-wing logo-butterfly-wing-back mark-svg" viewBox="0 0 23 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path
@@ -2244,6 +2258,7 @@ const structuredData = [
                     </svg>
                   </span>
                 </span>
+                <span class="seo-wordmark-text">{WORDMARK_TEXT}</span>
               </div>
             </div>
             <p class="subtitle" data-i18n="subtitle">{initialUi.subtitle}</p>

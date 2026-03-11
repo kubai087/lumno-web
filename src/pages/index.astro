@@ -18,6 +18,7 @@ const forcedLocale = Astro.props.forcedLocale ?? null;
 const seoPath = Astro.props.seoPath || "/";
 const routeLanguageMap = Astro.props.routeLanguageMap || buildRouteLanguageMap("/");
 const uiLocale = forcedLocale || DEFAULT_LOCALE;
+const WORDMARK_TEXT = "Lumno";
 const alternateLinks = [
   ...Object.entries(routeLanguageMap).map(([hreflang, href]) => ({
     hreflang,
@@ -264,11 +265,19 @@ const structuredData = [
 
       .title {
         margin: 0;
+        display: inline-flex;
+        align-items: center;
+        gap: clamp(10px, 1.8vw, 24px);
+        white-space: nowrap;
+      }
+
+      .title-welcome {
+        display: inline-flex;
+        align-items: center;
         font-size: clamp(38px, 3.6vw, 44px);
         font-weight: 500;
         line-height: 1.2;
         letter-spacing: 0.2px;
-        white-space: nowrap;
         background: linear-gradient(180deg, #000000 0%, #666666 100%);
         -webkit-background-clip: text;
         background-clip: text;
@@ -279,7 +288,7 @@ const structuredData = [
         display: inline-flex;
         align-items: center;
         gap: 10px;
-        transform: translateY(-5px);
+        transform: translateY(-2px);
       }
 
       .logo-icon-wrap {
@@ -315,8 +324,9 @@ const structuredData = [
         --wordmark-width: 182px;
         position: relative;
         width: var(--wordmark-width);
-        height: calc(var(--wordmark-width) * 43 / 165);
+        height: calc(var(--wordmark-width) * 47 / 165);
         flex: none;
+        overflow: visible;
       }
 
       .logo-wordmark {
@@ -367,6 +377,18 @@ const structuredData = [
         user-select: none;
         -webkit-user-select: none;
         pointer-events: none;
+      }
+
+      .seo-wordmark-text {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
       }
 
       .subtitle {
@@ -2233,13 +2255,14 @@ const structuredData = [
         <div class="left-main">
           <div class="hero">
             <div class="title-row">
-              <h1 class="title" data-i18n="title_welcome">{initialUi.titleWelcome}</h1>
-              <div class="logo-lockup">
+              <h1 class="title">
+                <span class="title-welcome" data-i18n="title_welcome">{initialUi.titleWelcome}</span>
+                <span class="logo-lockup">
                 <span class="logo-icon-wrap">
                   <span class="logo-icon mark-svg" role="img" aria-label={initialUi.logoIconAlt} data-i18n-aria-label="logo_icon_alt" set:html={logoIconSvg}></span>
                 </span>
-                <span class="logo-wordmark-wrap">
-                  <img class="logo-wordmark mark-svg" src="/assets/textlogo.svg" alt="Lumno" draggable="false" />
+                <span class="logo-wordmark-wrap" aria-hidden="true">
+                  <img class="logo-wordmark mark-svg" src="/assets/textlogo.svg" alt="" draggable="false" />
                   <span class="logo-butterfly-stage" aria-hidden="true">
                     <svg class="logo-butterfly logo-butterfly-wing logo-butterfly-wing-back mark-svg" viewBox="0 0 23 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path
@@ -2296,7 +2319,9 @@ const structuredData = [
                     </svg>
                   </span>
                 </span>
-              </div>
+                </span>
+                <span class="seo-wordmark-text">{WORDMARK_TEXT}</span>
+              </h1>
             </div>
             <p class="subtitle" data-i18n="subtitle">{initialUi.subtitle}</p>
           </div>

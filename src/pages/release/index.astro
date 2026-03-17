@@ -3,7 +3,9 @@ import SeoHead from "../../components/SeoHead.astro";
 import { fetchReleases, formatDate, parseReleaseBody, type ParsedReleaseBody, type ReleaseLocaleContent } from "../../lib/releases";
 import { marked } from "marked";
 import {
+  SITE_NAME,
   SITE_URL,
+  buildBreadcrumbListSchema,
   buildKeywords,
   buildSoftwareApplicationSchema,
   buildWebPageSchema,
@@ -131,6 +133,12 @@ const structuredData = [
     name: pageTitle,
     description: pageDescription,
     path: seoPath,
+  }),
+  buildBreadcrumbListSchema({
+    items: [
+      { name: SITE_NAME, path: "/" },
+      { name: pageTitle, path: seoPath },
+    ],
   }),
 ];
 

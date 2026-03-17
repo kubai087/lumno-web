@@ -5,7 +5,9 @@ import LanguageMenu from "../../components/onboarding/LanguageMenu";
 import logoIconSvg from "../../assets/onboarding/logo.svg?raw";
 import topWordmarkSvg from "../../assets/lumno-title-figma.svg?raw";
 import {
+  SITE_NAME,
   SITE_URL,
+  buildBreadcrumbListSchema,
   buildKeywords,
   buildSoftwareApplicationSchema,
   buildWebPageSchema,
@@ -191,6 +193,12 @@ const structuredData = [
     name: pageTitle,
     description: pageDescription,
     path: seoPath,
+  }),
+  buildBreadcrumbListSchema({
+    items: [
+      { name: SITE_NAME, path: "/" },
+      { name: pageTitle, path: seoPath },
+    ],
   }),
 ];
 ---

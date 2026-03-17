@@ -46,6 +46,7 @@ const robots = noindex
   : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
 const schemaItems = Array.isArray(structuredData) ? structuredData : [structuredData];
 const keywordContent = keywords.join(", ");
+const normalizedCurrentLocale = locale.replace("_", "-").toLowerCase();
 ---
 
 <title data-i18n={i18nTitleKey}>{title}</title>
@@ -72,9 +73,11 @@ const keywordContent = keywords.join(", ");
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonicalUrl} />
 <meta property="og:image" content={imageUrl} />
+<meta property="og:image:alt" content={title} />
 <meta property="og:locale" content={locale} />
 {alternates
   .filter((item) => item.hreflang !== "x-default")
+  .filter((item) => item.hreflang.toLowerCase() !== normalizedCurrentLocale)
   .map((item) => (
     <meta property="og:locale:alternate" content={item.hreflang.replace("-", "_")} />
   ))}

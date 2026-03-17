@@ -6,6 +6,9 @@ export const SITE_TITLE = "Lumno | Focus Search, Browser Command Bar & Minimal N
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/assets/logo@3x.png`;
 export const CHROME_STORE_URL =
   "https://chromewebstore.google.com/detail/lumno-%E5%85%A8%E5%B1%80%E5%BF%AB%E6%8D%B7%E5%91%BD%E4%BB%A4%E6%B5%AE%E5%B1%82/nggfkkbmogmadfoikakkfegkoilfcfao";
+export const ORGANIZATION_ID = `${SITE_URL}#organization`;
+export const WEBSITE_ID = `${SITE_URL}#website`;
+export const APP_ID = `${SITE_URL}#app`;
 
 const CORE_KEYWORDS = [
   "Lumno",
@@ -38,27 +41,6 @@ const EXTENDED_DISCOVERY_KEYWORDS = [
   "global browser search",
   "tab manager extension",
   "bookmark manager search",
-  "historial del navegador",
-  "busqueda de pestañas",
-  "barra de comandos del navegador",
-  "nouvel onglet minimaliste",
-  "barre de commande navigateur",
-  "recherche onglets navigateur",
-  "browser befehlsleiste",
-  "tab suche browser",
-  "minimale neuer tab",
-  "barra de comandos do navegador",
-  "pesquisa de abas",
-  "nova guia minimalista",
-  "командная панель браузера",
-  "поиск вкладок браузера",
-  "минимальная новая вкладка",
-  "ブラウザ コマンドバー",
-  "タブ検索 拡張機能",
-  "ミニマル 新しいタブ",
-  "브라우저 커맨드바",
-  "탭 검색 확장 프로그램",
-  "미니멀 새 탭",
 ];
 
 const PRODUCT_ALTERNATE_NAMES = [
@@ -84,8 +66,10 @@ export function buildOrganizationSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": ORGANIZATION_ID,
     name: SITE_NAME,
     url: SITE_URL,
+    logo: DEFAULT_OG_IMAGE,
     knowsLanguage: SUPPORTED_UI_LANGUAGES,
     sameAs: [
       "https://github.com/kubai087/lumno-extension",
@@ -99,14 +83,13 @@ export function buildWebSiteSchema() {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
+    "@id": WEBSITE_ID,
     name: SITE_NAME,
     alternateName: PRODUCT_ALTERNATE_NAMES,
     url: SITE_URL,
     inLanguage: SUPPORTED_UI_LANGUAGES,
     publisher: {
-      "@type": "Organization",
-      name: SITE_NAME,
-      url: SITE_URL,
+      "@id": ORGANIZATION_ID,
     },
   };
 }
@@ -121,6 +104,7 @@ export function buildSoftwareApplicationSchema({
   return {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
+    "@id": APP_ID,
     name: SITE_NAME,
     applicationCategory: "BrowserApplication",
     operatingSystem: "Chrome, Edge, Dia, and Chromium-based browsers",
@@ -137,6 +121,7 @@ export function buildSoftwareApplicationSchema({
     image: DEFAULT_OG_IMAGE,
     url: SITE_URL,
     downloadUrl: CHROME_STORE_URL,
+    sameAs: [CHROME_STORE_URL, "https://github.com/kubai087/lumno-extension"],
     softwareVersion: version || undefined,
     availableLanguage: SUPPORTED_UI_LANGUAGES,
     featureList: [
@@ -146,9 +131,7 @@ export function buildSoftwareApplicationSchema({
       "Works on Chrome, Edge, Dia, and other Chromium-based browsers",
     ],
     author: {
-      "@type": "Person",
-      name: "枯白啃设计",
-      sameAs: ["https://x.com/Kubai087"],
+      "@id": ORGANIZATION_ID,
     },
   };
 }
@@ -165,15 +148,37 @@ export function buildWebPageSchema({
   return {
     "@context": "https://schema.org",
     "@type": "WebPage",
+    "@id": `${new URL(path, SITE_URL).toString()}#webpage`,
     name,
     description,
     keywords: buildKeywords(),
     url: new URL(path, SITE_URL).toString(),
     inLanguage: SUPPORTED_UI_LANGUAGES,
     isPartOf: {
-      "@type": "WebSite",
-      name: SITE_NAME,
-      url: SITE_URL,
+      "@id": WEBSITE_ID,
     },
+    about: {
+      "@id": APP_ID,
+    },
+  };
+}
+
+export function buildBreadcrumbListSchema({
+  items,
+}: {
+  items: Array<{
+    name: string;
+    path: string;
+  }>;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: new URL(item.path, SITE_URL).toString(),
+    })),
   };
 }

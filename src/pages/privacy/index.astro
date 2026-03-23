@@ -1,0 +1,375 @@
+---
+import SeoHead from "../../components/SeoHead.astro";
+import {
+  SITE_NAME,
+  SITE_URL,
+  buildBreadcrumbListSchema,
+  buildKeywords,
+  buildSoftwareApplicationSchema,
+  buildWebPageSchema,
+} from "../../lib/seo";
+
+const seoPath = "/privacy/";
+const pageTitle = "Lumno Privacy Policy | 隐私政策";
+const pageDescription =
+  "Lumno 隐私政策：说明扩展如何在本地处理历史、书签、标签页与搜索词，以及何时会向搜索引擎或 favicon 服务发起请求。";
+const pageKeywords = buildKeywords([
+  "Lumno 隐私政策",
+  "Lumno privacy policy",
+  "Chrome 扩展隐私政策",
+  "浏览器扩展隐私声明",
+]);
+const structuredData = [
+  buildSoftwareApplicationSchema({
+    description: pageDescription,
+  }),
+  buildWebPageSchema({
+    name: pageTitle,
+    description: pageDescription,
+    path: seoPath,
+  }),
+  buildBreadcrumbListSchema({
+    items: [
+      { name: SITE_NAME, path: "/" },
+      { name: "Privacy Policy", path: seoPath },
+    ],
+  }),
+];
+---
+
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <SeoHead
+      title={pageTitle}
+      description={pageDescription}
+      path={seoPath}
+      keywords={pageKeywords}
+      locale="zh_CN"
+      i18nTitleKey="page_title_ui"
+      type="article"
+      structuredData={structuredData}
+    />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <style>
+      :root {
+        --bg: #fafaf8;
+        --surface: rgba(255, 255, 255, 0.82);
+        --surface-strong: rgba(255, 255, 255, 0.94);
+        --text: #18202a;
+        --muted: #5f6875;
+        --line: rgba(24, 32, 42, 0.1);
+        --accent: #2263eb;
+        --shadow: 0 20px 60px rgba(13, 18, 28, 0.08);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+        background:
+          radial-gradient(circle at top left, rgba(34, 99, 235, 0.08), transparent 34%),
+          radial-gradient(circle at top right, rgba(39, 171, 125, 0.08), transparent 32%),
+          linear-gradient(180deg, #f6f8fb 0%, #f8f7f2 52%, #fbfaf7 100%);
+        color: var(--text);
+        font-family: "Open Sans", "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+      }
+
+      a {
+        color: var(--accent);
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .shell {
+        width: min(960px, calc(100vw - 32px));
+        margin: 0 auto;
+        padding: 48px 0 88px;
+      }
+
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 32px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        color: var(--text);
+        font-weight: 700;
+        letter-spacing: 0.02em;
+      }
+
+      .brand-mark {
+        width: 40px;
+        height: 40px;
+        border-radius: 14px;
+        background: linear-gradient(135deg, #ffffff, #e8f0ff);
+        border: 1px solid rgba(34, 99, 235, 0.14);
+        display: grid;
+        place-items: center;
+        box-shadow: 0 10px 24px rgba(34, 99, 235, 0.12);
+      }
+
+      .brand-mark img {
+        width: 24px;
+        height: 24px;
+      }
+
+      .home-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 14px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.7);
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .hero {
+        padding: 30px 32px;
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.82));
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(12px);
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 11px;
+        border-radius: 999px;
+        background: rgba(34, 99, 235, 0.08);
+        color: var(--accent);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 18px 0 12px;
+        font-size: clamp(34px, 5vw, 54px);
+        line-height: 0.98;
+        letter-spacing: -0.04em;
+      }
+
+      .lead {
+        max-width: 720px;
+        margin: 0;
+        color: var(--muted);
+        font-size: 17px;
+        line-height: 1.7;
+      }
+
+      .meta {
+        margin-top: 18px;
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      .content {
+        margin-top: 26px;
+        display: grid;
+        gap: 18px;
+      }
+
+      .card {
+        padding: 28px 30px;
+        border-radius: 24px;
+        border: 1px solid var(--line);
+        background: var(--surface);
+        backdrop-filter: blur(10px);
+        box-shadow: var(--shadow);
+      }
+
+      .card h2 {
+        margin: 0 0 16px;
+        font-size: 24px;
+        letter-spacing: -0.03em;
+      }
+
+      .card h3 {
+        margin: 24px 0 10px;
+        font-size: 18px;
+      }
+
+      .card p,
+      .card li {
+        color: var(--muted);
+        line-height: 1.78;
+        font-size: 15px;
+      }
+
+      .card ul {
+        margin: 10px 0 0;
+        padding-left: 20px;
+      }
+
+      .contact {
+        padding: 22px 24px;
+        border-radius: 20px;
+        border: 1px dashed rgba(34, 99, 235, 0.22);
+        background: rgba(34, 99, 235, 0.04);
+      }
+
+      @media (max-width: 720px) {
+        .shell {
+          width: min(100vw - 20px, 960px);
+          padding-top: 20px;
+          padding-bottom: 40px;
+        }
+
+        .topbar {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .hero,
+        .card {
+          padding: 22px 18px;
+          border-radius: 22px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <div class="topbar">
+        <a class="brand" href="/" aria-label="Back to Lumno homepage">
+          <span class="brand-mark">
+            <img src="/assets/logo.svg" alt="Lumno" />
+          </span>
+          <span>Lumno</span>
+        </a>
+        <a class="home-link" href="/">
+          <span>返回首页 / Back Home</span>
+        </a>
+      </div>
+
+      <section class="hero">
+        <span class="eyebrow">Privacy Policy</span>
+        <h1>Lumno Privacy Policy / 隐私政策</h1>
+        <p class="lead">
+          Lumno 默认尽量在浏览器本地处理历史、书签、标签页和设置数据。本页面说明哪些信息会被访问，哪些处理仅在本地完成，以及哪些功能会触发浏览器向第三方服务发送请求。
+        </p>
+        <p class="meta">Last updated / 最近更新：2026-03-23</p>
+      </section>
+
+      <section class="content">
+        <article class="card">
+          <h2>1. Product Scope / 产品范围</h2>
+          <p>
+            Lumno 是一款浏览器效率扩展，提供网页搜索浮层、自定义新标签页、标签页搜索、历史记录搜索、书签搜索、常用网站展示、站内搜索快捷词以及部分可选的视频画中画辅助能力。
+          </p>
+          <p>
+            Lumno is a browser productivity extension that provides an in-page command bar, a custom new tab page, tab search, history search, bookmark search, top-site surfaces, site-search shortcuts, and optional Picture-in-Picture helpers on supported websites.
+          </p>
+        </article>
+
+        <article class="card">
+          <h2>2. What Lumno Can Access / Lumno 可能访问的数据</h2>
+          <ul>
+            <li>已打开标签页 / Open tabs: 用于展示、排序、切换与恢复标签页。</li>
+            <li>浏览历史 / Browsing history: 用于本地搜索历史记录与排序。</li>
+            <li>书签 / Bookmarks: 用于搜索书签及在新标签页中展示书签入口。</li>
+            <li>常用网站 / Top sites: 用于展示常访问网站。</li>
+            <li>网站内容 / Website content: 用于网页内浮层、快捷键响应与可选画中画功能。</li>
+            <li>用户输入搜索词 / User-entered search queries: 用于搜索、站内搜索与联网建议。</li>
+            <li>扩展设置 / Extension settings: 用于保存主题、语言、布局与搜索偏好。</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h2>3. Local Processing First / 默认本地处理</h2>
+          <p>
+            Lumno 默认在浏览器本地完成大部分功能，包括标签页搜索、历史记录搜索、书签搜索、Top Sites 展示、新标签页渲染，以及扩展设置和轻量缓存的保存。
+          </p>
+          <p>
+            Lumno does not upload your browsing history URLs, page titles, bookmark tree, or open-tab list to the developer's own servers.
+          </p>
+        </article>
+
+        <article class="card">
+          <h2>4. Third-Party Requests / 第三方请求</h2>
+          <h3>Search suggestions / 搜索建议</h3>
+          <p>
+            当你使用搜索建议功能时，输入的搜索词可能会被浏览器发送到所选搜索引擎或其建议接口，例如 Google、Bing、Baidu、Yahoo、DuckDuckGo、Yandex、360、Quark、Shenma 或相关接口。
+          </p>
+          <h3>Default web search / 默认网页搜索</h3>
+          <p>
+            当你提交普通网页搜索时，查询词可能会发送给浏览器默认搜索引擎或你选择的搜索引擎。
+          </p>
+          <h3>Favicon loading / 网站图标加载</h3>
+          <p>
+            为了显示网站图标，Lumno 可能会根据域名向目标网站或第三方 favicon 服务请求图标资源。第三方服务可能因此看到请求域名、IP 地址和常规请求元数据。
+          </p>
+        </article>
+
+        <article class="card">
+          <h2>5. Storage / 本地存储</h2>
+          <p>
+            Lumno 使用 Chrome 扩展存储能力保存设置和部分轻量缓存，包括 <code>chrome.storage.local</code>、<code>chrome.storage.sync</code> 以及在可用时的会话级扩展存储。
+          </p>
+          <ul>
+            <li>主题与语言设置 / Theme and language preferences</li>
+            <li>搜索引擎偏好 / Search engine preference</li>
+            <li>站内搜索快捷词配置 / Site-search shortcut configuration</li>
+            <li>布局和展示偏好 / Layout and presentation preferences</li>
+            <li>本地 UI 状态与轻量缓存 / Local UI state and lightweight caches</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h2>6. Permissions / 权限说明</h2>
+          <ul>
+            <li><code>tabs</code>: 查询、切换、创建、更新和管理标签页。</li>
+            <li><code>history</code>: 提供本地历史记录搜索。</li>
+            <li><code>bookmarks</code>: 搜索与展示书签。</li>
+            <li><code>topSites</code>: 展示常访问网站。</li>
+            <li><code>storage</code>: 保存扩展设置。</li>
+            <li><code>search</code>: 调用浏览器搜索能力。</li>
+            <li><code>scripting</code> 与页面访问权限（如 <code>&lt;all_urls&gt;</code>）: 在网页中注入扩展 UI 和快捷键逻辑，并支持可选网页内功能。</li>
+          </ul>
+        </article>
+
+        <article class="card">
+          <h2>7. Data Sale and Transfer / 数据出售与转移</h2>
+          <p>
+            开发者声明：Lumno 不出售用户数据；不会将用户数据用于与扩展核心功能无关的目的；不会将用户数据用于信用评估、放贷或类似用途。
+          </p>
+          <p>
+            The developer states that Lumno does not sell user data and does not transfer user data for purposes unrelated to the extension's core functionality.
+          </p>
+        </article>
+
+        <article class="card">
+          <h2>8. Contact / 联系方式</h2>
+          <div class="contact">
+            <p>Developer / 开发者：Kubai087</p>
+            <p>Website / 网站：<a href={SITE_URL}>{SITE_URL}</a></p>
+            <p>Email / 邮箱：<a href="mailto:i@kubai.design">i@kubai.design</a></p>
+          </div>
+        </article>
+      </section>
+    </main>
+  </body>
+</html>

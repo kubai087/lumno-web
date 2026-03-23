@@ -36,6 +36,7 @@ export const GET: APIRoute = async () => {
   const releaseLastmod = releases[0]?.date || now;
   const homeLastmod = readLastCommitIso(["src/pages/index.astro", "src/lib/seo.ts"], now);
   const onboardingLastmod = readLastCommitIso(["src/pages/onboarding/index.astro"], now);
+  const privacyLastmod = readLastCommitIso(["src/pages/privacy/index.astro"], now);
   const localizedHomeUrls = getNonDefaultLocales().map((locale) => ({
     locale,
     loc: `${SITE_URL}${buildLocalizedPath(locale, "/")}`,
@@ -77,6 +78,13 @@ export const GET: APIRoute = async () => {
       priority: "0.8",
     },
     ...localizedReleaseUrls,
+    {
+      locale: "zh-CN",
+      loc: `${SITE_URL}/privacy/`,
+      lastmod: privacyLastmod,
+      changefreq: "monthly",
+      priority: "0.5",
+    },
   ];
 
   const alternateByPath = new Map<string, Array<{ hreflang: string; href: string }>>();

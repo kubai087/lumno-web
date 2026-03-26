@@ -471,6 +471,25 @@ const structuredData = [
         font-weight: 400;
       }
 
+      .producthunt-badge-wrap {
+        margin-top: 18px;
+        opacity: 0;
+        transform: translateX(-24px);
+        filter: blur(6px);
+        animation: x-hero-enter 620ms cubic-bezier(0.22, 1, 0.36, 1) 380ms forwards;
+      }
+
+      .producthunt-badge-link {
+        display: inline-flex;
+        align-items: center;
+      }
+
+      .producthunt-badge-image {
+        display: block;
+        width: 250px;
+        height: 54px;
+      }
+
       .support-tooltip {
         position: relative;
         display: inline-flex;
@@ -1861,6 +1880,17 @@ const structuredData = [
           height: auto;
         }
 
+        .producthunt-badge-wrap {
+          margin-top: 16px;
+          display: flex;
+          justify-content: center;
+        }
+
+        .producthunt-badge-image {
+          width: min(68vw, 250px);
+          height: auto;
+        }
+
         .actions {
           margin: 0;
           flex-wrap: wrap;
@@ -2076,6 +2106,11 @@ const structuredData = [
 
         .shortcut-store-badge {
           width: min(74vw, 248px);
+          height: auto;
+        }
+
+        .producthunt-badge-image {
+          width: min(74vw, 250px);
           height: auto;
         }
 
@@ -2362,6 +2397,26 @@ const structuredData = [
                 </span>
               </span>
             </p>
+          </div>
+          <div class="producthunt-badge-wrap">
+            <a
+              class="producthunt-badge-link"
+              href="https://www.producthunt.com/products/lumno-the-ultimate-browser-command-bar?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-lumno-the-ultimate-browser-command-bar"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-analytics-event="open_producthunt"
+              data-analytics-category="cta"
+              data-analytics-label="home_producthunt_badge"
+            >
+              <img
+                class="producthunt-badge-image"
+                alt="Lumno - The Ultimate Browser Command Bar - Search tabs, history, bookmarks, and the web from any page. | Product Hunt"
+                width="250"
+                height="54"
+                src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1107555&theme=light&t=1774504898356"
+                draggable="false"
+              />
+            </a>
           </div>
         </div>
 

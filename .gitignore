@@ -5,3 +5,6 @@ resource_commited/
 
 # macOS Finder metadata
 .DS_Store
+
+# Local visual debug screenshots
+tmp-*.png

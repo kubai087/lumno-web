@@ -8,3 +8,6 @@ resource_commited/
 
 # Local visual debug screenshots
 tmp-*.png
+
+# Local test artifacts
+test-results/

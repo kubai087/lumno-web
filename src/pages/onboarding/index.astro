@@ -264,16 +264,14 @@ const structuredData = [
         position: relative;
         width: 40%;
         min-width: 560px;
+        display: flex;
+        align-items: center;
         padding-left: clamp(56px, 9vw, 132px);
         padding-right: 48px;
       }
 
       .left-main {
-        position: absolute;
-        left: clamp(56px, 9vw, 132px);
-        right: 48px;
-        top: 50%;
-        transform: translateY(-50%);
+        position: relative;
         width: min(428px, calc(100% - clamp(56px, 9vw, 132px) - 48px));
         display: flex;
         flex-direction: column;
@@ -1765,6 +1763,7 @@ const structuredData = [
         }
 
         .left-pane {
+          display: block;
           padding: 28px 30px 30px;
         }
 

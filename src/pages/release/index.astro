@@ -218,6 +218,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         --card: #ffffff;
         --chip-bg: #f9fafb;
         --chip-text: #475467;
+        --release-header-offset: 88px;
       }
 
       * {
@@ -250,6 +251,12 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
       }
 
       .header {
+        position: sticky;
+        top: 0;
+        z-index: 30;
+        background: rgba(255, 255, 255, 0.86);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
         border-bottom: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
       }
 
@@ -1033,7 +1040,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
 
         .entry-side-sticky {
           position: sticky;
-          top: 32px;
+          top: calc(var(--release-header-offset) + 24px);
         }
 
         .entry-main {
@@ -1046,6 +1053,10 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
       }
 
       @media (max-width: 767px) {
+        :root {
+          --release-header-offset: 76px;
+        }
+
         .header-inner {
           padding: 14px 16px;
           align-items: center;

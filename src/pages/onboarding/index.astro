@@ -66,6 +66,7 @@ const initialUi = {
     subtitle: "开源浏览器聚焦搜索 & 极简新标签页",
     settingsAria: "访问 Lumno GitHub 仓库",
     shortcutCopyAria: "复制扩展快捷键设置地址",
+    shortcutCopyExtensionAria: "复制插件详情页地址",
     releaseAria: "查看更新日志页面",
     discordAria: "反馈与提需",
     qrcodeTitle: "微信群二维码",
@@ -83,7 +84,7 @@ const initialUi = {
     shortcutTipDiaMiddle: " 改为 ",
     shortcutGlobalScopeLabel: "全局",
     shortcutTipDiaSuffix: "。",
-    shortcutTipFilePrefix: "如果想要在 PDF、HTML 文件中使用聚焦搜索，需前往插件详情页 ",
+    shortcutTipFilePrefix: "若要在 PDF、HTML 文件中使用聚焦搜索，需前往插件详情页 ",
     shortcutExtensionPageLabel: "chrome://extensions/?id=nggfkkbmogmadfoikakkfegkoilfcfao",
     shortcutTipFileMiddle: "，手动开启",
     shortcutAllowFileUrlsLabel: "允许访问文件网址",
@@ -101,6 +102,7 @@ const initialUi = {
     subtitle: "開源瀏覽器聚焦搜尋 & 極簡新分頁",
     settingsAria: "造訪 Lumno GitHub 倉庫",
     shortcutCopyAria: "複製擴充功能快捷鍵設定網址",
+    shortcutCopyExtensionAria: "複製擴充功能詳情頁網址",
     releaseAria: "查看更新日誌頁面",
     discordAria: "反饋與提需",
     qrcodeTitle: "微信群二維碼",
@@ -118,7 +120,7 @@ const initialUi = {
     shortcutTipDiaMiddle: " 改為 ",
     shortcutGlobalScopeLabel: "全域",
     shortcutTipDiaSuffix: "。",
-    shortcutTipFilePrefix: "如果想要在 PDF、HTML 檔案中使用聚焦搜尋，需前往擴充功能詳情頁 ",
+    shortcutTipFilePrefix: "若要在 PDF、HTML 檔案中使用聚焦搜尋，需前往擴充功能詳情頁 ",
     shortcutExtensionPageLabel: "chrome://extensions/?id=nggfkkbmogmadfoikakkfegkoilfcfao",
     shortcutTipFileMiddle: "，手動開啟",
     shortcutAllowFileUrlsLabel: "允許存取檔案網址",
@@ -136,6 +138,7 @@ const initialUi = {
     subtitle: "An open-source browser extension for focus search and a minimalist new tab.",
     settingsAria: "Open the Lumno GitHub repository",
     shortcutCopyAria: "Copy the extension shortcut settings address",
+    shortcutCopyExtensionAria: "Copy the extension details page URL",
     releaseAria: "Open the release notes page",
     discordAria: "Feedback and requests",
     qrcodeTitle: "WeChat group QR code",
@@ -505,23 +508,23 @@ const structuredData = [
         right: 10px;
         min-width: 34px;
         height: 34px;
-        border: 1px solid rgba(208, 215, 222, 0.96);
+        border: 0;
         border-radius: 8px;
         padding: 0 10px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
         gap: 6px;
-        background: rgba(255, 255, 255, 0.92);
-        color: #57606a;
-        opacity: 0;
-        transform: translateY(calc(-50% - 2px));
+        background: #e3e8ef;
+        color: #485466;
+        opacity: 1;
+        transform: translateY(-50%);
         transition:
-          opacity 0.18s ease,
-          transform 0.18s ease,
-          background 0.18s ease,
-          border-color 0.18s ease,
-          color 0.18s ease;
+          opacity 0.2s ease,
+          transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+          background-color 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+          color 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+          box-shadow 0.28s cubic-bezier(0.22, 1, 0.36, 1);
         cursor: pointer;
       }
 
@@ -536,12 +539,6 @@ const structuredData = [
         font-weight: 600;
       }
 
-      .shortcut-code-block:hover .shortcut-copy-btn,
-      .shortcut-code-block:focus-within .shortcut-copy-btn {
-        opacity: 1;
-        transform: translateY(-50%);
-      }
-
       .shortcut-copy-btn:focus-visible {
         outline: 2px solid rgba(9, 105, 218, 0.35);
         outline-offset: 2px;
@@ -550,10 +547,10 @@ const structuredData = [
 
       .shortcut-copy-btn.is-copied {
         opacity: 1;
-        transform: translateY(-50%);
-        border-color: rgba(31, 136, 61, 0.24);
+        transform: translateY(-50%) scale(0.98);
         background: #dafbe1;
         color: #1a7f37;
+        box-shadow: inset 0 0 0 1px rgba(26, 127, 55, 0.08);
       }
 
       .shortcut-steps {
@@ -630,6 +627,48 @@ const structuredData = [
         color: rgba(75, 85, 101, 0.9);
         background: rgba(36, 40, 47, 0.035);
         line-height: inherit;
+      }
+
+      .shortcut-inline-url-group {
+        display: inline;
+        white-space: normal;
+      }
+
+      .shortcut-inline-copy-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 20px;
+        height: 20px;
+        margin-left: 2px;
+        padding: 0;
+        border: 0;
+        border-radius: 0;
+        background: transparent;
+        color: rgba(72, 84, 102, 0.88);
+        vertical-align: -0.06em;
+        transition:
+          transform 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+          background-color 0.24s cubic-bezier(0.22, 1, 0.36, 1),
+          color 0.22s cubic-bezier(0.22, 1, 0.36, 1),
+          box-shadow 0.24s cubic-bezier(0.22, 1, 0.36, 1);
+        cursor: pointer;
+      }
+
+      .shortcut-inline-copy-btn i {
+        font-size: 13px;
+        line-height: 1;
+      }
+
+      .shortcut-inline-copy-btn:focus-visible {
+        outline: 2px solid rgba(9, 105, 218, 0.28);
+        outline-offset: 2px;
+      }
+
+      .shortcut-inline-copy-btn.is-copied {
+        transform: scale(0.97);
+        color: #1a7f37;
+        box-shadow: none;
       }
 
       .shortcut-note-text {
@@ -2422,7 +2461,17 @@ const structuredData = [
                   </li>
                   <li>
                     <span class="shortcut-note-text" data-i18n="shortcut_tip_file_prefix">{initialUi.shortcutTipFilePrefix}</span>
-                    <code class="shortcut-inline-code shortcut-inline-code-url" data-i18n="shortcut_extension_page_label">{initialUi.shortcutExtensionPageLabel}</code>
+                    <span class="shortcut-inline-url-group">
+                      <code class="shortcut-inline-code shortcut-inline-code-url" data-i18n="shortcut_extension_page_label">{initialUi.shortcutExtensionPageLabel}</code><button
+                        class="shortcut-inline-copy-btn"
+                        type="button"
+                        aria-label={initialUi.shortcutCopyExtensionAria}
+                        data-i18n-aria-label="shortcut_copy_extension_aria"
+                        data-extension-copy-button
+                      >
+                        <i class="ri-file-copy-line" aria-hidden="true" data-extension-copy-icon></i>
+                      </button>
+                    </span>
                     <span class="shortcut-note-text" data-i18n="shortcut_tip_file_middle">{initialUi.shortcutTipFileMiddle}</span>
                     <code class="shortcut-inline-code" data-i18n="shortcut_allow_file_urls_label">{initialUi.shortcutAllowFileUrlsLabel}</code>
                     <span class="shortcut-note-text" data-i18n="shortcut_tip_file_suffix">{initialUi.shortcutTipFileSuffix}</span>
@@ -2497,6 +2546,7 @@ const structuredData = [
           shortcut_copy: "复制",
           shortcut_copied: "已复制",
           shortcut_copy_aria: "复制扩展快捷键设置地址",
+          shortcut_copy_extension_aria: "复制插件详情页地址",
           shortcut_step_1: "复制上方浏览器快捷键设置页地址，粘贴到地址栏并回车访问。",
           shortcut_step_2: "在网页中找到 Lumno。",
           shortcut_step_3_prefix: "设置/修改「",
@@ -2508,7 +2558,7 @@ const structuredData = [
           shortcut_tip_dia_middle: " 改为 ",
           shortcut_global_scope_label: "全局",
           shortcut_tip_dia_suffix: "。",
-          shortcut_tip_file_prefix: "如果想要在 PDF、HTML 文件中使用聚焦搜索，需前往插件详情页 ",
+          shortcut_tip_file_prefix: "若要在 PDF、HTML 文件中使用聚焦搜索，需前往插件详情页 ",
           shortcut_extension_page_label: "chrome://extensions/?id=nggfkkbmogmadfoikakkfegkoilfcfao",
           shortcut_tip_file_middle: "，手动开启",
           shortcut_allow_file_urls_label: "允许访问文件网址",
@@ -2550,6 +2600,7 @@ const structuredData = [
           shortcut_copy: "複製",
           shortcut_copied: "已複製",
           shortcut_copy_aria: "複製擴充功能快捷鍵設定網址",
+          shortcut_copy_extension_aria: "複製擴充功能詳情頁網址",
           shortcut_step_1: "複製上方瀏覽器快捷鍵設定頁網址，貼到網址列後按 Enter 開啟。",
           shortcut_step_2: "在網頁中找到 Lumno。",
           shortcut_step_3_prefix: "設定/修改「",
@@ -2561,7 +2612,7 @@ const structuredData = [
           shortcut_tip_dia_middle: " 改為 ",
           shortcut_global_scope_label: "全域",
           shortcut_tip_dia_suffix: "。",
-          shortcut_tip_file_prefix: "如果想要在 PDF、HTML 檔案中使用聚焦搜尋，需前往擴充功能詳情頁 ",
+          shortcut_tip_file_prefix: "若要在 PDF、HTML 檔案中使用聚焦搜尋，需前往擴充功能詳情頁 ",
           shortcut_extension_page_label: "chrome://extensions/?id=nggfkkbmogmadfoikakkfegkoilfcfao",
           shortcut_tip_file_middle: "，手動開啟",
           shortcut_allow_file_urls_label: "允許存取檔案網址",
@@ -2603,6 +2654,7 @@ const structuredData = [
           shortcut_copy: "Copy",
           shortcut_copied: "Copied",
           shortcut_copy_aria: "Copy the extension shortcut settings address",
+          shortcut_copy_extension_aria: "Copy the extension details page URL",
           shortcut_step_1: "Copy the address above, paste it into the address bar, and open it.",
           shortcut_step_2: "Find Lumno.",
           shortcut_step_3_prefix: "Set or update the shortcut for ",
@@ -2941,6 +2993,16 @@ const structuredData = [
           copyIcon.className = "ri-file-copy-line";
           copyIcon.setAttribute("aria-hidden", "true");
         }
+
+        const extensionCopyButton = document.querySelector("[data-extension-copy-button]");
+        const extensionCopyIcon = document.querySelector("[data-extension-copy-icon]");
+        if (extensionCopyButton instanceof HTMLButtonElement) {
+          extensionCopyButton.classList.remove("is-copied");
+        }
+        if (extensionCopyIcon instanceof HTMLElement) {
+          extensionCopyIcon.className = "ri-file-copy-line";
+          extensionCopyIcon.setAttribute("aria-hidden", "true");
+        }
       }
 
       async function copyShortcutSettingsUrl() {
@@ -2952,6 +3014,24 @@ const structuredData = [
 
         const helper = document.createElement("textarea");
         helper.value = url;
+        helper.setAttribute("readonly", "");
+        helper.style.position = "absolute";
+        helper.style.opacity = "0";
+        helper.style.pointerEvents = "none";
+        document.body.appendChild(helper);
+        helper.select();
+        document.execCommand("copy");
+        helper.remove();
+      }
+
+      async function copyTextValue(value) {
+        if (navigator.clipboard?.writeText) {
+          await navigator.clipboard.writeText(value);
+          return;
+        }
+
+        const helper = document.createElement("textarea");
+        helper.value = value;
         helper.setAttribute("readonly", "");
         helper.style.position = "absolute";
         helper.style.opacity = "0";
@@ -2985,6 +3065,28 @@ const structuredData = [
             }, 1800);
           } catch (error) {
             console.error("Failed to copy shortcut settings URL.", error);
+          }
+        });
+      }
+
+      const extensionCopyButton = document.querySelector("[data-extension-copy-button]");
+      const extensionCopyIcon = document.querySelector("[data-extension-copy-icon]");
+      let extensionCopyResetTimer = 0;
+      if (extensionCopyButton instanceof HTMLButtonElement) {
+        extensionCopyButton.addEventListener("click", async () => {
+          try {
+            await copyTextValue("chrome://extensions/?id=nggfkkbmogmadfoikakkfegkoilfcfao");
+            extensionCopyButton.classList.add("is-copied");
+            if (extensionCopyIcon instanceof HTMLElement) {
+              extensionCopyIcon.className = "ri-check-line";
+              extensionCopyIcon.setAttribute("aria-hidden", "true");
+            }
+            window.clearTimeout(extensionCopyResetTimer);
+            extensionCopyResetTimer = window.setTimeout(() => {
+              syncShortcutGuide(document.body.getAttribute("data-locale") || FALLBACK_LOCALE);
+            }, 1800);
+          } catch (error) {
+            console.error("Failed to copy extension details URL.", error);
           }
         });
       }

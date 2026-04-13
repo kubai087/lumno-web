@@ -59,7 +59,7 @@ const initialUi = {
   "zh-CN": {
     viewRelease: "更新日志",
     joinDiscord: "反馈 & 提需",
-    shortcutGuideTitle: "✨ 快速启用 Lumno 聚焦搜索",
+    shortcutGuideTitle: "🦋 快速启用 Lumno 聚焦搜索",
     shortcutCopy: "复制",
     shortcutCopied: "已复制",
     titleWelcome: "欢迎使用",
@@ -78,18 +78,23 @@ const initialUi = {
     shortcutCommandLabel: "唤起聚焦搜索窗口",
     shortcutStep3Suffix: "」一栏的快捷键。",
     shortcutStep4: "用上述快捷键唤起 Lumno，即可实现网页聚焦搜索。",
-    shortcutNotePrefix: "注：对于 Dia 用户，如果快捷键设置后不生效，可以将右侧的 ",
+    shortcutTipDiaPrefix: "对于 Dia 用户，如果快捷键设置后不生效，可以将右侧的 ",
     shortcutBrowserScopeLabel: "在 Dia 中",
-    shortcutNoteMiddle: " 改为 ",
+    shortcutTipDiaMiddle: " 改为 ",
     shortcutGlobalScopeLabel: "全局",
-    shortcutNoteSuffix: " 。",
+    shortcutTipDiaSuffix: "。",
+    shortcutTipFilePrefix: "如果想要在 PDF、HTML 文件中使用聚焦搜索，需前往插件详情页 ",
+    shortcutExtensionPageLabel: "chrome://extensions/?id=nggfkkbmogmadfoikakkfegkoilfcfao",
+    shortcutTipFileMiddle: "，手动开启",
+    shortcutAllowFileUrlsLabel: "允许访问文件网址",
+    shortcutTipFileSuffix: "。",
     languageLabel: "简体中文",
     languageSelectAria: "语言",
   },
   "zh-TW": {
     viewRelease: "更新日誌",
     joinDiscord: "反饋 & 提需",
-    shortcutGuideTitle: "✨ 快速啟用 Lumno 聚焦搜尋",
+    shortcutGuideTitle: "🦋 快速啟用 Lumno 聚焦搜尋",
     shortcutCopy: "複製",
     shortcutCopied: "已複製",
     titleWelcome: "歡迎使用",
@@ -108,18 +113,23 @@ const initialUi = {
     shortcutCommandLabel: "喚起聚焦搜尋視窗",
     shortcutStep3Suffix: "」這一欄的快捷鍵。",
     shortcutStep4: "使用上述快捷鍵喚起 Lumno，即可進行網頁聚焦搜尋。",
-    shortcutNotePrefix: "註：對於 Dia 使用者，如果快捷鍵設定後仍未生效，可以將右側的 ",
+    shortcutTipDiaPrefix: "對於 Dia 使用者，如果快捷鍵設定後仍未生效，可以將右側的 ",
     shortcutBrowserScopeLabel: "在 Dia 中",
-    shortcutNoteMiddle: " 改為 ",
+    shortcutTipDiaMiddle: " 改為 ",
     shortcutGlobalScopeLabel: "全域",
-    shortcutNoteSuffix: " 。",
+    shortcutTipDiaSuffix: "。",
+    shortcutTipFilePrefix: "如果想要在 PDF、HTML 檔案中使用聚焦搜尋，需前往擴充功能詳情頁 ",
+    shortcutExtensionPageLabel: "chrome://extensions/?id=nggfkkbmogmadfoikakkfegkoilfcfao",
+    shortcutTipFileMiddle: "，手動開啟",
+    shortcutAllowFileUrlsLabel: "允許存取檔案網址",
+    shortcutTipFileSuffix: "。",
     languageLabel: "繁體中文",
     languageSelectAria: "語言",
   },
   en: {
     viewRelease: "Release Notes",
     joinDiscord: "Feedback & Requests",
-    shortcutGuideTitle: "✨ Quickly enable Lumno Focus Search",
+    shortcutGuideTitle: "🦋 Quickly enable Lumno Focus Search",
     shortcutCopy: "Copy",
     shortcutCopied: "Copied",
     titleWelcome: "Welcome to",
@@ -138,11 +148,16 @@ const initialUi = {
     shortcutCommandLabel: "Open command bar",
     shortcutStep3Suffix: ".",
     shortcutStep4: "Use that shortcut to open Lumno and start focus search on the page.",
-    shortcutNotePrefix: "Note: If you're using Dia and the shortcut still doesn't work, change ",
+    shortcutTipDiaPrefix: "If you're using Dia and the shortcut still doesn't work after setting it, change ",
     shortcutBrowserScopeLabel: "In Dia",
-    shortcutNoteMiddle: " to ",
+    shortcutTipDiaMiddle: " to ",
     shortcutGlobalScopeLabel: "Global",
-    shortcutNoteSuffix: ".",
+    shortcutTipDiaSuffix: ".",
+    shortcutTipFilePrefix: "If you want to use Focus Search in PDF or HTML files, open the extension details page at ",
+    shortcutExtensionPageLabel: "chrome://extensions/?id=nggfkkbmogmadfoikakkfegkoilfcfao",
+    shortcutTipFileMiddle: " and manually enable ",
+    shortcutAllowFileUrlsLabel: "Allow access to file URLs",
+    shortcutTipFileSuffix: ".",
     languageLabel: "English",
     languageSelectAria: "Language",
   },
@@ -262,8 +277,8 @@ const structuredData = [
 
       .left-pane {
         position: relative;
-        width: 40%;
-        min-width: 560px;
+        width: clamp(560px, 44vw, 760px);
+        flex: 0 0 auto;
         display: flex;
         align-items: center;
         padding-left: clamp(56px, 9vw, 132px);
@@ -272,7 +287,7 @@ const structuredData = [
 
       .left-main {
         position: relative;
-        width: min(428px, calc(100% - clamp(56px, 9vw, 132px) - 48px));
+        width: min(100%, 668px);
         display: flex;
         flex-direction: column;
         gap: 112px;
@@ -438,7 +453,7 @@ const structuredData = [
         align-items: center;
         justify-content: flex-start;
         width: 100%;
-        max-width: 560px;
+        max-width: 668px;
         opacity: 0;
         transform: translateX(-24px);
         filter: blur(6px);
@@ -547,17 +562,79 @@ const structuredData = [
         color: #3c4455;
         font-size: 14px;
         line-height: 1.65;
+        text-wrap: pretty;
+      }
+
+      .shortcut-steps li {
+        text-wrap: pretty;
       }
 
       .shortcut-steps li + li {
         margin-top: 8px;
       }
 
-      .shortcut-note {
-        margin: 12px 0 0;
-        color: #3c4455;
-        font-size: 14px;
-        line-height: 1.65;
+      .shortcut-notes {
+        margin-top: 18px;
+        padding-top: 14px;
+        border-top: 1px solid rgba(36, 40, 47, 0.1);
+      }
+
+      .shortcut-notes-list {
+        margin: 0;
+        padding-left: 20px;
+        color: rgba(75, 85, 101, 0.88);
+        font-size: 13px;
+        line-height: 1.95;
+        text-wrap: pretty;
+      }
+
+      .shortcut-notes-list li {
+        padding-left: 0;
+        font-weight: 400;
+        text-wrap: pretty;
+      }
+
+      .shortcut-notes-list li + li {
+        margin-top: 8px;
+      }
+
+      .shortcut-notes-list li::marker {
+        color: rgba(107, 114, 128, 0.56);
+      }
+
+      .shortcut-inline-code {
+        display: inline-block;
+        margin: 0 0.12em;
+        padding: 0.16em 0.34em;
+        border: 0;
+        border-radius: 5px;
+        background: rgba(36, 40, 47, 0.05);
+        color: #24292f;
+        font-family: ui-monospace, SFMono-Regular, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 0.89em;
+        line-height: 1.45;
+        vertical-align: -0.08em;
+        white-space: nowrap;
+        word-break: normal;
+        overflow-wrap: normal;
+        box-decoration-break: clone;
+        -webkit-box-decoration-break: clone;
+      }
+
+      .shortcut-inline-code-url {
+        display: inline;
+        vertical-align: baseline;
+        white-space: normal;
+        overflow-wrap: anywhere;
+        word-break: break-all;
+        color: rgba(75, 85, 101, 0.9);
+        background: rgba(36, 40, 47, 0.035);
+        line-height: inherit;
+      }
+
+      .shortcut-note-text {
+        color: rgba(75, 85, 101, 0.88);
+        text-wrap: pretty;
       }
 
       .producthunt-badge-wrap {
@@ -1234,7 +1311,8 @@ const structuredData = [
       }
 
       .right-pane {
-        width: 60%;
+        flex: 1 1 auto;
+        width: auto;
         position: relative;
         margin: 0;
         border-radius: 0;
@@ -1733,7 +1811,7 @@ const structuredData = [
 
       @media (max-width: 1250px) {
         .left-pane {
-          min-width: 500px;
+          width: clamp(500px, 42vw, 620px);
         }
 
         .feature-grid {
@@ -1742,7 +1820,7 @@ const structuredData = [
         }
       }
 
-      @media (max-width: 1080px) {
+      @media (max-width: 1280px) {
         .top-nav {
           background: transparent;
           box-shadow: none;
@@ -1967,7 +2045,7 @@ const structuredData = [
         }
       }
 
-      @media (max-width: 1080px) and (orientation: landscape) {
+      @media (max-width: 1280px) and (orientation: landscape) {
         .top-nav {
           top: 0;
           left: 0;
@@ -2333,13 +2411,24 @@ const structuredData = [
                 </li>
                 <li data-i18n="shortcut_step_4">{initialUi.shortcutStep4}</li>
               </ol>
-              <p class="shortcut-note">
-                  <span data-i18n="shortcut_note_prefix">{initialUi.shortcutNotePrefix}</span>
-                  <span class="shortcut-quote" data-i18n="shortcut_browser_scope_label">{initialUi.shortcutBrowserScopeLabel}</span>
-                  <span data-i18n="shortcut_note_middle">{initialUi.shortcutNoteMiddle}</span>
-                  <span class="shortcut-quote" data-i18n="shortcut_global_scope_label">{initialUi.shortcutGlobalScopeLabel}</span>
-                  <span data-i18n="shortcut_note_suffix">{initialUi.shortcutNoteSuffix}</span>
-              </p>
+              <div class="shortcut-notes">
+                <ul class="shortcut-notes-list">
+                  <li>
+                    <span class="shortcut-note-text" data-i18n="shortcut_tip_dia_prefix">{initialUi.shortcutTipDiaPrefix}</span>
+                    <code class="shortcut-inline-code" data-i18n="shortcut_browser_scope_label">{initialUi.shortcutBrowserScopeLabel}</code>
+                    <span class="shortcut-note-text" data-i18n="shortcut_tip_dia_middle">{initialUi.shortcutTipDiaMiddle}</span>
+                    <code class="shortcut-inline-code" data-i18n="shortcut_global_scope_label">{initialUi.shortcutGlobalScopeLabel}</code>
+                    <span class="shortcut-note-text" data-i18n="shortcut_tip_dia_suffix">{initialUi.shortcutTipDiaSuffix}</span>
+                  </li>
+                  <li>
+                    <span class="shortcut-note-text" data-i18n="shortcut_tip_file_prefix">{initialUi.shortcutTipFilePrefix}</span>
+                    <code class="shortcut-inline-code shortcut-inline-code-url" data-i18n="shortcut_extension_page_label">{initialUi.shortcutExtensionPageLabel}</code>
+                    <span class="shortcut-note-text" data-i18n="shortcut_tip_file_middle">{initialUi.shortcutTipFileMiddle}</span>
+                    <code class="shortcut-inline-code" data-i18n="shortcut_allow_file_urls_label">{initialUi.shortcutAllowFileUrlsLabel}</code>
+                    <span class="shortcut-note-text" data-i18n="shortcut_tip_file_suffix">{initialUi.shortcutTipFileSuffix}</span>
+                  </li>
+                </ul>
+              </div>
             </section>
           </div>
           <div class="producthunt-badge-wrap">
@@ -2404,7 +2493,7 @@ const structuredData = [
           page_title: "Lumno 安装引导｜浏览器命令栏与新标签页快速开始",
           title_welcome: "欢迎使用",
           subtitle: "开源浏览器聚焦搜索 & 极简新标签页",
-          shortcut_guide_title: "✨ 快速启用 Lumno 聚焦搜索",
+          shortcut_guide_title: "🦋 快速启用 Lumno 聚焦搜索",
           shortcut_copy: "复制",
           shortcut_copied: "已复制",
           shortcut_copy_aria: "复制扩展快捷键设置地址",
@@ -2414,11 +2503,16 @@ const structuredData = [
           shortcut_command_label: "唤起聚焦搜索窗口",
           shortcut_step_3_suffix: "」一栏的快捷键。",
           shortcut_step_4: "用上述快捷键唤起 Lumno，即可实现网页聚焦搜索。",
-          shortcut_note_prefix: "注：对于 Dia 用户，如果快捷键设置后不生效，可以将右侧的 ",
+          shortcut_tip_dia_prefix: "对于 Dia 用户，如果快捷键设置后不生效，可以将右侧的 ",
           shortcut_browser_scope_label: "在 Dia 中",
-          shortcut_note_middle: " 改为 ",
+          shortcut_tip_dia_middle: " 改为 ",
           shortcut_global_scope_label: "全局",
-          shortcut_note_suffix: " 。",
+          shortcut_tip_dia_suffix: "。",
+          shortcut_tip_file_prefix: "如果想要在 PDF、HTML 文件中使用聚焦搜索，需前往插件详情页 ",
+          shortcut_extension_page_label: "chrome://extensions/?id=nggfkkbmogmadfoikakkfegkoilfcfao",
+          shortcut_tip_file_middle: "，手动开启",
+          shortcut_allow_file_urls_label: "允许访问文件网址",
+          shortcut_tip_file_suffix: "。",
           language_select_aria: "语言",
           language_system: "跟随浏览器语言",
           language_zh_cn: "简体中文",
@@ -2452,7 +2546,7 @@ const structuredData = [
           page_title: "Lumno 安裝引導｜瀏覽器命令欄與新分頁快速開始",
           title_welcome: "歡迎使用",
           subtitle: "開源瀏覽器聚焦搜尋 & 極簡新分頁",
-          shortcut_guide_title: "✨ 快速啟用 Lumno 聚焦搜尋",
+          shortcut_guide_title: "🦋 快速啟用 Lumno 聚焦搜尋",
           shortcut_copy: "複製",
           shortcut_copied: "已複製",
           shortcut_copy_aria: "複製擴充功能快捷鍵設定網址",
@@ -2462,11 +2556,16 @@ const structuredData = [
           shortcut_command_label: "喚起聚焦搜尋視窗",
           shortcut_step_3_suffix: "」這一欄的快捷鍵。",
           shortcut_step_4: "使用上述快捷鍵喚起 Lumno，即可進行網頁聚焦搜尋。",
-          shortcut_note_prefix: "註：對於 Dia 使用者，如果快捷鍵設定後仍未生效，可以將右側的 ",
+          shortcut_tip_dia_prefix: "對於 Dia 使用者，如果快捷鍵設定後仍未生效，可以將右側的 ",
           shortcut_browser_scope_label: "在 Dia 中",
-          shortcut_note_middle: " 改為 ",
+          shortcut_tip_dia_middle: " 改為 ",
           shortcut_global_scope_label: "全域",
-          shortcut_note_suffix: " 。",
+          shortcut_tip_dia_suffix: "。",
+          shortcut_tip_file_prefix: "如果想要在 PDF、HTML 檔案中使用聚焦搜尋，需前往擴充功能詳情頁 ",
+          shortcut_extension_page_label: "chrome://extensions/?id=nggfkkbmogmadfoikakkfegkoilfcfao",
+          shortcut_tip_file_middle: "，手動開啟",
+          shortcut_allow_file_urls_label: "允許存取檔案網址",
+          shortcut_tip_file_suffix: "。",
           language_select_aria: "語言",
           language_system: "跟隨瀏覽器語言",
           language_zh_cn: "簡體中文",
@@ -2500,7 +2599,7 @@ const structuredData = [
           page_title: "Lumno Onboarding | Browser Command Bar Quick Start",
           title_welcome: "Welcome to",
           subtitle: "An open-source browser extension for focus search and a minimalist new tab.",
-          shortcut_guide_title: "✨ Quickly enable Lumno Focus Search",
+          shortcut_guide_title: "🦋 Quickly enable Lumno Focus Search",
           shortcut_copy: "Copy",
           shortcut_copied: "Copied",
           shortcut_copy_aria: "Copy the extension shortcut settings address",
@@ -2510,11 +2609,16 @@ const structuredData = [
           shortcut_command_label: "Open command bar",
           shortcut_step_3_suffix: ".",
           shortcut_step_4: "Use that shortcut to open Lumno and start focus search on the page.",
-          shortcut_note_prefix: "Note: If you're using Dia and the shortcut still doesn't work, change ",
+          shortcut_tip_dia_prefix: "If you're using Dia and the shortcut still doesn't work after setting it, change ",
           shortcut_browser_scope_label: "In Dia",
-          shortcut_note_middle: " to ",
+          shortcut_tip_dia_middle: " to ",
           shortcut_global_scope_label: "Global",
-          shortcut_note_suffix: ".",
+          shortcut_tip_dia_suffix: ".",
+          shortcut_tip_file_prefix: "If you want to use Focus Search in PDF or HTML files, open the extension details page at ",
+          shortcut_extension_page_label: "chrome://extensions/?id=nggfkkbmogmadfoikakkfegkoilfcfao",
+          shortcut_tip_file_middle: " and manually enable ",
+          shortcut_allow_file_urls_label: "Allow access to file URLs",
+          shortcut_tip_file_suffix: ".",
           language_select_aria: "Language",
           language_system: "Follow browser language",
           language_zh_cn: "简体中文",

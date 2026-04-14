@@ -194,6 +194,14 @@ const structuredData = [
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link
+      rel="preload"
+      as="image"
+      href="/assets/frame234-bg-1920.webp"
+      imagesrcset="/assets/frame234-bg-1280.webp 1280w, /assets/frame234-bg-1920.webp 1920w"
+      imagesizes="60vw"
+      type="image/webp"
+    />
     <link rel="stylesheet" href="/assets/remixicon.css" />
     <style is:global>
       @font-face {
@@ -1311,8 +1319,18 @@ const structuredData = [
       .right-bg {
         position: absolute;
         inset: 0;
-        background: url("/assets/frame234-bg.png") left center / cover no-repeat;
         opacity: 0.2;
+      }
+
+      .right-bg-image {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+        object-position: left center;
+        user-select: none;
+        -webkit-user-drag: none;
+        pointer-events: none;
       }
 
       .feature-grid {
@@ -2426,7 +2444,20 @@ const structuredData = [
       </section>
 
       <section class="right-pane" aria-hidden="true">
-        <div class="right-bg"></div>
+        <div class="right-bg">
+          <img
+            class="right-bg-image"
+            src="/assets/frame234-bg-1920.webp"
+            srcset="/assets/frame234-bg-1280.webp 1280w, /assets/frame234-bg-1920.webp 1920w"
+            sizes="60vw"
+            alt=""
+            width="1920"
+            height="814"
+            loading="eager"
+            decoding="async"
+            fetchpriority="high"
+          />
+        </div>
 
         <FeatureGrid messages={featureMessages} />
       </section>

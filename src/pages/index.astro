@@ -500,6 +500,15 @@ const structuredData = [
         height: 54px;
       }
 
+      .producthunt-badge-wrap--page-bottom {
+        display: none;
+        width: 100%;
+        opacity: 1;
+        transform: none;
+        filter: none;
+        animation: none;
+      }
+
       .support-tooltip {
         position: relative;
         display: inline-flex;
@@ -1907,6 +1916,16 @@ const structuredData = [
           justify-content: center;
         }
 
+        .producthunt-badge-wrap--hero {
+          display: none;
+        }
+
+        .producthunt-badge-wrap--page-bottom {
+          display: flex;
+          margin: 0 auto calc(24px + env(safe-area-inset-bottom, 0px));
+          padding: 0 20px;
+        }
+
         .producthunt-badge-image {
           width: min(68vw, 250px);
           height: auto;
@@ -2419,7 +2438,7 @@ const structuredData = [
               </span>
             </p>
           </div>
-          <div class="producthunt-badge-wrap">
+          <div class="producthunt-badge-wrap producthunt-badge-wrap--hero">
             <a
               class="producthunt-badge-link"
               href="https://www.producthunt.com/products/lumno-the-ultimate-browser-command-bar?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-lumno-the-ultimate-browser-command-bar"
@@ -2463,6 +2482,26 @@ const structuredData = [
       </section>
     </main>
     <LanguageMenu currentLabel={initialUi.languageLabel} toggleAriaLabel={initialUi.languageSelectAria} />
+    <div class="producthunt-badge-wrap producthunt-badge-wrap--page-bottom">
+      <a
+        class="producthunt-badge-link"
+        href="https://www.producthunt.com/products/lumno-the-ultimate-browser-command-bar?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-lumno-the-ultimate-browser-command-bar"
+        target="_blank"
+        rel="noopener noreferrer"
+        data-analytics-event="open_producthunt"
+        data-analytics-category="cta"
+        data-analytics-label="home_producthunt_badge_mobile_bottom"
+      >
+        <img
+          class="producthunt-badge-image"
+          alt="Lumno - The Ultimate Browser Command Bar - Search tabs, history, bookmarks, and the web from any page. | Product Hunt"
+          width="250"
+          height="54"
+          src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1107555&theme=light&t=1774504898356"
+          draggable="false"
+        />
+      </a>
+    </div>
     <div id="community-qrcode-modal" class="qrcode-modal" hidden>
       <div class="qrcode-modal-backdrop" data-close-qrcode-modal></div>
       <div class="qrcode-modal-panel" role="dialog" aria-modal="true" aria-labelledby="community-qrcode-title">

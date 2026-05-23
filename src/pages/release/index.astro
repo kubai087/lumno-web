@@ -563,12 +563,14 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
       }
 
       .qrcode-modal-panel {
+        --qrcode-panel-radius: 16px;
+        --qrcode-panel-padding: 20px;
         position: relative;
         width: min(92vw, 380px);
-        border-radius: 16px;
+        border-radius: var(--qrcode-panel-radius);
         background: #ffffff;
         box-shadow: 0 24px 42px rgba(16, 23, 38, 0.26);
-        padding: 20px;
+        padding: var(--qrcode-panel-padding);
       }
 
       .qrcode-modal-close {
@@ -595,7 +597,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
       .qrcode-modal-image {
         display: block;
         width: 100%;
-        border-radius: 12px;
+        border-radius: max(0px, calc(var(--qrcode-panel-radius) - var(--qrcode-panel-padding)));
       }
 
       main {
@@ -1066,6 +1068,15 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
           gap: 10px;
         }
 
+        .brand {
+          flex: 0 1 auto;
+          min-width: 0;
+        }
+
+        .brand-logo {
+          width: clamp(90px, 28vw, 136px);
+        }
+
         .header-controls {
           width: auto;
           margin-left: auto;
@@ -1138,17 +1149,33 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         .header-actions {
           margin-left: 0;
           gap: 6px;
+          min-width: 0;
         }
 
-        .social-btn-icon,
-        .social-btn-discord {
+        .social-btn-icon {
           width: 36px;
           min-width: 36px;
           padding: 0;
         }
 
+        .social-btn-discord {
+          width: auto;
+          min-width: 0;
+          max-width: clamp(84px, calc(72vw - 126px), 156px);
+          padding: 0 10px;
+          gap: 6px;
+        }
+
+        .social-btn-discord i {
+          flex: 0 0 auto;
+        }
+
         .social-btn-discord span {
-          display: none;
+          display: inline-block;
+          min-width: 0;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
         }
 
         main {

@@ -104,8 +104,8 @@ const initialUi = {
   en: {
     viewRelease: "Release Notes",
     joinDiscord: "Feedback & Requests",
-    titleWelcome: "Welcome to",
-    subtitle: "An open-source browser extension for focus search and a minimalist new tab.",
+    titleWelcome: "Meet",
+    subtitle: "Open-source focus search and a minimalist new tab.",
     languageLabel: "English",
     languageSelectAria: "Language",
     settingsAria: "Open the Lumno GitHub repository",
@@ -198,9 +198,8 @@ const structuredData = [
     <link
       rel="preload"
       as="image"
-      href="/assets/frame234-bg-1920.webp"
-      imagesrcset="/assets/frame234-bg-1280.webp 1280w, /assets/frame234-bg-1920.webp 1920w"
-      imagesizes="60vw"
+      href="/assets/settings-bg-light-monet-newtab.webp"
+      imagesizes="100vw"
       type="image/webp"
     />
     <link rel="stylesheet" href="/assets/remixicon.css" />
@@ -218,9 +217,26 @@ const structuredData = [
         --text-main: #2d3138;
         --text-sub: #898989;
         --card-text-sub: rgba(0, 0, 0, 0.6);
-        --card-grad-start: #ffffff;
-        --card-grad-end: #f9f9f9;
+        --card-grad-start: oklch(99.8% 0.001 255);
+        --card-grad-mid: oklch(99.3% 0.002 255);
+        --card-grad-end: oklch(98.6% 0.003 255);
+        --card-rim: oklch(78% 0.012 250 / 0.46);
+        --card-highlight: oklch(100% 0 0 / 0.98);
+        --card-merge-glow: oklch(100% 0 0 / 0.9);
+        --card-bottom-line: oklch(52% 0.012 250 / 0.18);
+        --card-shadow: oklch(44% 0.018 250 / 0.08);
+        --card-shadow-soft: oklch(70% 0.012 250 / 0.14);
+        --lang-ink: #5e7064;
+        --lang-option-ink: #465348;
+        --lang-border: oklch(82% 0.018 145 / 0.58);
+        --lang-surface: oklch(99.2% 0.004 115 / 0.84);
+        --lang-surface-hover: oklch(97.4% 0.016 145 / 0.9);
+        --lang-surface-active: oklch(94.2% 0.03 145 / 0.92);
+        --lang-active-ink: oklch(39% 0.054 145);
+        --lang-shadow: oklch(42% 0.02 145 / 0.12);
         --border-soft: #e2e2e2;
+        --page-bg-overlay: rgba(255, 255, 255, 0.16);
+        --producthunt-badge-width: 250px;
       }
 
       * {
@@ -231,7 +247,14 @@ const structuredData = [
       body {
         margin: 0;
         min-height: 100%;
-        background: var(--bg);
+        background-color: var(--bg);
+        background-image:
+          linear-gradient(var(--page-bg-overlay), var(--page-bg-overlay)),
+          url("/assets/settings-bg-light-monet-newtab.webp");
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
         color: var(--text-main);
         font-family: "Open Sans", "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
       }
@@ -255,7 +278,7 @@ const structuredData = [
 
       .left-main {
         position: relative;
-        width: min(428px, calc(100% - clamp(56px, 9vw, 132px) - 48px));
+        width: min(428px, 100%);
         display: flex;
         flex-direction: column;
         gap: 112px;
@@ -290,7 +313,7 @@ const structuredData = [
         font-weight: 500;
         line-height: 1.2;
         letter-spacing: 0.2px;
-        background: linear-gradient(180deg, #000000 0%, #666666 100%);
+        background: linear-gradient(180deg, #3a342b 0%, #5a5247 100%);
         -webkit-background-clip: text;
         background-clip: text;
         color: transparent;
@@ -405,7 +428,7 @@ const structuredData = [
 
       .subtitle {
         margin: 8px 0 0;
-        color: #9b9b9b;
+        color: #6f665b;
         font-size: 17px;
         line-height: 1.45;
         letter-spacing: 0.1px;
@@ -497,7 +520,7 @@ const structuredData = [
 
       .producthunt-badge-image {
         display: block;
-        width: 250px;
+        width: var(--producthunt-badge-width);
         height: 54px;
       }
 
@@ -547,7 +570,7 @@ const structuredData = [
 
       .support-tooltip-trigger:hover,
       .support-tooltip-trigger:focus-visible {
-        color: #4b545f;
+        color: var(--lang-ink);
         border-color: rgba(75, 84, 95, 0.35);
         background: rgba(255, 255, 255, 0.96);
       }
@@ -890,19 +913,20 @@ const structuredData = [
       .top-nav-brand {
         display: inline-flex;
         align-items: center;
+        flex: 0 0 auto;
         text-decoration: none;
       }
 
       .top-nav-brand-mark {
         display: block;
-        height: 24px;
-        width: auto;
+        width: 58px;
+        height: auto;
       }
 
-      .top-nav-brand-mark :global(svg) {
+      .top-nav-brand-mark svg {
         display: block;
-        width: auto;
-        height: 100%;
+        width: 100%;
+        height: auto;
         shape-rendering: geometricPrecision;
       }
 
@@ -930,7 +954,7 @@ const structuredData = [
         font-size: 14px;
         line-height: 1;
         font-weight: 500;
-        color: #4b545f;
+        color: var(--lang-ink);
         text-decoration: none;
         transition:
           transform 0.18s ease,
@@ -1140,7 +1164,7 @@ const structuredData = [
         -webkit-appearance: none;
         background: transparent;
         box-shadow: none;
-        color: #4b545f;
+        color: var(--lang-ink);
         -webkit-text-fill-color: currentColor;
         padding: 0;
         display: inline-flex;
@@ -1150,7 +1174,6 @@ const structuredData = [
         cursor: pointer;
       }
 
-      .lang-toggle,
       .lang-toggle i,
       .lang-select-prefix,
       .lang-select-arrow {
@@ -1176,7 +1199,7 @@ const structuredData = [
         flex: 1 1 auto;
         min-width: 0;
         font-size: 14px;
-        color: #4b545f;
+        color: var(--lang-ink);
         text-align: left;
         white-space: nowrap;
         overflow: hidden;
@@ -1189,21 +1212,21 @@ const structuredData = [
         height: 16px;
         align-items: center;
         justify-content: center;
-        color: #768095;
+        color: var(--lang-ink);
       }
 
       @media (hover: hover) and (pointer: fine) {
         .lang-toggle:hover {
-          border-color: #d2d8df;
-          background: rgba(255, 255, 255, 0.72);
-          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+          border-color: var(--lang-border);
+          background: var(--lang-surface-hover);
+          box-shadow: 0 6px 14px var(--lang-shadow);
         }
       }
 
       .lang-toggle:active {
-        border-color: #ccd3db;
-        background: rgba(255, 255, 255, 0.78);
-        box-shadow: none;
+        border-color: var(--lang-border);
+        background: var(--lang-surface-active);
+        box-shadow: 0 2px 6px oklch(42% 0.02 145 / 0.08);
       }
 
       .lang-menu {
@@ -1213,14 +1236,16 @@ const structuredData = [
         top: auto;
         z-index: 36;
         min-width: 180px;
-        background: #fff;
-        border: 1px solid #e2e2e2;
+        background: var(--lang-surface);
+        border: 1px solid var(--lang-border);
         border-radius: 12px;
         padding: 6px;
         display: flex;
         flex-direction: column;
         gap: 4px;
-        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.12);
+        box-shadow:
+          0 18px 34px var(--lang-shadow),
+          inset 0 1px 0 oklch(100% 0 0 / 0.86);
         opacity: 0;
         visibility: hidden;
         transform: translateY(6px) scale(0.97);
@@ -1243,19 +1268,19 @@ const structuredData = [
         border-radius: 8px;
         text-align: left;
         padding: 8px 10px;
-        color: #3f4650;
+        color: var(--lang-option-ink);
         font-family: inherit;
         font-size: 14px;
         cursor: pointer;
       }
 
       .lang-option:hover {
-        background: #f3f5f7;
+        background: var(--lang-surface-hover);
       }
 
       .lang-option.is-active {
-        background: #eaf3ff;
-        color: #2a5da7;
+        background: var(--lang-surface-active);
+        color: var(--lang-active-ink);
         font-weight: 600;
       }
 
@@ -1280,12 +1305,14 @@ const structuredData = [
       }
 
       .qrcode-modal-panel {
+        --qrcode-panel-radius: 16px;
+        --qrcode-panel-padding: 20px;
         position: relative;
         width: min(92vw, 380px);
-        border-radius: 16px;
+        border-radius: var(--qrcode-panel-radius);
         background: #ffffff;
         box-shadow: 0 24px 42px rgba(16, 23, 38, 0.26);
-        padding: 20px;
+        padding: var(--qrcode-panel-padding);
       }
 
       .qrcode-modal-close {
@@ -1312,7 +1339,7 @@ const structuredData = [
       .qrcode-modal-image {
         display: block;
         width: 100%;
-        border-radius: 12px;
+        border-radius: max(0px, calc(var(--qrcode-panel-radius) - var(--qrcode-panel-padding)));
       }
 
       .right-pane {
@@ -1327,6 +1354,7 @@ const structuredData = [
       }
 
       .right-bg {
+        display: none;
         position: absolute;
         inset: 0;
         opacity: 0.2;
@@ -1347,7 +1375,7 @@ const structuredData = [
         position: relative;
         width: 546px;
         height: 455px;
-        filter: drop-shadow(0 7px 15px rgba(0, 0, 0, 0.02)) drop-shadow(0 28px 28px rgba(0, 0, 0, 0.02));
+        filter: none;
         transform: scale(1.08);
         transform-origin: center;
       }
@@ -1361,8 +1389,8 @@ const structuredData = [
 
       .is-safari .feature-card {
         box-shadow:
-          0 7px 15px rgba(0, 0, 0, 0.02),
-          0 28px 28px rgba(0, 0, 0, 0.02);
+          0 18px 34px var(--card-shadow),
+          0 2px 8px var(--card-shadow-soft);
       }
 
       .is-safari .logo-lockup {
@@ -1387,7 +1415,11 @@ const structuredData = [
         display: flex;
         flex-direction: column;
         border-radius: 12px;
-        background: #fff;
+        background: var(--card-grad-end);
+        box-shadow:
+          0 18px 34px var(--card-shadow),
+          0 2px 8px var(--card-shadow-soft);
+        isolation: isolate;
         opacity: 0;
         transform: translateY(14px);
         animation: x-feature-card-enter 400ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
@@ -1397,21 +1429,44 @@ const structuredData = [
         border: none;
       }
 
+      .feature-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        background:
+          radial-gradient(ellipse 88% 62% at 18% -10%, var(--card-highlight) 0%, oklch(100% 0 0 / 0.74) 42%, transparent 72%),
+          radial-gradient(ellipse 86% 46% at 50% 62%, var(--card-merge-glow) 0%, transparent 68%),
+          linear-gradient(90deg, transparent 0%, transparent 68%, oklch(100% 0 0 / 0.8) 100%),
+          linear-gradient(180deg, var(--card-grad-start) 0%, var(--card-grad-mid) 52%, var(--card-grad-end) 100%);
+      }
+
       .feature-card::after {
         content: "";
         position: absolute;
         inset: 0;
+        z-index: 2;
         border-radius: inherit;
         pointer-events: none;
-        box-shadow: none;
+        box-shadow:
+          inset 0 0 0 1px var(--card-rim),
+          inset 0 2px 0 oklch(100% 0 0 / 0.94),
+          inset 0 -1px 0 var(--card-bottom-line);
+      }
+
+      .feature-card > * {
+        position: relative;
+        z-index: 1;
       }
 
       @media (hover: hover) and (pointer: fine) {
         .feature-card:hover {
           transform: translateY(-4px);
           box-shadow:
-            0 12px 24px rgba(0, 0, 0, 0.05),
-            0 4px 8px rgba(0, 0, 0, 0.03);
+            0 24px 42px oklch(39% 0.026 74 / 0.1),
+            0 7px 16px oklch(50% 0.025 82 / 0.1);
         }
       }
 
@@ -1428,7 +1483,7 @@ const structuredData = [
 
       .card-title-wrap {
         padding: 24px 22px 0;
-        flex: 1 1 auto;
+        flex: 0 0 auto;
         min-height: 0;
       }
 
@@ -1457,9 +1512,9 @@ const structuredData = [
 
       .card-a-graphic {
         position: relative;
-        height: 128px;
-        flex: 0 0 128px;
-        margin-top: 8px;
+        height: 120px;
+        flex: 0 0 120px;
+        margin-top: auto;
       }
 
       .card-a-image {
@@ -1498,9 +1553,9 @@ const structuredData = [
 
       .card-b-graphic {
         position: relative;
-        height: 128px;
-        flex: 0 0 128px;
-        margin-top: 8px;
+        height: 120px;
+        flex: 0 0 120px;
+        margin-top: auto;
         overflow: hidden;
       }
 
@@ -1607,9 +1662,9 @@ const structuredData = [
 
       .card-c-graphic {
         position: relative;
-        height: 128px;
-        flex: 0 0 128px;
-        margin-top: 8px;
+        height: 120px;
+        flex: 0 0 120px;
+        margin-top: auto;
         overflow: hidden;
       }
 
@@ -1754,9 +1809,9 @@ const structuredData = [
 
       .card-d-graphic {
         position: relative;
-        height: 128px;
-        flex: 0 0 128px;
-        margin-top: 8px;
+        height: 120px;
+        flex: 0 0 120px;
+        margin-top: auto;
         overflow: hidden;
       }
 
@@ -1834,16 +1889,76 @@ const structuredData = [
         }
       }
 
+      @media (min-width: 1680px) {
+        .onboarding {
+          display: grid;
+          grid-template-columns: minmax(420px, 480px) 590px;
+          column-gap: clamp(72px, 6vw, 140px);
+          justify-content: center;
+        }
+
+        .left-pane {
+          width: auto;
+          min-width: 0;
+          padding-left: 0;
+          padding-right: 0;
+        }
+
+        .right-pane {
+          width: auto;
+          overflow: visible;
+          justify-content: center;
+        }
+
+        .feature-grid {
+          margin-left: 0;
+        }
+      }
+
       @media (max-width: 1080px) {
+        :root {
+          --producthunt-badge-width: min(68vw, 250px);
+        }
+
+        body::before {
+          content: "";
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: calc(env(safe-area-inset-top, 0px) + 108px);
+          z-index: 19;
+          pointer-events: none;
+          background: linear-gradient(
+            to bottom,
+            rgba(250, 250, 250, 0.82) 0%,
+            rgba(250, 250, 250, 0.56) 42%,
+            rgba(250, 250, 250, 0) 100%
+          );
+        }
+
         .top-nav {
-          background: transparent;
-          box-shadow: none;
-          border: 0;
-          transition: background-color 160ms ease;
+          top: calc(env(safe-area-inset-top, 0px) + 12px);
+          left: 16px;
+          right: 16px;
+          min-height: 52px;
+          padding: 6px 8px 6px 14px;
+          border: 1px solid rgba(224, 228, 235, 0.48);
+          border-radius: 999px;
+          background: rgba(250, 250, 250, 0.44);
+          box-shadow:
+            0 10px 24px rgba(26, 36, 54, 0.055),
+            0 1px 4px rgba(26, 36, 54, 0.035),
+            inset 0 1px 0 rgba(255, 255, 255, 0.54);
+          backdrop-filter: saturate(130%) blur(14px);
+          -webkit-backdrop-filter: saturate(130%) blur(14px);
+          transition:
+            background-color 160ms ease,
+            box-shadow 160ms ease;
         }
 
         body.has-nav-overlap .top-nav {
-          background: #fafafa;
+          background: rgba(250, 250, 250, 0.58);
         }
 
         .onboarding {
@@ -1928,13 +2043,13 @@ const structuredData = [
         }
 
         .producthunt-badge-image {
-          width: min(68vw, 250px);
+          width: var(--producthunt-badge-width);
           height: auto;
         }
 
         .actions {
           margin: 0;
-          flex-wrap: wrap;
+          flex-wrap: nowrap;
           justify-content: flex-start;
           gap: 10px;
         }
@@ -1993,28 +2108,66 @@ const structuredData = [
         }
 
         .top-nav {
-          top: 14px;
-          left: 16px;
-          right: 16px;
           gap: 10px;
-          padding-bottom: 8px;
+        }
+
+        .top-nav-brand {
+          margin-left: 8px;
         }
 
         .top-nav-brand-mark {
-          height: 21px;
+          width: 64px;
+          transform: translateY(1px);
         }
 
         .top-actions {
           max-width: calc(100vw - 180px);
-          flex-wrap: wrap;
+          min-width: 0;
+          flex-wrap: nowrap;
           justify-content: flex-end;
+        }
+
+        .top-nav .pill-btn {
+          min-height: 40px;
+          border-color: transparent;
+          background: transparent;
+          box-shadow: none;
+          padding: 10px 12px;
+        }
+
+        .top-nav .pill-btn:not(.pill-btn-dark) {
+          border-color: rgba(211, 217, 226, 0.76);
+          background: rgba(255, 255, 255, 0.54);
+          color: #4b545f;
+          box-shadow:
+            0 1px 2px rgba(26, 36, 54, 0.06),
+            inset 0 1px 0 rgba(255, 255, 255, 0.76);
+        }
+
+        .top-nav .pill-btn-selected::after {
+          display: none;
+        }
+
+        .top-nav .pill-btn-icon-only {
+          width: 40px;
+          min-width: 40px;
+          height: 40px;
+          padding: 0;
+        }
+
+        .top-nav .pill-btn-dark {
+          padding: 10px 14px;
+          background: linear-gradient(180deg, #404859 0%, #273042 100%);
+          box-shadow:
+            0 8px 18px rgba(24, 32, 46, 0.18),
+            inset 0 1px 0 rgba(255, 255, 255, 0.42);
         }
 
         .lang-control {
           position: relative;
           right: auto;
           bottom: auto;
-          width: min(92vw, 420px);
+          width: var(--producthunt-badge-width);
           margin: 14px auto 18px;
         }
 
@@ -2023,9 +2176,9 @@ const structuredData = [
           min-width: 0;
           min-height: 40px;
           border-radius: 10px;
-          border: 1px solid #dbe1e8;
-          background: #ffffff;
-          box-shadow: 0 6px 18px rgba(14, 24, 38, 0.08);
+          border: 1px solid var(--lang-border);
+          background: var(--lang-surface);
+          box-shadow: 0 8px 20px var(--lang-shadow);
           padding: 0 12px;
           display: grid;
           grid-template-columns: 1fr auto 1fr;
@@ -2064,9 +2217,11 @@ const structuredData = [
           right: auto;
           top: auto;
           bottom: calc(100% + 8px);
-          background: #ffffff;
-          border-color: #d8dee7;
-          box-shadow: 0 12px 24px rgba(12, 20, 33, 0.16);
+          background: var(--lang-surface);
+          border-color: var(--lang-border);
+          box-shadow:
+            0 18px 34px var(--lang-shadow),
+            inset 0 1px 0 oklch(100% 0 0 / 0.86);
           backdrop-filter: none;
           -webkit-backdrop-filter: none;
           transform: translateY(6px) scale(0.97);
@@ -2075,29 +2230,37 @@ const structuredData = [
       }
 
       @media (max-width: 1080px) and (orientation: landscape) {
+        body::before {
+          height: calc(env(safe-area-inset-top, 0px) + 92px);
+        }
+
         .top-nav {
-          top: 0;
-          left: 0;
-          right: 0;
+          top: calc(env(safe-area-inset-top, 0px) + 8px);
+          left: 16px;
+          right: 16px;
           gap: 10px;
-          padding-top: calc(env(safe-area-inset-top, 0px) + 8px);
-          padding-right: 16px;
-          padding-bottom: 8px;
-          padding-left: 16px;
-          border-radius: 0;
-          background: rgba(250, 250, 250, 0.94);
-          border-bottom: 0;
-          box-shadow: none;
-          backdrop-filter: saturate(160%) blur(14px);
-          -webkit-backdrop-filter: saturate(160%) blur(14px);
+          padding: 5px 8px 5px 14px;
+          border-radius: 999px;
+          background: rgba(250, 250, 250, 0.46);
+          border: 1px solid rgba(224, 228, 235, 0.48);
+          box-shadow:
+            0 8px 20px rgba(26, 36, 54, 0.055),
+            0 1px 4px rgba(26, 36, 54, 0.035),
+            inset 0 1px 0 rgba(255, 255, 255, 0.54);
+          backdrop-filter: saturate(135%) blur(12px);
+          -webkit-backdrop-filter: saturate(135%) blur(12px);
         }
 
         body.has-nav-overlap .top-nav {
-          background: rgba(250, 250, 250, 0.98);
+          background: rgba(250, 250, 250, 0.6);
         }
       }
 
       @media (max-width: 680px) {
+        :root {
+          --producthunt-badge-width: min(74vw, 250px);
+        }
+
         .onboarding {
           justify-content: flex-start;
           padding-top: 120px;
@@ -2110,6 +2273,10 @@ const structuredData = [
 
         .title {
           font-size: 33px;
+        }
+
+        .title-welcome {
+          font-size: 30px;
         }
 
         .logo-icon {
@@ -2151,7 +2318,7 @@ const structuredData = [
         }
 
         .producthunt-badge-image {
-          width: min(74vw, 250px);
+          width: var(--producthunt-badge-width);
           height: auto;
         }
 
@@ -2160,20 +2327,20 @@ const structuredData = [
         }
 
         .top-nav {
-          top: 0;
-          left: 0;
-          right: 0;
-          padding-top: calc(env(safe-area-inset-top, 0px) + 10px);
-          padding-right: 14px;
-          padding-bottom: 8px;
-          padding-left: 14px;
-          border-radius: 0;
-          border: 0;
-          background: transparent;
+          top: calc(env(safe-area-inset-top, 0px) + 10px);
+          left: 10px;
+          right: 10px;
+          min-height: 48px;
+          padding: 5px 6px 5px 12px;
+          border-radius: 999px;
         }
 
         .top-nav-brand-mark {
-          height: 18px;
+          width: 56px;
+        }
+
+        .top-nav-brand {
+          margin-left: 6px;
         }
 
         .top-actions {
@@ -2183,12 +2350,13 @@ const structuredData = [
 
         .actions {
           gap: 8px;
+          min-width: 0;
         }
 
         .actions .pill-btn {
-          width: 36px;
-          min-width: 36px;
-          height: 36px;
+          width: 38px;
+          min-width: 38px;
+          height: 38px;
           padding: 0;
           justify-content: center;
           gap: 0;
@@ -2198,8 +2366,28 @@ const structuredData = [
           display: none;
         }
 
+        .actions .pill-btn.pill-btn-dark {
+          width: auto;
+          min-width: 0;
+          max-width: min(156px, calc(100vw - 216px));
+          padding: 0 10px;
+          gap: 6px;
+        }
+
+        .actions .pill-btn.pill-btn-dark i {
+          flex: 0 0 auto;
+        }
+
+        .actions .pill-btn.pill-btn-dark span {
+          display: inline-block;
+          min-width: 0;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
         .lang-control {
-          width: min(76vw, 280px);
+          width: var(--producthunt-badge-width);
           margin: 22px auto 20px;
         }
 
@@ -2467,12 +2655,11 @@ const structuredData = [
         <div class="right-bg">
           <img
             class="right-bg-image"
-            src="/assets/frame234-bg-1920.webp"
-            srcset="/assets/frame234-bg-1280.webp 1280w, /assets/frame234-bg-1920.webp 1920w"
+            src="/assets/settings-bg-light-monet-newtab.webp"
             sizes="60vw"
             alt=""
-            width="1920"
-            height="814"
+            width="2048"
+            height="1152"
             loading="eager"
             decoding="async"
             fetchpriority="high"
@@ -2604,8 +2791,8 @@ const structuredData = [
         en: {
           page_title_ui: "Lumno - The Ultimate Browser Command Bar",
           page_title: "Lumno - The Ultimate Browser Command Bar",
-          title_welcome: "Welcome to",
-          subtitle: "An open-source browser extension for focus search and a minimalist new tab.",
+          title_welcome: "Meet",
+          subtitle: "Open-source focus search and a minimalist new tab.",
           shortcut_press: "Press",
           shortcut_invoke: "to launch",
           language_select_aria: "Language",

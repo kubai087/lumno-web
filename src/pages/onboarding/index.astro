@@ -226,7 +226,7 @@ const structuredData = [
 <html lang={uiLocale}>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <SeoHead
       title={pageTitle}
       description={pageDescription}
@@ -282,6 +282,8 @@ const structuredData = [
         --lang-shadow: oklch(42% 0.02 145 / 0.12);
         --border-soft: #e2e2e2;
         --producthunt-badge-width: 250px;
+        --safe-area-bottom: 0px;
+        --safe-area-bottom: env(safe-area-inset-bottom, 0px);
       }
 
       * {
@@ -299,6 +301,8 @@ const structuredData = [
 
       .onboarding {
         min-height: 100vh;
+        min-height: 100svh;
+        min-height: 100dvh;
         display: flex;
         overflow: hidden;
       }
@@ -1193,7 +1197,7 @@ const structuredData = [
       .lang-control {
         position: fixed;
         right: 24px;
-        bottom: 24px;
+        bottom: calc(24px + var(--safe-area-bottom));
         z-index: 22;
         width: 38px;
       }
@@ -1952,8 +1956,10 @@ const structuredData = [
         .onboarding {
           flex-direction: column;
           min-height: 100vh;
+          min-height: 100svh;
+          min-height: 100dvh;
           justify-content: flex-start;
-          padding: 112px 0 44px;
+          padding: 112px 0 calc(44px + var(--safe-area-bottom));
         }
 
         .left-pane,
@@ -2016,7 +2022,7 @@ const structuredData = [
 
         .producthunt-badge-wrap--page-bottom {
           display: flex;
-          margin: 0 auto calc(24px + env(safe-area-inset-bottom, 0px));
+          margin: 0 auto calc(24px + var(--safe-area-bottom));
           padding: 0 20px;
         }
 
@@ -2207,7 +2213,7 @@ const structuredData = [
         .onboarding {
           justify-content: flex-start;
           padding-top: 120px;
-          padding-bottom: 52px;
+          padding-bottom: calc(52px + var(--safe-area-bottom));
         }
 
         .left-pane {

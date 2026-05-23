@@ -40,7 +40,7 @@ const structuredData = [
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <SeoHead
       title={pageTitle}
       description={pageDescription}
@@ -64,6 +64,8 @@ const structuredData = [
         --line: rgba(24, 32, 42, 0.1);
         --accent: #2263eb;
         --shadow: 0 20px 60px rgba(13, 18, 28, 0.08);
+        --safe-area-bottom: 0px;
+        --safe-area-bottom: env(safe-area-inset-bottom, 0px);
       }
 
       * {
@@ -94,7 +96,7 @@ const structuredData = [
       .shell {
         width: min(960px, calc(100vw - 32px));
         margin: 0 auto;
-        padding: 48px 0 88px;
+        padding: 48px 0 calc(88px + var(--safe-area-bottom));
       }
 
       .topbar {
@@ -235,7 +237,7 @@ const structuredData = [
         .shell {
           width: min(100vw - 20px, 960px);
           padding-top: 20px;
-          padding-bottom: 40px;
+          padding-bottom: calc(40px + var(--safe-area-bottom));
         }
 
         .topbar {

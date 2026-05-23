@@ -192,7 +192,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
 <html lang={uiLocale}>
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <SeoHead
       title={pageTitle}
       description={pageDescription}
@@ -220,6 +220,8 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         --chip-bg: #f9fafb;
         --chip-text: #475467;
         --release-header-offset: 88px;
+        --safe-area-bottom: 0px;
+        --safe-area-bottom: env(safe-area-inset-bottom, 0px);
       }
 
       * {
@@ -406,7 +408,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
       .lang-control {
         position: fixed;
         right: 24px;
-        bottom: 24px;
+        bottom: calc(24px + var(--safe-area-bottom));
         z-index: 22;
         width: 38px;
       }
@@ -601,7 +603,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
       }
 
       main {
-        padding: 30px 24px 60px;
+        padding: 30px 24px calc(60px + var(--safe-area-bottom));
       }
 
       .top-banner {
@@ -1090,7 +1092,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
           position: fixed;
           left: 16px;
           right: 16px;
-          bottom: 16px;
+          bottom: calc(16px + var(--safe-area-bottom));
           width: auto;
         }
 
@@ -1179,7 +1181,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         }
 
         main {
-          padding: 22px 16px 96px;
+          padding: 22px 16px calc(96px + var(--safe-area-bottom));
         }
 
         .entry-main::before,

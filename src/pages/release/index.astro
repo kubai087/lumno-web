@@ -603,7 +603,8 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
       }
 
       main {
-        padding: 30px 24px calc(60px + var(--safe-area-bottom));
+        padding: 30px 24px 60px;
+        padding: 30px 24px max(60px, var(--safe-area-bottom));
       }
 
       .top-banner {
@@ -1181,7 +1182,8 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         }
 
         main {
-          padding: 22px 16px calc(96px + var(--safe-area-bottom));
+          padding: 22px 16px 96px;
+          padding: 22px 16px max(96px, var(--safe-area-bottom));
         }
 
         .entry-main::before,

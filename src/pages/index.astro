@@ -237,8 +237,11 @@ const structuredData = [
         --border-soft: #e2e2e2;
         --page-bg-overlay: rgba(255, 255, 255, 0.16);
         --producthunt-badge-width: 250px;
+        --safe-area-top: 0px;
+        --safe-area-top: env(safe-area-inset-top, 0px);
         --safe-area-bottom: 0px;
         --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+        --mobile-status-cover-height: var(--safe-area-top);
       }
 
       * {
@@ -907,7 +910,7 @@ const structuredData = [
         top: 18px;
         left: 36px;
         right: 24px;
-        z-index: 20;
+        z-index: 30;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -1924,21 +1927,26 @@ const structuredData = [
           --producthunt-badge-width: min(68vw, 250px);
         }
 
-        body::before {
+        html {
+          background-color: var(--bg);
+          background-image: none;
+        }
+
+        body {
+          background-color: transparent;
+          background-image: none;
+        }
+
+        body::after {
           content: "";
           position: fixed;
           top: 0;
           left: 0;
           right: 0;
-          height: calc(env(safe-area-inset-top, 0px) + 108px);
-          z-index: 19;
+          height: var(--mobile-status-cover-height);
+          z-index: 29;
           pointer-events: none;
-          background: linear-gradient(
-            to bottom,
-            rgba(250, 250, 250, 0.82) 0%,
-            rgba(250, 250, 250, 0.56) 42%,
-            rgba(250, 250, 250, 0) 100%
-          );
+          background: var(--bg);
         }
 
         .top-nav {
@@ -1971,7 +1979,8 @@ const structuredData = [
           min-height: 100svh;
           min-height: 100dvh;
           justify-content: flex-start;
-          padding: 112px 0 calc(44px + var(--safe-area-bottom));
+          padding: 112px 0 44px;
+          padding: 112px 0 max(44px, var(--safe-area-bottom));
         }
 
         .left-pane,
@@ -2044,7 +2053,8 @@ const structuredData = [
 
         .producthunt-badge-wrap--page-bottom {
           display: flex;
-          margin: 0 auto calc(24px + var(--safe-area-bottom));
+          margin: 0 auto 56px;
+          margin: 0 auto max(56px, var(--safe-area-bottom));
           padding: 0 20px;
         }
 
@@ -2072,12 +2082,13 @@ const structuredData = [
         }
 
         .right-bg {
+          display: block;
           position: fixed;
           left: 0;
           right: 0;
-          top: auto;
+          top: 0;
           bottom: 0;
-          height: min(92vh, 1120px);
+          height: auto;
           background-position: center bottom;
           background-size: cover;
           opacity: 0.22;
@@ -2236,10 +2247,6 @@ const structuredData = [
       }
 
       @media (max-width: 1080px) and (orientation: landscape) {
-        body::before {
-          height: calc(env(safe-area-inset-top, 0px) + 92px);
-        }
-
         .top-nav {
           top: calc(env(safe-area-inset-top, 0px) + 8px);
           left: 16px;
@@ -2270,7 +2277,8 @@ const structuredData = [
         .onboarding {
           justify-content: flex-start;
           padding-top: 120px;
-          padding-bottom: calc(52px + var(--safe-area-bottom));
+          padding-bottom: 52px;
+          padding-bottom: max(52px, var(--safe-area-bottom));
         }
 
         .left-pane {

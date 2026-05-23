@@ -12,6 +12,7 @@ import {
 } from "../../lib/seo";
 import { buildEntryContextConfig } from "../../lib/entry-context";
 import { DEFAULT_LOCALE, buildRouteLanguageMap } from "../../lib/locales";
+import { COMMUNITY_LINKS } from "../../lib/community";
 
 const releases = (await fetchReleases()).map((item) => ({
   ...item,
@@ -1185,18 +1186,18 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
               <a class="social-btn social-btn-icon" href="https://github.com/kubai087/lumno-extension" target="_blank" rel="noreferrer noopener" aria-label={initialUi.githubRepoAria} data-i18n-aria-label="github_repo_aria" data-analytics-event="open_github_repo" data-analytics-category="cta" data-analytics-label="release_header_github">
                 <i class="ri-github-fill" aria-hidden="true"></i>
               </a>
-              <a class="social-btn social-btn-icon" href="https://x.com/kubai087" target="_blank" rel="noreferrer noopener" aria-label={initialUi.xAria} data-i18n-aria-label="x_aria" data-analytics-event="open_x_profile" data-analytics-category="cta" data-analytics-label="release_header_x">
+              <a class="social-btn social-btn-icon" href={COMMUNITY_LINKS.xUrl} target="_blank" rel="noreferrer noopener" aria-label={initialUi.xAria} data-i18n-aria-label="x_aria" data-analytics-event="open_x_profile" data-analytics-category="cta" data-analytics-label="release_header_x">
                 <i class="ri-twitter-x-fill" aria-hidden="true"></i>
               </a>
               <a
                 class="social-btn social-btn-discord"
-                href="https://discord.gg/2u9sg7ZNkJ"
+                href={COMMUNITY_LINKS.discordUrl}
                 target="_blank"
                 rel="noreferrer noopener"
                 aria-label={initialUi.discordAria}
                 data-i18n-aria-label="discord_aria"
                 data-community-entry
-                data-discord-href="https://discord.gg/2u9sg7ZNkJ"
+                data-discord-href={COMMUNITY_LINKS.discordUrl}
                 data-analytics-event="join_community"
                 data-analytics-category="cta"
                 data-analytics-label="release_header_discord"
@@ -1446,18 +1447,19 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
           <i class="ri-close-line" aria-hidden="true"></i>
         </button>
         <h2 id="community-qrcode-title" class="qrcode-modal-title" data-i18n="qrcode_title">{initialUi.qrcodeTitle}</h2>
-        <img class="qrcode-modal-image" src="/qrcode.JPG" alt={initialUi.qrcodeImageAlt} data-i18n-alt="qrcode_image_alt" loading="lazy" />
+        <img class="qrcode-modal-image" src={COMMUNITY_LINKS.wechatQrImagePath} alt={initialUi.qrcodeImageAlt} data-i18n-alt="qrcode_image_alt" loading="lazy" />
       </div>
     </div>
     <script>
       import "../../scripts/language-preference";
       import "../../scripts/language-runtime";
     </script>
-    <script define:vars={{ forcedLocale, routeLanguageMap, entryContextConfig }}>
+    <script define:vars={{ forcedLocale, routeLanguageMap, entryContextConfig, communityLinks: COMMUNITY_LINKS }}>
       const LANGUAGE_STORAGE_KEY = "_x_extension_language_2024_unique_";
       const FORCED_LOCALE = forcedLocale;
       const ROUTE_LANGUAGE_MAP = routeLanguageMap;
       const ENTRY_CONTEXT_CONFIG = entryContextConfig;
+      const COMMUNITY_LINKS = communityLinks;
       const FALLBACK_LOCALE = "zh-CN";
       const ZH_CN_LOCALE = "zh-CN";
       const I18N_MESSAGES = {
@@ -1676,7 +1678,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         const entry = document.querySelector("[data-community-entry]");
         if (!(entry instanceof HTMLAnchorElement)) return;
         const icon = entry.querySelector("[data-community-icon]");
-        const discordHref = entry.dataset.discordHref || "https://discord.gg/2u9sg7ZNkJ";
+        const discordHref = entry.dataset.discordHref || COMMUNITY_LINKS.discordUrl || "#";
         const isZhCn = locale === ZH_CN_LOCALE;
 
         entry.href = isZhCn ? "#" : discordHref;

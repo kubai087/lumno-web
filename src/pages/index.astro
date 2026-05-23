@@ -15,6 +15,7 @@ import {
   buildWebSiteSchema,
 } from "../lib/seo";
 import { DEFAULT_LOCALE, buildRouteLanguageMap } from "../lib/locales";
+import { COMMUNITY_LINKS } from "../lib/community";
 
 const forcedLocale = Astro.props.forcedLocale ?? null;
 const seoPath = Astro.props.seoPath || "/";
@@ -2312,14 +2313,14 @@ const structuredData = [
           </a>
           <a
             class="pill-btn pill-btn-selected pill-btn-dark"
-            href="https://discord.gg/2u9sg7ZNkJ"
+            href={COMMUNITY_LINKS.discordUrl}
             target="_blank"
             rel="noreferrer noopener"
             aria-label={initialUi.discordAria}
             data-i18n-aria-label="discord_aria"
             data-node-id="3358:42"
             data-community-entry
-            data-discord-href="https://discord.gg/2u9sg7ZNkJ"
+            data-discord-href={COMMUNITY_LINKS.discordUrl}
             data-analytics-event="join_community"
             data-analytics-category="cta"
             data-analytics-label="home_header_discord"
@@ -2509,16 +2510,17 @@ const structuredData = [
           <i class="ri-close-line" aria-hidden="true"></i>
         </button>
         <h2 id="community-qrcode-title" class="qrcode-modal-title" data-i18n="qrcode_title">{initialUi.qrcodeTitle}</h2>
-        <img class="qrcode-modal-image" src="/qrcode.JPG" alt={initialUi.qrcodeImageAlt} data-i18n-alt="qrcode_image_alt" loading="lazy" />
+        <img class="qrcode-modal-image" src={COMMUNITY_LINKS.wechatQrImagePath} alt={initialUi.qrcodeImageAlt} data-i18n-alt="qrcode_image_alt" loading="lazy" />
       </div>
     </div>
     <script>
       import "../scripts/language-preference";
       import "../scripts/language-runtime";
     </script>
-    <script define:vars={{ forcedLocale, routeLanguageMap }}>
+    <script define:vars={{ forcedLocale, routeLanguageMap, communityLinks: COMMUNITY_LINKS }}>
       const FORCED_LOCALE = forcedLocale;
       const ROUTE_LANGUAGE_MAP = routeLanguageMap;
+      const COMMUNITY_LINKS = communityLinks;
       const LANGUAGE_STORAGE_KEY = "_x_extension_language_2024_unique_";
       const FALLBACK_LOCALE = "zh-CN";
       const ZH_CN_LOCALE = "zh-CN";
@@ -2741,7 +2743,7 @@ const structuredData = [
         const entry = document.querySelector("[data-community-entry]");
         if (!(entry instanceof HTMLAnchorElement)) return;
         const icon = entry.querySelector("[data-community-icon]");
-        const discordHref = entry.dataset.discordHref || "https://discord.gg/2u9sg7ZNkJ";
+        const discordHref = entry.dataset.discordHref || COMMUNITY_LINKS.discordUrl || "#";
         const isZhCn = locale === ZH_CN_LOCALE;
 
         entry.href = isZhCn ? "#" : discordHref;

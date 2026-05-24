@@ -2063,6 +2063,10 @@ const structuredData = [
           padding: 0 20px;
         }
 
+        .is-twitter-in-app-browser .producthunt-badge-wrap--page-bottom {
+          display: none;
+        }
+
         .producthunt-badge-image {
           width: var(--producthunt-badge-width);
           height: auto;
@@ -3089,6 +3093,7 @@ const structuredData = [
           "--mobile-top-clearance",
           isTwitterInAppBrowser ? "0px" : "var(--safe-area-top-capped)"
         );
+        document.documentElement.classList.toggle("is-twitter-in-app-browser", isTwitterInAppBrowser);
         document.documentElement.style.setProperty("--browser-chrome-bottom", `${bottomInset}px`);
       }
 

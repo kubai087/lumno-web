@@ -285,11 +285,12 @@ const structuredData = [
         --safe-area-top: 0px;
         --safe-area-top: env(safe-area-inset-top, 0px);
         --safe-area-top-capped: min(var(--safe-area-top), 72px);
+        --mobile-top-clearance: var(--safe-area-top-capped);
         --safe-area-bottom: 0px;
         --safe-area-bottom: env(safe-area-inset-bottom, 0px);
         --browser-chrome-bottom: 0px;
         --mobile-bottom-clearance: max(var(--safe-area-bottom), var(--browser-chrome-bottom));
-        --mobile-status-cover-height: var(--safe-area-top-capped);
+        --mobile-status-cover-height: var(--mobile-top-clearance);
       }
 
       * {
@@ -2217,7 +2218,7 @@ const structuredData = [
           left: 0;
           right: 0;
           gap: 10px;
-          padding-top: calc(var(--safe-area-top-capped) + 8px);
+          padding-top: calc(var(--mobile-top-clearance) + 8px);
           padding-right: 16px;
           padding-bottom: 8px;
           padding-left: 16px;
@@ -2320,7 +2321,7 @@ const structuredData = [
           top: 0;
           left: 0;
           right: 0;
-          padding-top: calc(var(--safe-area-top-capped) + 10px);
+          padding-top: calc(var(--mobile-top-clearance) + 10px);
           padding-right: 14px;
           padding-bottom: 8px;
           padding-left: 14px;
@@ -3134,11 +3135,16 @@ const structuredData = [
 
       function syncViewportInsets() {
         const viewport = window.visualViewport;
+        const isTwitterInAppBrowser = navigator.userAgent.toLowerCase().includes("twitter");
         const rawBottomInset = viewport
           ? window.innerHeight - viewport.height - viewport.offsetTop
           : 0;
-        const embeddedBrowserInset = navigator.userAgent.toLowerCase().includes("twitter") ? 96 : 0;
+        const embeddedBrowserInset = isTwitterInAppBrowser ? 96 : 0;
         const bottomInset = Math.min(180, Math.max(embeddedBrowserInset, Math.round(rawBottomInset)));
+        document.documentElement.style.setProperty(
+          "--mobile-top-clearance",
+          isTwitterInAppBrowser ? "0px" : "var(--safe-area-top-capped)"
+        );
         document.documentElement.style.setProperty("--browser-chrome-bottom", `${bottomInset}px`);
       }
 

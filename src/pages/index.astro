@@ -239,9 +239,12 @@ const structuredData = [
         --producthunt-badge-width: 250px;
         --safe-area-top: 0px;
         --safe-area-top: env(safe-area-inset-top, 0px);
+        --safe-area-top-capped: min(var(--safe-area-top), 72px);
         --safe-area-bottom: 0px;
         --safe-area-bottom: env(safe-area-inset-bottom, 0px);
-        --mobile-status-cover-height: var(--safe-area-top);
+        --browser-chrome-bottom: 0px;
+        --mobile-bottom-clearance: max(var(--safe-area-bottom), var(--browser-chrome-bottom));
+        --mobile-status-cover-height: var(--safe-area-top-capped);
       }
 
       * {
@@ -1156,7 +1159,7 @@ const structuredData = [
       .lang-control {
         position: fixed;
         right: 24px;
-        bottom: calc(24px + var(--safe-area-bottom));
+        bottom: calc(24px + var(--mobile-bottom-clearance));
         z-index: 22;
         width: 38px;
       }
@@ -1950,7 +1953,7 @@ const structuredData = [
         }
 
         .top-nav {
-          top: calc(env(safe-area-inset-top, 0px) + 12px);
+          top: calc(var(--safe-area-top-capped) + 12px);
           left: 16px;
           right: 16px;
           min-height: 52px;
@@ -1980,7 +1983,7 @@ const structuredData = [
           min-height: 100dvh;
           justify-content: flex-start;
           padding: 112px 0 44px;
-          padding: 112px 0 max(44px, var(--safe-area-bottom));
+          padding: 112px 0 max(44px, var(--mobile-bottom-clearance));
         }
 
         .left-pane,
@@ -2054,7 +2057,7 @@ const structuredData = [
         .producthunt-badge-wrap--page-bottom {
           display: flex;
           margin: 0 auto 56px;
-          margin: 0 auto max(56px, var(--safe-area-bottom));
+          margin: 0 auto max(56px, calc(var(--mobile-bottom-clearance) + 16px));
           padding: 0 20px;
         }
 
@@ -2248,7 +2251,7 @@ const structuredData = [
 
       @media (max-width: 1080px) and (orientation: landscape) {
         .top-nav {
-          top: calc(env(safe-area-inset-top, 0px) + 8px);
+          top: calc(var(--safe-area-top-capped) + 8px);
           left: 16px;
           right: 16px;
           gap: 10px;
@@ -2278,7 +2281,7 @@ const structuredData = [
           justify-content: flex-start;
           padding-top: 120px;
           padding-bottom: 52px;
-          padding-bottom: max(52px, var(--safe-area-bottom));
+          padding-bottom: max(52px, var(--mobile-bottom-clearance));
         }
 
         .left-pane {
@@ -2341,7 +2344,7 @@ const structuredData = [
         }
 
         .top-nav {
-          top: calc(env(safe-area-inset-top, 0px) + 10px);
+          top: calc(var(--safe-area-top-capped) + 10px);
           left: 10px;
           right: 10px;
           min-height: 48px;
@@ -2358,19 +2361,28 @@ const structuredData = [
         }
 
         .top-actions {
+          width: min(252px, calc(100vw - 124px));
           max-width: calc(100vw - 124px);
+          flex: 0 1 min(252px, calc(100vw - 124px));
           gap: 6px;
         }
 
         .actions {
           gap: 8px;
+          width: 100%;
           min-width: 0;
+          max-width: 100%;
+          justify-content: flex-end;
         }
 
         .actions .pill-btn {
-          width: 38px;
-          min-width: 38px;
-          height: 38px;
+          width: 40px;
+          min-width: 40px;
+          max-width: 40px;
+          height: 40px;
+          min-height: 40px;
+          flex: 0 0 40px;
+          aspect-ratio: 1;
           padding: 0;
           justify-content: center;
           gap: 0;
@@ -2384,6 +2396,9 @@ const structuredData = [
           width: auto;
           min-width: 0;
           max-width: min(156px, calc(100vw - 216px));
+          height: 40px;
+          min-height: 40px;
+          flex: 1 1 auto;
           padding: 0 10px;
           gap: 6px;
         }
@@ -3057,6 +3072,22 @@ const structuredData = [
 
       setupQrcodeModal();
       applySafariBrowserClass();
+
+      function syncViewportInsets() {
+        const viewport = window.visualViewport;
+        const rawBottomInset = viewport
+          ? window.innerHeight - viewport.height - viewport.offsetTop
+          : 0;
+        const embeddedBrowserInset = navigator.userAgent.toLowerCase().includes("twitter") ? 96 : 0;
+        const bottomInset = Math.min(180, Math.max(embeddedBrowserInset, Math.round(rawBottomInset)));
+        document.documentElement.style.setProperty("--browser-chrome-bottom", `${bottomInset}px`);
+      }
+
+      syncViewportInsets();
+      window.visualViewport?.addEventListener("resize", syncViewportInsets, { passive: true });
+      window.visualViewport?.addEventListener("scroll", syncViewportInsets, { passive: true });
+      window.addEventListener("resize", syncViewportInsets, { passive: true });
+      window.addEventListener("orientationchange", syncViewportInsets);
 
       function syncTopNavOverlapState() {
         const shouldApply = window.matchMedia("(max-width: 1080px)").matches;

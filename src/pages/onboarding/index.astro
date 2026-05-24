@@ -290,6 +290,7 @@ const structuredData = [
         --safe-area-bottom: env(safe-area-inset-bottom, 0px);
         --browser-chrome-bottom: 0px;
         --mobile-bottom-clearance: max(var(--safe-area-bottom), var(--browser-chrome-bottom));
+        --mobile-flow-bottom-clearance: var(--safe-area-bottom);
         --mobile-status-cover-height: var(--mobile-top-clearance);
       }
 
@@ -1988,7 +1989,7 @@ const structuredData = [
           min-height: 100dvh;
           justify-content: flex-start;
           padding: 112px 0 44px;
-          padding: 112px 0 max(44px, var(--mobile-bottom-clearance));
+          padding: 112px 0 max(44px, var(--mobile-flow-bottom-clearance));
         }
 
         .left-pane,
@@ -2052,7 +2053,7 @@ const structuredData = [
         .producthunt-badge-wrap--page-bottom {
           display: flex;
           margin: 0 auto 56px;
-          margin: 0 auto max(56px, calc(var(--mobile-bottom-clearance) + 16px));
+          margin: 0 auto max(56px, calc(var(--mobile-flow-bottom-clearance) + 16px));
           padding: 0 20px;
         }
 
@@ -2244,7 +2245,7 @@ const structuredData = [
           justify-content: flex-start;
           padding-top: 120px;
           padding-bottom: 52px;
-          padding-bottom: max(52px, var(--mobile-bottom-clearance));
+          padding-bottom: max(52px, var(--mobile-flow-bottom-clearance));
         }
 
         .left-pane {

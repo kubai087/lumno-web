@@ -3154,6 +3154,14 @@ const structuredData = [
         );
         document.documentElement.classList.toggle("is-twitter-in-app-browser", isTwitterInAppBrowser);
         document.documentElement.style.setProperty("--browser-chrome-bottom", `${bottomInset}px`);
+        const languageControl = document.querySelector(".lang-control");
+        if (languageControl instanceof HTMLElement) {
+          if (isTwitterInAppBrowser) {
+            languageControl.style.marginBottom = `${bottomInset}px`;
+          } else {
+            languageControl.style.removeProperty("margin-bottom");
+          }
+        }
       }
 
       syncViewportInsets();

@@ -3139,8 +3139,10 @@ const structuredData = [
         const rawBottomInset = viewport
           ? window.innerHeight - viewport.height - viewport.offsetTop
           : 0;
-        const embeddedBrowserInset = isTwitterInAppBrowser ? 96 : 0;
-        const bottomInset = Math.min(180, Math.max(embeddedBrowserInset, Math.round(rawBottomInset)));
+        const embeddedBrowserInset = isTwitterInAppBrowser
+          ? Math.min(280, Math.max(216, Math.round(window.innerHeight * 0.26)))
+          : 0;
+        const bottomInset = Math.min(320, Math.max(embeddedBrowserInset, Math.round(rawBottomInset)));
         document.documentElement.style.setProperty(
           "--mobile-top-clearance",
           isTwitterInAppBrowser ? "0px" : "var(--safe-area-top-capped)"

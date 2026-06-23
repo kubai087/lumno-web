@@ -267,8 +267,11 @@ const structuredData = [
         --card-grad-mid: oklch(99.3% 0.002 255);
         --card-grad-end: oklch(98.6% 0.003 255);
         --card-rim: oklch(78% 0.012 250 / 0.46);
-        --card-highlight: oklch(100% 0 0 / 0.98);
-        --card-merge-glow: oklch(100% 0 0 / 0.9);
+        --card-highlight: rgba(255, 255, 255, 0.98);
+        --card-highlight-soft: rgba(255, 255, 255, 0.74);
+        --card-merge-glow: rgba(255, 255, 255, 0.9);
+        --card-edge-glow: rgba(255, 255, 255, 0.8);
+        --card-white-clear: rgba(255, 255, 255, 0);
         --card-bottom-line: oklch(52% 0.012 250 / 0.18);
         --card-shadow: oklch(44% 0.018 250 / 0.08);
         --card-shadow-soft: oklch(70% 0.012 250 / 0.14);
@@ -1493,9 +1496,9 @@ const structuredData = [
         border-radius: inherit;
         pointer-events: none;
         background:
-          radial-gradient(ellipse 88% 62% at 18% -10%, var(--card-highlight) 0%, oklch(100% 0 0 / 0.74) 42%, transparent 72%),
-          radial-gradient(ellipse 86% 46% at 50% 62%, var(--card-merge-glow) 0%, transparent 68%),
-          linear-gradient(90deg, transparent 0%, transparent 68%, oklch(100% 0 0 / 0.8) 100%),
+          radial-gradient(ellipse 88% 62% at 18% -10%, var(--card-highlight) 0%, var(--card-highlight-soft) 42%, var(--card-white-clear) 72%),
+          radial-gradient(ellipse 86% 46% at 50% 62%, var(--card-merge-glow) 0%, var(--card-white-clear) 68%),
+          linear-gradient(90deg, var(--card-white-clear) 0%, var(--card-white-clear) 68%, var(--card-edge-glow) 100%),
           linear-gradient(180deg, var(--card-grad-start) 0%, var(--card-grad-mid) 52%, var(--card-grad-end) 100%);
       }
 

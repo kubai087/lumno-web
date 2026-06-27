@@ -5,7 +5,6 @@ import LanguageMenu from "../components/onboarding/LanguageMenu";
 import logoIconSvg from "../assets/onboarding/logo.svg?raw";
 import topWordmarkSvg from "../assets/lumno-title-figma.svg?raw";
 import {
-  SITE_NAME,
   SITE_URL,
   buildBreadcrumbListSchema,
   buildKeywords,
@@ -14,13 +13,16 @@ import {
   buildWebPageSchema,
   buildWebSiteSchema,
 } from "../lib/seo";
-import { DEFAULT_LOCALE, buildRouteLanguageMap } from "../lib/locales";
+import { DEFAULT_LOCALE, buildLocalizedPath, buildRouteLanguageMap } from "../lib/locales";
 import { COMMUNITY_LINKS } from "../lib/community";
 
 const forcedLocale = Astro.props.forcedLocale ?? null;
 const seoPath = Astro.props.seoPath || "/";
 const routeLanguageMap = Astro.props.routeLanguageMap || buildRouteLanguageMap("/");
 const uiLocale = forcedLocale || DEFAULT_LOCALE;
+const homeHref = buildLocalizedPath(uiLocale, "/");
+const featuresHref = buildLocalizedPath(uiLocale, "/features/");
+const releaseHref = buildLocalizedPath(uiLocale, "/release/");
 const WORDMARK_TEXT = "Lumno";
 const alternateLinks = [
   ...Object.entries(routeLanguageMap).map(([hreflang, href]) => ({
@@ -62,6 +64,7 @@ const pageKeywords = buildKeywords([
 ]);
 const initialUi = {
   "zh-CN": {
+    viewFeatures: "功能",
     viewRelease: "更新日志",
     joinDiscord: "反馈 & 提需",
     titleWelcome: "欢迎使用",
@@ -69,6 +72,7 @@ const initialUi = {
     languageLabel: "简体中文",
     languageSelectAria: "语言",
     settingsAria: "访问 Lumno GitHub 仓库",
+    featuresAria: "查看 Lumno 功能与场景页面",
     releaseAria: "查看更新日志页面",
     discordAria: "反馈与提需",
     qrcodeTitle: "微信群二维码",
@@ -82,6 +86,7 @@ const initialUi = {
     supportTooltip: "为从 Arc 迁移到 Dia 或 Chrome 的用户保留熟悉的命令栏搜索体验。Lumno 受 Arc 式交互启发，但与 Arc 无关联。",
   },
   "zh-TW": {
+    viewFeatures: "功能",
     viewRelease: "更新日誌",
     joinDiscord: "反饋 & 提需",
     titleWelcome: "歡迎使用",
@@ -89,6 +94,7 @@ const initialUi = {
     languageLabel: "繁體中文",
     languageSelectAria: "語言",
     settingsAria: "造訪 Lumno GitHub 倉庫",
+    featuresAria: "查看 Lumno 功能與場景頁面",
     releaseAria: "查看更新日誌頁面",
     discordAria: "反饋與提需",
     qrcodeTitle: "微信群二維碼",
@@ -102,6 +108,7 @@ const initialUi = {
     supportTooltip: "為從 Arc 遷移到 Dia 或 Chrome 的使用者保留熟悉的命令欄搜尋體驗。Lumno 受 Arc 式互動啟發，但與 Arc 無關聯。",
   },
   en: {
+    viewFeatures: "Features",
     viewRelease: "Release Notes",
     joinDiscord: "Feedback & Requests",
     titleWelcome: "Meet",
@@ -109,6 +116,7 @@ const initialUi = {
     languageLabel: "English",
     languageSelectAria: "Language",
     settingsAria: "Open the Lumno GitHub repository",
+    featuresAria: "Open the Lumno features page",
     releaseAria: "Open the release notes page",
     discordAria: "Feedback and requests",
     qrcodeTitle: "WeChat group QR code",
@@ -170,9 +178,10 @@ const structuredData = [
     name: pageTitle,
     description: pageDescription,
     path: seoPath,
+    language: uiLocale,
   }),
   buildBreadcrumbListSchema({
-    items: [{ name: SITE_NAME, path: seoPath }],
+    items: [{ name: "Lumno", path: seoPath }],
   }),
 ];
 ---
@@ -2526,7 +2535,7 @@ const structuredData = [
   </head>
   <body data-locale={uiLocale} class:list={{ "is-locale-en": uiLocale === "en" }}>
     <header class="top-nav">
-      <a class="top-nav-brand" href="/" aria-label="Lumno" data-analytics-event="select_home_brand" data-analytics-category="navigation" data-analytics-label="home_brand">
+      <a class="top-nav-brand" href={homeHref} aria-label="Lumno" data-analytics-event="select_home_brand" data-analytics-category="navigation" data-analytics-label="home_brand">
         <span class="top-nav-brand-mark" role="img" aria-label="Lumno" set:html={topWordmarkSvg}></span>
       </a>
       <div class="top-actions">
@@ -2534,7 +2543,11 @@ const structuredData = [
           <a class="pill-btn pill-btn-selected pill-btn-icon-only" href="https://github.com/kubai087/lumno-extension" target="_blank" rel="noreferrer noopener" aria-label={initialUi.settingsAria} data-i18n-aria-label="settings_aria" data-analytics-event="open_github_repo" data-analytics-category="cta" data-analytics-label="home_header_github">
             <i class="ri-github-fill" aria-hidden="true"></i>
           </a>
-          <a class="pill-btn pill-btn-selected" href="/release/" aria-label={initialUi.releaseAria} data-i18n-aria-label="release_aria" data-analytics-event="open_release_page" data-analytics-category="navigation" data-analytics-label="home_header_release">
+          <a class="pill-btn pill-btn-selected" href={featuresHref} aria-label={initialUi.featuresAria} data-i18n-aria-label="features_aria" data-analytics-event="open_features_page" data-analytics-category="navigation" data-analytics-label="home_header_features">
+            <i class="ri-function-line" aria-hidden="true"></i>
+            <span data-i18n="view_features">{initialUi.viewFeatures}</span>
+          </a>
+          <a class="pill-btn pill-btn-selected" href={releaseHref} aria-label={initialUi.releaseAria} data-i18n-aria-label="release_aria" data-analytics-event="open_release_page" data-analytics-category="navigation" data-analytics-label="home_header_release">
             <i class="ri-file-list-3-line" aria-hidden="true"></i>
             <span data-i18n="view_release">{initialUi.viewRelease}</span>
           </a>
@@ -2764,12 +2777,14 @@ const structuredData = [
           language_zh_tw: "繁體中文",
           language_en: "English",
           join_discord: "反馈 & 提需",
+          view_features: "功能",
           go_settings: "访问 GitHub 仓库",
           discord_aria: "反馈与提需",
           qrcode_title: "微信群二维码",
           qrcode_image_alt: "Lumno 微信群二维码",
           qrcode_close_aria: "关闭二维码弹窗",
           settings_aria: "访问 Lumno GitHub 仓库",
+          features_aria: "查看 Lumno 功能与场景页面",
           release_aria: "查看更新日志页面",
           view_release: "更新日志",
           cws_badge_aria: "在 Chrome 应用商店中安装 Lumno",
@@ -2802,12 +2817,14 @@ const structuredData = [
           language_zh_tw: "繁體中文",
           language_en: "English",
           join_discord: "反饋 & 提需",
+          view_features: "功能",
           go_settings: "造訪 GitHub 倉庫",
           discord_aria: "反饋與提需",
           qrcode_title: "微信群二維碼",
           qrcode_image_alt: "Lumno 微信群二維碼",
           qrcode_close_aria: "關閉二維碼彈窗",
           settings_aria: "造訪 Lumno GitHub 倉庫",
+          features_aria: "查看 Lumno 功能與場景頁面",
           release_aria: "查看更新日誌頁面",
           view_release: "更新日誌",
           cws_badge_aria: "在 Chrome 線上應用程式商店安裝 Lumno",
@@ -2840,12 +2857,14 @@ const structuredData = [
           language_zh_tw: "繁體中文",
           language_en: "English",
           join_discord: "Feedback & Requests",
+          view_features: "Features",
           go_settings: "View on GitHub",
           discord_aria: "Feedback and requests",
           qrcode_title: "WeChat Group QR Code",
           qrcode_image_alt: "Lumno WeChat group QR code",
           qrcode_close_aria: "Close QR code dialog",
           settings_aria: "Open Lumno GitHub repository",
+          features_aria: "Open the Lumno features page",
           release_aria: "Open release notes page",
           view_release: "Release Notes",
           cws_badge_aria: "Install Lumno from Chrome Web Store",

@@ -1,0 +1,648 @@
+---
+import SeoHead from "../../components/SeoHead.astro";
+import { FEATURES_SEO_CONTENT, getFeaturesSeoContent } from "../../lib/features-content";
+import { DEFAULT_LOCALE, buildLocalizedPath, buildRouteLanguageMap } from "../../lib/locales";
+import {
+  CHROME_STORE_URL,
+  SITE_NAME,
+  SITE_URL,
+  buildBreadcrumbListSchema,
+  buildFAQPageSchema,
+  buildKeywords,
+  buildOrganizationSchema,
+  buildSoftwareApplicationSchema,
+  buildWebPageSchema,
+  buildWebSiteSchema,
+} from "../../lib/seo";
+
+const forcedLocale = Astro.props.forcedLocale ?? null;
+const seoPath = Astro.props.seoPath || "/features/";
+const routeLanguageMap = Astro.props.routeLanguageMap || buildRouteLanguageMap("/features/");
+const uiLocale = forcedLocale || DEFAULT_LOCALE;
+const content = getFeaturesSeoContent(uiLocale);
+const homeHref = buildLocalizedPath(uiLocale, "/");
+const releaseHref = buildLocalizedPath(uiLocale, "/release/");
+const alternateLinks = [
+  ...Object.entries(routeLanguageMap).map(([hreflang, href]) => ({
+    hreflang,
+    href: new URL(href, SITE_URL).toString(),
+  })),
+  { hreflang: "x-default", href: new URL("/features/", SITE_URL).toString() },
+];
+const ogLocale = {
+  "zh-CN": "zh_CN",
+  "zh-TW": "zh_TW",
+  en: "en_US",
+}[uiLocale] || "en_US";
+const pageKeywords = buildKeywords([
+  "浏览器快捷启动器",
+  "Arc 浏览器迁移",
+  "Arc 替代",
+  "Arc 风格搜索",
+  "command bar",
+  "command palette",
+  "tab search",
+  "bookmark search",
+  "history search",
+  "site search",
+]);
+const faqSchema = buildFAQPageSchema({
+  items: content.faq,
+  language: uiLocale,
+});
+const structuredData = [
+  buildOrganizationSchema(),
+  buildWebSiteSchema(),
+  buildSoftwareApplicationSchema({
+    description: content.pageDescription,
+  }),
+  buildWebPageSchema({
+    name: content.pageTitle,
+    description: content.pageDescription,
+    path: seoPath,
+    language: uiLocale,
+  }),
+  faqSchema,
+  buildBreadcrumbListSchema({
+    items: [
+      { name: SITE_NAME, path: homeHref },
+      { name: content.breadcrumbLabel, path: seoPath },
+    ],
+  }),
+];
+---
+
+<!doctype html>
+<html lang={uiLocale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <SeoHead
+      title={content.pageTitle}
+      description={content.pageDescription}
+      path={seoPath}
+      keywords={pageKeywords}
+      alternates={alternateLinks}
+      locale={ogLocale}
+      structuredData={structuredData}
+    />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preload" as="image" href="/assets/settings-bg-light-monet-newtab.webp" imagesizes="100vw" type="image/webp" />
+    <link rel="stylesheet" href="/assets/remixicon.css" />
+    <style>
+      @font-face {
+        font-family: "Open Sans";
+        src: url("/assets/OpenSans-VariableFont-wdth-wght.ttf") format("truetype");
+        font-style: normal;
+        font-weight: 300 800;
+        font-display: swap;
+      }
+
+      :root {
+        --bg: #fafafa;
+        --text-main: #2d3138;
+        --text-sub: #626b79;
+        --text-soft: #7a8492;
+        --line: rgba(220, 225, 232, 0.82);
+        --line-strong: rgba(189, 199, 211, 0.88);
+        --surface: rgba(255, 255, 255, 0.76);
+        --surface-strong: rgba(255, 255, 255, 0.94);
+        --accent: #4f755c;
+        --accent-soft: rgba(79, 117, 92, 0.1);
+        --shadow: 0 18px 34px rgba(45, 49, 56, 0.08);
+        --safe-area-top: 0px;
+        --safe-area-top: env(safe-area-inset-top, 0px);
+        --safe-area-bottom: 0px;
+        --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        margin: 0;
+        min-height: 100%;
+        background-color: var(--bg);
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.42)),
+          url("/assets/settings-bg-light-monet-newtab.webp");
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        color: var(--text-main);
+        font-family: "Open Sans", "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background:
+          linear-gradient(180deg, rgba(250, 250, 250, 0.24) 0%, rgba(250, 250, 250, 0.82) 42%, #fafafa 100%),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.68) 0%, rgba(245, 247, 250, 0.82) 100%);
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .features-page {
+        position: relative;
+        min-height: 100vh;
+        padding: max(24px, var(--safe-area-top)) 24px max(84px, calc(var(--safe-area-bottom) + 64px));
+      }
+
+      .features-shell {
+        max-width: 1120px;
+        margin: 0 auto;
+        min-width: 0;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 8px 0 46px;
+        min-width: 0;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: #343b46;
+        font-size: 18px;
+        line-height: 1;
+        font-weight: 680;
+      }
+
+      .brand-mark {
+        width: 34px;
+        height: 34px;
+        border-radius: 8px;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(180deg, #ffffff 0%, #eef1f4 100%);
+        border: 1px solid var(--line);
+        box-shadow: 0 8px 18px rgba(45, 49, 56, 0.08);
+        color: var(--accent);
+      }
+
+      .brand-mark i {
+        font-size: 18px;
+        line-height: 1;
+      }
+
+      .top-actions {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        min-width: 0;
+      }
+
+      .pill-btn {
+        min-height: 36px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: linear-gradient(180deg, #ffffff 0%, #ecedef 100%);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02), inset 0 -4px 3px rgba(255, 255, 255, 0.59);
+        padding: 9px 14px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: #5e7064;
+        font-size: 14px;
+        line-height: 1;
+        font-weight: 560;
+      }
+
+      .pill-btn-dark {
+        border-color: transparent;
+        color: #ffffff;
+        background: linear-gradient(180deg, #404859 0%, #273042 100%);
+        box-shadow: 0 8px 18px rgba(24, 32, 46, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.42);
+      }
+
+      .pill-btn:focus-visible,
+      .language-link:focus-visible,
+      .faq-item summary:focus-visible {
+        outline: 2px solid rgba(75, 84, 95, 0.32);
+        outline-offset: 2px;
+      }
+
+      @media (hover: hover) and (pointer: fine) {
+        .pill-btn:hover,
+        .language-link:hover {
+          transform: translateY(-1px);
+          border-color: var(--line-strong);
+          background: rgba(255, 255, 255, 0.96);
+        }
+
+        .pill-btn-dark:hover {
+          background: linear-gradient(180deg, #465064 0%, #2b3548 100%);
+        }
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: minmax(0, 0.98fr) minmax(300px, 0.62fr);
+        gap: clamp(36px, 6vw, 72px);
+        align-items: end;
+        padding: clamp(34px, 5vw, 62px) 0 clamp(42px, 6vw, 78px);
+        min-width: 0;
+      }
+
+      .eyebrow {
+        margin: 0 0 14px;
+        color: var(--accent);
+        font-size: 13px;
+        line-height: 1.4;
+        font-weight: 680;
+      }
+
+      h1 {
+        margin: 0;
+        max-width: 850px;
+        color: var(--text-main);
+        font-size: clamp(42px, 7vw, 80px);
+        line-height: 0.98;
+        font-weight: 660;
+        letter-spacing: 0;
+        overflow-wrap: anywhere;
+      }
+
+      .hero-intro {
+        margin: 24px 0 0;
+        max-width: 760px;
+        color: #586171;
+        font-size: 18px;
+        line-height: 1.78;
+      }
+
+      .hero-actions {
+        margin-top: 30px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      .language-links {
+        justify-self: end;
+        width: min(340px, 100%);
+        padding: 18px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.66);
+        box-shadow: var(--shadow);
+      }
+
+      .language-links-label {
+        margin: 0 0 12px;
+        color: var(--text-soft);
+        font-size: 13px;
+        line-height: 1.4;
+      }
+
+      .language-link-list {
+        margin: 0;
+        padding: 0;
+        display: grid;
+        gap: 8px;
+        list-style: none;
+      }
+
+      .language-link {
+        min-height: 36px;
+        padding: 9px 12px;
+        border: 1px solid rgba(220, 225, 232, 0.72);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        color: #465348;
+        background: rgba(255, 255, 255, 0.6);
+        font-size: 14px;
+      }
+
+      .language-link[aria-current="page"] {
+        border-color: rgba(79, 117, 92, 0.24);
+        background: var(--accent-soft);
+        color: #38533f;
+        font-weight: 650;
+      }
+
+      .section {
+        padding: 28px 0;
+        min-width: 0;
+      }
+
+      .section-heading {
+        margin: 0 0 18px;
+        color: #2f3744;
+        font-size: 24px;
+        line-height: 1.3;
+        font-weight: 660;
+      }
+
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 14px;
+        min-width: 0;
+      }
+
+      .feature-card,
+      .workflow-item,
+      .faq-item {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        background: var(--surface);
+        box-shadow: 0 14px 28px rgba(45, 49, 56, 0.07);
+      }
+
+      .feature-card {
+        min-height: 220px;
+        padding: 22px;
+        min-width: 0;
+      }
+
+      .feature-card h3 {
+        margin: 0;
+        color: #2f3744;
+        font-size: 17px;
+        line-height: 1.36;
+        font-weight: 670;
+      }
+
+      .feature-card p {
+        margin: 12px 0 0;
+        color: var(--text-sub);
+        font-size: 14px;
+        line-height: 1.72;
+        overflow-wrap: anywhere;
+      }
+
+      .split-section {
+        display: grid;
+        grid-template-columns: minmax(220px, 0.34fr) minmax(0, 1fr);
+        gap: 28px;
+        align-items: start;
+        min-width: 0;
+      }
+
+      .workflow-list,
+      .faq-list {
+        margin: 0;
+        padding: 0;
+        display: grid;
+        gap: 10px;
+        list-style: none;
+      }
+
+      .workflow-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .workflow-item {
+        min-height: 86px;
+        padding: 16px 18px;
+        color: #586171;
+        font-size: 14px;
+        line-height: 1.68;
+        min-width: 0;
+        overflow-wrap: anywhere;
+      }
+
+      .faq-item {
+        overflow: hidden;
+        min-width: 0;
+      }
+
+      .faq-item summary {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        list-style: none;
+        padding: 16px 18px;
+        color: #2f3744;
+        font-size: 15px;
+        line-height: 1.5;
+        font-weight: 650;
+      }
+
+      .faq-item summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .faq-item summary::marker {
+        content: "";
+        font-size: 0;
+      }
+
+      .faq-indicator {
+        flex: 0 0 auto;
+        width: 22px;
+        height: 22px;
+        border-radius: 999px;
+        border: 1px solid rgba(220, 225, 232, 0.9);
+        background: rgba(255, 255, 255, 0.72);
+        color: #667085;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        line-height: 1;
+        font-weight: 500;
+      }
+
+      .faq-indicator::before {
+        content: "+";
+      }
+
+      .faq-item[open] .faq-indicator::before {
+        content: "-";
+      }
+
+      .faq-item p {
+        margin: 0;
+        padding: 0 18px 18px;
+        color: var(--text-sub);
+        font-size: 14px;
+        line-height: 1.74;
+      }
+
+      @media (max-width: 960px) {
+        .features-page {
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+
+        .topbar {
+          align-items: flex-start;
+          padding-bottom: 28px;
+        }
+
+        .hero,
+        .split-section {
+          grid-template-columns: 1fr;
+        }
+
+        .language-links {
+          justify-self: start;
+        }
+
+        .feature-grid,
+        .workflow-list {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 640px) {
+        .features-page {
+          padding: max(16px, var(--safe-area-top)) 16px max(68px, calc(var(--safe-area-bottom) + 48px));
+        }
+
+        .topbar {
+          align-items: stretch;
+          flex-direction: column;
+          gap: 14px;
+        }
+
+        .top-actions {
+          justify-content: flex-start;
+        }
+
+        .pill-btn {
+          min-height: 40px;
+        }
+
+        .hero {
+          padding-top: 24px;
+          gap: 30px;
+        }
+
+        h1 {
+          font-size: clamp(30px, 8.8vw, 34px);
+          line-height: 1.12;
+        }
+
+        .hero-intro {
+          font-size: 15px;
+          line-height: 1.72;
+        }
+
+        .feature-grid,
+        .workflow-list {
+          grid-template-columns: 1fr;
+        }
+
+        .feature-card {
+          min-height: 0;
+          padding: 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="features-page" data-seo-content>
+      <div class="features-shell">
+        <header class="topbar">
+          <a class="brand" href={homeHref} aria-label={content.backHomeCta}>
+            <span class="brand-mark" aria-hidden="true"><i class="ri-sparkling-2-line"></i></span>
+            <span>Lumno</span>
+          </a>
+          <nav class="top-actions" aria-label={content.navLabel}>
+            <a class="pill-btn" href={homeHref}>{content.navHome}</a>
+            <a class="pill-btn" href={releaseHref}>{content.navRelease}</a>
+            <a class="pill-btn pill-btn-dark" href="https://github.com/kubai087/lumno-extension" target="_blank" rel="noreferrer noopener" aria-label={content.navGithubAria}>
+              <i class="ri-github-fill" aria-hidden="true"></i>
+              <span>GitHub</span>
+            </a>
+          </nav>
+        </header>
+
+        <section class="hero" aria-labelledby="features-title">
+          <div>
+            <p class="eyebrow">{content.eyebrow}</p>
+            <h1 id="features-title">{content.title}</h1>
+            <p class="hero-intro">{content.intro}</p>
+            <div class="hero-actions">
+              <a class="pill-btn pill-btn-dark" href={CHROME_STORE_URL} target="_blank" rel="noreferrer noopener">
+                <i class="ri-chrome-fill" aria-hidden="true"></i>
+                <span>{content.installCta}</span>
+              </a>
+              <a class="pill-btn" href={homeHref}>{content.backHomeCta}</a>
+            </div>
+          </div>
+
+          <aside class="language-links" aria-labelledby="language-links-title">
+            <p id="language-links-title" class="language-links-label">{content.languageLinksLabel}</p>
+            <ul class="language-link-list">
+              {Object.entries(FEATURES_SEO_CONTENT).map(([locale, localeContent]) => {
+                const href = new URL(routeLanguageMap[locale] || "/features/", SITE_URL).pathname;
+                return (
+                  <li>
+                    <a class="language-link" href={href} aria-current={locale === uiLocale ? "page" : undefined}>
+                      <span>{localeContent.languageLabel}</span>
+                      {locale === uiLocale ? <i class="ri-check-line" aria-hidden="true"></i> : <i class="ri-arrow-right-up-line" aria-hidden="true"></i>}
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </aside>
+        </section>
+
+        <section class="section" aria-labelledby="feature-section-title">
+          <h2 id="feature-section-title" class="section-heading">{content.featureSectionTitle}</h2>
+          <div class="feature-grid">
+            {content.features.map((item) => (
+              <article class="feature-card">
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section class="section split-section" aria-labelledby="workflows-title">
+          <h2 id="workflows-title" class="section-heading">{content.workflowsTitle}</h2>
+          <ul class="workflow-list">
+            {content.workflows.map((item) => (
+              <li class="workflow-item">{item}</li>
+            ))}
+          </ul>
+        </section>
+
+        <section class="section split-section" aria-labelledby="faq-title">
+          <h2 id="faq-title" class="section-heading">{content.faqTitle}</h2>
+          <div class="faq-list">
+            {content.faq.map((item, index) => (
+              <details class="faq-item" open={index === 0}>
+                <summary>
+                  <span>{item.question}</span>
+                  <span class="faq-indicator" aria-hidden="true"></span>
+                </summary>
+                <p>{item.answer}</p>
+              </details>
+            ))}
+          </div>
+        </section>
+      </div>
+    </main>
+  </body>
+</html>

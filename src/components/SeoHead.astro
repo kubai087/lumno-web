@@ -75,6 +75,7 @@ const normalizedCurrentLocale = locale.replace("_", "-").toLowerCase();
 {sogouSiteVerification ? <meta name="sogou_site_verification" content={sogouSiteVerification} /> : null}
 {keywordContent ? <meta name="keywords" content={keywordContent} /> : null}
 <link rel="canonical" href={canonicalUrl} />
+<link rel="alternate" type="text/plain" href={new URL("/llms.txt", SITE_URL).toString()} title="Lumno for answer engines" />
 {alternates.map((item) => (
   <link rel="alternate" hreflang={item.hreflang} href={item.href} />
 ))}

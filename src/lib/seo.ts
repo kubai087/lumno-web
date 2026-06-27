@@ -4,9 +4,9 @@ export const SITE_URL = "https://lumno.kubai.design";
 export const SITE_NAME = "Lumno";
 export const SITE_TITLE = "Lumno | Focus Search, Browser Command Bar & Minimal New Tab";
 export const SITE_LOGO_IMAGE = `${SITE_URL}/assets/logo@3x.png`;
-export const DEFAULT_OG_IMAGE = `${SITE_URL}/assets/og-image.png`;
-export const DEFAULT_TWITTER_IMAGE = `${SITE_URL}/assets/og-image-twitter.png`;
-export const DEFAULT_SOCIAL_SQUARE_IMAGE = `${SITE_URL}/assets/og-image-square.png`;
+export const DEFAULT_OG_IMAGE = `${SITE_URL}/assets/og-image-20260628.png`;
+export const DEFAULT_TWITTER_IMAGE = `${SITE_URL}/assets/og-image-twitter-20260628.png`;
+export const DEFAULT_SOCIAL_SQUARE_IMAGE = `${SITE_URL}/assets/og-image-square-20260628.png`;
 export const CHROME_STORE_URL =
   "https://chromewebstore.google.com/detail/lumno-%E5%85%A8%E5%B1%80%E5%BF%AB%E6%8D%B7%E5%91%BD%E4%BB%A4%E6%B5%AE%E5%B1%82/nggfkkbmogmadfoikakkfegkoilfcfao";
 export const ORGANIZATION_ID = `${SITE_URL}#organization`;
@@ -128,7 +128,8 @@ export function buildSoftwareApplicationSchema({
     softwareVersion: version || undefined,
     availableLanguage: SUPPORTED_UI_LANGUAGES,
     featureList: [
-      "Search tabs, bookmarks, history, and frequently visited pages",
+      "Open a browser command bar from any page",
+      "Run tab search, bookmark search, and history search in one focus search surface",
       "Use built-in site engines to start site search instantly with Tab",
       "Keep a minimalist new tab with bookmarks and useful page cards",
       "Works on Chrome, Edge, Dia, and other Chromium-based browsers",
@@ -143,10 +144,14 @@ export function buildWebPageSchema({
   name,
   description,
   path,
+  language,
+  mainEntity,
 }: {
   name: string;
   description: string;
   path: string;
+  language?: string;
+  mainEntity?: Record<string, unknown> | Array<Record<string, unknown>>;
 }) {
   return {
     "@context": "https://schema.org",
@@ -156,13 +161,39 @@ export function buildWebPageSchema({
     description,
     keywords: buildKeywords(),
     url: new URL(path, SITE_URL).toString(),
-    inLanguage: SUPPORTED_UI_LANGUAGES,
+    inLanguage: language || SUPPORTED_UI_LANGUAGES,
     isPartOf: {
       "@id": WEBSITE_ID,
     },
     about: {
       "@id": APP_ID,
     },
+    mainEntity: mainEntity || undefined,
+  };
+}
+
+export function buildFAQPageSchema({
+  items,
+  language,
+}: {
+  items: Array<{
+    question: string;
+    answer: string;
+  }>;
+  language?: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    inLanguage: language,
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
+    })),
   };
 }
 

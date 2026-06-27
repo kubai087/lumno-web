@@ -35,6 +35,10 @@ export const GET: APIRoute = async () => {
   const now = new Date().toISOString();
   const releaseLastmod = releases[0]?.date || now;
   const homeLastmod = readLastCommitIso(["src/pages/index.astro", "src/lib/seo.ts"], now);
+  const featuresLastmod = readLastCommitIso(
+    ["src/pages/features/index.astro", "src/pages/[locale]/features/index.astro", "src/lib/features-content.ts"],
+    now,
+  );
   const onboardingLastmod = readLastCommitIso(["src/pages/onboarding/index.astro"], now);
   const privacyLastmod = readLastCommitIso(["src/pages/privacy/index.astro"], now);
   const localizedHomeUrls = getNonDefaultLocales().map((locale) => ({
@@ -51,6 +55,13 @@ export const GET: APIRoute = async () => {
     changefreq: "monthly",
     priority: "0.7",
   }));
+  const localizedFeaturesUrls = getNonDefaultLocales().map((locale) => ({
+    locale,
+    loc: `${SITE_URL}${buildLocalizedPath(locale, "/features/")}`,
+    lastmod: featuresLastmod,
+    changefreq: "weekly",
+    priority: "0.85",
+  }));
   const localizedReleaseUrls = getNonDefaultLocales().map((locale) => ({
     locale,
     loc: `${SITE_URL}${buildLocalizedPath(locale, "/release/")}`,
@@ -62,6 +73,14 @@ export const GET: APIRoute = async () => {
   const urls = [
     { locale: "zh-CN", loc: `${SITE_URL}/`, lastmod: homeLastmod, changefreq: "weekly", priority: "1.0" },
     ...localizedHomeUrls,
+    {
+      locale: "zh-CN",
+      loc: `${SITE_URL}/features/`,
+      lastmod: featuresLastmod,
+      changefreq: "weekly",
+      priority: "0.85",
+    },
+    ...localizedFeaturesUrls,
     {
       locale: "zh-CN",
       loc: `${SITE_URL}/onboarding/`,

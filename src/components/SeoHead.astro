@@ -1,5 +1,11 @@
 ---
-import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_TITLE, SITE_URL } from "../lib/seo";
+import {
+  DEFAULT_OG_IMAGE,
+  DEFAULT_SOCIAL_SQUARE_IMAGE,
+  DEFAULT_TWITTER_IMAGE,
+  SITE_NAME,
+  SITE_URL,
+} from "../lib/seo";
 
 type StructuredData = Record<string, unknown>;
 
@@ -17,6 +23,8 @@ interface Props {
   locale?: string;
   noindex?: boolean;
   i18nTitleKey?: string;
+  twitterImage?: string;
+  squareImage?: string;
   structuredData?: StructuredData | StructuredData[];
 }
 
@@ -31,11 +39,15 @@ const {
   locale = "zh_CN",
   noindex = false,
   i18nTitleKey,
+  twitterImage = DEFAULT_TWITTER_IMAGE,
+  squareImage = DEFAULT_SOCIAL_SQUARE_IMAGE,
   structuredData = [],
 } = Astro.props;
 
 const canonicalUrl = new URL(path, SITE_URL).toString();
 const imageUrl = new URL(image, SITE_URL).toString();
+const twitterImageUrl = new URL(twitterImage, SITE_URL).toString();
+const squareImageUrl = squareImage ? new URL(squareImage, SITE_URL).toString() : "";
 const gaId = String(import.meta.env.PUBLIC_GA_ID || "").trim();
 const googleSiteVerification = String(import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION || "").trim();
 const bingSiteVerification = String(import.meta.env.PUBLIC_BING_SITE_VERIFICATION || "").trim();
@@ -73,7 +85,19 @@ const normalizedCurrentLocale = locale.replace("_", "-").toLowerCase();
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonicalUrl} />
 <meta property="og:image" content={imageUrl} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:type" content="image/png" />
 <meta property="og:image:alt" content={title} />
+{squareImageUrl ? (
+  <>
+    <meta property="og:image" content={squareImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="1200" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:alt" content={title} />
+  </>
+) : null}
 <meta property="og:locale" content={locale} />
 {alternates
   .filter((item) => item.hreflang !== "x-default")
@@ -85,7 +109,8 @@ const normalizedCurrentLocale = locale.replace("_", "-").toLowerCase();
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
-<meta name="twitter:image" content={imageUrl} />
+<meta name="twitter:image" content={twitterImageUrl} />
+<meta name="twitter:image:alt" content={title} />
 <meta name="twitter:site" content="@Kubai087" />
 <meta name="twitter:creator" content="@Kubai087" />
 

@@ -3,7 +3,10 @@ import { SUPPORTED_UI_LANGUAGES } from "./locales";
 export const SITE_URL = "https://lumno.kubai.design";
 export const SITE_NAME = "Lumno";
 export const SITE_TITLE = "Lumno | Focus Search, Browser Command Bar & Minimal New Tab";
-export const DEFAULT_OG_IMAGE = `${SITE_URL}/assets/logo@3x.png`;
+export const SITE_LOGO_IMAGE = `${SITE_URL}/assets/logo@3x.png`;
+export const DEFAULT_OG_IMAGE = `${SITE_URL}/assets/og-image.png`;
+export const DEFAULT_TWITTER_IMAGE = `${SITE_URL}/assets/og-image-twitter.png`;
+export const DEFAULT_SOCIAL_SQUARE_IMAGE = `${SITE_URL}/assets/og-image-square.png`;
 export const CHROME_STORE_URL =
   "https://chromewebstore.google.com/detail/lumno-%E5%85%A8%E5%B1%80%E5%BF%AB%E6%8D%B7%E5%91%BD%E4%BB%A4%E6%B5%AE%E5%B1%82/nggfkkbmogmadfoikakkfegkoilfcfao";
 export const ORGANIZATION_ID = `${SITE_URL}#organization`;
@@ -69,7 +72,7 @@ export function buildOrganizationSchema() {
     "@id": ORGANIZATION_ID,
     name: SITE_NAME,
     url: SITE_URL,
-    logo: DEFAULT_OG_IMAGE,
+    logo: SITE_LOGO_IMAGE,
     knowsLanguage: SUPPORTED_UI_LANGUAGES,
     sameAs: [
       "https://github.com/kubai087/lumno-extension",

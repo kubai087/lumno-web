@@ -22,6 +22,11 @@ export type FeaturesSeoContent = {
   }>;
   workflowsTitle: string;
   workflows: string[];
+  audiencesTitle: string;
+  audiences: Array<{
+    title: string;
+    description: string;
+  }>;
   faqTitle: string;
   faq: Array<{
     question: string;
@@ -76,6 +81,24 @@ export const FEATURES_SEO_CONTENT: Record<SupportedLocale, FeaturesSeoContent> =
       "工作切换：在写作、代码、文档和搜索结果页之间快速跳转。",
       "站内检索：对 GitHub、文档站、社区或搜索引擎发起更精确的站内搜索。",
       "Arc migration：在 Dia 或 Chrome 中延续熟悉的 command bar 操作节奏。",
+    ],
+    audiencesTitle: "适合哪些用户",
+    audiences: [
+      {
+        title: "研究和写作用户",
+        description:
+          "在搜索结果、文档、笔记、网页资料和历史记录之间找回上下文，减少重复打开同一批页面。",
+      },
+      {
+        title: "开发者和设计师",
+        description:
+          "快速跳转到 GitHub、文档站、设计参考、产品后台和调试页面，让浏览器更像一个轻量命令面板。",
+      },
+      {
+        title: "从 Arc 迁移的用户",
+        description:
+          "在 Dia、Chrome 或 Edge 里保留熟悉的浏览器 command bar、站内搜索和标签页切换体验。",
+      },
     ],
     faqTitle: "常见问题",
     faq: [
@@ -148,6 +171,24 @@ export const FEATURES_SEO_CONTENT: Record<SupportedLocale, FeaturesSeoContent> =
       "站內檢索：對 GitHub、文件站、社群或搜尋引擎發起更精準的站內搜尋。",
       "Arc migration：在 Dia 或 Chrome 中延續熟悉的 command bar 操作節奏。",
     ],
+    audiencesTitle: "適合哪些使用者",
+    audiences: [
+      {
+        title: "研究與寫作使用者",
+        description:
+          "在搜尋結果、文件、筆記、網頁資料與歷史紀錄之間找回上下文，減少重複開啟同一批頁面。",
+      },
+      {
+        title: "開發者與設計師",
+        description:
+          "快速跳轉到 GitHub、文件站、設計參考、產品後台與除錯頁面，讓瀏覽器更像一個輕量命令面板。",
+      },
+      {
+        title: "從 Arc 遷移的使用者",
+        description:
+          "在 Dia、Chrome 或 Edge 裡保留熟悉的瀏覽器 command bar、站內搜尋與分頁切換體驗。",
+      },
+    ],
     faqTitle: "常見問題",
     faq: [
       {
@@ -218,6 +259,24 @@ export const FEATURES_SEO_CONTENT: Record<SupportedLocale, FeaturesSeoContent> =
       "Work switching: jump between writing, code, docs, and search result pages with less browser friction.",
       "Site search: send precise queries to GitHub, docs, communities, or search engines.",
       "Arc migration: keep a familiar command bar rhythm inside Dia or Chrome.",
+    ],
+    audiencesTitle: "Who Lumno is for",
+    audiences: [
+      {
+        title: "Researchers and writers",
+        description:
+          "Recover context across search results, docs, notes, web references, and history without reopening the same pages repeatedly.",
+      },
+      {
+        title: "Developers and designers",
+        description:
+          "Jump to GitHub, docs, design references, product consoles, and debugging pages from a lightweight browser command palette.",
+      },
+      {
+        title: "People moving from Arc",
+        description:
+          "Keep a familiar browser command bar, site search, and tab-switching workflow inside Dia, Chrome, or Edge.",
+      },
     ],
     faqTitle: "Frequently Asked Questions",
     faq: [

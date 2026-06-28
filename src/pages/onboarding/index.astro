@@ -6,14 +6,16 @@ import logoIconSvg from "../../assets/onboarding/logo.svg?raw";
 import topWordmarkSvg from "../../assets/lumno-title-figma.svg?raw";
 import {
   SITE_NAME,
-  SITE_URL,
+  buildAlternateLinks,
   buildBreadcrumbListSchema,
+  buildHowToSchema,
   buildKeywords,
   buildSoftwareApplicationSchema,
   buildWebPageSchema,
+  getOpenGraphLocale,
 } from "../../lib/seo";
 import { buildEntryContextConfig } from "../../lib/entry-context";
-import { DEFAULT_LOCALE, SUPPORTED_ONBOARDING_LANGUAGES, buildScopedRouteLanguageMap } from "../../lib/locales";
+import { DEFAULT_LOCALE, SUPPORTED_ONBOARDING_LANGUAGES, buildLocalizedPath, buildScopedRouteLanguageMap } from "../../lib/locales";
 import { COMMUNITY_LINKS } from "../../lib/community";
 
 const forcedLocale = Astro.props.forcedLocale ?? null;
@@ -21,19 +23,10 @@ const seoPath = Astro.props.seoPath || "/onboarding/";
 const routeLanguageMap = Astro.props.routeLanguageMap || buildScopedRouteLanguageMap("/onboarding/", SUPPORTED_ONBOARDING_LANGUAGES);
 const entryContextConfig = buildEntryContextConfig();
 const uiLocale = forcedLocale || DEFAULT_LOCALE;
+const homeHref = buildLocalizedPath(uiLocale, "/");
 const WORDMARK_TEXT = "Lumno";
-const alternateLinks = [
-  ...Object.entries(routeLanguageMap).map(([hreflang, href]) => ({
-    hreflang,
-    href: new URL(href, SITE_URL).toString(),
-  })),
-  { hreflang: "x-default", href: new URL("/onboarding/", SITE_URL).toString() },
-];
-const ogLocale = {
-  "zh-CN": "zh_CN",
-  "zh-TW": "zh_TW",
-  en: "en_US",
-}[uiLocale] || "en_US";
+const alternateLinks = buildAlternateLinks(routeLanguageMap, "/onboarding/");
+const ogLocale = getOpenGraphLocale(uiLocale);
 const pageTitleByLocale = {
   "zh-CN": "Lumno 安装引导｜浏览器命令栏与新标签页快速开始",
   "zh-TW": "Lumno 安裝引導｜瀏覽器命令欄與新分頁快速開始",
@@ -61,6 +54,12 @@ const initialUi = {
     viewRelease: "更新日志",
     joinDiscord: "反馈 & 提需",
     shortcutGuideTitle: "🦋 快速启用 Lumno 聚焦搜索",
+    shortcutHowToName: "如何启用 Lumno 浏览器命令栏快捷键",
+    shortcutHowToDescription: "设置 Lumno 扩展快捷键后，即可从任意网页唤起聚焦搜索，搜索标签页、书签、历史记录和站内内容。",
+    shortcutStepName1: "打开扩展快捷键设置页",
+    shortcutStepName2: "找到 Lumno 扩展",
+    shortcutStepName3: "设置唤起聚焦搜索窗口快捷键",
+    shortcutStepName4: "使用快捷键打开 Lumno",
     shortcutCopy: "复制",
     shortcutCopied: "已复制",
     titleWelcome: "欢迎使用",
@@ -97,6 +96,12 @@ const initialUi = {
     viewRelease: "更新日誌",
     joinDiscord: "反饋 & 提需",
     shortcutGuideTitle: "🦋 快速啟用 Lumno 聚焦搜尋",
+    shortcutHowToName: "如何啟用 Lumno 瀏覽器命令欄快捷鍵",
+    shortcutHowToDescription: "設定 Lumno 擴充功能快捷鍵後，即可從任意網頁喚起聚焦搜尋，搜尋分頁、書籤、歷史紀錄與站內內容。",
+    shortcutStepName1: "開啟擴充功能快捷鍵設定頁",
+    shortcutStepName2: "找到 Lumno 擴充功能",
+    shortcutStepName3: "設定喚起聚焦搜尋視窗快捷鍵",
+    shortcutStepName4: "使用快捷鍵開啟 Lumno",
     shortcutCopy: "複製",
     shortcutCopied: "已複製",
     titleWelcome: "歡迎使用",
@@ -133,6 +138,12 @@ const initialUi = {
     viewRelease: "Release Notes",
     joinDiscord: "Feedback & Requests",
     shortcutGuideTitle: "🦋 Quickly enable Lumno Focus Search",
+    shortcutHowToName: "How to enable the Lumno browser command bar shortcut",
+    shortcutHowToDescription: "Set the Lumno extension shortcut, then open focus search from any page to search tabs, bookmarks, history, and site content.",
+    shortcutStepName1: "Open extension shortcut settings",
+    shortcutStepName2: "Find the Lumno extension",
+    shortcutStepName3: "Set the Open command bar shortcut",
+    shortcutStepName4: "Use the shortcut to open Lumno",
     shortcutCopy: "Copy",
     shortcutCopied: "Copied",
     titleWelcome: "Meet",
@@ -204,6 +215,34 @@ const featureMessages = {
     betaAlt: "Beta",
   },
 }[uiLocale];
+const shortcutHowToSchema = buildHowToSchema({
+  name: initialUi.shortcutHowToName,
+  description: initialUi.shortcutHowToDescription,
+  path: seoPath,
+  language: uiLocale,
+  steps: [
+    {
+      name: initialUi.shortcutStepName1,
+      text: initialUi.shortcutStep1,
+      anchor: "#shortcut-guide-title",
+    },
+    {
+      name: initialUi.shortcutStepName2,
+      text: initialUi.shortcutStep2,
+      anchor: "#shortcut-guide-title",
+    },
+    {
+      name: initialUi.shortcutStepName3,
+      text: `${initialUi.shortcutStep3Prefix}${initialUi.shortcutCommandLabel}${initialUi.shortcutStep3Suffix}`,
+      anchor: "#shortcut-guide-title",
+    },
+    {
+      name: initialUi.shortcutStepName4,
+      text: initialUi.shortcutStep4,
+      anchor: "#shortcut-guide-title",
+    },
+  ],
+});
 const structuredData = [
   buildSoftwareApplicationSchema({
     description: pageDescription,
@@ -212,10 +251,13 @@ const structuredData = [
     name: pageTitle,
     description: pageDescription,
     path: seoPath,
+    language: uiLocale,
+    mainEntity: shortcutHowToSchema,
   }),
+  shortcutHowToSchema,
   buildBreadcrumbListSchema({
     items: [
-      { name: SITE_NAME, path: "/" },
+      { name: SITE_NAME, path: homeHref },
       { name: pageTitle, path: seoPath },
     ],
   }),

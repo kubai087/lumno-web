@@ -4,14 +4,16 @@ import { fetchReleases, formatDate, parseReleaseBody, type ParsedReleaseBody, ty
 import { marked } from "marked";
 import {
   SITE_NAME,
-  SITE_URL,
+  buildAlternateLinks,
   buildBreadcrumbListSchema,
+  buildItemListSchema,
   buildKeywords,
   buildSoftwareApplicationSchema,
   buildWebPageSchema,
+  getOpenGraphLocale,
 } from "../../lib/seo";
 import { buildEntryContextConfig } from "../../lib/entry-context";
-import { DEFAULT_LOCALE, buildRouteLanguageMap } from "../../lib/locales";
+import { DEFAULT_LOCALE, buildLocalizedPath, buildRouteLanguageMap } from "../../lib/locales";
 import { COMMUNITY_LINKS } from "../../lib/community";
 
 const releases = (await fetchReleases()).map((item) => ({
@@ -24,19 +26,10 @@ const seoPath = Astro.props.seoPath || "/release/";
 const routeLanguageMap = Astro.props.routeLanguageMap || buildRouteLanguageMap("/release/");
 const entryContextConfig = buildEntryContextConfig(latestReleaseVersion);
 const uiLocale = forcedLocale || DEFAULT_LOCALE;
+const homeHref = buildLocalizedPath(uiLocale, "/");
 const releaseContentLocale = uiLocale === "zh-TW" ? "zh-TW" : uiLocale === "zh-CN" ? "zh-CN" : "en";
-const alternateLinks = [
-  ...Object.entries(routeLanguageMap).map(([hreflang, href]) => ({
-    hreflang,
-    href: new URL(href, SITE_URL).toString(),
-  })),
-  { hreflang: "x-default", href: new URL("/release/", SITE_URL).toString() },
-];
-const ogLocale = {
-  "zh-CN": "zh_CN",
-  "zh-TW": "zh_TW",
-  en: "en_US",
-}[uiLocale] || "en_US";
+const alternateLinks = buildAlternateLinks(routeLanguageMap, "/release/");
+const ogLocale = getOpenGraphLocale(uiLocale);
 const pageTitleByLocale = {
   "zh-CN": latestReleaseVersion
     ? `Lumno 更新日志｜v${latestReleaseVersion} 与浏览器命令栏发布记录`
@@ -125,6 +118,30 @@ const initialUi = {
     qrcodeCloseAria: "Close QR code dialog",
   },
 }[uiLocale];
+const releaseItemListSchema = releases.length
+  ? buildItemListSchema({
+      name: pageTitle,
+      description: pageDescription,
+      path: seoPath,
+      language: uiLocale,
+      items: releases.map((item) => {
+        const localeContent = item.parsed.locales[releaseContentLocale];
+        const description =
+          localeContent.summary ||
+          localeContent.features[0] ||
+          localeContent.bugFixes[0] ||
+          item.name;
+
+        return {
+          name: item.name,
+          description,
+          url: item.url,
+          type: "CreativeWork",
+          datePublished: item.date || undefined,
+        };
+      }),
+    })
+  : null;
 const structuredData = [
   buildSoftwareApplicationSchema({
     description: pageDescription,
@@ -134,10 +151,13 @@ const structuredData = [
     name: pageTitle,
     description: pageDescription,
     path: seoPath,
+    language: uiLocale,
+    mainEntity: releaseItemListSchema || undefined,
   }),
+  ...(releaseItemListSchema ? [releaseItemListSchema] : []),
   buildBreadcrumbListSchema({
     items: [
-      { name: SITE_NAME, path: "/" },
+      { name: SITE_NAME, path: homeHref },
       { name: pageTitle, path: seoPath },
     ],
   }),

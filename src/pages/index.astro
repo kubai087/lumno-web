@@ -5,13 +5,14 @@ import LanguageMenu from "../components/onboarding/LanguageMenu";
 import logoIconSvg from "../assets/onboarding/logo.svg?raw";
 import topWordmarkSvg from "../assets/lumno-title-figma.svg?raw";
 import {
-  SITE_URL,
+  buildAlternateLinks,
   buildBreadcrumbListSchema,
   buildKeywords,
   buildOrganizationSchema,
   buildSoftwareApplicationSchema,
   buildWebPageSchema,
   buildWebSiteSchema,
+  getOpenGraphLocale,
 } from "../lib/seo";
 import { DEFAULT_LOCALE, buildLocalizedPath, buildRouteLanguageMap } from "../lib/locales";
 import { COMMUNITY_LINKS } from "../lib/community";
@@ -24,18 +25,8 @@ const homeHref = buildLocalizedPath(uiLocale, "/");
 const featuresHref = buildLocalizedPath(uiLocale, "/features/");
 const releaseHref = buildLocalizedPath(uiLocale, "/release/");
 const WORDMARK_TEXT = "Lumno";
-const alternateLinks = [
-  ...Object.entries(routeLanguageMap).map(([hreflang, href]) => ({
-    hreflang,
-    href: new URL(href, SITE_URL).toString(),
-  })),
-  { hreflang: "x-default", href: new URL("/", SITE_URL).toString() },
-];
-const ogLocale = {
-  "zh-CN": "zh_CN",
-  "zh-TW": "zh_TW",
-  en: "en_US",
-}[uiLocale] || "en_US";
+const alternateLinks = buildAlternateLinks(routeLanguageMap, "/");
+const ogLocale = getOpenGraphLocale(uiLocale);
 const pageTitleByLocale = {
   "zh-CN": "Lumno｜浏览器命令栏、聚焦搜索与极简新标签页",
   "zh-TW": "Lumno｜瀏覽器命令欄、聚焦搜尋與極簡新分頁",

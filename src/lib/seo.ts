@@ -13,6 +13,17 @@ export const ORGANIZATION_ID = `${SITE_URL}#organization`;
 export const WEBSITE_ID = `${SITE_URL}#website`;
 export const APP_ID = `${SITE_URL}#app`;
 
+export type HreflangLink = {
+  hreflang: string;
+  href: string;
+};
+
+const OG_LOCALE_BY_LOCALE: Partial<Record<string, string>> = {
+  "zh-CN": "zh_CN",
+  "zh-TW": "zh_TW",
+  en: "en_US",
+};
+
 const CORE_KEYWORDS = [
   "Lumno",
   "浏览器命令栏",
@@ -36,6 +47,22 @@ const CORE_KEYWORDS = [
 ];
 
 const EXTENDED_DISCOVERY_KEYWORDS = [
+  "Arc 浏览器替代",
+  "Arc 浏览器迁移",
+  "Dia 浏览器搜索",
+  "Chrome 标签页搜索",
+  "Edge 标签页搜索",
+  "书签搜索工具",
+  "历史记录搜索工具",
+  "浏览器效率扩展",
+  "瀏覽器命令欄",
+  "瀏覽器快捷命令",
+  "聚焦搜尋",
+  "分頁搜尋",
+  "書籤搜尋",
+  "歷史紀錄搜尋",
+  "站內搜尋",
+  "極簡新分頁",
   "arc browser alternative",
   "arc browser migration",
   "arc style command bar",
@@ -44,6 +71,13 @@ const EXTENDED_DISCOVERY_KEYWORDS = [
   "global browser search",
   "tab manager extension",
   "bookmark manager search",
+  "history search extension",
+  "site search shortcut",
+  "Chrome command palette",
+  "Edge command bar extension",
+  "Dia browser extension",
+  "minimal browser new tab",
+  "open source Chrome extension",
 ];
 
 const PRODUCT_ALTERNATE_NAMES = [
@@ -60,6 +94,30 @@ const PRODUCT_ALTERNATE_NAMES = [
   "Lumno ブラウザ コマンドバー",
   "Lumno 브라우저 커맨드바",
 ];
+
+export function buildAbsoluteUrl(path: string): string {
+  return new URL(path, SITE_URL).toString();
+}
+
+export function buildAlternateLinks(
+  routeLanguageMap: Record<string, string>,
+  xDefaultPath: string,
+): HreflangLink[] {
+  return [
+    ...Object.entries(routeLanguageMap).map(([hreflang, href]) => ({
+      hreflang,
+      href: buildAbsoluteUrl(href),
+    })),
+    {
+      hreflang: "x-default",
+      href: buildAbsoluteUrl(xDefaultPath),
+    },
+  ];
+}
+
+export function getOpenGraphLocale(locale: string): string {
+  return OG_LOCALE_BY_LOCALE[locale] || "en_US";
+}
 
 export function buildKeywords(extra: string[] = []): string[] {
   return Array.from(new Set([...CORE_KEYWORDS, ...EXTENDED_DISCOVERY_KEYWORDS, ...extra]));
@@ -127,12 +185,24 @@ export function buildSoftwareApplicationSchema({
     sameAs: [CHROME_STORE_URL, "https://github.com/kubai087/lumno-extension"],
     softwareVersion: version || undefined,
     availableLanguage: SUPPORTED_UI_LANGUAGES,
+    audience: {
+      "@type": "Audience",
+      audienceType: [
+        "Browser power users",
+        "Researchers",
+        "Developers",
+        "Designers",
+        "Students",
+        "Arc migration users",
+      ],
+    },
     featureList: [
       "Open a browser command bar from any page",
       "Run tab search, bookmark search, and history search in one focus search surface",
       "Use built-in site engines to start site search instantly with Tab",
       "Keep a minimalist new tab with bookmarks and useful page cards",
       "Works on Chrome, Edge, Dia, and other Chromium-based browsers",
+      "Preserve an Arc-style command bar workflow after moving to Dia, Chrome, or Edge",
     ],
     author: {
       "@id": ORGANIZATION_ID,
@@ -192,6 +262,86 @@ export function buildFAQPageSchema({
       acceptedAnswer: {
         "@type": "Answer",
         text: item.answer,
+      },
+    })),
+  };
+}
+
+export function buildHowToSchema({
+  name,
+  description,
+  path,
+  language,
+  steps,
+}: {
+  name: string;
+  description: string;
+  path: string;
+  language?: string;
+  steps: Array<{
+    name: string;
+    text: string;
+    anchor?: string;
+  }>;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name,
+    description,
+    inLanguage: language,
+    url: buildAbsoluteUrl(path),
+    tool: [
+      {
+        "@type": "HowToTool",
+        name: "Chromium extension shortcut settings",
+      },
+    ],
+    step: steps.map((step, index) => ({
+      "@type": "HowToStep",
+      position: index + 1,
+      name: step.name,
+      text: step.text,
+      url: step.anchor ? buildAbsoluteUrl(`${path}${step.anchor}`) : undefined,
+    })),
+  };
+}
+
+export function buildItemListSchema({
+  name,
+  description,
+  path,
+  language,
+  items,
+}: {
+  name: string;
+  description?: string;
+  path: string;
+  language?: string;
+  items: Array<{
+    name: string;
+    description?: string;
+    url?: string;
+    type?: string;
+    datePublished?: string;
+  }>;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name,
+    description,
+    inLanguage: language,
+    url: buildAbsoluteUrl(path),
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: {
+        "@type": item.type || "Thing",
+        name: item.name,
+        description: item.description || undefined,
+        url: item.url ? buildAbsoluteUrl(item.url) : undefined,
+        datePublished: item.datePublished || undefined,
       },
     })),
   };

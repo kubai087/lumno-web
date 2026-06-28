@@ -5,14 +5,16 @@ import { DEFAULT_LOCALE, buildLocalizedPath, buildRouteLanguageMap } from "../..
 import {
   CHROME_STORE_URL,
   SITE_NAME,
-  SITE_URL,
+  buildAlternateLinks,
   buildBreadcrumbListSchema,
   buildFAQPageSchema,
+  buildItemListSchema,
   buildKeywords,
   buildOrganizationSchema,
   buildSoftwareApplicationSchema,
   buildWebPageSchema,
   buildWebSiteSchema,
+  getOpenGraphLocale,
 } from "../../lib/seo";
 
 const forcedLocale = Astro.props.forcedLocale ?? null;
@@ -22,18 +24,8 @@ const uiLocale = forcedLocale || DEFAULT_LOCALE;
 const content = getFeaturesSeoContent(uiLocale);
 const homeHref = buildLocalizedPath(uiLocale, "/");
 const releaseHref = buildLocalizedPath(uiLocale, "/release/");
-const alternateLinks = [
-  ...Object.entries(routeLanguageMap).map(([hreflang, href]) => ({
-    hreflang,
-    href: new URL(href, SITE_URL).toString(),
-  })),
-  { hreflang: "x-default", href: new URL("/features/", SITE_URL).toString() },
-];
-const ogLocale = {
-  "zh-CN": "zh_CN",
-  "zh-TW": "zh_TW",
-  en: "en_US",
-}[uiLocale] || "en_US";
+const alternateLinks = buildAlternateLinks(routeLanguageMap, "/features/");
+const ogLocale = getOpenGraphLocale(uiLocale);
 const pageKeywords = buildKeywords([
   "浏览器快捷启动器",
   "Arc 浏览器迁移",
@@ -50,6 +42,17 @@ const faqSchema = buildFAQPageSchema({
   items: content.faq,
   language: uiLocale,
 });
+const audienceItemListSchema = buildItemListSchema({
+  name: content.audiencesTitle,
+  description: content.intro,
+  path: seoPath,
+  language: uiLocale,
+  items: content.audiences.map((item) => ({
+    name: item.title,
+    description: item.description,
+    type: "Audience",
+  })),
+});
 const structuredData = [
   buildOrganizationSchema(),
   buildWebSiteSchema(),
@@ -61,7 +64,9 @@ const structuredData = [
     description: content.pageDescription,
     path: seoPath,
     language: uiLocale,
+    mainEntity: audienceItemListSchema,
   }),
+  audienceItemListSchema,
   faqSchema,
   buildBreadcrumbListSchema({
     items: [
@@ -593,7 +598,7 @@ const structuredData = [
             <p id="language-links-title" class="language-links-label">{content.languageLinksLabel}</p>
             <ul class="language-link-list">
               {Object.entries(FEATURES_SEO_CONTENT).map(([locale, localeContent]) => {
-                const href = new URL(routeLanguageMap[locale] || "/features/", SITE_URL).pathname;
+                const href = routeLanguageMap[locale] || "/features/";
                 return (
                   <li>
                     <a class="language-link" href={href} aria-current={locale === uiLocale ? "page" : undefined}>
@@ -626,6 +631,18 @@ const structuredData = [
               <li class="workflow-item">{item}</li>
             ))}
           </ul>
+        </section>
+
+        <section class="section" aria-labelledby="audiences-title">
+          <h2 id="audiences-title" class="section-heading">{content.audiencesTitle}</h2>
+          <div class="feature-grid">
+            {content.audiences.map((item) => (
+              <article class="feature-card">
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+              </article>
+            ))}
+          </div>
         </section>
 
         <section class="section split-section" aria-labelledby="faq-title">

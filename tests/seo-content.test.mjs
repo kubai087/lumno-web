@@ -12,8 +12,10 @@ function readSource(file) {
 test("homepage keeps a crawlable entry to the full feature SEO page", () => {
   const source = readSource("src/pages/index.astro");
 
+  assert.doesNotMatch(source, /data-seo-summary/);
   assert.doesNotMatch(source, /data-seo-content/);
   assert.doesNotMatch(source, /buildFAQPageSchema\(/);
+  assert.doesNotMatch(source, /buildItemListSchema\(/);
   assert.match(source, /featuresHref/);
   assert.match(source, /href=\{featuresHref\}/);
 });
@@ -29,6 +31,8 @@ test("features page contains product-led searchable content and FAQ schema hooks
   assert.match(contentSource, /标签页搜索/);
   assert.match(contentSource, /bookmark search/);
   assert.match(contentSource, /Arc migration/);
+  assert.match(contentSource, /适合哪些用户/);
+  assert.match(contentSource, /Developers and designers/);
   assert.match(contentSource, /Lumno 是 Arc 浏览器替代品吗/);
 });
 
@@ -46,6 +50,28 @@ test("shared SEO schema helpers support localized FAQ pages", () => {
   assert.match(source, /"@type": "FAQPage"/);
   assert.match(source, /acceptedAnswer/);
   assert.match(source, /inLanguage: language/);
+  assert.match(source, /buildHowToSchema/);
+  assert.match(source, /"@type": "HowTo"/);
+  assert.match(source, /buildItemListSchema/);
+  assert.match(source, /"@type": "ItemList"/);
+});
+
+test("onboarding page exposes shortcut setup as HowTo schema", () => {
+  const source = readSource("src/pages/onboarding/index.astro");
+
+  assert.match(source, /buildHowToSchema\(/);
+  assert.match(source, /shortcutHowToName/);
+  assert.match(source, /shortcutStepName1/);
+  assert.match(source, /mainEntity: shortcutHowToSchema/);
+});
+
+test("release page exposes GitHub releases as an ItemList schema", () => {
+  const source = readSource("src/pages/release/index.astro");
+
+  assert.match(source, /releaseItemListSchema/);
+  assert.match(source, /buildItemListSchema\(/);
+  assert.match(source, /type: "CreativeWork"/);
+  assert.match(source, /datePublished/);
 });
 
 test("social metadata uses one default Open Graph image candidate", () => {
@@ -74,6 +100,8 @@ test("llms.txt endpoint summarizes Lumno for answer engines", () => {
   assert.match(source, /tab search/);
   assert.match(source, /bookmark search/);
   assert.match(source, /site search/);
+  assert.match(source, /Target Users/);
+  assert.match(source, /Arc browser alternative/);
 });
 
 test("sitemap exposes localized features pages", () => {

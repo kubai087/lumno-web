@@ -55,7 +55,9 @@ const sogouSiteVerification = String(import.meta.env.PUBLIC_SOGOU_SITE_VERIFICAT
 const robots = noindex
   ? "noindex, nofollow, noarchive"
   : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
-const schemaItems = Array.isArray(structuredData) ? structuredData : [structuredData];
+const schemaItems = (Array.isArray(structuredData) ? structuredData : [structuredData]).filter(
+  (item): item is StructuredData => Boolean(item) && Object.keys(item).length > 0,
+);
 const keywordContent = keywords.join(", ");
 const normalizedCurrentLocale = locale.replace("_", "-").toLowerCase();
 ---
@@ -65,6 +67,7 @@ const normalizedCurrentLocale = locale.replace("_", "-").toLowerCase();
 <meta name="robots" content={robots} />
 <meta name="author" content="Lumno" />
 <meta name="generator" content="Astro" />
+<meta http-equiv="content-language" content={normalizedCurrentLocale} />
 <meta name="application-name" content={SITE_NAME} />
 <meta name="apple-mobile-web-app-title" content={SITE_NAME} />
 <meta name="theme-color" content="#fafafa" />

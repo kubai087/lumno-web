@@ -48,6 +48,15 @@ test("shared SEO schema helpers support localized FAQ pages", () => {
   assert.match(source, /inLanguage: language/);
 });
 
+test("social metadata uses one default Open Graph image candidate", () => {
+  const source = readSource("src/components/SeoHead.astro");
+
+  assert.doesNotMatch(source, /DEFAULT_SOCIAL_SQUARE_IMAGE/);
+  assert.match(source, /squareImage = ""/);
+  assert.match(source, /property="og:image:secure_url"/);
+  assert.match(source, /name="twitter:url"/);
+});
+
 test("robots policy allows AI answer crawlers by default with an opt-out", () => {
   const source = readSource("src/pages/robots.txt.ts");
 

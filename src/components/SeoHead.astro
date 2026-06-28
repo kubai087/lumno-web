@@ -1,7 +1,6 @@
 ---
 import {
   DEFAULT_OG_IMAGE,
-  DEFAULT_SOCIAL_SQUARE_IMAGE,
   DEFAULT_TWITTER_IMAGE,
   SITE_NAME,
   SITE_URL,
@@ -40,7 +39,7 @@ const {
   noindex = false,
   i18nTitleKey,
   twitterImage = DEFAULT_TWITTER_IMAGE,
-  squareImage = DEFAULT_SOCIAL_SQUARE_IMAGE,
+  squareImage = "",
   structuredData = [],
 } = Astro.props;
 
@@ -86,6 +85,7 @@ const normalizedCurrentLocale = locale.replace("_", "-").toLowerCase();
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonicalUrl} />
 <meta property="og:image" content={imageUrl} />
+<meta property="og:image:secure_url" content={imageUrl} />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta property="og:image:type" content="image/png" />
@@ -108,6 +108,7 @@ const normalizedCurrentLocale = locale.replace("_", "-").toLowerCase();
   ))}
 
 <meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:url" content={canonicalUrl} />
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={twitterImageUrl} />

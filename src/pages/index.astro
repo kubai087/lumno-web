@@ -74,7 +74,7 @@ const initialUi = {
     logoIconAlt: "Lumno 图标",
     cwsSupportNote: "支持 Dia \\ Edge \\ Comet \\ Atlas \\ Helium 浏览器",
     tooltipAria: "关于 Arc 迁移支持",
-    supportTooltip: "为从 Arc 迁移到 Dia 或 Chrome 的用户保留熟悉的命令栏搜索体验。Lumno 受 Arc 式交互启发，但与 Arc 无关联。",
+    supportTooltip: "为从 Arc 迁移到其他浏览器的用户保留熟悉的命令栏搜索体验。Lumno 受 Arc 式交互启发，但与 Arc 无关联。",
   },
   "zh-TW": {
     viewFeatures: "功能",
@@ -96,7 +96,7 @@ const initialUi = {
     logoIconAlt: "Lumno 圖示",
     cwsSupportNote: "支援 Dia \\ Edge \\ Comet \\ Atlas \\ Helium 瀏覽器",
     tooltipAria: "關於 Arc 遷移支援",
-    supportTooltip: "為從 Arc 遷移到 Dia 或 Chrome 的使用者保留熟悉的命令欄搜尋體驗。Lumno 受 Arc 式互動啟發，但與 Arc 無關聯。",
+    supportTooltip: "為從 Arc 遷移到其他瀏覽器的使用者保留熟悉的命令欄搜尋體驗。Lumno 受 Arc 式互動啟發，但與 Arc 無關聯。",
   },
   en: {
     viewFeatures: "Features",
@@ -118,7 +118,7 @@ const initialUi = {
     logoIconAlt: "Lumno icon",
     cwsSupportNote: "Supports Dia \\ Edge \\ Comet \\ Atlas \\ Helium browsers",
     tooltipAria: "About Arc migration support",
-    supportTooltip: "Keeps a familiar command-bar search workflow for people moving from Arc to Dia or Chrome. Lumno is inspired by Arc-like interactions, but is not affiliated with Arc.",
+    supportTooltip: "Keeps a familiar command-bar search workflow for people moving from Arc to other browsers. Lumno is inspired by Arc-like interactions, but is not affiliated with Arc.",
   },
 }[uiLocale];
 const featureMessages = {
@@ -601,15 +601,23 @@ const structuredData = [
       }
 
       .support-tooltip-bubble {
-        position: absolute;
-        left: calc(100% + 10px);
-        top: 50%;
+        --support-tooltip-bg-top: #ffffff;
+        --support-tooltip-bg-bottom: #f7f9fc;
+        --support-tooltip-border: rgba(214, 219, 227, 0.95);
+        --support-tooltip-arrow-border-size: 9px;
+        --support-tooltip-arrow-fill-size: 8px;
+        --support-tooltip-arrow-border-inset: 14px;
+        --support-tooltip-arrow-fill-inset: 16px;
+        position: fixed;
+        left: var(--support-tooltip-left, 0px);
+        top: var(--support-tooltip-top, 0px);
         z-index: 40;
-        width: min(300px, calc(100vw - 48px));
+        width: max-content;
+        max-width: min(360px, calc(100vw - 24px));
         padding: 10px 12px;
-        border: 1px solid rgba(214, 219, 227, 0.95);
+        border: 1px solid var(--support-tooltip-border);
         border-radius: 12px;
-        background: linear-gradient(180deg, #ffffff 0%, #f7f9fc 100%);
+        background: linear-gradient(180deg, var(--support-tooltip-bg-top) 0%, var(--support-tooltip-bg-bottom) 100%);
         box-shadow:
           0 16px 36px rgba(17, 24, 39, 0.08),
           0 3px 10px rgba(17, 24, 39, 0.05);
@@ -617,9 +625,10 @@ const structuredData = [
         text-align: left;
         font-size: 12px;
         line-height: 1.5;
+        overflow-wrap: anywhere;
         opacity: 0;
         visibility: hidden;
-        transform: translateY(-50%) translateX(-6px);
+        transform: translate3d(0, 4px, 0) scale(0.985);
         transition:
           opacity 0.18s ease,
           transform 0.18s ease,
@@ -635,101 +644,139 @@ const structuredData = [
       .support-tooltip-bubble::before {
         content: "";
         position: absolute;
-        left: -9px;
-        top: 50%;
         width: 0;
         height: 0;
-        border-top: 8px solid transparent;
-        border-bottom: 8px solid transparent;
-        border-right: 9px solid rgba(214, 219, 227, 0.95);
-        transform: translateY(-50%);
+        border: 0 solid transparent;
+        transform: none;
+        pointer-events: none;
       }
 
       .support-tooltip-bubble::after {
         content: "";
         position: absolute;
-        left: -7px;
-        top: 50%;
         width: 0;
         height: 0;
-        border-top: 7px solid transparent;
-        border-bottom: 7px solid transparent;
-        border-right: 8px solid #fcfdfe;
+        border: 0 solid transparent;
+        transform: none;
+        pointer-events: none;
+      }
+
+      .support-tooltip-bubble[data-arrow-side="top"]::before {
+        top: calc(0px - var(--support-tooltip-arrow-border-size));
+        border-left-width: var(--support-tooltip-arrow-border-size);
+        border-right-width: var(--support-tooltip-arrow-border-size);
+        border-bottom: var(--support-tooltip-arrow-border-size) solid var(--support-tooltip-border);
+      }
+
+      .support-tooltip-bubble[data-arrow-side="top"]::after {
+        top: calc(1px - var(--support-tooltip-arrow-fill-size));
+        border-left-width: var(--support-tooltip-arrow-fill-size);
+        border-right-width: var(--support-tooltip-arrow-fill-size);
+        border-bottom: var(--support-tooltip-arrow-fill-size) solid var(--support-tooltip-bg-top);
+      }
+
+      .support-tooltip-bubble[data-arrow-side="right"]::before {
+        right: calc(0px - var(--support-tooltip-arrow-border-size));
+        border-top-width: var(--support-tooltip-arrow-border-size);
+        border-bottom-width: var(--support-tooltip-arrow-border-size);
+        border-left: var(--support-tooltip-arrow-border-size) solid var(--support-tooltip-border);
+      }
+
+      .support-tooltip-bubble[data-arrow-side="right"]::after {
+        right: calc(1px - var(--support-tooltip-arrow-fill-size));
+        border-top-width: var(--support-tooltip-arrow-fill-size);
+        border-bottom-width: var(--support-tooltip-arrow-fill-size);
+        border-left: var(--support-tooltip-arrow-fill-size) solid var(--support-tooltip-bg-bottom);
+      }
+
+      .support-tooltip-bubble[data-arrow-side="bottom"]::before {
+        bottom: calc(0px - var(--support-tooltip-arrow-border-size));
+        border-left-width: var(--support-tooltip-arrow-border-size);
+        border-right-width: var(--support-tooltip-arrow-border-size);
+        border-top: var(--support-tooltip-arrow-border-size) solid var(--support-tooltip-border);
+      }
+
+      .support-tooltip-bubble[data-arrow-side="bottom"]::after {
+        bottom: calc(1px - var(--support-tooltip-arrow-fill-size));
+        border-left-width: var(--support-tooltip-arrow-fill-size);
+        border-right-width: var(--support-tooltip-arrow-fill-size);
+        border-top: var(--support-tooltip-arrow-fill-size) solid var(--support-tooltip-bg-bottom);
+      }
+
+      .support-tooltip-bubble[data-arrow-side="left"]::before {
+        left: calc(0px - var(--support-tooltip-arrow-border-size));
+        border-top-width: var(--support-tooltip-arrow-border-size);
+        border-bottom-width: var(--support-tooltip-arrow-border-size);
+        border-right: var(--support-tooltip-arrow-border-size) solid var(--support-tooltip-border);
+      }
+
+      .support-tooltip-bubble[data-arrow-side="left"]::after {
+        left: calc(1px - var(--support-tooltip-arrow-fill-size));
+        border-top-width: var(--support-tooltip-arrow-fill-size);
+        border-bottom-width: var(--support-tooltip-arrow-fill-size);
+        border-right: var(--support-tooltip-arrow-fill-size) solid var(--support-tooltip-bg-bottom);
+      }
+
+      .support-tooltip-bubble[data-arrow-side="top"][data-arrow-align="start"]::before,
+      .support-tooltip-bubble[data-arrow-side="bottom"][data-arrow-align="start"]::before {
+        left: var(--support-tooltip-arrow-border-inset);
+      }
+
+      .support-tooltip-bubble[data-arrow-side="top"][data-arrow-align="start"]::after,
+      .support-tooltip-bubble[data-arrow-side="bottom"][data-arrow-align="start"]::after {
+        left: var(--support-tooltip-arrow-fill-inset);
+      }
+
+      .support-tooltip-bubble[data-arrow-side="top"][data-arrow-align="center"]::before,
+      .support-tooltip-bubble[data-arrow-side="top"][data-arrow-align="center"]::after,
+      .support-tooltip-bubble[data-arrow-side="bottom"][data-arrow-align="center"]::before,
+      .support-tooltip-bubble[data-arrow-side="bottom"][data-arrow-align="center"]::after {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .support-tooltip-bubble[data-arrow-side="top"][data-arrow-align="end"]::before,
+      .support-tooltip-bubble[data-arrow-side="bottom"][data-arrow-align="end"]::before {
+        right: var(--support-tooltip-arrow-border-inset);
+      }
+
+      .support-tooltip-bubble[data-arrow-side="top"][data-arrow-align="end"]::after,
+      .support-tooltip-bubble[data-arrow-side="bottom"][data-arrow-align="end"]::after {
+        right: var(--support-tooltip-arrow-fill-inset);
+      }
+
+      .support-tooltip-bubble[data-arrow-side="right"][data-arrow-align="start"]::before,
+      .support-tooltip-bubble[data-arrow-side="left"][data-arrow-align="start"]::before {
+        top: var(--support-tooltip-arrow-border-inset);
+      }
+
+      .support-tooltip-bubble[data-arrow-side="right"][data-arrow-align="start"]::after,
+      .support-tooltip-bubble[data-arrow-side="left"][data-arrow-align="start"]::after {
+        top: var(--support-tooltip-arrow-fill-inset);
+      }
+
+      .support-tooltip-bubble[data-arrow-side="right"][data-arrow-align="center"]::before,
+      .support-tooltip-bubble[data-arrow-side="right"][data-arrow-align="center"]::after,
+      .support-tooltip-bubble[data-arrow-side="left"][data-arrow-align="center"]::before,
+      .support-tooltip-bubble[data-arrow-side="left"][data-arrow-align="center"]::after {
+        top: 50%;
         transform: translateY(-50%);
       }
 
-      .support-tooltip:hover .support-tooltip-bubble,
-      .support-tooltip:focus-within .support-tooltip-bubble {
-        opacity: 1;
+      .support-tooltip-bubble[data-arrow-side="right"][data-arrow-align="end"]::before,
+      .support-tooltip-bubble[data-arrow-side="left"][data-arrow-align="end"]::before {
+        bottom: var(--support-tooltip-arrow-border-inset);
+      }
+
+      .support-tooltip-bubble[data-arrow-side="right"][data-arrow-align="end"]::after,
+      .support-tooltip-bubble[data-arrow-side="left"][data-arrow-align="end"]::after {
+        bottom: var(--support-tooltip-arrow-fill-inset);
+      }
+
+      .support-tooltip-bubble[data-visible="true"] {
         visibility: visible;
-        transform: translateY(-50%) translateX(0);
-      }
-
-      @media (max-width: 860px) {
-        .support-tooltip-bubble {
-          left: auto;
-          right: 0;
-          top: calc(100% + 12px);
-          width: min(320px, calc(100vw - 32px));
-          transform: translateY(-6px);
-        }
-
-        .support-tooltip-bubble::before {
-          left: auto;
-          right: 12px;
-          top: -9px;
-          width: 0;
-          height: 0;
-          border-left: 9px solid transparent;
-          border-right: 9px solid transparent;
-          border-top: 0;
-          border-bottom: 9px solid rgba(214, 219, 227, 0.95);
-          transform: none;
-        }
-
-        .support-tooltip-bubble::after {
-          left: auto;
-          right: 14px;
-          top: -7px;
-          width: 0;
-          height: 0;
-          border-left: 7px solid transparent;
-          border-right: 7px solid transparent;
-          border-top: 0;
-          border-bottom: 8px solid #fcfdfe;
-          transform: none;
-        }
-
-        .support-tooltip:hover .support-tooltip-bubble,
-        .support-tooltip:focus-within .support-tooltip-bubble {
-          transform: translateY(0);
-        }
-      }
-
-      @media (max-width: 560px) {
-        .support-tooltip-bubble {
-          left: 50%;
-          right: auto;
-          width: min(320px, calc(100vw - 24px));
-          transform: translateX(-50%) translateY(-6px);
-        }
-
-        .support-tooltip-bubble::before {
-          left: 50%;
-          right: auto;
-          transform: translateX(-50%);
-        }
-
-        .support-tooltip-bubble::after {
-          left: 50%;
-          right: auto;
-          transform: translateX(-50%);
-        }
-
-        .support-tooltip:hover .support-tooltip-bubble,
-        .support-tooltip:focus-within .support-tooltip-bubble {
-          transform: translateX(-50%) translateY(0);
-        }
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1);
       }
 
       .text-shimmer {
@@ -2654,10 +2701,10 @@ const structuredData = [
             <p class="shortcut-store-note">
               <span data-i18n="cws_support_note">{initialUi.cwsSupportNote}</span>
               <span class="support-tooltip">
-                <button class="support-tooltip-trigger" type="button" aria-label={initialUi.tooltipAria} data-i18n-aria-label="support_tooltip_aria">
+                <button class="support-tooltip-trigger" type="button" aria-label={initialUi.tooltipAria} aria-describedby="support-tooltip-bubble" data-i18n-aria-label="support_tooltip_aria">
                   <i class="ri-question-line" aria-hidden="true"></i>
                 </button>
-                <span class="support-tooltip-bubble" role="tooltip" data-i18n-html="support_tooltip">
+                <span id="support-tooltip-bubble" class="support-tooltip-bubble" role="tooltip" data-visible="false" aria-hidden="true" data-tooltip-placement="right" data-arrow-side="left" data-arrow-align="center" data-i18n-html="support_tooltip">
                   {initialUi.supportTooltip}
                 </span>
               </span>
@@ -2775,7 +2822,7 @@ const structuredData = [
           cws_badge_alt: "在 Chrome 应用商店中获取",
           cws_support_note: "支持 Dia \\ Edge \\ Comet \\ Atlas \\ Helium 浏览器",
           support_tooltip_aria: "关于 Arc 迁移支持",
-          support_tooltip: "为从 Arc 迁移到 Dia 或 Chrome 的用户保留熟悉的命令栏搜索体验。<strong>Lumno 受 Arc 式交互启发，但与 Arc 无关联。</strong>",
+          support_tooltip: "为从 Arc 迁移到其他浏览器的用户保留熟悉的命令栏搜索体验。<strong>Lumno 受 Arc 式交互启发，但与 Arc 无关联。</strong>",
           feature_search_title: "搜索浏览器中的任意页面",
           feature_search_desc: "支持书签、历史记录、已打开页面和最常访问",
           feature_sitesearch_title: "自定义站内搜索",
@@ -2815,7 +2862,7 @@ const structuredData = [
           cws_badge_alt: "在 Chrome 線上應用程式商店中取得",
           cws_support_note: "支援 Dia \\ Edge \\ Comet \\ Atlas \\ Helium 瀏覽器",
           support_tooltip_aria: "關於 Arc 遷移支援",
-          support_tooltip: "為從 Arc 遷移到 Dia 或 Chrome 的使用者保留熟悉的命令欄搜尋體驗。<strong>Lumno 受 Arc 式互動啟發，但與 Arc 無關聯。</strong>",
+          support_tooltip: "為從 Arc 遷移到其他瀏覽器的使用者保留熟悉的命令欄搜尋體驗。<strong>Lumno 受 Arc 式互動啟發，但與 Arc 無關聯。</strong>",
           feature_search_title: "搜尋瀏覽器中的任意頁面",
           feature_search_desc: "支援書籤、歷史紀錄、已開啟頁面與最常造訪",
           feature_sitesearch_title: "自訂站內搜尋",
@@ -2855,7 +2902,7 @@ const structuredData = [
           cws_badge_alt: "Get it from Chrome Web Store",
           cws_support_note: "Supports Dia \\ Edge \\ Comet \\ Atlas \\ Helium browsers",
           support_tooltip_aria: "About Arc migration support",
-          support_tooltip: "Keeps a familiar command-bar search workflow for people moving from Arc to Dia or Chrome. <strong>Lumno is inspired by Arc-like interactions, but is not affiliated with Arc.</strong>",
+          support_tooltip: "Keeps a familiar command-bar search workflow for people moving from Arc to other browsers. <strong>Lumno is inspired by Arc-like interactions, but is not affiliated with Arc.</strong>",
           feature_search_title: "Search any page in your browser",
           feature_search_desc: "Search bookmarks, history, open pages, and frequently visited sites",
           feature_sitesearch_title: "Custom site search",
@@ -2933,6 +2980,203 @@ const structuredData = [
         );
       }
 
+      const SUPPORT_TOOLTIP_PLACEMENTS = Object.freeze([
+        "right",
+        "bottom-end",
+        "bottom",
+        "bottom-start",
+        "left",
+        "top-start",
+        "top",
+        "top-end"
+      ]);
+      const SUPPORT_TOOLTIP_MARGIN = 12;
+      const SUPPORT_TOOLTIP_GAP = 12;
+      const SUPPORT_TOOLTIP_ALIGN_INSET = 22;
+
+      function clampNumber(value, min, max) {
+        const safeMax = Math.max(min, max);
+        return Math.min(Math.max(value, min), safeMax);
+      }
+
+      function getSupportTooltipPlacementCandidate(placement, triggerRect, tooltipRect) {
+        const triggerCenterX = triggerRect.left + triggerRect.width / 2;
+        const triggerCenterY = triggerRect.top + triggerRect.height / 2;
+        const candidate = {
+          placement,
+          arrowSide: "left",
+          arrowAlign: "center",
+          left: triggerRect.right + SUPPORT_TOOLTIP_GAP,
+          top: triggerCenterY - tooltipRect.height / 2
+        };
+
+        if (placement === "left") {
+          candidate.arrowSide = "right";
+          candidate.left = triggerRect.left - tooltipRect.width - SUPPORT_TOOLTIP_GAP;
+          candidate.top = triggerCenterY - tooltipRect.height / 2;
+        } else if (placement.startsWith("top")) {
+          candidate.arrowSide = "bottom";
+          candidate.arrowAlign = placement.endsWith("start") ? "start" : placement.endsWith("end") ? "end" : "center";
+          candidate.top = triggerRect.top - tooltipRect.height - SUPPORT_TOOLTIP_GAP;
+          if (candidate.arrowAlign === "start") {
+            candidate.left = triggerRect.left - SUPPORT_TOOLTIP_ALIGN_INSET;
+          } else if (candidate.arrowAlign === "end") {
+            candidate.left = triggerRect.right - tooltipRect.width + SUPPORT_TOOLTIP_ALIGN_INSET;
+          } else {
+            candidate.left = triggerCenterX - tooltipRect.width / 2;
+          }
+        } else if (placement.startsWith("bottom")) {
+          candidate.arrowSide = "top";
+          candidate.arrowAlign = placement.endsWith("start") ? "start" : placement.endsWith("end") ? "end" : "center";
+          candidate.top = triggerRect.bottom + SUPPORT_TOOLTIP_GAP;
+          if (candidate.arrowAlign === "start") {
+            candidate.left = triggerRect.left - SUPPORT_TOOLTIP_ALIGN_INSET;
+          } else if (candidate.arrowAlign === "end") {
+            candidate.left = triggerRect.right - tooltipRect.width + SUPPORT_TOOLTIP_ALIGN_INSET;
+          } else {
+            candidate.left = triggerCenterX - tooltipRect.width / 2;
+          }
+        }
+
+        return candidate;
+      }
+
+      function getSupportTooltipOverflowScore(candidate, tooltipRect, viewportWidth, viewportHeight) {
+        const overflowLeft = Math.max(0, SUPPORT_TOOLTIP_MARGIN - candidate.left);
+        const overflowTop = Math.max(0, SUPPORT_TOOLTIP_MARGIN - candidate.top);
+        const overflowRight = Math.max(0, candidate.left + tooltipRect.width + SUPPORT_TOOLTIP_MARGIN - viewportWidth);
+        const overflowBottom = Math.max(0, candidate.top + tooltipRect.height + SUPPORT_TOOLTIP_MARGIN - viewportHeight);
+        return overflowLeft + overflowTop + overflowRight + overflowBottom;
+      }
+
+      function getSupportTooltipParts(host) {
+        if (!(host instanceof HTMLElement)) return null;
+        const trigger = host.querySelector(".support-tooltip-trigger");
+        if (!(trigger instanceof HTMLElement)) return null;
+        const bubbleId = trigger.getAttribute("aria-describedby");
+        const bubble = bubbleId
+          ? document.getElementById(bubbleId)
+          : host.querySelector(".support-tooltip-bubble");
+        if (!(bubble instanceof HTMLElement)) return null;
+        return { trigger, bubble };
+      }
+
+      function positionSupportTooltipBubble(host) {
+        const parts = getSupportTooltipParts(host);
+        if (!parts) return null;
+        const { trigger, bubble } = parts;
+
+        const viewportWidth = Math.round(window.visualViewport?.width || window.innerWidth || document.documentElement.clientWidth || 0);
+        const viewportHeight = Math.round(window.visualViewport?.height || window.innerHeight || document.documentElement.clientHeight || 0);
+        const triggerRect = trigger.getBoundingClientRect();
+        const tooltipRect = bubble.getBoundingClientRect();
+        const bestPlacement = SUPPORT_TOOLTIP_PLACEMENTS
+          .map((placement) => {
+            const candidate = getSupportTooltipPlacementCandidate(placement, triggerRect, tooltipRect);
+            return {
+              ...candidate,
+              overflowScore: getSupportTooltipOverflowScore(candidate, tooltipRect, viewportWidth, viewportHeight)
+            };
+          })
+          .sort((a, b) => a.overflowScore - b.overflowScore)[0];
+        if (!bestPlacement) return null;
+
+        const left = clampNumber(bestPlacement.left, SUPPORT_TOOLTIP_MARGIN, viewportWidth - tooltipRect.width - SUPPORT_TOOLTIP_MARGIN);
+        const top = clampNumber(bestPlacement.top, SUPPORT_TOOLTIP_MARGIN, viewportHeight - tooltipRect.height - SUPPORT_TOOLTIP_MARGIN);
+        bubble.style.setProperty("--support-tooltip-left", `${Math.round(left)}px`);
+        bubble.style.setProperty("--support-tooltip-top", `${Math.round(top)}px`);
+        bubble.dataset.tooltipPlacement = bestPlacement.placement;
+        bubble.dataset.arrowSide = bestPlacement.arrowSide;
+        bubble.dataset.arrowAlign = bestPlacement.arrowAlign;
+
+        return Object.freeze({
+          placement: bestPlacement.placement,
+          arrowSide: bestPlacement.arrowSide,
+          arrowAlign: bestPlacement.arrowAlign,
+          left: Math.round(left),
+          top: Math.round(top)
+        });
+      }
+
+      function showSupportTooltipBubble(host, options = {}) {
+        const parts = getSupportTooltipParts(host);
+        if (!parts) return;
+        positionSupportTooltipBubble(host);
+        if (options.persist) parts.bubble.dataset.pinned = "true";
+        parts.bubble.dataset.visible = "true";
+        parts.bubble.setAttribute("aria-hidden", "false");
+      }
+
+      function hideSupportTooltipBubble(host) {
+        const parts = getSupportTooltipParts(host);
+        if (!parts) return;
+        delete parts.bubble.dataset.pinned;
+        parts.bubble.dataset.visible = "false";
+        parts.bubble.setAttribute("aria-hidden", "true");
+      }
+
+      function positionActiveSupportTooltipBubble() {
+        document.querySelectorAll(".support-tooltip").forEach((host) => {
+          if (!(host instanceof HTMLElement)) return;
+          const parts = getSupportTooltipParts(host);
+          const active = host.matches(":hover") || host.contains(document.activeElement) || parts?.bubble?.dataset.visible === "true";
+          if (active) positionSupportTooltipBubble(host);
+        });
+      }
+
+      function setupSupportTooltipPlacement() {
+        const hosts = Array.from(document.querySelectorAll(".support-tooltip"));
+        if (!hosts.length) return;
+        const schedulePosition = (host) => {
+          window.requestAnimationFrame(() => positionSupportTooltipBubble(host));
+        };
+
+        hosts.forEach((host) => {
+          if (!(host instanceof HTMLElement)) return;
+          const parts = getSupportTooltipParts(host);
+          if (!parts) return;
+          const { trigger, bubble } = parts;
+          if (bubble.parentElement !== document.body) {
+            document.body.appendChild(bubble);
+          }
+          bubble.dataset.visible = "false";
+          bubble.setAttribute("aria-hidden", "true");
+
+          const scheduleShow = (options = {}) => {
+            schedulePosition(host);
+            window.requestAnimationFrame(() => showSupportTooltipBubble(host, options));
+          };
+
+          host.addEventListener("mouseenter", scheduleShow);
+          host.addEventListener("mouseleave", () => {
+            if (bubble.dataset.pinned === "true") return;
+            hideSupportTooltipBubble(host);
+          });
+          host.addEventListener("focusin", scheduleShow);
+          host.addEventListener("focusout", (event) => {
+            if (event.relatedTarget instanceof Node && host.contains(event.relatedTarget)) return;
+            if (bubble.dataset.pinned === "true") return;
+            hideSupportTooltipBubble(host);
+          });
+          trigger.addEventListener("pointerdown", scheduleShow);
+          trigger.addEventListener("click", () => scheduleShow({ persist: true }));
+          positionSupportTooltipBubble(host);
+        });
+
+        document.addEventListener("pointerdown", (event) => {
+          const target = event.target instanceof Element ? event.target : null;
+          document.querySelectorAll(".support-tooltip").forEach((host) => {
+            if (!(host instanceof HTMLElement)) return;
+            if (target && host.contains(target)) return;
+            hideSupportTooltipBubble(host);
+          });
+        });
+        window.addEventListener("resize", positionActiveSupportTooltipBubble, { passive: true });
+        window.addEventListener("scroll", positionActiveSupportTooltipBubble, { passive: true });
+        window.visualViewport?.addEventListener("resize", positionActiveSupportTooltipBubble, { passive: true });
+        window.visualViewport?.addEventListener("scroll", positionActiveSupportTooltipBubble, { passive: true });
+      }
+
       function applyI18n(locale) {
         const resolvedLocale = I18N_MESSAGES[locale] ? locale : FALLBACK_LOCALE;
         document.documentElement.lang = resolvedLocale;
@@ -2966,6 +3210,7 @@ const structuredData = [
           if (!key) return;
           node.setAttribute("alt", getMessage(resolvedLocale, key));
         });
+        positionActiveSupportTooltipBubble();
       }
 
       function syncCommunityAction(locale) {
@@ -3084,6 +3329,7 @@ const structuredData = [
       }
 
       setupQrcodeModal();
+      setupSupportTooltipPlacement();
       applySafariBrowserClass();
 
       function syncViewportInsets() {

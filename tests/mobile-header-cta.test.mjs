@@ -63,3 +63,19 @@ test("mobile release feedback CTA matches the icon-only social buttons", () => {
     "release mobile feedback CTA should hide its text label",
   );
 });
+
+test("mobile release banner cannot expand wider than the viewport", () => {
+  const source = fs.readFileSync(path.join(workspaceRoot, "src/pages/release/index.astro"), "utf8");
+
+  assert.match(
+    source,
+    /\.top-banner\s*\{[^}]*width:\s*100%;[^}]*max-width:\s*100%;/,
+    "release banner should have an explicit content-width constraint",
+  );
+
+  assert.match(
+    source,
+    /@media \(max-width:\s*767px\)\s*\{[\s\S]*?\.top-banner\s*\{[^}]*min-height:\s*0;/,
+    "release mobile banner should not let min-height and aspect-ratio force a wider box",
+  );
+});

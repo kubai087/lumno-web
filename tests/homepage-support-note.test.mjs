@@ -29,6 +29,46 @@ test("homepage support note is localized for the expanded browser list", () => {
   }
 });
 
+test("homepage provides a localized Microsoft Edge Add-ons badge beside the Chrome store badge", () => {
+  const source = readSource("src/pages/index.astro");
+
+  assert.match(
+    source,
+    /class="shortcut-store-badges"[\s\S]*?chromewebstore\.google\.com[\s\S]*?microsoftedge\.microsoft\.com\/addons\/detail\/pfbklkaefmfamjpibfiapaiihlddhchc/,
+    "the Edge Add-ons link should be grouped directly with the Chrome store badge",
+  );
+
+  for (const copy of [
+    "在 Microsoft Edge 加载项中安装 Lumno",
+    "在 Microsoft Edge 附加元件中安裝 Lumno",
+    "Install Lumno from Microsoft Edge Add-ons",
+  ]) {
+    assert.ok(source.includes(copy), `Edge badge should include localized text: ${copy}`);
+  }
+
+  assert.match(
+    source,
+    /src="\/assets\/microsoft-edge-addons-badge\.png"/,
+    "the Edge link should use the official badge image asset",
+  );
+});
+
+test("mobile store badges preserve their intrinsic aspect ratios", () => {
+  const source = readSource("src/pages/index.astro");
+
+  assert.doesNotMatch(
+    source,
+    /\.shortcut-store-badge--edge\s*\{\s*height:\s*min\([^}]+\);\s*\}/,
+    "the Edge badge must not use a viewport-derived height while its width is constrained",
+  );
+
+  assert.match(
+    source,
+    /\.shortcut-store-badge\s*\{\s*width:\s*min\(68vw,\s*var\(--store-badge-width\)\);\s*height:\s*auto;/,
+    "the tablet breakpoint should scale store badges by width only",
+  );
+});
+
 test("homepage support note stays on one line until the viewport is too narrow", () => {
   const source = readSource("src/pages/index.astro");
 

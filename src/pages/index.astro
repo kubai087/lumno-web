@@ -71,6 +71,8 @@ const initialUi = {
     qrcodeCloseAria: "关闭二维码弹窗",
     cwsBadgeAria: "在 Chrome 应用商店中安装 Lumno",
     cwsBadgeAlt: "在 Chrome 应用商店中获取",
+    edgeBadgeAria: "在 Microsoft Edge 加载项中安装 Lumno",
+    edgeBadgeAlt: "从 Microsoft Edge 获取",
     logoIconAlt: "Lumno 图标",
     cwsSupportNote: "支持 Dia \\ Edge \\ Comet \\ Atlas \\ Helium 浏览器",
     tooltipAria: "关于 Arc 迁移支持",
@@ -93,6 +95,8 @@ const initialUi = {
     qrcodeCloseAria: "關閉二維碼彈窗",
     cwsBadgeAria: "在 Chrome 線上應用程式商店安裝 Lumno",
     cwsBadgeAlt: "在 Chrome 線上應用程式商店中取得",
+    edgeBadgeAria: "在 Microsoft Edge 附加元件中安裝 Lumno",
+    edgeBadgeAlt: "從 Microsoft Edge 取得",
     logoIconAlt: "Lumno 圖示",
     cwsSupportNote: "支援 Dia \\ Edge \\ Comet \\ Atlas \\ Helium 瀏覽器",
     tooltipAria: "關於 Arc 遷移支援",
@@ -115,6 +119,8 @@ const initialUi = {
     qrcodeCloseAria: "Close QR code dialog",
     cwsBadgeAria: "Install Lumno from the Chrome Web Store",
     cwsBadgeAlt: "Get it from the Chrome Web Store",
+    edgeBadgeAria: "Install Lumno from Microsoft Edge Add-ons",
+    edgeBadgeAlt: "Get it from Microsoft Edge",
     logoIconAlt: "Lumno icon",
     cwsSupportNote: "Supports Dia \\ Edge \\ Comet \\ Atlas \\ Helium browsers",
     tooltipAria: "About Arc migration support",
@@ -501,10 +507,25 @@ const structuredData = [
         align-items: center;
       }
 
+      .shortcut-store-badges {
+        --store-badge-width: 198px;
+        --store-badge-height: 60px;
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        gap: 12px;
+      }
+
       .shortcut-store-badge {
-        width: 248px;
-        height: 75px;
+        width: var(--store-badge-width);
+        height: var(--store-badge-height);
         display: block;
+      }
+
+      .shortcut-store-badge--edge {
+        display: block;
+        width: auto;
+        height: 52px;
       }
 
       .shortcut-store-note {
@@ -2097,13 +2118,18 @@ const structuredData = [
           align-items: center;
         }
 
+        .shortcut-store-badges {
+          flex-wrap: wrap;
+          justify-content: center;
+        }
+
         .shortcut-store-note {
           justify-content: center;
           text-align: center;
         }
 
         .shortcut-store-badge {
-          width: min(68vw, 248px);
+          width: min(68vw, var(--store-badge-width));
           height: auto;
         }
 
@@ -2403,7 +2429,7 @@ const structuredData = [
         }
 
         .shortcut-store-badge {
-          width: min(74vw, 248px);
+          width: min(74vw, var(--store-badge-width));
           height: auto;
         }
 
@@ -2679,25 +2705,46 @@ const structuredData = [
           </div>
 
           <div class="shortcut-line shortcut-line-store" data-node-id="3364:535">
-            <a
-              class="shortcut-store-link"
-              href="https://chromewebstore.google.com/detail/nggfkkbmogmadfoikakkfegkoilfcfao"
-              target="_blank"
-              rel="noreferrer noopener"
-              aria-label={initialUi.cwsBadgeAria}
-              data-i18n-aria-label="cws_badge_aria"
-              data-analytics-event="open_chrome_web_store"
-              data-analytics-category="cta"
-              data-analytics-label="home_store_badge"
-            >
-              <img
-                class="shortcut-store-badge mark-svg"
-                src="/assets/chrome-web-store-large-bordered.png"
-                alt={initialUi.cwsBadgeAlt}
-                data-i18n-alt="cws_badge_alt"
-                draggable="false"
-              />
-            </a>
+            <div class="shortcut-store-badges">
+              <a
+                class="shortcut-store-link"
+                href="https://chromewebstore.google.com/detail/nggfkkbmogmadfoikakkfegkoilfcfao"
+                target="_blank"
+                rel="noreferrer noopener"
+                aria-label={initialUi.cwsBadgeAria}
+                data-i18n-aria-label="cws_badge_aria"
+                data-analytics-event="open_chrome_web_store"
+                data-analytics-category="cta"
+                data-analytics-label="home_store_badge"
+              >
+                <img
+                  class="shortcut-store-badge mark-svg"
+                  src="/assets/chrome-web-store-large-bordered.png"
+                  alt={initialUi.cwsBadgeAlt}
+                  data-i18n-alt="cws_badge_alt"
+                  draggable="false"
+                />
+              </a>
+              <a
+                class="shortcut-store-link"
+                href="https://microsoftedge.microsoft.com/addons/detail/pfbklkaefmfamjpibfiapaiihlddhchc"
+                target="_blank"
+                rel="noreferrer noopener"
+                aria-label={initialUi.edgeBadgeAria}
+                data-i18n-aria-label="edge_badge_aria"
+                data-analytics-event="open_edge_addons"
+                data-analytics-category="cta"
+                data-analytics-label="home_edge_addons_badge"
+              >
+                <img
+                  class="shortcut-store-badge shortcut-store-badge--edge"
+                  src="/assets/microsoft-edge-addons-badge.png"
+                  alt={initialUi.edgeBadgeAlt}
+                  data-i18n-alt="edge_badge_alt"
+                  draggable="false"
+                />
+              </a>
+            </div>
             <p class="shortcut-store-note">
               <span data-i18n="cws_support_note">{initialUi.cwsSupportNote}</span>
               <span class="support-tooltip">
@@ -2820,6 +2867,8 @@ const structuredData = [
           view_release: "更新日志",
           cws_badge_aria: "在 Chrome 应用商店中安装 Lumno",
           cws_badge_alt: "在 Chrome 应用商店中获取",
+          edge_badge_aria: "在 Microsoft Edge 加载项中安装 Lumno",
+          edge_badge_alt: "从 Microsoft Edge 获取",
           cws_support_note: "支持 Dia \\ Edge \\ Comet \\ Atlas \\ Helium 浏览器",
           support_tooltip_aria: "关于 Arc 迁移支持",
           support_tooltip: "为从 Arc 迁移到其他浏览器的用户保留熟悉的命令栏搜索体验。<strong>Lumno 受 Arc 式交互启发，但与 Arc 无关联。</strong>",
@@ -2860,6 +2909,8 @@ const structuredData = [
           view_release: "更新日誌",
           cws_badge_aria: "在 Chrome 線上應用程式商店安裝 Lumno",
           cws_badge_alt: "在 Chrome 線上應用程式商店中取得",
+          edge_badge_aria: "在 Microsoft Edge 附加元件中安裝 Lumno",
+          edge_badge_alt: "從 Microsoft Edge 取得",
           cws_support_note: "支援 Dia \\ Edge \\ Comet \\ Atlas \\ Helium 瀏覽器",
           support_tooltip_aria: "關於 Arc 遷移支援",
           support_tooltip: "為從 Arc 遷移到其他瀏覽器的使用者保留熟悉的命令欄搜尋體驗。<strong>Lumno 受 Arc 式互動啟發，但與 Arc 無關聯。</strong>",
@@ -2900,6 +2951,8 @@ const structuredData = [
           view_release: "Release Notes",
           cws_badge_aria: "Install Lumno from Chrome Web Store",
           cws_badge_alt: "Get it from Chrome Web Store",
+          edge_badge_aria: "Install Lumno from Microsoft Edge Add-ons",
+          edge_badge_alt: "Get it from Microsoft Edge",
           cws_support_note: "Supports Dia \\ Edge \\ Comet \\ Atlas \\ Helium browsers",
           support_tooltip_aria: "About Arc migration support",
           support_tooltip: "Keeps a familiar command-bar search workflow for people moving from Arc to other browsers. <strong>Lumno is inspired by Arc-like interactions, but is not affiliated with Arc.</strong>",

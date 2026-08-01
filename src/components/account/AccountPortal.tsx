@@ -163,9 +163,12 @@ const COPY: Record<Locale, Copy> = {
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function getProvider(user: User): string {
-  const provider = String(user.app_metadata?.provider || user.identities?.[0]?.provider || "email");
-  if (provider === "github") return "GitHub";
-  if (provider === "google") return "Google";
+  const providers = [
+    user.app_metadata?.provider,
+    ...(user.identities || []).map((identity) => identity.provider),
+  ].map((provider) => String(provider || "").toLowerCase());
+  if (providers.includes("github")) return "GitHub";
+  if (providers.includes("google")) return "Google";
   return "Email";
 }
 

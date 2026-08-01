@@ -20,6 +20,7 @@ test("account portal prioritizes Google and GitHub while keeping email in previe
   assert.match(source, /auth-email-disclosure/);
   assert.match(source, /signInWithOAuth/);
   assert.match(source, /signInWithOtp/);
+  assert.match(source, /providers\.includes\("github"\)/);
 });
 
 test("auth routes use PKCE and never allow an external post-login return URL", () => {

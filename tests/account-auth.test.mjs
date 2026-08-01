@@ -19,6 +19,9 @@ test("account portal prioritizes Google and GitHub while keeping email in previe
   assert.match(source, /邮箱验证码登录（内测）/);
   assert.match(source, /auth-email-disclosure/);
   assert.match(source, /signInWithOAuth/);
+  assert.match(source, /continueWithProvider\("google"\)/);
+  assert.match(source, /busy === "google"/);
+  assert.doesNotMatch(source, /googleSoon|aria-disabled="true"/);
   assert.match(source, /signInWithOtp/);
   assert.match(source, /providers\.includes\("github"\)/);
 });

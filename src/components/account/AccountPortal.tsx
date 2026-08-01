@@ -12,7 +12,6 @@ type Copy = {
   title: string;
   subtitle: string;
   google: string;
-  googleSoon: string;
   github: string;
   recommended: string;
   emailBeta: string;
@@ -51,7 +50,6 @@ const COPY: Record<Locale, Copy> = {
     title: "登录 Lumno",
     subtitle: "在每台设备继续你的设置、快捷方式与自定义壁纸。",
     google: "使用 Google 继续",
-    googleSoon: "即将支持",
     github: "使用 GitHub 继续",
     recommended: "推荐",
     emailBeta: "邮箱验证码登录（内测）",
@@ -88,7 +86,6 @@ const COPY: Record<Locale, Copy> = {
     title: "登入 Lumno",
     subtitle: "在每台裝置延續你的設定、快捷方式與自訂桌布。",
     google: "使用 Google 繼續",
-    googleSoon: "即將支援",
     github: "使用 GitHub 繼續",
     recommended: "推薦",
     emailBeta: "電子郵件驗證碼登入（內測）",
@@ -125,7 +122,6 @@ const COPY: Record<Locale, Copy> = {
     title: "Sign in to Lumno",
     subtitle: "Keep your settings, shortcuts, and custom wallpapers with you on every device.",
     google: "Continue with Google",
-    googleSoon: "Coming soon",
     github: "Continue with GitHub",
     recommended: "Recommended",
     emailBeta: "Email code sign-in (preview)",
@@ -465,16 +461,16 @@ export default function AccountPortal({
       </div>
 
       <div className="auth-provider-stack">
-        <button className="auth-button auth-button-provider auth-button-github" type="button" onClick={() => continueWithProvider("github")} disabled={Boolean(busy)}>
-          {busy === "github" ? <LoadingMark /> : <i className="ri-github-fill" aria-hidden="true" />}
-          <span>{copy.github}</span>
+        <button className="auth-button auth-button-provider auth-button-google" type="button" onClick={() => continueWithProvider("google")} disabled={Boolean(busy)}>
+          {busy === "google" ? <LoadingMark /> : <i className="ri-google-fill" aria-hidden="true" />}
+          <span>{copy.google}</span>
           <small className="auth-provider-badge">{copy.recommended}</small>
           <i className="ri-arrow-right-up-line auth-button-tail" aria-hidden="true" />
         </button>
-        <button className="auth-button auth-button-provider auth-button-google" type="button" disabled aria-disabled="true">
-          <i className="ri-google-fill" aria-hidden="true" />
-          <span>{copy.google}</span>
-          <small className="auth-provider-soon">{copy.googleSoon}</small>
+        <button className="auth-button auth-button-provider auth-button-github" type="button" onClick={() => continueWithProvider("github")} disabled={Boolean(busy)}>
+          {busy === "github" ? <LoadingMark /> : <i className="ri-github-fill" aria-hidden="true" />}
+          <span>{copy.github}</span>
+          <i className="ri-arrow-right-up-line auth-button-tail" aria-hidden="true" />
         </button>
       </div>
 

@@ -12,7 +12,7 @@ import {
 const seoPath = "/privacy/";
 const pageTitle = "Lumno Privacy Policy | 隐私政策";
 const pageDescription =
-  "Lumno 隐私政策：说明扩展的本地处理、账号登录、配置与媒体同步、匿名或账号关联使用统计，以及第三方服务请求。";
+  "Lumno 隐私政策：说明扩展的本地处理、账号登录、配置与媒体同步、可选账号关联使用统计，以及第三方服务请求。";
 const pageKeywords = buildKeywords([
   "Lumno 隐私政策",
   "Lumno privacy policy",
@@ -275,7 +275,7 @@ const structuredData = [
         <p class="lead">
           Lumno 默认尽量在浏览器本地处理历史、书签和标签页。登录后，你可以选择跨设备同步配置与自定义媒体；Lumno 也可能收集不包含具体浏览内容的功能使用统计。本页面说明这些数据的边界与用途。
         </p>
-        <p class="meta">Last updated / 最近更新：2026-08-01</p>
+        <p class="meta">Effective and last updated / 生效及最近更新：2026-08-02</p>
       </section>
 
       <section class="content">
@@ -354,6 +354,9 @@ const structuredData = [
             Lumno 使用 Supabase 提供账号认证、数据库和私有对象存储，使用 Resend 发送邮箱验证码；当你选择社交登录时，Google 或 GitHub 会按照其各自的隐私政策处理登录请求。自定义壁纸存放在受访问控制的私有存储中，不作为公开链接发布。
           </p>
           <p>
+            账号、同步和媒体数据主要存放在 Supabase 日本东京区域。Supabase、Resend、Google 和 GitHub 可能在用户所在国家或地区以外处理身份、邮件或有限服务日志。Lumno 面向全球用户，并在适用时依赖履行服务所必需的处理、用户同意及服务商提供的数据保护条款和合法传输机制。
+          </p>
+          <p>
             网页登录页不加载 Lumno 的网站访问统计脚本。Lumno 官网的其他公开页面可能使用聚合访问统计；扩展内的产品使用统计与浏览内容分离，并只用于可靠性、功能采用情况和产品改进。
           </p>
           <p>
@@ -364,10 +367,13 @@ const structuredData = [
         <article class="card">
           <h2>7. Retention and Your Choices / 保存期限与用户选择</h2>
           <p>
-            你可以退出登录并停止新的同步。你可以联系我们请求导出或删除账号、同步配置、媒体文件及与账号关联的产品使用数据。为防止滥用、排查故障或履行法律义务，必要的安全日志可能在有限期限内保留。
+            账号、同步设置和媒体文件保留至你删除相关数据或永久删除账号。与账号关联的每日产品使用统计及配置属性保留 24 个月；到期后，仅把次数按“月份和功能指标”汇总为不含用户 ID、设备 ID、邮箱和配置属性的长期总数，并删除账号关联明细。统计上传的去重批次标识保留 30 天，同步写入的去重操作记录保留 90 天。
           </p>
           <p>
-            You may sign out to stop new sync activity and contact us to request access to or deletion of your account, synced settings, media files, and account-linked product usage data.
+            Account-linked daily usage and configuration attributes are retained for 24 months. After that, only non-identifying monthly totals per feature metric may be retained long term; these totals contain no user, device, email, or configuration identifiers. Accounts, synced settings, and media remain until deleted by the user.
+          </p>
+          <p>
+            当前 Supabase Free 计划的 API 与数据库日志保留 1 天；Resend 默认保留验证码邮件和投递记录 30 天。你可以退出登录、关闭可选统计，或联系我们请求访问、导出、更正或删除账号及关联数据。关闭统计会立即停止新统计并清除本机待上传计数；永久删除账号会删除云端账号、同步配置、媒体和仍可关联到账号的统计。
           </p>
         </article>
 
@@ -393,14 +399,28 @@ const structuredData = [
           <p>
             The developer states that Lumno does not sell user data and does not transfer user data for purposes unrelated to the extension's core functionality.
           </p>
+          <p>
+            Lumno 对从浏览器 API 和 Google API 获得的信息的使用遵守 Chrome Web Store User Data Policy（包括 Limited Use 要求）。Lumno 不将这些数据用于个性化广告；除具体支持请求获得用户同意、安全调查、法律义务，或聚合匿名化后的内部运营外，不允许人工读取用户内容。
+          </p>
         </article>
 
         <article class="card">
-          <h2>10. Contact / 联系方式</h2>
+          <h2>10. Children / 儿童</h2>
+          <p>
+            Lumno 面向一般用户，不专门面向 13 周岁以下儿童。未达到所在地区可独立同意个人信息处理年龄的用户，应在监护人同意和指导下使用账号、同步和可选统计功能。
+          </p>
+          <p>
+            Lumno is not directed to children under 13. Anyone below the age at which they may independently consent to personal-data processing in their region should use account, sync, and optional analytics features only with a guardian's consent and guidance.
+          </p>
+        </article>
+
+        <article class="card">
+          <h2>11. Contact / 联系方式</h2>
           <div class="contact">
-            <p>Developer / 开发者：Kubai087</p>
+            <p>开发者：枯白啃设计</p>
+            <p>Developer outside Chinese-language contexts: Kubai087</p>
             <p>Website / 网站：<a href={SITE_URL}>{SITE_URL}</a></p>
-            <p>Email / 邮箱：<a href="mailto:i@kubai.design">i@kubai.design</a></p>
+            <p>Privacy &amp; Security / 隐私与安全：<a href="mailto:i@kubai.design">i@kubai.design</a></p>
           </div>
         </article>
       </section>

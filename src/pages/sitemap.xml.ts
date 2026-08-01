@@ -40,7 +40,10 @@ export const GET: APIRoute = async () => {
     now,
   );
   const onboardingLastmod = readLastCommitIso(["src/pages/onboarding/index.astro"], now);
-  const privacyLastmod = readLastCommitIso(["src/pages/privacy/index.astro"], now);
+  const privacyLastmod = readLastCommitIso(
+    ["src/pages/privacy/index.astro", "src/content/privacy-policy.md"],
+    now,
+  );
   const localizedHomeUrls = getNonDefaultLocales().map((locale) => ({
     locale,
     loc: `${SITE_URL}${buildLocalizedPath(locale, "/")}`,

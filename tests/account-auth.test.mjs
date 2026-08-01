@@ -64,7 +64,10 @@ test("sensitive auth layout does not load site analytics or SEO scripts", () => 
 });
 
 test("privacy policy documents account, private sync media, and bounded metrics", () => {
-  const source = readSource("src/pages/privacy/index.astro");
+  const source = [
+    readSource("src/pages/privacy/index.astro"),
+    readSource("src/content/privacy-policy.md"),
+  ].join("\n");
 
   assert.match(source, /账号信息 \/ Account information/);
   assert.match(source, /同步内容 \/ Synced content/);

@@ -1,5 +1,7 @@
 ---
+import { marked } from "marked";
 import SeoHead from "../../components/SeoHead.astro";
+import privacyPolicySource from "../../content/privacy-policy.md?raw";
 import {
   SITE_NAME,
   SITE_URL,
@@ -35,6 +37,13 @@ const structuredData = [
     ],
   }),
 ];
+
+// Only repository-owned static Markdown is rendered here. User-provided input
+// must never be passed to this renderer without an explicit sanitization step.
+const privacyPolicyHtml = marked.parse(privacyPolicySource, {
+  async: false,
+  gfm: true,
+});
 ---
 
 <html lang="zh-CN">
@@ -54,16 +63,18 @@ const structuredData = [
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <style>
+    <link rel="stylesheet" href="/onboarding/assets/remixicon.css" />
+    <link rel="stylesheet" href="/onboarding/assets/fonts/open-sans/open-sans.css" />
+    <style is:global>
       :root {
-        --bg: #fafaf8;
-        --surface: rgba(255, 255, 255, 0.82);
-        --surface-strong: rgba(255, 255, 255, 0.94);
-        --text: #18202a;
-        --muted: #5f6875;
-        --line: rgba(24, 32, 42, 0.1);
-        --accent: #2263eb;
-        --shadow: 0 20px 60px rgba(13, 18, 28, 0.08);
+        --privacy-bg: #ffffff;
+        --privacy-text: #17211b;
+        --privacy-muted: #667069;
+        --privacy-line: #e5e9e6;
+        --privacy-line-strong: #d6ddd8;
+        --privacy-green: #45634f;
+        --privacy-green-soft: #f0f5f1;
+        --privacy-paper: #ffffff;
         --safe-area-bottom: 0px;
         --safe-area-bottom: env(safe-area-inset-bottom, 0px);
       }
@@ -72,356 +83,565 @@ const structuredData = [
         box-sizing: border-box;
       }
 
-      html,
+      html {
+        scroll-behavior: smooth;
+        background: var(--privacy-bg);
+      }
+
       body {
         margin: 0;
         min-height: 100%;
-        background:
-          radial-gradient(circle at top left, rgba(34, 99, 235, 0.08), transparent 34%),
-          radial-gradient(circle at top right, rgba(39, 171, 125, 0.08), transparent 32%),
-          linear-gradient(180deg, #f6f8fb 0%, #f8f7f2 52%, #fbfaf7 100%);
-        color: var(--text);
-        font-family: "Open Sans", "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+        background: var(--privacy-bg);
+        color: var(--privacy-text);
+        font-family: "Open Sans", "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
       }
 
       a {
-        color: var(--accent);
+        color: inherit;
+      }
+
+      .privacy-container {
+        width: min(1024px, 100%);
+        margin: 0 auto;
+      }
+
+      .privacy-header {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        border-bottom: 1px solid color-mix(in srgb, var(--privacy-line) 74%, transparent);
+        background: rgba(255, 255, 255, 0.88);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+      }
+
+      .privacy-header-inner {
+        min-height: 64px;
+        padding: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+
+      .privacy-brand {
+        display: inline-flex;
+        align-items: center;
         text-decoration: none;
       }
 
-      a:hover {
-        text-decoration: underline;
+      .privacy-brand img {
+        display: block;
+        width: 136px;
+        height: auto;
       }
 
-      .shell {
-        width: min(960px, calc(100vw - 32px));
-        margin: 0 auto;
-        padding: 48px 0 88px;
-        padding: 48px 0 max(88px, var(--safe-area-bottom));
-      }
-
-      .topbar {
+      .privacy-header-actions {
         display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 16px;
-        margin-bottom: 32px;
-      }
-
-      .brand {
-        display: inline-flex;
-        align-items: center;
-        gap: 12px;
-        color: var(--text);
-        font-weight: 700;
-        letter-spacing: 0.02em;
-      }
-
-      .brand-mark {
-        width: 40px;
-        height: 40px;
-        border-radius: 14px;
-        background: linear-gradient(135deg, #ffffff, #e8f0ff);
-        border: 1px solid rgba(34, 99, 235, 0.14);
-        display: grid;
-        place-items: center;
-        box-shadow: 0 10px 24px rgba(34, 99, 235, 0.12);
-      }
-
-      .brand-mark img {
-        width: 24px;
-        height: 24px;
-      }
-
-      .home-link {
-        display: inline-flex;
         align-items: center;
         gap: 8px;
-        padding: 10px 14px;
+      }
+
+      .privacy-header-link {
+        min-height: 36px;
+        padding: 0 14px;
+        border: 1px solid var(--privacy-line-strong);
         border-radius: 999px;
-        border: 1px solid var(--line);
-        background: rgba(255, 255, 255, 0.7);
-        color: var(--muted);
-        font-size: 14px;
-      }
-
-      .hero {
-        padding: 30px 32px;
-        border: 1px solid var(--line);
-        border-radius: 28px;
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(255, 255, 255, 0.82));
-        box-shadow: var(--shadow);
-        backdrop-filter: blur(12px);
-      }
-
-      .eyebrow {
+        background: linear-gradient(180deg, #ffffff 0%, #f1f3f1 100%);
+        color: #4f5b53;
+        box-shadow: 0 1px 2px rgba(23, 33, 27, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.8);
         display: inline-flex;
         align-items: center;
-        gap: 8px;
-        padding: 7px 11px;
-        border-radius: 999px;
-        background: rgba(34, 99, 235, 0.08);
-        color: var(--accent);
+        justify-content: center;
+        gap: 7px;
+        font-size: 13px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+      }
+
+      .privacy-header-link:focus-visible,
+      .privacy-markdown a:focus-visible,
+      .privacy-aside-link:focus-visible {
+        outline: 2px solid rgba(69, 99, 79, 0.42);
+        outline-offset: 3px;
+      }
+
+      @media (hover: hover) and (pointer: fine) {
+        .privacy-header-link:hover {
+          transform: translateY(-1px);
+          border-color: #c4cec7;
+          box-shadow: 0 8px 18px rgba(23, 33, 27, 0.07);
+        }
+      }
+
+      .privacy-main {
+        padding: 30px 24px max(72px, var(--safe-area-bottom));
+      }
+
+      .privacy-banner {
+        position: relative;
+        width: 100%;
+        min-height: 248px;
+        margin: 0 0 44px;
+        overflow: hidden;
+        border-radius: 16px;
+        background: #eef3ec;
+        aspect-ratio: 2200 / 586;
+      }
+
+      .privacy-banner::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, rgba(247, 249, 245, 0.96) 0%, rgba(247, 249, 245, 0.84) 38%, rgba(247, 249, 245, 0.16) 72%);
+      }
+
+      .privacy-banner img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+
+      .privacy-banner-copy {
+        position: relative;
+        z-index: 1;
+        width: min(740px, 76%);
+        min-height: 100%;
+        padding: clamp(26px, 4vw, 42px);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .privacy-eyebrow {
+        margin: 0 0 12px;
+        color: #617365;
         font-size: 12px;
         font-weight: 700;
-        letter-spacing: 0.08em;
+        letter-spacing: 0.14em;
         text-transform: uppercase;
       }
 
-      h1 {
-        margin: 18px 0 12px;
-        font-size: clamp(34px, 5vw, 54px);
-        line-height: 0.98;
-        letter-spacing: -0.04em;
+      .privacy-banner h1 {
+        margin: 0;
+        max-width: 640px;
+        font-size: clamp(34px, 4.8vw, 48px);
+        font-weight: 520;
+        line-height: 1.04;
+        letter-spacing: -0.045em;
+        color: #24362a;
       }
 
-      .lead {
-        max-width: 720px;
+      .privacy-banner-lead {
+        max-width: 580px;
+        margin: 12px 0 0;
+        color: #58665c;
+        font-size: 15px;
+        line-height: 1.72;
+      }
+
+      .privacy-banner-meta {
+        margin: 8px 0 0;
+        color: #758078;
+        font-size: 12px;
+      }
+
+      .privacy-layout {
+        display: grid;
+        grid-template-columns: 208px minmax(0, 1fr);
+        gap: clamp(36px, 6vw, 72px);
+        align-items: start;
+      }
+
+      .privacy-aside {
+        position: sticky;
+        top: 96px;
+      }
+
+      .privacy-aside-label {
+        margin: 0 0 14px;
+        color: #8a938d;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .privacy-aside-status {
+        width: fit-content;
+        margin-bottom: 24px;
+        padding: 6px 9px;
+        border: 1px solid #dce6df;
+        border-radius: 7px;
+        background: var(--privacy-green-soft);
+        color: var(--privacy-green);
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .privacy-meta-list {
         margin: 0;
-        color: var(--muted);
+        display: grid;
+        gap: 17px;
+      }
+
+      .privacy-meta-list div {
+        display: grid;
+        gap: 4px;
+      }
+
+      .privacy-meta-list dt {
+        color: #8a938d;
+        font-size: 11px;
+        letter-spacing: 0.04em;
+      }
+
+      .privacy-meta-list dd {
+        margin: 0;
+        color: #435047;
+        font-size: 13px;
+        line-height: 1.55;
+      }
+
+      .privacy-aside-links {
+        margin-top: 28px;
+        padding-top: 20px;
+        border-top: 1px solid var(--privacy-line);
+        display: grid;
+        gap: 12px;
+      }
+
+      .privacy-aside-link {
+        width: fit-content;
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        color: #657168;
+        font-size: 13px;
+        text-decoration: none;
+      }
+
+      .privacy-aside-link:hover {
+        color: var(--privacy-green);
+      }
+
+      .privacy-paper {
+        min-width: 0;
+        padding-bottom: 24px;
+      }
+
+      .privacy-doc-intro {
+        margin-bottom: 42px;
+        padding-bottom: 32px;
+        border-bottom: 1px solid var(--privacy-line);
+      }
+
+      .privacy-doc-intro p {
+        margin: 0;
+        color: #4f5d54;
+        font-size: clamp(17px, 2.3vw, 20px);
+        line-height: 1.72;
+        letter-spacing: -0.012em;
+      }
+
+      .privacy-markdown {
+        color: var(--privacy-muted);
+        font-size: 15px;
+        line-height: 1.86;
+      }
+
+      .privacy-markdown h2,
+      .privacy-markdown h3 {
+        color: var(--privacy-text);
+        scroll-margin-top: 96px;
+      }
+
+      .privacy-markdown h2 {
+        margin: 52px 0 18px;
+        padding-top: 42px;
+        border-top: 1px solid var(--privacy-line);
+        font-size: clamp(23px, 3vw, 28px);
+        font-weight: 650;
+        line-height: 1.3;
+        letter-spacing: -0.032em;
+      }
+
+      .privacy-markdown h2:first-child {
+        margin-top: 0;
+        padding-top: 0;
+        border-top: 0;
+      }
+
+      .privacy-markdown h3 {
+        margin: 30px 0 10px;
         font-size: 17px;
+        font-weight: 650;
+        line-height: 1.45;
+        letter-spacing: -0.015em;
+      }
+
+      .privacy-markdown p {
+        margin: 0 0 16px;
+      }
+
+      .privacy-markdown ul,
+      .privacy-markdown ol {
+        margin: 10px 0 20px;
+        padding-left: 1.35em;
+      }
+
+      .privacy-markdown li {
+        margin: 8px 0;
+        padding-left: 4px;
+      }
+
+      .privacy-markdown li::marker {
+        color: #849589;
+      }
+
+      .privacy-markdown strong {
+        color: #334238;
+        font-weight: 650;
+      }
+
+      .privacy-markdown a {
+        color: #38654a;
+        text-decoration-color: rgba(56, 101, 74, 0.32);
+        text-decoration-thickness: 1px;
+        text-underline-offset: 3px;
+      }
+
+      .privacy-markdown a:hover {
+        text-decoration-color: currentColor;
+      }
+
+      .privacy-markdown code {
+        padding: 0.16em 0.42em;
+        border: 1px solid #e1e6e2;
+        border-radius: 5px;
+        background: #f5f7f5;
+        color: #3d5545;
+        font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+        font-size: 0.88em;
+      }
+
+      .privacy-markdown blockquote {
+        margin: 24px 0;
+        padding: 18px 20px;
+        border: 1px solid #dbe6de;
+        border-left: 3px solid #6d8a75;
+        border-radius: 0 10px 10px 0;
+        background: #f5f8f5;
+      }
+
+      .privacy-markdown blockquote p:last-child {
+        margin-bottom: 0;
+      }
+
+      .privacy-doc-footer {
+        margin-top: 52px;
+        padding: 24px;
+        border: 1px solid #dfe6e1;
+        border-radius: 14px;
+        background: linear-gradient(135deg, #f7faf7, #ffffff);
+        color: #657168;
+        font-size: 13px;
         line-height: 1.7;
       }
 
-      .meta {
-        margin-top: 18px;
-        color: var(--muted);
+      .privacy-doc-footer strong {
+        display: block;
+        margin-bottom: 4px;
+        color: #334238;
         font-size: 14px;
       }
 
-      .content {
-        margin-top: 26px;
-        display: grid;
-        gap: 18px;
+      .privacy-doc-footer a {
+        color: #38654a;
       }
 
-      .card {
-        padding: 28px 30px;
-        border-radius: 24px;
-        border: 1px solid var(--line);
-        background: var(--surface);
-        backdrop-filter: blur(10px);
-        box-shadow: var(--shadow);
-      }
-
-      .card h2 {
-        margin: 0 0 16px;
-        font-size: 24px;
-        letter-spacing: -0.03em;
-      }
-
-      .card h3 {
-        margin: 24px 0 10px;
-        font-size: 18px;
-      }
-
-      .card p,
-      .card li {
-        color: var(--muted);
-        line-height: 1.78;
-        font-size: 15px;
-      }
-
-      .card ul {
-        margin: 10px 0 0;
-        padding-left: 20px;
-      }
-
-      .contact {
-        padding: 22px 24px;
-        border-radius: 20px;
-        border: 1px dashed rgba(34, 99, 235, 0.22);
-        background: rgba(34, 99, 235, 0.04);
-      }
-
-      @media (max-width: 720px) {
-        .shell {
-          width: min(100vw - 20px, 960px);
-          padding-top: 20px;
-          padding-bottom: 40px;
-          padding-bottom: max(40px, var(--safe-area-bottom));
+      @media (max-width: 760px) {
+        .privacy-main {
+          padding: 20px 12px max(48px, var(--safe-area-bottom));
         }
 
-        .topbar {
-          flex-direction: column;
-          align-items: flex-start;
+        .privacy-banner {
+          min-height: 330px;
+          margin-bottom: 34px;
+          aspect-ratio: auto;
         }
 
-        .hero,
-        .card {
-          padding: 22px 18px;
-          border-radius: 22px;
+        .privacy-banner::after {
+          background: linear-gradient(90deg, rgba(247, 249, 245, 0.97) 0%, rgba(247, 249, 245, 0.82) 65%, rgba(247, 249, 245, 0.28) 100%);
+        }
+
+        .privacy-banner-copy {
+          width: 92%;
+          padding: 28px 24px;
+        }
+
+        .privacy-layout {
+          grid-template-columns: 1fr;
+          gap: 34px;
+        }
+
+        .privacy-aside {
+          position: static;
+          display: grid;
+          grid-template-columns: auto 1fr;
+          gap: 12px 24px;
+          padding: 0 8px 28px;
+          border-bottom: 1px solid var(--privacy-line);
+        }
+
+        .privacy-aside-label,
+        .privacy-aside-status,
+        .privacy-meta-list,
+        .privacy-aside-links {
+          grid-column: 1 / -1;
+        }
+
+        .privacy-meta-list {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .privacy-aside-links {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .privacy-paper {
+          padding: 0 8px;
+        }
+      }
+
+      @media (max-width: 520px) {
+        .privacy-header-link-release span {
+          display: none;
+        }
+
+        .privacy-header-link-release {
+          width: 36px;
+          padding: 0;
+        }
+
+        .privacy-banner h1 {
+          font-size: 38px;
+        }
+
+        .privacy-banner-lead {
+          font-size: 14px;
+        }
+
+        .privacy-aside-links {
+          grid-template-columns: 1fr;
+        }
+
+        .privacy-markdown {
+          font-size: 14.5px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        *,
+        *::before,
+        *::after {
+          transition-duration: 0.01ms !important;
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
         }
       }
     </style>
   </head>
   <body>
-    <main class="shell">
-      <div class="topbar">
-        <a class="brand" href="/" aria-label="Back to Lumno homepage">
-          <span class="brand-mark">
-            <img src="/assets/logo.svg" alt="Lumno" />
-          </span>
-          <span>Lumno</span>
+    <header class="privacy-header">
+      <div class="privacy-container privacy-header-inner">
+        <a class="privacy-brand" href="/" aria-label="返回 Lumno 首页">
+          <img src="/assets/textlogo.svg" alt="Lumno" width="408" height="114" />
         </a>
-        <a class="home-link" href="/">
-          <span>返回首页 / Back Home</span>
-        </a>
+        <nav class="privacy-header-actions" aria-label="页面导航">
+          <a class="privacy-header-link privacy-header-link-release" href="/release/">
+            <i class="ri-history-line" aria-hidden="true"></i>
+            <span>Release</span>
+          </a>
+          <a class="privacy-header-link" href="/">
+            <span>返回首页</span>
+            <i class="ri-arrow-right-up-line" aria-hidden="true"></i>
+          </a>
+        </nav>
       </div>
+    </header>
 
-      <section class="hero">
-        <span class="eyebrow">Privacy Policy</span>
-        <h1>Lumno Privacy Policy / 隐私政策</h1>
-        <p class="lead">
-          Lumno 默认尽量在浏览器本地处理历史、书签和标签页。登录后，你可以选择跨设备同步配置与自定义媒体；Lumno 也可能收集不包含具体浏览内容的功能使用统计。本页面说明这些数据的边界与用途。
-        </p>
-        <p class="meta">Effective and last updated / 生效及最近更新：2026-08-02</p>
+    <main class="privacy-container privacy-main">
+      <section class="privacy-banner" aria-labelledby="privacy-title">
+        <img
+          src="/resource_commited/banner.jpg"
+          alt="Lumno 水彩风景横幅"
+          loading="eager"
+          decoding="async"
+          width="2200"
+          height="586"
+        />
+        <div class="privacy-banner-copy">
+          <p class="privacy-eyebrow">Privacy Policy · 隐私政策</p>
+          <h1 id="privacy-title">清楚说明，才是真正尊重。</h1>
+          <p class="privacy-banner-lead">
+            本地处理什么、同步什么、统计什么，以及你可以如何撤回和删除，都写在这里。
+          </p>
+          <p class="privacy-banner-meta">Effective &amp; last updated · 2026-08-02</p>
+        </div>
       </section>
 
-      <section class="content">
-        <article class="card">
-          <h2>1. Product Scope / 产品范围</h2>
-          <p>
-            Lumno 是一款浏览器效率扩展，提供网页搜索浮层、自定义新标签页、标签页搜索、历史记录搜索、书签搜索、常用网站展示、站内搜索快捷词以及部分可选的视频画中画辅助能力。
-          </p>
-          <p>
-            Lumno is a browser productivity extension that provides an in-page command bar, a custom new tab page, tab search, history search, bookmark search, top-site surfaces, site-search shortcuts, and optional Picture-in-Picture helpers on supported websites.
-          </p>
-        </article>
-
-        <article class="card">
-          <h2>2. What Lumno Can Access / Lumno 可能访问的数据</h2>
-          <ul>
-            <li>已打开标签页 / Open tabs: 用于展示、排序、切换与恢复标签页。</li>
-            <li>浏览历史 / Browsing history: 用于本地搜索历史记录与排序。</li>
-            <li>书签 / Bookmarks: 用于搜索书签及在新标签页中展示书签入口。</li>
-            <li>常用网站 / Top sites: 用于展示常访问网站。</li>
-            <li>网站内容 / Website content: 用于网页内浮层、快捷键响应与可选画中画功能。</li>
-            <li>用户输入搜索词 / User-entered search queries: 用于搜索、站内搜索与联网建议。</li>
-            <li>扩展设置 / Extension settings: 用于保存主题、语言、布局与搜索偏好。</li>
-            <li>账号信息 / Account information: 登录后处理用户 ID、邮箱，以及由 Google、GitHub 或邮箱登录提供的昵称、头像和登录方式。</li>
-            <li>同步内容 / Synced content: 你选择同步的配置、快捷方式和自定义壁纸等媒体文件。</li>
-            <li>使用统计 / Usage metrics: 功能开关、配置属性、插件版本、平台以及唤起次数等纯数字事件；不包含具体浏览网址、网页标题、书签内容或搜索词。</li>
-          </ul>
-        </article>
-
-        <article class="card">
-          <h2>3. Local Processing First / 默认本地处理</h2>
-          <p>
-            Lumno 默认在浏览器本地完成大部分功能，包括标签页搜索、历史记录搜索、书签搜索、Top Sites 展示、新标签页渲染，以及扩展设置和轻量缓存的保存。
-          </p>
-          <p>
-            Lumno does not upload your browsing history URLs, page titles, bookmark tree, or open-tab list to the developer's own servers.
-          </p>
-          <p>
-            账号、同步与使用统计是独立于上述浏览器数据的云端能力。即使登录，Lumno 也不会把浏览历史网址、网页标题、书签树、打开的标签页列表或搜索词作为同步或统计数据上传。
-          </p>
-        </article>
-
-        <article class="card">
-          <h2>4. Third-Party Requests / 第三方请求</h2>
-          <h3>Search suggestions / 搜索建议</h3>
-          <p>
-            当你使用搜索建议功能时，输入的搜索词可能会被浏览器发送到所选搜索引擎或其建议接口，例如 Google、Bing、Baidu、Yahoo、DuckDuckGo、Yandex、360、Quark、Shenma 或相关接口。
-          </p>
-          <h3>Default web search / 默认网页搜索</h3>
-          <p>
-            当你提交普通网页搜索时，查询词可能会发送给浏览器默认搜索引擎或你选择的搜索引擎。
-          </p>
-          <h3>Favicon loading / 网站图标加载</h3>
-          <p>
-            为了显示网站图标，Lumno 可能会根据域名向目标网站或第三方 favicon 服务请求图标资源。第三方服务可能因此看到请求域名、IP 地址和常规请求元数据。
-          </p>
-        </article>
-
-        <article class="card">
-          <h2>5. Storage / 本地存储</h2>
-          <p>
-            Lumno 使用 Chrome 扩展存储能力保存设置和部分轻量缓存，包括 <code>chrome.storage.local</code>、<code>chrome.storage.sync</code> 以及在可用时的会话级扩展存储。
-          </p>
-          <ul>
-            <li>主题与语言设置 / Theme and language preferences</li>
-            <li>搜索引擎偏好 / Search engine preference</li>
-            <li>站内搜索快捷词配置 / Site-search shortcut configuration</li>
-            <li>布局和展示偏好 / Layout and presentation preferences</li>
-            <li>本地 UI 状态与轻量缓存 / Local UI state and lightweight caches</li>
-          </ul>
-        </article>
-
-        <article class="card">
-          <h2>6. Account, Sync and Service Providers / 账号、同步与服务商</h2>
-          <p>
-            Lumno 使用 Supabase 提供账号认证、数据库和私有对象存储，使用 Resend 发送邮箱验证码；当你选择社交登录时，Google 或 GitHub 会按照其各自的隐私政策处理登录请求。自定义壁纸存放在受访问控制的私有存储中，不作为公开链接发布。
-          </p>
-          <p>
-            账号、同步和媒体数据主要存放在 Supabase 日本东京区域。Supabase、Resend、Google 和 GitHub 可能在用户所在国家或地区以外处理身份、邮件或有限服务日志。Lumno 面向全球用户，并在适用时依赖履行服务所必需的处理、用户同意及服务商提供的数据保护条款和合法传输机制。
-          </p>
-          <p>
-            网页登录页不加载 Lumno 的网站访问统计脚本。Lumno 官网的其他公开页面可能使用聚合访问统计；扩展内的产品使用统计与浏览内容分离，并只用于可靠性、功能采用情况和产品改进。
-          </p>
-          <p>
-            登录会话保存在你的设备中。插件令牌存放在扩展源私有的 IndexedDB，不进入 Chrome 同步，也不向网页内容脚本开放。云端访问受账号身份与行级访问控制约束，使每位用户只能读取自己的同步记录和媒体对象。
-          </p>
-        </article>
-
-        <article class="card">
-          <h2>7. Retention and Your Choices / 保存期限与用户选择</h2>
-          <p>
-            账号、同步设置和媒体文件保留至你删除相关数据或永久删除账号。与账号关联的每日产品使用统计及配置属性保留 24 个月；到期后，仅把次数按“月份和功能指标”汇总为不含用户 ID、设备 ID、邮箱和配置属性的长期总数，并删除账号关联明细。统计上传的去重批次标识保留 30 天，同步写入的去重操作记录保留 90 天。
-          </p>
-          <p>
-            Account-linked daily usage and configuration attributes are retained for 24 months. After that, only non-identifying monthly totals per feature metric may be retained long term; these totals contain no user, device, email, or configuration identifiers. Accounts, synced settings, and media remain until deleted by the user.
-          </p>
-          <p>
-            当前 Supabase Free 计划的 API 与数据库日志保留 1 天；Resend 默认保留验证码邮件和投递记录 30 天。你可以退出登录、关闭可选统计，或联系我们请求访问、导出、更正或删除账号及关联数据。关闭统计会立即停止新统计并清除本机待上传计数；永久删除账号会删除云端账号、同步配置、媒体和仍可关联到账号的统计。
-          </p>
-        </article>
-
-        <article class="card">
-          <h2>8. Permissions / 权限说明</h2>
-          <ul>
-            <li><code>tabs</code>: 查询、切换、创建、更新和管理标签页。</li>
-            <li><code>history</code>: 提供本地历史记录搜索。</li>
-            <li><code>bookmarks</code>: 搜索与展示书签。</li>
-            <li><code>topSites</code>: 展示常访问网站。</li>
-            <li><code>storage</code>: 保存扩展设置。</li>
-            <li><code>identity</code>: 打开受控网页登录窗口，并通过带 PKCE 与 state 校验的专用回调完成插件登录。</li>
-            <li><code>search</code>: 调用浏览器搜索能力。</li>
-            <li><code>scripting</code> 与页面访问权限（如 <code>&lt;all_urls&gt;</code>）: 在网页中注入扩展 UI 和快捷键逻辑，并支持可选网页内功能。</li>
-          </ul>
-        </article>
-
-        <article class="card">
-          <h2>9. Data Sale and Transfer / 数据出售与转移</h2>
-          <p>
-            开发者声明：Lumno 不出售用户数据；不会将用户数据用于与扩展核心功能无关的目的；不会将用户数据用于信用评估、放贷或类似用途。
-          </p>
-          <p>
-            The developer states that Lumno does not sell user data and does not transfer user data for purposes unrelated to the extension's core functionality.
-          </p>
-          <p>
-            Lumno 对从浏览器 API 和 Google API 获得的信息的使用遵守 Chrome Web Store User Data Policy（包括 Limited Use 要求）。Lumno 不将这些数据用于个性化广告；除具体支持请求获得用户同意、安全调查、法律义务，或聚合匿名化后的内部运营外，不允许人工读取用户内容。
-          </p>
-        </article>
-
-        <article class="card">
-          <h2>10. Children / 儿童</h2>
-          <p>
-            Lumno 面向一般用户，不专门面向 13 周岁以下儿童。未达到所在地区可独立同意个人信息处理年龄的用户，应在监护人同意和指导下使用账号、同步和可选统计功能。
-          </p>
-          <p>
-            Lumno is not directed to children under 13. Anyone below the age at which they may independently consent to personal-data processing in their region should use account, sync, and optional analytics features only with a guardian's consent and guidance.
-          </p>
-        </article>
-
-        <article class="card">
-          <h2>11. Contact / 联系方式</h2>
-          <div class="contact">
-            <p>开发者：枯白啃设计</p>
-            <p>Developer outside Chinese-language contexts: Kubai087</p>
-            <p>Website / 网站：<a href={SITE_URL}>{SITE_URL}</a></p>
-            <p>Privacy &amp; Security / 隐私与安全：<a href="mailto:i@kubai.design">i@kubai.design</a></p>
+      <section class="privacy-layout" aria-label="隐私政策正文">
+        <aside class="privacy-aside" aria-label="文档信息">
+          <p class="privacy-aside-label">Document</p>
+          <div class="privacy-aside-status">Current · 当前有效</div>
+          <dl class="privacy-meta-list">
+            <div>
+              <dt>Last updated</dt>
+              <dd>2026-08-02</dd>
+            </div>
+            <div>
+              <dt>Developer</dt>
+              <dd>枯白啃设计<br />Kubai087</dd>
+            </div>
+            <div>
+              <dt>Applies to</dt>
+              <dd>Lumno Extension<br />Lumno Account</dd>
+            </div>
+          </dl>
+          <div class="privacy-aside-links">
+            <a class="privacy-aside-link" href="mailto:i@kubai.design">
+              <i class="ri-mail-line" aria-hidden="true"></i>
+              联系隐私团队
+            </a>
+            <a class="privacy-aside-link" href="/release/">
+              <i class="ri-history-line" aria-hidden="true"></i>
+              查看更新日志
+            </a>
           </div>
+        </aside>
+
+        <article class="privacy-paper">
+          <div class="privacy-doc-intro">
+            <p>
+              Lumno 默认尽量在浏览器本地处理历史、书签和标签页。登录后，你可以选择跨设备同步配置与自定义媒体；产品使用统计保持关闭，只有你主动开启后才会上传明确列出的数字和配置属性。
+            </p>
+          </div>
+          <div class="privacy-markdown" set:html={privacyPolicyHtml}></div>
+          <footer class="privacy-doc-footer">
+            <strong>对这份说明有疑问？</strong>
+            请通过 <a href="mailto:i@kubai.design">i@kubai.design</a> 联系我们，或返回 <a href={SITE_URL}>Lumno 官网</a>。
+          </footer>
         </article>
       </section>
     </main>

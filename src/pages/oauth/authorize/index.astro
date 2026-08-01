@@ -1,0 +1,8 @@
+---
+import OAuthAuthorizePortal from "../../../components/account/OAuthAuthorizePortal";
+import AuthLayout from "../../../layouts/AuthLayout.astro";
+---
+
+<AuthLayout title="授权 Lumno 插件" description="安全地将 Lumno 网页账号连接到浏览器扩展。" compact>
+  <OAuthAuthorizePortal client:load />
+</AuthLayout>

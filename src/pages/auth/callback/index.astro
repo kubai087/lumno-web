@@ -1,0 +1,8 @@
+---
+import AuthCallback from "../../../components/account/AuthCallback";
+import AuthLayout from "../../../layouts/AuthLayout.astro";
+---
+
+<AuthLayout title="正在完成 Lumno 登录" description="正在安全地完成 Lumno 登录。" compact>
+  <AuthCallback client:load />
+</AuthLayout>

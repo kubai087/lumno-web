@@ -1,0 +1,17 @@
+---
+import Page from "../../account/index.astro";
+import { buildLocalizedPath, getNonDefaultLocales, resolveLocaleFromSegment } from "../../../lib/locales";
+
+export function getStaticPaths() {
+  return getNonDefaultLocales().map((locale) => ({
+    params: {
+      locale: buildLocalizedPath(locale, "/").replaceAll("/", "") || locale.toLowerCase(),
+    },
+  }));
+}
+
+const locale = resolveLocaleFromSegment(Astro.params.locale || "");
+if (!locale) throw new Error(`Unsupported locale: ${Astro.params.locale}`);
+---
+
+<Page forcedLocale={locale} />

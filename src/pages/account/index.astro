@@ -1,0 +1,27 @@
+---
+import AccountPortal from "../../components/account/AccountPortal";
+import AuthLayout from "../../layouts/AuthLayout.astro";
+
+type Locale = "zh-CN" | "zh-TW" | "en";
+const { forcedLocale = "zh-CN" } = Astro.props as { forcedLocale?: Locale };
+const locale: Locale = forcedLocale;
+const pageCopyByLocale: Record<Locale, { title: string; description: string }> = {
+  "zh-CN": {
+    title: "登录 Lumno",
+    description: "登录 Lumno，在设备之间同步配置、快捷方式和自定义壁纸。",
+  },
+  "zh-TW": {
+    title: "登入 Lumno",
+    description: "登入 Lumno，在裝置之間同步設定、快捷方式與自訂桌布。",
+  },
+  en: {
+    title: "Sign in to Lumno",
+    description: "Sign in to sync Lumno settings, shortcuts, and custom wallpapers across devices.",
+  },
+};
+const pageCopy = pageCopyByLocale[locale];
+---
+
+<AuthLayout title={pageCopy.title} description={pageCopy.description} locale={locale}>
+  <AccountPortal locale={locale} client:load />
+</AuthLayout>

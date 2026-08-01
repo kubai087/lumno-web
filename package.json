@@ -11,12 +11,21 @@
     "test": "node --test"
   },
   "dependencies": {
-    "@astrojs/react": "^4.4.0",
-    "astro": "^5.4.2",
+    "@astrojs/react": "^6.0.2",
+    "@supabase/supabase-js": "^2.111.0",
+    "astro": "^7.1.6",
     "marked": "^16.4.2",
     "motion": "^12.5.0",
     "opencc-js": "^1.0.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "typescript": "^5.9.3"
+  },
+  "overrides": {
+    "sharp": "^0.35.3",
+    "svgo": "^4.0.2"
   }
 }

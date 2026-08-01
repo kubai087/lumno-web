@@ -12,7 +12,7 @@ import {
 const seoPath = "/privacy/";
 const pageTitle = "Lumno Privacy Policy | 隐私政策";
 const pageDescription =
-  "Lumno 隐私政策：说明扩展如何在本地处理历史、书签、标签页与搜索词，以及何时会向搜索引擎或 favicon 服务发起请求。";
+  "Lumno 隐私政策：说明扩展的本地处理、账号登录、配置与媒体同步、匿名或账号关联使用统计，以及第三方服务请求。";
 const pageKeywords = buildKeywords([
   "Lumno 隐私政策",
   "Lumno privacy policy",
@@ -273,9 +273,9 @@ const structuredData = [
         <span class="eyebrow">Privacy Policy</span>
         <h1>Lumno Privacy Policy / 隐私政策</h1>
         <p class="lead">
-          Lumno 默认尽量在浏览器本地处理历史、书签、标签页和设置数据。本页面说明哪些信息会被访问，哪些处理仅在本地完成，以及哪些功能会触发浏览器向第三方服务发送请求。
+          Lumno 默认尽量在浏览器本地处理历史、书签和标签页。登录后，你可以选择跨设备同步配置与自定义媒体；Lumno 也可能收集不包含具体浏览内容的功能使用统计。本页面说明这些数据的边界与用途。
         </p>
-        <p class="meta">Last updated / 最近更新：2026-03-23</p>
+        <p class="meta">Last updated / 最近更新：2026-08-01</p>
       </section>
 
       <section class="content">
@@ -299,6 +299,9 @@ const structuredData = [
             <li>网站内容 / Website content: 用于网页内浮层、快捷键响应与可选画中画功能。</li>
             <li>用户输入搜索词 / User-entered search queries: 用于搜索、站内搜索与联网建议。</li>
             <li>扩展设置 / Extension settings: 用于保存主题、语言、布局与搜索偏好。</li>
+            <li>账号信息 / Account information: 登录后处理用户 ID、邮箱，以及由 Google、GitHub 或邮箱登录提供的昵称、头像和登录方式。</li>
+            <li>同步内容 / Synced content: 你选择同步的配置、快捷方式和自定义壁纸等媒体文件。</li>
+            <li>使用统计 / Usage metrics: 功能开关、配置属性、插件版本、平台以及唤起次数等纯数字事件；不包含具体浏览网址、网页标题、书签内容或搜索词。</li>
           </ul>
         </article>
 
@@ -309,6 +312,9 @@ const structuredData = [
           </p>
           <p>
             Lumno does not upload your browsing history URLs, page titles, bookmark tree, or open-tab list to the developer's own servers.
+          </p>
+          <p>
+            账号、同步与使用统计是独立于上述浏览器数据的云端能力。即使登录，Lumno 也不会把浏览历史网址、网页标题、书签树、打开的标签页列表或搜索词作为同步或统计数据上传。
           </p>
         </article>
 
@@ -343,20 +349,44 @@ const structuredData = [
         </article>
 
         <article class="card">
-          <h2>6. Permissions / 权限说明</h2>
+          <h2>6. Account, Sync and Service Providers / 账号、同步与服务商</h2>
+          <p>
+            Lumno 使用 Supabase 提供账号认证、数据库和私有对象存储，使用 Resend 发送邮箱验证码；当你选择社交登录时，Google 或 GitHub 会按照其各自的隐私政策处理登录请求。自定义壁纸存放在受访问控制的私有存储中，不作为公开链接发布。
+          </p>
+          <p>
+            网页登录页不加载 Lumno 的网站访问统计脚本。Lumno 官网的其他公开页面可能使用聚合访问统计；扩展内的产品使用统计与浏览内容分离，并只用于可靠性、功能采用情况和产品改进。
+          </p>
+          <p>
+            登录会话保存在你的设备中。插件令牌存放在扩展源私有的 IndexedDB，不进入 Chrome 同步，也不向网页内容脚本开放。云端访问受账号身份与行级访问控制约束，使每位用户只能读取自己的同步记录和媒体对象。
+          </p>
+        </article>
+
+        <article class="card">
+          <h2>7. Retention and Your Choices / 保存期限与用户选择</h2>
+          <p>
+            你可以退出登录并停止新的同步。你可以联系我们请求导出或删除账号、同步配置、媒体文件及与账号关联的产品使用数据。为防止滥用、排查故障或履行法律义务，必要的安全日志可能在有限期限内保留。
+          </p>
+          <p>
+            You may sign out to stop new sync activity and contact us to request access to or deletion of your account, synced settings, media files, and account-linked product usage data.
+          </p>
+        </article>
+
+        <article class="card">
+          <h2>8. Permissions / 权限说明</h2>
           <ul>
             <li><code>tabs</code>: 查询、切换、创建、更新和管理标签页。</li>
             <li><code>history</code>: 提供本地历史记录搜索。</li>
             <li><code>bookmarks</code>: 搜索与展示书签。</li>
             <li><code>topSites</code>: 展示常访问网站。</li>
             <li><code>storage</code>: 保存扩展设置。</li>
+            <li><code>identity</code>: 打开受控网页登录窗口，并通过带 PKCE 与 state 校验的专用回调完成插件登录。</li>
             <li><code>search</code>: 调用浏览器搜索能力。</li>
             <li><code>scripting</code> 与页面访问权限（如 <code>&lt;all_urls&gt;</code>）: 在网页中注入扩展 UI 和快捷键逻辑，并支持可选网页内功能。</li>
           </ul>
         </article>
 
         <article class="card">
-          <h2>7. Data Sale and Transfer / 数据出售与转移</h2>
+          <h2>9. Data Sale and Transfer / 数据出售与转移</h2>
           <p>
             开发者声明：Lumno 不出售用户数据；不会将用户数据用于与扩展核心功能无关的目的；不会将用户数据用于信用评估、放贷或类似用途。
           </p>
@@ -366,7 +396,7 @@ const structuredData = [
         </article>
 
         <article class="card">
-          <h2>8. Contact / 联系方式</h2>
+          <h2>10. Contact / 联系方式</h2>
           <div class="contact">
             <p>Developer / 开发者：Kubai087</p>
             <p>Website / 网站：<a href={SITE_URL}>{SITE_URL}</a></p>

@@ -188,10 +188,8 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
         position: sticky;
         top: 0;
         z-index: 30;
-        border-bottom: 1px solid color-mix(in srgb, var(--privacy-header-line) 70%, transparent);
-        background: rgba(255, 255, 255, 0.86);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
+        border-bottom: 1px solid var(--privacy-header-line);
+        background: #ffffff;
       }
 
       .privacy-header-inner {

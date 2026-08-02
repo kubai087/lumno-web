@@ -12,11 +12,15 @@ function readSource(file) {
 test("privacy header matches the release shell with one primary website CTA", () => {
   const source = readSource("src/pages/privacy/index.astro");
   const contentSource = readSource("src/lib/privacy-content.ts");
+  const headerStyles = source.match(/\.privacy-header \{[\s\S]*?\n\s*\}/)?.[0];
   const headerActions = source.match(
     /<nav class="privacy-header-actions"[\s\S]*?<\/nav>/,
   )?.[0];
 
   assert.ok(headerActions, "privacy header actions should exist");
+  assert.ok(headerStyles, "privacy header styles should exist");
+  assert.match(headerStyles, /background: #ffffff/);
+  assert.doesNotMatch(headerStyles, /rgba\(|backdrop-filter|color-mix/);
   assert.equal(
     (headerActions.match(/<a\b/g) || []).length,
     1,

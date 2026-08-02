@@ -51,6 +51,7 @@ test("privacy article opens with a title and a semantic quote", () => {
     source,
     /<blockquote class="privacy-doc-intro">[\s\S]*?content\.intro[\s\S]*?<\/blockquote>/,
   );
+  assert.match(source, /\.privacy-doc-intro p \{[\s\S]*?font-size: 15px;/);
   assert.match(contentSource, /articleTitle: "隐私政策"/);
   assert.match(contentSource, /articleTitle: "隱私權政策"/);
   assert.match(contentSource, /articleTitle: "Privacy Policy"/);

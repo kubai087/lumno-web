@@ -74,9 +74,17 @@ test("homepage uses the shared language preference helper too", () => {
 
 test("privacy uses the shared language preference and route redirect runtime", () => {
   const source = fs.readFileSync(path.join(workspaceRoot, "src/pages/privacy/index.astro"), "utf8");
+  const headSource = source.slice(0, source.indexOf("</head>"));
   assert.match(source, /import "\.\.\/\.\.\/scripts\/language-preference"/);
   assert.match(source, /import "\.\.\/\.\.\/scripts\/language-runtime"/);
   assert.match(source, /window\.__lumnoLanguageRuntime\.setupLanguageRuntime\(/);
   assert.match(source, /routeLanguageMap:\s*ROUTE_LANGUAGE_MAP/);
+  assert.match(headSource, /!forcedLocale && \(/);
+  assert.match(headSource, /window\.location\.replace\(`/);
+  assert.match(headSource, /routeMap\[resolvedLocale\]/);
+  assert.ok(
+    source.indexOf("window.location.replace(`") < source.indexOf("<body"),
+    "privacy locale redirect should run before the first body paint",
+  );
   assert.doesNotMatch(source, /function applyLanguageMode\(mode, options\)/);
 });

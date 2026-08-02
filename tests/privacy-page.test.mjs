@@ -46,7 +46,7 @@ test("privacy article opens with a title and a semantic quote", () => {
   const source = readSource("src/pages/privacy/index.astro");
   const contentSource = readSource("src/lib/privacy-content.ts");
 
-  assert.match(source, /<h2 class="privacy-doc-title">\{content\.articleTitle\}<\/h2>/);
+  assert.match(source, /<h1 class="privacy-doc-title">\{content\.articleTitle\}<\/h1>/);
   assert.match(
     source,
     /<blockquote class="privacy-doc-intro">[\s\S]*?content\.intro[\s\S]*?<\/blockquote>/,
@@ -56,20 +56,16 @@ test("privacy article opens with a title and a semantic quote", () => {
   assert.match(contentSource, /articleTitle: "Privacy Policy"/);
 });
 
-test("privacy hero uses natural Chinese copy and a localized update date", () => {
+test("privacy page starts directly with the article and has no retired hero", () => {
   const source = readSource("src/pages/privacy/index.astro");
   const contentSource = readSource("src/lib/privacy-content.ts");
 
-  assert.match(source, /<section class="privacy-hero" aria-labelledby="privacy-title">/);
-  assert.doesNotMatch(source, /privacy-banner/);
-  assert.match(contentSource, /heroTitle: "Lumno 如何处理你的数据"/);
-  assert.match(
-    contentSource,
-    /heroLead: "这份政策说明哪些信息只留在本机、登录后会同步什么、哪些统计需要你主动开启，以及如何关闭同步或删除数据。"/,
-  );
-  assert.doesNotMatch(contentSource, /清楚说明，才是真正尊重/);
+  assert.doesNotMatch(source, /privacy-hero|\/resource_commited\/banner\.jpg/);
+  assert.doesNotMatch(contentSource, /bannerAlt|eyebrow|heroTitle|heroLead|effectiveLabel/);
+  assert.match(source, /<main class="privacy-container privacy-main">\s*<section class="privacy-layout"/);
+  assert.match(source, /<h1 class="privacy-doc-title">\{content\.articleTitle\}<\/h1>/);
   assert.match(source, /new Intl\.DateTimeFormat\(uiLocale/);
-  assert.match(source, /\{content\.effectiveLabel\}\{displayLastUpdated\}/);
+  assert.match(source, /<dd>\{displayLastUpdated\}<\/dd>/);
 });
 
 test("privacy uses branded search copy and page-appropriate structured data", () => {
@@ -77,8 +73,7 @@ test("privacy uses branded search copy and page-appropriate structured data", ()
   const contentSource = readSource("src/lib/privacy-content.ts");
 
   assert.match(contentSource, /pageTitle: "Lumno Privacy Policy \| Local Data, Sync & Analytics"/);
-  assert.match(contentSource, /heroTitle: "How Lumno handles your data"/);
-  assert.match(contentSource, /heroLead: "Clarity is a form of respect:/);
+  assert.match(contentSource, /articleTitle: "Privacy Policy"/);
   assert.doesNotMatch(source, /buildSoftwareApplicationSchema/);
   assert.match(source, /buildWebPageSchema\(/);
   assert.match(source, /buildBreadcrumbListSchema\(/);

@@ -72,7 +72,7 @@ test("homepage uses the shared language preference helper too", () => {
   assert.doesNotMatch(source, /function applyLanguageMode\(mode, options\)/);
 });
 
-test("privacy uses the shared language preference and route redirect runtime", () => {
+test("privacy keeps x-default stable until a user has saved a language choice", () => {
   const source = fs.readFileSync(path.join(workspaceRoot, "src/pages/privacy/index.astro"), "utf8");
   const headSource = source.slice(0, source.indexOf("</head>"));
   assert.match(source, /import "\.\.\/\.\.\/scripts\/language-preference"/);
@@ -80,11 +80,15 @@ test("privacy uses the shared language preference and route redirect runtime", (
   assert.match(source, /window\.__lumnoLanguageRuntime\.setupLanguageRuntime\(/);
   assert.match(source, /routeLanguageMap:\s*ROUTE_LANGUAGE_MAP/);
   assert.match(headSource, /!forcedLocale && \(/);
+  assert.match(headSource, /if \(!storedMode\) return;/);
   assert.match(headSource, /window\.location\.replace\(`/);
   assert.match(headSource, /routeMap\[resolvedLocale\]/);
   assert.ok(
-    source.indexOf("window.location.replace(`") < source.indexOf("<body"),
-    "privacy locale redirect should run before the first body paint",
+    headSource.indexOf("if (!storedMode) return;") < headSource.indexOf("window.location.replace(`"),
+    "privacy should only redirect before paint when a preference already exists",
   );
+  assert.match(source, /const DEFAULT_PRIVACY_LOCALE = "zh-CN";/);
+  assert.match(source, /const initialForcedLocale = FORCED_LOCALE \|\| \(!storedMode \? DEFAULT_PRIVACY_LOCALE : null\);/);
+  assert.match(source, /forcedLocale: initialForcedLocale/);
   assert.doesNotMatch(source, /function applyLanguageMode\(mode, options\)/);
 });

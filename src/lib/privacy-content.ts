@@ -108,7 +108,7 @@ export const PRIVACY_CONTENT: Record<SupportedLocale, PrivacyPageContent> = {
     policySource: privacyPolicyZhTw,
   },
   en: {
-    pageTitle: "Lumno Privacy Policy | Local Processing, Sync, and Usage Metrics",
+    pageTitle: "Lumno Privacy Policy | Local Data, Sync & Analytics",
     pageDescription:
       "Read how Lumno handles browser data locally, account sign-in, settings and media sync, optional account-linked usage metrics, and third-party requests.",
     pageKeywords: ["Lumno privacy policy", "Chrome extension privacy policy", "browser extension privacy notice"],
@@ -119,8 +119,8 @@ export const PRIVACY_CONTENT: Record<SupportedLocale, PrivacyPageContent> = {
     pageNavigationAria: "Page navigation",
     bannerAlt: "Lumno watercolor landscape banner",
     eyebrow: "Privacy Policy",
-    heroTitle: "Clarity is a form of respect.",
-    heroLead: "What stays local, what can sync, what may be measured, and how you can withdraw or delete it—all in one place.",
+    heroTitle: "How Lumno handles your data",
+    heroLead: "Clarity is a form of respect: see what stays local, what can sync, what may be measured, and how you can withdraw or delete it.",
     effectiveLabel: "Effective and last updated: ",
     policySectionAria: "Privacy policy",
     metadataAria: "Document information",

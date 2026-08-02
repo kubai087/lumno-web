@@ -58,13 +58,14 @@ test("privacy article opens with a title and a semantic quote", () => {
 
 test("privacy sidebar exposes the same four support contacts as options", () => {
   const source = readSource("src/pages/privacy/index.astro");
+  const supportLinkSource = readSource("src/components/privacy/OptionsFeedbackSupportLink.astro");
   const contentSource = readSource("src/lib/privacy-content.ts");
   const supportLinks = source.match(
     /<div class="privacy-aside-links">[\s\S]*?<\/div>/,
   )?.[0];
 
   assert.ok(supportLinks, "privacy support links should exist");
-  assert.equal((supportLinks.match(/<a\b/g) || []).length, 4);
+  assert.equal((supportLinks.match(/<OptionsFeedbackSupportLink\b/g) || []).length, 4);
   assert.match(supportLinks, /content\.communityLabel/);
   assert.match(supportLinks, /content\.reviewLabel/);
   assert.match(supportLinks, /content\.issueLabel/);
@@ -75,6 +76,18 @@ test("privacy sidebar exposes the same four support contacts as options", () => 
   assert.match(supportLinks, /ri-twitter-x-line/);
   assert.match(contentSource, /communityLabel: "加入反馈群"/);
   assert.match(contentSource, /communityLabel: "Join Discord"/);
+
+  assert.match(supportLinkSource, /class="_x_extension_feedback_support_link_2026_unique_"/);
+  assert.match(supportLinkSource, /data-feedback-support=\{feedbackKey\}/);
+  assert.match(supportLinkSource, /ri-icon ri-size-20/);
+  assert.match(supportLinkSource, /ri-icon ri-size-14 ri-external-link-line/);
+  assert.match(supportLinkSource, /min-height: 30px/);
+  assert.match(supportLinkSource, /padding: 6px 10px/);
+  assert.match(supportLinkSource, /border-radius: 999px/);
+  assert.match(supportLinkSource, /background: rgba\(15, 23, 42, 0\.045\)/);
+  assert.match(supportLinkSource, /color: #111827/);
+  assert.match(supportLinkSource, /outline: 2px solid rgba\(59, 130, 246, 0\.65\)/);
+  assert.match(supportLinkSource, /transition: background-color 160ms ease, color 160ms ease/);
 });
 
 test("privacy policy does not duplicate contacts in an eleventh section", () => {

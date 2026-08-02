@@ -214,3 +214,12 @@ test("privacy exposes a localized scrollspy table of contents with stable anchor
   assert.match(contentSource, /tocLabel: "目錄"/);
   assert.match(contentSource, /tocLabel: "On this page"/);
 });
+
+test("privacy hides the table of contents on mobile", () => {
+  const source = readSource("src/pages/privacy/index.astro");
+
+  assert.match(
+    source,
+    /@media \(max-width: 760px\) \{[\s\S]*?\.privacy-toc \{[\s\S]*?display: none;/,
+  );
+});

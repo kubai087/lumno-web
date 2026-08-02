@@ -1,5 +1,6 @@
 ---
 import { marked } from "marked";
+import OptionsFeedbackSupportLink from "../../components/privacy/OptionsFeedbackSupportLink.astro";
 import SeoHead from "../../components/SeoHead.astro";
 import { COMMUNITY_LINKS } from "../../lib/community";
 import { DEFAULT_LOCALE, buildLocalizedPath, buildRouteLanguageMap, type SupportedLocale } from "../../lib/locales";
@@ -268,8 +269,7 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
       }
 
       .privacy-markdown a:focus-visible,
-      .privacy-toc-link:focus-visible,
-      .privacy-aside-link:focus-visible {
+      .privacy-toc-link:focus-visible {
         outline: 2px solid rgba(69, 99, 79, 0.42);
         outline-offset: 3px;
       }
@@ -477,33 +477,9 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
         padding-top: 20px;
         border-top: 1px solid var(--privacy-line);
         display: grid;
-        gap: 12px;
-      }
-
-      .privacy-aside-link {
-        width: fit-content;
-        display: inline-flex;
-        align-items: center;
-        gap: 7px;
-        color: #657168;
-        font-size: 13px;
-        white-space: nowrap;
-        text-decoration: none;
-      }
-
-      .privacy-aside-link > i:first-child {
-        flex: 0 0 auto;
-        font-size: 16px;
-      }
-
-      .privacy-aside-link > .ri-external-link-line {
-        flex: 0 0 auto;
-        font-size: 13px;
-        opacity: 0.72;
-      }
-
-      .privacy-aside-link:hover {
-        color: var(--privacy-green);
+        justify-items: start;
+        gap: 4px;
+        margin-left: -10px;
       }
 
       .privacy-paper {
@@ -1106,26 +1082,30 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
             </ol>
           </nav>
           <div class="privacy-aside-links">
-            <a class="privacy-aside-link" href={communityHref} target="_blank" rel="noreferrer noopener">
-              <i class={communityIconClass} aria-hidden="true"></i>
-              <span>{content.communityLabel}</span>
-              <i class="ri-external-link-line" aria-hidden="true"></i>
-            </a>
-            <a class="privacy-aside-link" href={chromeReviewUrl} target="_blank" rel="noreferrer noopener">
-              <i class="ri-star-line" aria-hidden="true"></i>
-              <span>{content.reviewLabel}</span>
-              <i class="ri-external-link-line" aria-hidden="true"></i>
-            </a>
-            <a class="privacy-aside-link" href={githubIssueUrl} target="_blank" rel="noreferrer noopener">
-              <i class="ri-github-line" aria-hidden="true"></i>
-              <span>{content.issueLabel}</span>
-              <i class="ri-external-link-line" aria-hidden="true"></i>
-            </a>
-            <a class="privacy-aside-link" href={COMMUNITY_LINKS.xUrl} target="_blank" rel="noreferrer noopener">
-              <i class="ri-twitter-x-line" aria-hidden="true"></i>
-              <span>{content.authorLabel}</span>
-              <i class="ri-external-link-line" aria-hidden="true"></i>
-            </a>
+            <OptionsFeedbackSupportLink
+              feedbackKey="community"
+              href={communityHref}
+              iconClass={communityIconClass}
+              label={content.communityLabel}
+            />
+            <OptionsFeedbackSupportLink
+              feedbackKey="chrome-review"
+              href={chromeReviewUrl}
+              iconClass="ri-star-line"
+              label={content.reviewLabel}
+            />
+            <OptionsFeedbackSupportLink
+              feedbackKey="github-issue"
+              href={githubIssueUrl}
+              iconClass="ri-github-line"
+              label={content.issueLabel}
+            />
+            <OptionsFeedbackSupportLink
+              feedbackKey="contact-author"
+              href={COMMUNITY_LINKS.xUrl}
+              iconClass="ri-twitter-x-line"
+              label={content.authorLabel}
+            />
           </div>
         </aside>
 

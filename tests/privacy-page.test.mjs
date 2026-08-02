@@ -106,7 +106,7 @@ test("privacy sidebar exposes the same four support contacts as options", () => 
   assert.match(supportLinkSource, /transition: background-color 160ms ease, color 160ms ease/);
 });
 
-test("privacy desktop layout pins the navigation left and keeps the article centered", () => {
+test("privacy desktop layout keeps navigation in a separate left rail", () => {
   const source = readSource("src/pages/privacy/index.astro");
 
   assert.match(source, /--privacy-shell-gutter: 12px;/);
@@ -116,20 +116,20 @@ test("privacy desktop layout pins the navigation left and keeps the article cent
   assert.match(source, /\.privacy-layout \{[\s\S]*?width: 100%;[\s\S]*?margin-left: 0;[\s\S]*?transform: none;/);
   assert.match(
     source,
-    /grid-template-columns: minmax\(170px, 1fr\) minmax\(0, 3\.12fr\) minmax\(170px, 1fr\);/,
+    /grid-template-columns: minmax\(180px, 230px\) minmax\(0, 1fr\);/,
   );
-  assert.match(source, /\.privacy-aside \{[\s\S]*?grid-column: 1;[\s\S]*?justify-self: start;[\s\S]*?max-width: 260px;/);
+  assert.match(source, /\.privacy-aside \{[\s\S]*?grid-column: 1;[\s\S]*?justify-self: start;[\s\S]*?max-width: 230px;/);
   assert.match(source, /\.privacy-paper \{[\s\S]*?grid-column: 2;[\s\S]*?justify-self: center;[\s\S]*?max-width: 780px;/);
   assert.match(source, /@media \(max-width: 760px\) \{[\s\S]*?\.privacy-layout \{[\s\S]*?width: 100%;[\s\S]*?margin-left: 0;[\s\S]*?transform: none;[\s\S]*?grid-template-columns: 1fr;/);
   assert.doesNotMatch(source, /width: calc\(100vw - 48px\)/);
-  assert.doesNotMatch(source, /grid-template-columns: minmax\(220px, 250px\) minmax\(0, 1fr\)/);
+  assert.doesNotMatch(source, /grid-template-columns: minmax\(170px, 1fr\) minmax\(0, 3\.12fr\) minmax\(170px, 1fr\)/);
 });
 
 test("privacy support hover backgrounds stay inside the sidebar clipping edge", () => {
   const source = readSource("src/pages/privacy/index.astro");
 
-  assert.match(source, /\.privacy-aside \{[\s\S]*?width: calc\(100% \+ 10px\);[\s\S]*?max-width: 260px;[\s\S]*?margin-left: -10px;[\s\S]*?padding-left: 10px;/);
-  assert.match(source, /\.privacy-aside-links \{[\s\S]*?margin-left: -10px;/);
+  assert.match(source, /\.privacy-aside \{[\s\S]*?width: 100%;[\s\S]*?max-width: 230px;[\s\S]*?margin-left: 0;[\s\S]*?padding-left: 0;/);
+  assert.match(source, /\.privacy-aside-links \{[\s\S]*?margin-left: 0;/);
   assert.match(source, /@media \(max-width: 760px\) \{[\s\S]*?\.privacy-aside \{[\s\S]*?width: 100%;[\s\S]*?max-width: none;[\s\S]*?margin-left: 0;/);
 });
 

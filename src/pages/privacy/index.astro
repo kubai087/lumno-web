@@ -184,6 +184,13 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
         --privacy-green: #45634f;
         --privacy-header-line: #eaecf0;
         --privacy-shell-gutter: 12px;
+        --privacy-type-caption: 12px;
+        --privacy-type-small: 14px;
+        --privacy-type-intro: 15px;
+        --privacy-type-body: 16px;
+        --privacy-type-subheading: 18px;
+        --privacy-type-section: clamp(22px, 2.4vw, 24px);
+        --privacy-type-title: clamp(30px, 3vw, 32px);
         --safe-area-bottom: 0px;
         --safe-area-bottom: env(safe-area-inset-bottom, 0px);
       }
@@ -268,7 +275,7 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
         align-items: center;
         justify-content: center;
         gap: 8px;
-        font-size: 14px;
+        font-size: var(--privacy-type-small);
         font-weight: 500;
         line-height: 1;
         text-decoration: none;
@@ -374,14 +381,15 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
 
       .privacy-meta-list dt {
         color: #8a938d;
-        font-size: 11px;
+        font-size: var(--privacy-type-caption);
+        line-height: 1.4;
         letter-spacing: 0.04em;
       }
 
       .privacy-meta-list dd {
         margin: 0;
         color: #435047;
-        font-size: 13px;
+        font-size: var(--privacy-type-small);
         line-height: 1.55;
       }
 
@@ -394,8 +402,9 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
       .privacy-toc-title {
         margin: 0 0 8px;
         color: #8a938d;
-        font-size: 11px;
+        font-size: var(--privacy-type-caption);
         font-weight: 650;
+        line-height: 1.4;
         letter-spacing: 0.06em;
         text-transform: uppercase;
       }
@@ -416,7 +425,7 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
         padding: 7px 8px;
         border-radius: 8px;
         color: #68736b;
-        font-size: 12px;
+        font-size: var(--privacy-type-small);
         line-height: 1.4;
         text-decoration: none;
         transition: color 160ms ease, background-color 160ms ease;
@@ -464,10 +473,10 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
       .privacy-doc-title {
         margin: 0 0 20px;
         color: var(--privacy-text);
-        font-size: clamp(28px, 3.4vw, 36px);
+        font-size: var(--privacy-type-title);
         font-weight: 650;
-        line-height: 1.24;
-        letter-spacing: -0.035em;
+        line-height: 1.22;
+        letter-spacing: -0.025em;
       }
 
       .privacy-doc-intro {
@@ -482,15 +491,15 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
       .privacy-doc-intro p {
         margin: 0;
         color: #4f5d54;
-        font-size: 15px;
-        line-height: 1.75;
+        font-size: var(--privacy-type-intro);
+        line-height: 1.72;
         letter-spacing: -0.012em;
       }
 
       .privacy-markdown {
         color: var(--privacy-muted);
-        font-size: 15px;
-        line-height: 1.86;
+        font-size: var(--privacy-type-body);
+        line-height: 1.78;
       }
 
       .privacy-markdown h2,
@@ -503,10 +512,10 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
         margin: 52px 0 18px;
         padding-top: 42px;
         border-top: 1px solid var(--privacy-line);
-        font-size: clamp(23px, 3vw, 28px);
+        font-size: var(--privacy-type-section);
         font-weight: 650;
-        line-height: 1.3;
-        letter-spacing: -0.032em;
+        line-height: 1.32;
+        letter-spacing: -0.022em;
       }
 
       .privacy-markdown h2:first-child {
@@ -517,10 +526,10 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
 
       .privacy-markdown h3 {
         margin: 30px 0 10px;
-        font-size: 17px;
+        font-size: var(--privacy-type-subheading);
         font-weight: 650;
-        line-height: 1.45;
-        letter-spacing: -0.015em;
+        line-height: 1.42;
+        letter-spacing: -0.01em;
       }
 
       .privacy-markdown p {
@@ -591,8 +600,8 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
         border-collapse: separate;
         border-spacing: 0;
         background: #ffffff;
-        font-size: 13.5px;
-        line-height: 1.65;
+        font-size: var(--privacy-type-small);
+        line-height: 1.6;
         -webkit-overflow-scrolling: touch;
       }
 
@@ -634,15 +643,15 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
         border-radius: 14px;
         background: linear-gradient(135deg, #f7faf7, #ffffff);
         color: #657168;
-        font-size: 13px;
-        line-height: 1.7;
+        font-size: var(--privacy-type-small);
+        line-height: 1.65;
       }
 
       .privacy-doc-footer strong {
         display: block;
         margin-bottom: 4px;
         color: #334238;
-        font-size: 14px;
+        font-size: var(--privacy-type-body);
       }
 
       .privacy-doc-footer a {
@@ -711,7 +720,7 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
         flex: 1 1 auto;
         min-width: 0;
         color: #4b545f;
-        font-size: 14px;
+        font-size: var(--privacy-type-small);
         text-align: left;
         white-space: nowrap;
         overflow: hidden;
@@ -779,7 +788,7 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
         color: #3f4650;
         cursor: pointer;
         font: inherit;
-        font-size: 13px;
+        font-size: var(--privacy-type-small);
         text-align: left;
       }
 
@@ -962,10 +971,6 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
       @media (max-width: 520px) {
         .privacy-aside-links {
           grid-template-columns: 1fr;
-        }
-
-        .privacy-markdown {
-          font-size: 14.5px;
         }
       }
 

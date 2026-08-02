@@ -64,11 +64,6 @@ type Copy = {
   retry: string;
   genericError: string;
   providerUnavailable: string;
-  mainlandTitle: string;
-  mainlandBody: string;
-  mainlandCheck: string;
-  mainlandLink: string;
-  mainlandRequired: string;
   deleteTitle: string;
   deleteDescription: string;
   deleteOpen: string;
@@ -105,11 +100,6 @@ const COPY: Record<Locale, Copy> = {
     retry: "重试",
     genericError: "操作没有完成，请稍后重试。",
     providerUnavailable: "该登录方式尚未完成配置，请先使用其他方式。",
-    mainlandTitle: "中国大陆用户单独告知",
-    mainlandBody: "账号、同步配置和自定义壁纸将跨境传输至 Supabase 日本东京区域，并可能由登录与基础设施服务商处理。",
-    mainlandCheck: "若我位于中国大陆，我已满 14 周岁，并单独同意上述跨境处理；未满 14 周岁请勿开启云功能。",
-    mainlandLink: "查看接收方、数据类型与权利详情",
-    mainlandRequired: "请先阅读并单独同意中国大陆跨境处理告知。",
     deleteTitle: "永久删除账号",
     deleteDescription: "删除云端配置、自定义媒体、账号关联统计和登录身份。本机配置与 Chrome 同步副本不会自动删除。",
     deleteOpen: "删除账号",
@@ -144,11 +134,6 @@ const COPY: Record<Locale, Copy> = {
     retry: "重試",
     genericError: "操作未完成，請稍後再試。",
     providerUnavailable: "此登入方式尚未完成設定，請先使用其他方式。",
-    mainlandTitle: "中國大陸使用者單獨告知",
-    mainlandBody: "帳號、同步設定與自訂桌布將跨境傳輸至 Supabase 日本東京區域，並可能由登入與基礎設施服務商處理。",
-    mainlandCheck: "若我位於中國大陸，我已滿 14 歲，並單獨同意上述跨境處理；未滿 14 歲請勿啟用雲端功能。",
-    mainlandLink: "查看接收方、資料類型與權利詳情",
-    mainlandRequired: "請先閱讀並單獨同意中國大陸跨境處理告知。",
     deleteTitle: "永久刪除帳號",
     deleteDescription: "刪除雲端設定、自訂媒體、帳號關聯統計與登入身分。本機設定與 Chrome 同步副本不會自動刪除。",
     deleteOpen: "刪除帳號",
@@ -183,11 +168,6 @@ const COPY: Record<Locale, Copy> = {
     retry: "Try again",
     genericError: "That action could not be completed. Please try again.",
     providerUnavailable: "This sign-in method is not configured yet. Please use another option.",
-    mainlandTitle: "Notice for users in mainland China",
-    mainlandBody: "Account data, synced settings, and custom wallpapers are transferred to Supabase's Tokyo region and may be handled by authentication and infrastructure providers.",
-    mainlandCheck: "If I am in mainland China, I confirm that I am at least 14 and separately consent to this cross-border processing. Users under 14 must not enable cloud features.",
-    mainlandLink: "View recipients, data categories, and rights",
-    mainlandRequired: "Review and separately consent to the mainland China cross-border notice first.",
     deleteTitle: "Permanently delete account",
     deleteDescription: "Deletes cloud settings, custom media, account-linked analytics, and your login identity. Local settings and Chrome Sync copies are not automatically deleted.",
     deleteOpen: "Delete account",
@@ -197,9 +177,6 @@ const COPY: Record<Locale, Copy> = {
     deleteDone: "Your account and cloud data were deleted.",
   },
 };
-
-const MAINLAND_NOTICE_VERSION = "2026-08-02";
-const MAINLAND_NOTICE_STORAGE_KEY = "lumno-mainland-cross-border-consent-v1";
 
 function getProvider(user: User): string {
   const providers = [
@@ -276,7 +253,6 @@ export default function AccountPortal({
   const [error, setError] = useState("");
   const [authorizationReady, setAuthorizationReady] = useState(!authorizationId);
   const [authorizationDetails, setAuthorizationDetails] = useState<OAuthAuthorizationDetails | null>(null);
-  const [mainlandConsentAccepted, setMainlandConsentAccepted] = useState(locale !== "zh-CN");
   const [deleteExpanded, setDeleteExpanded] = useState(false);
   const [deleteConfirmation, setDeleteConfirmation] = useState("");
 
@@ -326,50 +302,13 @@ export default function AccountPortal({
     };
   }, [authorizationId, copy, supabase, user]);
 
-  useEffect(() => {
-    if (locale !== "zh-CN") return;
-    setMainlandConsentAccepted(
-      window.sessionStorage.getItem(MAINLAND_NOTICE_STORAGE_KEY) === MAINLAND_NOTICE_VERSION,
-    );
-  }, [locale]);
-
-  useEffect(() => {
-    if (!user || locale !== "zh-CN" || !mainlandConsentAccepted) return;
-    const timestamp = new Date().toISOString();
-    void supabase.from("lumno_consents").upsert({
-      user_id: user.id,
-      privacy_notice_version: MAINLAND_NOTICE_VERSION,
-      mainland_cross_border_terms_version: MAINLAND_NOTICE_VERSION,
-      mainland_cross_border_consented_at: timestamp,
-      mainland_age_confirmation_version: MAINLAND_NOTICE_VERSION,
-      mainland_age_confirmed_at: timestamp,
-    }, { onConflict: "user_id" });
-  }, [locale, mainlandConsentAccepted, supabase, user]);
-
   function clearFeedback() {
     setNotice("");
     setError("");
   }
 
-  function ensureMainlandConsent(): boolean {
-    if (locale !== "zh-CN" || mainlandConsentAccepted) return true;
-    setError(copy.mainlandRequired);
-    return false;
-  }
-
-  function updateMainlandConsent(accepted: boolean) {
-    setMainlandConsentAccepted(accepted);
-    if (accepted) {
-      window.sessionStorage.setItem(MAINLAND_NOTICE_STORAGE_KEY, MAINLAND_NOTICE_VERSION);
-      if (error === copy.mainlandRequired) setError("");
-    } else {
-      window.sessionStorage.removeItem(MAINLAND_NOTICE_STORAGE_KEY);
-    }
-  }
-
   async function continueWithProvider(provider: Extract<Provider, "google" | "github">) {
     clearFeedback();
-    if (!ensureMainlandConsent()) return;
     setBusy(provider);
     rememberAuthReturnPath(`${window.location.pathname}${window.location.search}`);
     const redirectTo = `${window.location.origin}/auth/callback/`;
@@ -397,7 +336,6 @@ export default function AccountPortal({
   async function finishAuthorization(approved: boolean) {
     if (!authorizationId) return;
     clearFeedback();
-    if (approved && !ensureMainlandConsent()) return;
     setBusy(approved ? "approve" : "deny");
     const response = approved
       ? await supabase.auth.oauth.approveAuthorization(authorizationId, { skipBrowserRedirect: true })
@@ -430,27 +368,6 @@ export default function AccountPortal({
   }
 
   const generalError = error;
-  const mainlandNotice = locale === "zh-CN" ? (
-    <div className="auth-mainland-notice">
-      <div>
-        <strong>{copy.mainlandTitle}</strong>
-        <p>{copy.mainlandBody}</p>
-        <a href="/privacy/#mainland-china-notice" target="_blank" rel="noreferrer">
-          {copy.mainlandLink}
-        </a>
-      </div>
-      <label>
-        <input
-          type="checkbox"
-          checked={mainlandConsentAccepted}
-          onChange={(event) => updateMainlandConsent(event.currentTarget.checked)}
-          disabled={Boolean(busy)}
-        />
-        <span>{copy.mainlandCheck}</span>
-      </label>
-    </div>
-  ) : null;
-
   if (checking || (authorizationId && user && !authorizationReady)) {
     return (
       <Card className="auth-card" aria-live="polite">
@@ -547,8 +464,6 @@ export default function AccountPortal({
             <span className="auth-connected-dot" aria-label={copy.signedIn} />
           </div>
 
-          {mainlandNotice}
-
           {!authorizationId ? (
             <div className="auth-danger-zone">
               <div>
@@ -638,8 +553,6 @@ export default function AccountPortal({
       </CardHeader>
 
       <CardContent className="grid gap-5">
-        {mainlandNotice}
-
         <div className="auth-provider-stack">
           <Button className="auth-button-provider auth-button-google" variant="outline" size="auth" type="button" onClick={() => continueWithProvider("google")} disabled={Boolean(busy)}>
             {busy === "google" ? (

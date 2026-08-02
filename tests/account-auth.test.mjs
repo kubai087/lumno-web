@@ -27,9 +27,7 @@ test("account portal exposes Google and GitHub identity linking without email OT
   assert.match(source, /providers\.includes\("github"\)/);
   assert.match(source, /supabase\.functions\.invoke\("delete-account"/);
   assert.match(source, /deleteConfirmation !== "DELETE"/);
-  assert.match(source, /MAINLAND_NOTICE_STORAGE_KEY/);
-  assert.match(source, /mainland_cross_border_consented_at/);
-  assert.match(source, /ensureMainlandConsent\(\)/);
+  assert.doesNotMatch(source, /MAINLAND_NOTICE_STORAGE_KEY|mainland_cross_border|ensureMainlandConsent/);
   assert.match(callbackSource, /exchangeCodeForSession/);
   assert.doesNotMatch(callbackSource, /unlinkIdentity|provider_locked/);
   assert.doesNotMatch(clientSource, /lumno-auth-provider-choice-v1/);
@@ -100,6 +98,5 @@ test("privacy policy documents account, private sync media, and bounded metrics"
   assert.match(source, /自定义媒体存放在受访问控制的私有存储中/);
   assert.match(source, /不上传具体网址、域名、路径、搜索词/);
   assert.match(source, /同一时间只有你选定的一套远端同步会接收新写入/);
-  assert.match(source, /中国大陆不满 14 周岁的用户不得自行开启/);
-  assert.match(source, /mainland-china-notice/);
+  assert.doesNotMatch(source, /中国大陆单独告知|mainland-china-notice/);
 });

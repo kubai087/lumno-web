@@ -22,6 +22,7 @@ type PrivacyPageContent = {
   policySectionAria: string;
   metadataAria: string;
   lastUpdatedLabel: string;
+  tocLabel: string;
   communityLabel: string;
   reviewLabel: string;
   issueLabel: string;
@@ -56,6 +57,7 @@ export const PRIVACY_CONTENT: Record<SupportedLocale, PrivacyPageContent> = {
     policySectionAria: "隐私政策正文",
     metadataAria: "文档信息",
     lastUpdatedLabel: "最后更新",
+    tocLabel: "目录",
     communityLabel: "加入反馈群",
     reviewLabel: "为 Lumno 评分",
     issueLabel: "创建 Issue",
@@ -89,6 +91,7 @@ export const PRIVACY_CONTENT: Record<SupportedLocale, PrivacyPageContent> = {
     policySectionAria: "隱私權政策正文",
     metadataAria: "文件資訊",
     lastUpdatedLabel: "最後更新",
+    tocLabel: "目錄",
     communityLabel: "加入回饋群",
     reviewLabel: "為 Lumno 評分",
     issueLabel: "建立 Issue",
@@ -122,6 +125,7 @@ export const PRIVACY_CONTENT: Record<SupportedLocale, PrivacyPageContent> = {
     policySectionAria: "Privacy policy",
     metadataAria: "Document information",
     lastUpdatedLabel: "Last updated",
+    tocLabel: "On this page",
     communityLabel: "Join Discord",
     reviewLabel: "Rate Lumno",
     issueLabel: "Create an issue",

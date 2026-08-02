@@ -51,10 +51,28 @@ test("privacy article opens with a title and a semantic quote", () => {
     source,
     /<blockquote class="privacy-doc-intro">[\s\S]*?content\.intro[\s\S]*?<\/blockquote>/,
   );
-  assert.match(source, /\.privacy-doc-intro p \{[\s\S]*?font-size: 15px;/);
+  assert.match(source, /--privacy-type-intro: 15px;/);
+  assert.match(source, /\.privacy-doc-intro p \{[\s\S]*?font-size: var\(--privacy-type-intro\);/);
   assert.match(contentSource, /articleTitle: "隐私政策"/);
   assert.match(contentSource, /articleTitle: "隱私權政策"/);
   assert.match(contentSource, /articleTitle: "Privacy Policy"/);
+});
+
+test("privacy typography uses one shared responsive scale", () => {
+  const source = readSource("src/pages/privacy/index.astro");
+  const supportLinkSource = readSource("src/components/privacy/OptionsFeedbackSupportLink.astro");
+
+  assert.match(source, /--privacy-type-caption: 12px;/);
+  assert.match(source, /--privacy-type-small: 14px;/);
+  assert.match(source, /--privacy-type-body: 16px;/);
+  assert.match(source, /--privacy-type-subheading: 18px;/);
+  assert.match(source, /--privacy-type-section: clamp\(22px, 2\.4vw, 24px\);/);
+  assert.match(source, /--privacy-type-title: clamp\(30px, 3vw, 32px\);/);
+  assert.match(source, /\.privacy-markdown \{[\s\S]*?font-size: var\(--privacy-type-body\);/);
+  assert.match(source, /\.privacy-markdown h2 \{[\s\S]*?font-size: var\(--privacy-type-section\);/);
+  assert.match(source, /\.privacy-markdown h3 \{[\s\S]*?font-size: var\(--privacy-type-subheading\);/);
+  assert.match(supportLinkSource, /font-size: var\(--privacy-type-small, 14px\);/);
+  assert.doesNotMatch(source, /font-size: 14\.5px/);
 });
 
 test("privacy page starts directly with the article and has no retired hero", () => {

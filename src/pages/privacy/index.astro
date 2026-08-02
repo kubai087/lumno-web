@@ -417,12 +417,14 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
       .privacy-aside {
         grid-column: 1;
         justify-self: start;
-        width: 100%;
-        max-width: 250px;
+        width: calc(100% + 10px);
+        max-width: 260px;
+        margin-left: -10px;
         min-width: 0;
         position: sticky;
         top: 96px;
         max-height: calc(100vh - 116px);
+        padding-left: 10px;
         padding-right: 8px;
         overflow-y: auto;
         overscroll-behavior: contain;
@@ -968,6 +970,7 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
           grid-column: 1;
           width: 100%;
           max-width: none;
+          margin-left: 0;
           position: static;
           max-height: none;
           display: grid;

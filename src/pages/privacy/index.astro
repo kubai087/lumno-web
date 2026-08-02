@@ -333,7 +333,7 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
         padding: 30px 24px max(72px, var(--safe-area-bottom));
       }
 
-      .privacy-banner {
+      .privacy-hero {
         position: relative;
         width: 100%;
         min-height: 248px;
@@ -344,14 +344,14 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
         aspect-ratio: 2200 / 586;
       }
 
-      .privacy-banner::after {
+      .privacy-hero::after {
         content: "";
         position: absolute;
         inset: 0;
         background: linear-gradient(90deg, rgba(247, 249, 245, 0.96) 0%, rgba(247, 249, 245, 0.84) 38%, rgba(247, 249, 245, 0.16) 72%);
       }
 
-      .privacy-banner img {
+      .privacy-hero img {
         position: absolute;
         inset: 0;
         width: 100%;
@@ -360,7 +360,7 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
         display: block;
       }
 
-      .privacy-banner-copy {
+      .privacy-hero-copy {
         position: relative;
         z-index: 1;
         width: min(740px, 76%);
@@ -380,7 +380,7 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
         text-transform: uppercase;
       }
 
-      .privacy-banner h1 {
+      .privacy-hero h1 {
         margin: 0;
         max-width: 640px;
         font-size: clamp(34px, 4.8vw, 48px);
@@ -390,7 +390,7 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
         color: #24362a;
       }
 
-      .privacy-banner-lead {
+      .privacy-hero-lead {
         max-width: 580px;
         margin: 12px 0 0;
         color: #58665c;
@@ -398,7 +398,7 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
         line-height: 1.72;
       }
 
-      .privacy-banner-meta {
+      .privacy-hero-meta {
         margin: 8px 0 0;
         color: #758078;
         font-size: 12px;
@@ -943,17 +943,17 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
           padding: 20px 12px max(96px, var(--safe-area-bottom));
         }
 
-        .privacy-banner {
+        .privacy-hero {
           min-height: 330px;
           margin-bottom: 34px;
           aspect-ratio: auto;
         }
 
-        .privacy-banner::after {
+        .privacy-hero::after {
           background: linear-gradient(90deg, rgba(247, 249, 245, 0.97) 0%, rgba(247, 249, 245, 0.82) 65%, rgba(247, 249, 245, 0.28) 100%);
         }
 
-        .privacy-banner-copy {
+        .privacy-hero-copy {
           width: 92%;
           padding: 28px 24px;
         }
@@ -1045,11 +1045,11 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
       }
 
       @media (max-width: 520px) {
-        .privacy-banner h1 {
+        .privacy-hero h1 {
           font-size: 38px;
         }
 
-        .privacy-banner-lead {
+        .privacy-hero-lead {
           font-size: 14px;
         }
 
@@ -1093,7 +1093,7 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
     </header>
 
     <main class="privacy-container privacy-main">
-      <section class="privacy-banner" aria-labelledby="privacy-title">
+      <section class="privacy-hero" aria-labelledby="privacy-title">
         <img
           src="/resource_commited/banner.jpg"
           alt={content.bannerAlt}
@@ -1102,11 +1102,11 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
           width="2200"
           height="586"
         />
-        <div class="privacy-banner-copy">
+        <div class="privacy-hero-copy">
           <p class="privacy-eyebrow">{content.eyebrow}</p>
           <h1 id="privacy-title">{content.heroTitle}</h1>
-          <p class="privacy-banner-lead">{content.heroLead}</p>
-          <p class="privacy-banner-meta">{content.effectiveLabel}{displayLastUpdated}</p>
+          <p class="privacy-hero-lead">{content.heroLead}</p>
+          <p class="privacy-hero-meta">{content.effectiveLabel}{displayLastUpdated}</p>
         </div>
       </section>
 

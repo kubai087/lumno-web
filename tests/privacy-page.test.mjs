@@ -60,6 +60,8 @@ test("privacy hero uses natural Chinese copy and a localized update date", () =>
   const source = readSource("src/pages/privacy/index.astro");
   const contentSource = readSource("src/lib/privacy-content.ts");
 
+  assert.match(source, /<section class="privacy-hero" aria-labelledby="privacy-title">/);
+  assert.doesNotMatch(source, /privacy-banner/);
   assert.match(contentSource, /heroTitle: "Lumno 如何处理你的数据"/);
   assert.match(
     contentSource,

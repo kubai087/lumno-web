@@ -282,6 +282,7 @@ export default function AccountPortal({
   const [authorizationDetails, setAuthorizationDetails] = useState<OAuthAuthorizationDetails | null>(null);
   const [deleteExpanded, setDeleteExpanded] = useState(false);
   const [deleteConfirmation, setDeleteConfirmation] = useState("");
+  const userId = user?.id || "";
 
   useEffect(() => {
     let active = true;
@@ -304,7 +305,7 @@ export default function AccountPortal({
   }, [supabase]);
 
   useEffect(() => {
-    if (!authorizationId || !user) {
+    if (!authorizationId || !userId) {
       setAuthorizationReady(!authorizationId);
       return;
     }
@@ -348,7 +349,7 @@ export default function AccountPortal({
     return () => {
       active = false;
     };
-  }, [authorizationId, copy, supabase, user]);
+  }, [authorizationId, copy, supabase, userId]);
 
   function clearFeedback() {
     setNotice("");

@@ -70,6 +70,10 @@ test("extension consent uses a registered authorization request and an explicit 
   assert.match(source, /authorizationDetails\?\.scope/);
   assert.match(source, /requestedScopes\.map/);
   assert.match(authorizeSource, /登录请求无效/);
+  assert.match(authorizeSource, /useState<string \| null>\(null\)/);
+  assert.match(authorizeSource, /authorizationId === null/);
+  assert.match(authorizeSource, /正在确认登录请求/);
+  assert.doesNotMatch(authorizeSource, /useMemo/);
 });
 
 test("Lumno extension authorization resumes from the account route and returns automatically", () => {
@@ -83,6 +87,9 @@ test("Lumno extension authorization resumes from the account route and returns a
     source,
     /isLumnoExtensionAuthorization\(data\)[\s\S]*approveAuthorization\([\s\S]*skipBrowserRedirect: true[\s\S]*window\.location\.assign\(approval\.data\.redirect_url\)/,
   );
+  assert.match(source, /const userId = user\?\.id \|\| ""/);
+  assert.match(source, /\[authorizationId, copy, supabase, userId\]/);
+  assert.doesNotMatch(source, /\[authorizationId, copy, supabase, user\]/);
 });
 
 test("sensitive auth layout does not load site analytics or SEO scripts", () => {

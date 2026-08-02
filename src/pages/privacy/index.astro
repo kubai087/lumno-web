@@ -11,7 +11,6 @@ import {
   buildAlternateLinks,
   buildBreadcrumbListSchema,
   buildKeywords,
-  buildSoftwareApplicationSchema,
   buildWebPageSchema,
   getOpenGraphLocale,
 } from "../../lib/seo";
@@ -57,9 +56,6 @@ const privacySections = PRIVACY_SECTION_IDS.map((id, index) => ({
   navigationTitle: (privacySectionTitles[index] || `${index + 1}`).replace(/^\d+\.\s*/, ""),
 }));
 const structuredData = [
-  buildSoftwareApplicationSchema({
-    description: content.pageDescription,
-  }),
   buildWebPageSchema({
     name: content.pageTitle,
     description: content.pageDescription,
@@ -139,18 +135,21 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
               return "en";
             };
 
-            const systemLocale = normalizeLocale(
-              (Array.isArray(navigator.languages) && navigator.languages[0]) || navigator.language || "en",
-            );
             let storedMode = "";
             try {
               storedMode = String(window.localStorage.getItem(languageStorageKey) || "").trim();
             } catch (_error) {
-              // Private browsing or blocked storage falls back to the browser language.
+              // Private browsing or blocked storage keeps the default route stable.
             }
 
-            const resolvedLocale = !storedMode || storedMode.toLowerCase() === "system"
-              ? systemLocale
+            // Keep the x-default URL stable for first-time visitors and crawlers.
+            // A previously saved, explicit language choice is still honored before paint.
+            if (!storedMode) return;
+
+            const resolvedLocale = storedMode.toLowerCase() === "system"
+              ? normalizeLocale(
+                  (Array.isArray(navigator.languages) && navigator.languages[0]) || navigator.language || "en",
+                )
               : normalizeLocale(storedMode);
             const targetPath = routeMap[resolvedLocale];
 
@@ -1318,6 +1317,7 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
     <script is:inline define:vars={{ forcedLocale, routeLanguageMap }}>
       const LANGUAGE_STORAGE_KEY = "_x_extension_language_2024_unique_";
       const FORCED_LOCALE = forcedLocale;
+      const DEFAULT_PRIVACY_LOCALE = "zh-CN";
       const ROUTE_LANGUAGE_MAP = routeLanguageMap;
 
       function normalizeLocale(locale) {
@@ -1365,8 +1365,10 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
 
       function initLanguageRuntime() {
         if (!window.__lumnoLanguagePreference || !window.__lumnoLanguageRuntime) return null;
+        const storedMode = window.__lumnoLanguagePreference.getStoredLanguageMode(LANGUAGE_STORAGE_KEY);
+        const initialForcedLocale = FORCED_LOCALE || (!storedMode ? DEFAULT_PRIVACY_LOCALE : null);
         return window.__lumnoLanguageRuntime.setupLanguageRuntime({
-          forcedLocale: FORCED_LOCALE,
+          forcedLocale: initialForcedLocale,
           getSystemLocale,
           normalizeLanguageMode,
           routeLanguageMap: ROUTE_LANGUAGE_MAP,

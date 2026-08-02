@@ -72,6 +72,18 @@ test("privacy hero uses natural Chinese copy and a localized update date", () =>
   assert.match(source, /\{content\.effectiveLabel\}\{displayLastUpdated\}/);
 });
 
+test("privacy uses branded search copy and page-appropriate structured data", () => {
+  const source = readSource("src/pages/privacy/index.astro");
+  const contentSource = readSource("src/lib/privacy-content.ts");
+
+  assert.match(contentSource, /pageTitle: "Lumno Privacy Policy \| Local Data, Sync & Analytics"/);
+  assert.match(contentSource, /heroTitle: "How Lumno handles your data"/);
+  assert.match(contentSource, /heroLead: "Clarity is a form of respect:/);
+  assert.doesNotMatch(source, /buildSoftwareApplicationSchema/);
+  assert.match(source, /buildWebPageSchema\(/);
+  assert.match(source, /buildBreadcrumbListSchema\(/);
+});
+
 test("privacy sidebar exposes the same four support contacts as options", () => {
   const source = readSource("src/pages/privacy/index.astro");
   const supportLinkSource = readSource("src/components/privacy/OptionsFeedbackSupportLink.astro");

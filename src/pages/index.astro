@@ -24,6 +24,7 @@ const uiLocale = forcedLocale || DEFAULT_LOCALE;
 const homeHref = buildLocalizedPath(uiLocale, "/");
 const featuresHref = buildLocalizedPath(uiLocale, "/features/");
 const releaseHref = buildLocalizedPath(uiLocale, "/release/");
+const privacyHref = buildLocalizedPath(uiLocale, "/privacy/");
 const WORDMARK_TEXT = "Lumno";
 const alternateLinks = buildAlternateLinks(routeLanguageMap, "/");
 const ogLocale = getOpenGraphLocale(uiLocale);
@@ -65,6 +66,8 @@ const initialUi = {
     settingsAria: "访问 Lumno GitHub 仓库",
     featuresAria: "查看 Lumno 功能与场景页面",
     releaseAria: "查看更新日志页面",
+    privacyLabel: "隐私政策",
+    privacyAria: "查看 Lumno 隐私政策",
     discordAria: "反馈与提需",
     qrcodeTitle: "微信群二维码",
     qrcodeImageAlt: "Lumno 微信群二维码",
@@ -89,6 +92,8 @@ const initialUi = {
     settingsAria: "造訪 Lumno GitHub 倉庫",
     featuresAria: "查看 Lumno 功能與場景頁面",
     releaseAria: "查看更新日誌頁面",
+    privacyLabel: "隱私權政策",
+    privacyAria: "查看 Lumno 隱私權政策",
     discordAria: "反饋與提需",
     qrcodeTitle: "微信群二維碼",
     qrcodeImageAlt: "Lumno 微信群二維碼",
@@ -113,6 +118,8 @@ const initialUi = {
     settingsAria: "Open the Lumno GitHub repository",
     featuresAria: "Open the Lumno features page",
     releaseAria: "Open the release notes page",
+    privacyLabel: "Privacy Policy",
+    privacyAria: "Open the Lumno Privacy Policy",
     discordAria: "Feedback and requests",
     qrcodeTitle: "WeChat group QR code",
     qrcodeImageAlt: "Lumno WeChat group QR code",
@@ -578,6 +585,36 @@ const structuredData = [
         transform: none;
         filter: none;
         animation: none;
+      }
+
+      .site-legal-nav {
+        position: fixed;
+        left: clamp(56px, 9vw, 132px);
+        bottom: calc(24px + var(--mobile-bottom-clearance));
+        z-index: 22;
+        display: flex;
+        align-items: center;
+      }
+
+      .site-legal-link {
+        padding: 6px 2px;
+        color: #5f6772;
+        font-size: 12px;
+        line-height: 1.4;
+        text-decoration: none;
+        text-underline-offset: 3px;
+        transition: color 160ms ease;
+      }
+
+      .site-legal-link:hover {
+        color: #364052;
+        text-decoration: underline;
+      }
+
+      .site-legal-link:focus-visible {
+        outline: 2px solid rgba(53, 120, 203, 0.28);
+        outline-offset: 3px;
+        border-radius: 4px;
       }
 
       .support-tooltip {
@@ -2151,6 +2188,16 @@ const structuredData = [
           padding: 0 20px;
         }
 
+        .site-legal-nav {
+          position: relative;
+          left: auto;
+          bottom: auto;
+          width: 100%;
+          margin: 12px auto 0;
+          padding: 0 20px;
+          justify-content: center;
+        }
+
         .is-twitter-in-app-browser .producthunt-badge-wrap--page-bottom {
           display: none;
         }
@@ -2800,6 +2847,17 @@ const structuredData = [
         <FeatureGrid messages={featureMessages} />
       </section>
     </main>
+    <footer class="site-legal-nav">
+      <a
+        class="site-legal-link"
+        href={privacyHref}
+        aria-label={initialUi.privacyAria}
+        data-i18n="privacy_link"
+        data-i18n-aria-label="privacy_aria"
+      >
+        {initialUi.privacyLabel}
+      </a>
+    </footer>
     <LanguageMenu currentLabel={initialUi.languageLabel} toggleAriaLabel={initialUi.languageSelectAria} />
     <div class="producthunt-badge-wrap producthunt-badge-wrap--page-bottom">
       <a
@@ -2866,6 +2924,8 @@ const structuredData = [
           features_aria: "查看 Lumno 功能与场景页面",
           release_aria: "查看更新日志页面",
           view_release: "更新日志",
+          privacy_link: "隐私政策",
+          privacy_aria: "查看 Lumno 隐私政策",
           cws_badge_aria: "在 Chrome 应用商店中安装 Lumno",
           cws_badge_alt: "在 Chrome 应用商店中获取",
           edge_badge_aria: "在 Microsoft Edge 加载项中安装 Lumno",
@@ -2908,6 +2968,8 @@ const structuredData = [
           features_aria: "查看 Lumno 功能與場景頁面",
           release_aria: "查看更新日誌頁面",
           view_release: "更新日誌",
+          privacy_link: "隱私權政策",
+          privacy_aria: "查看 Lumno 隱私權政策",
           cws_badge_aria: "在 Chrome 線上應用程式商店安裝 Lumno",
           cws_badge_alt: "在 Chrome 線上應用程式商店中取得",
           edge_badge_aria: "在 Microsoft Edge 附加元件中安裝 Lumno",
@@ -2950,6 +3012,8 @@ const structuredData = [
           features_aria: "Open the Lumno features page",
           release_aria: "Open release notes page",
           view_release: "Release Notes",
+          privacy_link: "Privacy Policy",
+          privacy_aria: "Open the Lumno Privacy Policy",
           cws_badge_aria: "Install Lumno from Chrome Web Store",
           cws_badge_alt: "Get it from Chrome Web Store",
           edge_badge_aria: "Install Lumno from Microsoft Edge Add-ons",

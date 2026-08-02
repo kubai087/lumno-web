@@ -63,7 +63,7 @@ These requests are generally made directly from the extension to the relevant th
 
 If you choose to sign in and use cloud features, Lumno processes:
 
-- a system-generated user ID, email address, sign-in method, and basic profile fields such as display name and avatar returned by the sign-in provider;
+- a system-generated user ID, email address, your selected Google or GitHub sign-in method, and basic profile fields such as display name and avatar returned by that provider; if Google and GitHub return the same verified email, Supabase may automatically link both identities to one Lumno account;
 - a random device ID, device display name, browser family, coarse platform type, extension version, and last activity time;
 - consent records, sync versions, conflict state, and operation identifiers used to prevent duplicate writes;
 - Lumno settings you choose to sync. Custom shortcuts, search providers, and blocklist rules may contain URLs, names, or rule text that you entered;
@@ -94,8 +94,7 @@ Lumno processes data only as needed to provide browser features, accounts, and s
 | Recipient | Data it may process | Purpose |
 | --- | --- | --- |
 | [Supabase](https://supabase.com/privacy) | Account, device, consent, synced settings, custom media, optional product metrics, and limited service logs | Authentication, database, private object storage, and Edge Functions; the primary project region is Tokyo, Japan. |
-| [Resend](https://resend.com/legal/privacy-policy) | Recipient email address, verification-email content, delivery status, and email logs | Deliver one-time sign-in codes. |
-| [Google](https://policies.google.com/privacy), [GitHub](https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement) | Identity and OAuth request information needed when you choose social sign-in | Complete the sign-in method you selected. |
+| [Google](https://policies.google.com/privacy), [GitHub](https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement) | Identity and OAuth request information needed when you choose to sign in | Complete your chosen sign-in; identities with the same verified email may be linked to one Lumno account. |
 | [VibeLoft](https://vibeloft.ai/privacy), Google Analytics if enabled | Website visit and technical information | Measure public-page traffic, sources, and performance. |
 | Browser vendors | Settings stored in `chrome.storage.sync` and browser-account metadata | Provide browser-native extension settings sync. |
 | Search, AI, website, or favicon services you select | Query, selected text, prompt, requested URL or domain, and network metadata | Complete a search, AI action, navigation, or icon request you initiated. |
@@ -111,7 +110,6 @@ Providers may process data outside your country or region. Lumno does not sell d
 | Account-linked daily product metrics and configuration | **24 months** from the relevant day, after which linked detail is deleted. Before deletion, totals may be aggregated by month and feature metric without user ID, device ID, email address, or configuration. Totals that can no longer be linked to an individual may be retained long term. |
 | Metric-upload deduplication batch identifiers | 30 days. |
 | Sync-write deduplication operation records | 90 days. |
-| Verification emails and delivery records | Resend currently retains them for approximately 30 days; Lumno does not create a separate long-term copy. |
 | Infrastructure, security, and request logs | Retained by providers under the current service plan and only as needed for security and troubleshooting. Lumno uses the shortest period necessary for those purposes and does not create a separate long-term export. |
 
 Permanent account deletion removes the account, devices, synced settings, custom media, consent records, and any product metrics still linkable to the account from active cloud systems. Data required by law, needed for a security investigation, present temporarily in provider backups, or already irreversibly aggregated may not be deleted at the same time. Account deletion does not automatically erase local data on your devices or browser-vendor sync copies.
@@ -141,7 +139,7 @@ When you direct a query or selected text to a search, AI, or other third party, 
 
 ## 9. International Processing and Children
 
-Account, sync, and media data is primarily stored in Supabase's Tokyo, Japan region. Supabase, Resend, Google, GitHub, VibeLoft, Google Analytics, and search or AI services you select may process identity data, content, or service logs in other countries. Where applicable, Lumno uses provider data-protection terms, required transfer mechanisms, or user consent. If local law requires separate consent or additional safeguards, Lumno will present the relevant choice before that processing or limit availability of the cloud feature.
+Account, sync, and media data is primarily stored in Supabase's Tokyo, Japan region. Supabase, Google, GitHub, VibeLoft, Google Analytics, and search or AI services you select may process identity data, content, or service logs in other countries. Where applicable, Lumno uses provider data-protection terms, required transfer mechanisms, or user consent. If local law requires separate consent or additional safeguards, Lumno will present the relevant choice before that processing or limit availability of the cloud feature.
 
 Lumno is intended for a general audience and is not directed to children under 13. A user below the age at which they may independently consent to personal-data processing where they live should use account, sync, and optional metrics only with a guardian's consent and guidance. If you believe Lumno processed a child's personal data without appropriate consent, contact us so we can investigate and delete it.
 

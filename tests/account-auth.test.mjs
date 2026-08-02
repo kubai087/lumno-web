@@ -11,29 +11,28 @@ function readSource(file) {
   return fs.readFileSync(path.join(workspaceRoot, file), "utf8");
 }
 
-test("account portal prioritizes Google and GitHub while keeping email in preview", () => {
+test("account portal exposes Google and GitHub identity linking without email OTP", () => {
   const source = readSource("src/components/account/AccountPortal.tsx");
+  const callbackSource = readSource("src/components/account/AuthCallback.tsx");
+  const clientSource = readSource("src/lib/supabase-client.ts");
 
   assert.match(source, /使用 Google 继续/);
   assert.match(source, /使用 GitHub 继续/);
-  assert.match(source, /邮箱验证码登录（内测）/);
-  assert.match(source, /auth-email-disclosure/);
-  assert.match(source, /CollapsibleTrigger/);
-  assert.match(source, /InputOTP/);
-  assert.match(source, /REGEXP_ONLY_DIGITS/);
-  assert.match(source, /setResendIn\(30\)/);
-  assert.match(source, /FieldError/);
+  assert.match(source, /如果两者使用同一个已验证邮箱，系统会自动合并到同一账号/);
   assert.match(source, /signInWithOAuth/);
   assert.match(source, /continueWithProvider\("google"\)/);
   assert.match(source, /busy === "google"/);
   assert.doesNotMatch(source, /googleSoon|aria-disabled="true"/);
-  assert.match(source, /signInWithOtp/);
+  assert.doesNotMatch(source, /signInWithOtp|verifyOtp|InputOTP|auth-email|邮箱验证码登录/);
   assert.match(source, /providers\.includes\("github"\)/);
   assert.match(source, /supabase\.functions\.invoke\("delete-account"/);
   assert.match(source, /deleteConfirmation !== "DELETE"/);
   assert.match(source, /MAINLAND_NOTICE_STORAGE_KEY/);
   assert.match(source, /mainland_cross_border_consented_at/);
   assert.match(source, /ensureMainlandConsent\(\)/);
+  assert.match(callbackSource, /exchangeCodeForSession/);
+  assert.doesNotMatch(callbackSource, /unlinkIdentity|provider_locked/);
+  assert.doesNotMatch(clientSource, /lumno-auth-provider-choice-v1/);
 });
 
 test("web auth components use Lumno semantic tokens", () => {

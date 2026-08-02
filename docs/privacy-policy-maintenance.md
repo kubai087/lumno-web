@@ -7,7 +7,7 @@
 - Lumno 浏览器扩展 0.9.30 及以上版本；
 - `lumno.kubai.design` 公开页面和敏感账号页面；
 - Supabase 账号、同步、自定义媒体和可选产品使用统计；
-- Resend 邮箱验证码；
+- Google / GitHub OAuth 身份关联；
 - Google / GitHub 社交登录；
 - 用户主动发起的搜索、AI、选中文字与 favicon 请求；
 - VibeLoft 和部署时可能启用的 Google Analytics 官网统计。
@@ -24,7 +24,7 @@
 | 云端表、RLS 和保存期限 | `lumno-extension/supabase/migrations/` |
 | 永久删除账号的实际范围 | `lumno-extension/supabase/functions/delete-account/index.ts` |
 | 官网统计与敏感页面例外 | `src/components/SeoHead.astro`、`src/layouts/AuthLayout.astro` |
-| 服务商、项目区域和部署配置 | Supabase / Resend 控制台与部署环境变量 |
+| 服务商、项目区域和部署配置 | Supabase / Google / GitHub 控制台与部署环境变量 |
 
 ## 必须触发政策复查的变更
 

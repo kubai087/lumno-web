@@ -164,7 +164,8 @@ test("privacy policy discloses all material data paths and maintenance-sensitive
     assert.match(policy, /VibeLoft/);
     assert.match(policy, /Google Analytics/);
     assert.match(policy, /Supabase/);
-    assert.match(policy, /Resend/);
+    assert.doesNotMatch(policy, /Resend/);
+    assert.match(policy, /verified (?:email|邮箱|電子郵件)|已验证邮箱|已驗證電子郵件/i);
     assert.match(policy, /24 (?:个月|個月|months)/);
     assert.match(policy, /`tabGroups`/);
     assert.match(policy, /`alarms`/);

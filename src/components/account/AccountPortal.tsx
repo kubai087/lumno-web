@@ -1,14 +1,12 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { OAuthAuthorizationDetails, Provider, User } from "@supabase/supabase-js";
 import {
   ArrowRightIcon,
   ArrowUpRightIcon,
   CheckIcon,
-  ChevronDownIcon,
   CircleAlertIcon,
   HomeIcon,
   LogOutIcon,
-  MailIcon,
   RefreshCwIcon,
   ShieldCheckIcon,
   Trash2Icon,
@@ -27,33 +25,18 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "@/components/ui/collapsible";
-import {
   Field,
-  FieldDescription,
-  FieldError,
-  FieldGroup,
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import {
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSlot,
-} from "@/components/ui/input-otp";
-import { Separator } from "@/components/ui/separator";
 import { Spinner } from "@/components/ui/spinner";
-import { REGEXP_ONLY_DIGITS } from "input-otp";
 import {
   getSupabaseBrowserClient,
   rememberAuthReturnPath,
 } from "../../lib/supabase-client";
 
 type Locale = "zh-CN" | "zh-TW" | "en";
-type BusyAction = "google" | "github" | "send-code" | "verify-code" | "sign-out" | "delete-account" | "approve" | "deny" | "";
+type BusyAction = "google" | "github" | "sign-out" | "delete-account" | "approve" | "deny" | "";
 
 type Copy = {
   title: string;
@@ -61,18 +44,7 @@ type Copy = {
   google: string;
   github: string;
   recommended: string;
-  emailBeta: string;
-  emailLabel: string;
-  emailPlaceholder: string;
-  sendCode: string;
-  codeLabel: string;
-  codePlaceholder: string;
-  verifyCode: string;
-  codeSent: string;
-  codeHelp: string;
-  changeEmail: string;
-  resendCode: string;
-  resendWait: string;
+  providerRule: string;
   privacyPrefix: string;
   privacyLink: string;
   privacySuffix: string;
@@ -92,8 +64,6 @@ type Copy = {
   retry: string;
   genericError: string;
   providerUnavailable: string;
-  invalidEmail: string;
-  invalidCode: string;
   mainlandTitle: string;
   mainlandBody: string;
   mainlandCheck: string;
@@ -115,18 +85,7 @@ const COPY: Record<Locale, Copy> = {
     google: "使用 Google 继续",
     github: "使用 GitHub 继续",
     recommended: "推荐",
-    emailBeta: "邮箱验证码登录（内测）",
-    emailLabel: "邮箱",
-    emailPlaceholder: "you@example.com",
-    sendCode: "发送验证码",
-    codeLabel: "验证码",
-    codePlaceholder: "输入邮件中的 6 位验证码",
-    verifyCode: "验证并登录",
-    codeSent: "验证码已发送，请检查邮箱。",
-    codeHelp: "可直接粘贴邮件中的 6 位验证码。",
-    changeEmail: "更换邮箱",
-    resendCode: "重新发送",
-    resendWait: "秒后可重新发送",
+    providerRule: "Google 与 GitHub 都可以登录 Lumno；如果两者使用同一个已验证邮箱，系统会自动合并到同一账号。",
     privacyPrefix: "继续即表示你已阅读并同意",
     privacyLink: "隐私政策",
     privacySuffix: "。",
@@ -146,10 +105,8 @@ const COPY: Record<Locale, Copy> = {
     retry: "重试",
     genericError: "操作没有完成，请稍后重试。",
     providerUnavailable: "该登录方式尚未完成配置，请先使用其他方式。",
-    invalidEmail: "请输入有效的邮箱地址。",
-    invalidCode: "请输入邮件中的 6 位验证码。",
     mainlandTitle: "中国大陆用户单独告知",
-    mainlandBody: "账号、同步配置和自定义壁纸将跨境传输至 Supabase 日本东京区域，并可能由登录、邮件与基础设施服务商处理。",
+    mainlandBody: "账号、同步配置和自定义壁纸将跨境传输至 Supabase 日本东京区域，并可能由登录与基础设施服务商处理。",
     mainlandCheck: "若我位于中国大陆，我已满 14 周岁，并单独同意上述跨境处理；未满 14 周岁请勿开启云功能。",
     mainlandLink: "查看接收方、数据类型与权利详情",
     mainlandRequired: "请先阅读并单独同意中国大陆跨境处理告知。",
@@ -167,18 +124,7 @@ const COPY: Record<Locale, Copy> = {
     google: "使用 Google 繼續",
     github: "使用 GitHub 繼續",
     recommended: "推薦",
-    emailBeta: "電子郵件驗證碼登入（內測）",
-    emailLabel: "電子郵件",
-    emailPlaceholder: "you@example.com",
-    sendCode: "傳送驗證碼",
-    codeLabel: "驗證碼",
-    codePlaceholder: "輸入郵件中的 6 位驗證碼",
-    verifyCode: "驗證並登入",
-    codeSent: "驗證碼已傳送，請檢查電子郵件。",
-    codeHelp: "可直接貼上郵件中的 6 位驗證碼。",
-    changeEmail: "更換電子郵件",
-    resendCode: "重新傳送",
-    resendWait: "秒後可重新傳送",
+    providerRule: "Google 與 GitHub 都可以登入 Lumno；如果兩者使用同一個已驗證電子郵件，系統會自動合併至同一帳號。",
     privacyPrefix: "繼續即表示你已閱讀並同意",
     privacyLink: "隱私權政策",
     privacySuffix: "。",
@@ -198,10 +144,8 @@ const COPY: Record<Locale, Copy> = {
     retry: "重試",
     genericError: "操作未完成，請稍後再試。",
     providerUnavailable: "此登入方式尚未完成設定，請先使用其他方式。",
-    invalidEmail: "請輸入有效的電子郵件地址。",
-    invalidCode: "請輸入郵件中的 6 位驗證碼。",
     mainlandTitle: "中國大陸使用者單獨告知",
-    mainlandBody: "帳號、同步設定與自訂桌布將跨境傳輸至 Supabase 日本東京區域，並可能由登入、郵件與基礎設施服務商處理。",
+    mainlandBody: "帳號、同步設定與自訂桌布將跨境傳輸至 Supabase 日本東京區域，並可能由登入與基礎設施服務商處理。",
     mainlandCheck: "若我位於中國大陸，我已滿 14 歲，並單獨同意上述跨境處理；未滿 14 歲請勿啟用雲端功能。",
     mainlandLink: "查看接收方、資料類型與權利詳情",
     mainlandRequired: "請先閱讀並單獨同意中國大陸跨境處理告知。",
@@ -219,18 +163,7 @@ const COPY: Record<Locale, Copy> = {
     google: "Continue with Google",
     github: "Continue with GitHub",
     recommended: "Recommended",
-    emailBeta: "Email code sign-in (preview)",
-    emailLabel: "Email",
-    emailPlaceholder: "you@example.com",
-    sendCode: "Send code",
-    codeLabel: "Verification code",
-    codePlaceholder: "Enter the 6-digit code from your email",
-    verifyCode: "Verify and sign in",
-    codeSent: "We sent a verification code to your email.",
-    codeHelp: "Paste the 6-digit code directly from your email.",
-    changeEmail: "Use another email",
-    resendCode: "Resend code",
-    resendWait: "seconds to resend",
+    providerRule: "You can sign in with Google or GitHub. If both use the same verified email, they are automatically linked to one Lumno account.",
     privacyPrefix: "By continuing, you acknowledge the ",
     privacyLink: "Privacy Policy",
     privacySuffix: ".",
@@ -250,10 +183,8 @@ const COPY: Record<Locale, Copy> = {
     retry: "Try again",
     genericError: "That action could not be completed. Please try again.",
     providerUnavailable: "This sign-in method is not configured yet. Please use another option.",
-    invalidEmail: "Enter a valid email address.",
-    invalidCode: "Enter the 6-digit code from your email.",
     mainlandTitle: "Notice for users in mainland China",
-    mainlandBody: "Account data, synced settings, and custom wallpapers are transferred to Supabase's Tokyo region and may be handled by authentication, email, and infrastructure providers.",
+    mainlandBody: "Account data, synced settings, and custom wallpapers are transferred to Supabase's Tokyo region and may be handled by authentication and infrastructure providers.",
     mainlandCheck: "If I am in mainland China, I confirm that I am at least 14 and separately consent to this cross-border processing. Users under 14 must not enable cloud features.",
     mainlandLink: "View recipients, data categories, and rights",
     mainlandRequired: "Review and separately consent to the mainland China cross-border notice first.",
@@ -267,7 +198,6 @@ const COPY: Record<Locale, Copy> = {
   },
 };
 
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MAINLAND_NOTICE_VERSION = "2026-08-02";
 const MAINLAND_NOTICE_STORAGE_KEY = "lumno-mainland-cross-border-consent-v1";
 
@@ -276,9 +206,10 @@ function getProvider(user: User): string {
     user.app_metadata?.provider,
     ...(user.identities || []).map((identity) => identity.provider),
   ].map((provider) => String(provider || "").toLowerCase());
+  if (providers.includes("github") && providers.includes("google")) return "Google + GitHub";
   if (providers.includes("github")) return "GitHub";
   if (providers.includes("google")) return "Google";
-  return "Email";
+  return "Lumno";
 }
 
 function getDisplayName(user: User): string {
@@ -294,8 +225,6 @@ function getAvatar(user: User): string {
 function formatAuthError(error: unknown, copy: Copy): string {
   const message = String((error as { message?: string } | null)?.message || error || "").toLowerCase();
   if (message.includes("provider") || message.includes("oauth")) return copy.providerUnavailable;
-  if (message.includes("email") && message.includes("invalid")) return copy.invalidEmail;
-  if (message.includes("token") || message.includes("otp") || message.includes("code")) return copy.invalidCode;
   return copy.genericError;
 }
 
@@ -343,11 +272,6 @@ export default function AccountPortal({
   const [user, setUser] = useState<User | null>(null);
   const [checking, setChecking] = useState(true);
   const [busy, setBusy] = useState<BusyAction>("");
-  const [emailExpanded, setEmailExpanded] = useState(false);
-  const [email, setEmail] = useState("");
-  const [code, setCode] = useState("");
-  const [codeSent, setCodeSent] = useState(false);
-  const [resendIn, setResendIn] = useState(0);
   const [notice, setNotice] = useState("");
   const [error, setError] = useState("");
   const [authorizationReady, setAuthorizationReady] = useState(!authorizationId);
@@ -355,7 +279,6 @@ export default function AccountPortal({
   const [mainlandConsentAccepted, setMainlandConsentAccepted] = useState(locale !== "zh-CN");
   const [deleteExpanded, setDeleteExpanded] = useState(false);
   const [deleteConfirmation, setDeleteConfirmation] = useState("");
-  const emailInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     let active = true;
@@ -423,20 +346,6 @@ export default function AccountPortal({
     }, { onConflict: "user_id" });
   }, [locale, mainlandConsentAccepted, supabase, user]);
 
-  useEffect(() => {
-    if (resendIn <= 0) return;
-    const timeoutId = window.setTimeout(() => {
-      setResendIn((seconds) => Math.max(0, seconds - 1));
-    }, 1000);
-    return () => window.clearTimeout(timeoutId);
-  }, [resendIn]);
-
-  useEffect(() => {
-    if (!emailExpanded || codeSent) return;
-    const frameId = window.requestAnimationFrame(() => emailInputRef.current?.focus());
-    return () => window.cancelAnimationFrame(frameId);
-  }, [codeSent, emailExpanded]);
-
   function clearFeedback() {
     setNotice("");
     setError("");
@@ -475,68 +384,6 @@ export default function AccountPortal({
       setError(formatAuthError(providerError, copy));
       setBusy("");
     }
-  }
-
-  async function requestCode() {
-    clearFeedback();
-    if (!ensureMainlandConsent()) return;
-    const normalizedEmail = email.trim().toLowerCase();
-    if (!EMAIL_PATTERN.test(normalizedEmail)) {
-      setError(copy.invalidEmail);
-      return;
-    }
-    setBusy("send-code");
-    const { error: otpError } = await supabase.auth.signInWithOtp({
-      email: normalizedEmail,
-      options: { shouldCreateUser: true },
-    });
-    setBusy("");
-    if (otpError) {
-      setError(formatAuthError(otpError, copy));
-      return;
-    }
-    setCodeSent(true);
-    setResendIn(30);
-    setNotice(copy.codeSent);
-  }
-
-  async function sendCode(event: React.SyntheticEvent<HTMLFormElement>) {
-    event.preventDefault();
-    await requestCode();
-  }
-
-  async function resendCode() {
-    if (resendIn > 0 || busy) return;
-    await requestCode();
-  }
-
-  function resetEmailStep() {
-    clearFeedback();
-    setCode("");
-    setCodeSent(false);
-    setResendIn(0);
-  }
-
-  async function verifyCode(event: React.SyntheticEvent<HTMLFormElement>) {
-    event.preventDefault();
-    clearFeedback();
-    const token = code.replace(/\s+/g, "");
-    if (!/^\d{6}$/.test(token)) {
-      setError(copy.invalidCode);
-      return;
-    }
-    setBusy("verify-code");
-    const { error: verifyError } = await supabase.auth.verifyOtp({
-      email: email.trim().toLowerCase(),
-      token,
-      type: "email",
-    });
-    setBusy("");
-    if (verifyError) {
-      setError(formatAuthError(verifyError, copy));
-      return;
-    }
-    setCode("");
   }
 
   async function signOut() {
@@ -582,9 +429,7 @@ export default function AccountPortal({
     setNotice(copy.deleteDone);
   }
 
-  const emailError = error === copy.invalidEmail;
-  const codeError = error === copy.invalidCode;
-  const generalError = error && !emailError && !codeError ? error : "";
+  const generalError = error;
   const mainlandNotice = locale === "zh-CN" ? (
     <div className="auth-mainland-notice">
       <div>
@@ -816,105 +661,7 @@ export default function AccountPortal({
             <ArrowUpRightIcon className="auth-button-tail" data-icon="inline-end" aria-hidden="true" />
           </Button>
         </div>
-
-        <Separator />
-
-        <Collapsible className="auth-email-section" open={emailExpanded} onOpenChange={setEmailExpanded}>
-          <CollapsibleTrigger asChild>
-            <Button className="auth-email-disclosure" variant="ghost" size="sm" type="button">
-              <MailIcon data-icon="inline-start" aria-hidden="true" />
-              <span>{copy.emailBeta}</span>
-              <ChevronDownIcon className="auth-email-chevron" data-icon="inline-end" aria-hidden="true" />
-            </Button>
-          </CollapsibleTrigger>
-
-          <CollapsibleContent className="auth-email-panel">
-            {!codeSent ? (
-              <form onSubmit={sendCode} noValidate>
-                <FieldGroup>
-                  <Field data-invalid={emailError}>
-                    <FieldLabel htmlFor="lumno-auth-email">{copy.emailLabel}</FieldLabel>
-                    <div className="auth-input-row">
-                      <Input
-                        ref={emailInputRef}
-                        className="h-12 rounded-xl bg-background/80 px-3.5"
-                        id="lumno-auth-email"
-                        type="email"
-                        inputMode="email"
-                        autoComplete="email"
-                        value={email}
-                        onChange={(event) => {
-                          setEmail(event.currentTarget.value);
-                          if (emailError) clearFeedback();
-                        }}
-                        placeholder={copy.emailPlaceholder}
-                        aria-invalid={emailError}
-                        disabled={Boolean(busy)}
-                      />
-                      <Button size="auth" type="submit" disabled={Boolean(busy)}>
-                        {busy === "send-code" ? (
-                          <LoadingMark label={copy.sendCode} />
-                        ) : (
-                          <MailIcon data-icon="inline-start" />
-                        )}
-                        {copy.sendCode}
-                      </Button>
-                    </div>
-                    {emailError ? <FieldError>{error}</FieldError> : null}
-                  </Field>
-                </FieldGroup>
-              </form>
-            ) : (
-              <form onSubmit={verifyCode} noValidate>
-                <FieldGroup>
-                  <Field data-invalid={codeError}>
-                    <FieldLabel htmlFor="lumno-auth-code">{copy.codeLabel}</FieldLabel>
-                    <InputOTP
-                      id="lumno-auth-code"
-                      maxLength={6}
-                      pattern={REGEXP_ONLY_DIGITS}
-                      value={code}
-                      onChange={(value) => {
-                        setCode(value);
-                        if (codeError) clearFeedback();
-                      }}
-                      autoComplete="one-time-code"
-                      aria-label={copy.codePlaceholder}
-                      aria-invalid={codeError}
-                      disabled={Boolean(busy)}
-                      containerClassName="auth-otp-group"
-                    >
-                      <InputOTPGroup>
-                        {Array.from({ length: 6 }, (_, index) => (
-                          <InputOTPSlot key={index} index={index} aria-invalid={codeError} />
-                        ))}
-                      </InputOTPGroup>
-                    </InputOTP>
-                    <FieldDescription>{copy.codeHelp}</FieldDescription>
-                    {codeError ? <FieldError>{error}</FieldError> : null}
-                  </Field>
-                  <Button size="auth" type="submit" disabled={Boolean(busy) || code.length !== 6}>
-                    {busy === "verify-code" ? (
-                      <LoadingMark label={copy.verifyCode} />
-                    ) : (
-                      <ShieldCheckIcon data-icon="inline-start" />
-                    )}
-                    {copy.verifyCode}
-                  </Button>
-                  <div className="auth-email-secondary-actions">
-                    <Button variant="ghost" size="sm" type="button" onClick={resetEmailStep} disabled={Boolean(busy)}>
-                      {copy.changeEmail}
-                    </Button>
-                    <Button variant="ghost" size="sm" type="button" onClick={resendCode} disabled={Boolean(busy) || resendIn > 0}>
-                      <RefreshCwIcon data-icon="inline-start" />
-                      {resendIn > 0 ? `${resendIn} ${copy.resendWait}` : copy.resendCode}
-                    </Button>
-                  </div>
-                </FieldGroup>
-              </form>
-            )}
-          </CollapsibleContent>
-        </Collapsible>
+        <p className="auth-provider-rule">{copy.providerRule}</p>
 
         {notice ? <AuthFeedback message={notice} tone="success" /> : null}
         {generalError ? <AuthFeedback message={generalError} tone="error" /> : null}

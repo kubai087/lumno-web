@@ -109,7 +109,11 @@ test("privacy sidebar exposes the same four support contacts as options", () => 
 test("privacy desktop layout pins the navigation left and keeps the article centered", () => {
   const source = readSource("src/pages/privacy/index.astro");
 
-  assert.match(source, /\.privacy-layout \{[\s\S]*?width: calc\(100vw - 48px\);[\s\S]*?margin-left: 50%;[\s\S]*?transform: translateX\(-50%\);/);
+  assert.match(source, /--privacy-shell-gutter: 12px;/);
+  assert.match(source, /\.privacy-header-inner \{[\s\S]*?padding: 12px var\(--privacy-shell-gutter\);/);
+  assert.match(source, /@media \(max-width: 760px\) \{[\s\S]*?\.privacy-header-inner \{[\s\S]*?padding: 14px var\(--privacy-shell-gutter\);/);
+  assert.match(source, /\.privacy-main \{[\s\S]*?padding: 30px var\(--privacy-shell-gutter\) max\(72px, var\(--safe-area-bottom\)\);/);
+  assert.match(source, /\.privacy-layout \{[\s\S]*?width: 100%;[\s\S]*?margin-left: 0;[\s\S]*?transform: none;/);
   assert.match(
     source,
     /grid-template-columns: minmax\(170px, 1fr\) minmax\(0, 3\.12fr\) minmax\(170px, 1fr\);/,
@@ -117,6 +121,7 @@ test("privacy desktop layout pins the navigation left and keeps the article cent
   assert.match(source, /\.privacy-aside \{[\s\S]*?grid-column: 1;[\s\S]*?justify-self: start;[\s\S]*?max-width: 260px;/);
   assert.match(source, /\.privacy-paper \{[\s\S]*?grid-column: 2;[\s\S]*?justify-self: center;[\s\S]*?max-width: 780px;/);
   assert.match(source, /@media \(max-width: 760px\) \{[\s\S]*?\.privacy-layout \{[\s\S]*?width: 100%;[\s\S]*?margin-left: 0;[\s\S]*?transform: none;[\s\S]*?grid-template-columns: 1fr;/);
+  assert.doesNotMatch(source, /width: calc\(100vw - 48px\)/);
   assert.doesNotMatch(source, /grid-template-columns: minmax\(220px, 250px\) minmax\(0, 1fr\)/);
 });
 

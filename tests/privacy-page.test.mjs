@@ -56,6 +56,20 @@ test("privacy article opens with a title and a semantic quote", () => {
   assert.match(contentSource, /articleTitle: "Privacy Policy"/);
 });
 
+test("privacy hero uses natural Chinese copy and a localized update date", () => {
+  const source = readSource("src/pages/privacy/index.astro");
+  const contentSource = readSource("src/lib/privacy-content.ts");
+
+  assert.match(contentSource, /heroTitle: "Lumno 如何处理你的数据"/);
+  assert.match(
+    contentSource,
+    /heroLead: "这份政策说明哪些信息只留在本机、登录后会同步什么、哪些统计需要你主动开启，以及如何关闭同步或删除数据。"/,
+  );
+  assert.doesNotMatch(contentSource, /清楚说明，才是真正尊重/);
+  assert.match(source, /new Intl\.DateTimeFormat\(uiLocale/);
+  assert.match(source, /\{content\.effectiveLabel\}\{displayLastUpdated\}/);
+});
+
 test("privacy sidebar exposes the same four support contacts as options", () => {
   const source = readSource("src/pages/privacy/index.astro");
   const supportLinkSource = readSource("src/components/privacy/OptionsFeedbackSupportLink.astro");
@@ -160,6 +174,13 @@ test("privacy exposes a localized scrollspy table of contents with stable anchor
   assert.match(source, /aria-current", "location"/);
   assert.match(source, /window\.history\.replaceState\(/);
   assert.match(source, /window\.requestAnimationFrame\(/);
+  assert.match(source, /__lumnoPrivacyAutoAnchor/);
+  assert.match(source, /navigationEntry\.type === "reload"/);
+  assert.match(source, /window\.history\.scrollRestoration = "manual"/);
+  assert.match(source, /clearAutoAnchorState\(\)/);
+  assert.match(source, /const initialSectionId = window\.location\.hash\.slice\(1\)/);
+  assert.match(source, /tocLinksById\.has\(initialSectionId\)/);
+  assert.match(source, /setActiveSection\(initialSectionId, false\)/);
   assert.match(contentSource, /tocLabel: "目录"/);
   assert.match(contentSource, /tocLabel: "目錄"/);
   assert.match(contentSource, /tocLabel: "On this page"/);

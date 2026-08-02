@@ -1,12 +1,59 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { OAuthAuthorizationDetails, Provider, User } from "@supabase/supabase-js";
+import {
+  ArrowRightIcon,
+  ArrowUpRightIcon,
+  CheckIcon,
+  ChevronDownIcon,
+  CircleAlertIcon,
+  HomeIcon,
+  LogOutIcon,
+  MailIcon,
+  RefreshCwIcon,
+  ShieldCheckIcon,
+  Trash2Icon,
+  UserIcon,
+} from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
+import { Separator } from "@/components/ui/separator";
+import { Spinner } from "@/components/ui/spinner";
+import { REGEXP_ONLY_DIGITS } from "input-otp";
 import {
   getSupabaseBrowserClient,
   rememberAuthReturnPath,
 } from "../../lib/supabase-client";
 
 type Locale = "zh-CN" | "zh-TW" | "en";
-type BusyAction = "google" | "github" | "send-code" | "verify-code" | "sign-out" | "approve" | "deny" | "";
+type BusyAction = "google" | "github" | "send-code" | "verify-code" | "sign-out" | "delete-account" | "approve" | "deny" | "";
 
 type Copy = {
   title: string;
@@ -22,6 +69,10 @@ type Copy = {
   codePlaceholder: string;
   verifyCode: string;
   codeSent: string;
+  codeHelp: string;
+  changeEmail: string;
+  resendCode: string;
+  resendWait: string;
   privacyPrefix: string;
   privacyLink: string;
   privacySuffix: string;
@@ -43,6 +94,18 @@ type Copy = {
   providerUnavailable: string;
   invalidEmail: string;
   invalidCode: string;
+  mainlandTitle: string;
+  mainlandBody: string;
+  mainlandCheck: string;
+  mainlandLink: string;
+  mainlandRequired: string;
+  deleteTitle: string;
+  deleteDescription: string;
+  deleteOpen: string;
+  deleteLabel: string;
+  deletePlaceholder: string;
+  deleteAction: string;
+  deleteDone: string;
 };
 
 const COPY: Record<Locale, Copy> = {
@@ -60,6 +123,10 @@ const COPY: Record<Locale, Copy> = {
     codePlaceholder: "输入邮件中的 6 位验证码",
     verifyCode: "验证并登录",
     codeSent: "验证码已发送，请检查邮箱。",
+    codeHelp: "可直接粘贴邮件中的 6 位验证码。",
+    changeEmail: "更换邮箱",
+    resendCode: "重新发送",
+    resendWait: "秒后可重新发送",
     privacyPrefix: "继续即表示你已阅读并同意",
     privacyLink: "隐私政策",
     privacySuffix: "。",
@@ -81,6 +148,18 @@ const COPY: Record<Locale, Copy> = {
     providerUnavailable: "该登录方式尚未完成配置，请先使用其他方式。",
     invalidEmail: "请输入有效的邮箱地址。",
     invalidCode: "请输入邮件中的 6 位验证码。",
+    mainlandTitle: "中国大陆用户单独告知",
+    mainlandBody: "账号、同步配置和自定义壁纸将跨境传输至 Supabase 日本东京区域，并可能由登录、邮件与基础设施服务商处理。",
+    mainlandCheck: "若我位于中国大陆，我已满 14 周岁，并单独同意上述跨境处理；未满 14 周岁请勿开启云功能。",
+    mainlandLink: "查看接收方、数据类型与权利详情",
+    mainlandRequired: "请先阅读并单独同意中国大陆跨境处理告知。",
+    deleteTitle: "永久删除账号",
+    deleteDescription: "删除云端配置、自定义媒体、账号关联统计和登录身份。本机配置与 Chrome 同步副本不会自动删除。",
+    deleteOpen: "删除账号",
+    deleteLabel: "输入 DELETE 以确认",
+    deletePlaceholder: "DELETE",
+    deleteAction: "永久删除",
+    deleteDone: "账号和云端数据已删除。",
   },
   "zh-TW": {
     title: "登入 Lumno",
@@ -96,6 +175,10 @@ const COPY: Record<Locale, Copy> = {
     codePlaceholder: "輸入郵件中的 6 位驗證碼",
     verifyCode: "驗證並登入",
     codeSent: "驗證碼已傳送，請檢查電子郵件。",
+    codeHelp: "可直接貼上郵件中的 6 位驗證碼。",
+    changeEmail: "更換電子郵件",
+    resendCode: "重新傳送",
+    resendWait: "秒後可重新傳送",
     privacyPrefix: "繼續即表示你已閱讀並同意",
     privacyLink: "隱私權政策",
     privacySuffix: "。",
@@ -117,6 +200,18 @@ const COPY: Record<Locale, Copy> = {
     providerUnavailable: "此登入方式尚未完成設定，請先使用其他方式。",
     invalidEmail: "請輸入有效的電子郵件地址。",
     invalidCode: "請輸入郵件中的 6 位驗證碼。",
+    mainlandTitle: "中國大陸使用者單獨告知",
+    mainlandBody: "帳號、同步設定與自訂桌布將跨境傳輸至 Supabase 日本東京區域，並可能由登入、郵件與基礎設施服務商處理。",
+    mainlandCheck: "若我位於中國大陸，我已滿 14 歲，並單獨同意上述跨境處理；未滿 14 歲請勿啟用雲端功能。",
+    mainlandLink: "查看接收方、資料類型與權利詳情",
+    mainlandRequired: "請先閱讀並單獨同意中國大陸跨境處理告知。",
+    deleteTitle: "永久刪除帳號",
+    deleteDescription: "刪除雲端設定、自訂媒體、帳號關聯統計與登入身分。本機設定與 Chrome 同步副本不會自動刪除。",
+    deleteOpen: "刪除帳號",
+    deleteLabel: "輸入 DELETE 以確認",
+    deletePlaceholder: "DELETE",
+    deleteAction: "永久刪除",
+    deleteDone: "帳號與雲端資料已刪除。",
   },
   en: {
     title: "Sign in to Lumno",
@@ -132,6 +227,10 @@ const COPY: Record<Locale, Copy> = {
     codePlaceholder: "Enter the 6-digit code from your email",
     verifyCode: "Verify and sign in",
     codeSent: "We sent a verification code to your email.",
+    codeHelp: "Paste the 6-digit code directly from your email.",
+    changeEmail: "Use another email",
+    resendCode: "Resend code",
+    resendWait: "seconds to resend",
     privacyPrefix: "By continuing, you acknowledge the ",
     privacyLink: "Privacy Policy",
     privacySuffix: ".",
@@ -153,10 +252,24 @@ const COPY: Record<Locale, Copy> = {
     providerUnavailable: "This sign-in method is not configured yet. Please use another option.",
     invalidEmail: "Enter a valid email address.",
     invalidCode: "Enter the 6-digit code from your email.",
+    mainlandTitle: "Notice for users in mainland China",
+    mainlandBody: "Account data, synced settings, and custom wallpapers are transferred to Supabase's Tokyo region and may be handled by authentication, email, and infrastructure providers.",
+    mainlandCheck: "If I am in mainland China, I confirm that I am at least 14 and separately consent to this cross-border processing. Users under 14 must not enable cloud features.",
+    mainlandLink: "View recipients, data categories, and rights",
+    mainlandRequired: "Review and separately consent to the mainland China cross-border notice first.",
+    deleteTitle: "Permanently delete account",
+    deleteDescription: "Deletes cloud settings, custom media, account-linked analytics, and your login identity. Local settings and Chrome Sync copies are not automatically deleted.",
+    deleteOpen: "Delete account",
+    deleteLabel: "Type DELETE to confirm",
+    deletePlaceholder: "DELETE",
+    deleteAction: "Delete permanently",
+    deleteDone: "Your account and cloud data were deleted.",
   },
 };
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const MAINLAND_NOTICE_VERSION = "2026-08-02";
+const MAINLAND_NOTICE_STORAGE_KEY = "lumno-mainland-cross-border-consent-v1";
 
 function getProvider(user: User): string {
   const providers = [
@@ -196,8 +309,26 @@ function getScopeLabel(scope: string, locale: Locale): string {
   return labels[scope]?.[locale] || scope;
 }
 
-function LoadingMark() {
-  return <span className="auth-spinner" aria-hidden="true" />;
+function LoadingMark({ label }: { label: string }) {
+  return <Spinner data-icon="inline-start" aria-label={label} />;
+}
+
+function AuthFeedback({
+  message,
+  tone,
+}: {
+  message: string;
+  tone: "error" | "success";
+}) {
+  return (
+    <Alert
+      variant={tone === "error" ? "destructive" : "default"}
+      role={tone === "error" ? "alert" : "status"}
+    >
+      {tone === "error" ? <CircleAlertIcon /> : <ShieldCheckIcon />}
+      <AlertDescription>{message}</AlertDescription>
+    </Alert>
+  );
 }
 
 export default function AccountPortal({
@@ -216,10 +347,15 @@ export default function AccountPortal({
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [codeSent, setCodeSent] = useState(false);
+  const [resendIn, setResendIn] = useState(0);
   const [notice, setNotice] = useState("");
   const [error, setError] = useState("");
   const [authorizationReady, setAuthorizationReady] = useState(!authorizationId);
   const [authorizationDetails, setAuthorizationDetails] = useState<OAuthAuthorizationDetails | null>(null);
+  const [mainlandConsentAccepted, setMainlandConsentAccepted] = useState(locale !== "zh-CN");
+  const [deleteExpanded, setDeleteExpanded] = useState(false);
+  const [deleteConfirmation, setDeleteConfirmation] = useState("");
+  const emailInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     let active = true;
@@ -267,13 +403,64 @@ export default function AccountPortal({
     };
   }, [authorizationId, copy, supabase, user]);
 
+  useEffect(() => {
+    if (locale !== "zh-CN") return;
+    setMainlandConsentAccepted(
+      window.sessionStorage.getItem(MAINLAND_NOTICE_STORAGE_KEY) === MAINLAND_NOTICE_VERSION,
+    );
+  }, [locale]);
+
+  useEffect(() => {
+    if (!user || locale !== "zh-CN" || !mainlandConsentAccepted) return;
+    const timestamp = new Date().toISOString();
+    void supabase.from("lumno_consents").upsert({
+      user_id: user.id,
+      privacy_notice_version: MAINLAND_NOTICE_VERSION,
+      mainland_cross_border_terms_version: MAINLAND_NOTICE_VERSION,
+      mainland_cross_border_consented_at: timestamp,
+      mainland_age_confirmation_version: MAINLAND_NOTICE_VERSION,
+      mainland_age_confirmed_at: timestamp,
+    }, { onConflict: "user_id" });
+  }, [locale, mainlandConsentAccepted, supabase, user]);
+
+  useEffect(() => {
+    if (resendIn <= 0) return;
+    const timeoutId = window.setTimeout(() => {
+      setResendIn((seconds) => Math.max(0, seconds - 1));
+    }, 1000);
+    return () => window.clearTimeout(timeoutId);
+  }, [resendIn]);
+
+  useEffect(() => {
+    if (!emailExpanded || codeSent) return;
+    const frameId = window.requestAnimationFrame(() => emailInputRef.current?.focus());
+    return () => window.cancelAnimationFrame(frameId);
+  }, [codeSent, emailExpanded]);
+
   function clearFeedback() {
     setNotice("");
     setError("");
   }
 
+  function ensureMainlandConsent(): boolean {
+    if (locale !== "zh-CN" || mainlandConsentAccepted) return true;
+    setError(copy.mainlandRequired);
+    return false;
+  }
+
+  function updateMainlandConsent(accepted: boolean) {
+    setMainlandConsentAccepted(accepted);
+    if (accepted) {
+      window.sessionStorage.setItem(MAINLAND_NOTICE_STORAGE_KEY, MAINLAND_NOTICE_VERSION);
+      if (error === copy.mainlandRequired) setError("");
+    } else {
+      window.sessionStorage.removeItem(MAINLAND_NOTICE_STORAGE_KEY);
+    }
+  }
+
   async function continueWithProvider(provider: Extract<Provider, "google" | "github">) {
     clearFeedback();
+    if (!ensureMainlandConsent()) return;
     setBusy(provider);
     rememberAuthReturnPath(`${window.location.pathname}${window.location.search}`);
     const redirectTo = `${window.location.origin}/auth/callback/`;
@@ -290,9 +477,9 @@ export default function AccountPortal({
     }
   }
 
-  async function sendCode(event: React.SyntheticEvent<HTMLFormElement>) {
-    event.preventDefault();
+  async function requestCode() {
     clearFeedback();
+    if (!ensureMainlandConsent()) return;
     const normalizedEmail = email.trim().toLowerCase();
     if (!EMAIL_PATTERN.test(normalizedEmail)) {
       setError(copy.invalidEmail);
@@ -309,7 +496,25 @@ export default function AccountPortal({
       return;
     }
     setCodeSent(true);
+    setResendIn(30);
     setNotice(copy.codeSent);
+  }
+
+  async function sendCode(event: React.SyntheticEvent<HTMLFormElement>) {
+    event.preventDefault();
+    await requestCode();
+  }
+
+  async function resendCode() {
+    if (resendIn > 0 || busy) return;
+    await requestCode();
+  }
+
+  function resetEmailStep() {
+    clearFeedback();
+    setCode("");
+    setCodeSent(false);
+    setResendIn(0);
   }
 
   async function verifyCode(event: React.SyntheticEvent<HTMLFormElement>) {
@@ -345,6 +550,7 @@ export default function AccountPortal({
   async function finishAuthorization(approved: boolean) {
     if (!authorizationId) return;
     clearFeedback();
+    if (approved && !ensureMainlandConsent()) return;
     setBusy(approved ? "approve" : "deny");
     const response = approved
       ? await supabase.auth.oauth.approveAuthorization(authorizationId, { skipBrowserRedirect: true })
@@ -358,23 +564,80 @@ export default function AccountPortal({
     if (redirectUrl) window.location.assign(redirectUrl);
   }
 
+  async function deleteAccount() {
+    clearFeedback();
+    if (deleteConfirmation !== "DELETE") return;
+    setBusy("delete-account");
+    const { error: deleteError } = await supabase.functions.invoke("delete-account", {
+      body: { confirmation: "DELETE" },
+    });
+    if (deleteError) {
+      setBusy("");
+      setError(formatAuthError(deleteError, copy));
+      return;
+    }
+    await supabase.auth.signOut({ scope: "local" }).catch(() => undefined);
+    setBusy("");
+    setUser(null);
+    setNotice(copy.deleteDone);
+  }
+
+  const emailError = error === copy.invalidEmail;
+  const codeError = error === copy.invalidCode;
+  const generalError = error && !emailError && !codeError ? error : "";
+  const mainlandNotice = locale === "zh-CN" ? (
+    <div className="auth-mainland-notice">
+      <div>
+        <strong>{copy.mainlandTitle}</strong>
+        <p>{copy.mainlandBody}</p>
+        <a href="/privacy/#mainland-china-notice" target="_blank" rel="noreferrer">
+          {copy.mainlandLink}
+        </a>
+      </div>
+      <label>
+        <input
+          type="checkbox"
+          checked={mainlandConsentAccepted}
+          onChange={(event) => updateMainlandConsent(event.currentTarget.checked)}
+          disabled={Boolean(busy)}
+        />
+        <span>{copy.mainlandCheck}</span>
+      </label>
+    </div>
+  ) : null;
+
   if (checking || (authorizationId && user && !authorizationReady)) {
     return (
-      <section className="auth-card auth-card-loading" aria-live="polite">
-        <LoadingMark />
-        <p>{copy.checking}</p>
-      </section>
+      <Card className="auth-card" aria-live="polite">
+        <CardContent className="flex min-h-64 flex-col items-center justify-center gap-3 text-center text-muted-foreground">
+          <LoadingMark label={copy.checking} />
+          <p>{copy.checking}</p>
+        </CardContent>
+      </Card>
     );
   }
 
   if (authorizationId && user && !authorizationDetails) {
     return (
-      <section className="auth-card auth-card-loading" role="alert">
-        <div className="auth-error-mark" aria-hidden="true"><i className="ri-close-line" /></div>
-        <h1>{copy.authorizeTitle}</h1>
-        <p>{error || copy.invalidAuthorization}</p>
-        <a className="auth-button auth-button-primary" href="/account/">{copy.retry}</a>
-      </section>
+      <Card className="auth-card" role="alert">
+        <CardHeader className="auth-card-header flex flex-col items-center text-center">
+          <span className="auth-error-mark" aria-hidden="true">
+            <CircleAlertIcon />
+          </span>
+          <CardTitle>
+            <h1>{copy.authorizeTitle}</h1>
+          </CardTitle>
+          <CardDescription>{error || copy.invalidAuthorization}</CardDescription>
+        </CardHeader>
+        <CardFooter className="justify-center">
+          <Button asChild size="auth">
+            <a href="/account/">
+              <RefreshCwIcon data-icon="inline-start" />
+              {copy.retry}
+            </a>
+          </Button>
+        </CardFooter>
+      </Card>
     );
   }
 
@@ -382,155 +645,286 @@ export default function AccountPortal({
     const avatar = getAvatar(user);
     const requestedScopes = authorizationDetails?.scope.split(/\s+/).filter(Boolean) || [];
     return (
-      <section className="auth-card" aria-labelledby="account-status-title">
-        <div className="auth-card-header auth-card-header-status">
-          <div className="auth-success-mark" aria-hidden="true"><i className="ri-check-line" /></div>
-          <div>
-            <p className="auth-status-label">{authorizationId ? copy.sessionVerified : copy.signedIn}</p>
-            <h1 id="account-status-title">{authorizationId ? copy.authorizeTitle : getDisplayName(user)}</h1>
+      <Card className="auth-card" aria-labelledby="account-status-title">
+        <CardHeader className="auth-card-header auth-card-header-status flex flex-row">
+          <span className="auth-success-mark" aria-hidden="true">
+            <CheckIcon />
+          </span>
+          <div className="min-w-0">
+            <Badge variant="secondary" className="auth-status-label">
+              {authorizationId ? copy.sessionVerified : copy.signedIn}
+            </Badge>
+            <CardTitle>
+              <h1 id="account-status-title">
+                {authorizationId ? copy.authorizeTitle : getDisplayName(user)}
+              </h1>
+            </CardTitle>
           </div>
-        </div>
+        </CardHeader>
 
-        {authorizationId ? (
-          <>
-            <p className="auth-consent-copy">{copy.authorizeBody}</p>
-            <div className="auth-consent-details">
-              <span>{copy.authorizeRequestedBy}</span>
-              <strong>{authorizationDetails?.client.name || "Lumno"}</strong>
-              {requestedScopes.length ? (
-                <div className="auth-consent-scopes">
-                  <span>{copy.authorizePermissions}</span>
-                  <ul>
-                    {requestedScopes.map((scope) => (
-                      <li key={scope}>
-                        <span>{getScopeLabel(scope, locale)}</span>
-                        <code>{scope}</code>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ) : null}
+        <CardContent className="grid gap-5">
+          {authorizationId ? (
+            <div className="grid gap-4">
+              <p className="auth-consent-copy">{copy.authorizeBody}</p>
+              <div className="auth-consent-details">
+                <span>{copy.authorizeRequestedBy}</span>
+                <strong>{authorizationDetails?.client.name || "Lumno"}</strong>
+                {requestedScopes.length ? (
+                  <div className="auth-consent-scopes">
+                    <span>{copy.authorizePermissions}</span>
+                    <ul>
+                      {requestedScopes.map((scope) => (
+                        <li key={scope}>
+                          <span>{getScopeLabel(scope, locale)}</span>
+                          <code>{scope}</code>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
+              </div>
             </div>
-          </>
-        ) : null}
+          ) : null}
 
-        <div className="auth-account-row">
-          <div className="auth-avatar" aria-hidden="true">
-            {avatar ? <img src={avatar} alt="" referrerPolicy="no-referrer" /> : <i className="ri-user-3-line" />}
+          <div className="auth-account-row">
+            <Avatar size="lg" className="auth-avatar">
+              {avatar ? (
+                <AvatarImage src={avatar} alt="" referrerPolicy="no-referrer" />
+              ) : null}
+              <AvatarFallback>
+                <UserIcon aria-hidden="true" />
+              </AvatarFallback>
+            </Avatar>
+            <div className="auth-account-copy">
+              <span>{copy.connectedAs} · {getProvider(user)}</span>
+              <strong>{user.email || getDisplayName(user)}</strong>
+            </div>
+            <span className="auth-connected-dot" aria-label={copy.signedIn} />
           </div>
-          <div className="auth-account-copy">
-            <span>{copy.connectedAs} · {getProvider(user)}</span>
-            <strong>{user.email || getDisplayName(user)}</strong>
-          </div>
-          <span className="auth-connected-dot" aria-label={copy.signedIn} />
-        </div>
 
-        {error ? <p className="auth-feedback auth-feedback-error" role="alert">{error}</p> : null}
+          {mainlandNotice}
 
-        {authorizationId ? (
-          <div className="auth-actions auth-actions-stacked">
-            <button className="auth-button auth-button-primary" type="button" onClick={() => finishAuthorization(true)} disabled={Boolean(busy)}>
-              {busy === "approve" ? <LoadingMark /> : <i className="ri-arrow-right-line" aria-hidden="true" />}
-              <span>{copy.authorizeContinue}</span>
-            </button>
-            <button className="auth-text-button" type="button" onClick={() => finishAuthorization(false)} disabled={Boolean(busy)}>
-              {copy.authorizeDeny}
-            </button>
-          </div>
-        ) : (
-          <div className="auth-actions">
-            <a className="auth-button auth-button-secondary" href="/">
-              <i className="ri-home-5-line" aria-hidden="true" />
-              <span>{copy.backHome}</span>
-            </a>
-            <button className="auth-button auth-button-quiet" type="button" onClick={signOut} disabled={Boolean(busy)}>
-              {busy === "sign-out" ? <LoadingMark /> : <i className="ri-logout-box-r-line" aria-hidden="true" />}
-              <span>{copy.signOut}</span>
-            </button>
-          </div>
-        )}
-      </section>
+          {!authorizationId ? (
+            <div className="auth-danger-zone">
+              <div>
+                <strong>{copy.deleteTitle}</strong>
+                <p>{copy.deleteDescription}</p>
+              </div>
+              {!deleteExpanded ? (
+                <Button variant="outline" type="button" onClick={() => setDeleteExpanded(true)}>
+                  <Trash2Icon data-icon="inline-start" />
+                  {copy.deleteOpen}
+                </Button>
+              ) : (
+                <Field data-invalid={Boolean(deleteConfirmation) && deleteConfirmation !== "DELETE"}>
+                  <FieldLabel htmlFor="lumno-delete-confirmation">{copy.deleteLabel}</FieldLabel>
+                  <div className="auth-input-row">
+                    <Input
+                      id="lumno-delete-confirmation"
+                      value={deleteConfirmation}
+                      onChange={(event) => setDeleteConfirmation(event.currentTarget.value)}
+                      placeholder={copy.deletePlaceholder}
+                      autoComplete="off"
+                      disabled={Boolean(busy)}
+                    />
+                    <Button
+                      variant="destructive"
+                      type="button"
+                      onClick={deleteAccount}
+                      disabled={Boolean(busy) || deleteConfirmation !== "DELETE"}
+                    >
+                      {busy === "delete-account" ? <LoadingMark label={copy.deleteAction} /> : <Trash2Icon data-icon="inline-start" />}
+                      {copy.deleteAction}
+                    </Button>
+                  </div>
+                </Field>
+              )}
+            </div>
+          ) : null}
+
+          {error ? <AuthFeedback message={error} tone="error" /> : null}
+        </CardContent>
+
+        <CardFooter className={authorizationId ? "grid gap-2" : "grid grid-cols-2 gap-2 max-[520px]:grid-cols-1"}>
+          {authorizationId ? (
+            <>
+              <Button size="auth" type="button" onClick={() => finishAuthorization(true)} disabled={Boolean(busy)}>
+                {busy === "approve" ? (
+                  <LoadingMark label={copy.authorizeContinue} />
+                ) : (
+                  <ArrowRightIcon data-icon="inline-start" />
+                )}
+                {copy.authorizeContinue}
+              </Button>
+              <Button variant="ghost" type="button" onClick={() => finishAuthorization(false)} disabled={Boolean(busy)}>
+                {copy.authorizeDeny}
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button asChild variant="secondary" size="auth">
+                <a href="/">
+                  <HomeIcon data-icon="inline-start" />
+                  {copy.backHome}
+                </a>
+              </Button>
+              <Button variant="outline" size="auth" type="button" onClick={signOut} disabled={Boolean(busy)}>
+                {busy === "sign-out" ? (
+                  <LoadingMark label={copy.signOut} />
+                ) : (
+                  <LogOutIcon data-icon="inline-start" />
+                )}
+                {copy.signOut}
+              </Button>
+            </>
+          )}
+        </CardFooter>
+      </Card>
     );
   }
 
   return (
-    <section className="auth-card" aria-labelledby="auth-title">
-      <div className="auth-card-header">
-        <h1 id="auth-title">{copy.title}</h1>
-        <p>{copy.subtitle}</p>
-      </div>
+    <Card className="auth-card" aria-labelledby="auth-title">
+      <CardHeader className="auth-card-header">
+        <CardTitle>
+          <h1 id="auth-title">{copy.title}</h1>
+        </CardTitle>
+        <CardDescription>{copy.subtitle}</CardDescription>
+      </CardHeader>
 
-      <div className="auth-provider-stack">
-        <button className="auth-button auth-button-provider auth-button-google" type="button" onClick={() => continueWithProvider("google")} disabled={Boolean(busy)}>
-          {busy === "google" ? <LoadingMark /> : <i className="ri-google-fill" aria-hidden="true" />}
-          <span>{copy.google}</span>
-          <small className="auth-provider-badge">{copy.recommended}</small>
-          <i className="ri-arrow-right-up-line auth-button-tail" aria-hidden="true" />
-        </button>
-        <button className="auth-button auth-button-provider auth-button-github" type="button" onClick={() => continueWithProvider("github")} disabled={Boolean(busy)}>
-          {busy === "github" ? <LoadingMark /> : <i className="ri-github-fill" aria-hidden="true" />}
-          <span>{copy.github}</span>
-          <i className="ri-arrow-right-up-line auth-button-tail" aria-hidden="true" />
-        </button>
-      </div>
+      <CardContent className="grid gap-5">
+        {mainlandNotice}
 
-      <div className="auth-email-section" data-expanded={emailExpanded ? "true" : "false"}>
-        <button className="auth-email-disclosure" type="button" aria-expanded={emailExpanded} onClick={() => setEmailExpanded((value) => !value)}>
-          <span>{copy.emailBeta}</span>
-          <i className="ri-arrow-down-s-line" aria-hidden="true" />
-        </button>
+        <div className="auth-provider-stack">
+          <Button className="auth-button-provider auth-button-google" variant="outline" size="auth" type="button" onClick={() => continueWithProvider("google")} disabled={Boolean(busy)}>
+            {busy === "google" ? (
+              <LoadingMark label={copy.google} />
+            ) : (
+              <i className="ri-google-fill auth-provider-brand" data-icon="inline-start" aria-hidden="true" />
+            )}
+            <span>{copy.google}</span>
+            <Badge className="auth-provider-badge" variant="secondary">{copy.recommended}</Badge>
+            <ArrowUpRightIcon className="auth-button-tail" data-icon="inline-end" aria-hidden="true" />
+          </Button>
+          <Button className="auth-button-provider auth-button-github" variant="outline" size="auth" type="button" onClick={() => continueWithProvider("github")} disabled={Boolean(busy)}>
+            {busy === "github" ? (
+              <LoadingMark label={copy.github} />
+            ) : (
+              <i className="ri-github-fill auth-provider-brand" data-icon="inline-start" aria-hidden="true" />
+            )}
+            <span>{copy.github}</span>
+            <ArrowUpRightIcon className="auth-button-tail" data-icon="inline-end" aria-hidden="true" />
+          </Button>
+        </div>
 
-        {emailExpanded ? (
-          <div className="auth-email-panel">
-            <form onSubmit={sendCode} className="auth-form" noValidate>
-              <label htmlFor="lumno-auth-email">{copy.emailLabel}</label>
-              <div className="auth-input-row">
-                <input
-                  id="lumno-auth-email"
-                  type="email"
-                  inputMode="email"
-                  autoComplete="email"
-                  value={email}
-                  onChange={(event) => setEmail(event.currentTarget.value)}
-                  placeholder={copy.emailPlaceholder}
-                  disabled={codeSent || Boolean(busy)}
-                />
-                <button className="auth-inline-button" type="submit" disabled={codeSent || Boolean(busy)}>
-                  {busy === "send-code" ? <LoadingMark /> : copy.sendCode}
-                </button>
-              </div>
-            </form>
+        <Separator />
 
-            {codeSent ? (
-              <form onSubmit={verifyCode} className="auth-form auth-code-form" noValidate>
-                <label htmlFor="lumno-auth-code">{copy.codeLabel}</label>
-                <input
-                  id="lumno-auth-code"
-                  type="text"
-                  inputMode="numeric"
-                  autoComplete="one-time-code"
-                  maxLength={6}
-                  value={code}
-                  onChange={(event) => setCode(event.currentTarget.value.replace(/\D/g, "").slice(0, 6))}
-                  placeholder={copy.codePlaceholder}
-                  disabled={Boolean(busy)}
-                />
-                <button className="auth-button auth-button-primary" type="submit" disabled={Boolean(busy)}>
-                  {busy === "verify-code" ? <LoadingMark /> : <i className="ri-shield-check-line" aria-hidden="true" />}
-                  <span>{copy.verifyCode}</span>
-                </button>
+        <Collapsible className="auth-email-section" open={emailExpanded} onOpenChange={setEmailExpanded}>
+          <CollapsibleTrigger asChild>
+            <Button className="auth-email-disclosure" variant="ghost" size="sm" type="button">
+              <MailIcon data-icon="inline-start" aria-hidden="true" />
+              <span>{copy.emailBeta}</span>
+              <ChevronDownIcon className="auth-email-chevron" data-icon="inline-end" aria-hidden="true" />
+            </Button>
+          </CollapsibleTrigger>
+
+          <CollapsibleContent className="auth-email-panel">
+            {!codeSent ? (
+              <form onSubmit={sendCode} noValidate>
+                <FieldGroup>
+                  <Field data-invalid={emailError}>
+                    <FieldLabel htmlFor="lumno-auth-email">{copy.emailLabel}</FieldLabel>
+                    <div className="auth-input-row">
+                      <Input
+                        ref={emailInputRef}
+                        className="h-12 rounded-xl bg-background/80 px-3.5"
+                        id="lumno-auth-email"
+                        type="email"
+                        inputMode="email"
+                        autoComplete="email"
+                        value={email}
+                        onChange={(event) => {
+                          setEmail(event.currentTarget.value);
+                          if (emailError) clearFeedback();
+                        }}
+                        placeholder={copy.emailPlaceholder}
+                        aria-invalid={emailError}
+                        disabled={Boolean(busy)}
+                      />
+                      <Button size="auth" type="submit" disabled={Boolean(busy)}>
+                        {busy === "send-code" ? (
+                          <LoadingMark label={copy.sendCode} />
+                        ) : (
+                          <MailIcon data-icon="inline-start" />
+                        )}
+                        {copy.sendCode}
+                      </Button>
+                    </div>
+                    {emailError ? <FieldError>{error}</FieldError> : null}
+                  </Field>
+                </FieldGroup>
               </form>
-            ) : null}
-          </div>
-        ) : null}
-      </div>
+            ) : (
+              <form onSubmit={verifyCode} noValidate>
+                <FieldGroup>
+                  <Field data-invalid={codeError}>
+                    <FieldLabel htmlFor="lumno-auth-code">{copy.codeLabel}</FieldLabel>
+                    <InputOTP
+                      id="lumno-auth-code"
+                      maxLength={6}
+                      pattern={REGEXP_ONLY_DIGITS}
+                      value={code}
+                      onChange={(value) => {
+                        setCode(value);
+                        if (codeError) clearFeedback();
+                      }}
+                      autoComplete="one-time-code"
+                      aria-label={copy.codePlaceholder}
+                      aria-invalid={codeError}
+                      disabled={Boolean(busy)}
+                      containerClassName="auth-otp-group"
+                    >
+                      <InputOTPGroup>
+                        {Array.from({ length: 6 }, (_, index) => (
+                          <InputOTPSlot key={index} index={index} aria-invalid={codeError} />
+                        ))}
+                      </InputOTPGroup>
+                    </InputOTP>
+                    <FieldDescription>{copy.codeHelp}</FieldDescription>
+                    {codeError ? <FieldError>{error}</FieldError> : null}
+                  </Field>
+                  <Button size="auth" type="submit" disabled={Boolean(busy) || code.length !== 6}>
+                    {busy === "verify-code" ? (
+                      <LoadingMark label={copy.verifyCode} />
+                    ) : (
+                      <ShieldCheckIcon data-icon="inline-start" />
+                    )}
+                    {copy.verifyCode}
+                  </Button>
+                  <div className="auth-email-secondary-actions">
+                    <Button variant="ghost" size="sm" type="button" onClick={resetEmailStep} disabled={Boolean(busy)}>
+                      {copy.changeEmail}
+                    </Button>
+                    <Button variant="ghost" size="sm" type="button" onClick={resendCode} disabled={Boolean(busy) || resendIn > 0}>
+                      <RefreshCwIcon data-icon="inline-start" />
+                      {resendIn > 0 ? `${resendIn} ${copy.resendWait}` : copy.resendCode}
+                    </Button>
+                  </div>
+                </FieldGroup>
+              </form>
+            )}
+          </CollapsibleContent>
+        </Collapsible>
 
-      {notice ? <p className="auth-feedback auth-feedback-success" role="status">{notice}</p> : null}
-      {error ? <p className="auth-feedback auth-feedback-error" role="alert">{error}</p> : null}
+        {notice ? <AuthFeedback message={notice} tone="success" /> : null}
+        {generalError ? <AuthFeedback message={generalError} tone="error" /> : null}
+      </CardContent>
 
-      <p className="auth-privacy-copy">
-        {copy.privacyPrefix}<a href="/privacy/" target="_blank" rel="noreferrer">{copy.privacyLink}</a>{copy.privacySuffix}
-      </p>
-    </section>
+      <CardFooter className="justify-center text-center">
+        <p className="auth-privacy-copy">
+          {copy.privacyPrefix}<a href="/privacy/" target="_blank" rel="noreferrer">{copy.privacyLink}</a>{copy.privacySuffix}
+        </p>
+      </CardFooter>
+    </Card>
   );
 }

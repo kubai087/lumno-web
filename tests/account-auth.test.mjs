@@ -18,12 +18,33 @@ test("account portal prioritizes Google and GitHub while keeping email in previe
   assert.match(source, /使用 GitHub 继续/);
   assert.match(source, /邮箱验证码登录（内测）/);
   assert.match(source, /auth-email-disclosure/);
+  assert.match(source, /CollapsibleTrigger/);
+  assert.match(source, /InputOTP/);
+  assert.match(source, /REGEXP_ONLY_DIGITS/);
+  assert.match(source, /setResendIn\(30\)/);
+  assert.match(source, /FieldError/);
   assert.match(source, /signInWithOAuth/);
   assert.match(source, /continueWithProvider\("google"\)/);
   assert.match(source, /busy === "google"/);
   assert.doesNotMatch(source, /googleSoon|aria-disabled="true"/);
   assert.match(source, /signInWithOtp/);
   assert.match(source, /providers\.includes\("github"\)/);
+  assert.match(source, /supabase\.functions\.invoke\("delete-account"/);
+  assert.match(source, /deleteConfirmation !== "DELETE"/);
+  assert.match(source, /MAINLAND_NOTICE_STORAGE_KEY/);
+  assert.match(source, /mainland_cross_border_consented_at/);
+  assert.match(source, /ensureMainlandConsent\(\)/);
+});
+
+test("web auth components use Lumno semantic tokens", () => {
+  const source = readSource("src/styles/globals.css");
+  const config = readSource("components.json");
+
+  assert.match(config, /"style": "radix-nova"/);
+  assert.match(source, /--primary: #3f624d/);
+  assert.match(source, /--ring: #3a8fc7/);
+  assert.match(source, /--font-sans: "Open Sans"/);
+  assert.doesNotMatch(source, /Geist/);
 });
 
 test("auth routes use PKCE and never allow an external post-login return URL", () => {
@@ -79,4 +100,7 @@ test("privacy policy documents account, private sync media, and bounded metrics"
   assert.match(source, /product usage metrics are \*\*off by default\*\*/);
   assert.match(source, /自定义媒体存放在受访问控制的私有存储中/);
   assert.match(source, /不上传具体网址、域名、路径、搜索词/);
+  assert.match(source, /同一时间只有你选定的一套远端同步会接收新写入/);
+  assert.match(source, /中国大陆不满 14 周岁的用户不得自行开启/);
+  assert.match(source, /mainland-china-notice/);
 });

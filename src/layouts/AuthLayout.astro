@@ -1,4 +1,6 @@
 ---
+import "../styles/globals.css";
+
 interface Props {
   title: string;
   description: string;
@@ -82,13 +84,13 @@ const story = {
 
 <style is:global>
   :root {
-    --auth-ink: #1f2933;
-    --auth-muted: #68737d;
+    --auth-ink: var(--foreground);
+    --auth-muted: var(--muted-foreground);
     --auth-soft: #87929b;
-    --auth-line: rgba(79, 102, 83, 0.15);
+    --auth-line: var(--border);
     --auth-green: #4f735c;
-    --auth-green-strong: #3f624d;
-    --auth-blue: #3a8fc7;
+    --auth-green-strong: var(--primary);
+    --auth-blue: var(--ring);
     --auth-surface: rgba(255, 255, 255, 0.76);
     --auth-surface-strong: rgba(255, 255, 255, 0.93);
     --auth-shadow: 0 32px 80px rgba(43, 62, 50, 0.13), 0 3px 12px rgba(43, 62, 50, 0.07);
@@ -184,7 +186,7 @@ const story = {
 
   .auth-card {
     width: 100%;
-    padding: clamp(30px, 4vw, 44px);
+    --card-spacing: clamp(28px, 3.4vw, 38px);
     border: 1px solid rgba(255, 255, 255, 0.86);
     border-radius: 28px;
     background:
@@ -205,6 +207,7 @@ const story = {
   }
 
   .auth-card-header > p,
+  .auth-card-header [data-slot="card-description"],
   .auth-card-header-status p {
     margin: 14px 0 0;
     color: var(--auth-muted);
@@ -256,7 +259,33 @@ const story = {
   .auth-consent-scopes li span { flex: 1; color: var(--auth-ink); }
   .auth-consent-scopes code { color: var(--auth-muted); font: 500 11px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; }
 
-  .auth-provider-stack { display: grid; gap: 12px; margin-top: 30px; }
+  .auth-mainland-notice {
+    display: grid;
+    gap: 12px;
+    padding: 14px 16px;
+    border: 1px solid rgba(166, 111, 52, 0.2);
+    border-radius: 14px;
+    background: rgba(255, 249, 237, 0.78);
+  }
+
+  .auth-mainland-notice strong,
+  .auth-danger-zone strong { font-size: 13px; }
+  .auth-mainland-notice p,
+  .auth-danger-zone p { margin: 5px 0 0; color: var(--auth-muted); font-size: 12px; line-height: 1.65; }
+  .auth-mainland-notice a { color: var(--auth-green-strong); font-size: 12px; font-weight: 650; }
+  .auth-mainland-notice label { display: flex; align-items: flex-start; gap: 9px; color: #5e5140; font-size: 12px; line-height: 1.55; }
+  .auth-mainland-notice input { width: 16px; height: 16px; margin: 2px 0 0; accent-color: var(--auth-green-strong); }
+
+  .auth-danger-zone {
+    display: grid;
+    gap: 12px;
+    padding-top: 18px;
+    border-top: 1px solid var(--auth-line);
+  }
+
+  .auth-danger-zone > button { justify-self: start; color: var(--destructive); }
+
+  .auth-provider-stack { display: grid; gap: 12px; }
 
   .auth-provider-badge {
     margin-left: auto;
@@ -310,13 +339,13 @@ const story = {
     box-shadow: 0 7px 20px rgba(50, 65, 56, 0.055);
   }
 
-  .auth-button-provider > i:first-child { width: 22px; font-size: 20px; text-align: center; }
-  .auth-button-provider .auth-button-tail { position: absolute; right: 18px; color: #96a099; font-size: 17px; }
+  .auth-provider-brand { width: 22px; font-size: 20px; text-align: center; }
+  .auth-button-provider .auth-button-tail { position: absolute; right: 18px; color: #96a099; }
   .auth-button-provider:hover { background: #fff; border-color: rgba(79, 115, 92, 0.25); box-shadow: 0 10px 26px rgba(50, 65, 56, 0.09); }
   .auth-button-google > i:first-child { color: #4285f4; }
   .auth-button-github > i:first-child { color: #202723; }
 
-  .auth-email-section { margin-top: 18px; border-top: 1px solid var(--auth-line); }
+  .auth-email-section { display: grid; }
 
   .auth-email-disclosure {
     width: 100%;
@@ -334,8 +363,8 @@ const story = {
     font-weight: 560;
   }
 
-  .auth-email-disclosure i { font-size: 15px; transition: transform 180ms ease; }
-  .auth-email-section[data-expanded="true"] .auth-email-disclosure i { transform: rotate(180deg); }
+  .auth-email-chevron { transition: transform 180ms ease; }
+  .auth-email-disclosure[data-state="open"] .auth-email-chevron { transform: rotate(180deg); }
 
   .auth-email-panel { padding-top: 12px; animation: auth-email-enter 220ms ease both; }
   .auth-form { display: grid; gap: 7px; }
@@ -374,6 +403,17 @@ const story = {
   .auth-inline-button:disabled { opacity: 0.56; cursor: wait; }
   .auth-code-form .auth-button { margin-top: 3px; }
 
+  .auth-otp-group { justify-content: center; }
+  .auth-email-secondary-actions { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px; }
+
+  .auth-card [data-slot="alert"][role="status"] {
+    border-color: rgba(79, 133, 95, 0.16);
+    background: rgba(79, 133, 95, 0.08);
+    color: #3f684e;
+  }
+
+  .auth-card [data-slot="alert"][role="status"] [data-slot="alert-description"] { color: inherit; }
+
   .auth-button-primary { color: #fff; background: var(--auth-green-strong); box-shadow: 0 10px 24px rgba(63, 98, 77, 0.19); }
   .auth-button-primary:hover { background: #355943; box-shadow: 0 13px 28px rgba(63, 98, 77, 0.24); }
   .auth-button-secondary { color: var(--auth-green-strong); background: rgba(79, 115, 92, 0.1); border-color: rgba(79, 115, 92, 0.16); }
@@ -391,7 +431,7 @@ const story = {
   .auth-feedback-success { color: #3f684e; background: rgba(79, 133, 95, 0.09); border: 1px solid rgba(79, 133, 95, 0.14); }
 
   .auth-privacy-copy {
-    margin: 18px 0 0;
+    margin: 0;
     color: #909991;
     font-size: 10.5px;
     line-height: 1.65;
@@ -405,7 +445,7 @@ const story = {
     grid-template-columns: auto minmax(0, 1fr) auto;
     align-items: center;
     gap: 12px;
-    margin-top: 26px;
+    margin-top: 0;
     padding: 14px;
     border: 1px solid rgba(79, 102, 83, 0.13);
     border-radius: 16px;
@@ -480,7 +520,7 @@ const story = {
     .auth-story { gap: 14px; padding-inline: 8px; }
     .auth-story-copy h2 { display: none; }
     .auth-story-copy p { display: none; }
-    .auth-card { padding: 26px 20px; border-radius: 23px; }
+    .auth-card { --card-spacing: 22px; border-radius: 23px; }
     .auth-card-header h1 { font-size: 29px; }
     .auth-input-row { grid-template-columns: 1fr; }
     .auth-inline-button { min-height: 43px; }

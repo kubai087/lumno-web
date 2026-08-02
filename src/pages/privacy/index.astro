@@ -410,7 +410,7 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
         margin-left: 0;
         transform: none;
         display: grid;
-        grid-template-columns: minmax(170px, 1fr) minmax(0, 3.12fr) minmax(170px, 1fr);
+        grid-template-columns: minmax(180px, 230px) minmax(0, 1fr);
         column-gap: clamp(24px, 2.8vw, 40px);
         align-items: start;
       }
@@ -418,14 +418,14 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
       .privacy-aside {
         grid-column: 1;
         justify-self: start;
-        width: calc(100% + 10px);
-        max-width: 260px;
-        margin-left: -10px;
+        width: 100%;
+        max-width: 230px;
+        margin-left: 0;
         min-width: 0;
         position: sticky;
         top: 96px;
         max-height: calc(100vh - 116px);
-        padding-left: 10px;
+        padding-left: 0;
         padding-right: 8px;
         overflow-y: auto;
         overscroll-behavior: contain;
@@ -521,7 +521,7 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
         display: grid;
         justify-items: start;
         gap: 4px;
-        margin-left: -10px;
+        margin-left: 0;
       }
 
       .privacy-paper {

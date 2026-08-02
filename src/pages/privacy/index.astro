@@ -184,6 +184,7 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
         --privacy-line: #e5e9e6;
         --privacy-green: #45634f;
         --privacy-header-line: #eaecf0;
+        --privacy-shell-gutter: 12px;
         --safe-area-bottom: 0px;
         --safe-area-bottom: env(safe-area-inset-bottom, 0px);
       }
@@ -225,7 +226,7 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
       }
 
       .privacy-header-inner {
-        padding: 12px;
+        padding: 12px var(--privacy-shell-gutter);
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -330,7 +331,7 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
       }
 
       .privacy-main {
-        padding: 30px 24px max(72px, var(--safe-area-bottom));
+        padding: 30px var(--privacy-shell-gutter) max(72px, var(--safe-area-bottom));
       }
 
       .privacy-hero {
@@ -405,9 +406,9 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
       }
 
       .privacy-layout {
-        width: calc(100vw - 48px);
-        margin-left: 50%;
-        transform: translateX(-50%);
+        width: 100%;
+        margin-left: 0;
+        transform: none;
         display: grid;
         grid-template-columns: minmax(170px, 1fr) minmax(0, 3.12fr) minmax(170px, 1fr);
         column-gap: clamp(24px, 2.8vw, 40px);
@@ -866,7 +867,7 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
 
       @media (max-width: 760px) {
         .privacy-header-inner {
-          padding: 14px 16px;
+          padding: 14px var(--privacy-shell-gutter);
           gap: 10px;
         }
 
@@ -940,7 +941,7 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
         }
 
         .privacy-main {
-          padding: 20px 12px max(96px, var(--safe-area-bottom));
+          padding: 20px var(--privacy-shell-gutter) max(96px, var(--safe-area-bottom));
         }
 
         .privacy-hero {

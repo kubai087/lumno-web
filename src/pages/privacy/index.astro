@@ -21,6 +21,12 @@ const seoPath = Astro.props.seoPath || "/privacy/";
 const routeLanguageMap = Astro.props.routeLanguageMap || buildRouteLanguageMap("/privacy/");
 const uiLocale: SupportedLocale = forcedLocale || DEFAULT_LOCALE;
 const content = getPrivacyContent(uiLocale);
+const displayLastUpdated = new Intl.DateTimeFormat(uiLocale, {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+  timeZone: "UTC",
+}).format(new Date(`${PRIVACY_LAST_UPDATED}T00:00:00Z`));
 const homeHref = buildLocalizedPath(uiLocale, "/");
 const alternateLinks = buildAlternateLinks(routeLanguageMap, "/privacy/");
 const ogLocale = getOpenGraphLocale(uiLocale);
@@ -91,6 +97,31 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <script is:inline>
+      (() => {
+        const autoAnchorStateKey = "__lumnoPrivacyAutoAnchor";
+        const navigationEntry = performance.getEntriesByType("navigation")[0];
+        const isReload = navigationEntry && navigationEntry.type === "reload";
+        const currentState = window.history.state;
+        const hasAutoAnchor = Boolean(
+          currentState
+          && typeof currentState === "object"
+          && currentState[autoAnchorStateKey] === true,
+        );
+
+        if (!isReload || !window.location.hash || !hasAutoAnchor) return;
+
+        const nextState = { ...currentState };
+        delete nextState[autoAnchorStateKey];
+        window.history.scrollRestoration = "manual";
+        window.history.replaceState(
+          nextState,
+          "",
+          `${window.location.pathname}${window.location.search}`,
+        );
+        window.addEventListener("DOMContentLoaded", () => window.scrollTo(0, 0), { once: true });
+      })();
+    </script>
     {
       !forcedLocale && (
         <script is:inline define:vars={{ routeLanguageMap }}>
@@ -1051,7 +1082,7 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
           <p class="privacy-eyebrow">{content.eyebrow}</p>
           <h1 id="privacy-title">{content.heroTitle}</h1>
           <p class="privacy-banner-lead">{content.heroLead}</p>
-          <p class="privacy-banner-meta">{content.effectiveLabel} · {PRIVACY_LAST_UPDATED}</p>
+          <p class="privacy-banner-meta">{content.effectiveLabel}{displayLastUpdated}</p>
         </div>
       </section>
 
@@ -1060,7 +1091,7 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
           <dl class="privacy-meta-list">
             <div>
               <dt>{content.lastUpdatedLabel}</dt>
-              <dd>{PRIVACY_LAST_UPDATED}</dd>
+              <dd>{displayLastUpdated}</dd>
             </div>
           </dl>
           <nav class="privacy-toc" aria-label={content.tocLabel}>
@@ -1158,6 +1189,7 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
         const tocLinksById = new Map(
           tocLinks.map((link) => [link.getAttribute("data-section-id") || "", link]),
         );
+        const autoAnchorStateKey = "__lumnoPrivacyAutoAnchor";
         let activeSectionId = "";
         let scrollFrame = 0;
         let navigationTargetId = "";
@@ -1166,11 +1198,29 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
         function replaceCurrentAnchor(sectionId) {
           const nextHash = sectionId ? `#${encodeURIComponent(sectionId)}` : "";
           if (window.location.hash === nextHash) return;
+          const currentState = window.history.state;
+          const nextState = currentState && typeof currentState === "object"
+            ? { ...currentState }
+            : {};
+          nextState[autoAnchorStateKey] = true;
           window.history.replaceState(
-            window.history.state,
+            nextState,
             "",
             `${window.location.pathname}${window.location.search}${nextHash}`,
           );
+        }
+
+        function clearAutoAnchorState() {
+          const currentState = window.history.state;
+          if (
+            !currentState
+            || typeof currentState !== "object"
+            || currentState[autoAnchorStateKey] !== true
+          ) return;
+
+          const nextState = { ...currentState };
+          delete nextState[autoAnchorStateKey];
+          window.history.replaceState(nextState, "", window.location.href);
         }
 
         function setActiveSection(sectionId, syncAnchor = true) {
@@ -1212,6 +1262,7 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
           link.addEventListener("click", () => {
             const sectionId = link.getAttribute("data-section-id") || "";
             if (!sectionId) return;
+            clearAutoAnchorState();
             navigationTargetId = sectionId;
             setActiveSection(sectionId, false);
             window.clearTimeout(navigationUnlockTimer);
@@ -1225,7 +1276,17 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
         window.addEventListener("scroll", scheduleCurrentSectionRead, { passive: true });
         window.addEventListener("resize", scheduleCurrentSectionRead);
         window.addEventListener("hashchange", scheduleCurrentSectionRead);
-        readCurrentSection();
+        const initialSectionId = window.location.hash.slice(1);
+        if (tocLinksById.has(initialSectionId)) {
+          navigationTargetId = initialSectionId;
+          setActiveSection(initialSectionId, false);
+          navigationUnlockTimer = window.setTimeout(() => {
+            navigationTargetId = "";
+            readCurrentSection();
+          }, 900);
+        } else {
+          readCurrentSection();
+        }
       })();
     </script>
     <script is:inline define:vars={{ forcedLocale, routeLanguageMap }}>

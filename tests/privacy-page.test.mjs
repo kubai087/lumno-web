@@ -104,6 +104,20 @@ test("privacy sidebar exposes the same four support contacts as options", () => 
   assert.match(supportLinkSource, /transition: background-color 160ms ease, color 160ms ease/);
 });
 
+test("privacy desktop layout pins the navigation left and keeps the article centered", () => {
+  const source = readSource("src/pages/privacy/index.astro");
+
+  assert.match(source, /\.privacy-layout \{[\s\S]*?width: calc\(100vw - 48px\);[\s\S]*?margin-left: 50%;[\s\S]*?transform: translateX\(-50%\);/);
+  assert.match(
+    source,
+    /grid-template-columns: minmax\(170px, 1fr\) minmax\(0, 3\.12fr\) minmax\(170px, 1fr\);/,
+  );
+  assert.match(source, /\.privacy-aside \{[\s\S]*?grid-column: 1;[\s\S]*?justify-self: start;[\s\S]*?max-width: 250px;/);
+  assert.match(source, /\.privacy-paper \{[\s\S]*?grid-column: 2;[\s\S]*?justify-self: center;[\s\S]*?max-width: 780px;/);
+  assert.match(source, /@media \(max-width: 760px\) \{[\s\S]*?\.privacy-layout \{[\s\S]*?width: 100%;[\s\S]*?margin-left: 0;[\s\S]*?transform: none;[\s\S]*?grid-template-columns: 1fr;/);
+  assert.doesNotMatch(source, /grid-template-columns: minmax\(220px, 250px\) minmax\(0, 1fr\)/);
+});
+
 test("privacy policy does not duplicate contacts in an eleventh section", () => {
   const policy = readSource("src/content/privacy-policy.md");
 

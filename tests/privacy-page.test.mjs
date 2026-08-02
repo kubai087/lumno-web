@@ -12,11 +12,15 @@ function readSource(file) {
 test("privacy header matches the release shell with one primary website CTA", () => {
   const source = readSource("src/pages/privacy/index.astro");
   const contentSource = readSource("src/lib/privacy-content.ts");
+  const headerStyles = source.match(/\.privacy-header \{[\s\S]*?\n\s*\}/)?.[0];
   const headerActions = source.match(
     /<nav class="privacy-header-actions"[\s\S]*?<\/nav>/,
   )?.[0];
 
   assert.ok(headerActions, "privacy header actions should exist");
+  assert.ok(headerStyles, "privacy header styles should exist");
+  assert.match(headerStyles, /background: #ffffff/);
+  assert.doesNotMatch(headerStyles, /rgba\(|backdrop-filter|color-mix/);
   assert.equal(
     (headerActions.match(/<a\b/g) || []).length,
     1,
@@ -52,15 +56,32 @@ test("privacy article opens with a title and a semantic quote", () => {
   assert.match(contentSource, /articleTitle: "Privacy Policy"/);
 });
 
+test("privacy hero uses natural Chinese copy and a localized update date", () => {
+  const source = readSource("src/pages/privacy/index.astro");
+  const contentSource = readSource("src/lib/privacy-content.ts");
+
+  assert.match(source, /<section class="privacy-hero" aria-labelledby="privacy-title">/);
+  assert.doesNotMatch(source, /privacy-banner/);
+  assert.match(contentSource, /heroTitle: "Lumno 如何处理你的数据"/);
+  assert.match(
+    contentSource,
+    /heroLead: "这份政策说明哪些信息只留在本机、登录后会同步什么、哪些统计需要你主动开启，以及如何关闭同步或删除数据。"/,
+  );
+  assert.doesNotMatch(contentSource, /清楚说明，才是真正尊重/);
+  assert.match(source, /new Intl\.DateTimeFormat\(uiLocale/);
+  assert.match(source, /\{content\.effectiveLabel\}\{displayLastUpdated\}/);
+});
+
 test("privacy sidebar exposes the same four support contacts as options", () => {
   const source = readSource("src/pages/privacy/index.astro");
+  const supportLinkSource = readSource("src/components/privacy/OptionsFeedbackSupportLink.astro");
   const contentSource = readSource("src/lib/privacy-content.ts");
   const supportLinks = source.match(
     /<div class="privacy-aside-links">[\s\S]*?<\/div>/,
   )?.[0];
 
   assert.ok(supportLinks, "privacy support links should exist");
-  assert.equal((supportLinks.match(/<a\b/g) || []).length, 4);
+  assert.equal((supportLinks.match(/<OptionsFeedbackSupportLink\b/g) || []).length, 4);
   assert.match(supportLinks, /content\.communityLabel/);
   assert.match(supportLinks, /content\.reviewLabel/);
   assert.match(supportLinks, /content\.issueLabel/);
@@ -71,6 +92,40 @@ test("privacy sidebar exposes the same four support contacts as options", () => 
   assert.match(supportLinks, /ri-twitter-x-line/);
   assert.match(contentSource, /communityLabel: "加入反馈群"/);
   assert.match(contentSource, /communityLabel: "Join Discord"/);
+
+  assert.match(supportLinkSource, /class="_x_extension_feedback_support_link_2026_unique_"/);
+  assert.match(supportLinkSource, /data-feedback-support=\{feedbackKey\}/);
+  assert.match(supportLinkSource, /ri-icon ri-size-20/);
+  assert.match(supportLinkSource, /ri-icon ri-size-14 ri-external-link-line/);
+  assert.match(supportLinkSource, /min-height: 30px/);
+  assert.match(supportLinkSource, /padding: 6px 10px/);
+  assert.match(supportLinkSource, /border-radius: 999px/);
+  assert.match(supportLinkSource, /background: rgba\(15, 23, 42, 0\.045\)/);
+  assert.match(supportLinkSource, /color: #111827/);
+  assert.match(supportLinkSource, /outline: 2px solid rgba\(59, 130, 246, 0\.65\)/);
+  assert.match(supportLinkSource, /transition: background-color 160ms ease, color 160ms ease/);
+});
+
+test("privacy desktop layout pins the navigation left and keeps the article centered", () => {
+  const source = readSource("src/pages/privacy/index.astro");
+
+  assert.match(source, /\.privacy-layout \{[\s\S]*?width: calc\(100vw - 48px\);[\s\S]*?margin-left: 50%;[\s\S]*?transform: translateX\(-50%\);/);
+  assert.match(
+    source,
+    /grid-template-columns: minmax\(170px, 1fr\) minmax\(0, 3\.12fr\) minmax\(170px, 1fr\);/,
+  );
+  assert.match(source, /\.privacy-aside \{[\s\S]*?grid-column: 1;[\s\S]*?justify-self: start;[\s\S]*?max-width: 260px;/);
+  assert.match(source, /\.privacy-paper \{[\s\S]*?grid-column: 2;[\s\S]*?justify-self: center;[\s\S]*?max-width: 780px;/);
+  assert.match(source, /@media \(max-width: 760px\) \{[\s\S]*?\.privacy-layout \{[\s\S]*?width: 100%;[\s\S]*?margin-left: 0;[\s\S]*?transform: none;[\s\S]*?grid-template-columns: 1fr;/);
+  assert.doesNotMatch(source, /grid-template-columns: minmax\(220px, 250px\) minmax\(0, 1fr\)/);
+});
+
+test("privacy support hover backgrounds stay inside the sidebar clipping edge", () => {
+  const source = readSource("src/pages/privacy/index.astro");
+
+  assert.match(source, /\.privacy-aside \{[\s\S]*?width: calc\(100% \+ 10px\);[\s\S]*?max-width: 260px;[\s\S]*?margin-left: -10px;[\s\S]*?padding-left: 10px;/);
+  assert.match(source, /\.privacy-aside-links \{[\s\S]*?margin-left: -10px;/);
+  assert.match(source, /@media \(max-width: 760px\) \{[\s\S]*?\.privacy-aside \{[\s\S]*?width: 100%;[\s\S]*?max-width: none;[\s\S]*?margin-left: 0;/);
 });
 
 test("privacy policy does not duplicate contacts in an eleventh section", () => {
@@ -128,4 +183,29 @@ test("privacy localized routes reuse the canonical page", () => {
 
   assert.match(route, /buildLocalizedPath\(locale, "\/privacy\/"\)/);
   assert.match(route, /buildRouteLanguageMap\("\/privacy\/"\)/);
+});
+
+test("privacy exposes a localized scrollspy table of contents with stable anchors", () => {
+  const source = readSource("src/pages/privacy/index.astro");
+  const contentSource = readSource("src/lib/privacy-content.ts");
+  const sectionIds = source.match(/const PRIVACY_SECTION_IDS = \[([\s\S]*?)\] as const;/)?.[1];
+
+  assert.ok(sectionIds, "privacy section IDs should be declared");
+  assert.equal((sectionIds.match(/"[a-z][a-z-]+"/g) || []).length, 10);
+  assert.match(source, /<nav class="privacy-toc" aria-label=\{content\.tocLabel\}>/);
+  assert.match(source, /data-privacy-toc-link/);
+  assert.match(source, /data-privacy-section/);
+  assert.match(source, /aria-current", "location"/);
+  assert.match(source, /window\.history\.replaceState\(/);
+  assert.match(source, /window\.requestAnimationFrame\(/);
+  assert.match(source, /__lumnoPrivacyAutoAnchor/);
+  assert.match(source, /navigationEntry\.type === "reload"/);
+  assert.match(source, /window\.history\.scrollRestoration = "manual"/);
+  assert.match(source, /clearAutoAnchorState\(\)/);
+  assert.match(source, /const initialSectionId = window\.location\.hash\.slice\(1\)/);
+  assert.match(source, /tocLinksById\.has\(initialSectionId\)/);
+  assert.match(source, /setActiveSection\(initialSectionId, false\)/);
+  assert.match(contentSource, /tocLabel: "目录"/);
+  assert.match(contentSource, /tocLabel: "目錄"/);
+  assert.match(contentSource, /tocLabel: "On this page"/);
 });

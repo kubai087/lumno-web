@@ -72,6 +72,19 @@ test("extension consent uses a registered authorization request and an explicit 
   assert.match(authorizeSource, /登录请求无效/);
 });
 
+test("Lumno extension authorization resumes from the account route and returns automatically", () => {
+  const source = readSource("src/components/account/AccountPortal.tsx");
+
+  assert.match(source, /window\.location\.search[\s\S]*get\("authorization_id"\)/);
+  assert.match(source, /768d478e-811f-4085-a3be-62609b9184fc/);
+  assert.match(source, /1279a56a-4c1d-495d-8a57-13e77d1b2d53/);
+  assert.match(source, /isLumnoExtensionAuthorization\(data\)/);
+  assert.match(
+    source,
+    /isLumnoExtensionAuthorization\(data\)[\s\S]*approveAuthorization\([\s\S]*skipBrowserRedirect: true[\s\S]*window\.location\.assign\(approval\.data\.redirect_url\)/,
+  );
+});
+
 test("sensitive auth layout does not load site analytics or SEO scripts", () => {
   const source = readSource("src/layouts/AuthLayout.astro");
 

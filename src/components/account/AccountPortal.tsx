@@ -1,5 +1,10 @@
-import { useEffect, useMemo, useState } from "react";
-import type { OAuthAuthorizationDetails, Provider, User } from "@supabase/supabase-js";
+import { useEffect, useMemo, useRef, useState } from "react";
+import type {
+  AuthOAuthConsentResponse,
+  OAuthAuthorizationDetails,
+  Provider,
+  User,
+} from "@supabase/supabase-js";
 import {
   ArrowRightIcon,
   ArrowUpRightIcon,
@@ -37,6 +42,17 @@ import {
 
 type Locale = "zh-CN" | "zh-TW" | "en";
 type BusyAction = "google" | "github" | "sign-out" | "delete-account" | "approve" | "deny" | "";
+
+const LUMNO_EXTENSION_OAUTH_REDIRECTS = new Map([
+  [
+    "768d478e-811f-4085-a3be-62609b9184fc",
+    "https://kkcjcneagmlhpeaafngjdlpcfjakejgb.chromiumapp.org/lumno-auth",
+  ],
+  [
+    "1279a56a-4c1d-495d-8a57-13e77d1b2d53",
+    "https://nggfkkbmogmadfoikakkfegkoilfcfao.chromiumapp.org/lumno-auth",
+  ],
+]);
 
 type Copy = {
   title: string;
@@ -215,6 +231,10 @@ function getScopeLabel(scope: string, locale: Locale): string {
   return labels[scope]?.[locale] || scope;
 }
 
+function isLumnoExtensionAuthorization(details: OAuthAuthorizationDetails): boolean {
+  return LUMNO_EXTENSION_OAUTH_REDIRECTS.get(details.client.id) === details.redirect_uri;
+}
+
 function LoadingMark({ label }: { label: string }) {
   return <Spinner data-icon="inline-start" aria-label={label} />;
 }
@@ -239,13 +259,20 @@ function AuthFeedback({
 
 export default function AccountPortal({
   locale = "zh-CN",
-  authorizationId = "",
+  authorizationId: authorizationIdProp = "",
 }: {
   locale?: Locale;
   authorizationId?: string;
 }) {
   const copy = COPY[locale] || COPY["zh-CN"];
+  const authorizationId = useMemo(() => {
+    const explicitId = String(authorizationIdProp || "").trim();
+    if (explicitId || typeof window === "undefined") return explicitId;
+    return new URLSearchParams(window.location.search).get("authorization_id") || "";
+  }, [authorizationIdProp]);
   const supabase = useMemo(() => getSupabaseBrowserClient(), []);
+  const autoApprovalIdRef = useRef("");
+  const autoApprovalPromiseRef = useRef<Promise<AuthOAuthConsentResponse> | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const [checking, setChecking] = useState(true);
   const [busy, setBusy] = useState<BusyAction>("");
@@ -283,7 +310,7 @@ export default function AccountPortal({
     }
     let active = true;
     setAuthorizationReady(false);
-    supabase.auth.oauth.getAuthorizationDetails(authorizationId).then(({ data, error: detailsError }) => {
+    supabase.auth.oauth.getAuthorizationDetails(authorizationId).then(async ({ data, error: detailsError }) => {
       if (!active) return;
       if (detailsError || !data) {
         setError(copy.invalidAuthorization);
@@ -292,6 +319,27 @@ export default function AccountPortal({
       }
       if ("redirect_url" in data) {
         window.location.assign(data.redirect_url);
+        return;
+      }
+      if (isLumnoExtensionAuthorization(data)) {
+        setBusy("approve");
+        if (autoApprovalIdRef.current !== authorizationId || !autoApprovalPromiseRef.current) {
+          autoApprovalIdRef.current = authorizationId;
+          autoApprovalPromiseRef.current = supabase.auth.oauth.approveAuthorization(
+            authorizationId,
+            { skipBrowserRedirect: true },
+          );
+        }
+        const approval = await autoApprovalPromiseRef.current;
+        if (!active) return;
+        setBusy("");
+        if (approval.error || !approval.data?.redirect_url) {
+          setAuthorizationDetails(data);
+          setError(formatAuthError(approval.error, copy));
+          setAuthorizationReady(true);
+          return;
+        }
+        window.location.assign(approval.data.redirect_url);
         return;
       }
       setAuthorizationDetails(data);

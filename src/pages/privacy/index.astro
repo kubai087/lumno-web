@@ -333,77 +333,6 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
         padding: 30px var(--privacy-shell-gutter) max(72px, var(--safe-area-bottom));
       }
 
-      .privacy-hero {
-        position: relative;
-        width: 100%;
-        min-height: 248px;
-        margin: 0 0 44px;
-        overflow: hidden;
-        border-radius: 16px;
-        background: #eef3ec;
-        aspect-ratio: 2200 / 586;
-      }
-
-      .privacy-hero::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(90deg, rgba(247, 249, 245, 0.96) 0%, rgba(247, 249, 245, 0.84) 38%, rgba(247, 249, 245, 0.16) 72%);
-      }
-
-      .privacy-hero img {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-      }
-
-      .privacy-hero-copy {
-        position: relative;
-        z-index: 1;
-        width: min(740px, 76%);
-        min-height: 100%;
-        padding: clamp(26px, 4vw, 42px);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-      }
-
-      .privacy-eyebrow {
-        margin: 0 0 12px;
-        color: #617365;
-        font-size: 12px;
-        font-weight: 700;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-      }
-
-      .privacy-hero h1 {
-        margin: 0;
-        max-width: 640px;
-        font-size: clamp(34px, 4.8vw, 48px);
-        font-weight: 520;
-        line-height: 1.04;
-        letter-spacing: -0.045em;
-        color: #24362a;
-      }
-
-      .privacy-hero-lead {
-        max-width: 580px;
-        margin: 12px 0 0;
-        color: #58665c;
-        font-size: 15px;
-        line-height: 1.72;
-      }
-
-      .privacy-hero-meta {
-        margin: 8px 0 0;
-        color: #758078;
-        font-size: 12px;
-      }
-
       .privacy-layout {
         width: 100%;
         margin-left: 0;
@@ -943,21 +872,6 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
           padding: 20px var(--privacy-shell-gutter) max(96px, var(--safe-area-bottom));
         }
 
-        .privacy-hero {
-          min-height: 330px;
-          margin-bottom: 34px;
-          aspect-ratio: auto;
-        }
-
-        .privacy-hero::after {
-          background: linear-gradient(90deg, rgba(247, 249, 245, 0.97) 0%, rgba(247, 249, 245, 0.82) 65%, rgba(247, 249, 245, 0.28) 100%);
-        }
-
-        .privacy-hero-copy {
-          width: 92%;
-          padding: 28px 24px;
-        }
-
         .privacy-layout {
           width: 100%;
           margin-left: 0;
@@ -1046,14 +960,6 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
       }
 
       @media (max-width: 520px) {
-        .privacy-hero h1 {
-          font-size: 38px;
-        }
-
-        .privacy-hero-lead {
-          font-size: 14px;
-        }
-
         .privacy-aside-links {
           grid-template-columns: 1fr;
         }
@@ -1094,23 +1000,6 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
     </header>
 
     <main class="privacy-container privacy-main">
-      <section class="privacy-hero" aria-labelledby="privacy-title">
-        <img
-          src="/resource_commited/banner.jpg"
-          alt={content.bannerAlt}
-          loading="eager"
-          decoding="async"
-          width="2200"
-          height="586"
-        />
-        <div class="privacy-hero-copy">
-          <p class="privacy-eyebrow">{content.eyebrow}</p>
-          <h1 id="privacy-title">{content.heroTitle}</h1>
-          <p class="privacy-hero-lead">{content.heroLead}</p>
-          <p class="privacy-hero-meta">{content.effectiveLabel}{displayLastUpdated}</p>
-        </div>
-      </section>
-
       <section class="privacy-layout" aria-label={content.policySectionAria}>
         <aside class="privacy-aside" aria-label={content.metadataAria}>
           <dl class="privacy-meta-list">
@@ -1166,7 +1055,7 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
         </aside>
 
         <article class="privacy-paper">
-          <h2 class="privacy-doc-title">{content.articleTitle}</h2>
+          <h1 class="privacy-doc-title">{content.articleTitle}</h1>
           <blockquote class="privacy-doc-intro">
             <p>{content.intro}</p>
           </blockquote>

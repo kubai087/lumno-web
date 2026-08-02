@@ -14,11 +14,6 @@ type PrivacyPageContent = {
   officialSiteLabel: string;
   officialSiteAria: string;
   pageNavigationAria: string;
-  bannerAlt: string;
-  eyebrow: string;
-  heroTitle: string;
-  heroLead: string;
-  effectiveLabel: string;
   policySectionAria: string;
   metadataAria: string;
   lastUpdatedLabel: string;
@@ -49,11 +44,6 @@ export const PRIVACY_CONTENT: Record<SupportedLocale, PrivacyPageContent> = {
     officialSiteLabel: "访问官网",
     officialSiteAria: "访问 Lumno 官网",
     pageNavigationAria: "页面导航",
-    bannerAlt: "Lumno 水彩风景横幅",
-    eyebrow: "隐私政策",
-    heroTitle: "Lumno 如何处理你的数据",
-    heroLead: "这份政策说明哪些信息只留在本机、登录后会同步什么、哪些统计需要你主动开启，以及如何关闭同步或删除数据。",
-    effectiveLabel: "最后更新：",
     policySectionAria: "隐私政策正文",
     metadataAria: "文档信息",
     lastUpdatedLabel: "最后更新",
@@ -83,11 +73,6 @@ export const PRIVACY_CONTENT: Record<SupportedLocale, PrivacyPageContent> = {
     officialSiteLabel: "造訪官網",
     officialSiteAria: "造訪 Lumno 官網",
     pageNavigationAria: "頁面導覽",
-    bannerAlt: "Lumno 水彩風景橫幅",
-    eyebrow: "隱私權政策",
-    heroTitle: "Lumno 如何處理你的資料",
-    heroLead: "這份政策說明哪些資訊只留在本機、登入後會同步什麼、哪些統計需要你主動開啟，以及如何關閉同步或刪除資料。",
-    effectiveLabel: "最後更新：",
     policySectionAria: "隱私權政策正文",
     metadataAria: "文件資訊",
     lastUpdatedLabel: "最後更新",
@@ -117,11 +102,6 @@ export const PRIVACY_CONTENT: Record<SupportedLocale, PrivacyPageContent> = {
     officialSiteLabel: "Visit website",
     officialSiteAria: "Visit the Lumno website",
     pageNavigationAria: "Page navigation",
-    bannerAlt: "Lumno watercolor landscape banner",
-    eyebrow: "Privacy Policy",
-    heroTitle: "How Lumno handles your data",
-    heroLead: "Clarity is a form of respect: see what stays local, what can sync, what may be measured, and how you can withdraw or delete it.",
-    effectiveLabel: "Effective and last updated: ",
     policySectionAria: "Privacy policy",
     metadataAria: "Document information",
     lastUpdatedLabel: "Last updated",

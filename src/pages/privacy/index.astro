@@ -31,6 +31,24 @@ const communityHref = communityUsesDiscord
   : COMMUNITY_LINKS.wechatQrImagePath;
 const communityIconClass = communityUsesDiscord ? "ri-discord-fill" : "ri-wechat-line";
 const pageKeywords = buildKeywords(content.pageKeywords);
+const PRIVACY_SECTION_IDS = [
+  "scope-and-controller",
+  "summary",
+  "local-data-and-permissions",
+  "data-leaving-device",
+  "purposes-and-recipients",
+  "retention-and-deletion",
+  "choices-and-rights",
+  "security-and-responsibility",
+  "international-processing-and-children",
+  "limited-use-and-policy-changes",
+] as const;
+const privacySectionTitles = Array.from(content.policySource.matchAll(/^##\s+(.+)$/gm), (match) => match[1].trim());
+const privacySections = PRIVACY_SECTION_IDS.map((id, index) => ({
+  id,
+  title: privacySectionTitles[index] || `${index + 1}`,
+  navigationTitle: (privacySectionTitles[index] || `${index + 1}`).replace(/^\d+\.\s*/, ""),
+}));
 const structuredData = [
   buildSoftwareApplicationSchema({
     description: content.pageDescription,
@@ -51,9 +69,20 @@ const structuredData = [
 
 // Only repository-owned static Markdown is rendered here. User-provided input
 // must never be passed to this renderer without an explicit sanitization step.
+const privacyRenderer = new marked.Renderer();
+let privacySectionIndex = 0;
+privacyRenderer.heading = function ({ tokens, depth }) {
+  const headingContent = this.parser.parseInline(tokens);
+  if (depth !== 2) return `<h${depth}>${headingContent}</h${depth}>\n`;
+
+  const sectionId = privacySections[privacySectionIndex]?.id || `section-${privacySectionIndex + 1}`;
+  privacySectionIndex += 1;
+  return `<h2 id="${sectionId}" data-privacy-section>${headingContent}</h2>\n`;
+};
 const privacyPolicyHtml = marked.parse(content.policySource, {
   async: false,
   gfm: true,
+  renderer: privacyRenderer,
 });
 ---
 
@@ -241,6 +270,7 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
       }
 
       .privacy-markdown a:focus-visible,
+      .privacy-toc-link:focus-visible,
       .privacy-aside-link:focus-visible {
         outline: 2px solid rgba(69, 99, 79, 0.42);
         outline-offset: 3px;
@@ -347,7 +377,7 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
 
       .privacy-layout {
         display: grid;
-        grid-template-columns: 208px minmax(0, 1fr);
+        grid-template-columns: minmax(220px, 250px) minmax(0, 1fr);
         gap: clamp(36px, 6vw, 72px);
         align-items: start;
       }
@@ -355,6 +385,12 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
       .privacy-aside {
         position: sticky;
         top: 96px;
+        max-height: calc(100vh - 116px);
+        padding-right: 8px;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        scrollbar-width: thin;
+        scrollbar-color: #d8ded9 transparent;
       }
 
       .privacy-meta-list {
@@ -379,6 +415,63 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
         color: #435047;
         font-size: 13px;
         line-height: 1.55;
+      }
+
+      .privacy-toc {
+        margin-top: 24px;
+        padding-top: 18px;
+        border-top: 1px solid var(--privacy-line);
+      }
+
+      .privacy-toc-title {
+        margin: 0 0 8px;
+        color: #8a938d;
+        font-size: 11px;
+        font-weight: 650;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+
+      .privacy-toc-list {
+        margin: 0;
+        padding: 0;
+        display: grid;
+        gap: 2px;
+        list-style: none;
+      }
+
+      .privacy-toc-link {
+        display: grid;
+        grid-template-columns: 22px minmax(0, 1fr);
+        gap: 7px;
+        align-items: start;
+        padding: 7px 8px;
+        border-radius: 8px;
+        color: #68736b;
+        font-size: 12px;
+        line-height: 1.4;
+        text-decoration: none;
+        transition: color 160ms ease, background-color 160ms ease;
+      }
+
+      .privacy-toc-number {
+        color: #a0a9a2;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .privacy-toc-link:hover {
+        background: #f3f6f4;
+        color: #3f5f4a;
+      }
+
+      .privacy-toc-link[aria-current="location"] {
+        background: #edf4ef;
+        color: #345640;
+        font-weight: 650;
+      }
+
+      .privacy-toc-link[aria-current="location"] .privacy-toc-number {
+        color: #557763;
       }
 
       .privacy-aside-links {
@@ -853,14 +946,17 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
 
         .privacy-aside {
           position: static;
+          max-height: none;
           display: grid;
           grid-template-columns: auto 1fr;
           gap: 12px 24px;
           padding: 0 8px 28px;
+          overflow: visible;
           border-bottom: 1px solid var(--privacy-line);
         }
 
         .privacy-meta-list,
+        .privacy-toc,
         .privacy-aside-links {
           grid-column: 1 / -1;
         }
@@ -871,6 +967,39 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
 
         .privacy-aside-links {
           grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .privacy-toc {
+          margin-top: 6px;
+          padding-top: 18px;
+        }
+
+        .privacy-toc-list {
+          margin: 0 -8px;
+          padding: 0 8px 8px;
+          display: flex;
+          gap: 8px;
+          overflow-x: auto;
+          scroll-snap-type: x proximity;
+          scrollbar-width: none;
+          -webkit-overflow-scrolling: touch;
+        }
+
+        .privacy-toc-list::-webkit-scrollbar {
+          display: none;
+        }
+
+        .privacy-toc-item {
+          flex: 0 0 auto;
+          scroll-snap-align: start;
+        }
+
+        .privacy-toc-link {
+          width: min(72vw, 280px);
+          height: 100%;
+          padding: 10px 11px;
+          border: 1px solid #e3e8e4;
+          background: #ffffff;
         }
 
         .privacy-paper {
@@ -960,6 +1089,24 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
               <dd>{PRIVACY_LAST_UPDATED}</dd>
             </div>
           </dl>
+          <nav class="privacy-toc" aria-label={content.tocLabel}>
+            <p class="privacy-toc-title">{content.tocLabel}</p>
+            <ol class="privacy-toc-list">
+              {privacySections.map((section, index) => (
+                <li class="privacy-toc-item">
+                  <a
+                    class="privacy-toc-link"
+                    href={`#${section.id}`}
+                    data-privacy-toc-link
+                    data-section-id={section.id}
+                  >
+                    <span class="privacy-toc-number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span>
+                    <span>{section.navigationTitle}</span>
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </nav>
           <div class="privacy-aside-links">
             <a class="privacy-aside-link" href={communityHref} target="_blank" rel="noreferrer noopener">
               <i class={communityIconClass} aria-hidden="true"></i>
@@ -1023,6 +1170,85 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
     <script>
       import "../../scripts/language-preference";
       import "../../scripts/language-runtime";
+    </script>
+    <script is:inline>
+      (() => {
+        const sections = Array.from(document.querySelectorAll("[data-privacy-section]"));
+        const tocLinks = Array.from(document.querySelectorAll("[data-privacy-toc-link]"));
+        if (!sections.length || !tocLinks.length) return;
+
+        const tocLinksById = new Map(
+          tocLinks.map((link) => [link.getAttribute("data-section-id") || "", link]),
+        );
+        let activeSectionId = "";
+        let scrollFrame = 0;
+        let navigationTargetId = "";
+        let navigationUnlockTimer = 0;
+
+        function replaceCurrentAnchor(sectionId) {
+          const nextHash = sectionId ? `#${encodeURIComponent(sectionId)}` : "";
+          if (window.location.hash === nextHash) return;
+          window.history.replaceState(
+            window.history.state,
+            "",
+            `${window.location.pathname}${window.location.search}${nextHash}`,
+          );
+        }
+
+        function setActiveSection(sectionId, syncAnchor = true) {
+          if (activeSectionId === sectionId) return;
+          activeSectionId = sectionId;
+          tocLinksById.forEach((link, id) => {
+            if (id === sectionId) {
+              link.setAttribute("aria-current", "location");
+            } else {
+              link.removeAttribute("aria-current");
+            }
+          });
+          if (syncAnchor) replaceCurrentAnchor(sectionId);
+        }
+
+        function readCurrentSection() {
+          if (navigationTargetId) return;
+          const anchorOffset = 112;
+          let currentSectionId = "";
+          for (const section of sections) {
+            if (section.getBoundingClientRect().top > anchorOffset) break;
+            currentSectionId = section.id;
+          }
+          if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 24) {
+            currentSectionId = sections[sections.length - 1].id;
+          }
+          setActiveSection(currentSectionId);
+        }
+
+        function scheduleCurrentSectionRead() {
+          if (scrollFrame) return;
+          scrollFrame = window.requestAnimationFrame(() => {
+            scrollFrame = 0;
+            readCurrentSection();
+          });
+        }
+
+        tocLinks.forEach((link) => {
+          link.addEventListener("click", () => {
+            const sectionId = link.getAttribute("data-section-id") || "";
+            if (!sectionId) return;
+            navigationTargetId = sectionId;
+            setActiveSection(sectionId, false);
+            window.clearTimeout(navigationUnlockTimer);
+            navigationUnlockTimer = window.setTimeout(() => {
+              navigationTargetId = "";
+              readCurrentSection();
+            }, 900);
+          });
+        });
+
+        window.addEventListener("scroll", scheduleCurrentSectionRead, { passive: true });
+        window.addEventListener("resize", scheduleCurrentSectionRead);
+        window.addEventListener("hashchange", scheduleCurrentSectionRead);
+        readCurrentSection();
+      })();
     </script>
     <script is:inline define:vars={{ forcedLocale, routeLanguageMap }}>
       const LANGUAGE_STORAGE_KEY = "_x_extension_language_2024_unique_";

@@ -129,3 +129,21 @@ test("privacy localized routes reuse the canonical page", () => {
   assert.match(route, /buildLocalizedPath\(locale, "\/privacy\/"\)/);
   assert.match(route, /buildRouteLanguageMap\("\/privacy\/"\)/);
 });
+
+test("privacy exposes a localized scrollspy table of contents with stable anchors", () => {
+  const source = readSource("src/pages/privacy/index.astro");
+  const contentSource = readSource("src/lib/privacy-content.ts");
+  const sectionIds = source.match(/const PRIVACY_SECTION_IDS = \[([\s\S]*?)\] as const;/)?.[1];
+
+  assert.ok(sectionIds, "privacy section IDs should be declared");
+  assert.equal((sectionIds.match(/"[a-z][a-z-]+"/g) || []).length, 10);
+  assert.match(source, /<nav class="privacy-toc" aria-label=\{content\.tocLabel\}>/);
+  assert.match(source, /data-privacy-toc-link/);
+  assert.match(source, /data-privacy-section/);
+  assert.match(source, /aria-current", "location"/);
+  assert.match(source, /window\.history\.replaceState\(/);
+  assert.match(source, /window\.requestAnimationFrame\(/);
+  assert.match(contentSource, /tocLabel: "目录"/);
+  assert.match(contentSource, /tocLabel: "目錄"/);
+  assert.match(contentSource, /tocLabel: "On this page"/);
+});

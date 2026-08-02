@@ -111,3 +111,12 @@ test("sitemap exposes localized features pages", () => {
   assert.match(source, /buildLocalizedPath\(locale, "\/features\/"\)/);
   assert.match(source, /priority: "0.85"/);
 });
+
+test("sitemap exposes localized privacy pages", () => {
+  const source = readSource("src/pages/sitemap.xml.ts");
+
+  assert.match(source, /localizedPrivacyUrls/);
+  assert.match(source, /buildLocalizedPath\(locale, "\/privacy\/"\)/);
+  assert.match(source, /src\/content\/privacy-policy\.zh-TW\.md/);
+  assert.match(source, /src\/content\/privacy-policy\.en\.md/);
+});

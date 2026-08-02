@@ -41,7 +41,14 @@ export const GET: APIRoute = async () => {
   );
   const onboardingLastmod = readLastCommitIso(["src/pages/onboarding/index.astro"], now);
   const privacyLastmod = readLastCommitIso(
-    ["src/pages/privacy/index.astro", "src/content/privacy-policy.md"],
+    [
+      "src/pages/privacy/index.astro",
+      "src/pages/[locale]/privacy/index.astro",
+      "src/lib/privacy-content.ts",
+      "src/content/privacy-policy.md",
+      "src/content/privacy-policy.zh-TW.md",
+      "src/content/privacy-policy.en.md",
+    ],
     now,
   );
   const localizedHomeUrls = getNonDefaultLocales().map((locale) => ({
@@ -71,6 +78,13 @@ export const GET: APIRoute = async () => {
     lastmod: releaseLastmod,
     changefreq: "daily",
     priority: "0.8",
+  }));
+  const localizedPrivacyUrls = getNonDefaultLocales().map((locale) => ({
+    locale,
+    loc: `${SITE_URL}${buildLocalizedPath(locale, "/privacy/")}`,
+    lastmod: privacyLastmod,
+    changefreq: "monthly",
+    priority: "0.5",
   }));
 
   const urls = [
@@ -107,6 +121,7 @@ export const GET: APIRoute = async () => {
       changefreq: "monthly",
       priority: "0.5",
     },
+    ...localizedPrivacyUrls,
   ];
 
   const alternateByPath = new Map<string, Array<{ hreflang: string; href: string }>>();

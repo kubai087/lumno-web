@@ -71,3 +71,12 @@ test("homepage uses the shared language preference helper too", () => {
   assert.match(source, /window\.__lumnoLanguageRuntime\.setupLanguageRuntime\(/);
   assert.doesNotMatch(source, /function applyLanguageMode\(mode, options\)/);
 });
+
+test("privacy uses the shared language preference and route redirect runtime", () => {
+  const source = fs.readFileSync(path.join(workspaceRoot, "src/pages/privacy/index.astro"), "utf8");
+  assert.match(source, /import "\.\.\/\.\.\/scripts\/language-preference"/);
+  assert.match(source, /import "\.\.\/\.\.\/scripts\/language-runtime"/);
+  assert.match(source, /window\.__lumnoLanguageRuntime\.setupLanguageRuntime\(/);
+  assert.match(source, /routeLanguageMap:\s*ROUTE_LANGUAGE_MAP/);
+  assert.doesNotMatch(source, /function applyLanguageMode\(mode, options\)/);
+});

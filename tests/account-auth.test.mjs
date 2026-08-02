@@ -67,11 +67,16 @@ test("privacy policy documents account, private sync media, and bounded metrics"
   const source = [
     readSource("src/pages/privacy/index.astro"),
     readSource("src/content/privacy-policy.md"),
+    readSource("src/content/privacy-policy.zh-TW.md"),
+    readSource("src/content/privacy-policy.en.md"),
   ].join("\n");
 
-  assert.match(source, /账号信息 \/ Account information/);
-  assert.match(source, /同步内容 \/ Synced content/);
-  assert.match(source, /使用统计 \/ Usage metrics/);
-  assert.match(source, /自定义壁纸存放在受访问控制的私有存储中/);
-  assert.match(source, /不包含具体浏览网址、网页标题、书签内容或搜索词/);
+  assert.match(source, /随机设备 ID/);
+  assert.match(source, /自定义快捷方式、搜索提供商和黑名单规则可能包含/);
+  assert.match(source, /扩展内产品使用统计\*\*默认关闭\*\*/);
+  assert.match(source, /random device ID/);
+  assert.match(source, /Custom shortcuts, search providers, and blocklist rules may contain/);
+  assert.match(source, /product usage metrics are \*\*off by default\*\*/);
+  assert.match(source, /自定义媒体存放在受访问控制的私有存储中/);
+  assert.match(source, /不上传具体网址、域名、路径、搜索词/);
 });

@@ -1,62 +1,73 @@
 ---
 import { marked } from "marked";
 import SeoHead from "../../components/SeoHead.astro";
-import privacyPolicySource from "../../content/privacy-policy.md?raw";
+import { COMMUNITY_LINKS } from "../../lib/community";
+import { DEFAULT_LOCALE, buildLocalizedPath, buildRouteLanguageMap, type SupportedLocale } from "../../lib/locales";
+import { PRIVACY_LAST_UPDATED, getPrivacyContent } from "../../lib/privacy-content";
 import {
+  CHROME_STORE_URL,
   SITE_NAME,
-  SITE_URL,
+  buildAlternateLinks,
   buildBreadcrumbListSchema,
   buildKeywords,
   buildSoftwareApplicationSchema,
   buildWebPageSchema,
+  getOpenGraphLocale,
 } from "../../lib/seo";
 
-const seoPath = "/privacy/";
-const pageTitle = "Lumno Privacy Policy | 隐私政策";
-const pageDescription =
-  "Lumno 隐私政策：说明扩展的本地处理、账号登录、配置与媒体同步、可选账号关联使用统计，以及第三方服务请求。";
-const pageKeywords = buildKeywords([
-  "Lumno 隐私政策",
-  "Lumno privacy policy",
-  "Chrome 扩展隐私政策",
-  "浏览器扩展隐私声明",
-]);
+const forcedLocale = (Astro.props.forcedLocale ?? null) as SupportedLocale | null;
+const seoPath = Astro.props.seoPath || "/privacy/";
+const routeLanguageMap = Astro.props.routeLanguageMap || buildRouteLanguageMap("/privacy/");
+const uiLocale: SupportedLocale = forcedLocale || DEFAULT_LOCALE;
+const content = getPrivacyContent(uiLocale);
+const homeHref = buildLocalizedPath(uiLocale, "/");
+const alternateLinks = buildAlternateLinks(routeLanguageMap, "/privacy/");
+const ogLocale = getOpenGraphLocale(uiLocale);
+const chromeReviewUrl = `${CHROME_STORE_URL}/reviews?utm_source=item-share-cb`;
+const githubIssueUrl = "https://github.com/kubai087/lumno-extension/issues/new";
+const communityUsesDiscord = uiLocale === "en";
+const communityHref = communityUsesDiscord
+  ? COMMUNITY_LINKS.discordUrl
+  : COMMUNITY_LINKS.wechatQrImagePath;
+const communityIconClass = communityUsesDiscord ? "ri-discord-fill" : "ri-wechat-line";
+const pageKeywords = buildKeywords(content.pageKeywords);
 const structuredData = [
   buildSoftwareApplicationSchema({
-    description: pageDescription,
+    description: content.pageDescription,
   }),
   buildWebPageSchema({
-    name: pageTitle,
-    description: pageDescription,
+    name: content.pageTitle,
+    description: content.pageDescription,
     path: seoPath,
+    language: uiLocale,
   }),
   buildBreadcrumbListSchema({
     items: [
-      { name: SITE_NAME, path: "/" },
-      { name: "Privacy Policy", path: seoPath },
+      { name: SITE_NAME, path: homeHref },
+      { name: content.breadcrumbLabel, path: seoPath },
     ],
   }),
 ];
 
 // Only repository-owned static Markdown is rendered here. User-provided input
 // must never be passed to this renderer without an explicit sanitization step.
-const privacyPolicyHtml = marked.parse(privacyPolicySource, {
+const privacyPolicyHtml = marked.parse(content.policySource, {
   async: false,
   gfm: true,
 });
 ---
 
-<html lang="zh-CN">
+<html lang={uiLocale}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <SeoHead
-      title={pageTitle}
-      description={pageDescription}
+      title={content.pageTitle}
+      description={content.pageDescription}
       path={seoPath}
       keywords={pageKeywords}
-      locale="zh_CN"
-      i18nTitleKey="page_title_ui"
+      alternates={alternateLinks}
+      locale={ogLocale}
       type="article"
       structuredData={structuredData}
     />
@@ -71,10 +82,8 @@ const privacyPolicyHtml = marked.parse(privacyPolicySource, {
         --privacy-text: #17211b;
         --privacy-muted: #667069;
         --privacy-line: #e5e9e6;
-        --privacy-line-strong: #d6ddd8;
         --privacy-green: #45634f;
-        --privacy-green-soft: #f0f5f1;
-        --privacy-paper: #ffffff;
+        --privacy-header-line: #eaecf0;
         --safe-area-bottom: 0px;
         --safe-area-bottom: env(safe-area-inset-bottom, 0px);
       }
@@ -110,20 +119,19 @@ const privacyPolicyHtml = marked.parse(privacyPolicySource, {
       .privacy-header {
         position: sticky;
         top: 0;
-        z-index: 20;
-        border-bottom: 1px solid color-mix(in srgb, var(--privacy-line) 74%, transparent);
-        background: rgba(255, 255, 255, 0.88);
+        z-index: 30;
+        border-bottom: 1px solid color-mix(in srgb, var(--privacy-header-line) 70%, transparent);
+        background: rgba(255, 255, 255, 0.86);
         backdrop-filter: blur(16px);
         -webkit-backdrop-filter: blur(16px);
       }
 
       .privacy-header-inner {
-        min-height: 64px;
         padding: 12px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 16px;
+        gap: 12px;
       }
 
       .privacy-brand {
@@ -144,25 +152,55 @@ const privacyPolicyHtml = marked.parse(privacyPolicySource, {
         gap: 8px;
       }
 
-      .privacy-header-link {
+      .privacy-header-cta {
+        position: relative;
         min-height: 36px;
         padding: 0 14px;
-        border: 1px solid var(--privacy-line-strong);
+        border: none;
         border-radius: 999px;
-        background: linear-gradient(180deg, #ffffff 0%, #f1f3f1 100%);
-        color: #4f5b53;
-        box-shadow: 0 1px 2px rgba(23, 33, 27, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        background: linear-gradient(180deg, #404859 0%, #273042 100%);
+        color: #ffffff;
+        box-shadow:
+          0 10px 3px rgba(0, 0, 0, 0),
+          0 6px 2px rgba(0, 0, 0, 0.008),
+          0 3px 2px rgba(0, 0, 0, 0.035),
+          0 2px 2px rgba(0, 0, 0, 0.065),
+          0 0 1px rgba(0, 0, 0, 0.075);
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        gap: 7px;
-        font-size: 13px;
-        font-weight: 600;
+        gap: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1;
         text-decoration: none;
-        transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+        transition:
+          transform 180ms ease,
+          box-shadow 180ms ease,
+          background 180ms ease;
       }
 
-      .privacy-header-link:focus-visible,
+      .privacy-header-cta::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        box-shadow:
+          inset 0 0 0 1px #040404,
+          inset 0 1px 0 rgba(255, 255, 255, 0.52),
+          inset 0 1px 2.4px rgba(255, 255, 255, 0.36);
+      }
+
+      .privacy-header-cta i {
+        font-size: 18px;
+      }
+
+      .privacy-header-cta:focus-visible {
+        outline: 2px solid rgba(75, 84, 95, 0.35);
+        outline-offset: 2px;
+      }
+
       .privacy-markdown a:focus-visible,
       .privacy-aside-link:focus-visible {
         outline: 2px solid rgba(69, 99, 79, 0.42);
@@ -170,11 +208,27 @@ const privacyPolicyHtml = marked.parse(privacyPolicySource, {
       }
 
       @media (hover: hover) and (pointer: fine) {
-        .privacy-header-link:hover {
+        .privacy-header-cta:hover {
           transform: translateY(-1px);
-          border-color: #c4cec7;
-          box-shadow: 0 8px 18px rgba(23, 33, 27, 0.07);
+          background: linear-gradient(180deg, #4a5467 0%, #2f3a4f 100%);
+          box-shadow:
+            0 12px 4px rgba(0, 0, 0, 0),
+            0 7px 3px rgba(0, 0, 0, 0.015),
+            0 4px 3px rgba(0, 0, 0, 0.045),
+            0 2px 2px rgba(0, 0, 0, 0.075),
+            0 0 1px rgba(0, 0, 0, 0.09);
         }
+      }
+
+      .privacy-header-cta:active {
+        transform: translateY(1px);
+        background: linear-gradient(180deg, #3a4353 0%, #232b3b 100%);
+        box-shadow:
+          0 10px 3px rgba(0, 0, 0, 0),
+          0 6px 2px rgba(0, 0, 0, 0.008),
+          0 3px 2px rgba(0, 0, 0, 0.035),
+          0 2px 2px rgba(0, 0, 0, 0.065),
+          0 0 1px rgba(0, 0, 0, 0.075);
       }
 
       .privacy-main {
@@ -264,27 +318,6 @@ const privacyPolicyHtml = marked.parse(privacyPolicySource, {
         top: 96px;
       }
 
-      .privacy-aside-label {
-        margin: 0 0 14px;
-        color: #8a938d;
-        font-size: 11px;
-        font-weight: 700;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-      }
-
-      .privacy-aside-status {
-        width: fit-content;
-        margin-bottom: 24px;
-        padding: 6px 9px;
-        border: 1px solid #dce6df;
-        border-radius: 7px;
-        background: var(--privacy-green-soft);
-        color: var(--privacy-green);
-        font-size: 12px;
-        font-weight: 700;
-      }
-
       .privacy-meta-list {
         margin: 0;
         display: grid;
@@ -324,7 +357,19 @@ const privacyPolicyHtml = marked.parse(privacyPolicySource, {
         gap: 7px;
         color: #657168;
         font-size: 13px;
+        white-space: nowrap;
         text-decoration: none;
+      }
+
+      .privacy-aside-link > i:first-child {
+        flex: 0 0 auto;
+        font-size: 16px;
+      }
+
+      .privacy-aside-link > .ri-external-link-line {
+        flex: 0 0 auto;
+        font-size: 13px;
+        opacity: 0.72;
       }
 
       .privacy-aside-link:hover {
@@ -336,16 +381,28 @@ const privacyPolicyHtml = marked.parse(privacyPolicySource, {
         padding-bottom: 24px;
       }
 
+      .privacy-doc-title {
+        margin: 0 0 20px;
+        color: var(--privacy-text);
+        font-size: clamp(28px, 3.4vw, 36px);
+        font-weight: 650;
+        line-height: 1.24;
+        letter-spacing: -0.035em;
+      }
+
       .privacy-doc-intro {
-        margin-bottom: 42px;
-        padding-bottom: 32px;
-        border-bottom: 1px solid var(--privacy-line);
+        margin: 0 0 42px;
+        padding: 20px 22px;
+        border: 1px solid #dbe6de;
+        border-left: 3px solid #6d8a75;
+        border-radius: 0 12px 12px 0;
+        background: linear-gradient(135deg, #f5f8f5 0%, #fafcfa 100%);
       }
 
       .privacy-doc-intro p {
         margin: 0;
         color: #4f5d54;
-        font-size: clamp(17px, 2.3vw, 20px);
+        font-size: clamp(16px, 2vw, 18px);
         line-height: 1.72;
         letter-spacing: -0.012em;
       }
@@ -444,6 +501,52 @@ const privacyPolicyHtml = marked.parse(privacyPolicySource, {
         margin-bottom: 0;
       }
 
+      .privacy-markdown table {
+        display: block;
+        width: 100%;
+        margin: 18px 0 26px;
+        overflow-x: auto;
+        border: 1px solid #e1e6e2;
+        border-radius: 10px;
+        border-collapse: separate;
+        border-spacing: 0;
+        background: #ffffff;
+        font-size: 13.5px;
+        line-height: 1.65;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .privacy-markdown thead,
+      .privacy-markdown tbody,
+      .privacy-markdown tr {
+        width: 100%;
+      }
+
+      .privacy-markdown th,
+      .privacy-markdown td {
+        min-width: 140px;
+        padding: 12px 14px;
+        border-right: 1px solid #e7ebe8;
+        border-bottom: 1px solid #e7ebe8;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      .privacy-markdown th {
+        background: #f5f8f5;
+        color: #334238;
+        font-weight: 650;
+      }
+
+      .privacy-markdown th:last-child,
+      .privacy-markdown td:last-child {
+        border-right: 0;
+      }
+
+      .privacy-markdown tr:last-child td {
+        border-bottom: 0;
+      }
+
       .privacy-doc-footer {
         margin-top: 52px;
         padding: 24px;
@@ -466,9 +569,227 @@ const privacyPolicyHtml = marked.parse(privacyPolicySource, {
         color: #38654a;
       }
 
+      .lang-control {
+        position: fixed;
+        right: 24px;
+        bottom: calc(24px + var(--safe-area-bottom));
+        z-index: 22;
+        width: 38px;
+      }
+
+      .lang-toggle {
+        width: 38px;
+        min-width: 38px;
+        height: 38px;
+        padding: 0;
+        border: 1px solid transparent;
+        border-radius: 999px;
+        appearance: none;
+        -webkit-appearance: none;
+        background: transparent;
+        box-shadow: none;
+        color: #4b545f;
+        -webkit-text-fill-color: currentColor;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0;
+        font: inherit;
+        font-size: 16px;
+        transition: border-color 180ms ease, background 180ms ease, box-shadow 180ms ease;
+      }
+
+      .lang-toggle,
+      .lang-toggle i,
+      .lang-select-prefix,
+      .lang-select-arrow {
+        color: inherit;
+        -webkit-text-fill-color: currentColor;
+      }
+
+      .lang-toggle i {
+        font-size: 16px;
+        line-height: 1;
+      }
+
+      .lang-toggle:focus-visible {
+        outline: 2px solid rgba(75, 84, 95, 0.35);
+        outline-offset: 2px;
+      }
+
+      .lang-select-prefix {
+        width: 18px;
+        height: 18px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .lang-current-label {
+        display: none;
+        flex: 1 1 auto;
+        min-width: 0;
+        color: #4b545f;
+        font-size: 14px;
+        text-align: left;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .lang-select-arrow {
+        display: none;
+        width: 16px;
+        height: 16px;
+        align-items: center;
+        justify-content: center;
+        color: #768095;
+      }
+
+      @media (hover: hover) and (pointer: fine) {
+        .lang-toggle:hover {
+          border-color: #d2d8df;
+          background: rgba(255, 255, 255, 0.72);
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+        }
+      }
+
+      .lang-toggle:active {
+        border-color: #ccd3db;
+        background: rgba(255, 255, 255, 0.78);
+        box-shadow: none;
+      }
+
+      .lang-menu {
+        position: absolute;
+        right: 0;
+        bottom: calc(100% + 8px);
+        z-index: 36;
+        min-width: 180px;
+        padding: 6px;
+        border: 1px solid #e2e2e2;
+        border-radius: 12px;
+        background: #ffffff;
+        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.12);
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(6px) scale(0.97);
+        transform-origin: bottom right;
+        pointer-events: none;
+        transition: opacity 180ms ease, transform 180ms ease;
+      }
+
+      .lang-menu[data-open="true"] {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0) scale(1);
+        pointer-events: auto;
+      }
+
+      .lang-option {
+        width: 100%;
+        padding: 7px 9px;
+        border: 0;
+        border-radius: 8px;
+        background: transparent;
+        color: #3f4650;
+        cursor: pointer;
+        font: inherit;
+        font-size: 13px;
+        text-align: left;
+      }
+
+      .lang-option:hover {
+        background: #f3f5f7;
+      }
+
+      .lang-option.is-active {
+        background: #eaf3ff;
+        color: #2a5da7;
+        font-weight: 600;
+      }
+
       @media (max-width: 760px) {
+        .privacy-header-inner {
+          padding: 14px 16px;
+          gap: 10px;
+        }
+
+        .privacy-brand {
+          flex: 0 1 auto;
+          min-width: 0;
+        }
+
+        .privacy-brand img {
+          width: clamp(90px, 28vw, 136px);
+        }
+
+        .privacy-header-actions {
+          margin-left: auto;
+          gap: 6px;
+          min-width: 0;
+        }
+
+        .lang-control {
+          left: 16px;
+          right: 16px;
+          bottom: calc(16px + var(--safe-area-bottom));
+          width: auto;
+        }
+
+        .lang-toggle {
+          width: 100%;
+          min-width: 0;
+          min-height: 40px;
+          padding: 0 12px;
+          border: 1px solid #dbe1e8;
+          border-radius: 10px;
+          background: #ffffff;
+          box-shadow: 0 6px 18px rgba(14, 24, 38, 0.08);
+          display: grid;
+          grid-template-columns: 1fr auto 1fr;
+          align-items: center;
+          gap: 10px;
+        }
+
+        .lang-current-label,
+        .lang-select-arrow {
+          display: inline-flex;
+        }
+
+        .lang-current-label {
+          display: block;
+          flex: none;
+          justify-self: center;
+          max-width: 100%;
+          padding: 0 6px;
+          text-align: center;
+        }
+
+        .lang-select-prefix {
+          width: 18px;
+          justify-self: start;
+        }
+
+        .lang-select-arrow {
+          width: 18px;
+          justify-self: end;
+        }
+
+        .lang-menu {
+          left: 0;
+          right: auto;
+          width: 100%;
+          min-width: 0;
+          transform-origin: bottom center;
+        }
+
         .privacy-main {
-          padding: 20px 12px max(48px, var(--safe-area-bottom));
+          padding: 20px 12px max(96px, var(--safe-area-bottom));
         }
 
         .privacy-banner {
@@ -500,8 +821,6 @@ const privacyPolicyHtml = marked.parse(privacyPolicySource, {
           border-bottom: 1px solid var(--privacy-line);
         }
 
-        .privacy-aside-label,
-        .privacy-aside-status,
         .privacy-meta-list,
         .privacy-aside-links {
           grid-column: 1 / -1;
@@ -518,18 +837,17 @@ const privacyPolicyHtml = marked.parse(privacyPolicySource, {
         .privacy-paper {
           padding: 0 8px;
         }
+
+        .privacy-doc-title {
+          margin-bottom: 16px;
+        }
+
+        .privacy-doc-intro {
+          padding: 18px;
+        }
       }
 
       @media (max-width: 520px) {
-        .privacy-header-link-release span {
-          display: none;
-        }
-
-        .privacy-header-link-release {
-          width: 36px;
-          padding: 0;
-        }
-
         .privacy-banner h1 {
           font-size: 38px;
         }
@@ -562,19 +880,15 @@ const privacyPolicyHtml = marked.parse(privacyPolicySource, {
       }
     </style>
   </head>
-  <body>
+  <body data-privacy-locale={uiLocale}>
     <header class="privacy-header">
       <div class="privacy-container privacy-header-inner">
-        <a class="privacy-brand" href="/" aria-label="返回 Lumno 首页">
-          <img src="/assets/textlogo.svg" alt="Lumno" width="408" height="114" />
+        <a class="privacy-brand" href={homeHref} aria-label={content.brandHomeAria}>
+          <img src="/resource_commited/logo.png" alt="Lumno" draggable="false" />
         </a>
-        <nav class="privacy-header-actions" aria-label="页面导航">
-          <a class="privacy-header-link privacy-header-link-release" href="/release/">
-            <i class="ri-history-line" aria-hidden="true"></i>
-            <span>Release</span>
-          </a>
-          <a class="privacy-header-link" href="/">
-            <span>返回首页</span>
+        <nav class="privacy-header-actions" aria-label={content.pageNavigationAria}>
+          <a class="privacy-header-cta" href={homeHref} aria-label={content.officialSiteAria}>
+            <span>{content.officialSiteLabel}</span>
             <i class="ri-arrow-right-up-line" aria-hidden="true"></i>
           </a>
         </nav>
@@ -585,65 +899,168 @@ const privacyPolicyHtml = marked.parse(privacyPolicySource, {
       <section class="privacy-banner" aria-labelledby="privacy-title">
         <img
           src="/resource_commited/banner.jpg"
-          alt="Lumno 水彩风景横幅"
+          alt={content.bannerAlt}
           loading="eager"
           decoding="async"
           width="2200"
           height="586"
         />
         <div class="privacy-banner-copy">
-          <p class="privacy-eyebrow">Privacy Policy · 隐私政策</p>
-          <h1 id="privacy-title">清楚说明，才是真正尊重。</h1>
-          <p class="privacy-banner-lead">
-            本地处理什么、同步什么、统计什么，以及你可以如何撤回和删除，都写在这里。
-          </p>
-          <p class="privacy-banner-meta">Effective &amp; last updated · 2026-08-02</p>
+          <p class="privacy-eyebrow">{content.eyebrow}</p>
+          <h1 id="privacy-title">{content.heroTitle}</h1>
+          <p class="privacy-banner-lead">{content.heroLead}</p>
+          <p class="privacy-banner-meta">{content.effectiveLabel} · {PRIVACY_LAST_UPDATED}</p>
         </div>
       </section>
 
-      <section class="privacy-layout" aria-label="隐私政策正文">
-        <aside class="privacy-aside" aria-label="文档信息">
-          <p class="privacy-aside-label">Document</p>
-          <div class="privacy-aside-status">Current · 当前有效</div>
+      <section class="privacy-layout" aria-label={content.policySectionAria}>
+        <aside class="privacy-aside" aria-label={content.metadataAria}>
           <dl class="privacy-meta-list">
             <div>
-              <dt>Last updated</dt>
-              <dd>2026-08-02</dd>
-            </div>
-            <div>
-              <dt>Developer</dt>
-              <dd>枯白啃设计<br />Kubai087</dd>
-            </div>
-            <div>
-              <dt>Applies to</dt>
-              <dd>Lumno Extension<br />Lumno Account</dd>
+              <dt>{content.lastUpdatedLabel}</dt>
+              <dd>{PRIVACY_LAST_UPDATED}</dd>
             </div>
           </dl>
           <div class="privacy-aside-links">
-            <a class="privacy-aside-link" href="mailto:i@kubai.design">
-              <i class="ri-mail-line" aria-hidden="true"></i>
-              联系隐私团队
+            <a class="privacy-aside-link" href={communityHref} target="_blank" rel="noreferrer noopener">
+              <i class={communityIconClass} aria-hidden="true"></i>
+              <span>{content.communityLabel}</span>
+              <i class="ri-external-link-line" aria-hidden="true"></i>
             </a>
-            <a class="privacy-aside-link" href="/release/">
-              <i class="ri-history-line" aria-hidden="true"></i>
-              查看更新日志
+            <a class="privacy-aside-link" href={chromeReviewUrl} target="_blank" rel="noreferrer noopener">
+              <i class="ri-star-line" aria-hidden="true"></i>
+              <span>{content.reviewLabel}</span>
+              <i class="ri-external-link-line" aria-hidden="true"></i>
+            </a>
+            <a class="privacy-aside-link" href={githubIssueUrl} target="_blank" rel="noreferrer noopener">
+              <i class="ri-github-line" aria-hidden="true"></i>
+              <span>{content.issueLabel}</span>
+              <i class="ri-external-link-line" aria-hidden="true"></i>
+            </a>
+            <a class="privacy-aside-link" href={COMMUNITY_LINKS.xUrl} target="_blank" rel="noreferrer noopener">
+              <i class="ri-twitter-x-line" aria-hidden="true"></i>
+              <span>{content.authorLabel}</span>
+              <i class="ri-external-link-line" aria-hidden="true"></i>
             </a>
           </div>
         </aside>
 
         <article class="privacy-paper">
-          <div class="privacy-doc-intro">
-            <p>
-              Lumno 默认尽量在浏览器本地处理历史、书签和标签页。登录后，你可以选择跨设备同步配置与自定义媒体；产品使用统计保持关闭，只有你主动开启后才会上传明确列出的数字和配置属性。
-            </p>
-          </div>
+          <h2 class="privacy-doc-title">{content.articleTitle}</h2>
+          <blockquote class="privacy-doc-intro">
+            <p>{content.intro}</p>
+          </blockquote>
           <div class="privacy-markdown" set:html={privacyPolicyHtml}></div>
           <footer class="privacy-doc-footer">
-            <strong>对这份说明有疑问？</strong>
-            请通过 <a href="mailto:i@kubai.design">i@kubai.design</a> 联系我们，或返回 <a href={SITE_URL}>Lumno 官网</a>。
+            <strong>{content.footerTitle}</strong>
+            {content.footerBeforeEmail} <a href="mailto:i@kubai.design">i@kubai.design</a> {content.footerAfterEmail} <a href={homeHref}>{content.footerHomeLabel}</a>{uiLocale === "en" ? "." : "。"}
           </footer>
         </article>
       </section>
     </main>
+    <div class="lang-control">
+      <button
+        id="language-toggle"
+        class="lang-toggle"
+        type="button"
+        aria-label={content.languageSelectAria}
+        aria-haspopup="menu"
+        aria-expanded="false"
+      >
+        <span class="lang-select-prefix">
+          <i class="ri-global-line" aria-hidden="true"></i>
+        </span>
+        <span id="language-current-label" class="lang-current-label">{content.languageLabel}</span>
+        <span class="lang-select-arrow" aria-hidden="true">
+          <i class="ri-arrow-down-s-line"></i>
+        </span>
+      </button>
+      <div id="language-menu" class="lang-menu" role="menu" data-open="false">
+        <button class="lang-option" type="button" role="menuitemradio" data-lang-value="zh-CN">简体中文</button>
+        <button class="lang-option" type="button" role="menuitemradio" data-lang-value="zh-TW">繁體中文</button>
+        <button class="lang-option" type="button" role="menuitemradio" data-lang-value="en">English</button>
+      </div>
+    </div>
+    <script>
+      import "../../scripts/language-preference";
+      import "../../scripts/language-runtime";
+    </script>
+    <script is:inline define:vars={{ forcedLocale, routeLanguageMap }}>
+      const LANGUAGE_STORAGE_KEY = "_x_extension_language_2024_unique_";
+      const FORCED_LOCALE = forcedLocale;
+      const ROUTE_LANGUAGE_MAP = routeLanguageMap;
+
+      function normalizeLocale(locale) {
+        const raw = String(locale || "").trim().toLowerCase();
+        if (!raw) return "en";
+        if (raw.startsWith("zh")) {
+          return raw.includes("tw") || raw.includes("hk") || raw.includes("mo") || raw.includes("hant")
+            ? "zh-TW"
+            : "zh-CN";
+        }
+        return "en";
+      }
+
+      function getSystemLocale() {
+        const preferred = Array.isArray(navigator.languages) && navigator.languages.length
+          ? navigator.languages[0]
+          : navigator.language;
+        return normalizeLocale(preferred || "en");
+      }
+
+      function normalizeLanguageMode(mode) {
+        const raw = String(mode || "").trim();
+        if (!raw || raw.toLowerCase() === "system") return getSystemLocale();
+        return normalizeLocale(raw);
+      }
+
+      function updateLanguageOptionState(locale) {
+        let activeLabel = "";
+        document.querySelectorAll("[data-lang-value]").forEach((node) => {
+          const value = node.getAttribute("data-lang-value") || getSystemLocale();
+          const isActive = value === locale;
+          node.classList.toggle("is-active", isActive);
+          node.setAttribute("aria-checked", isActive ? "true" : "false");
+          if (isActive) activeLabel = (node.textContent || "").trim();
+        });
+        const currentLabel = document.getElementById("language-current-label");
+        if (currentLabel && activeLabel) currentLabel.textContent = activeLabel;
+      }
+
+      function applyResolvedLanguage(locale) {
+        document.documentElement.lang = locale;
+        document.body.setAttribute("data-privacy-locale", locale);
+        updateLanguageOptionState(locale);
+      }
+
+      function initLanguageRuntime() {
+        if (!window.__lumnoLanguagePreference || !window.__lumnoLanguageRuntime) return null;
+        return window.__lumnoLanguageRuntime.setupLanguageRuntime({
+          forcedLocale: FORCED_LOCALE,
+          getSystemLocale,
+          normalizeLanguageMode,
+          routeLanguageMap: ROUTE_LANGUAGE_MAP,
+          languageStorageKey: LANGUAGE_STORAGE_KEY,
+          applyResolvedLanguage,
+        });
+      }
+
+      function bootLanguageRuntime() {
+        const languageRuntime = initLanguageRuntime();
+        if (!languageRuntime) return false;
+        languageRuntime.applyLanguageMode(languageRuntime.getInitialLanguageMode());
+        return true;
+      }
+
+      if (!bootLanguageRuntime()) {
+        const retryBootLanguageRuntime = () => {
+          if (!bootLanguageRuntime()) return;
+          window.removeEventListener("lumno:language-runtime-ready", retryBootLanguageRuntime);
+          window.removeEventListener("lumno:language-preference-ready", retryBootLanguageRuntime);
+        };
+        window.addEventListener("lumno:language-runtime-ready", retryBootLanguageRuntime);
+        window.addEventListener("lumno:language-preference-ready", retryBootLanguageRuntime);
+      }
+    </script>
   </body>
 </html>

@@ -14,8 +14,14 @@ import {
   buildWebSiteSchema,
   getOpenGraphLocale,
 } from "../lib/seo";
-import { DEFAULT_LOCALE, buildLocalizedPath, buildRouteLanguageMap } from "../lib/locales";
+import { DEFAULT_LOCALE, buildLocalizedPath, buildRouteLanguageMap, type SupportedLocale } from "../lib/locales";
 import { COMMUNITY_LINKS } from "../lib/community";
+
+interface Props {
+  forcedLocale?: SupportedLocale | null;
+  seoPath?: string;
+  routeLanguageMap?: Record<string, string>;
+}
 
 const forcedLocale = Astro.props.forcedLocale ?? null;
 const seoPath = Astro.props.seoPath || "/";
@@ -39,7 +45,7 @@ const pageDescriptionByLocale = {
   "zh-TW":
     "Lumno 是一款開源瀏覽器命令欄與快捷命令浮層，支援搜尋分頁、書籤、歷史紀錄與站內內容，並提供極簡新分頁體驗，適用於 Chrome、Edge、Dia 等瀏覽器，也適合從 Arc 遷移後延續高效率搜尋流程。",
   en:
-    "Lumno is an open-source browser extension for focus search, command-bar workflows, and a minimalist new tab. Search tabs, bookmarks, history, and site content on Chrome, Edge, and Dia, with migration-friendly workflows for former Arc users.",
+    "Lumno is an open-source browser command bar for tabs, bookmarks, history, and site search, plus a minimalist new tab for Chrome, Edge, and Dia.",
 };
 const pageTitle = pageTitleByLocale[uiLocale] || pageTitleByLocale[DEFAULT_LOCALE];
 const pageDescription = pageDescriptionByLocale[uiLocale] || pageDescriptionByLocale[DEFAULT_LOCALE];

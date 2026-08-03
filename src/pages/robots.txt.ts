@@ -13,6 +13,7 @@ export const GET: APIRoute = async () => {
     "ClaudeBot",
     "anthropic-ai",
     "PerplexityBot",
+    "Google-Extended",
   ];
   const trainingOnlyCrawlers = ["Bytespider", "CCBot"];
   const body = [

@@ -48,6 +48,14 @@ test("features page contains product-led searchable content and FAQ schema hooks
   assert.match(contentSource, /Lumno 是 Arc 浏览器替代品吗/);
 });
 
+test("features hero install CTA is included in the conversion event funnel", () => {
+  const source = readSource("src/pages/features/index.astro");
+
+  assert.match(source, /data-analytics-event="open_chrome_web_store"/);
+  assert.match(source, /data-analytics-category="conversion"/);
+  assert.match(source, /data-analytics-label="features_hero_install"/);
+});
+
 test("localized features route reuses the canonical features page", () => {
   const source = readSource("src/pages/[locale]/features/index.astro");
 
@@ -95,12 +103,22 @@ test("social metadata uses one default Open Graph image candidate", () => {
   assert.match(source, /name="twitter:url"/);
 });
 
+test("Open Graph alternate locales use standard locale values and exclude the current locale", () => {
+  const source = readSource("src/components/SeoHead.astro");
+
+  assert.match(source, /getOpenGraphLocale/);
+  assert.match(source, /normalizedCurrentHreflang/);
+  assert.match(source, /item\.hreflang\.toLowerCase\(\) !== normalizedCurrentHreflang/);
+  assert.match(source, /content=\{getOpenGraphLocale\(item\.hreflang\)\}/);
+});
+
 test("robots policy allows AI answer crawlers by default with an opt-out", () => {
   const source = readSource("src/pages/robots.txt.ts");
 
   assert.match(source, /PUBLIC_ALLOW_AI_CRAWLERS/);
   assert.match(source, /"GPTBot"/);
   assert.match(source, /"PerplexityBot"/);
+  assert.match(source, /"Google-Extended"/);
   assert.match(source, /const aiCrawlerRule = allowAiCrawlers \? "Allow: \/" : "Disallow: \/";/);
 });
 

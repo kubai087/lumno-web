@@ -39,6 +39,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Type-check site
+        run: npm run check
+
       - name: Resolve Chrome Web Store version
         env:
           CHROME_EXTENSION_ID: nggfkkbmogmadfoikakkfegkoilfcfao

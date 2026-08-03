@@ -1,3 +1,5 @@
+export {};
+
 type LanguageRuntimeOptions = {
   getSystemLocale: () => string;
   normalizeLanguageMode: (mode: string) => string;

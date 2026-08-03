@@ -13,8 +13,14 @@ import {
   getOpenGraphLocale,
 } from "../../lib/seo";
 import { buildEntryContextConfig } from "../../lib/entry-context";
-import { DEFAULT_LOCALE, buildLocalizedPath, buildRouteLanguageMap } from "../../lib/locales";
+import { DEFAULT_LOCALE, buildLocalizedPath, buildRouteLanguageMap, type SupportedLocale } from "../../lib/locales";
 import { COMMUNITY_LINKS } from "../../lib/community";
+
+interface Props {
+  forcedLocale?: SupportedLocale | null;
+  seoPath?: string;
+  routeLanguageMap?: Record<string, string>;
+}
 
 const releases = (await fetchReleases()).map((item) => ({
   ...item,
@@ -170,11 +176,11 @@ const chromeStoreVersion = String(
 ).trim();
 
 function renderMdInline(markdown: string): string {
-  return marked.parseInline(markdown || "");
+  return marked.parseInline(markdown || "", { async: false });
 }
 
 function renderMdBlock(markdown: string): string {
-  return marked.parse(markdown || "");
+  return marked.parse(markdown || "", { async: false });
 }
 
 function hasLocaleContent(content: ReleaseLocaleContent): boolean {

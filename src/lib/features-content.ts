@@ -216,7 +216,7 @@ export const FEATURES_SEO_CONTENT: Record<SupportedLocale, FeaturesSeoContent> =
   en: {
     pageTitle: "Lumno Features | Browser Command Bar, Tab Search, Bookmark Search & Site Search",
     pageDescription:
-      "Explore how Lumno combines tab search, bookmark search, history search, site search, and a minimalist new tab in an open-source browser command bar for Chrome, Edge, Dia, and Arc migration workflows.",
+      "Search tabs, bookmarks, history, and sites from one open-source browser command bar, with a minimalist new tab for Chrome, Edge, and Dia.",
     breadcrumbLabel: "Features",
     navHome: "Home",
     navRelease: "Release Notes",

@@ -1,7 +1,7 @@
 ---
 import SeoHead from "../../components/SeoHead.astro";
 import { FEATURES_SEO_CONTENT, getFeaturesSeoContent } from "../../lib/features-content";
-import { DEFAULT_LOCALE, buildLocalizedPath, buildRouteLanguageMap } from "../../lib/locales";
+import { DEFAULT_LOCALE, buildLocalizedPath, buildRouteLanguageMap, type SupportedLocale } from "../../lib/locales";
 import {
   CHROME_STORE_URL,
   SITE_NAME,
@@ -17,9 +17,15 @@ import {
   getOpenGraphLocale,
 } from "../../lib/seo";
 
+interface Props {
+  forcedLocale?: SupportedLocale | null;
+  seoPath?: string;
+  routeLanguageMap?: Record<string, string>;
+}
+
 const forcedLocale = Astro.props.forcedLocale ?? null;
 const seoPath = Astro.props.seoPath || "/features/";
-const routeLanguageMap = Astro.props.routeLanguageMap || buildRouteLanguageMap("/features/");
+const routeLanguageMap: Record<string, string> = Astro.props.routeLanguageMap || buildRouteLanguageMap("/features/");
 const uiLocale = forcedLocale || DEFAULT_LOCALE;
 const content = getFeaturesSeoContent(uiLocale);
 const homeHref = buildLocalizedPath(uiLocale, "/");
@@ -586,7 +592,15 @@ const structuredData = [
             <h1 id="features-title">{content.title}</h1>
             <p class="hero-intro">{content.intro}</p>
             <div class="hero-actions">
-              <a class="pill-btn pill-btn-dark" href={CHROME_STORE_URL} target="_blank" rel="noreferrer noopener">
+              <a
+                class="pill-btn pill-btn-dark"
+                href={CHROME_STORE_URL}
+                target="_blank"
+                rel="noreferrer noopener"
+                data-analytics-event="open_chrome_web_store"
+                data-analytics-category="conversion"
+                data-analytics-label="features_hero_install"
+              >
                 <i class="ri-chrome-fill" aria-hidden="true"></i>
                 <span>{content.installCta}</span>
               </a>

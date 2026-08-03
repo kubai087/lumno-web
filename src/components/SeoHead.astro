@@ -4,6 +4,7 @@ import {
   DEFAULT_TWITTER_IMAGE,
   SITE_NAME,
   SITE_URL,
+  getOpenGraphLocale,
 } from "../lib/seo";
 
 type StructuredData = Record<string, unknown>;
@@ -60,6 +61,7 @@ const schemaItems = (Array.isArray(structuredData) ? structuredData : [structure
 );
 const keywordContent = keywords.join(", ");
 const normalizedCurrentLocale = locale.replace("_", "-").toLowerCase();
+const normalizedCurrentHreflang = locale === "en_US" ? "en" : locale.replace("_", "-").toLowerCase();
 ---
 
 <title data-i18n={i18nTitleKey}>{title}</title>
@@ -105,9 +107,9 @@ const normalizedCurrentLocale = locale.replace("_", "-").toLowerCase();
 <meta property="og:locale" content={locale} />
 {alternates
   .filter((item) => item.hreflang !== "x-default")
-  .filter((item) => item.hreflang.toLowerCase() !== normalizedCurrentLocale)
+  .filter((item) => item.hreflang.toLowerCase() !== normalizedCurrentHreflang)
   .map((item) => (
-    <meta property="og:locale:alternate" content={item.hreflang.replace("-", "_")} />
+    <meta property="og:locale:alternate" content={getOpenGraphLocale(item.hreflang)} />
   ))}
 
 <meta name="twitter:card" content="summary_large_image" />
@@ -120,6 +122,7 @@ const normalizedCurrentLocale = locale.replace("_", "-").toLowerCase();
 <meta name="twitter:creator" content="@Kubai087" />
 
 <script
+  is:inline
   defer
   src="https://vibeloft.ai/telemetry/v1.js"
   data-vl-product-id="0e7d5952-e389-4515-9021-ccbea09452ba"
@@ -127,10 +130,10 @@ const normalizedCurrentLocale = locale.replace("_", "-").toLowerCase();
 ></script>
 
 {schemaItems.map((item) => (
-  <script type="application/ld+json" set:html={JSON.stringify(item)} />
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(item)} />
 ))}
 
-{gaId ? <script async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script> : null}
+{gaId ? <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}></script> : null}
 {gaId ? (
   <script is:inline define:vars={{ gaId }}>
     window.dataLayer = window.dataLayer || [];

@@ -15,8 +15,20 @@ import {
   getOpenGraphLocale,
 } from "../../lib/seo";
 import { buildEntryContextConfig } from "../../lib/entry-context";
-import { DEFAULT_LOCALE, SUPPORTED_ONBOARDING_LANGUAGES, buildLocalizedPath, buildScopedRouteLanguageMap } from "../../lib/locales";
+import {
+  DEFAULT_LOCALE,
+  SUPPORTED_ONBOARDING_LANGUAGES,
+  buildLocalizedPath,
+  buildScopedRouteLanguageMap,
+  type SupportedLocale,
+} from "../../lib/locales";
 import { COMMUNITY_LINKS } from "../../lib/community";
+
+interface Props {
+  forcedLocale?: SupportedLocale | null;
+  seoPath?: string;
+  routeLanguageMap?: Record<string, string>;
+}
 
 const forcedLocale = Astro.props.forcedLocale ?? null;
 const seoPath = Astro.props.seoPath || "/onboarding/";

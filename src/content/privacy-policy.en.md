@@ -71,6 +71,8 @@ If you choose to sign in and use cloud features, Lumno processes:
 
 Lumno uses this data to authenticate your account, restore settings and media across devices, resolve sync conflicts, protect the service, and troubleshoot failures. Custom media is kept in access-controlled private storage and is not published as a public link.
 
+When you click Google or GitHub sign-in, the page loads Google reCAPTCHA v3 on demand and sends Google a short-lived challenge token, a fixed sign-in action, and the request IP to assess automation risk. Lumno verifies validity, score, action, time, and hostname on the server. It does not store the challenge token or raw IP; it stores only a short-lived HMAC-fingerprinted pass, provider, score, and verification/expiry/consumption times.
+
 ### Optional in-extension product usage metrics
 
 In-extension product usage metrics are **off by default** and require both sign-in and an explicit opt-in. If enabled, Lumno uploads daily:
@@ -95,6 +97,7 @@ Lumno processes data only as needed to provide browser features, accounts, and s
 | --- | --- | --- |
 | [Supabase](https://supabase.com/privacy) | Account, device, consent, synced settings, custom media, optional product metrics, and limited service logs | Authentication, database, private object storage, and Edge Functions; the primary project region is Tokyo, Japan. |
 | [Google](https://policies.google.com/privacy), [GitHub](https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement) | Identity and OAuth request information needed when you choose to sign in | Complete your chosen sign-in; identities with the same verified email may be linked to one Lumno account. |
+| Google reCAPTCHA, GitHub Actions, and [Feishu](https://www.feishu.cn/privacy) | Sign-in challenge and network information; service status, time windows, and aggregate error/traffic counts | Prevent automated registration; run external health and aggregate-log checks every five minutes; and send Feishu group alerts with backup email to `i@kubai.design` when an incident starts, escalates, or recovers. Alerts contain no raw logs, IP addresses, user IDs, email addresses, settings, or media paths. |
 | [VibeLoft](https://vibeloft.ai/privacy), Google Analytics if enabled | Website visit and technical information | Measure public-page traffic, sources, and performance. |
 | Browser vendors | Settings stored in `chrome.storage.sync` and browser-account metadata | Provide browser-native extension settings sync. |
 | Search, AI, website, or favicon services you select | Query, selected text, prompt, requested URL or domain, and network metadata | Complete a search, AI action, navigation, or icon request you initiated. |
@@ -111,6 +114,7 @@ Providers may process data outside your country or region. Lumno does not sell d
 | Metric-upload deduplication batch identifiers | 30 days. |
 | Sync-write deduplication operation records | 90 days. |
 | Infrastructure, security, and request logs | Retained by providers under the current service plan and only as needed for security and troubleshooting. Lumno uses the shortest period necessary for those purposes and does not create a separate long-term export. |
+| Registration-abuse records | Registration-rate HMAC fingerprints are retained for up to 26 hours. A reCAPTCHA pass expires after 10 minutes and is deleted within about 2 hours. Challenge tokens and raw IP addresses are not stored in these tables. |
 
 Permanent account deletion removes the account, devices, synced settings, custom media, consent records, and any product metrics still linkable to the account from active cloud systems. Data required by law, needed for a security investigation, present temporarily in provider backups, or already irreversibly aggregated may not be deleted at the same time. Account deletion does not automatically erase local data on your devices or browser-vendor sync copies.
 
@@ -121,7 +125,7 @@ You can:
 - use most local features without signing in;
 - decide whether to enable Lumno account sync and in-extension product usage metrics;
 - turn metrics off at any time. This stops new recording and clears pending local counts, without affecting the lawfulness of earlier consent-based processing;
-- sign out, disable cloud sync, delete custom media, or permanently delete your account through the account interface;
+- sign out only the current device while keeping local settings working; other devices remain signed in. Signing back into the same account compares server versions and reconciles local edits made while signed out. You can also disable cloud sync, delete custom media, or permanently delete your account through the account interface;
 - clear local or browser-sync data through browser settings or uninstall the extension;
 - avoid online suggestions, AI, selected-text, or other third-party features, or change the relevant provider.
 

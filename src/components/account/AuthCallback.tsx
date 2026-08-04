@@ -1,5 +1,12 @@
 import { useEffect, useState } from "react";
-import { consumeAuthReturnPath, getSupabaseBrowserClient } from "../../lib/supabase-client";
+import {
+  clearDeleteStepUp,
+  consumeAuthReturnPath,
+  consumeDeleteStepUpReturnPath,
+  getSupabaseBrowserClient,
+  getSupabaseDeleteStepUpClient,
+  isDeleteStepUpPending,
+} from "../../lib/supabase-client";
 
 type CallbackState = "working" | "error";
 
@@ -10,18 +17,29 @@ export default function AuthCallback() {
     let active = true;
     const params = new URLSearchParams(window.location.search);
     const code = params.get("code") || "";
+    const deleteStepUp = isDeleteStepUpPending();
     if (!code) {
+      if (deleteStepUp) clearDeleteStepUp();
       setState("error");
       return;
     }
 
-    getSupabaseBrowserClient().auth.exchangeCodeForSession(code).then(({ error }) => {
+    const authClient = deleteStepUp ? getSupabaseDeleteStepUpClient() : getSupabaseBrowserClient();
+    authClient.auth.exchangeCodeForSession(code).then(({ error }) => {
       if (!active) return;
       if (error) {
+        if (deleteStepUp) clearDeleteStepUp();
         setState("error");
         return;
       }
-      window.location.replace(consumeAuthReturnPath());
+      const returnPath = deleteStepUp
+        ? `${consumeDeleteStepUpReturnPath()}?delete_step_up=1`
+        : consumeAuthReturnPath();
+      window.location.replace(returnPath);
+    }).catch(() => {
+      if (!active) return;
+      if (deleteStepUp) clearDeleteStepUp();
+      setState("error");
     });
 
     return () => {

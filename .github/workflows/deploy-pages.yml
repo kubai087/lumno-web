@@ -55,6 +55,15 @@ jobs:
             echo "Could not resolve Chrome Web Store version. Keep fallback review status."
           fi
 
+      - name: Validate OAuth protection configuration
+        env:
+          PUBLIC_RECAPTCHA_SITE_KEY: ${{ secrets.PUBLIC_RECAPTCHA_SITE_KEY }}
+        run: |
+          if [ -z "${PUBLIC_RECAPTCHA_SITE_KEY:-}" ]; then
+            echo "::error::PUBLIC_RECAPTCHA_SITE_KEY is required before deploying the account OAuth flow."
+            exit 1
+          fi
+
       - name: Build site
         env:
           GITHUB_RELEASES_OWNER: kubai087
@@ -65,6 +74,7 @@ jobs:
           PUBLIC_BING_SITE_VERIFICATION: ${{ secrets.PUBLIC_BING_SITE_VERIFICATION }}
           PUBLIC_BAIDU_SITE_VERIFICATION: ${{ secrets.PUBLIC_BAIDU_SITE_VERIFICATION }}
           PUBLIC_SOGOU_SITE_VERIFICATION: ${{ secrets.PUBLIC_SOGOU_SITE_VERIFICATION }}
+          PUBLIC_RECAPTCHA_SITE_KEY: ${{ secrets.PUBLIC_RECAPTCHA_SITE_KEY }}
         run: npm run build
 
       - name: Configure Pages

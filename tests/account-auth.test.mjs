@@ -26,11 +26,38 @@ test("account portal exposes Google and GitHub identity linking without email OT
   assert.doesNotMatch(source, /signInWithOtp|verifyOtp|InputOTP|auth-email|邮箱验证码登录/);
   assert.match(source, /providers\.includes\("github"\)/);
   assert.match(source, /supabase\.functions\.invoke\("delete-account"/);
+  assert.match(source, /getOAuthCaptchaToken\(RECAPTCHA_SITE_KEY, RECAPTCHA_ACTION\)/);
+  assert.match(source, /supabase\.functions\.invoke\("signup-captcha"/);
+  assert.match(source, /captchaData\?\.ok !== true/);
   assert.match(source, /deleteConfirmation !== "DELETE"/);
+  assert.match(source, /step_up_access_token: proofAccessToken/);
+  assert.match(source, /headers: \{ Authorization: `Bearer \$\{primaryAccessToken\}` \}/);
+  assert.match(source, /getSupabaseDeleteStepUpClient\(\)\.auth\.signInWithOAuth/);
   assert.doesNotMatch(source, /MAINLAND_NOTICE_STORAGE_KEY|mainland_cross_border|ensureMainlandConsent/);
   assert.match(callbackSource, /exchangeCodeForSession/);
+  assert.match(callbackSource, /isDeleteStepUpPending\(\)/);
+  assert.match(callbackSource, /clearDeleteStepUp\(\)/);
+  assert.match(callbackSource, /consumeDeleteStepUpReturnPath\(\)/);
+  assert.match(clientSource, /export function clearDeleteStepUp\(\)/);
   assert.doesNotMatch(callbackSource, /unlinkIdentity|provider_locked/);
   assert.doesNotMatch(clientSource, /lumno-auth-provider-choice-v1/);
+});
+
+test("OAuth CAPTCHA is loaded on demand and bound to a server-verified action", () => {
+  const portalSource = readSource("src/components/account/AccountPortal.tsx");
+  const captchaSource = readSource("src/lib/recaptcha.ts");
+  const workflowSource = readSource(".github/workflows/deploy-pages.yml");
+
+  assert.match(portalSource, /const RECAPTCHA_ACTION = "lumno_oauth"/);
+  assert.match(portalSource, /PUBLIC_RECAPTCHA_SITE_KEY/);
+  assert.match(captchaSource, /let loader: Promise<RecaptchaApi> \| null = null/);
+  assert.match(captchaSource, /recaptcha\.execute\(siteKey, \{ action \}\)/);
+  assert.match(captchaSource, /document\.head\.append\(script\)/);
+  assert.doesNotMatch(readSource("src/layouts/AuthLayout.astro"), /recaptcha\/api\.js/,
+    "third-party CAPTCHA code should load only after a sign-in click");
+  assert.match(workflowSource, /PUBLIC_RECAPTCHA_SITE_KEY: \$\{\{ secrets\.PUBLIC_RECAPTCHA_SITE_KEY \}\}/);
+  assert.match(workflowSource, /Validate OAuth protection configuration/);
+  assert.match(workflowSource, /PUBLIC_RECAPTCHA_SITE_KEY is required before deploying/);
 });
 
 test("web auth components use Lumno semantic tokens", () => {

@@ -36,9 +36,13 @@ import {
 import { Input } from "@/components/ui/input";
 import { Spinner } from "@/components/ui/spinner";
 import {
+  clearDeleteStepUp,
   getSupabaseBrowserClient,
+  getSupabaseDeleteStepUpClient,
+  rememberDeleteStepUp,
   rememberAuthReturnPath,
 } from "../../lib/supabase-client";
+import { getOAuthCaptchaToken } from "../../lib/recaptcha";
 
 type Locale = "zh-CN" | "zh-TW" | "en";
 type BusyAction = "google" | "github" | "sign-out" | "delete-account" | "approve" | "deny" | "";
@@ -53,6 +57,8 @@ const LUMNO_EXTENSION_OAUTH_REDIRECTS = new Map([
     "https://nggfkkbmogmadfoikakkfegkoilfcfao.chromiumapp.org/lumno-auth",
   ],
 ]);
+const RECAPTCHA_ACTION = "lumno_oauth";
+const RECAPTCHA_SITE_KEY = String(import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY || "").trim();
 
 type Copy = {
   title: string;
@@ -80,6 +86,7 @@ type Copy = {
   retry: string;
   genericError: string;
   providerUnavailable: string;
+  captchaFailed: string;
   deleteTitle: string;
   deleteDescription: string;
   deleteOpen: string;
@@ -103,7 +110,7 @@ const COPY: Record<Locale, Copy> = {
     checking: "正在确认登录状态…",
     signedIn: "已登录",
     connectedAs: "当前账号",
-    signOut: "退出登录",
+    signOut: "退出当前设备",
     backHome: "返回 Lumno 首页",
     authorizeTitle: "继续登录 Lumno 插件",
     authorizeBody: "插件将获得你的基础账号信息，并使用你的身份同步 Lumno 配置与自定义壁纸。",
@@ -116,6 +123,7 @@ const COPY: Record<Locale, Copy> = {
     retry: "重试",
     genericError: "操作没有完成，请稍后重试。",
     providerUnavailable: "该登录方式尚未完成配置，请先使用其他方式。",
+    captchaFailed: "登录安全验证未通过，请稍后重试。",
     deleteTitle: "永久删除账号",
     deleteDescription: "删除云端配置、自定义媒体、账号关联统计和登录身份。本机配置与 Chrome 同步副本不会自动删除。",
     deleteOpen: "删除账号",
@@ -137,7 +145,7 @@ const COPY: Record<Locale, Copy> = {
     checking: "正在確認登入狀態…",
     signedIn: "已登入",
     connectedAs: "目前帳號",
-    signOut: "登出",
+    signOut: "登出目前裝置",
     backHome: "返回 Lumno 首頁",
     authorizeTitle: "繼續登入 Lumno 擴充功能",
     authorizeBody: "擴充功能將取得你的基本帳號資訊，並使用你的身分同步 Lumno 設定與自訂桌布。",
@@ -150,6 +158,7 @@ const COPY: Record<Locale, Copy> = {
     retry: "重試",
     genericError: "操作未完成，請稍後再試。",
     providerUnavailable: "此登入方式尚未完成設定，請先使用其他方式。",
+    captchaFailed: "登入安全驗證未通過，請稍後再試。",
     deleteTitle: "永久刪除帳號",
     deleteDescription: "刪除雲端設定、自訂媒體、帳號關聯統計與登入身分。本機設定與 Chrome 同步副本不會自動刪除。",
     deleteOpen: "刪除帳號",
@@ -171,7 +180,7 @@ const COPY: Record<Locale, Copy> = {
     checking: "Checking your sign-in status…",
     signedIn: "Signed in",
     connectedAs: "Current account",
-    signOut: "Sign out",
+    signOut: "Sign out this device",
     backHome: "Back to Lumno",
     authorizeTitle: "Continue to the Lumno extension",
     authorizeBody: "The extension will receive your basic account information and use your identity to sync Lumno settings and custom wallpapers.",
@@ -184,6 +193,7 @@ const COPY: Record<Locale, Copy> = {
     retry: "Try again",
     genericError: "That action could not be completed. Please try again.",
     providerUnavailable: "This sign-in method is not configured yet. Please use another option.",
+    captchaFailed: "The sign-in security check did not pass. Please try again.",
     deleteTitle: "Permanently delete account",
     deleteDescription: "Deletes cloud settings, custom media, account-linked analytics, and your login identity. Local settings and Chrome Sync copies are not automatically deleted.",
     deleteOpen: "Delete account",
@@ -203,6 +213,16 @@ function getProvider(user: User): string {
   if (providers.includes("github")) return "GitHub";
   if (providers.includes("google")) return "Google";
   return "Lumno";
+}
+
+function getOAuthProvider(user: User): Extract<Provider, "google" | "github"> | null {
+  const providers = [
+    user.app_metadata?.provider,
+    ...(user.identities || []).map((identity) => identity.provider),
+  ].map((provider) => String(provider || "").toLowerCase());
+  if (providers.includes("google")) return "google";
+  if (providers.includes("github")) return "github";
+  return null;
 }
 
 function getDisplayName(user: User): string {
@@ -283,6 +303,10 @@ export default function AccountPortal({
   const [deleteExpanded, setDeleteExpanded] = useState(false);
   const [deleteConfirmation, setDeleteConfirmation] = useState("");
   const userId = user?.id || "";
+  const deleteStepUpRequested = useMemo(() => {
+    if (typeof window === "undefined") return false;
+    return new URLSearchParams(window.location.search).get("delete_step_up") === "1";
+  }, []);
 
   useEffect(() => {
     let active = true;
@@ -351,6 +375,41 @@ export default function AccountPortal({
     };
   }, [authorizationId, copy, supabase, userId]);
 
+  useEffect(() => {
+    if (!deleteStepUpRequested || !userId) return;
+    let active = true;
+    setBusy("delete-account");
+    setDeleteExpanded(true);
+    Promise.all([
+      supabase.auth.getSession(),
+      getSupabaseDeleteStepUpClient().auth.getSession(),
+    ]).then(async ([primaryResult, proofResult]) => {
+      const primaryAccessToken = primaryResult.data.session?.access_token || "";
+      const proofAccessToken = proofResult.data.session?.access_token || "";
+      if (!primaryAccessToken || !proofAccessToken) throw new Error("step_up_missing");
+      const { error: deleteError } = await supabase.functions.invoke("delete-account", {
+        body: { confirmation: "DELETE", step_up_access_token: proofAccessToken },
+        headers: { Authorization: `Bearer ${primaryAccessToken}` },
+      });
+      if (deleteError) throw deleteError;
+      await Promise.allSettled([
+        getSupabaseDeleteStepUpClient().auth.signOut({ scope: "local" }),
+        supabase.auth.signOut({ scope: "local" }),
+      ]);
+      if (!active) return;
+      window.history.replaceState(null, "", window.location.pathname);
+      setBusy("");
+      setUser(null);
+      setNotice(copy.deleteDone);
+    }).catch((_deleteError) => {
+      if (!active) return;
+      window.history.replaceState(null, "", window.location.pathname);
+      setBusy("");
+      setError(copy.genericError);
+    });
+    return () => { active = false; };
+  }, [copy, deleteStepUpRequested, supabase, userId]);
+
   function clearFeedback() {
     setNotice("");
     setError("");
@@ -359,6 +418,17 @@ export default function AccountPortal({
   async function continueWithProvider(provider: Extract<Provider, "google" | "github">) {
     clearFeedback();
     setBusy(provider);
+    try {
+      const token = await getOAuthCaptchaToken(RECAPTCHA_SITE_KEY, RECAPTCHA_ACTION);
+      const { data: captchaData, error: captchaError } = await supabase.functions.invoke("signup-captcha", {
+        body: { action: RECAPTCHA_ACTION, provider, token },
+      });
+      if (captchaError || captchaData?.ok !== true) throw captchaError || new Error("captcha_rejected");
+    } catch (_captchaError) {
+      setError(copy.captchaFailed);
+      setBusy("");
+      return;
+    }
     rememberAuthReturnPath(`${window.location.pathname}${window.location.search}`);
     const redirectTo = `${window.location.origin}/auth/callback/`;
     const { error: providerError } = await supabase.auth.signInWithOAuth({
@@ -400,20 +470,34 @@ export default function AccountPortal({
 
   async function deleteAccount() {
     clearFeedback();
-    if (deleteConfirmation !== "DELETE") return;
+    if (deleteConfirmation !== "DELETE" || !user) return;
     setBusy("delete-account");
-    const { error: deleteError } = await supabase.functions.invoke("delete-account", {
-      body: { confirmation: "DELETE" },
-    });
-    if (deleteError) {
+    const provider = getOAuthProvider(user);
+    if (!provider) {
       setBusy("");
-      setError(formatAuthError(deleteError, copy));
+      setError(copy.providerUnavailable);
       return;
     }
-    await supabase.auth.signOut({ scope: "local" }).catch(() => undefined);
-    setBusy("");
-    setUser(null);
-    setNotice(copy.deleteDone);
+    try {
+      const token = await getOAuthCaptchaToken(RECAPTCHA_SITE_KEY, RECAPTCHA_ACTION);
+      const { data: captchaData, error: captchaError } = await supabase.functions.invoke("signup-captcha", {
+        body: { action: RECAPTCHA_ACTION, provider, token },
+      });
+      if (captchaError || captchaData?.ok !== true) throw captchaError || new Error("captcha_rejected");
+      rememberDeleteStepUp(window.location.pathname);
+      const { error: stepUpError } = await getSupabaseDeleteStepUpClient().auth.signInWithOAuth({
+        provider,
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback/`,
+          queryParams: provider === "google" ? { prompt: "select_account" } : undefined,
+        },
+      });
+      if (stepUpError) throw stepUpError;
+    } catch (deleteError) {
+      clearDeleteStepUp();
+      setBusy("");
+      setError(formatAuthError(deleteError, copy));
+    }
   }
 
   const generalError = error;

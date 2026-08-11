@@ -1,0 +1,94 @@
+.install-menu .lumno-settings-select-menu {
+  width: min(360px, calc(100vw - 48px));
+  padding: 6px;
+}
+
+.install-menu .lumno-settings-select-option {
+  min-height: 42px;
+  gap: 14px;
+  padding: 8px 10px;
+  font-size: 14px;
+}
+
+.install-menu .lumno-settings-select-option-label {
+  min-width: 0;
+  align-items: center;
+  line-height: 20px;
+}
+
+.install-menu-store-icon {
+  display: inline-flex;
+  flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  line-height: 1;
+}
+
+.install-menu-store-icon-chrome {
+  color: #4285f4;
+}
+
+.install-menu-store-icon-edge {
+  color: #0a96d8;
+}
+
+.install-menu .lumno-settings-select-option-meta {
+  min-width: 0;
+  align-items: center;
+  gap: 6px;
+  color: var(--lumno-panel-subtext, #6b7280);
+  line-height: 1;
+}
+
+.install-menu .lumno-settings-badge {
+  box-sizing: border-box;
+  height: 20px;
+  min-height: 20px;
+  justify-content: center;
+  padding: 0 7px;
+  background: rgba(15, 23, 42, 0.07);
+  color: #4b5563;
+  font-size: 14px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+.install-menu .lumno-settings-badge-accent {
+  height: 22px;
+  min-height: 22px;
+  padding: 0 6px;
+  border: 1px solid #bfdbfe;
+  border-radius: 8px;
+  background: #eef6ff;
+  color: #1e3a8a;
+  font-weight: 500;
+}
+
+@media (max-width: 420px) {
+  .install-menu .lumno-settings-select-menu {
+    width: min(330px, calc(100vw - 48px));
+  }
+
+  .install-menu .lumno-settings-select-option {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    min-height: 0;
+    gap: 2px 10px;
+    padding: 6px 9px;
+  }
+
+  .install-menu .lumno-settings-select-option-meta {
+    grid-column: 1 / -1;
+    justify-self: end;
+    gap: 4px;
+  }
+
+  .install-menu .lumno-settings-badge-accent {
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,823 @@
+/* Onboarding reuses these suggestion row styles for its right-side overlay demo.
+   When changing shared overlay styling, verify src/onboarding/onboarding.html?slide=1. */
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestions-container {
+  all: unset;
+  --x-ov-suggestion-row-height: 52px;
+  --x-ov-suggestion-row-gap: 4px;
+  --x-ov-suggestions-max-height: 580px;
+  --x-ov-suggestion-action-column-width: 200px;
+  width: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
+  max-height: min(
+    var(--x-ov-suggestions-max-height, 580px),
+    var(--x-ov-suggestions-menu-fit-max-height, 580px)
+  );
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  background: transparent;
+  border-radius: 0 0 var(--x-ov-panel-radius, 28px) var(--x-ov-panel-radius, 28px);
+  padding: 12px;
+  box-sizing: border-box;
+  display: block;
+  line-height: 1;
+  text-decoration: none;
+  list-style: none;
+  outline: none;
+  color: inherit;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestions-container[data-number-shortcuts-scroll-locked="true"] {
+  overflow-y: hidden;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-close-other-tabs {
+  all: unset;
+  position: absolute;
+  right: calc(var(--x-ext-input-right-icon-inset, 13px) + 36px);
+  top: var(--x-ext-input-right-icon-inset, 13px);
+  transform: none;
+  width: 30px;
+  height: 30px;
+  border-radius: var(--x-ext-input-right-icon-radius, 16px);
+  z-index: 2;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  text-decoration: none;
+  list-style: none;
+  outline: none;
+  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0;
+  color: var(--x-ext-input-icon, #9CA3AF);
+  cursor: pointer;
+  transition: background-color 140ms ease, color 140ms ease;
+}
+
+#_x_extension_overlay_2024_unique_[data-lumno-site-fix-reveal] .x-ov-close-other-tabs {
+  transition: none !important;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-close-other-tabs[data-hover-active="true"] {
+  background: var(--x-ext-input-icon-hover-bg, rgba(148, 163, 184, 0.16));
+  color: var(--x-ext-input-icon-hover, #4B5563);
+  transform: none;
+}
+
+@supports (corner-shape: superellipse(1.25)) {
+  :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestions-container,
+  :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-empty-state,
+  :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-item,
+  :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-visit-button,
+  :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-close-other-tabs,
+  :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-number-shortcut {
+    corner-shape: superellipse(1.25);
+  }
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .ri-icon {
+  font-style: normal;
+  font-variant: normal;
+  text-transform: none;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-close-other-tabs .ri-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transform: none;
+  transition: transform 160ms ease;
+  pointer-events: none;
+  cursor: inherit;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-close-other-tabs[data-hover-active="true"] .ri-icon {
+  transform: scale(1.06);
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-inline-label,
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-inline-icon {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-inline-icon {
+  all: unset;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  text-decoration: none;
+  list-style: none;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-inline-icon[data-tone="subtext"] {
+  color: var(--x-ov-subtext, #9CA3AF);
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-favicon {
+  all: unset;
+  width: 16px;
+  height: 16px;
+  border-radius: 2px;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  text-decoration: none;
+  list-style: none;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  display: block;
+  object-fit: contain;
+  object-position: center center;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-favicon[data-favicon-visibility="hidden"] {
+  visibility: hidden;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-favicon[data-favicon-visibility="visible"] {
+  visibility: visible;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-favicon-fallback[data-visible="false"],
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) img[data-fallback-icon="true"],
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) img[data-favicon-placeholder="true"] {
+  display: none;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-favicon[data-favicon-load-state="priming"] {
+  transition: none;
+  filter: blur(4px);
+  opacity: 0.72;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-favicon[data-favicon-load-state="loaded"] {
+  transition: filter 240ms cubic-bezier(0.22, 1, 0.36, 1), opacity 240ms cubic-bezier(0.22, 1, 0.36, 1);
+  filter: blur(0);
+  opacity: 1;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-empty-state {
+  all: unset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 14px;
+  margin: 0;
+  border: none;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--x-ov-bg, #FFFFFF) 90%, var(--x-ov-hover-bg, #F3F4F6) 10%);
+  color: var(--x-ov-subtext, #6B7280);
+  box-sizing: border-box;
+  line-height: 1.4;
+  text-decoration: none;
+  list-style: none;
+  outline: none;
+  font-size: 13px;
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  vertical-align: baseline;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-empty-state[data-theme="dark"] {
+  background: transparent;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-empty-state__icon {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--x-ov-subtext, #9CA3AF);
+  line-height: 1;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-empty-state__text {
+  all: unset;
+  line-height: 1.35;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-item {
+  all: unset;
+  --x-ov-suggestion-action-height: 26px;
+  --x-ov-suggestion-key-height: 18px;
+  --x-ov-suggestion-action-button-start: 10px;
+  --x-ov-suggestion-action-icon-end: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  min-height: var(--x-ov-suggestion-row-height, 52px);
+  background: var(--x-ov-suggestion-row-bg, transparent);
+  border: 1px solid transparent;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  box-sizing: border-box;
+  margin: 0 0 var(--x-ov-suggestion-row-gap, 4px) 0;
+  line-height: 1.5;
+  text-decoration: none;
+  list-style: none;
+  outline: none;
+  color: inherit;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-item[data-last="true"] {
+  margin-bottom: 0;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestions-container[data-scope-result-enter="run"] .x-ov-suggestion-item {
+  animation: _x_ov_scope_result_enter_2026_unique_ 180ms ease-in-out both;
+  will-change: transform;
+}
+
+@keyframes _x_ov_scope_result_enter_2026_unique_ {
+  from {
+    transform: translateY(8px);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestions-container[data-scope-result-enter="run"] .x-ov-suggestion-item {
+    animation: none !important;
+    transform: none !important;
+    will-change: auto;
+  }
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-left {
+  all: unset;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  text-decoration: none;
+  list-style: none;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-left[data-motion="true"] {
+  transition: gap 160ms ease, transform 160ms ease;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-icon-slot {
+  all: unset;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  text-decoration: none;
+  list-style: none;
+  outline: none;
+  background: transparent;
+  transition: background-color 0.2s ease;
+  color: var(--x-ov-subtext, #9CA3AF);
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  position: relative;
+  overflow: visible;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-number-shortcut {
+  all: unset;
+  position: absolute;
+  inset-block-start: -6px;
+  inset-inline-end: -7px;
+  width: 16px;
+  height: 16px;
+  border-radius: 5px;
+  box-sizing: border-box;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: #111827;
+  color: #FFFFFF;
+  font: 600 11px/1 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  pointer-events: none;
+  z-index: 2;
+}
+
+:is(#_x_extension_overlay_2024_unique_[data-theme="dark"], #_x_extension_onboarding_overlay_demo_2026_unique_[data-theme="dark"]) .x-ov-suggestion-number-shortcut {
+  background: #FFFFFF;
+  color: #0F172A;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestions-container[data-number-shortcuts-active="true"] .x-ov-suggestion-number-shortcut {
+  display: inline-flex;
+}
+
+:is(#_x_extension_overlay_2024_unique_[data-theme="dark"], #_x_extension_onboarding_overlay_demo_2026_unique_[data-theme="dark"]) .x-ov-suggestion-item[data-row-state="active"] .x-ov-suggestion-icon-slot[data-favicon="true"] {
+  background-color: #FFFFFF;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-text {
+  all: unset;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+  overflow: visible;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0 8px 0 0;
+  line-height: 1;
+  text-decoration: none;
+  list-style: none;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-title {
+  all: unset;
+  color: var(--x-ov-text, #111827);
+  font-size: 14px;
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-weight: var(--x-ov-suggestion-title-weight, 400);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+  text-decoration: none;
+  list-style: none;
+  outline: none;
+  background: transparent;
+  display: inline-block;
+  vertical-align: baseline;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-mark {
+  background: var(--x-ext-mark-bg, #CFE8FF);
+  color: var(--x-ext-mark-text, #1E3A8A);
+  padding: 0 1px;
+  border-radius: 2px;
+  line-height: inherit;
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-item[data-command-row="true"] {
+  height: var(--x-ov-suggestion-row-height, 52px);
+  min-height: var(--x-ov-suggestion-row-height, 52px);
+  padding-top: 7px;
+  padding-bottom: 7px;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-item[data-command-row="true"] .x-ov-suggestion-text {
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  gap: 1px;
+  overflow: hidden;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-command {
+  all: unset;
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  color: var(--x-ov-text, #111827);
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 18px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-item[data-row-state="active"] .x-ov-suggestion-command {
+  font-weight: 600;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-command-description {
+  color: var(--x-ov-subtext, #6B7280);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 15px;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-reason {
+  all: unset;
+  color: var(--x-ov-subtext, #6B7280);
+  font-size: 12px;
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-bookmark-path {
+  all: unset;
+  color: var(--x-ov-link, #2563EB);
+  font-size: 12px;
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  text-decoration: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  line-height: 1.2;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-url-line {
+  all: unset;
+  color: var(--x-ov-link, #2563EB);
+  font-size: 12px;
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  text-decoration: none;
+  display: inline-block;
+  max-width: 60%;
+  line-height: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-tab-rank-debug {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  margin-left: 8px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  color: var(--x-ov-subtext, #6B7280);
+  background: color-mix(in srgb, var(--x-ov-bg, #FFFFFF) 70%, #94A3B8 30%);
+  border: 1px solid color-mix(in srgb, var(--x-ov-border, rgba(0, 0, 0, 0.08)) 75%, #94A3B8 25%);
+  font-size: 12px;
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.2;
+  white-space: nowrap;
+  vertical-align: baseline;
+  flex-shrink: 0;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-source-tag {
+  all: unset;
+  background: var(--x-ov-suggestion-source-tag-bg, var(--x-ov-tag-bg, #F3F4F6));
+  color: var(--x-ov-suggestion-source-tag-text, var(--x-ov-tag-text, #6B7280));
+  font-size: 12px;
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  padding: 4px 6px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  line-height: 1.2;
+  text-decoration: none;
+  list-style: none;
+  outline: none;
+  border: 1px solid var(--x-ov-suggestion-source-tag-border, transparent);
+  display: none;
+  align-items: center;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-source-tag[data-visible="true"] {
+  display: inline-flex;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-right {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  flex-shrink: 0;
+  min-height: var(--x-ov-suggestion-action-height, 26px);
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  text-decoration: none;
+  list-style: none;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-right[data-action-column="true"] {
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: min(56%, var(--x-ov-suggestion-action-column-width, 200px));
+  justify-content: flex-end;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-action-tags {
+  all: unset;
+  display: none;
+  align-items: center;
+  gap: 6px;
+  min-height: var(--x-ov-suggestion-action-height, 26px);
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  text-decoration: none;
+  list-style: none;
+  outline: none;
+  background: transparent;
+  color: inherit;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+  flex-shrink: 0;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-action-tags[data-visible="true"] {
+  display: inline-flex;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-action-tag {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  background: var(--x-ext-tag-bg, #EEF6FF);
+  color: var(--x-ext-tag-text, #1E3A8A);
+  border: 1px solid var(--x-ext-tag-border, #BFDBFE);
+  height: var(--x-ov-suggestion-action-height, 26px);
+  padding: 0 4px 0 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1;
+  text-decoration: none;
+  list-style: none;
+  outline: none;
+  box-sizing: border-box;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-right[data-action-column="true"] .x-ov-suggestion-action-tags[data-visible="true"],
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-right[data-action-column="true"] .x-ov-suggestion-action-button[data-visible="true"] {
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 100%;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-right[data-action-column="true"] .x-ov-suggestion-action-tags[data-visible="true"] .x-ov-action-tag {
+  max-width: 100%;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-right[data-action-column="true"] .x-ov-suggestion-action-button {
+  justify-content: flex-end;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-action-tag[data-clickable="true"] {
+  cursor: pointer;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-action-tag__label {
+  all: unset;
+  font-weight: 500;
+  line-height: 1.35;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-action-tag__key {
+  all: unset;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  height: var(--x-ov-suggestion-key-height, 18px);
+  padding: 0 7px;
+  border-radius: 6px;
+  background: var(--x-ext-key-bg, #FFFFFF);
+  color: var(--x-ext-key-text, #1E3A8A);
+  border: 1px solid var(--x-ext-key-border, #BFDBFE);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.12);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1;
+  box-sizing: border-box;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-action-button {
+  all: unset;
+  background: var(--x-ov-suggestion-action-button-bg, transparent);
+  color: var(--x-ov-suggestion-action-button-text, var(--x-ov-subtext, #9CA3AF));
+  font-size: 12px;
+  font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 160ms ease;
+  box-sizing: border-box;
+  margin: 0;
+  line-height: 1;
+  text-decoration: none;
+  list-style: none;
+  outline: none;
+  display: none;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 4px;
+  vertical-align: baseline;
+  max-width: 100%;
+  min-width: 0;
+  white-space: nowrap;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-action-button[data-visible="true"] {
+  display: inline-flex;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-action-button .x-ov-inline-label {
+  line-height: 1.35;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-action-button .x-ov-inline-icon {
+  flex: 0 0 auto;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-visit-button {
+  border: 1px solid var(--x-ov-suggestion-action-button-border, transparent);
+  border-radius: 16px;
+  height: var(--x-ov-suggestion-action-height, 26px);
+  padding: 0 var(--x-ov-suggestion-action-icon-end, 7px) 0 var(--x-ov-suggestion-action-button-start, 10px);
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-switch-button {
+  border: none;
+  border-radius: 6px;
+  height: var(--x-ov-suggestion-action-height, 26px);
+  padding: 0 var(--x-ov-suggestion-action-icon-end, 7px) 0 var(--x-ov-suggestion-action-button-start, 10px);
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-utility-slot {
+  all: unset;
+  width: 0;
+  height: var(--x-ov-suggestion-action-height, 26px);
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  line-height: 1;
+  text-decoration: none;
+  list-style: none;
+  outline: none;
+  background: transparent;
+  vertical-align: baseline;
+  opacity: 0;
+  pointer-events: none;
+  transition: width 180ms ease, margin-left 180ms ease, opacity 160ms ease;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-utility-slot[data-visible="true"] {
+  width: var(--x-ov-suggestion-action-height, 26px);
+  margin-left: 0;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-utility-button {
+  all: unset;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+  border-radius: 8px;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  text-decoration: none;
+  list-style: none;
+  outline: none;
+  background: var(--x-ov-suggestion-utility-bg, transparent);
+  color: var(--x-ov-suggestion-utility-color, var(--x-ext-input-icon, #9CA3AF));
+  border: 1px solid var(--x-ov-suggestion-utility-border, transparent);
+  display: inline-flex;
+  visibility: hidden;
+  pointer-events: none;
+  opacity: 0;
+  align-items: center;
+  justify-content: center;
+  font-size: 0;
+  cursor: pointer;
+  transform: translateX(4px);
+  transition: background-color 140ms ease, border-color 140ms ease, color 140ms ease, transform 160ms ease, opacity 160ms ease, visibility 160ms ease;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-utility-button[data-visible="true"] {
+  visibility: visible;
+  pointer-events: auto;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-utility-button[data-hover="true"] {
+  background: var(--x-ov-suggestion-utility-hover-bg, transparent);
+  color: var(--x-ov-suggestion-utility-hover-color, var(--x-ext-input-icon, #9CA3AF));
+  border-color: var(--x-ov-suggestion-utility-hover-border, transparent);
+  transform: none;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-utility-button .ri-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transform: none;
+  transition: transform 160ms ease;
+  pointer-events: none;
+  cursor: inherit;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-utility-button[data-hover="true"] .ri-icon {
+  transform: scale(1.06);
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-action-button:focus-visible,
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-utility-button:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}

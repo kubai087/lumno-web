@@ -42,17 +42,25 @@ jobs:
       - name: Type-check site
         run: npm run check
 
-      - name: Resolve Chrome Web Store version
+      - name: Resolve extension store versions
         env:
           CHROME_EXTENSION_ID: nggfkkbmogmadfoikakkfegkoilfcfao
+          EDGE_EXTENSION_ID: pfbklkaefmfamjpibfiapaiihlddhchc
         run: |
           set -u
-          VERSION="$(node scripts/get-chrome-store-version.mjs || true)"
-          if [ -n "$VERSION" ]; then
-            echo "PUBLIC_CHROME_STORE_VERSION=$VERSION" >> "$GITHUB_ENV"
-            echo "Resolved Chrome Web Store version: $VERSION"
+          CHROME_VERSION="$(node scripts/get-chrome-store-version.mjs || true)"
+          EDGE_VERSION="$(node scripts/get-edge-store-version.mjs || true)"
+          if [ -n "$CHROME_VERSION" ]; then
+            echo "PUBLIC_CHROME_STORE_VERSION=$CHROME_VERSION" >> "$GITHUB_ENV"
+            echo "Resolved Chrome Web Store version: $CHROME_VERSION"
           else
             echo "Could not resolve Chrome Web Store version. Keep fallback review status."
+          fi
+          if [ -n "$EDGE_VERSION" ]; then
+            echo "PUBLIC_EDGE_STORE_VERSION=$EDGE_VERSION" >> "$GITHUB_ENV"
+            echo "Resolved Microsoft Edge Add-ons version: $EDGE_VERSION"
+          else
+            echo "Could not resolve Microsoft Edge Add-ons version. Hide its version tag."
           fi
 
       - name: Validate OAuth protection configuration

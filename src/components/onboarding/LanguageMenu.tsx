@@ -1,7 +1,11 @@
+import { SettingsSelect } from "../extension-settings/SettingsKit";
+
 interface Props {
   currentLabel?: string;
   toggleAriaLabel?: string;
   locales?: Array<"zh-CN" | "zh-TW" | "en">;
+  iconOnly?: boolean;
+  placement?: "above" | "below";
 }
 
 const LANGUAGE_OPTIONS = [
@@ -10,47 +14,41 @@ const LANGUAGE_OPTIONS = [
   { value: "en", label: "English", i18n: "language_en" },
 ] as const;
 
-export default function LanguageMenu({ currentLabel = "简体中文", toggleAriaLabel = "语言", locales }: Props) {
+export default function LanguageMenu({
+  currentLabel = "简体中文",
+  toggleAriaLabel = "语言",
+  locales,
+  iconOnly = false,
+  placement = "below",
+}: Props) {
   const enabledLocales = locales?.length ? new Set(locales) : null;
   const options = enabledLocales
     ? LANGUAGE_OPTIONS.filter((option) => enabledLocales.has(option.value))
     : LANGUAGE_OPTIONS;
+  const currentValue = options.find((option) => option.label === currentLabel)?.value || options[0]?.value;
 
   return (
     <div className="lang-control">
-      <button
+      <SettingsSelect
+        className="lang-select"
         id="language-toggle"
-        className="lang-toggle lang-select-toggle"
-        type="button"
-        data-i18n-aria-label="language_select_aria"
-        aria-label={toggleAriaLabel}
-        aria-haspopup="menu"
-        aria-expanded="false"
-      >
-        <span className="lang-select-prefix">
-          <i className="ri-global-line" aria-hidden="true"></i>
-        </span>
-        <span id="language-current-label" className="lang-current-label">
-          {currentLabel}
-        </span>
-        <span className="lang-select-arrow" aria-hidden="true">
-          <i className="ri-arrow-down-s-line"></i>
-        </span>
-      </button>
-      <div id="language-menu" className="lang-menu" role="menu" data-open="false">
-        {options.map((option) => (
-          <button
-            key={option.value}
-            className="lang-option"
-            type="button"
-            role="menuitemradio"
-            data-lang-value={option.value}
-            data-i18n={option.i18n}
-          >
-            {option.label}
-          </button>
-        ))}
-      </div>
+        menuId="language-menu"
+        menuRole="menu"
+        optionRole="menuitemradio"
+        triggerMode={iconOnly ? "icon" : "default"}
+        triggerIconClass="ri-global-line"
+        triggerClassName="lang-toggle lang-select-toggle"
+        triggerPrefixClassName="lang-select-prefix"
+        triggerValueClassName="lang-current-label"
+        triggerValueId="language-current-label"
+        triggerChevronClassName="lang-select-arrow"
+        triggerDataI18nAriaLabel="language_select_aria"
+        menuPlacement={placement}
+        openStateEvent="lumno:language-menu-state"
+        label={toggleAriaLabel}
+        defaultValue={currentValue}
+        items={options}
+      />
     </div>
   );
 }

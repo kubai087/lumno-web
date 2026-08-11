@@ -6,7 +6,6 @@ import path from "node:path";
 const workspaceRoot = path.resolve(import.meta.dirname, "..");
 
 const featureCardPages = [
-  ["homepage", "src/pages/index.astro"],
   ["onboarding", "src/pages/onboarding/index.astro"],
 ];
 

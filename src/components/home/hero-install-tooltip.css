@@ -1,0 +1,66 @@
+.hero-install-butterfly {
+  display: inline-grid;
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  place-items: center;
+}
+
+.hero-install-butterfly img {
+  display: block;
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  filter: sepia(100%) saturate(260%) hue-rotate(164deg) brightness(112%) contrast(94%);
+}
+
+.hero-browser-tooltip-content {
+  display: flex;
+  min-width: 218px;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hero-browser-tooltip-logos {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+  gap: 9px;
+  list-style: none;
+}
+
+.hero-browser-tooltip-logo {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 24px;
+  place-items: center;
+}
+
+.hero-browser-tooltip-logo img {
+  display: block;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  object-fit: contain;
+}
+
+.hero-browser-tooltip-more {
+  display: grid;
+  width: 20px;
+  height: 24px;
+  flex: 0 0 20px;
+  place-items: center;
+  color: inherit;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.hero-browser-tooltip-label {
+  margin: 0;
+  color: inherit;
+  font: inherit;
+  font-weight: 600;
+  line-height: 1.4;
+}

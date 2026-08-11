@@ -1,0 +1,76 @@
+.lumno-tooltip-content {
+  --lumno-tooltip-bg-top: #ffffff;
+  --lumno-tooltip-bg-bottom: #f7f9fc;
+  --lumno-tooltip-text: #556070;
+  --lumno-tooltip-border: rgba(214, 219, 227, 0.95);
+  --lumno-tooltip-shadow:
+    0 16px 36px rgba(17, 24, 39, 0.08),
+    0 3px 10px rgba(17, 24, 39, 0.05);
+  position: relative;
+  z-index: 10000;
+  display: inline-flex;
+  box-sizing: border-box;
+  width: max-content;
+  max-width: min(420px, calc(100vw - 16px));
+  padding: 8px 12px;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--lumno-tooltip-border);
+  border-radius: 10px;
+  background: linear-gradient(
+    180deg,
+    var(--lumno-tooltip-bg-top) 0%,
+    var(--lumno-tooltip-bg-bottom) 100%
+  );
+  box-shadow: var(--lumno-tooltip-shadow);
+  color: var(--lumno-tooltip-text);
+  font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+  pointer-events: none;
+  text-align: left;
+  white-space: normal;
+  transform-origin: var(--radix-tooltip-content-transform-origin);
+}
+
+.lumno-tooltip-content[data-state="delayed-open"],
+.lumno-tooltip-content[data-state="instant-open"] {
+  animation: lumno-tooltip-in 120ms ease both;
+}
+
+.lumno-tooltip-content[data-state="closed"] {
+  animation: lumno-tooltip-out 120ms ease both;
+}
+
+@keyframes lumno-tooltip-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes lumno-tooltip-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lumno-tooltip-content {
+    animation: none !important;
+  }
+}

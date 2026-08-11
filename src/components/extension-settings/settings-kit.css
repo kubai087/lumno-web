@@ -1,0 +1,765 @@
+.lumno-settings-kit {
+  --lumno-panel-bg: #fff;
+  --lumno-panel-border: rgba(0, 0, 0, 0.12);
+  --lumno-panel-text: #111827;
+  --lumno-panel-subtext: #6b7280;
+  --lumno-divider: rgba(15, 23, 42, 0.12);
+  --lumno-focus: rgba(59, 130, 246, 0.65);
+  --lumno-focus-bg: rgba(59, 130, 246, 0.08);
+  --lumno-control-bg: rgba(15, 23, 42, 0.04);
+  --lumno-control-hover-bg: rgba(0, 0, 0, 0.05);
+  --lumno-control-open-bg: rgba(0, 0, 0, 0.08);
+  --lumno-menu-bg: #fff;
+  --lumno-tab-bg: rgba(15, 23, 42, 0.04);
+  --lumno-tab-active-bg: #fff;
+  --lumno-tab-active-text: #0f172a;
+  --lumno-tab-inactive-text: #8b94a4;
+  --lumno-selected-bg: #111827;
+  --lumno-selected-text: #f9fafb;
+  --lumno-control-border: rgba(15, 23, 42, 0.08);
+  --lumno-icon-bg: rgba(15, 23, 42, 0.05);
+  color: var(--lumno-panel-text);
+  color-scheme: light;
+  font-family:
+    Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.lumno-settings-kit[data-theme="dark"] {
+  --lumno-panel-bg: rgb(25, 25, 25);
+  --lumno-panel-border: rgba(255, 255, 255, 0.1);
+  --lumno-panel-text: #e5e7eb;
+  --lumno-panel-subtext: #9ca3af;
+  --lumno-divider: rgba(255, 255, 255, 0.1);
+  --lumno-focus: rgba(148, 163, 184, 0.72);
+  --lumno-focus-bg: rgba(255, 255, 255, 0.08);
+  --lumno-control-bg: #2f2f2f;
+  --lumno-control-hover-bg: #363636;
+  --lumno-control-open-bg: #3b3b3b;
+  --lumno-menu-bg: #252525;
+  --lumno-tab-bg: #2f2f2f;
+  --lumno-tab-active-bg: #475569;
+  --lumno-tab-active-text: #f8fafc;
+  --lumno-tab-inactive-text: #9ca3af;
+  --lumno-selected-bg: #e5e7eb;
+  --lumno-selected-text: #111827;
+  --lumno-control-border: rgba(255, 255, 255, 0.12);
+  --lumno-icon-bg: rgba(255, 255, 255, 0.08);
+  color-scheme: dark;
+}
+
+.lumno-settings-panel {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 760px;
+  padding: 18px;
+  border: 1px solid var(--lumno-panel-border);
+  border-radius: 22px;
+  background: var(--lumno-panel-bg);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+}
+
+.lumno-settings-panel *,
+.lumno-settings-panel *::before,
+.lumno-settings-panel *::after {
+  box-sizing: border-box;
+}
+
+.lumno-settings-tabs {
+  display: flex;
+  gap: 8px;
+  max-width: 100%;
+  margin-bottom: 18px;
+  padding: 4px;
+  overflow-x: auto;
+  border: 1px solid var(--lumno-control-border);
+  border-radius: 12px;
+  background: var(--lumno-tab-bg);
+  scrollbar-width: none;
+}
+
+.lumno-settings-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.lumno-settings-tab,
+.lumno-settings-segment,
+.lumno-settings-select-trigger,
+.lumno-settings-select-option,
+.lumno-settings-theme-option {
+  appearance: none;
+  border: 0;
+  font: inherit;
+}
+
+.lumno-settings-tab {
+  display: inline-flex;
+  flex: 1 0 auto;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--lumno-tab-inactive-text);
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: color 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
+}
+
+.lumno-settings-tab:hover {
+  color: var(--lumno-panel-text);
+}
+
+.lumno-settings-tab[data-active="true"] {
+  background: var(--lumno-tab-active-bg);
+  color: var(--lumno-tab-active-text);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.1);
+}
+
+.lumno-settings-tab:focus-visible,
+.lumno-settings-segment:focus-visible,
+.lumno-settings-select-trigger:focus-visible,
+.lumno-settings-select-option:focus-visible,
+.lumno-settings-theme-option:focus-visible,
+.lumno-settings-button:focus-visible,
+.lumno-settings-input:focus-visible {
+  outline: 2px solid var(--lumno-focus, rgba(59, 130, 246, 0.65));
+  outline-offset: 2px;
+}
+
+.lumno-settings-section + .lumno-settings-section {
+  margin-top: 22px;
+}
+
+.lumno-settings-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 32px;
+  padding: 0 14px 8px;
+}
+
+.lumno-settings-section-header h3 {
+  margin: 0;
+  color: var(--lumno-panel-text);
+  font-size: 16px;
+  font-weight: 550;
+  line-height: 1.4;
+}
+
+.lumno-settings-section-content {
+  overflow: visible;
+  border: 1px solid var(--lumno-control-border);
+  border-radius: 16px;
+}
+
+.lumno-settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  min-height: 62px;
+  padding: 12px 14px;
+  border-radius: 14px;
+}
+
+.lumno-settings-row-compact {
+  min-height: 54px;
+  padding-block: 9px;
+}
+
+.lumno-settings-row-copy {
+  display: flex;
+  min-width: 0;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.lumno-settings-row-copy > div {
+  min-width: 0;
+}
+
+.lumno-settings-row-icon {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin-top: -4px;
+  border-radius: 9px;
+  background: var(--lumno-icon-bg);
+  color: var(--lumno-panel-subtext);
+  font-size: 15px;
+}
+
+.lumno-settings-row-title {
+  color: var(--lumno-panel-text);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.lumno-settings-row p {
+  max-width: 470px;
+  margin: 4px 0 0;
+  color: var(--lumno-panel-subtext);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.lumno-settings-row-control {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.lumno-settings-divider {
+  width: calc(100% - 28px);
+  height: 1px;
+  margin: 0 14px;
+  background: var(--lumno-divider);
+  opacity: 0.75;
+  transform: scaleY(0.5);
+}
+
+.lumno-settings-button {
+  all: unset;
+  position: relative;
+  display: inline-flex;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 8px 14px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 550;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 120ms ease, background 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.lumno-settings-button:active:not(:disabled) {
+  transform: translateY(1px) scale(0.985);
+}
+
+.lumno-settings-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.lumno-settings-button-secondary {
+  border-color: rgba(15, 23, 42, 0.06);
+  background: #fff;
+  color: #1f2937;
+  box-shadow:
+    0 2px 2px rgba(15, 23, 42, 0.025),
+    0 1px 1px rgba(15, 23, 42, 0.035),
+    0 0 1px rgba(15, 23, 42, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.75);
+}
+
+.lumno-settings-button-secondary:hover:not(:disabled) {
+  border-color: rgba(15, 23, 42, 0.08);
+  background: #f8fafc;
+  box-shadow:
+    0 2px 3px rgba(15, 23, 42, 0.032),
+    0 1px 1px rgba(15, 23, 42, 0.045),
+    0 0 1px rgba(15, 23, 42, 0.07);
+}
+
+.lumno-settings-kit[data-theme="dark"] .lumno-settings-button-secondary {
+  border-color: rgba(255, 255, 255, 0.1);
+  background: #2f2f2f;
+  color: #e5e7eb;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.lumno-settings-kit[data-theme="dark"] .lumno-settings-button-secondary:hover:not(:disabled) {
+  background: #383838;
+}
+
+.lumno-settings-button-primary {
+  border-color: #040404;
+  background: linear-gradient(180deg, #404859 0%, #273042 100%);
+  color: #fff;
+  box-shadow:
+    0 2px 5px rgba(15, 23, 42, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.36);
+  font-weight: 600;
+}
+
+.lumno-settings-button-primary:hover:not(:disabled) {
+  background: linear-gradient(180deg, #4b5568 0%, #303a4e 100%);
+  box-shadow:
+    0 3px 7px rgba(15, 23, 42, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.lumno-settings-button-ghost {
+  background: transparent;
+  color: var(--lumno-panel-subtext);
+}
+
+.lumno-settings-button-ghost:hover:not(:disabled) {
+  background: var(--lumno-control-hover-bg);
+  color: var(--lumno-panel-text);
+}
+
+.lumno-settings-icon-button {
+  width: 38px;
+  min-width: 38px;
+  height: 38px;
+  min-height: 38px;
+  padding: 2px;
+  border-radius: 50%;
+  font-size: 16px;
+}
+
+.lumno-settings-switch {
+  position: relative;
+  display: inline-flex;
+  flex: 0 0 auto;
+  width: 44px;
+  height: 24px;
+  cursor: pointer;
+}
+
+.lumno-settings-switch input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.lumno-settings-switch-track {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  border-radius: 999px;
+  background: linear-gradient(180deg, #e7eaf0 0%, #d8dce5 100%);
+  box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.12);
+  transition: background 180ms ease, border-color 180ms ease;
+}
+
+.lumno-settings-switch-knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  transition: transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.lumno-settings-switch input:checked + .lumno-settings-switch-track {
+  border-color: #111827;
+  background: linear-gradient(180deg, #3e4759 0%, #202838 100%);
+}
+
+.lumno-settings-switch input:checked + .lumno-settings-switch-track .lumno-settings-switch-knob {
+  transform: translateX(20px);
+}
+
+.lumno-settings-switch input:focus-visible + .lumno-settings-switch-track {
+  outline: 2px solid var(--lumno-focus);
+  outline-offset: 2px;
+}
+
+.lumno-settings-switch input:disabled + .lumno-settings-switch-track {
+  opacity: 0.5;
+}
+
+.lumno-settings-segmented {
+  display: inline-flex;
+  align-items: stretch;
+  gap: 4px;
+  min-height: 32px;
+  padding: 2px;
+  border: 1px solid var(--lumno-control-border);
+  border-radius: 10px;
+  background: var(--lumno-control-bg);
+}
+
+.lumno-settings-segment {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  min-width: 36px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--lumno-panel-subtext);
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.lumno-settings-segment:hover {
+  color: var(--lumno-panel-text);
+}
+
+.lumno-settings-segment[data-active="true"] {
+  background: var(--lumno-tab-active-bg);
+  color: var(--lumno-tab-active-text);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.12);
+}
+
+.lumno-settings-select {
+  position: relative;
+  min-width: 180px;
+  z-index: 0;
+}
+
+.lumno-settings-select[data-trigger-mode="icon"] {
+  min-width: 0;
+}
+
+.lumno-settings-select[data-trigger-variant] {
+  min-width: 0;
+}
+
+.lumno-settings-select[data-open="true"] {
+  z-index: 2;
+}
+
+.lumno-settings-select-trigger {
+  display: flex;
+  width: 100%;
+  min-height: 36px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 10px;
+  border: 1px solid var(--lumno-control-border, rgba(15, 23, 42, 0.08));
+  border-radius: 10px;
+  background: var(--lumno-control-bg, rgba(15, 23, 42, 0.04));
+  color: var(--lumno-panel-text, #111827);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 160ms ease, border-color 160ms ease;
+}
+
+.lumno-settings-select-trigger > span,
+.lumno-settings-select-option > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.lumno-settings-select-option-label {
+  flex: 0 0 auto;
+}
+
+.lumno-settings-select-option-meta {
+  justify-content: flex-end;
+}
+
+.lumno-settings-select-trigger:hover,
+.lumno-settings-select[data-open="true"] .lumno-settings-select-trigger {
+  border-color: var(--lumno-focus, rgba(59, 130, 246, 0.65));
+  background: var(--lumno-focus-bg, rgba(59, 130, 246, 0.08));
+}
+
+.lumno-settings-select-chevron {
+  color: var(--lumno-panel-subtext, #6b7280);
+  font-size: 16px;
+  transition: transform 160ms ease;
+}
+
+.lumno-settings-select[data-open="true"] .lumno-settings-select-chevron {
+  transform: rotate(180deg);
+}
+
+.lumno-settings-select-menu {
+  --lumno-settings-menu-closed-transform: translateY(-6px) scale(0.96, 0.86);
+  --lumno-settings-menu-open-transform: translateY(0) scale(1, 1);
+  position: absolute;
+  z-index: 20;
+  top: calc(100% + 6px);
+  right: 0;
+  width: max-content;
+  min-width: 100%;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  border: 1px solid var(--lumno-control-border, rgba(15, 23, 42, 0.08));
+  border-radius: 12px;
+  background: var(--lumno-menu-bg, #fff);
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.16), 0 2px 8px rgba(15, 23, 42, 0.08);
+  opacity: 0;
+  visibility: hidden;
+  transform: var(--lumno-settings-menu-closed-transform);
+  transform-origin: top center;
+  pointer-events: none;
+  will-change: transform, opacity;
+  transition:
+    opacity 170ms ease,
+    transform 360ms cubic-bezier(0.2, 1.45, 0.35, 1),
+    visibility 0s linear 360ms;
+}
+
+.lumno-settings-select-menu[data-placement="above"] {
+  --lumno-settings-menu-closed-transform: translateY(6px) scale(0.96, 0.86);
+  top: auto;
+  bottom: calc(100% + 8px);
+  transform-origin: bottom center;
+}
+
+.lumno-settings-select-menu[data-open="true"] {
+  opacity: 1;
+  visibility: visible;
+  transform: var(--lumno-settings-menu-open-transform);
+  pointer-events: auto;
+  transition-delay: 0s;
+}
+
+.lumno-settings-select-option {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 9px 10px;
+  border-radius: 9px;
+  background: transparent;
+  color: var(--lumno-panel-text, #111827);
+  font-size: 13px;
+  font-weight: 500;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.lumno-settings-select-option:hover {
+  background: var(--lumno-control-hover-bg, rgba(0, 0, 0, 0.05));
+}
+
+.lumno-settings-select-option[data-selected="true"] {
+  background: var(--lumno-selected-bg, #111827);
+  color: var(--lumno-selected-text, #f9fafb);
+}
+
+.lumno-settings-input {
+  width: min(260px, 100%);
+  min-height: 36px;
+  padding: 8px 10px;
+  border: 1px solid var(--lumno-control-border);
+  border-radius: 10px;
+  background: var(--lumno-control-bg);
+  color: var(--lumno-panel-text);
+  font: inherit;
+  font-size: 13px;
+  transition: background 160ms ease, border-color 160ms ease;
+}
+
+.lumno-settings-input:hover,
+.lumno-settings-input:focus {
+  border-color: var(--lumno-focus);
+  background: var(--lumno-focus-bg);
+  outline: none;
+}
+
+.lumno-settings-input::placeholder {
+  color: var(--lumno-panel-subtext);
+  opacity: 0.72;
+}
+
+.lumno-settings-theme-picker {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 90px));
+  gap: 14px;
+  padding: 14px;
+}
+
+.lumno-settings-theme-option {
+  display: grid;
+  gap: 7px;
+  padding: 0;
+  background: transparent;
+  color: var(--lumno-panel-subtext);
+  font-size: 12px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.lumno-settings-theme-preview {
+  position: relative;
+  display: block;
+  width: 90px;
+  height: 60px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  border-radius: 9px;
+  background: var(--lumno-control-bg);
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.12);
+}
+
+.lumno-settings-theme-preview img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.lumno-settings-theme-option[data-selected="true"] {
+  color: var(--lumno-panel-text);
+}
+
+.lumno-settings-theme-option[data-selected="true"] .lumno-settings-theme-preview {
+  border-color: #6b7280;
+}
+
+.lumno-settings-theme-preview > i {
+  position: absolute;
+  right: 4px;
+  bottom: 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #111827;
+  color: #fff;
+  font-size: 12px;
+}
+
+.lumno-settings-shortcut {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 5px;
+  min-height: 30px;
+  padding: 3px 4px 7px;
+}
+
+.lumno-settings-keycap {
+  --lumno-key-shadow: #000;
+  position: relative;
+  display: inline-flex;
+  min-width: 23px;
+  height: 22px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  overflow: hidden;
+  border: 3px solid #000;
+  border-radius: 8px;
+  background: linear-gradient(180deg, #ededed 0%, #fff 100%);
+  box-shadow: 0 4px 0 var(--lumno-key-shadow);
+  color: #000;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.lumno-settings-kit[data-theme="dark"] .lumno-settings-keycap {
+  --lumno-key-shadow: #fff;
+  border: 3px solid #e7e7e7;
+  background: linear-gradient(180deg, #5f5f5f 0%, #575757 100%);
+  color: #fff;
+}
+
+.lumno-settings-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 22px;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: var(--lumno-control-bg);
+  color: var(--lumno-panel-subtext);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.lumno-settings-badge-accent {
+  background: rgba(59, 130, 246, 0.1);
+  color: #2563eb;
+}
+
+.lumno-settings-control-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lumno-settings-visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+@media (max-width: 620px) {
+  .lumno-settings-panel {
+    padding: 12px;
+    border-radius: 18px;
+  }
+
+  .lumno-settings-tabs {
+    margin-bottom: 14px;
+  }
+
+  .lumno-settings-row {
+    align-items: flex-start;
+    gap: 12px;
+    min-height: 58px;
+    padding: 11px 12px;
+  }
+
+  .lumno-settings-row p {
+    font-size: 12px;
+    line-height: 1.55;
+  }
+
+  .lumno-settings-row-control {
+    padding-top: 1px;
+  }
+
+  .lumno-settings-select {
+    min-width: 132px;
+  }
+
+  .lumno-settings-segment span {
+    display: none;
+  }
+
+  .lumno-settings-section-header {
+    padding-inline: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lumno-settings-kit *,
+  .lumno-settings-kit *::before,
+  .lumno-settings-kit *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .lumno-settings-select-menu,
+  .lumno-settings-select-chevron {
+    transition-duration: 0.01ms !important;
+  }
+}

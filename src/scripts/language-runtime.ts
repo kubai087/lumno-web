@@ -23,11 +23,20 @@ function persistLanguageMode(storageKey: string, normalizedMode: string) {
 }
 
 function setLanguageMenuOpen(open: boolean) {
+  const pendingStates = (window as Window & {
+    __lumnoMenuOpenStates?: Record<string, boolean>;
+  }).__lumnoMenuOpenStates || {};
+  pendingStates["language-menu"] = open;
+  (window as Window & { __lumnoMenuOpenStates?: Record<string, boolean> }).__lumnoMenuOpenStates = pendingStates;
   const languageMenu = document.getElementById("language-menu");
   const languageToggle = document.getElementById("language-toggle");
-  if (!languageMenu || !languageToggle) return;
-  languageMenu.setAttribute("data-open", open ? "true" : "false");
-  languageToggle.setAttribute("aria-expanded", open ? "true" : "false");
+  const languageSelect = document.querySelector(".lang-select");
+  if (!languageMenu && !languageToggle) return;
+  languageMenu?.setAttribute("data-open", open ? "true" : "false");
+  languageMenu?.setAttribute("aria-hidden", open ? "false" : "true");
+  languageToggle?.setAttribute("aria-expanded", open ? "true" : "false");
+  languageSelect?.setAttribute("data-open", open ? "true" : "false");
+  document.dispatchEvent(new CustomEvent("lumno:language-menu-state", { detail: { open } }));
 }
 
 function bindLanguageMenuInteractions(
@@ -35,15 +44,15 @@ function bindLanguageMenuInteractions(
   applyLanguageMode: (mode: string, options?: ApplyLanguageModeOptions) => void,
 ) {
   const initialLanguageMenu = document.getElementById("language-menu");
-  if (initialLanguageMenu) {
-    initialLanguageMenu.setAttribute("data-open", "false");
-  }
+  if (initialLanguageMenu) setLanguageMenuOpen(false);
 
   document.addEventListener("click", (event) => {
     const target = event.target instanceof HTMLElement ? event.target : null;
     if (!target) return;
     const languageToggle = target.closest("#language-toggle");
     const languageMenu = document.getElementById("language-menu");
+    const languageSelect = languageToggle?.closest(".lang-select");
+    if (languageToggle && languageSelect?.getAttribute("data-hydrated") === "true") return;
     if (languageToggle) {
       event.stopPropagation();
       const expanded = languageToggle.getAttribute("aria-expanded") === "true";

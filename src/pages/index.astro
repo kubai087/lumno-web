@@ -1,10 +1,22 @@
 ---
 import SeoHead from "../components/SeoHead.astro";
-import FeatureGrid from "../components/onboarding/FeatureGrid";
+import ChromeReviewMarquee from "../components/home/ChromeReviewMarquee.astro";
+import { CommunityQrDialog } from "../components/home/CommunityQrDialog";
+import { HeroInstallTooltip } from "../components/home/HeroInstallTooltip";
+import { HeroSafariDemo } from "../components/home/HeroSafariDemo";
 import LanguageMenu from "../components/onboarding/LanguageMenu";
+import HomeNavGhostLinks from "../components/navigation/HomeNavGhostLinks";
+import InstallMenu from "../components/navigation/InstallMenu";
 import logoIconSvg from "../assets/onboarding/logo.svg?raw";
-import topWordmarkSvg from "../assets/lumno-title-figma.svg?raw";
+import "../styles/globals.css";
+import { getChromeStoreReviews } from "../lib/chrome-store-reviews";
+import { COMMUNITY_LINKS } from "../lib/community";
+import { getHomeContent } from "../lib/home-content";
+import { getLumnoBuiltinSiteSearchProviders } from "../lib/lumno-search-providers";
+import { DEFAULT_LOCALE, buildLocalizedPath, buildRouteLanguageMap, type SupportedLocale } from "../lib/locales";
+import { getStoreVersions } from "../lib/store-versions";
 import {
+  CHROME_STORE_URL,
   buildAlternateLinks,
   buildBreadcrumbListSchema,
   buildKeywords,
@@ -14,8 +26,6 @@ import {
   buildWebSiteSchema,
   getOpenGraphLocale,
 } from "../lib/seo";
-import { DEFAULT_LOCALE, buildLocalizedPath, buildRouteLanguageMap, type SupportedLocale } from "../lib/locales";
-import { COMMUNITY_LINKS } from "../lib/community";
 
 interface Props {
   forcedLocale?: SupportedLocale | null;
@@ -23,15 +33,41 @@ interface Props {
   routeLanguageMap?: Record<string, string>;
 }
 
+const EDGE_STORE_URL = "https://microsoftedge.microsoft.com/addons/detail/pfbklkaefmfamjpibfiapaiihlddhchc";
+const GITHUB_URL = "https://github.com/kubai087/lumno-extension";
+const GITHUB_LICENSE_URL = `${GITHUB_URL}/blob/main/LICENSE`;
+const CHROME_REVIEW_URL = `${CHROME_STORE_URL}/reviews?utm_source=item-share-cb`;
+const { chrome: chromeStoreVersion, edge: edgeStoreVersion } = await getStoreVersions({
+  chrome:
+    import.meta.env.PUBLIC_CHROME_STORE_VERSION ||
+    import.meta.env.CHROME_STORE_VERSION,
+  edge:
+    import.meta.env.PUBLIC_EDGE_STORE_VERSION ||
+    import.meta.env.EDGE_STORE_VERSION,
+});
+const chromeStoreReviews = await getChromeStoreReviews();
+const builtinSiteSearchProviders = await getLumnoBuiltinSiteSearchProviders();
 const forcedLocale = Astro.props.forcedLocale ?? null;
 const seoPath = Astro.props.seoPath || "/";
 const routeLanguageMap = Astro.props.routeLanguageMap || buildRouteLanguageMap("/");
 const uiLocale = forcedLocale || DEFAULT_LOCALE;
+const content = getHomeContent(uiLocale);
+const [heroOpenSourcePrefix = "", heroOpenSourceSuffix = ""] = content.heroOpenSourceNote.split(
+  content.heroLicenseLabel,
+);
+const heroTitleCommaIndex = uiLocale === "zh-CN" ? content.heroTitle.indexOf("，") : -1;
+const heroTitleSeparator = heroTitleCommaIndex >= 0 ? content.heroTitle[heroTitleCommaIndex] : "";
+const heroTitleSegments = heroTitleCommaIndex >= 0
+  ? [
+      content.heroTitle.slice(0, heroTitleCommaIndex),
+      content.heroTitle.slice(heroTitleCommaIndex + 1).trimStart(),
+    ]
+  : [content.heroTitle];
 const homeHref = buildLocalizedPath(uiLocale, "/");
 const featuresHref = buildLocalizedPath(uiLocale, "/features/");
+const onboardingHref = buildLocalizedPath(uiLocale, "/onboarding/");
 const releaseHref = buildLocalizedPath(uiLocale, "/release/");
 const privacyHref = buildLocalizedPath(uiLocale, "/privacy/");
-const WORDMARK_TEXT = "Lumno";
 const alternateLinks = buildAlternateLinks(routeLanguageMap, "/");
 const ogLocale = getOpenGraphLocale(uiLocale);
 const pageTitleByLocale = {
@@ -41,165 +77,41 @@ const pageTitleByLocale = {
 };
 const pageDescriptionByLocale = {
   "zh-CN":
-    "Lumno 是一款开源浏览器命令栏与快捷命令浮层，支持搜索标签页、书签、历史记录和站内内容，并提供极简新标签页体验，适用于 Chrome、Edge、Dia 等浏览器，也适合从 Arc 迁移后的高效搜索工作流。",
+    "Lumno 是一款开源浏览器命令栏与快捷命令浮层，支持搜索标签页、书签、历史记录和站内内容，并提供极简新标签页，适用于 Chrome、Edge、Dia 等 Chromium 浏览器。",
   "zh-TW":
-    "Lumno 是一款開源瀏覽器命令欄與快捷命令浮層，支援搜尋分頁、書籤、歷史紀錄與站內內容，並提供極簡新分頁體驗，適用於 Chrome、Edge、Dia 等瀏覽器，也適合從 Arc 遷移後延續高效率搜尋流程。",
+    "Lumno 是一款開源瀏覽器命令欄與快捷命令浮層，支援搜尋分頁、書籤、瀏覽紀錄與站內內容，並提供極簡新分頁，適用於 Chrome、Edge、Dia 等 Chromium 瀏覽器。",
   en:
-    "Lumno is an open-source browser command bar for tabs, bookmarks, history, and site search, plus a minimalist new tab for Chrome, Edge, and Dia.",
+    "Lumno is an open-source browser command bar for tabs, bookmarks, history, and site search, plus a minimalist new tab for Chrome, Edge, Dia, and other Chromium browsers.",
 };
-const pageTitle = pageTitleByLocale[uiLocale] || pageTitleByLocale[DEFAULT_LOCALE];
-const pageDescription = pageDescriptionByLocale[uiLocale] || pageDescriptionByLocale[DEFAULT_LOCALE];
+const pageTitle = pageTitleByLocale[uiLocale];
+const pageDescription = pageDescriptionByLocale[uiLocale];
 const pageKeywords = buildKeywords([
   "浏览器快捷启动器",
   "Arc 浏览器迁移",
   "Arc 替代",
-  "Arc 风格搜索",
-  "command bar",
   "command palette",
   "tab search",
   "bookmark search",
   "history search",
 ]);
-const initialUi = {
-  "zh-CN": {
-    viewFeatures: "功能",
-    viewRelease: "更新日志",
-    joinDiscord: "反馈 & 提需",
-    titleWelcome: "欢迎使用",
-    subtitle: "Lumno 是一款开源浏览器扩展，提供聚焦搜索、浏览器命令栏与极简新标签页。",
-    languageLabel: "简体中文",
-    languageSelectAria: "语言",
-    settingsAria: "访问 Lumno GitHub 仓库",
-    featuresAria: "查看 Lumno 功能与场景页面",
-    releaseAria: "查看更新日志页面",
-    privacyLabel: "隐私政策",
-    privacyAria: "查看 Lumno 隐私政策",
-    discordAria: "反馈与提需",
-    qrcodeTitle: "微信群二维码",
-    qrcodeImageAlt: "Lumno 微信群二维码",
-    qrcodeCloseAria: "关闭二维码弹窗",
-    cwsBadgeAria: "在 Chrome 应用商店中安装 Lumno",
-    cwsBadgeAlt: "在 Chrome 应用商店中获取",
-    edgeBadgeAria: "在 Microsoft Edge 加载项中安装 Lumno",
-    edgeBadgeAlt: "从 Microsoft Edge 获取",
-    logoIconAlt: "Lumno 图标",
-    cwsSupportNote: "支持 Dia \\ Edge \\ Comet \\ Atlas \\ Helium 浏览器",
-    tooltipAria: "关于 Arc 迁移支持",
-    supportTooltip: "为从 Arc 迁移到其他浏览器的用户保留熟悉的命令栏搜索体验。Lumno 受 Arc 式交互启发，但与 Arc 无关联。",
-  },
-  "zh-TW": {
-    viewFeatures: "功能",
-    viewRelease: "更新日誌",
-    joinDiscord: "反饋 & 提需",
-    titleWelcome: "歡迎使用",
-    subtitle: "Lumno 是一款開源瀏覽器擴充功能，提供聚焦搜尋、瀏覽器命令列與極簡新分頁。",
-    languageLabel: "繁體中文",
-    languageSelectAria: "語言",
-    settingsAria: "造訪 Lumno GitHub 倉庫",
-    featuresAria: "查看 Lumno 功能與場景頁面",
-    releaseAria: "查看更新日誌頁面",
-    privacyLabel: "隱私權政策",
-    privacyAria: "查看 Lumno 隱私權政策",
-    discordAria: "反饋與提需",
-    qrcodeTitle: "微信群二維碼",
-    qrcodeImageAlt: "Lumno 微信群二維碼",
-    qrcodeCloseAria: "關閉二維碼彈窗",
-    cwsBadgeAria: "在 Chrome 線上應用程式商店安裝 Lumno",
-    cwsBadgeAlt: "在 Chrome 線上應用程式商店中取得",
-    edgeBadgeAria: "在 Microsoft Edge 附加元件中安裝 Lumno",
-    edgeBadgeAlt: "從 Microsoft Edge 取得",
-    logoIconAlt: "Lumno 圖示",
-    cwsSupportNote: "支援 Dia \\ Edge \\ Comet \\ Atlas \\ Helium 瀏覽器",
-    tooltipAria: "關於 Arc 遷移支援",
-    supportTooltip: "為從 Arc 遷移到其他瀏覽器的使用者保留熟悉的命令欄搜尋體驗。Lumno 受 Arc 式互動啟發，但與 Arc 無關聯。",
-  },
-  en: {
-    viewFeatures: "Features",
-    viewRelease: "Release Notes",
-    joinDiscord: "Feedback & Requests",
-    titleWelcome: "Meet",
-    subtitle: "Lumno is an open-source browser extension for focus search, a browser command bar, and a minimalist new tab.",
-    languageLabel: "English",
-    languageSelectAria: "Language",
-    settingsAria: "Open the Lumno GitHub repository",
-    featuresAria: "Open the Lumno features page",
-    releaseAria: "Open the release notes page",
-    privacyLabel: "Privacy Policy",
-    privacyAria: "Open the Lumno Privacy Policy",
-    discordAria: "Feedback and requests",
-    qrcodeTitle: "WeChat group QR code",
-    qrcodeImageAlt: "Lumno WeChat group QR code",
-    qrcodeCloseAria: "Close QR code dialog",
-    cwsBadgeAria: "Install Lumno from the Chrome Web Store",
-    cwsBadgeAlt: "Get it from the Chrome Web Store",
-    edgeBadgeAria: "Install Lumno from Microsoft Edge Add-ons",
-    edgeBadgeAlt: "Get it from Microsoft Edge",
-    logoIconAlt: "Lumno icon",
-    cwsSupportNote: "Supports Dia \\ Edge \\ Comet \\ Atlas \\ Helium browsers",
-    tooltipAria: "About Arc migration support",
-    supportTooltip: "Keeps a familiar command-bar search workflow for people moving from Arc to other browsers. Lumno is inspired by Arc-like interactions, but is not affiliated with Arc.",
-  },
-}[uiLocale];
-const featureMessages = {
-  "zh-CN": {
-    searchTitle: "搜索浏览器中的任意页面",
-    searchDesc: "支持书签、历史记录、已打开页面和最常访问",
-    siteSearchTitle: "自定义站内搜索",
-    siteSearchDesc: "内置常用站点，按 Tab 一键发起站内搜索",
-    newTabTitle: "极简新标签页",
-    newTabDesc: "展示书签与常用网页卡片",
-    labsTitle: "实验室功能",
-    labsTitleStrong: "& 精美 UI",
-    labsDesc: "更多玩法，敬请期待",
-    betaAlt: "Beta",
-  },
-  "zh-TW": {
-    searchTitle: "搜尋瀏覽器中的任意頁面",
-    searchDesc: "支援書籤、歷史紀錄、已開啟頁面與最常造訪",
-    siteSearchTitle: "自訂站內搜尋",
-    siteSearchDesc: "內建常用站點，按 Tab 一鍵發起站內搜尋",
-    newTabTitle: "極簡新分頁",
-    newTabDesc: "展示書籤與常用網頁卡片",
-    labsTitle: "實驗室功能",
-    labsTitleStrong: "& 精緻 UI",
-    labsDesc: "更多玩法，敬請期待",
-    betaAlt: "Beta",
-  },
-  en: {
-    searchTitle: "Search any page in your browser",
-    searchDesc: "Search bookmarks, history, open pages, and frequently visited sites",
-    siteSearchTitle: "Custom site search",
-    siteSearchDesc: "Built-in site search shortcuts. Press Tab to search instantly",
-    newTabTitle: "Minimalist new tab",
-    newTabDesc: "Keep bookmarks and frequently used pages in clean card layouts",
-    labsTitle: "Labs features",
-    labsTitleStrong: "& refined UI",
-    labsDesc: "More experiments are on the way",
-    betaAlt: "Beta",
-  },
-}[uiLocale];
 const structuredData = [
   buildOrganizationSchema(),
   buildWebSiteSchema(),
-  buildSoftwareApplicationSchema({
-    description: pageDescription,
-  }),
+  buildSoftwareApplicationSchema({ description: pageDescription }),
   buildWebPageSchema({
     name: pageTitle,
     description: pageDescription,
     path: seoPath,
     language: uiLocale,
   }),
-  buildBreadcrumbListSchema({
-    items: [{ name: "Lumno", path: seoPath }],
-  }),
+  buildBreadcrumbListSchema({ items: [{ name: "Lumno", path: seoPath }] }),
 ];
 ---
 
 <!doctype html>
 <html lang={uiLocale}>
   <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <SeoHead
       title={pageTitle}
@@ -208,20 +120,411 @@ const structuredData = [
       keywords={pageKeywords}
       alternates={alternateLinks}
       locale={ogLocale}
-      i18nTitleKey="page_title_ui"
       structuredData={structuredData}
     />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link
-      rel="preload"
-      as="image"
-      href="/assets/settings-bg-light-monet-newtab.webp"
-      imagesizes="100vw"
-      type="image/webp"
-    />
     <link rel="stylesheet" href="/assets/remixicon.css" />
+  </head>
+  <body data-locale={uiLocale}>
+    <header class="top-nav">
+      <a
+        class="top-nav-brand"
+        href={homeHref}
+        aria-label="Lumno"
+        data-analytics-event="select_home_brand"
+        data-analytics-category="navigation"
+        data-analytics-label="home_header_brand"
+      >
+        <img src="/assets/lumno-title-figma.svg" width="70" height="17" alt="Lumno" />
+      </a>
+      <nav class="top-nav-actions" aria-label={content.navigationAria}>
+        <HomeNavGhostLinks
+          releaseHref={releaseHref}
+          repositoryHref={GITHUB_URL}
+          releaseLabel={content.navRelease}
+          feedbackLabel={content.navFeedback}
+          repositoryLabel={content.navRepository}
+          featureRequestLabel={content.navFeatureRequest}
+          menuLabel={content.navMoreMenuAria}
+          panelTitle={content.communityPanelTitle}
+          qrImageSrc={COMMUNITY_LINKS.wechatQrImagePath}
+          qrImageAlt={content.qrcodeImageAlt}
+          qrCloseLabel={content.qrcodeCloseAria}
+          qrRefreshLabel={content.qrcodeRefreshAria}
+          client:load
+        />
+        <LanguageMenu
+          currentLabel={content.languageLabel}
+          toggleAriaLabel={content.languageSelectAria}
+          iconOnly
+          client:load
+        />
+        <InstallMenu
+          label={content.installLabel}
+          ariaLabel={content.installAria}
+          chromeUrl={CHROME_STORE_URL}
+          edgeUrl={EDGE_STORE_URL}
+          chromeLabel={content.installChromeStoreLabel}
+          edgeLabel={content.installEdgeStoreLabel}
+          chromeVersion={chromeStoreVersion}
+          edgeVersion={edgeStoreVersion}
+          chromeRecommendation={content.installChromeRecommendation}
+          client:load
+        />
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero-section" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <h1
+            id="hero-title"
+            class:list={{ "hero-title-has-break": heroTitleSegments.length > 1 }}
+            aria-label={content.heroTitle}
+          >
+            <span class="hero-title-line">
+              {heroTitleSegments.map((segment, index) => (
+                <span class="hero-title-segment">
+                  {segment}
+                  {index === 0 && heroTitleSeparator && (
+                    <span class="hero-title-separator">{heroTitleSeparator}</span>
+                  )}
+                  {index === heroTitleSegments.length - 1 && (
+                    <span class="hero-title-app-icon" aria-hidden="true" set:html={logoIconSvg}></span>
+                  )}
+                </span>
+              ))}
+            </span>
+          </h1>
+          <p>{content.heroDescription}</p>
+          <div class="hero-actions">
+            <HeroInstallTooltip
+              label={content.heroInstallLabel}
+              ariaLabel={content.heroInstallAria}
+              href={CHROME_STORE_URL}
+              tooltipLabel={content.heroBrowserTooltipLabel}
+              client:load
+            />
+            <CommunityQrDialog
+              triggerLabel={content.heroCommunityLabel}
+              triggerAriaLabel={content.heroCommunityAria}
+              title={content.qrcodeTitle}
+              qrImageSrc={COMMUNITY_LINKS.wechatQrImagePath}
+              qrImageAlt={content.qrcodeImageAlt}
+              closeLabel={content.qrcodeCloseAria}
+              triggerVariant="hero"
+              client:load
+            />
+          </div>
+          <p class="hero-open-source-note">
+            {heroOpenSourcePrefix}<a
+              class="hero-license-link"
+              href={GITHUB_LICENSE_URL}
+              target="_blank"
+              rel="noreferrer noopener"
+              aria-label={content.heroLicenseAria}
+              data-analytics-event="open_github_license"
+              data-analytics-category="trust"
+              data-analytics-label="home_hero_license"
+            >
+              {content.heroLicenseLabel}
+            </a>{heroOpenSourceSuffix}
+          </p>
+        </div>
+        <HeroSafariDemo
+          ariaLabel={content.heroDemoAria}
+          builtinSiteSearchProviders={builtinSiteSearchProviders}
+          locale={uiLocale}
+          client:load
+        />
+      </section>
+
+      <ChromeReviewMarquee
+        title={content.reviewsTitle}
+        summary={content.reviewsSummary(
+          chromeStoreReviews.averageRating,
+          chromeStoreReviews.ratingCount,
+        )}
+        sourceLabel={content.reviewsSourceLabel}
+        ariaLabel={content.reviewsAriaLabel}
+        avatarLabel={content.reviewAvatarLabel}
+        ratingLabel={content.reviewRatingLabel}
+        reviewUrl={CHROME_REVIEW_URL}
+        locale={uiLocale}
+        reviews={chromeStoreReviews.reviews}
+      />
+
+      <section id="features" class="section feature-intro" aria-labelledby="features-title">
+        <div class="section-heading section-heading-wide">
+          <h2 id="features-title">{content.featureSectionTitle}</h2>
+          <p>{content.featureSectionDescription}</p>
+        </div>
+        <a
+          class="text-link"
+          href={featuresHref}
+          aria-label={content.featurePageAria}
+          data-analytics-event="open_features_page"
+          data-analytics-category="navigation"
+          data-analytics-label="home_feature_section"
+        >
+          {content.featurePageLabel}
+          <i class="ri-arrow-right-line" aria-hidden="true"></i>
+        </a>
+      </section>
+
+      <section id="workflow" class="section workflow-section" aria-labelledby="workflow-title">
+        <div class="section-heading">
+          <h2 id="workflow-title">{content.workflowTitle}</h2>
+          <p>{content.workflowDescription}</p>
+        </div>
+        <ol class="workflow-list">
+          {content.workflowSteps.map((step, index) => (
+            <li>
+              <span class="step-number">0{index + 1}</span>
+              <span class="step-icon" aria-hidden="true">
+                <i class={index === 0 ? "ri-command-line" : index === 1 ? "ri-search-line" : "ri-arrow-right-up-line"}></i>
+              </span>
+              <h3>{step.title}</h3>
+              <p>{step.description}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section class="section audience-section" aria-labelledby="audience-title">
+        <div class="section-heading section-heading-wide">
+          <h2 id="audience-title">{content.audienceTitle}</h2>
+          <p>{content.audienceDescription}</p>
+        </div>
+        <div class="audience-list">
+          {content.audiences.map((audience, index) => (
+            <article>
+              <span class="audience-mark" aria-hidden="true">
+                <i class={index === 0 ? "ri-book-open-line" : index === 1 ? "ri-code-s-slash-line" : "ri-compass-3-line"}></i>
+              </span>
+              <h3>{audience.title}</h3>
+              <p>{audience.description}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section id="trust" class="section trust-section" aria-labelledby="trust-title">
+        <div class="trust-copy">
+          <h2 id="trust-title">{content.trustTitle}</h2>
+          <p>{content.trustDescription}</p>
+          <a
+            class="text-link"
+            href={privacyHref}
+            data-analytics-event="open_privacy_page"
+            data-analytics-category="navigation"
+            data-analytics-label="home_trust_privacy"
+          >
+            {content.footerPrivacy}
+            <i class="ri-arrow-right-line" aria-hidden="true"></i>
+          </a>
+        </div>
+        <div class="trust-list">
+          {content.trustPoints.map((point, index) => (
+            <article>
+              <span class="trust-icon" aria-hidden="true">
+                <i class={index === 0 ? "ri-computer-line" : index === 1 ? "ri-github-line" : "ri-toggle-line"}></i>
+              </span>
+              <div>
+                <h3>{point.title}</h3>
+                <p>{point.description}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="section browser-section" aria-labelledby="browsers-title">
+        <div>
+          <h2 id="browsers-title">{content.browsersTitle}</h2>
+          <p>{content.browsersDescription}</p>
+        </div>
+        <ul class="browser-list" aria-label={content.browsersTitle}>
+          {content.browserNames.map((browser) => <li>{browser}</li>)}
+        </ul>
+      </section>
+
+      <section class="section faq-section" aria-labelledby="faq-title">
+        <div class="section-heading">
+          <h2 id="faq-title">{content.faqTitle}</h2>
+        </div>
+        <div class="faq-list">
+          {content.faqItems.map((item) => (
+            <details>
+              <summary>
+                <span>{item.question}</span>
+                <i class="ri-add-line" aria-hidden="true"></i>
+              </summary>
+              <p>{item.answer}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+
+      <section class="section final-cta" aria-labelledby="final-title">
+        <div class="final-cta-copy">
+          <span class="final-logo" set:html={logoIconSvg} aria-hidden="true"></span>
+          <h2 id="final-title">{content.finalTitle}</h2>
+          <p>{content.finalDescription}</p>
+        </div>
+        <div class="final-cta-actions">
+          <a
+            class="button button-primary"
+            href={CHROME_STORE_URL}
+            target="_blank"
+            rel="noreferrer noopener"
+            data-analytics-event="open_chrome_web_store"
+            data-analytics-category="conversion"
+            data-analytics-label="home_final_install"
+          >
+            {content.installLabel}
+            <i class="ri-arrow-right-up-line" aria-hidden="true"></i>
+          </a>
+          <a
+            class="button button-secondary"
+            href={GITHUB_URL}
+            target="_blank"
+            rel="noreferrer noopener"
+            aria-label={content.viewSourceAria}
+            data-analytics-event="open_github_repo"
+            data-analytics-category="cta"
+            data-analytics-label="home_final_github"
+          >
+            <i class="ri-github-fill" aria-hidden="true"></i>
+            {content.viewSourceLabel}
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-legal-nav">
+      <div class="footer-main">
+        <div class="footer-brand">
+          <a class="brand" href={homeHref} aria-label="Lumno">
+            <span class="brand-icon" set:html={logoIconSvg}></span>
+            <img class="brand-wordmark" src="/assets/textlogo.svg" width="165" height="43" alt="Lumno" loading="lazy" />
+          </a>
+          <p>{content.footerTagline}</p>
+        </div>
+        <div class="footer-links">
+          <div>
+            <h2>{content.footerProduct}</h2>
+            <a href={featuresHref}>{content.footerFeatures}</a>
+            <a href={onboardingHref}>{content.footerQuickStart}</a>
+          </div>
+          <div>
+            <h2>{content.footerResources}</h2>
+            <a href={releaseHref}>{content.footerRelease}</a>
+            <a href={privacyHref}>{content.footerPrivacy}</a>
+          </div>
+          <div>
+            <h2>{content.footerCommunity}</h2>
+            <a href={GITHUB_URL} target="_blank" rel="noreferrer noopener">{content.footerGithub}</a>
+            <CommunityQrDialog
+              triggerLabel={content.footerFeedback}
+              triggerAriaLabel={content.heroCommunityAria}
+              title={content.qrcodeTitle}
+              qrImageSrc={COMMUNITY_LINKS.wechatQrImagePath}
+              qrImageAlt={content.qrcodeImageAlt}
+              closeLabel={content.qrcodeCloseAria}
+              triggerVariant="footer"
+              externalHref={uiLocale === "zh-CN" ? undefined : COMMUNITY_LINKS.discordUrl}
+              client:load
+            />
+          </div>
+        </div>
+      </div>
+      <div class="footer-meta">
+        <p>© {new Date().getFullYear()} {content.footerCopyright}</p>
+        <a href={privacyHref}>{content.footerPrivacy}</a>
+      </div>
+    </footer>
+
+    <script>
+      import "../scripts/language-preference";
+      import "../scripts/language-runtime";
+    </script>
+    <script define:vars={{ forcedLocale, routeLanguageMap }}>
+      const FORCED_LOCALE = forcedLocale;
+      const ROUTE_LANGUAGE_MAP = routeLanguageMap;
+      const LANGUAGE_STORAGE_KEY = "_x_extension_language_2024_unique_";
+
+      function normalizeLanguageMode(mode) {
+        const normalized = String(mode || "").trim().toLowerCase().replaceAll("_", "-");
+        if (normalized === "zh-tw" || normalized === "zh-hk" || normalized === "zh-hant") return "zh-TW";
+        if (normalized === "zh" || normalized === "zh-cn" || normalized === "zh-sg" || normalized === "zh-hans") return "zh-CN";
+        if (normalized === "en" || normalized.startsWith("en-")) return "en";
+        return "zh-CN";
+      }
+
+      function getSystemLocale() {
+        const browserLanguage = navigator.languages?.[0] || navigator.language || "zh-CN";
+        return normalizeLanguageMode(browserLanguage);
+      }
+
+      function applyResolvedLanguage(normalizedMode) {
+        document.documentElement.lang = normalizedMode;
+        document.body.dataset.locale = normalizedMode;
+        document.querySelectorAll("[data-lang-value]").forEach((node) => {
+          const active = node.getAttribute("data-lang-value") === normalizedMode;
+          node.setAttribute("aria-checked", active ? "true" : "false");
+          node.classList.toggle("is-active", active);
+        });
+      }
+
+      function setupHomeLanguageRuntime() {
+        if (!window.__lumnoLanguagePreference || !window.__lumnoLanguageRuntime) return false;
+        const languageRuntime = window.__lumnoLanguageRuntime.setupLanguageRuntime({
+          forcedLocale: FORCED_LOCALE,
+          getSystemLocale,
+          normalizeLanguageMode,
+          routeLanguageMap: ROUTE_LANGUAGE_MAP,
+          languageStorageKey: LANGUAGE_STORAGE_KEY,
+          applyResolvedLanguage,
+        });
+        languageRuntime.applyLanguageMode(languageRuntime.getInitialLanguageMode());
+        return true;
+      }
+
+      if (!setupHomeLanguageRuntime()) {
+        const retry = () => {
+          if (!setupHomeLanguageRuntime()) return;
+          window.removeEventListener("lumno:language-runtime-ready", retry);
+          window.removeEventListener("lumno:language-preference-ready", retry);
+        };
+        window.addEventListener("lumno:language-runtime-ready", retry);
+        window.addEventListener("lumno:language-preference-ready", retry);
+      }
+
+      const topNav = document.querySelector(".top-nav");
+      const heroTitle = document.getElementById("hero-title");
+      if (topNav instanceof HTMLElement && heroTitle instanceof HTMLElement) {
+        let navOverlapFrame = 0;
+        const updateNavOverlap = () => {
+          navOverlapFrame = 0;
+          const navBottom = topNav.getBoundingClientRect().bottom;
+          const titleTop = heroTitle.getBoundingClientRect().top;
+          document.body.classList.toggle("has-nav-overlap", window.scrollY > 0 && titleTop < navBottom - 1);
+        };
+        const scheduleNavOverlapUpdate = () => {
+          if (navOverlapFrame) return;
+          navOverlapFrame = window.requestAnimationFrame(updateNavOverlap);
+        };
+        updateNavOverlap();
+        window.addEventListener("scroll", scheduleNavOverlapUpdate, { passive: true });
+        window.addEventListener("resize", scheduleNavOverlapUpdate);
+        new ResizeObserver(scheduleNavOverlapUpdate).observe(topNav);
+      }
+
+    </script>
+
     <style is:global>
       @font-face {
         font-family: "Open Sans";
@@ -233,3288 +536,1140 @@ const structuredData = [
 
       :root {
         --bg: #fafafa;
-        --text-main: #2d3138;
-        --text-sub: #898989;
-        --card-text-sub: rgba(0, 0, 0, 0.6);
-        --card-grad-start: oklch(99.8% 0.001 255);
-        --card-grad-mid: oklch(99.3% 0.002 255);
-        --card-grad-end: oklch(98.6% 0.003 255);
-        --card-rim: oklch(78% 0.012 250 / 0.46);
-        --card-highlight: rgba(255, 255, 255, 0.98);
-        --card-highlight-soft: rgba(255, 255, 255, 0.74);
-        --card-merge-glow: rgba(255, 255, 255, 0.9);
-        --card-edge-glow: rgba(255, 255, 255, 0.8);
-        --card-white-clear: rgba(255, 255, 255, 0);
-        --card-bottom-line: oklch(52% 0.012 250 / 0.18);
-        --card-shadow: oklch(44% 0.018 250 / 0.08);
-        --card-shadow-soft: oklch(70% 0.012 250 / 0.14);
-        --lang-ink: #5e7064;
-        --lang-option-ink: #465348;
-        --lang-border: oklch(82% 0.018 145 / 0.58);
-        --lang-surface: oklch(99.2% 0.004 115 / 0.84);
-        --lang-surface-hover: oklch(97.4% 0.016 145 / 0.9);
-        --lang-surface-active: oklch(94.2% 0.03 145 / 0.92);
-        --lang-active-ink: oklch(39% 0.054 145);
-        --lang-shadow: oklch(42% 0.02 145 / 0.12);
-        --border-soft: #e2e2e2;
-        --page-bg-overlay: rgba(255, 255, 255, 0.16);
-        --producthunt-badge-width: 250px;
-        --safe-area-top: 0px;
-        --safe-area-top: env(safe-area-inset-top, 0px);
-        --safe-area-top-capped: min(var(--safe-area-top), 72px);
-        --mobile-top-clearance: var(--safe-area-top-capped);
-        --safe-area-bottom: 0px;
-        --safe-area-bottom: env(safe-area-inset-bottom, 0px);
-        --browser-chrome-bottom: 0px;
-        --mobile-bottom-clearance: max(var(--safe-area-bottom), var(--browser-chrome-bottom));
-        --mobile-flow-bottom-clearance: var(--safe-area-bottom);
-        --mobile-status-cover-height: var(--mobile-top-clearance);
+        --surface: #ffffff;
+        --surface-soft: #f4f6f8;
+        --surface-blue: #eef6fb;
+        --text-main: #15171a;
+        --text-sub: #626870;
+        --text-soft: #89919a;
+        --line: #e2e6e9;
+        --line-strong: #d4dade;
+        --blue: #4ba7dd;
+        --blue-dark: #1e729f;
+        --green-soft: #e9f2e8;
+        --green-ink: #4d6653;
+        --shadow-soft: rgba(45, 54, 62, 0.08);
+        --shadow-card: rgba(45, 54, 62, 0.12);
+        --content-width: 1360px;
       }
 
       * {
         box-sizing: border-box;
       }
 
-      html,
+      html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 88px;
+        background: var(--bg);
+      }
+
       body {
         margin: 0;
-        min-height: 100%;
-        background-color: var(--bg);
-        background-image:
-          linear-gradient(var(--page-bg-overlay), var(--page-bg-overlay)),
-          url("/assets/settings-bg-light-monet-newtab.webp");
-        background-position: center;
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-attachment: fixed;
+        min-width: 320px;
         color: var(--text-main);
-        font-family: "Open Sans", "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+        background-color: var(--bg);
+        font-family: "Open Sans", "PingFang SC", "Microsoft JhengHei", "Microsoft YaHei", sans-serif;
+        -webkit-font-smoothing: antialiased;
       }
 
-      .onboarding {
-        min-height: 100vh;
-        min-height: 100svh;
-        min-height: 100dvh;
-        display: flex;
-        overflow: hidden;
+      button,
+      a {
+        font: inherit;
       }
 
-      .left-pane {
-        position: relative;
-        width: 40%;
-        min-width: 560px;
-        z-index: 2;
-        display: flex;
-        align-items: center;
-        padding-left: clamp(56px, 9vw, 132px);
-        padding-right: 48px;
-      }
-
-      .left-main {
-        position: relative;
-        width: min(428px, 100%);
-        display: flex;
-        flex-direction: column;
-        gap: 112px;
-      }
-
-      .hero {
-        width: 100%;
-        opacity: 0;
-        transform: translateX(-24px);
-        filter: blur(6px);
-        animation: x-hero-enter 620ms cubic-bezier(0.22, 1, 0.36, 1) 100ms forwards;
-      }
-
-      .title-row {
-        display: flex;
-        align-items: center;
-        gap: clamp(10px, 1.8vw, 24px);
-      }
-
-      .title {
-        margin: 0;
-        display: inline-flex;
-        align-items: center;
-        gap: clamp(10px, 1.8vw, 24px);
-        white-space: nowrap;
-      }
-
-      .title-welcome {
-        display: inline-flex;
-        align-items: center;
-        font-size: clamp(38px, 3.6vw, 44px);
-        font-weight: 500;
-        line-height: 1.2;
-        letter-spacing: 0.2px;
-        background: linear-gradient(180deg, #3a342b 0%, #5a5247 100%);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-      }
-
-      .logo-lockup {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        transform: translateY(-2px);
-      }
-
-      .logo-icon-wrap {
-        --logo-box: 54px;
-        position: relative;
-        width: var(--logo-box);
-        height: var(--logo-box);
-        flex: none;
-        overflow: visible;
-      }
-
-      .logo-icon {
-        position: absolute;
-        width: calc(var(--logo-box) * 63 / 48);
-        height: calc(var(--logo-box) * 69 / 48);
-        left: calc(var(--logo-box) * -13 / 48);
-        top: calc(var(--logo-box) * -1 / 48);
-        display: block;
-        max-width: none;
-        transform: translateZ(0);
-        backface-visibility: hidden;
-        -webkit-backface-visibility: hidden;
-      }
-
-      .logo-icon svg {
-        width: 100%;
-        height: 100%;
-        display: block;
-        shape-rendering: geometricPrecision;
-      }
-
-      .logo-wordmark-wrap {
-        --wordmark-width: 182px;
-        position: relative;
-        width: var(--wordmark-width);
-        height: calc(var(--wordmark-width) * 47 / 165);
-        flex: none;
-        overflow: visible;
-      }
-
-      .logo-wordmark {
-        width: 100%;
-        height: 100%;
-        display: block;
-      }
-
-      .logo-butterfly-stage {
-        position: absolute;
-        left: calc(var(--wordmark-width) * 152 / 165);
-        top: 6px;
-        width: calc(var(--wordmark-width) * 20 / 165);
-        height: calc(var(--wordmark-width) * 22 / 165);
-        overflow: visible;
-        transform: rotate(-4deg);
-        transform-origin: 24% 77%;
-      }
-
-      .logo-butterfly {
-        position: absolute;
-        inset: 0;
-        display: block;
-      }
-
-      .logo-butterfly-wing {
-        transform-origin: 24% 77%;
-      }
-
-      .logo-butterfly-wing-back {
-        opacity: 0.22;
-        transform: translate(0.6px, 0.2px) rotate(12deg) scale(0.97);
-        filter: blur(0.1px);
-      }
-
-      .logo-butterfly-wing-front {
-        opacity: 0.34;
-        transform: translate(-0.2px, 0.1px) rotate(-8deg) scale(1.01);
-      }
-
-      .logo-butterfly-path {
-        opacity: 1;
-      }
-
-      .mark-svg {
-        -webkit-user-drag: none;
-        user-drag: none;
-        user-select: none;
-        -webkit-user-select: none;
-        pointer-events: none;
-      }
-
-      .seo-wordmark-text {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        white-space: nowrap;
-        border: 0;
-      }
-
-      .subtitle {
-        margin: 8px 0 0;
-        max-width: 560px;
-        color: #6f665b;
-        font-size: 17px;
-        line-height: 1.45;
-        letter-spacing: 0.1px;
-        font-weight: 400;
-      }
-
-      .migration-note {
-        margin: 14px 0 0;
-        max-width: 420px;
-        color: #6e7683;
-        font-size: 14px;
-        line-height: 1.55;
-      }
-
-      .migration-note strong {
-        color: #3c4455;
-        font-weight: 600;
-      }
-
-      .is-locale-en .subtitle {
-        white-space: normal;
-        overflow-wrap: anywhere;
-        font-size: 15px;
-        letter-spacing: 0;
-      }
-
-      .is-locale-en .title {
-        letter-spacing: -1px;
-      }
-
-      .shortcut-line {
-        margin-top: 0;
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        color: #3c4455;
-        font-size: 18px;
-        font-weight: 500;
-        opacity: 0;
-        transform: translateX(-24px);
-        filter: blur(6px);
-        animation: x-hero-enter 620ms cubic-bezier(0.22, 1, 0.36, 1) 300ms forwards;
-      }
-
-      .shortcut-line-store {
-        position: relative;
-        z-index: 3;
-        gap: 10px;
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .shortcut-store-link {
-        display: inline-flex;
-        align-items: center;
-      }
-
-      .shortcut-store-badges {
-        --store-badge-width: 198px;
-        --store-badge-height: 60px;
-        display: flex;
-        flex-wrap: nowrap;
-        align-items: center;
-        gap: 12px;
-      }
-
-      .shortcut-store-badge {
-        width: var(--store-badge-width);
-        height: var(--store-badge-height);
-        display: block;
-      }
-
-      .shortcut-store-badge--edge {
-        display: block;
-        width: auto;
-        height: 52px;
-      }
-
-      .shortcut-store-note {
-        margin: 0;
-        display: inline-flex;
-        width: max-content;
-        max-width: min(calc(100vw - 40px), 520px);
-        flex-wrap: nowrap;
-        align-items: center;
-        gap: 6px;
-        color: #707887;
-        font-size: 12px;
-        line-height: 1.35;
-        font-weight: 400;
-      }
-
-      .shortcut-store-note [data-i18n="cws_support_note"] {
-        flex: 1 1 auto;
-        min-width: 0;
-        overflow-wrap: normal;
-        word-break: keep-all;
-      }
-
-      .producthunt-badge-wrap {
-        position: relative;
-        z-index: 1;
-        margin-top: 18px;
-        opacity: 0;
-        transform: translateX(-24px);
-        filter: blur(6px);
-        animation: x-hero-enter 620ms cubic-bezier(0.22, 1, 0.36, 1) 380ms forwards;
-      }
-
-      .producthunt-badge-link {
-        display: inline-flex;
-        align-items: center;
-      }
-
-      .producthunt-badge-image {
-        display: block;
-        width: var(--producthunt-badge-width);
-        height: 54px;
-      }
-
-      .producthunt-badge-wrap--page-bottom {
-        display: none;
-        width: 100%;
-        opacity: 1;
-        transform: none;
-        filter: none;
-        animation: none;
-      }
-
-      .site-legal-nav {
-        position: fixed;
-        left: clamp(56px, 9vw, 132px);
-        bottom: calc(24px + var(--mobile-bottom-clearance));
-        z-index: 22;
-        display: flex;
-        align-items: center;
-      }
-
-      .site-legal-link {
-        padding: 6px 2px;
-        color: #5f6772;
-        font-size: 12px;
-        line-height: 1.4;
-        text-decoration: none;
-        text-underline-offset: 3px;
-        transition: color 160ms ease;
-      }
-
-      .site-legal-link:hover {
-        color: #364052;
-        text-decoration: underline;
-      }
-
-      .site-legal-link:focus-visible {
-        outline: 2px solid rgba(53, 120, 203, 0.28);
-        outline-offset: 3px;
-        border-radius: 4px;
-      }
-
-      .support-tooltip {
-        position: relative;
-        display: inline-flex;
-        align-items: center;
-        z-index: 32;
-      }
-
-      .support-tooltip-trigger {
-        width: 16px;
-        height: 16px;
-        padding: 0;
-        border: 1px solid rgba(112, 120, 135, 0.28);
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.8);
-        color: #707887;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition:
-          border-color 0.18s ease,
-          color 0.18s ease,
-          background-color 0.18s ease;
-      }
-
-      .support-tooltip-trigger i {
-        font-size: 11px;
-        line-height: 1;
-      }
-
-      .support-tooltip-trigger:focus-visible {
-        outline: 2px solid rgba(53, 120, 203, 0.22);
-        outline-offset: 2px;
-      }
-
-      .support-tooltip-trigger:hover,
-      .support-tooltip-trigger:focus-visible {
-        color: var(--lang-ink);
-        border-color: rgba(75, 84, 95, 0.35);
-        background: rgba(255, 255, 255, 0.96);
-      }
-
-      .support-tooltip-bubble {
-        --support-tooltip-bg-top: #ffffff;
-        --support-tooltip-bg-bottom: #f7f9fc;
-        --support-tooltip-border: rgba(214, 219, 227, 0.95);
-        --support-tooltip-arrow-border-size: 9px;
-        --support-tooltip-arrow-fill-size: 8px;
-        --support-tooltip-arrow-border-inset: 14px;
-        --support-tooltip-arrow-fill-inset: 16px;
-        position: fixed;
-        left: var(--support-tooltip-left, 0px);
-        top: var(--support-tooltip-top, 0px);
-        z-index: 40;
-        width: max-content;
-        max-width: min(360px, calc(100vw - 24px));
-        padding: 10px 12px;
-        border: 1px solid var(--support-tooltip-border);
-        border-radius: 12px;
-        background: linear-gradient(180deg, var(--support-tooltip-bg-top) 0%, var(--support-tooltip-bg-bottom) 100%);
-        box-shadow:
-          0 16px 36px rgba(17, 24, 39, 0.08),
-          0 3px 10px rgba(17, 24, 39, 0.05);
-        color: #556070;
-        text-align: left;
-        font-size: 12px;
-        line-height: 1.5;
-        overflow-wrap: anywhere;
-        opacity: 0;
-        visibility: hidden;
-        transform: translate3d(0, 4px, 0) scale(0.985);
-        transition:
-          opacity 0.18s ease,
-          transform 0.18s ease,
-          visibility 0.18s ease;
-        pointer-events: none;
-      }
-
-      .support-tooltip-bubble strong {
-        color: #3c4455;
-        font-weight: 600;
-      }
-
-      .support-tooltip-bubble::before {
-        content: "";
-        position: absolute;
-        width: 0;
-        height: 0;
-        border: 0 solid transparent;
-        transform: none;
-        pointer-events: none;
-      }
-
-      .support-tooltip-bubble::after {
-        content: "";
-        position: absolute;
-        width: 0;
-        height: 0;
-        border: 0 solid transparent;
-        transform: none;
-        pointer-events: none;
-      }
-
-      .support-tooltip-bubble[data-arrow-side="top"]::before {
-        top: calc(0px - var(--support-tooltip-arrow-border-size));
-        border-left-width: var(--support-tooltip-arrow-border-size);
-        border-right-width: var(--support-tooltip-arrow-border-size);
-        border-bottom: var(--support-tooltip-arrow-border-size) solid var(--support-tooltip-border);
-      }
-
-      .support-tooltip-bubble[data-arrow-side="top"]::after {
-        top: calc(1px - var(--support-tooltip-arrow-fill-size));
-        border-left-width: var(--support-tooltip-arrow-fill-size);
-        border-right-width: var(--support-tooltip-arrow-fill-size);
-        border-bottom: var(--support-tooltip-arrow-fill-size) solid var(--support-tooltip-bg-top);
-      }
-
-      .support-tooltip-bubble[data-arrow-side="right"]::before {
-        right: calc(0px - var(--support-tooltip-arrow-border-size));
-        border-top-width: var(--support-tooltip-arrow-border-size);
-        border-bottom-width: var(--support-tooltip-arrow-border-size);
-        border-left: var(--support-tooltip-arrow-border-size) solid var(--support-tooltip-border);
-      }
-
-      .support-tooltip-bubble[data-arrow-side="right"]::after {
-        right: calc(1px - var(--support-tooltip-arrow-fill-size));
-        border-top-width: var(--support-tooltip-arrow-fill-size);
-        border-bottom-width: var(--support-tooltip-arrow-fill-size);
-        border-left: var(--support-tooltip-arrow-fill-size) solid var(--support-tooltip-bg-bottom);
-      }
-
-      .support-tooltip-bubble[data-arrow-side="bottom"]::before {
-        bottom: calc(0px - var(--support-tooltip-arrow-border-size));
-        border-left-width: var(--support-tooltip-arrow-border-size);
-        border-right-width: var(--support-tooltip-arrow-border-size);
-        border-top: var(--support-tooltip-arrow-border-size) solid var(--support-tooltip-border);
-      }
-
-      .support-tooltip-bubble[data-arrow-side="bottom"]::after {
-        bottom: calc(1px - var(--support-tooltip-arrow-fill-size));
-        border-left-width: var(--support-tooltip-arrow-fill-size);
-        border-right-width: var(--support-tooltip-arrow-fill-size);
-        border-top: var(--support-tooltip-arrow-fill-size) solid var(--support-tooltip-bg-bottom);
-      }
-
-      .support-tooltip-bubble[data-arrow-side="left"]::before {
-        left: calc(0px - var(--support-tooltip-arrow-border-size));
-        border-top-width: var(--support-tooltip-arrow-border-size);
-        border-bottom-width: var(--support-tooltip-arrow-border-size);
-        border-right: var(--support-tooltip-arrow-border-size) solid var(--support-tooltip-border);
-      }
-
-      .support-tooltip-bubble[data-arrow-side="left"]::after {
-        left: calc(1px - var(--support-tooltip-arrow-fill-size));
-        border-top-width: var(--support-tooltip-arrow-fill-size);
-        border-bottom-width: var(--support-tooltip-arrow-fill-size);
-        border-right: var(--support-tooltip-arrow-fill-size) solid var(--support-tooltip-bg-bottom);
-      }
-
-      .support-tooltip-bubble[data-arrow-side="top"][data-arrow-align="start"]::before,
-      .support-tooltip-bubble[data-arrow-side="bottom"][data-arrow-align="start"]::before {
-        left: var(--support-tooltip-arrow-border-inset);
-      }
-
-      .support-tooltip-bubble[data-arrow-side="top"][data-arrow-align="start"]::after,
-      .support-tooltip-bubble[data-arrow-side="bottom"][data-arrow-align="start"]::after {
-        left: var(--support-tooltip-arrow-fill-inset);
-      }
-
-      .support-tooltip-bubble[data-arrow-side="top"][data-arrow-align="center"]::before,
-      .support-tooltip-bubble[data-arrow-side="top"][data-arrow-align="center"]::after,
-      .support-tooltip-bubble[data-arrow-side="bottom"][data-arrow-align="center"]::before,
-      .support-tooltip-bubble[data-arrow-side="bottom"][data-arrow-align="center"]::after {
-        left: 50%;
-        transform: translateX(-50%);
-      }
-
-      .support-tooltip-bubble[data-arrow-side="top"][data-arrow-align="end"]::before,
-      .support-tooltip-bubble[data-arrow-side="bottom"][data-arrow-align="end"]::before {
-        right: var(--support-tooltip-arrow-border-inset);
-      }
-
-      .support-tooltip-bubble[data-arrow-side="top"][data-arrow-align="end"]::after,
-      .support-tooltip-bubble[data-arrow-side="bottom"][data-arrow-align="end"]::after {
-        right: var(--support-tooltip-arrow-fill-inset);
-      }
-
-      .support-tooltip-bubble[data-arrow-side="right"][data-arrow-align="start"]::before,
-      .support-tooltip-bubble[data-arrow-side="left"][data-arrow-align="start"]::before {
-        top: var(--support-tooltip-arrow-border-inset);
-      }
-
-      .support-tooltip-bubble[data-arrow-side="right"][data-arrow-align="start"]::after,
-      .support-tooltip-bubble[data-arrow-side="left"][data-arrow-align="start"]::after {
-        top: var(--support-tooltip-arrow-fill-inset);
-      }
-
-      .support-tooltip-bubble[data-arrow-side="right"][data-arrow-align="center"]::before,
-      .support-tooltip-bubble[data-arrow-side="right"][data-arrow-align="center"]::after,
-      .support-tooltip-bubble[data-arrow-side="left"][data-arrow-align="center"]::before,
-      .support-tooltip-bubble[data-arrow-side="left"][data-arrow-align="center"]::after {
-        top: 50%;
-        transform: translateY(-50%);
-      }
-
-      .support-tooltip-bubble[data-arrow-side="right"][data-arrow-align="end"]::before,
-      .support-tooltip-bubble[data-arrow-side="left"][data-arrow-align="end"]::before {
-        bottom: var(--support-tooltip-arrow-border-inset);
-      }
-
-      .support-tooltip-bubble[data-arrow-side="right"][data-arrow-align="end"]::after,
-      .support-tooltip-bubble[data-arrow-side="left"][data-arrow-align="end"]::after {
-        bottom: var(--support-tooltip-arrow-fill-inset);
-      }
-
-      .support-tooltip-bubble[data-visible="true"] {
-        visibility: visible;
-        opacity: 1;
-        transform: translate3d(0, 0, 0) scale(1);
-      }
-
-      .text-shimmer {
-        position: relative;
-        display: inline-block;
-        font-weight: 400;
-        background-image: linear-gradient(
-          110deg,
-          rgba(60, 68, 85, 0.88) 0%,
-          rgba(60, 68, 85, 0.95) 30%,
-          rgba(255, 255, 255, 0.12) 46%,
-          rgba(255, 255, 255, 0.16) 50%,
-          rgba(255, 255, 255, 0.12) 54%,
-          rgba(60, 68, 85, 0.95) 70%,
-          rgba(60, 68, 85, 0.88) 100%
-        );
-        background-size: 280% 100%;
-        background-position: 140% 0;
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-
-      .is-entered .text-shimmer {
-        animation: x-text-shimmer-press 4300ms linear infinite;
-      }
-
-      .is-entered .text-shimmer-delay {
-        animation: x-text-shimmer-invoke 4300ms linear infinite;
-      }
-
-      @keyframes x-text-shimmer-press {
-        0% {
-          background-position: 140% 0;
-        }
-        24% {
-          background-position: -40% 0;
-        }
-        100% {
-          background-position: -40% 0;
-        }
-      }
-
-      @keyframes x-text-shimmer-invoke {
-        0%,
-        33.8% {
-          background-position: 140% 0;
-        }
-        66% {
-          background-position: -40% 0;
-        }
-        100% {
-          background-position: -40% 0;
-        }
-      }
-
-      .is-safari .text-shimmer {
-        color: #3c4455;
-        background: none;
-        -webkit-background-clip: border-box;
-        background-clip: border-box;
-        -webkit-text-fill-color: currentColor;
-      }
-
-      .is-safari .text-shimmer::after {
-        content: attr(data-shimmer-text);
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-        color: transparent;
-        -webkit-text-fill-color: transparent;
-        background-image: linear-gradient(
-          110deg,
-          rgba(255, 255, 255, 0) 0%,
-          rgba(255, 255, 255, 0) 38%,
-          rgba(255, 255, 255, 0.6) 49%,
-          rgba(255, 255, 255, 0) 60%,
-          rgba(255, 255, 255, 0) 100%
-        );
-        background-size: 280% 100%;
-        background-position: 140% 0;
-        -webkit-background-clip: text;
-        background-clip: text;
-      }
-
-      .is-safari .is-entered .text-shimmer::after {
-        animation: x-text-shimmer-press 4300ms linear infinite;
-      }
-
-      .is-safari .is-entered .text-shimmer-delay::after {
-        animation: x-text-shimmer-invoke 4300ms linear infinite;
-      }
-
-      @keyframes x-hero-enter {
-        from {
-          opacity: 0;
-          transform: translateX(-24px);
-          filter: blur(6px);
-        }
-        to {
-          opacity: 1;
-          transform: translateX(0);
-          filter: blur(0);
-        }
-      }
-
-      .kbd-group {
-        display: inline-flex;
-        align-items: center;
-        gap: 4px;
-      }
-
-      kbd {
-        min-width: 38px;
-        height: 30px;
-        border-radius: 8px;
-        border: 3px solid #000;
-        padding: 0 10px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        font-family: "Open Sans", "PingFang SC", sans-serif;
-        font-size: 13px;
-        font-weight: 500;
-        color: #000;
-        background: linear-gradient(180deg, #ededed 0%, #ffffff 100%);
-        box-shadow: 0 5px 0 #000, inset 0 -2px 5px rgba(255, 255, 255, 0.34);
-        text-shadow: 0 1px 0 rgba(255, 255, 255, 0.42);
-        transition: transform 120ms ease, box-shadow 120ms ease, background 120ms ease;
-      }
-
-      .kbd-key-trigger {
-        text-shadow:
-          0 1px 0 rgba(255, 255, 255, 0.42),
-          0 0 1px rgba(0, 0, 0, 0.26);
-      }
-
-      .is-entered .kbd-key-modifier {
-        animation: x-kbd-press-modifier 4300ms linear infinite;
-      }
-
-      .is-entered .kbd-key-trigger {
-        animation: x-kbd-press-trigger 4300ms linear infinite;
-      }
-
-      @keyframes x-kbd-press-modifier {
-        0%,
-        24.5%,
-        100% {
-          transform: translateY(0);
-          background: linear-gradient(180deg, #ededed 0%, #ffffff 100%);
-          box-shadow: 0 5px 0 #000, inset 0 -2px 5px rgba(255, 255, 255, 0.34);
-        }
-        25.2%,
-        26.8% {
-          transform: translateY(2px);
-          background: linear-gradient(180deg, #e2e2e2 0%, #f2f2f2 100%);
-          box-shadow: 0 3px 0 #000, inset 0 -1px 3px rgba(255, 255, 255, 0.22);
-        }
-        27.6% {
-          transform: translateY(-1px);
-          background: linear-gradient(180deg, #f1f1f1 0%, #ffffff 100%);
-          box-shadow: 0 6px 0 #000, inset 0 -2px 5px rgba(255, 255, 255, 0.36);
-        }
-      }
-
-      @keyframes x-kbd-press-trigger {
-        0%,
-        26.9%,
-        100% {
-          transform: translateY(0);
-          background: linear-gradient(180deg, #ededed 0%, #ffffff 100%);
-          box-shadow: 0 5px 0 #000, inset 0 -2px 5px rgba(255, 255, 255, 0.34);
-        }
-        27.6%,
-        29.2% {
-          transform: translateY(2px);
-          background: linear-gradient(180deg, #e2e2e2 0%, #f2f2f2 100%);
-          box-shadow: 0 3px 0 #000, inset 0 -1px 3px rgba(255, 255, 255, 0.22);
-        }
-        30% {
-          transform: translateY(-1px);
-          background: linear-gradient(180deg, #f1f1f1 0%, #ffffff 100%);
-          box-shadow: 0 6px 0 #000, inset 0 -2px 5px rgba(255, 255, 255, 0.36);
-        }
-      }
-
-      .actions {
-        display: flex;
-        align-items: center;
-        gap: 14px;
+      a {
+        color: inherit;
       }
 
       .top-nav {
         position: fixed;
         top: 18px;
-        left: 36px;
-        right: 24px;
-        z-index: 30;
+        left: 50%;
+        z-index: 50;
+        width: min(calc(100% - 48px), var(--content-width));
+        min-height: 56px;
+        padding: 7px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 16px;
+        gap: 18px;
+        transform: translateX(-50%);
+        border: 1px solid transparent;
+        border-radius: 999px;
+        background: transparent;
+        box-shadow: none;
+        backdrop-filter: blur(0);
+        -webkit-backdrop-filter: blur(0);
+        contain: layout;
+        transition:
+          background-color 180ms ease,
+          border-color 180ms ease,
+          box-shadow 180ms ease,
+          backdrop-filter 180ms ease;
+      }
+
+      body.has-nav-overlap .top-nav {
+        border-color: rgba(211, 217, 226, 0.78);
+        background: rgba(255, 255, 255, 0.84);
+        box-shadow: 0 10px 32px rgba(35, 43, 52, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(18px);
+        -webkit-backdrop-filter: blur(18px);
       }
 
       .top-nav-brand {
         display: inline-flex;
         align-items: center;
         flex: 0 0 auto;
+        padding: 5px 10px 5px 22px;
         text-decoration: none;
       }
 
-      .top-nav-brand-mark {
+      .top-nav-brand img {
+        width: 70px;
+        height: 17px;
         display: block;
-        width: 58px;
-        height: auto;
+        object-fit: contain;
       }
 
-      .top-nav-brand-mark svg {
+      .top-nav-actions {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 8px;
+        margin-right: 2.5px;
+      }
+
+      .top-nav-ghost-links {
+        --lumno-panel-text: var(--text-main);
+        --lumno-panel-subtext: #68717c;
+        --lumno-control-hover-bg: rgba(29, 32, 36, 0.06);
+        display: flex;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        align-items: center;
+        gap: 2px;
+        transform: translate(-50%, -50%);
+      }
+
+      .top-nav-ghost-button {
+        min-height: 34px;
+        padding: 0 12px;
+        color: var(--lumno-panel-subtext);
+        font-size: 14px;
+        white-space: nowrap;
+      }
+
+      .top-nav .lumno-settings-select-option,
+      .top-nav-install {
+        font-size: 14px;
+      }
+
+      .top-nav-more-menu {
+        display: none;
+      }
+
+      .top-nav-more-dropdown {
+        min-width: 168px;
+      }
+
+      .top-nav-more-option {
+        white-space: nowrap;
+      }
+
+      .install-menu {
+        z-index: 1;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        width: max-content;
+        text-decoration: none;
+      }
+
+      .brand-icon {
+        width: 34px;
+        height: 34px;
         display: block;
-        width: 100%;
-        height: auto;
+        overflow: hidden;
+      }
+
+      .brand-icon svg {
+        width: 44px;
+        height: 48px;
+        display: block;
+        transform: translate(-8px, -1px);
         shape-rendering: geometricPrecision;
       }
 
-      .is-safari .top-nav-brand-mark {
-        transform: translateZ(0);
-      }
-
-      .top-actions {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-      }
-
-      .pill-btn {
-        min-height: 36px;
-        position: relative;
-        border-radius: 999px;
-        border: 1px solid var(--border-soft);
-        background: linear-gradient(180deg, #ffffff 0%, #ecedef 100%);
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02), inset 0 -4px 3px rgba(255, 255, 255, 0.59);
-        padding: 9px 14px;
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-        font-size: 14px;
-        line-height: 1;
-        font-weight: 500;
-        color: var(--lang-ink);
-        text-decoration: none;
-        transition:
-          transform 0.18s ease,
-          box-shadow 0.18s ease,
-          border-color 0.18s ease,
-          background 0.18s ease;
-      }
-
-
-      .pill-btn-selected {
-        box-shadow:
-          0 20px 6px rgba(0, 0, 0, 0),
-          0 13px 5px rgba(0, 0, 0, 0),
-          0 7px 4px rgba(0, 0, 0, 0.01),
-          0 3px 3px rgba(0, 0, 0, 0.02),
-          0 1px 2px rgba(0, 0, 0, 0.02);
-      }
-
-      .pill-btn-selected::after {
-        content: "";
-        position: absolute;
-        inset: -1px;
-        border-radius: inherit;
-        pointer-events: none;
-        box-shadow: inset 0 -4px 3px rgba(255, 255, 255, 0.59);
-      }
-
-      .pill-btn:focus-visible {
-        outline: 2px solid rgba(75, 84, 95, 0.35);
-        outline-offset: 2px;
-      }
-
-      @media (hover: hover) and (pointer: fine) {
-        .pill-btn:hover {
-          transform: translateY(-1px);
-          border-color: #d2d8df;
-          background: linear-gradient(180deg, #ffffff 0%, #e8ebef 100%);
-          box-shadow:
-            0 14px 18px rgba(0, 0, 0, 0.04),
-            0 2px 3px rgba(0, 0, 0, 0.04),
-            inset 0 -4px 3px rgba(255, 255, 255, 0.65);
-        }
-
-        .pill-btn.pill-btn-selected:hover {
-          box-shadow:
-            0 20px 6px rgba(0, 0, 0, 0),
-            0 13px 5px rgba(0, 0, 0, 0),
-            0 9px 6px rgba(0, 0, 0, 0.02),
-            0 4px 4px rgba(0, 0, 0, 0.03),
-            0 1px 2px rgba(0, 0, 0, 0.03);
-        }
-      }
-
-      .pill-btn:active {
-        transform: translateY(1px);
-        background: linear-gradient(180deg, #ffffff 0%, #ecedef 100%);
-        box-shadow:
-          0 2px 5px rgba(0, 0, 0, 0.06),
-          inset 0 -4px 3px rgba(255, 255, 255, 0.59);
-      }
-
-      .pill-btn.pill-btn-selected:active {
-        box-shadow:
-          0 6px 8px rgba(0, 0, 0, 0.06),
-          0 1px 2px rgba(0, 0, 0, 0.04);
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        .pill-btn {
-          transition: none;
-        }
-
-        .hero,
-        .shortcut-line {
-          opacity: 1;
-          transform: none;
-          filter: none;
-          animation: none;
-        }
-
-        .text-shimmer,
-        .text-shimmer-delay {
-          animation: none;
-          background: none;
-          -webkit-text-fill-color: currentColor;
-        }
-
-        .kbd-key {
-          animation: none;
-        }
-
-        .logo-butterfly {
-          transform: none;
-          animation: none;
-        }
-
-        .logo-butterfly animate {
-          display: none;
-        }
-
-        .feature-card {
-          opacity: 1;
-          transform: none;
-          animation: none;
-        }
-      }
-
-      .pill-btn-figma-icon {
-        width: 18px;
-        height: 18px;
+      .brand-wordmark {
+        width: 82px;
+        height: auto;
         display: block;
       }
 
-      .pill-btn img {
-        width: 18px;
-        height: 18px;
+      .footer-links a,
+      .footer-links .community-footer-trigger,
+      .footer-meta a {
+        color: var(--text-sub);
+        text-decoration: none;
+        transition: color 160ms ease;
       }
 
-      .pill-btn .ri-discord-fill,
-      .pill-btn .ri-wechat-fill,
-      .pill-btn .ri-settings-6-line,
-      .pill-btn .ri-github-fill,
-      .pill-btn .ri-file-list-3-line {
-        width: 18px;
-        height: 18px;
+      .footer-links a:hover,
+      .footer-links .community-footer-trigger:hover,
+      .footer-meta a:hover {
+        color: var(--text-main);
+      }
+
+      .footer-links .community-footer-trigger {
+        all: unset;
+        color: var(--text-sub);
+        cursor: pointer;
+        transition: color 160ms ease;
+      }
+
+      .button {
+        min-height: 42px;
+        border: 1px solid var(--line);
+        background: var(--surface);
+        color: var(--text-main);
+      }
+
+      .button {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        font-size: 18px;
-        line-height: 1;
+        gap: 8px;
+        padding: 0 17px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 650;
+        box-shadow: 0 4px 12px var(--shadow-soft);
+        transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
       }
 
-      .pill-btn-icon-only {
-        width: 36px;
-        min-width: 36px;
-        height: 36px;
-        padding: 0;
-        justify-content: center;
+      .button:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 7px 18px var(--shadow-card);
       }
 
-      .pill-btn-dark {
-        position: relative;
-        border: none;
-        color: #ffffff;
-        background: linear-gradient(180deg, #404859 0%, #273042 100%);
-        box-shadow:
-          0 10px 3px rgba(0, 0, 0, 0),
-          0 6px 2px rgba(0, 0, 0, 0.008),
-          0 3px 2px rgba(0, 0, 0, 0.035),
-          0 2px 2px rgba(0, 0, 0, 0.065),
-          0 0 1px rgba(0, 0, 0, 0.075);
+      .button-primary {
+        background: #1d2024;
+        border-color: #1d2024;
+        color: #fff;
       }
 
-      .pill-btn-dark::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        border-radius: inherit;
-        pointer-events: none;
-        box-shadow:
-          inset 0 0 0 1px #040404,
-          inset 0 1px 0 rgba(255, 255, 255, 0.52),
-          inset 0 1px 2.4px rgba(255, 255, 255, 0.36);
+      .button-primary:hover {
+        background: #30343a;
       }
 
-      .pill-btn-dark::after {
-        display: none;
-      }
-
-      @media (hover: hover) and (pointer: fine) {
-        .pill-btn-dark:hover {
-          border-color: transparent;
-          color: #ffffff;
-          background: linear-gradient(180deg, #475164 0%, #2c374b 100%);
-          box-shadow:
-            0 10px 3px rgba(0, 0, 0, 0),
-            0 6px 2px rgba(0, 0, 0, 0.01),
-            0 3px 2px rgba(0, 0, 0, 0.04),
-            0 2px 2px rgba(0, 0, 0, 0.07),
-            0 0 1px rgba(0, 0, 0, 0.08);
-        }
-      }
-
-      .pill-btn-dark:active {
-        color: #ffffff;
-        background: linear-gradient(180deg, #364052 0%, #212a3a 100%);
-        box-shadow:
-          0 4px 6px rgba(0, 0, 0, 0.2),
-          0 1px 2px rgba(0, 0, 0, 0.18);
+      .button-secondary {
+        background: rgba(255, 255, 255, 0.86);
       }
 
       .lang-control {
-        position: fixed;
-        right: 24px;
-        bottom: calc(24px + var(--mobile-bottom-clearance));
-        z-index: 22;
-        width: 38px;
-      }
-
-      .lang-toggle {
-        width: 38px;
-        min-width: 38px;
-        height: 38px;
-        border-radius: 999px;
-        border: 1px solid transparent;
-        appearance: none;
-        -webkit-appearance: none;
-        background: transparent;
-        box-shadow: none;
-        color: var(--lang-ink);
-        -webkit-text-fill-color: currentColor;
-        padding: 0;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0;
-        cursor: pointer;
-      }
-
-      .lang-toggle i,
-      .lang-select-prefix,
-      .lang-select-arrow {
-        color: inherit;
-        -webkit-text-fill-color: currentColor;
-      }
-
-      .lang-toggle i {
-        font-size: 16px;
-        line-height: 1;
-      }
-
-      .lang-select-prefix {
-        width: 18px;
-        height: 18px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .lang-current-label {
-        display: none;
-        flex: 1 1 auto;
-        min-width: 0;
-        font-size: 14px;
-        color: var(--lang-ink);
-        text-align: left;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
-      .lang-select-arrow {
-        display: none;
-        width: 16px;
-        height: 16px;
-        align-items: center;
-        justify-content: center;
-        color: var(--lang-ink);
-      }
-
-      @media (hover: hover) and (pointer: fine) {
-        .lang-toggle:hover {
-          border-color: var(--lang-border);
-          background: var(--lang-surface-hover);
-          box-shadow: 0 6px 14px var(--lang-shadow);
-        }
-      }
-
-      .lang-toggle:active {
-        border-color: var(--lang-border);
-        background: var(--lang-surface-active);
-        box-shadow: 0 2px 6px oklch(42% 0.02 145 / 0.08);
-      }
-
-      .lang-menu {
-        position: absolute;
-        right: 0;
-        bottom: calc(100% + 8px);
-        top: auto;
-        z-index: 36;
-        min-width: 180px;
-        background: var(--lang-surface);
-        border: 1px solid var(--lang-border);
-        border-radius: 12px;
-        padding: 6px;
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-        box-shadow:
-          0 18px 34px var(--lang-shadow),
-          inset 0 1px 0 oklch(100% 0 0 / 0.86);
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(6px) scale(0.97);
-        transform-origin: bottom right;
-        pointer-events: none;
-        transition: opacity 180ms ease, transform 180ms ease;
-      }
-
-      .lang-menu[data-open="true"] {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-        pointer-events: auto;
-        visibility: visible;
-      }
-
-      .lang-option {
-        width: 100%;
-        border: 0;
-        background: transparent;
-        border-radius: 8px;
-        text-align: left;
-        padding: 8px 10px;
-        color: var(--lang-option-ink);
-        font-family: inherit;
-        font-size: 14px;
-        cursor: pointer;
-      }
-
-      .lang-option:hover {
-        background: var(--lang-surface-hover);
-      }
-
-      .lang-option.is-active {
-        background: var(--lang-surface-active);
-        color: var(--lang-active-ink);
-        font-weight: 600;
-      }
-
-      .qrcode-modal {
-        position: fixed;
-        inset: 0;
-        z-index: 30;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-      }
-
-      .qrcode-modal[hidden] {
-        display: none;
-      }
-
-      .qrcode-modal-backdrop {
-        position: absolute;
-        inset: 0;
-        background: rgba(8, 12, 20, 0.6);
-      }
-
-      .qrcode-modal-panel {
-        --qrcode-panel-radius: 16px;
-        --qrcode-panel-padding: 20px;
-        position: relative;
-        width: min(92vw, 380px);
-        border-radius: var(--qrcode-panel-radius);
-        background: #ffffff;
-        box-shadow: 0 24px 42px rgba(16, 23, 38, 0.26);
-        padding: var(--qrcode-panel-padding);
-      }
-
-      .qrcode-modal-close {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        width: 32px;
-        height: 32px;
-        border: none;
-        border-radius: 999px;
-        background: #f2f4f8;
-        color: #212733;
-        cursor: pointer;
-      }
-
-      .qrcode-modal-title {
-        margin: 0 34px 12px 0;
-        font-size: 16px;
-        line-height: 1.35;
-        font-weight: 600;
-        color: #0f1725;
-      }
-
-      .qrcode-modal-image {
-        display: block;
-        width: 100%;
-        border-radius: max(0px, calc(var(--qrcode-panel-radius) - var(--qrcode-panel-padding)));
-      }
-
-      .right-pane {
-        width: 60%;
-        position: relative;
-        margin: 0;
-        border-radius: 0;
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .right-bg {
-        display: none;
-        position: absolute;
-        inset: 0;
-        opacity: 0.2;
-      }
-
-      .right-bg-image {
-        width: 100%;
-        height: 100%;
-        display: block;
-        object-fit: cover;
-        object-position: left center;
-        user-select: none;
-        -webkit-user-drag: none;
-        pointer-events: none;
-      }
-
-      .feature-grid {
-        position: relative;
-        width: 546px;
-        height: 455px;
-        filter: none;
-        transform: scale(1.08);
-        transform-origin: center;
-      }
-
-      .is-safari .feature-grid {
-        filter: none;
-        transform: none;
-        width: 590px;
-        height: 491px;
-      }
-
-      .is-safari .feature-card {
-        box-shadow:
-          0 18px 34px var(--card-shadow),
-          0 2px 8px var(--card-shadow-soft);
-      }
-
-      .is-safari .logo-lockup {
-        transform: none;
-      }
-
-      .is-safari .logo-icon {
-        width: 71px;
-        height: 78px;
-        left: -15px;
-        top: -1px;
-      }
-
-      .is-safari .logo-butterfly-wing-back {
-        transform: translate(1px, 0) rotate(12deg) scale(0.97);
-        filter: none;
-      }
-
-      .feature-card {
-        position: absolute;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-        border-radius: 12px;
-        background: var(--card-grad-end);
-        box-shadow:
-          0 18px 34px var(--card-shadow),
-          0 2px 8px var(--card-shadow-soft);
-        isolation: isolate;
-        opacity: 0;
-        transform: translateY(14px);
-        animation: x-feature-card-enter 400ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
-        transition:
-          transform 340ms cubic-bezier(0.22, 1, 0.36, 1),
-          box-shadow 340ms cubic-bezier(0.22, 1, 0.36, 1);
-        border: none;
-      }
-
-      .feature-card::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        z-index: 0;
-        border-radius: inherit;
-        pointer-events: none;
-        background:
-          radial-gradient(ellipse 88% 62% at 18% -10%, var(--card-highlight) 0%, var(--card-highlight-soft) 42%, var(--card-white-clear) 72%),
-          radial-gradient(ellipse 86% 46% at 50% 62%, var(--card-merge-glow) 0%, var(--card-white-clear) 68%),
-          linear-gradient(90deg, var(--card-white-clear) 0%, var(--card-white-clear) 68%, var(--card-edge-glow) 100%),
-          linear-gradient(180deg, var(--card-grad-start) 0%, var(--card-grad-mid) 52%, var(--card-grad-end) 100%);
-      }
-
-      .feature-card::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        z-index: 2;
-        border-radius: inherit;
-        pointer-events: none;
-        box-shadow:
-          inset 0 0 0 1px var(--card-rim),
-          inset 0 2px 0 oklch(100% 0 0 / 0.94),
-          inset 0 -1px 0 var(--card-bottom-line);
-      }
-
-      .feature-card > * {
         position: relative;
         z-index: 1;
       }
 
-      @media (hover: hover) and (pointer: fine) {
-        .feature-card:hover {
-          transform: translateY(-4px);
-          box-shadow:
-            0 24px 42px oklch(39% 0.026 74 / 0.1),
-            0 7px 16px oklch(50% 0.025 82 / 0.1);
-        }
+      .lang-control .lumno-settings-select-menu {
+        min-width: 180px;
       }
 
-      @keyframes x-feature-card-enter {
-        from {
-          opacity: 0;
-          transform: translateY(14px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
+      main {
+        overflow: hidden;
       }
 
-      .card-title-wrap {
-        padding: 24px 22px 0;
-        flex: 0 0 auto;
-        min-height: 0;
+      .hero-section,
+      .section,
+      .footer-main,
+      .footer-meta {
+        width: min(calc(100% - 48px), var(--content-width));
+        margin-left: auto;
+        margin-right: auto;
       }
 
-      .card-title {
-        margin: 0;
-        font-size: 16px;
-        line-height: 1.3;
-        color: #000;
-        font-weight: 500;
-      }
-
-      .card-desc {
-        margin: 4px 0 0;
-        color: var(--card-text-sub);
-        font-size: 13px;
-        line-height: 1.38;
-      }
-
-      .card-a {
-        left: 0;
-        top: 0;
-        width: 280px;
-        height: 222px;
-        animation-delay: 120ms;
-      }
-
-      .card-a-graphic {
+      .hero-section {
         position: relative;
-        height: 120px;
-        flex: 0 0 120px;
-        margin-top: auto;
+        min-height: 100svh;
+        min-height: 100dvh;
+        padding: 120px 0 80px;
+        display: grid;
+        grid-template-columns: 1fr;
+        max-width: var(--content-width);
+        align-content: start;
+        justify-items: center;
+        isolation: isolate;
       }
 
-      .card-a-image {
+      .hero-copy {
+        position: relative;
+        z-index: 2;
         width: 100%;
-        height: 100%;
+        max-width: 760px;
+        margin: 0 auto;
+        text-align: center;
+        animation: hero-copy-in 680ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+      }
+
+      .hero-copy h1 {
+        margin: 0 auto;
+        max-width: 760px;
+        font-size: clamp(36px, 3.6vw, 48px);
+        line-height: 1.2;
+        letter-spacing: -0.045em;
+        font-weight: 620;
+      }
+
+      .hero-title-line {
         display: block;
-        transform: translateZ(0);
-        backface-visibility: hidden;
-        -webkit-backface-visibility: hidden;
+        padding-block: 0.1em;
+        font-weight: 620;
       }
 
-      .card-graphic-image {
-        width: 100%;
-        height: 100%;
-        display: block;
-        transform: translateZ(0);
-        backface-visibility: hidden;
-        -webkit-backface-visibility: hidden;
+      .hero-title-segment {
+        background: linear-gradient(180deg, #3a342b 0%, #5a5247 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        -webkit-text-fill-color: transparent;
       }
 
-      .card-a-image svg,
-      .card-graphic-image svg {
-        width: 100%;
-        height: 100%;
+      .hero-title-has-break .hero-title-line {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        justify-content: center;
+      }
+
+      .hero-title-has-break .hero-title-segment {
+        display: inline-block;
+        white-space: nowrap;
+      }
+
+      .hero-title-app-icon {
+        --hero-icon-box: clamp(40px, 3.5vw, 48px);
+        position: relative;
+        display: inline-block;
+        width: var(--hero-icon-box);
+        height: var(--hero-icon-box);
+        margin-left: clamp(12px, 1.6vw, 20px);
+        vertical-align: -0.11em;
+        overflow: visible;
+        transform: rotate(4deg);
+        transform-origin: 24% 77%;
+      }
+
+      .hero-title-app-icon svg {
+        position: absolute;
+        width: calc(var(--hero-icon-box) * 63 / 48);
+        height: calc(var(--hero-icon-box) * 69 / 48);
+        left: calc(var(--hero-icon-box) * -13 / 48);
+        top: calc(var(--hero-icon-box) * -1 / 48);
         display: block;
         shape-rendering: geometricPrecision;
       }
 
-      .card-b {
-        left: 292px;
-        top: 0;
-        width: 252px;
-        height: 222px;
-        animation-delay: 200ms;
+      .hero-copy > p {
+        max-width: 590px;
+        margin: 18px auto 0;
+        color: var(--text-sub);
+        font-size: clamp(16px, 1.35vw, 18px);
+        line-height: 1.72;
+        white-space: pre-line;
       }
 
-      .card-b-graphic {
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        margin-top: 22px;
+      }
+
+      .hero-section .hero-safari-demo {
+        height: clamp(300px, calc(100svh - 470px), 620px);
+        aspect-ratio: auto;
+        margin-top: clamp(52px, 4.5vw, 72px);
+      }
+
+      .hero-actions-button {
+        min-height: 44px;
+        padding: 8px 16px;
+        font-size: 14px;
+        font-weight: 650;
+        line-height: 1.4;
+        white-space: nowrap;
+      }
+
+      .hero-copy > .hero-open-source-note {
+        margin: 10px auto 0;
+        color: var(--text-sub);
+        font-size: 12px;
+        line-height: 1.5;
+      }
+
+      .hero-license-link {
+        color: inherit;
+        font-weight: 600;
+        text-decoration: underline;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 3px;
+        white-space: nowrap;
+      }
+
+      .hero-license-link:hover {
+        color: var(--text-main);
+      }
+
+      @keyframes hero-copy-in {
+        from { opacity: 0; transform: translateY(18px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      .section {
+        padding: 112px 0;
+        border-top: 1px solid var(--line);
+      }
+
+      .section-heading {
+        max-width: 650px;
+      }
+
+      .section-heading-wide {
+        max-width: 820px;
+      }
+
+      .section-heading h2,
+      .trust-copy h2,
+      .browser-section h2,
+      .final-cta h2 {
+        margin: 0;
+        font-size: clamp(34px, 4vw, 52px);
+        line-height: 1.14;
+        letter-spacing: -0.035em;
+        font-weight: 620;
+      }
+
+      .section-heading p,
+      .trust-copy > p,
+      .browser-section > div > p,
+      .final-cta-copy > p {
+        margin: 20px 0 0;
+        color: var(--text-sub);
+        font-size: 17px;
+        line-height: 1.75;
+      }
+
+      .feature-intro {
         position: relative;
-        height: 120px;
-        flex: 0 0 120px;
-        margin-top: auto;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 42px;
+        align-items: end;
+      }
+
+      .text-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        width: max-content;
+        color: var(--blue-dark);
+        font-size: 15px;
+        font-weight: 650;
+        text-decoration: none;
+      }
+
+      .text-link i {
+        transition: transform 160ms ease;
+      }
+
+      .text-link:hover i {
+        transform: translateX(3px);
+      }
+
+      .workflow-section {
+        display: grid;
+        grid-template-columns: 0.76fr 1.24fr;
+        gap: clamp(56px, 9vw, 130px);
+      }
+
+      .workflow-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        border-top: 1px solid var(--line-strong);
+      }
+
+      .workflow-list li {
+        display: grid;
+        grid-template-columns: 44px 42px 170px 1fr;
+        gap: 18px;
+        align-items: start;
+        padding: 28px 0;
+        border-bottom: 1px solid var(--line-strong);
+      }
+
+      .step-number {
+        padding-top: 9px;
+        color: var(--text-soft);
+        font-size: 12px;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .step-icon,
+      .audience-mark,
+      .trust-icon {
+        display: grid;
+        place-items: center;
+        color: var(--blue-dark);
+        background: var(--surface-blue);
+      }
+
+      .step-icon {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        font-size: 19px;
+      }
+
+      .workflow-list h3,
+      .audience-list h3,
+      .trust-list h3 {
+        margin: 8px 0 0;
+        font-size: 17px;
+        line-height: 1.45;
+        font-weight: 650;
+      }
+
+      .workflow-list p,
+      .audience-list p,
+      .trust-list p {
+        margin: 7px 0 0;
+        color: var(--text-sub);
+        font-size: 14px;
+        line-height: 1.7;
+      }
+
+      .audience-section {
+        display: grid;
+        gap: 66px;
+      }
+
+      .audience-list {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0;
+        border-top: 1px solid var(--line-strong);
+        border-bottom: 1px solid var(--line-strong);
+      }
+
+      .audience-list article {
+        min-height: 250px;
+        padding: 34px 38px 38px;
+        border-right: 1px solid var(--line-strong);
+      }
+
+      .audience-list article:first-child {
+        padding-left: 0;
+      }
+
+      .audience-list article:last-child {
+        padding-right: 0;
+        border-right: 0;
+      }
+
+      .audience-mark {
+        width: 48px;
+        height: 48px;
+        border-radius: 14px;
+        margin-bottom: 34px;
+        font-size: 21px;
+      }
+
+      .audience-list h3 {
+        font-size: 20px;
+      }
+
+      .trust-section {
+        display: grid;
+        grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+        gap: clamp(64px, 10vw, 146px);
+        align-items: start;
+        padding-top: 124px;
+        padding-bottom: 124px;
+      }
+
+      .trust-copy .text-link {
+        margin-top: 30px;
+      }
+
+      .trust-list {
+        display: grid;
+      }
+
+      .trust-list article {
+        display: grid;
+        grid-template-columns: 50px 1fr;
+        gap: 20px;
+        padding: 26px 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .trust-list article:first-child {
+        padding-top: 0;
+      }
+
+      .trust-icon {
+        width: 46px;
+        height: 46px;
+        border-radius: 13px;
+        color: var(--green-ink);
+        background: var(--green-soft);
+        font-size: 20px;
+      }
+
+      .trust-list h3 {
+        margin-top: 1px;
+      }
+
+      .browser-section {
+        padding-top: 72px;
+        padding-bottom: 72px;
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr;
+        gap: 60px;
+        align-items: center;
+      }
+
+      .browser-section h2 {
+        font-size: clamp(30px, 3.1vw, 42px);
+      }
+
+      .browser-section > div > p {
+        margin-top: 12px;
+        font-size: 15px;
+      }
+
+      .browser-list {
+        margin: 0;
+        padding: 0;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        list-style: none;
+        border-top: 1px solid var(--line-strong);
+        border-left: 1px solid var(--line-strong);
+      }
+
+      .browser-list li {
+        min-height: 62px;
+        display: grid;
+        place-items: center;
+        border-right: 1px solid var(--line-strong);
+        border-bottom: 1px solid var(--line-strong);
+        color: var(--text-sub);
+        font-size: 14px;
+        font-weight: 650;
+      }
+
+      .faq-section {
+        display: grid;
+        grid-template-columns: 0.65fr 1.35fr;
+        gap: clamp(56px, 10vw, 156px);
+      }
+
+      .faq-list {
+        border-top: 1px solid var(--line-strong);
+      }
+
+      .faq-list details {
+        border-bottom: 1px solid var(--line-strong);
+      }
+
+      .faq-list summary {
+        min-height: 76px;
+        display: grid;
+        grid-template-columns: 1fr 24px;
+        gap: 18px;
+        align-items: center;
+        cursor: pointer;
+        list-style: none;
+        font-size: 16px;
+        font-weight: 620;
+      }
+
+      .faq-list summary::-webkit-details-marker {
+        display: none;
+      }
+
+      .faq-list summary i {
+        color: var(--text-soft);
+        font-size: 20px;
+        transition: transform 180ms ease;
+      }
+
+      .faq-list details[open] summary i {
+        transform: rotate(45deg);
+      }
+
+      .faq-list details > p {
+        max-width: 700px;
+        margin: -4px 46px 24px 0;
+        color: var(--text-sub);
+        font-size: 14px;
+        line-height: 1.75;
+      }
+
+      .final-cta {
+        margin-bottom: 112px;
+        padding: 78px 82px;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 56px;
+        align-items: end;
+        background: rgba(239, 247, 251, 0.78);
+        border: 1px solid #d7e6ee;
+        border-radius: 22px;
+      }
+
+      .final-logo {
+        width: 52px;
+        height: 52px;
+        display: block;
         overflow: hidden;
+        margin-bottom: 28px;
       }
 
-      .rings {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-      }
-
-      .rings.r1 {
-        top: -84px;
-        width: 287px;
-      }
-
-      .rings.r2 {
-        top: -61px;
-        width: 241px;
-      }
-
-      .rings.r3 {
-        top: -35px;
-        width: 189px;
-      }
-
-      .rings.r4 {
-        top: -12px;
-        width: 143px;
-      }
-
-      .rings.r5 {
-        top: 12px;
-        width: 95px;
-      }
-
-      .center-mark {
-        position: absolute;
-        top: 37px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 44px;
-      }
-
-      .social-bubble {
-        position: absolute;
-        width: 34px;
-        height: 34px;
-        border-radius: 999px;
-        padding: 8px;
-        background: #fff;
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 3px 3px rgba(0, 0, 0, 0.04);
-      }
-
-      .social-bubble img {
-        width: 18px;
-        height: 18px;
-      }
-
-      .s1 {
-        left: 31px;
-        top: 66px;
-      }
-
-      .s2 {
-        left: 186px;
-        top: 15px;
-      }
-
-      .s3 {
-        left: 61px;
-        top: 7px;
-      }
-
-      .s4 {
-        left: 210px;
-        top: 73px;
-      }
-
-      .edge-fade-top,
-      .edge-fade-bottom {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 280px;
-        pointer-events: none;
-      }
-
-      .edge-fade-top {
-        top: 0;
-        height: 40px;
-      }
-
-      .edge-fade-bottom {
-        bottom: 0;
-        height: 20px;
-      }
-
-      .card-c {
-        left: 0;
-        top: 233px;
-        width: 236px;
-        height: 222px;
-        animation-delay: 280ms;
-      }
-
-      .card-c-graphic {
-        position: relative;
-        height: 120px;
-        flex: 0 0 120px;
-        margin-top: auto;
-        overflow: hidden;
-      }
-
-      .c-ellipse-a {
-        position: absolute;
-        top: -5px;
-        left: 78px;
-        width: 194px;
-      }
-
-      .c-ellipse-b {
-        position: absolute;
-        top: -11px;
-        left: 41px;
-        width: 162px;
-      }
-
-      .mini-card {
-        position: absolute;
-        top: 7px;
-        left: 96px;
-        width: 118px;
+      .final-logo svg {
+        width: 68px;
         height: 74px;
-        border-radius: 14.5px;
-        border: 0.52px solid rgba(0, 0, 0, 0.62);
-        background: #dae6f8;
-        transform: rotate(-6.2deg);
-        box-shadow: 0 2px 4px rgba(82, 128, 188, 0.15), 0 7px 7px rgba(82, 128, 188, 0.13);
+        transform: translate(-12px, -2px);
       }
 
-      .mini-window {
-        position: absolute;
-        left: 3.6px;
-        right: 3.6px;
-        top: -6.7px;
-        height: 57.9px;
-        border-radius: 10.4px;
-        overflow: hidden;
-        border: 0.52px solid rgba(0, 0, 0, 0.1);
-        background: #fff;
+      .final-cta-copy {
+        max-width: 760px;
       }
 
-      .mini-brand {
-        position: absolute;
-        top: 6.7px;
-        left: 7.8px;
+      .final-cta-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .site-legal-nav {
+        border-top: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.54);
+      }
+
+      .footer-main {
+        padding: 72px 0 60px;
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: 80px;
+      }
+
+      .footer-brand > p {
+        max-width: 360px;
+        margin: 18px 0 0;
+        color: var(--text-sub);
+        font-size: 14px;
+        line-height: 1.7;
+      }
+
+      .footer-links {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+      }
+
+      .footer-links > div {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .footer-links h2 {
+        margin: 0 0 6px;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .footer-links a,
+      .footer-links .community-footer-trigger {
+        font-size: 13px;
+      }
+
+      .footer-meta {
+        min-height: 74px;
         display: flex;
         align-items: center;
-        gap: 3.6px;
-        font-size: 7.3px;
-        line-height: 1;
-        font-weight: 600;
+        justify-content: space-between;
+        gap: 20px;
+        border-top: 1px solid var(--line);
+        color: var(--text-soft);
+        font-size: 12px;
       }
 
-      .mini-brand img {
-        width: 13px;
-        height: 13px;
-      }
-
-      .mini-window p {
+      .footer-meta p {
         margin: 0;
       }
 
-      .mini-text {
-        position: absolute;
-        left: 24px;
-        right: 7px;
-        top: 21px;
-        font-size: 6.2px;
-        line-height: 1.25;
-      }
-
-      .mini-footer {
-        position: absolute;
-        left: 7px;
-        right: 7px;
-        bottom: 8px;
-        display: flex;
-        align-items: center;
-        gap: 2px;
-        font-size: 7.3px;
-        color: rgba(0, 0, 0, 0.5);
-      }
-
-      .mini-footer img {
-        width: 7px;
-        height: 7px;
-      }
-
-      .folder-a,
-      .folder-b {
-        position: absolute;
-      }
-
-      .folder-a {
-        top: 10px;
-        left: 49px;
-        width: 25px;
-        transform: rotate(-21.57deg);
-      }
-
-      .folder-b {
-        top: 49px;
-        left: 51px;
-        width: 21px;
-        transform: rotate(-41.18deg);
-      }
-
-      .fade-c {
-        position: absolute;
-        left: calc(50% + 8px);
-        transform: translateX(-50%) scaleY(-1);
-        bottom: 0;
-        width: 280px;
-        height: 42px;
-      }
-
-      .card-d {
-        left: 248px;
-        top: 233px;
-        width: 298px;
-        height: 222px;
-        animation-delay: 360ms;
-      }
-
-      .title-with-badge {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-
-      .title-badge {
-        width: 36.991px;
-        height: 20.684px;
-        display: block;
-        flex: none;
-      }
-
-      .title-strong {
-        font-weight: 600;
-      }
-
-      .card-d-graphic {
-        position: relative;
-        height: 120px;
-        flex: 0 0 120px;
-        margin-top: auto;
-        overflow: hidden;
-      }
-
-      .auto-pip-box {
-        position: absolute;
-        left: 133px;
-        top: 17px;
-        width: 126px;
-        height: 79px;
-        border-radius: 10px;
-        border: 1px solid #e2e2e2;
-        background: linear-gradient(180deg, #fcfcfc 0%, #ffffff 100%);
-        transform: rotate(4.94deg);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .auto-pip-box img {
-        width: 36px;
-      }
-
-      .auto-pill {
-        position: absolute;
-        left: 173px;
-        top: 10px;
-        width: 56px;
-        transform: rotate(4.94deg);
-      }
-
-      .binary {
-        position: absolute;
-        font-family: "MiSans", "Inter", sans-serif;
-        font-size: 11px;
-        line-height: 1.1;
-        color: #acace6;
-        opacity: 0.85;
-        user-select: none;
-      }
-
-      .b1 {
-        left: 261px;
-        top: 3px;
-      }
-
-      .b2 {
-        left: 99px;
-        top: 64px;
-      }
-
-      .star-a {
-        position: absolute;
-        left: 108px;
-        top: 19px;
-        width: 19px;
-        transform: rotate(71.44deg);
-      }
-
-      .star-b {
-        position: absolute;
-        left: 269px;
-        top: 69px;
-        width: 12px;
-        transform: rotate(71.44deg);
-      }
-
-      @media (max-width: 1250px) {
-        .left-pane {
-          min-width: 500px;
-        }
-
-        .feature-grid {
-          transform: scale(0.92);
-          transform-origin: center;
-        }
-      }
-
-      @media (min-width: 1680px) {
-        .onboarding {
-          display: grid;
-          grid-template-columns: minmax(420px, 480px) 590px;
-          column-gap: clamp(72px, 6vw, 140px);
-          justify-content: center;
-        }
-
-        .left-pane {
-          width: auto;
-          min-width: 0;
-          padding-left: 0;
-          padding-right: 0;
-        }
-
-        .right-pane {
-          width: auto;
-          overflow: visible;
-          justify-content: center;
-        }
-
-        .feature-grid {
-          margin-left: 0;
-        }
+      :focus-visible {
+        outline: 3px solid rgba(75, 167, 221, 0.38);
+        outline-offset: 3px;
       }
 
       @media (max-width: 1080px) {
-        :root {
-          --producthunt-badge-width: min(68vw, 250px);
-        }
-
-        html {
-          background-color: var(--bg);
-          background-image: none;
-        }
-
-        body {
-          background-color: transparent;
-          background-image: none;
-        }
-
-        body::after {
-          content: "";
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          height: var(--mobile-status-cover-height);
-          z-index: 29;
-          pointer-events: none;
-          background: var(--bg);
-        }
-
-        .top-nav {
-          top: calc(var(--mobile-top-clearance) + 12px);
-          left: 16px;
-          right: 16px;
-          min-height: 52px;
-          padding: 6px 8px 6px 14px;
-          border: 1px solid rgba(224, 228, 235, 0.48);
-          border-radius: 999px;
-          background: rgba(250, 250, 250, 0.44);
-          box-shadow:
-            0 10px 24px rgba(26, 36, 54, 0.055),
-            0 1px 4px rgba(26, 36, 54, 0.035),
-            inset 0 1px 0 rgba(255, 255, 255, 0.54);
-          backdrop-filter: saturate(130%) blur(14px);
-          -webkit-backdrop-filter: saturate(130%) blur(14px);
-          transition:
-            background-color 160ms ease,
-            box-shadow 160ms ease;
-        }
-
-        body.has-nav-overlap .top-nav {
-          background: rgba(250, 250, 250, 0.58);
-        }
-
-        .onboarding {
-          flex-direction: column;
-          min-height: 100vh;
-          min-height: 100svh;
-          min-height: 100dvh;
-          justify-content: flex-start;
-          padding: 112px 0 44px;
-          padding: 112px 0 max(44px, var(--mobile-flow-bottom-clearance));
-        }
-
-        .left-pane,
-        .right-pane {
-          width: 100%;
-          min-width: 0;
-          margin: 0;
-          border-radius: 0;
-        }
-
-        .left-pane {
-          display: block;
-          padding: 28px 30px 30px;
-        }
-
-        .left-main {
-          position: static;
-          transform: none;
-          width: 100%;
-          max-width: 680px;
-          margin: 0 auto;
-          align-items: center;
-          text-align: center;
-          gap: 24px;
-        }
-
-        .hero {
-          width: 100%;
-          max-width: 700px;
-        }
-
-        .title-row {
-          flex-wrap: wrap;
-          justify-content: center;
-        }
-
-        .is-locale-en .subtitle {
-          white-space: normal;
-          overflow-wrap: anywhere;
-        }
-
-        .shortcut-line {
-          margin-top: 22px;
-          font-size: 17px;
-          justify-content: center;
-        }
-
-        .shortcut-line-store {
-          align-items: center;
-        }
-
-        .shortcut-store-badges {
-          flex-wrap: wrap;
-          justify-content: center;
-        }
-
-        .shortcut-store-note {
-          justify-content: center;
-          text-align: center;
-        }
-
-        .shortcut-store-badge {
-          width: min(68vw, var(--store-badge-width));
-          height: auto;
-        }
-
-        .producthunt-badge-wrap {
-          margin-top: 16px;
-          display: flex;
-          justify-content: center;
-        }
-
-        .producthunt-badge-wrap--hero {
-          display: none;
-        }
-
-        .producthunt-badge-wrap--page-bottom {
-          display: flex;
-          margin: 0 auto 56px;
-          margin: 0 auto max(56px, calc(var(--mobile-flow-bottom-clearance) + 16px));
-          padding: 0 20px;
-        }
-
-        .site-legal-nav {
-          position: relative;
-          left: auto;
-          bottom: auto;
-          width: 100%;
-          margin: 12px auto 0;
-          padding: 0 20px;
-          justify-content: center;
-        }
-
-        .is-twitter-in-app-browser .producthunt-badge-wrap--page-bottom {
-          display: none;
-        }
-
-        .producthunt-badge-image {
-          width: var(--producthunt-badge-width);
-          height: auto;
-        }
-
-        .actions {
-          margin: 0;
-          flex-wrap: nowrap;
-          justify-content: flex-start;
-          gap: 10px;
-        }
-
-        .right-pane {
-          min-height: 430px;
-          margin-top: 16px;
-          padding: 8px 0 16px;
-          align-items: center;
-          border-radius: 0;
-          position: relative;
-          overflow: visible;
-          z-index: 1;
-        }
-
-        .right-bg {
-          display: block;
-          position: fixed;
-          left: 0;
-          right: 0;
-          top: 0;
-          bottom: 0;
-          height: auto;
-          background-position: center bottom;
-          background-size: cover;
-          opacity: 0.5;
-          z-index: 0;
-          pointer-events: none;
-          overflow: hidden;
-        }
-
-        .right-bg-image {
-          height: 200%;
-          object-position: center bottom;
-          transform: translateY(-50%);
-        }
-
-        .right-bg::before {
-          content: "";
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(
-            to bottom,
-            rgba(250, 250, 250, 0.24) 0,
-            rgba(250, 250, 250, 0.14) 88px,
-            rgba(250, 250, 250, 0.05) 148px,
-            rgba(250, 250, 250, 0) 220px
-          );
-        }
-
-        .feature-grid {
-          transform: scale(1.35);
-          transform-origin: center top;
-        }
-
-        .card-title {
-          font-size: 13px;
-        }
-
-        .card-desc {
-          font-size: 11px;
-          line-height: 1.32;
-        }
-
-        .top-nav {
-          gap: 10px;
-        }
-
-        .top-nav-brand {
-          margin-left: 8px;
-        }
-
-        .top-nav-brand-mark {
-          width: 64px;
-          transform: translateY(1px);
-        }
-
-        .top-actions {
-          max-width: calc(100vw - 180px);
-          min-width: 0;
-          flex-wrap: nowrap;
-          justify-content: flex-end;
-        }
-
-        .top-nav .pill-btn {
-          min-height: 40px;
-          border-color: transparent;
-          background: transparent;
-          box-shadow: none;
-          padding: 10px 12px;
-        }
-
-        .top-nav .pill-btn:not(.pill-btn-dark) {
-          border-color: rgba(211, 217, 226, 0.76);
-          background: rgba(255, 255, 255, 0.54);
-          color: #4b545f;
-          box-shadow:
-            0 1px 2px rgba(26, 36, 54, 0.06),
-            inset 0 1px 0 rgba(255, 255, 255, 0.76);
-        }
-
-        .top-nav .pill-btn-selected::after {
-          display: none;
-        }
-
-        .top-nav .pill-btn-icon-only {
-          width: 40px;
-          min-width: 40px;
-          height: 40px;
-          padding: 0;
-        }
-
-        .top-nav .pill-btn-dark {
-          padding: 10px 14px;
-          background: linear-gradient(180deg, #404859 0%, #273042 100%);
-          box-shadow:
-            0 8px 18px rgba(24, 32, 46, 0.18),
-            inset 0 1px 0 rgba(255, 255, 255, 0.42);
-        }
-
-        .lang-control {
-          position: relative;
-          right: auto;
-          bottom: auto;
-          width: var(--producthunt-badge-width);
-          margin: 14px auto 18px;
-        }
-
-        .lang-toggle {
-          width: 100%;
-          min-width: 0;
-          min-height: 40px;
-          border-radius: 10px;
-          border: 1px solid var(--lang-border);
-          background: var(--lang-surface);
-          box-shadow: 0 8px 20px var(--lang-shadow);
-          padding: 0 12px;
-          display: grid;
-          grid-template-columns: 1fr auto 1fr;
-          align-items: center;
-          gap: 10px;
-        }
-
-        .lang-current-label,
-        .lang-select-arrow {
-          display: inline-flex;
-        }
-
-        .lang-current-label {
-          display: block;
-          flex: none;
-          justify-self: center;
-          text-align: center;
-          padding: 0 6px;
-          max-width: 100%;
-        }
-
-        .lang-select-prefix {
-          justify-self: start;
-          width: 18px;
-        }
-
-        .lang-select-arrow {
-          justify-self: end;
-          width: 18px;
-        }
-
-        .lang-menu {
-          width: 100%;
-          min-width: 0;
-          left: 0;
-          right: auto;
-          top: auto;
-          bottom: calc(100% + 8px);
-          background: var(--lang-surface);
-          border-color: var(--lang-border);
-          box-shadow:
-            0 18px 34px var(--lang-shadow),
-            inset 0 1px 0 oklch(100% 0 0 / 0.86);
-          backdrop-filter: none;
-          -webkit-backdrop-filter: none;
-          transform: translateY(6px) scale(0.97);
-          transform-origin: bottom center;
-        }
-      }
-
-      @media (max-width: 1080px) and (orientation: landscape) {
-        .top-nav {
-          top: calc(var(--mobile-top-clearance) + 8px);
-          left: 16px;
-          right: 16px;
-          gap: 10px;
-          padding: 5px 8px 5px 14px;
-          border-radius: 999px;
-          background: rgba(250, 250, 250, 0.46);
-          border: 1px solid rgba(224, 228, 235, 0.48);
-          box-shadow:
-            0 8px 20px rgba(26, 36, 54, 0.055),
-            0 1px 4px rgba(26, 36, 54, 0.035),
-            inset 0 1px 0 rgba(255, 255, 255, 0.54);
-          backdrop-filter: saturate(135%) blur(12px);
-          -webkit-backdrop-filter: saturate(135%) blur(12px);
-        }
-
-        body.has-nav-overlap .top-nav {
-          background: rgba(250, 250, 250, 0.6);
-        }
-      }
-
-      @media (max-width: 680px) {
-        :root {
-          --producthunt-badge-width: min(74vw, 250px);
-        }
-
-        .onboarding {
-          justify-content: flex-start;
+        .hero-section {
+          grid-template-columns: 1fr;
           padding-top: 120px;
-          padding-bottom: 52px;
-          padding-bottom: max(52px, var(--mobile-flow-bottom-clearance));
-        }
-
-        .left-pane {
-          padding: 42px 20px 18px;
-        }
-
-        .title {
-          font-size: 33px;
-        }
-
-        .title-welcome {
-          font-size: 30px;
-        }
-
-        .logo-icon {
-          width: calc(var(--logo-box) * 63 / 48);
-          height: calc(var(--logo-box) * 69 / 48);
-          left: calc(var(--logo-box) * -13 / 48);
-          top: calc(var(--logo-box) * -1 / 48);
-        }
-
-        .is-safari .logo-icon {
-          width: 55px;
-          height: 60px;
-          left: -11px;
-          top: -1px;
-        }
-
-        .logo-icon-wrap {
-          --logo-box: 42px;
-        }
-
-        .logo-wordmark-wrap {
-          --wordmark-width: 152px;
-        }
-
-        .shortcut-line {
-          flex-wrap: wrap;
-          row-gap: 8px;
-          font-size: 16px;
-          justify-content: center;
-        }
-
-        .shortcut-line-store {
-          row-gap: 10px;
-        }
-
-        .shortcut-store-badge {
-          width: min(74vw, var(--store-badge-width));
-          height: auto;
-        }
-
-        .producthunt-badge-image {
-          width: var(--producthunt-badge-width);
-          height: auto;
-        }
-
-        .shortcut-store-note {
-          font-size: 11px;
-        }
-
-        .top-nav {
-          top: calc(var(--mobile-top-clearance) + 10px);
-          left: 10px;
-          right: 10px;
-          min-height: 48px;
-          padding: 5px 6px 5px 12px;
-          border-radius: 999px;
-        }
-
-        .top-nav-brand-mark {
-          width: 56px;
-        }
-
-        .top-nav-brand {
-          margin-left: 6px;
-        }
-
-        .top-actions {
-          width: min(252px, calc(100vw - 124px));
-          max-width: calc(100vw - 124px);
-          flex: 0 1 min(252px, calc(100vw - 124px));
-          gap: 6px;
-        }
-
-        .actions {
-          gap: 8px;
-          width: 100%;
-          min-width: 0;
-          max-width: 100%;
-          justify-content: flex-end;
-        }
-
-        .actions .pill-btn {
-          width: 40px;
-          min-width: 40px;
-          max-width: 40px;
-          height: 40px;
-          min-height: 40px;
-          flex: 0 0 40px;
-          aspect-ratio: 1;
-          padding: 0;
-          justify-content: center;
           gap: 0;
         }
 
-        .actions .pill-btn span {
+        .hero-copy {
+          max-width: 760px;
+        }
+
+        .workflow-section,
+        .trust-section,
+        .faq-section {
+          grid-template-columns: 1fr;
+          gap: 60px;
+        }
+
+        .workflow-list li {
+          grid-template-columns: 44px 42px 190px 1fr;
+        }
+
+        .footer-main {
+          grid-template-columns: 0.8fr 1.2fr;
+        }
+      }
+
+      @media (max-width: 760px) {
+        .top-nav {
+          top: max(10px, env(safe-area-inset-top));
+          width: min(calc(100% - 32px), var(--content-width));
+          min-height: 58px;
+          padding: 5px;
+          gap: 10px;
+        }
+
+        .top-nav-brand img {
+          width: 64px;
+          height: 15px;
+        }
+
+        .top-nav-actions {
+          gap: 6px;
+          margin-right: 3px;
+        }
+
+        .top-nav-ghost-links {
           display: none;
         }
 
-        .lang-control {
-          width: var(--producthunt-badge-width);
-          margin: 22px auto 20px;
+        .top-nav-more-menu {
+          display: block;
+          position: static;
         }
 
-        .lang-menu {
+        .top-nav-more-dropdown {
+          top: calc(100% + 8px);
           left: 0;
-          right: auto;
-          width: 100%;
-          transform: translateY(6px) scale(0.97);
-          transform-origin: bottom center;
+          right: 0;
+          width: auto;
+          min-width: 0;
+          padding: 10px;
+          gap: 2px;
+          border-color: rgba(211, 217, 226, 0.9);
+          border-radius: 18px;
+          background: rgba(255, 255, 255, 0.96);
+          box-shadow:
+            0 18px 48px rgba(35, 43, 52, 0.16),
+            0 3px 12px rgba(35, 43, 52, 0.08),
+            inset 0 1px 0 rgba(255, 255, 255, 0.92);
+          backdrop-filter: blur(20px) saturate(1.12);
+          -webkit-backdrop-filter: blur(20px) saturate(1.12);
+          transform-origin: top center;
         }
 
-        .lang-menu[data-open="true"] {
-          transform: translateY(0) scale(1);
+        .top-nav-more-option {
+          min-height: 50px;
+          padding: 13px 15px;
+          border-radius: 12px;
+          font-size: 14px;
+          line-height: 1.4;
+          touch-action: manipulation;
         }
 
-        .feature-grid {
-          width: min(92vw, 420px);
-          height: auto;
-          display: flex;
+        .top-nav-install {
+          min-height: 40px;
+          padding-left: 14px;
+          padding-right: 14px;
+        }
+
+        .brand-icon {
+          width: 30px;
+          height: 30px;
+        }
+
+        .brand-icon svg {
+          width: 39px;
+          height: 43px;
+          transform: translate(-7px, -1px);
+        }
+
+        .brand-wordmark {
+          width: 67px;
+        }
+
+        .hero-section,
+        .section,
+        .footer-main,
+        .footer-meta {
+          width: min(calc(100% - 32px), var(--content-width));
+        }
+
+        .hero-section {
+          padding: 120px 0 52px;
+          gap: 0;
+        }
+
+        .hero-section .hero-safari-demo {
+          height: clamp(220px, calc(100svh - 530px), 440px);
+          aspect-ratio: auto;
+          margin-top: 36px;
+        }
+
+        .hero-copy h1 {
+          max-width: 620px;
+          font-size: clamp(28px, 8.5vw, 40px);
+          letter-spacing: -0.048em;
+        }
+
+        .hero-copy {
+          padding-left: max(8px, env(safe-area-inset-left));
+          padding-right: max(8px, env(safe-area-inset-right));
+        }
+
+        .hero-title-has-break .hero-title-line {
           flex-direction: column;
           align-items: center;
+        }
+
+        .hero-title-separator {
+          display: none;
+        }
+
+        .hero-copy > p {
+          margin-top: 22px;
+          font-size: 15px;
+          line-height: 1.65;
+        }
+
+        .hero-actions {
+          gap: 10px;
+          margin-top: 24px;
+        }
+
+        .hero-actions-button {
+          min-height: 42px;
+          padding: 7px 14px;
+          font-size: 13px;
+        }
+
+        .section {
+          padding: 80px 0;
+        }
+
+        .section-heading h2,
+        .trust-copy h2,
+        .browser-section h2,
+        .final-cta h2 {
+          font-size: 34px;
+        }
+
+        .feature-intro {
+          grid-template-columns: 1fr;
+          gap: 28px;
+          align-items: start;
+        }
+
+        .workflow-section,
+        .trust-section,
+        .faq-section {
+          gap: 46px;
+        }
+
+        .workflow-list li {
+          grid-template-columns: 34px 42px 1fr;
           gap: 12px;
-          transform: none;
-          margin: 0 auto;
         }
 
-        .is-safari .feature-grid {
-          width: min(92vw, 420px);
+        .workflow-list li > p {
+          grid-column: 3;
+          margin-top: -4px;
+        }
+
+        .audience-section {
+          gap: 46px;
+        }
+
+        .audience-list {
+          grid-template-columns: 1fr;
+        }
+
+        .audience-list article,
+        .audience-list article:first-child,
+        .audience-list article:last-child {
+          min-height: 0;
+          padding: 28px 0;
+          border-right: 0;
+          border-bottom: 1px solid var(--line-strong);
+        }
+
+        .audience-list article:last-child {
+          border-bottom: 0;
+        }
+
+        .audience-mark {
+          margin-bottom: 20px;
+        }
+
+        .browser-section {
+          grid-template-columns: 1fr;
+          gap: 34px;
+        }
+
+        .browser-list {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .final-cta {
+          width: calc(100% - 24px);
+          margin-bottom: 70px;
+          padding: 46px 30px;
+          grid-template-columns: 1fr;
+          gap: 34px;
+          border-radius: 18px;
+        }
+
+        .final-cta-actions {
+          align-items: stretch;
+        }
+
+        .final-cta-actions .button {
+          flex: 1 1 180px;
+        }
+
+        .footer-main {
+          padding-top: 54px;
+          grid-template-columns: 1fr;
+          gap: 48px;
+        }
+
+        .footer-links {
+          gap: 20px;
+        }
+
+        .footer-meta {
+          padding: 20px 0;
+          align-items: flex-start;
+          flex-direction: column;
+        }
+      }
+
+      @media (min-width: 761px) and (max-height: 740px) {
+        .hero-section {
+          padding-top: 80px;
+        }
+
+        .hero-section .hero-safari-demo {
+          margin-top: 40px;
+        }
+      }
+
+      @media (max-width: 760px) and (max-height: 740px) {
+        .hero-section {
+          padding-top: 80px;
+        }
+
+        .hero-copy > p {
+          margin-top: 12px;
+          line-height: 1.55;
+        }
+
+        .hero-actions {
+          margin-top: 16px;
+        }
+      }
+
+      @media (max-width: 360px) {
+        .top-nav {
+          gap: 4px;
+        }
+
+        .top-nav-brand {
+          padding-left: 8px;
+          padding-right: 4px;
+        }
+
+        .top-nav-brand img {
+          width: 52px;
           height: auto;
-          transform: none;
-          margin-left: auto;
-          margin-right: auto;
         }
 
-        .feature-card {
-          position: relative;
-          left: auto;
-          top: auto;
-          width: 100%;
-          height: auto;
-          min-height: 228px;
-          margin-left: auto;
-          margin-right: auto;
+        .top-nav-actions {
+          gap: 4px;
+          margin-right: 0;
         }
 
-        .card-a,
-        .card-b,
-        .card-c,
-        .card-d {
-          width: 100%;
+        .top-nav-install {
+          min-height: 36px;
+          padding-left: 10px;
+          padding-right: 10px;
+        }
+      }
+
+      @media (max-width: 420px) {
+        .workflow-list li {
+          grid-template-columns: 34px 1fr;
         }
 
-        .card-a-graphic,
-        .card-b-graphic,
-        .card-c-graphic,
-        .card-d-graphic {
-          height: auto;
-          flex: 0 0 auto;
+        .workflow-list li .step-icon {
+          display: none;
         }
 
-        .card-a-image,
-        .card-graphic-image {
-          height: auto;
+        .workflow-list li > p {
+          grid-column: 2;
         }
 
-        .card-a-image svg,
-        .card-graphic-image svg {
-          width: 100%;
-          height: auto;
+        .footer-links {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
         }
 
-        .card-title {
-          font-size: 18px;
-          line-height: 1.32;
-        }
-
-        .card-desc {
-          font-size: 14px;
-          line-height: 1.45;
-        }
-
-        .right-pane {
-          min-height: auto;
-          margin-top: 36px;
-          padding: 16px 0 12px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        .right-bg {
-          background-position: center bottom;
-          background-size: cover;
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
         }
       }
     </style>
-  </head>
-  <body data-locale={uiLocale} class:list={{ "is-locale-en": uiLocale === "en" }}>
-    <header class="top-nav">
-      <a class="top-nav-brand" href={homeHref} aria-label="Lumno" data-analytics-event="select_home_brand" data-analytics-category="navigation" data-analytics-label="home_brand">
-        <span class="top-nav-brand-mark" role="img" aria-label="Lumno" set:html={topWordmarkSvg}></span>
-      </a>
-      <div class="top-actions">
-        <div class="actions" data-node-id="3358:77">
-          <a class="pill-btn pill-btn-selected pill-btn-icon-only" href="https://github.com/kubai087/lumno-extension" target="_blank" rel="noreferrer noopener" aria-label={initialUi.settingsAria} data-i18n-aria-label="settings_aria" data-analytics-event="open_github_repo" data-analytics-category="cta" data-analytics-label="home_header_github">
-            <i class="ri-github-fill" aria-hidden="true"></i>
-          </a>
-          <a class="pill-btn pill-btn-selected" href={featuresHref} aria-label={initialUi.featuresAria} data-i18n-aria-label="features_aria" data-analytics-event="open_features_page" data-analytics-category="navigation" data-analytics-label="home_header_features">
-            <i class="ri-function-line" aria-hidden="true"></i>
-            <span data-i18n="view_features">{initialUi.viewFeatures}</span>
-          </a>
-          <a class="pill-btn pill-btn-selected" href={releaseHref} aria-label={initialUi.releaseAria} data-i18n-aria-label="release_aria" data-analytics-event="open_release_page" data-analytics-category="navigation" data-analytics-label="home_header_release">
-            <i class="ri-file-list-3-line" aria-hidden="true"></i>
-            <span data-i18n="view_release">{initialUi.viewRelease}</span>
-          </a>
-          <a
-            class="pill-btn pill-btn-selected pill-btn-dark"
-            href={COMMUNITY_LINKS.discordUrl}
-            target="_blank"
-            rel="noreferrer noopener"
-            aria-label={initialUi.discordAria}
-            data-i18n-aria-label="discord_aria"
-            data-node-id="3358:42"
-            data-community-entry
-            data-discord-href={COMMUNITY_LINKS.discordUrl}
-            data-analytics-event="join_community"
-            data-analytics-category="cta"
-            data-analytics-label="home_header_discord"
-          >
-            <i class="ri-discord-fill" aria-hidden="true" data-community-icon></i>
-            <span data-i18n="join_discord">{initialUi.joinDiscord}</span>
-          </a>
-        </div>
-      </div>
-    </header>
-    <main class="onboarding" data-node-id="3152:2">
-      <section class="left-pane">
-        <div class="left-main">
-          <div class="hero">
-            <div class="title-row">
-              <h1 class="title">
-                <span class="title-welcome" data-i18n="title_welcome">{initialUi.titleWelcome}</span>
-                <span class="logo-lockup">
-                <span class="logo-icon-wrap">
-                  <span class="logo-icon mark-svg" role="img" aria-label={initialUi.logoIconAlt} data-i18n-aria-label="logo_icon_alt" set:html={logoIconSvg}></span>
-                </span>
-                <span class="logo-wordmark-wrap" aria-hidden="true">
-                  <img class="logo-wordmark mark-svg" src="/assets/textlogo.svg" alt="" draggable="false" />
-                  <span class="logo-butterfly-stage" aria-hidden="true">
-                    <svg class="logo-butterfly logo-butterfly-wing logo-butterfly-wing-back mark-svg" viewBox="0 0 23 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path
-                        class="logo-butterfly-path"
-                        opacity="0.2"
-                        fill="#79C3F2"
-                        d="M4.3248 17.7823C1.22382 14.6398 -0.116749 10.2475 0.824858 6.7097C1.02033 5.97529 1.95363 5.98287 2.27212 6.67289L4.16024 10.7637C4.38415 11.2488 4.50011 11.7767 4.50011 12.311L4.50011 16L6.24277 16C7.66705 16 9.01155 16.6576 9.88596 17.7819L11.0831 19.3211C11.5044 19.8627 11.2076 20.6668 10.5235 20.7201C8.63849 20.8671 6.85452 20.3459 4.3248 17.7823Z"
-                      >
-                        <animate
-                          attributeName="d"
-                          dur="2800ms"
-                          begin="120ms"
-                          repeatCount="indefinite"
-                          calcMode="spline"
-                          keyTimes="0;0.5;1"
-                          keySplines="0.42 0 0.58 1;0.42 0 0.58 1"
-                          values="
-                            M4.32468 17.7823C-1.04106 11.6456 2.30784 4.56298 5.14393 1.13518C5.48929 0.717757 6.11849 0.734355 6.47527 1.14207L10.4328 5.66451C11.4105 6.78177 11.6239 8.37593 10.9745 9.71102L8.61264 14.567L11.5238 13.9636C13.2202 13.612 14.9706 14.24 16.0565 15.5899L18.7241 18.9056C19.0394 19.2975 18.9857 19.8717 18.5688 20.1531C15.6258 22.1399 9.6385 23.8596 4.32468 17.7823Z;
-                            M4.3248 17.7823C1.22382 14.6398 -0.116749 10.2475 0.824858 6.7097C1.02033 5.97529 1.95363 5.98287 2.27212 6.67289L4.16024 10.7637C4.38415 11.2488 4.50011 11.7767 4.50011 12.311L4.50011 16L6.24277 16C7.66705 16 9.01155 16.6576 9.88596 17.7819L11.0831 19.3211C11.5044 19.8627 11.2076 20.6668 10.5235 20.7201C8.63849 20.8671 6.85452 20.3459 4.3248 17.7823Z;
-                            M4.32468 17.7823C-1.04106 11.6456 2.30784 4.56298 5.14393 1.13518C5.48929 0.717757 6.11849 0.734355 6.47527 1.14207L10.4328 5.66451C11.4105 6.78177 11.6239 8.37593 10.9745 9.71102L8.61264 14.567L11.5238 13.9636C13.2202 13.612 14.9706 14.24 16.0565 15.5899L18.7241 18.9056C19.0394 19.2975 18.9857 19.8717 18.5688 20.1531C15.6258 22.1399 9.6385 23.8596 4.32468 17.7823Z"
-                        />
-                      </path>
-                    </svg>
-                    <svg class="logo-butterfly logo-butterfly-wing logo-butterfly-wing-front mark-svg" viewBox="0 0 23 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <path
-                        class="logo-butterfly-path"
-                        opacity="0.2"
-                        fill="#79C3F2"
-                        d="M4.3248 17.7823C1.22382 14.6398 -0.116749 10.2475 0.824858 6.7097C1.02033 5.97529 1.95363 5.98287 2.27212 6.67289L4.16024 10.7637C4.38415 11.2488 4.50011 11.7767 4.50011 12.311L4.50011 16L6.24277 16C7.66705 16 9.01155 16.6576 9.88596 17.7819L11.0831 19.3211C11.5044 19.8627 11.2076 20.6668 10.5235 20.7201C8.63849 20.8671 6.85452 20.3459 4.3248 17.7823Z"
-                      >
-                        <animate
-                          attributeName="d"
-                          dur="2800ms"
-                          repeatCount="indefinite"
-                          calcMode="spline"
-                          keyTimes="0;0.5;1"
-                          keySplines="0.42 0 0.58 1;0.42 0 0.58 1"
-                          values="
-                            M4.32468 17.7823C-1.04106 11.6456 2.30784 4.56298 5.14393 1.13518C5.48929 0.717757 6.11849 0.734355 6.47527 1.14207L10.4328 5.66451C11.4105 6.78177 11.6239 8.37593 10.9745 9.71102L8.61264 14.567L11.5238 13.9636C13.2202 13.612 14.9706 14.24 16.0565 15.5899L18.7241 18.9056C19.0394 19.2975 18.9857 19.8717 18.5688 20.1531C15.6258 22.1399 9.6385 23.8596 4.32468 17.7823Z;
-                            M4.3248 17.7823C1.22382 14.6398 -0.116749 10.2475 0.824858 6.7097C1.02033 5.97529 1.95363 5.98287 2.27212 6.67289L4.16024 10.7637C4.38415 11.2488 4.50011 11.7767 4.50011 12.311L4.50011 16L6.24277 16C7.66705 16 9.01155 16.6576 9.88596 17.7819L11.0831 19.3211C11.5044 19.8627 11.2076 20.6668 10.5235 20.7201C8.63849 20.8671 6.85452 20.3459 4.3248 17.7823Z;
-                            M4.32468 17.7823C-1.04106 11.6456 2.30784 4.56298 5.14393 1.13518C5.48929 0.717757 6.11849 0.734355 6.47527 1.14207L10.4328 5.66451C11.4105 6.78177 11.6239 8.37593 10.9745 9.71102L8.61264 14.567L11.5238 13.9636C13.2202 13.612 14.9706 14.24 16.0565 15.5899L18.7241 18.9056C19.0394 19.2975 18.9857 19.8717 18.5688 20.1531C15.6258 22.1399 9.6385 23.8596 4.32468 17.7823Z"
-                        />
-                        <animateTransform
-                          attributeName="transform"
-                          type="rotate"
-                          dur="2800ms"
-                          repeatCount="indefinite"
-                          calcMode="spline"
-                          keyTimes="0;0.5;1"
-                          keySplines="0.42 0 0.58 1;0.42 0 0.58 1"
-                          values="-1.5 5.5 15.5;0 5.5 15.5;-1.5 5.5 15.5"
-                        />
-                      </path>
-                    </svg>
-                  </span>
-                </span>
-                </span>
-                <span class="seo-wordmark-text">{WORDMARK_TEXT}</span>
-              </h1>
-            </div>
-            <p class="subtitle" data-i18n="subtitle">{initialUi.subtitle}</p>
-          </div>
-
-          <div class="shortcut-line shortcut-line-store" data-node-id="3364:535">
-            <div class="shortcut-store-badges">
-              <a
-                class="shortcut-store-link"
-                href="https://chromewebstore.google.com/detail/nggfkkbmogmadfoikakkfegkoilfcfao"
-                target="_blank"
-                rel="noreferrer noopener"
-                aria-label={initialUi.cwsBadgeAria}
-                data-i18n-aria-label="cws_badge_aria"
-                data-analytics-event="open_chrome_web_store"
-                data-analytics-category="cta"
-                data-analytics-label="home_store_badge"
-              >
-                <img
-                  class="shortcut-store-badge mark-svg"
-                  src="/assets/chrome-web-store-large-bordered.png"
-                  alt={initialUi.cwsBadgeAlt}
-                  data-i18n-alt="cws_badge_alt"
-                  draggable="false"
-                />
-              </a>
-              <a
-                class="shortcut-store-link"
-                href="https://microsoftedge.microsoft.com/addons/detail/pfbklkaefmfamjpibfiapaiihlddhchc"
-                target="_blank"
-                rel="noreferrer noopener"
-                aria-label={initialUi.edgeBadgeAria}
-                data-i18n-aria-label="edge_badge_aria"
-                data-analytics-event="open_edge_addons"
-                data-analytics-category="cta"
-                data-analytics-label="home_edge_addons_badge"
-              >
-                <img
-                  class="shortcut-store-badge shortcut-store-badge--edge"
-                  src="/assets/microsoft-edge-addons-badge.png"
-                  alt={initialUi.edgeBadgeAlt}
-                  data-i18n-alt="edge_badge_alt"
-                  draggable="false"
-                />
-              </a>
-            </div>
-            <p class="shortcut-store-note">
-              <span data-i18n="cws_support_note">{initialUi.cwsSupportNote}</span>
-              <span class="support-tooltip">
-                <button class="support-tooltip-trigger" type="button" aria-label={initialUi.tooltipAria} aria-describedby="support-tooltip-bubble" data-i18n-aria-label="support_tooltip_aria">
-                  <i class="ri-question-line" aria-hidden="true"></i>
-                </button>
-                <span id="support-tooltip-bubble" class="support-tooltip-bubble" role="tooltip" data-visible="false" aria-hidden="true" data-tooltip-placement="right" data-arrow-side="left" data-arrow-align="center" data-i18n-html="support_tooltip">
-                  {initialUi.supportTooltip}
-                </span>
-              </span>
-            </p>
-          </div>
-          <div class="producthunt-badge-wrap producthunt-badge-wrap--hero">
-            <a
-              class="producthunt-badge-link"
-              href="https://www.producthunt.com/products/lumno-the-ultimate-browser-command-bar?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-lumno-the-ultimate-browser-command-bar"
-              target="_blank"
-              rel="noopener noreferrer"
-              data-analytics-event="open_producthunt"
-              data-analytics-category="cta"
-              data-analytics-label="home_producthunt_badge"
-            >
-              <img
-                class="producthunt-badge-image"
-                alt="Lumno - The Ultimate Browser Command Bar - Search tabs, history, bookmarks, and the web from any page. | Product Hunt"
-                width="250"
-                height="54"
-                src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1107555&theme=light&t=1774504898356"
-                draggable="false"
-              />
-            </a>
-          </div>
-        </div>
-
-      </section>
-
-      <section class="right-pane" aria-hidden="true">
-        <div class="right-bg">
-          <img
-            class="right-bg-image"
-            src="/assets/settings-bg-light-monet-newtab.webp"
-            sizes="60vw"
-            alt=""
-            width="2048"
-            height="1152"
-            loading="eager"
-            decoding="async"
-            fetchpriority="high"
-          />
-        </div>
-
-        <FeatureGrid messages={featureMessages} />
-      </section>
-    </main>
-    <footer class="site-legal-nav">
-      <a
-        class="site-legal-link"
-        href={privacyHref}
-        aria-label={initialUi.privacyAria}
-        data-i18n="privacy_link"
-        data-i18n-aria-label="privacy_aria"
-      >
-        {initialUi.privacyLabel}
-      </a>
-    </footer>
-    <LanguageMenu currentLabel={initialUi.languageLabel} toggleAriaLabel={initialUi.languageSelectAria} />
-    <div class="producthunt-badge-wrap producthunt-badge-wrap--page-bottom">
-      <a
-        class="producthunt-badge-link"
-        href="https://www.producthunt.com/products/lumno-the-ultimate-browser-command-bar?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-lumno-the-ultimate-browser-command-bar"
-        target="_blank"
-        rel="noopener noreferrer"
-        data-analytics-event="open_producthunt"
-        data-analytics-category="cta"
-        data-analytics-label="home_producthunt_badge_mobile_bottom"
-      >
-        <img
-          class="producthunt-badge-image"
-          alt="Lumno - The Ultimate Browser Command Bar - Search tabs, history, bookmarks, and the web from any page. | Product Hunt"
-          width="250"
-          height="54"
-          src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1107555&theme=light&t=1774504898356"
-          draggable="false"
-        />
-      </a>
-    </div>
-    <div id="community-qrcode-modal" class="qrcode-modal" hidden>
-      <div class="qrcode-modal-backdrop" data-close-qrcode-modal></div>
-      <div class="qrcode-modal-panel" role="dialog" aria-modal="true" aria-labelledby="community-qrcode-title">
-        <button class="qrcode-modal-close" type="button" aria-label={initialUi.qrcodeCloseAria} data-i18n-aria-label="qrcode_close_aria" data-close-qrcode-modal>
-          <i class="ri-close-line" aria-hidden="true"></i>
-        </button>
-        <h2 id="community-qrcode-title" class="qrcode-modal-title" data-i18n="qrcode_title">{initialUi.qrcodeTitle}</h2>
-        <img class="qrcode-modal-image" src={COMMUNITY_LINKS.wechatQrImagePath} alt={initialUi.qrcodeImageAlt} data-i18n-alt="qrcode_image_alt" loading="lazy" />
-      </div>
-    </div>
-    <script>
-      import "../scripts/language-preference";
-      import "../scripts/language-runtime";
-    </script>
-    <script define:vars={{ forcedLocale, routeLanguageMap, communityLinks: COMMUNITY_LINKS }}>
-      const FORCED_LOCALE = forcedLocale;
-      const ROUTE_LANGUAGE_MAP = routeLanguageMap;
-      const COMMUNITY_LINKS = communityLinks;
-      const LANGUAGE_STORAGE_KEY = "_x_extension_language_2024_unique_";
-      const FALLBACK_LOCALE = "zh-CN";
-      const ZH_CN_LOCALE = "zh-CN";
-      const I18N_MESSAGES = {
-        "zh-CN": {
-          page_title_ui: "Lumno - 聚焦搜索&新标签页",
-          page_title: "Lumno - 聚焦搜索&新标签页",
-          title_welcome: "欢迎使用",
-          subtitle: "Lumno 是一款开源浏览器扩展，提供聚焦搜索、浏览器命令栏与极简新标签页。",
-          shortcut_press: "按下",
-          shortcut_invoke: "唤起",
-          language_select_aria: "语言",
-          language_system: "跟随浏览器语言",
-          language_zh_cn: "简体中文",
-          language_zh_tw: "繁體中文",
-          language_en: "English",
-          join_discord: "反馈 & 提需",
-          view_features: "功能",
-          go_settings: "访问 GitHub 仓库",
-          discord_aria: "反馈与提需",
-          qrcode_title: "微信群二维码",
-          qrcode_image_alt: "Lumno 微信群二维码",
-          qrcode_close_aria: "关闭二维码弹窗",
-          settings_aria: "访问 Lumno GitHub 仓库",
-          features_aria: "查看 Lumno 功能与场景页面",
-          release_aria: "查看更新日志页面",
-          view_release: "更新日志",
-          privacy_link: "隐私政策",
-          privacy_aria: "查看 Lumno 隐私政策",
-          cws_badge_aria: "在 Chrome 应用商店中安装 Lumno",
-          cws_badge_alt: "在 Chrome 应用商店中获取",
-          edge_badge_aria: "在 Microsoft Edge 加载项中安装 Lumno",
-          edge_badge_alt: "从 Microsoft Edge 获取",
-          cws_support_note: "支持 Dia \\ Edge \\ Comet \\ Atlas \\ Helium 浏览器",
-          support_tooltip_aria: "关于 Arc 迁移支持",
-          support_tooltip: "为从 Arc 迁移到其他浏览器的用户保留熟悉的命令栏搜索体验。<strong>Lumno 受 Arc 式交互启发，但与 Arc 无关联。</strong>",
-          feature_search_title: "搜索浏览器中的任意页面",
-          feature_search_desc: "支持书签、历史记录、已打开页面和最常访问",
-          feature_sitesearch_title: "自定义站内搜索",
-          feature_sitesearch_desc: "内置常用站点，按 Tab 一键发起站内搜索",
-          feature_newtab_title: "极简新标签页",
-          feature_newtab_desc: "展示书签与常用网页卡片",
-          feature_labs_title: "实验室功能",
-          feature_labs_title_strong: "& 精美 UI",
-          feature_labs_desc: "更多玩法，敬请期待",
-          beta_alt: "Beta",
-          logo_icon_alt: "Lumno 图标"
-        },
-        "zh-TW": {
-          page_title_ui: "Lumno - 聚焦搜尋&新分頁",
-          page_title: "Lumno - 聚焦搜尋&新分頁",
-          title_welcome: "歡迎使用",
-          subtitle: "Lumno 是一款開源瀏覽器擴充功能，提供聚焦搜尋、瀏覽器命令列與極簡新分頁。",
-          shortcut_press: "按下",
-          shortcut_invoke: "喚起",
-          language_select_aria: "語言",
-          language_system: "跟隨瀏覽器語言",
-          language_zh_cn: "簡體中文",
-          language_zh_tw: "繁體中文",
-          language_en: "English",
-          join_discord: "反饋 & 提需",
-          view_features: "功能",
-          go_settings: "造訪 GitHub 倉庫",
-          discord_aria: "反饋與提需",
-          qrcode_title: "微信群二維碼",
-          qrcode_image_alt: "Lumno 微信群二維碼",
-          qrcode_close_aria: "關閉二維碼彈窗",
-          settings_aria: "造訪 Lumno GitHub 倉庫",
-          features_aria: "查看 Lumno 功能與場景頁面",
-          release_aria: "查看更新日誌頁面",
-          view_release: "更新日誌",
-          privacy_link: "隱私權政策",
-          privacy_aria: "查看 Lumno 隱私權政策",
-          cws_badge_aria: "在 Chrome 線上應用程式商店安裝 Lumno",
-          cws_badge_alt: "在 Chrome 線上應用程式商店中取得",
-          edge_badge_aria: "在 Microsoft Edge 附加元件中安裝 Lumno",
-          edge_badge_alt: "從 Microsoft Edge 取得",
-          cws_support_note: "支援 Dia \\ Edge \\ Comet \\ Atlas \\ Helium 瀏覽器",
-          support_tooltip_aria: "關於 Arc 遷移支援",
-          support_tooltip: "為從 Arc 遷移到其他瀏覽器的使用者保留熟悉的命令欄搜尋體驗。<strong>Lumno 受 Arc 式互動啟發，但與 Arc 無關聯。</strong>",
-          feature_search_title: "搜尋瀏覽器中的任意頁面",
-          feature_search_desc: "支援書籤、歷史紀錄、已開啟頁面與最常造訪",
-          feature_sitesearch_title: "自訂站內搜尋",
-          feature_sitesearch_desc: "內建常用站點，按 Tab 一鍵發起站內搜尋",
-          feature_newtab_title: "極簡新分頁",
-          feature_newtab_desc: "展示書籤與常用網頁卡片",
-          feature_labs_title: "實驗室功能",
-          feature_labs_title_strong: "& 精緻 UI",
-          feature_labs_desc: "更多玩法，敬請期待",
-          beta_alt: "Beta",
-          logo_icon_alt: "Lumno 圖示"
-        },
-        en: {
-          page_title_ui: "Lumno - The Ultimate Browser Command Bar",
-          page_title: "Lumno - The Ultimate Browser Command Bar",
-          title_welcome: "Meet",
-          subtitle: "Lumno is an open-source browser extension for focus search, a browser command bar, and a minimalist new tab.",
-          shortcut_press: "Press",
-          shortcut_invoke: "to launch",
-          language_select_aria: "Language",
-          language_system: "Follow browser language",
-          language_zh_cn: "简体中文",
-          language_zh_tw: "繁體中文",
-          language_en: "English",
-          join_discord: "Feedback & Requests",
-          view_features: "Features",
-          go_settings: "View on GitHub",
-          discord_aria: "Feedback and requests",
-          qrcode_title: "WeChat Group QR Code",
-          qrcode_image_alt: "Lumno WeChat group QR code",
-          qrcode_close_aria: "Close QR code dialog",
-          settings_aria: "Open Lumno GitHub repository",
-          features_aria: "Open the Lumno features page",
-          release_aria: "Open release notes page",
-          view_release: "Release Notes",
-          privacy_link: "Privacy Policy",
-          privacy_aria: "Open the Lumno Privacy Policy",
-          cws_badge_aria: "Install Lumno from Chrome Web Store",
-          cws_badge_alt: "Get it from Chrome Web Store",
-          edge_badge_aria: "Install Lumno from Microsoft Edge Add-ons",
-          edge_badge_alt: "Get it from Microsoft Edge",
-          cws_support_note: "Supports Dia \\ Edge \\ Comet \\ Atlas \\ Helium browsers",
-          support_tooltip_aria: "About Arc migration support",
-          support_tooltip: "Keeps a familiar command-bar search workflow for people moving from Arc to other browsers. <strong>Lumno is inspired by Arc-like interactions, but is not affiliated with Arc.</strong>",
-          feature_search_title: "Search any page in your browser",
-          feature_search_desc: "Search bookmarks, history, open pages, and frequently visited sites",
-          feature_sitesearch_title: "Custom site search",
-          feature_sitesearch_desc: "Built-in site engines for instant site search with Tab",
-          feature_newtab_title: "Minimalist new tab",
-          feature_newtab_desc: "Keep bookmarks and frequently used pages in clean card layouts",
-          feature_labs_title: "Labs features",
-          feature_labs_title_strong: "& refined UI",
-          feature_labs_desc: "More experiments are on the way",
-          beta_alt: "Beta",
-          logo_icon_alt: "Lumno icon"
-        }
-      };
-      function updateLanguageOptionState(mode) {
-        let activeLabel = "";
-        document.querySelectorAll("[data-lang-value]").forEach((node) => {
-          const value = node.getAttribute("data-lang-value") || getSystemLocale();
-          const isActive = value === mode;
-          node.classList.toggle("is-active", isActive);
-          node.setAttribute("aria-checked", isActive ? "true" : "false");
-          if (isActive) {
-            activeLabel = (node.textContent || "").trim();
-          }
-        });
-        const currentLabel = document.getElementById("language-current-label");
-        if (currentLabel && activeLabel) {
-          currentLabel.textContent = activeLabel;
-        }
-      }
-
-      function normalizeLocale(locale) {
-        const raw = String(locale || "").trim();
-        if (!raw) {
-          return "en";
-        }
-        const lower = raw.toLowerCase();
-        if (lower.startsWith("zh")) {
-          if (lower.includes("hk")) {
-            return "zh-TW";
-          }
-          if (lower.includes("tw") || lower.includes("mo") || lower.includes("hant")) {
-            return "zh-TW";
-          }
-          return "zh-CN";
-        }
-        return "en";
-      }
-
-      function normalizeLanguageMode(mode) {
-        const raw = String(mode || "").trim();
-        if (!raw) return getSystemLocale();
-        const lower = raw.toLowerCase();
-        if (lower === "system") return getSystemLocale();
-        if (lower === "en" || lower.startsWith("en-") || lower.startsWith("en_")) return "en";
-        if (lower === "zh-hk" || lower === "zh_hk") return "zh-TW";
-        if (lower === "zh-tw" || lower === "zh_tw" || lower === "zh-mo" || lower === "zh_mo" || lower.includes("hant")) {
-          return "zh-TW";
-        }
-        if (lower === "zh-cn" || lower === "zh_cn" || lower === "zh-hans" || lower === "zh_hans" || lower.startsWith("zh")) {
-          return "zh-CN";
-        }
-        return getSystemLocale();
-      }
-
-      function getSystemLocale() {
-        const firstPreferred = Array.isArray(navigator.languages) && navigator.languages.length ? navigator.languages[0] : navigator.language;
-        return normalizeLocale(firstPreferred || "en");
-      }
-
-      function getMessage(locale, key) {
-        return (
-          (I18N_MESSAGES[locale] && I18N_MESSAGES[locale][key]) ||
-          (I18N_MESSAGES[FALLBACK_LOCALE] && I18N_MESSAGES[FALLBACK_LOCALE][key]) ||
-          key
-        );
-      }
-
-      const SUPPORT_TOOLTIP_PLACEMENTS = Object.freeze([
-        "right",
-        "bottom-end",
-        "bottom",
-        "bottom-start",
-        "left",
-        "top-start",
-        "top",
-        "top-end"
-      ]);
-      const SUPPORT_TOOLTIP_MARGIN = 12;
-      const SUPPORT_TOOLTIP_GAP = 12;
-      const SUPPORT_TOOLTIP_ALIGN_INSET = 22;
-
-      function clampNumber(value, min, max) {
-        const safeMax = Math.max(min, max);
-        return Math.min(Math.max(value, min), safeMax);
-      }
-
-      function getSupportTooltipPlacementCandidate(placement, triggerRect, tooltipRect) {
-        const triggerCenterX = triggerRect.left + triggerRect.width / 2;
-        const triggerCenterY = triggerRect.top + triggerRect.height / 2;
-        const candidate = {
-          placement,
-          arrowSide: "left",
-          arrowAlign: "center",
-          left: triggerRect.right + SUPPORT_TOOLTIP_GAP,
-          top: triggerCenterY - tooltipRect.height / 2
-        };
-
-        if (placement === "left") {
-          candidate.arrowSide = "right";
-          candidate.left = triggerRect.left - tooltipRect.width - SUPPORT_TOOLTIP_GAP;
-          candidate.top = triggerCenterY - tooltipRect.height / 2;
-        } else if (placement.startsWith("top")) {
-          candidate.arrowSide = "bottom";
-          candidate.arrowAlign = placement.endsWith("start") ? "start" : placement.endsWith("end") ? "end" : "center";
-          candidate.top = triggerRect.top - tooltipRect.height - SUPPORT_TOOLTIP_GAP;
-          if (candidate.arrowAlign === "start") {
-            candidate.left = triggerRect.left - SUPPORT_TOOLTIP_ALIGN_INSET;
-          } else if (candidate.arrowAlign === "end") {
-            candidate.left = triggerRect.right - tooltipRect.width + SUPPORT_TOOLTIP_ALIGN_INSET;
-          } else {
-            candidate.left = triggerCenterX - tooltipRect.width / 2;
-          }
-        } else if (placement.startsWith("bottom")) {
-          candidate.arrowSide = "top";
-          candidate.arrowAlign = placement.endsWith("start") ? "start" : placement.endsWith("end") ? "end" : "center";
-          candidate.top = triggerRect.bottom + SUPPORT_TOOLTIP_GAP;
-          if (candidate.arrowAlign === "start") {
-            candidate.left = triggerRect.left - SUPPORT_TOOLTIP_ALIGN_INSET;
-          } else if (candidate.arrowAlign === "end") {
-            candidate.left = triggerRect.right - tooltipRect.width + SUPPORT_TOOLTIP_ALIGN_INSET;
-          } else {
-            candidate.left = triggerCenterX - tooltipRect.width / 2;
-          }
-        }
-
-        return candidate;
-      }
-
-      function getSupportTooltipOverflowScore(candidate, tooltipRect, viewportWidth, viewportHeight) {
-        const overflowLeft = Math.max(0, SUPPORT_TOOLTIP_MARGIN - candidate.left);
-        const overflowTop = Math.max(0, SUPPORT_TOOLTIP_MARGIN - candidate.top);
-        const overflowRight = Math.max(0, candidate.left + tooltipRect.width + SUPPORT_TOOLTIP_MARGIN - viewportWidth);
-        const overflowBottom = Math.max(0, candidate.top + tooltipRect.height + SUPPORT_TOOLTIP_MARGIN - viewportHeight);
-        return overflowLeft + overflowTop + overflowRight + overflowBottom;
-      }
-
-      function getSupportTooltipParts(host) {
-        if (!(host instanceof HTMLElement)) return null;
-        const trigger = host.querySelector(".support-tooltip-trigger");
-        if (!(trigger instanceof HTMLElement)) return null;
-        const bubbleId = trigger.getAttribute("aria-describedby");
-        const bubble = bubbleId
-          ? document.getElementById(bubbleId)
-          : host.querySelector(".support-tooltip-bubble");
-        if (!(bubble instanceof HTMLElement)) return null;
-        return { trigger, bubble };
-      }
-
-      function positionSupportTooltipBubble(host) {
-        const parts = getSupportTooltipParts(host);
-        if (!parts) return null;
-        const { trigger, bubble } = parts;
-
-        const viewportWidth = Math.round(window.visualViewport?.width || window.innerWidth || document.documentElement.clientWidth || 0);
-        const viewportHeight = Math.round(window.visualViewport?.height || window.innerHeight || document.documentElement.clientHeight || 0);
-        const triggerRect = trigger.getBoundingClientRect();
-        const tooltipRect = bubble.getBoundingClientRect();
-        const bestPlacement = SUPPORT_TOOLTIP_PLACEMENTS
-          .map((placement) => {
-            const candidate = getSupportTooltipPlacementCandidate(placement, triggerRect, tooltipRect);
-            return {
-              ...candidate,
-              overflowScore: getSupportTooltipOverflowScore(candidate, tooltipRect, viewportWidth, viewportHeight)
-            };
-          })
-          .sort((a, b) => a.overflowScore - b.overflowScore)[0];
-        if (!bestPlacement) return null;
-
-        const left = clampNumber(bestPlacement.left, SUPPORT_TOOLTIP_MARGIN, viewportWidth - tooltipRect.width - SUPPORT_TOOLTIP_MARGIN);
-        const top = clampNumber(bestPlacement.top, SUPPORT_TOOLTIP_MARGIN, viewportHeight - tooltipRect.height - SUPPORT_TOOLTIP_MARGIN);
-        bubble.style.setProperty("--support-tooltip-left", `${Math.round(left)}px`);
-        bubble.style.setProperty("--support-tooltip-top", `${Math.round(top)}px`);
-        bubble.dataset.tooltipPlacement = bestPlacement.placement;
-        bubble.dataset.arrowSide = bestPlacement.arrowSide;
-        bubble.dataset.arrowAlign = bestPlacement.arrowAlign;
-
-        return Object.freeze({
-          placement: bestPlacement.placement,
-          arrowSide: bestPlacement.arrowSide,
-          arrowAlign: bestPlacement.arrowAlign,
-          left: Math.round(left),
-          top: Math.round(top)
-        });
-      }
-
-      function showSupportTooltipBubble(host, options = {}) {
-        const parts = getSupportTooltipParts(host);
-        if (!parts) return;
-        positionSupportTooltipBubble(host);
-        if (options.persist) parts.bubble.dataset.pinned = "true";
-        parts.bubble.dataset.visible = "true";
-        parts.bubble.setAttribute("aria-hidden", "false");
-      }
-
-      function hideSupportTooltipBubble(host) {
-        const parts = getSupportTooltipParts(host);
-        if (!parts) return;
-        delete parts.bubble.dataset.pinned;
-        parts.bubble.dataset.visible = "false";
-        parts.bubble.setAttribute("aria-hidden", "true");
-      }
-
-      function positionActiveSupportTooltipBubble() {
-        document.querySelectorAll(".support-tooltip").forEach((host) => {
-          if (!(host instanceof HTMLElement)) return;
-          const parts = getSupportTooltipParts(host);
-          const active = host.matches(":hover") || host.contains(document.activeElement) || parts?.bubble?.dataset.visible === "true";
-          if (active) positionSupportTooltipBubble(host);
-        });
-      }
-
-      function setupSupportTooltipPlacement() {
-        const hosts = Array.from(document.querySelectorAll(".support-tooltip"));
-        if (!hosts.length) return;
-        const schedulePosition = (host) => {
-          window.requestAnimationFrame(() => positionSupportTooltipBubble(host));
-        };
-
-        hosts.forEach((host) => {
-          if (!(host instanceof HTMLElement)) return;
-          const parts = getSupportTooltipParts(host);
-          if (!parts) return;
-          const { trigger, bubble } = parts;
-          if (bubble.parentElement !== document.body) {
-            document.body.appendChild(bubble);
-          }
-          bubble.dataset.visible = "false";
-          bubble.setAttribute("aria-hidden", "true");
-
-          const scheduleShow = (options = {}) => {
-            schedulePosition(host);
-            window.requestAnimationFrame(() => showSupportTooltipBubble(host, options));
-          };
-
-          host.addEventListener("mouseenter", scheduleShow);
-          host.addEventListener("mouseleave", () => {
-            if (bubble.dataset.pinned === "true") return;
-            hideSupportTooltipBubble(host);
-          });
-          host.addEventListener("focusin", scheduleShow);
-          host.addEventListener("focusout", (event) => {
-            if (event.relatedTarget instanceof Node && host.contains(event.relatedTarget)) return;
-            if (bubble.dataset.pinned === "true") return;
-            hideSupportTooltipBubble(host);
-          });
-          trigger.addEventListener("pointerdown", scheduleShow);
-          trigger.addEventListener("click", () => scheduleShow({ persist: true }));
-          positionSupportTooltipBubble(host);
-        });
-
-        document.addEventListener("pointerdown", (event) => {
-          const target = event.target instanceof Element ? event.target : null;
-          document.querySelectorAll(".support-tooltip").forEach((host) => {
-            if (!(host instanceof HTMLElement)) return;
-            if (target && host.contains(target)) return;
-            hideSupportTooltipBubble(host);
-          });
-        });
-        window.addEventListener("resize", positionActiveSupportTooltipBubble, { passive: true });
-        window.addEventListener("scroll", positionActiveSupportTooltipBubble, { passive: true });
-        window.visualViewport?.addEventListener("resize", positionActiveSupportTooltipBubble, { passive: true });
-        window.visualViewport?.addEventListener("scroll", positionActiveSupportTooltipBubble, { passive: true });
-      }
-
-      function applyI18n(locale) {
-        const resolvedLocale = I18N_MESSAGES[locale] ? locale : FALLBACK_LOCALE;
-        document.documentElement.lang = resolvedLocale;
-        document.body.setAttribute("data-locale", resolvedLocale);
-        document.body.classList.toggle("is-locale-en", resolvedLocale === "en");
-        document.querySelectorAll("[data-i18n]").forEach((node) => {
-          const key = node.getAttribute("data-i18n");
-          if (!key) return;
-          const value = getMessage(resolvedLocale, key);
-          if (node.tagName === "TITLE") {
-            document.title = value;
-            return;
-          }
-          node.textContent = value;
-          if (node.classList && node.classList.contains("text-shimmer")) {
-            node.setAttribute("data-shimmer-text", value);
-          }
-        });
-        document.querySelectorAll("[data-i18n-html]").forEach((node) => {
-          const key = node.getAttribute("data-i18n-html");
-          if (!key) return;
-          node.innerHTML = getMessage(resolvedLocale, key);
-        });
-        document.querySelectorAll("[data-i18n-aria-label]").forEach((node) => {
-          const key = node.getAttribute("data-i18n-aria-label");
-          if (!key) return;
-          node.setAttribute("aria-label", getMessage(resolvedLocale, key));
-        });
-        document.querySelectorAll("[data-i18n-alt]").forEach((node) => {
-          const key = node.getAttribute("data-i18n-alt");
-          if (!key) return;
-          node.setAttribute("alt", getMessage(resolvedLocale, key));
-        });
-        positionActiveSupportTooltipBubble();
-      }
-
-      function syncCommunityAction(locale) {
-        const entry = document.querySelector("[data-community-entry]");
-        if (!(entry instanceof HTMLAnchorElement)) return;
-        const icon = entry.querySelector("[data-community-icon]");
-        const discordHref = entry.dataset.discordHref || COMMUNITY_LINKS.discordUrl || "#";
-        const isZhCn = locale === ZH_CN_LOCALE;
-
-        entry.href = isZhCn ? "#" : discordHref;
-        if (isZhCn) {
-          entry.removeAttribute("target");
-          entry.removeAttribute("rel");
-        } else {
-          entry.setAttribute("target", "_blank");
-          entry.setAttribute("rel", "noreferrer noopener");
-        }
-
-        if (icon instanceof HTMLElement) {
-          icon.classList.toggle("ri-wechat-fill", isZhCn);
-          icon.classList.toggle("ri-discord-fill", !isZhCn);
-        }
-      }
-
-      function applyResolvedLanguage(normalizedMode) {
-        if (!I18N_MESSAGES[normalizedMode]) {
-          document.documentElement.lang = normalizedMode;
-          syncCommunityAction(normalizedMode);
-          updateLanguageOptionState(normalizedMode);
-          return;
-        }
-        applyI18n(normalizedMode);
-        syncCommunityAction(normalizedMode);
-        updateLanguageOptionState(normalizedMode);
-      }
-
-      function initLanguageRuntime() {
-        if (!window.__lumnoLanguagePreference || !window.__lumnoLanguageRuntime) return null;
-        return window.__lumnoLanguageRuntime.setupLanguageRuntime({
-          forcedLocale: FORCED_LOCALE,
-          getSystemLocale,
-          normalizeLanguageMode,
-          routeLanguageMap: ROUTE_LANGUAGE_MAP,
-          languageStorageKey: LANGUAGE_STORAGE_KEY,
-          applyResolvedLanguage,
-        });
-      }
-
-      function setupQrcodeModal() {
-        const entry = document.querySelector("[data-community-entry]");
-        const modal = document.getElementById("community-qrcode-modal");
-        if (!(entry instanceof HTMLAnchorElement) || !(modal instanceof HTMLDivElement)) return;
-
-        const close = () => {
-          modal.hidden = true;
-          document.body.style.removeProperty("overflow");
-        };
-
-        const open = () => {
-          modal.hidden = false;
-          document.body.style.overflow = "hidden";
-        };
-
-        entry.addEventListener("click", (event) => {
-          const currentLocale = document.body.getAttribute("data-locale") || FALLBACK_LOCALE;
-          if (currentLocale !== ZH_CN_LOCALE) return;
-          event.preventDefault();
-          open();
-        });
-
-        modal.addEventListener("click", (event) => {
-          const target = event.target instanceof HTMLElement ? event.target.closest("[data-close-qrcode-modal]") : null;
-          if (target) close();
-        });
-
-        document.addEventListener("keydown", (event) => {
-          if (event.key === "Escape" && !modal.hidden) close();
-        });
-      }
-
-      function isSafariBrowser() {
-        const ua = navigator.userAgent;
-        return /Safari/i.test(ua) && !/Chrome|CriOS|Edg|OPR|Android/i.test(ua);
-      }
-
-      function applySafariBrowserClass() {
-        const isSafari = isSafariBrowser();
-        document.documentElement.classList.toggle("is-safari", isSafari);
-      }
-
-      document.addEventListener("dragstart", (event) => {
-        if (event.target instanceof HTMLImageElement && event.target.classList.contains("mark-svg")) {
-          event.preventDefault();
-        }
-      });
-
-      function bootLanguageRuntime() {
-        const languageRuntime = initLanguageRuntime();
-        if (!languageRuntime) return false;
-        languageRuntime.applyLanguageMode(languageRuntime.getInitialLanguageMode());
-        window.addEventListener("load", () => {
-          languageRuntime.applyLanguageMode(languageRuntime.getInitialLanguageMode());
-        }, { once: true });
-        return true;
-      }
-
-      if (!bootLanguageRuntime()) {
-        const retryBootLanguageRuntime = () => {
-          if (bootLanguageRuntime()) {
-            window.removeEventListener("lumno:language-runtime-ready", retryBootLanguageRuntime);
-            window.removeEventListener("lumno:language-preference-ready", retryBootLanguageRuntime);
-          }
-        };
-        window.addEventListener("lumno:language-runtime-ready", retryBootLanguageRuntime);
-        window.addEventListener("lumno:language-preference-ready", retryBootLanguageRuntime);
-      }
-
-      setupQrcodeModal();
-      setupSupportTooltipPlacement();
-      applySafariBrowserClass();
-
-      function syncViewportInsets() {
-        const viewport = window.visualViewport;
-        const isTwitterInAppBrowser = navigator.userAgent.toLowerCase().includes("twitter");
-        const rawBottomInset = viewport
-          ? window.innerHeight - viewport.height - viewport.offsetTop
-          : 0;
-        const embeddedBrowserInset = isTwitterInAppBrowser
-          ? Math.min(280, Math.max(216, Math.round(window.innerHeight * 0.26)))
-          : 0;
-        const bottomInset = Math.min(320, Math.max(embeddedBrowserInset, Math.round(rawBottomInset)));
-        document.documentElement.style.setProperty(
-          "--mobile-top-clearance",
-          isTwitterInAppBrowser ? "0px" : "var(--safe-area-top-capped)"
-        );
-        document.documentElement.classList.toggle("is-twitter-in-app-browser", isTwitterInAppBrowser);
-        document.documentElement.style.setProperty("--browser-chrome-bottom", `${bottomInset}px`);
-        const languageControl = document.querySelector(".lang-control");
-        if (languageControl instanceof HTMLElement) {
-          if (isTwitterInAppBrowser) {
-            languageControl.style.marginBottom = `${bottomInset}px`;
-          } else {
-            languageControl.style.removeProperty("margin-bottom");
-          }
-        }
-      }
-
-      syncViewportInsets();
-      window.visualViewport?.addEventListener("resize", syncViewportInsets, { passive: true });
-      window.visualViewport?.addEventListener("scroll", syncViewportInsets, { passive: true });
-      window.addEventListener("resize", syncViewportInsets, { passive: true });
-      window.addEventListener("orientationchange", syncViewportInsets);
-
-      function syncTopNavOverlapState() {
-        const shouldApply = window.matchMedia("(max-width: 1080px)").matches;
-        const topNav = document.querySelector(".top-nav");
-        const mainContent = document.querySelector(".onboarding");
-        if (!shouldApply || !(topNav instanceof HTMLElement) || !(mainContent instanceof HTMLElement)) {
-          document.body.classList.remove("has-nav-overlap");
-          return;
-        }
-        const navBottom = topNav.getBoundingClientRect().bottom;
-        const contentTop = mainContent.getBoundingClientRect().top;
-        document.body.classList.toggle("has-nav-overlap", contentTop < navBottom - 1);
-      }
-
-      syncTopNavOverlapState();
-      window.addEventListener("scroll", syncTopNavOverlapState, { passive: true });
-      window.addEventListener("resize", syncTopNavOverlapState, { passive: true });
-
-      const modifierKeyEl = document.getElementById("shortcut-modifier-key");
-      if (modifierKeyEl) {
-        const isWindows = navigator.userAgent.toLowerCase().includes("windows");
-        modifierKeyEl.textContent = isWindows ? "Ctrl" : "⌘";
-      }
-
-      window.setTimeout(() => {
-        document.body.classList.add("is-entered");
-      }, 1000);
-
-    </script>
   </body>
 </html>

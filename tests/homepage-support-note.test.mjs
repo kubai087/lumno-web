@@ -9,200 +9,83 @@ function readSource(file) {
   return fs.readFileSync(path.join(workspaceRoot, file), "utf8");
 }
 
-test("homepage support note is localized for the expanded browser list", () => {
+test("homepage toolbar exposes Chrome and Edge install options", () => {
   const source = readSource("src/pages/index.astro");
+  const menuSource = readSource("src/components/navigation/InstallMenu.tsx");
 
-  for (const copy of [
-    "支持 Dia \\\\ Edge \\\\ Comet \\\\ Atlas \\\\ Helium 浏览器",
-    "支援 Dia \\\\ Edge \\\\ Comet \\\\ Atlas \\\\ Helium 瀏覽器",
-    "Supports Dia \\\\ Edge \\\\ Comet \\\\ Atlas \\\\ Helium browsers",
+  assert.match(source, /<InstallMenu[\s\S]*chromeUrl=\{CHROME_STORE_URL\}[\s\S]*edgeUrl=\{EDGE_STORE_URL\}/);
+  assert.match(source, /chromeVersion=\{chromeStoreVersion\}/);
+  assert.match(source, /edgeVersion=\{edgeStoreVersion\}/);
+  assert.match(source, /chromeLabel=\{content\.installChromeStoreLabel\}/);
+  assert.match(source, /edgeLabel=\{content\.installEdgeStoreLabel\}/);
+  assert.match(source, /await getStoreVersions\(/);
+  assert.match(source, /chromeRecommendation=\{content\.installChromeRecommendation\}/);
+  assert.match(menuSource, /menuRole="menu"/);
+  assert.match(menuSource, /optionRole="menuitem"/);
+  assert.match(menuSource, /label: chromeLabel/);
+  assert.match(menuSource, /label: edgeLabel/);
+  assert.match(menuSource, /iconClass: "ri-chrome-fill/);
+  assert.match(menuSource, /iconClass: "ri-edge-new-fill/);
+  assert.match(menuSource, /href: chromeUrl/);
+  assert.match(menuSource, /href: edgeUrl/);
+  assert.match(menuSource, /<SettingsBadge>\{chromeVersionTag\}<\/SettingsBadge>/);
+  assert.match(menuSource, /<SettingsBadge>\{edgeVersionTag\}<\/SettingsBadge>/);
+  assert.match(
+    menuSource,
+    /<SettingsBadge tone="accent">\{chromeRecommendation\}<\/SettingsBadge>[\s\S]*<SettingsBadge>\{chromeVersionTag\}<\/SettingsBadge>/,
+  );
+  const menuStyles = readSource("src/components/navigation/install-menu.css");
+  assert.match(
+    menuStyles,
+    /\.install-menu \.lumno-settings-badge-accent\s*\{[\s\S]*border:\s*1px solid #bfdbfe;[\s\S]*border-radius:\s*8px;[\s\S]*background:\s*#eef6ff;[\s\S]*color:\s*#1e3a8a;/,
+  );
+});
+
+test("homepage install store names and recommendation are localized", () => {
+  const source = readSource("src/lib/home-content.ts");
+
+  for (const label of [
+    "Chrome 应用商店",
+    "Microsoft Edge 加载项",
+    "Chrome 線上應用程式商店",
+    "Microsoft Edge 附加元件",
+    "Chrome Web Store",
+    "Microsoft Edge Add-ons",
   ]) {
-    assert.ok(
-      source.includes(`cwsSupportNote: "${copy}"`),
-      `static initial UI should include ${copy}`,
-    );
-
-    assert.ok(
-      source.includes(`cws_support_note: "${copy}"`),
-      `runtime i18n should include ${copy}`,
-    );
+    assert.ok(source.includes(label), `missing localized store label: ${label}`);
   }
+
+  assert.match(source, /installChromeRecommendation: "推荐 · 更新更快"/);
+  assert.match(source, /installChromeRecommendation: "推薦 · 更新更快"/);
+  assert.match(source, /installChromeRecommendation: "Recommended · Faster updates"/);
 });
 
-test("homepage provides a localized Microsoft Edge Add-ons badge beside the Chrome store badge", () => {
-  const source = readSource("src/pages/index.astro");
+test("store versions fall back to the live Chrome and Edge stores", () => {
+  const source = readSource("src/lib/store-versions.ts");
 
-  assert.match(
-    source,
-    /class="shortcut-store-badges"[\s\S]*?chromewebstore\.google\.com[\s\S]*?microsoftedge\.microsoft\.com\/addons\/detail\/pfbklkaefmfamjpibfiapaiihlddhchc/,
-    "the Edge Add-ons link should be grouped directly with the Chrome store badge",
-  );
-
-  for (const copy of [
-    "在 Microsoft Edge 加载项中安装 Lumno",
-    "在 Microsoft Edge 附加元件中安裝 Lumno",
-    "Install Lumno from Microsoft Edge Add-ons",
-  ]) {
-    assert.ok(source.includes(copy), `Edge badge should include localized text: ${copy}`);
-  }
-
-  assert.match(
-    source,
-    /src="\/assets\/microsoft-edge-addons-badge\.png"/,
-    "the Edge link should use the official badge image asset",
-  );
+  assert.match(source, /clients2\.google\.com\/service\/update2\/crx/);
+  assert.match(source, /microsoftedge\.microsoft\.com/);
+  assert.match(source, /Promise\.all\(\[/);
+  assert.match(source, /local development and ordinary static builds fall back to the live stores/);
 });
 
-test("mobile store badges preserve their intrinsic aspect ratios", () => {
+test("homepage is a product narrative while onboarding remains a separate route", () => {
   const source = readSource("src/pages/index.astro");
 
-  assert.doesNotMatch(
-    source,
-    /\.shortcut-store-badge--edge\s*\{\s*height:\s*min\([^}]+\);\s*\}/,
-    "the Edge badge must not use a viewport-derived height while its width is constrained",
-  );
-
-  assert.match(
-    source,
-    /\.shortcut-store-badge\s*\{\s*width:\s*min\(68vw,\s*var\(--store-badge-width\)\);\s*height:\s*auto;/,
-    "the tablet breakpoint should scale store badges by width only",
-  );
+  assert.match(source, /id="features"/);
+  assert.match(source, /id="workflow"/);
+  assert.match(source, /id="trust"/);
+  assert.match(source, /class="section faq-section"/);
+  assert.match(source, /const onboardingHref = buildLocalizedPath\(uiLocale, "\/onboarding\/"\);/);
+  assert.match(source, /href=\{onboardingHref\}/);
+  assert.doesNotMatch(source, /chrome:\/\/extensions\/shortcuts/);
 });
 
-test("homepage support note stays on one line until the viewport is too narrow", () => {
+test("homepage uses the standard favicon set and a plain page background", () => {
   const source = readSource("src/pages/index.astro");
 
-  assert.match(
-    source,
-    /\.shortcut-store-note\s*\{[\s\S]*?width:\s*max-content;[\s\S]*?max-width:\s*min\(calc\(100vw - 40px\),\s*520px\);[\s\S]*?flex-wrap:\s*nowrap;/,
-    "support note should be wider than the store badge when the text fits",
-  );
-
-  assert.match(
-    source,
-    /\.shortcut-store-note \[data-i18n="cws_support_note"\]\s*\{[\s\S]*?min-width:\s*0;[\s\S]*?overflow-wrap:\s*normal;[\s\S]*?word-break:\s*keep-all;/,
-    "support note text should avoid forced early wrapping",
-  );
-
-  assert.doesNotMatch(
-    source,
-    /\.shortcut-store-note\s*\{[\s\S]*?max-width:\s*248px;[\s\S]*?\}/,
-    "support note should no longer be capped to the store badge width",
-  );
-});
-
-test("homepage support tooltip copy generalizes Arc migration destinations", () => {
-  const source = readSource("src/pages/index.astro");
-
-  for (const copy of [
-    "为从 Arc 迁移到其他浏览器的用户保留熟悉的命令栏搜索体验。",
-    "為從 Arc 遷移到其他瀏覽器的使用者保留熟悉的命令欄搜尋體驗。",
-    "Keeps a familiar command-bar search workflow for people moving from Arc to other browsers.",
-  ]) {
-    assert.ok(
-      source.includes(copy),
-      `support tooltip should include ${copy}`,
-    );
-  }
-
-  for (const staleCopy of [
-    "从 Arc 迁移到 Dia 或 Chrome",
-    "從 Arc 遷移到 Dia 或 Chrome",
-    "moving from Arc to Dia or Chrome",
-  ]) {
-    assert.ok(
-      !source.includes(staleCopy),
-      `support tooltip should not still mention ${staleCopy}`,
-    );
-  }
-});
-
-test("homepage support tooltip can choose among eight viewport-aware arrow placements", () => {
-  const source = readSource("src/pages/index.astro");
-
-  assert.match(
-    source,
-    /const SUPPORT_TOOLTIP_PLACEMENTS = Object\.freeze\(\[\s*"right",\s*"bottom-end",\s*"bottom",\s*"bottom-start",\s*"left",\s*"top-start",\s*"top",\s*"top-end"\s*\]\);/,
-    "support tooltip should define eight placement candidates",
-  );
-
-  assert.match(
-    source,
-    /function positionSupportTooltipBubble\(host\)[\s\S]*?bubble\.dataset\.tooltipPlacement = bestPlacement\.placement;[\s\S]*?bubble\.dataset\.arrowSide = bestPlacement\.arrowSide;[\s\S]*?bubble\.dataset\.arrowAlign = bestPlacement\.arrowAlign;/,
-    "support tooltip should write the selected placement and arrow metadata",
-  );
-
-  assert.match(
-    source,
-    /clampNumber\(bestPlacement\.left,\s*SUPPORT_TOOLTIP_MARGIN,\s*viewportWidth - tooltipRect\.width - SUPPORT_TOOLTIP_MARGIN\)/,
-    "support tooltip should clamp horizontal position inside the viewport",
-  );
-
-  assert.match(
-    source,
-    /const viewportWidth = Math\.round\(window\.visualViewport\?\.width \|\| window\.innerWidth \|\| document\.documentElement\.clientWidth \|\| 0\);/,
-    "support tooltip should use the visual viewport width before document layout width",
-  );
-
-  assert.match(
-    source,
-    /clampNumber\(bestPlacement\.top,\s*SUPPORT_TOOLTIP_MARGIN,\s*viewportHeight - tooltipRect\.height - SUPPORT_TOOLTIP_MARGIN\)/,
-    "support tooltip should clamp vertical position inside the viewport",
-  );
-
-  for (const side of ["top", "right", "bottom", "left"]) {
-    assert.match(
-      source,
-      new RegExp(`\\.support-tooltip-bubble\\[data-arrow-side="${side}"\\]::before`),
-      `support tooltip should draw a ${side} arrow border`,
-    );
-    assert.match(
-      source,
-      new RegExp(`\\.support-tooltip-bubble\\[data-arrow-side="${side}"\\]::after`),
-      `support tooltip should draw a ${side} arrow fill`,
-    );
-  }
-
-  for (const align of ["start", "center", "end"]) {
-    assert.match(
-      source,
-      new RegExp(`\\.support-tooltip-bubble\\[data-arrow-side="top"\\]\\[data-arrow-align="${align}"\\]`),
-      `support tooltip should support ${align} horizontal arrow alignment`,
-    );
-    assert.match(
-      source,
-      new RegExp(`\\.support-tooltip-bubble\\[data-arrow-side="left"\\]\\[data-arrow-align="${align}"\\]`),
-      `support tooltip should support ${align} vertical arrow alignment`,
-    );
-  }
-
-  assert.match(
-    source,
-    /\.support-tooltip-bubble\s*\{[\s\S]*?position:\s*fixed;[\s\S]*?left:\s*var\(--support-tooltip-left,\s*0px\);[\s\S]*?top:\s*var\(--support-tooltip-top,\s*0px\);/,
-    "support tooltip bubble should use fixed positioning with JS-computed coordinates",
-  );
-
-  assert.match(
-    source,
-    /document\.body\.appendChild\(bubble\);/,
-    "support tooltip bubble should be mounted under body so fixed positioning is viewport-relative",
-  );
-
-  assert.match(
-    source,
-    /trigger\.addEventListener\("click",\s*\(\) => scheduleShow\(\{ persist: true \}\)\);/,
-    "support tooltip trigger clicks should keep the bubble open for touch/mobile use",
-  );
-
-  assert.match(
-    source,
-    /if \(bubble\.dataset\.pinned === "true"\) return;[\s\S]*?hideSupportTooltipBubble\(host\);/,
-    "support tooltip should not immediately hide a click-opened bubble on focus or pointer changes",
-  );
-
-  assert.match(
-    source,
-    /\.support-tooltip-bubble\[data-visible="true"\]\s*\{[\s\S]*?visibility:\s*visible;[\s\S]*?opacity:\s*1;/,
-    "support tooltip bubble visibility should be controlled after being reparented",
-  );
+  assert.match(source, /href="\/favicon\.ico" sizes="any"/);
+  assert.match(source, /type="image\/png" href="\/favicon\.png"/);
+  assert.match(source, /rel="apple-touch-icon" href="\/apple-touch-icon\.png"/);
+  assert.doesNotMatch(source, /background-image:\s*url\("\/assets\/settings-bg-light-monet-newtab\.webp"\)/);
 });

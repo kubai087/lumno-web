@@ -22,14 +22,14 @@ test("homepage keeps a crawlable entry to the full feature SEO page", () => {
 
 test("homepage keeps a localized crawlable entry to the privacy policy", () => {
   const source = readSource("src/pages/index.astro");
+  const contentSource = readSource("src/lib/home-content.ts");
 
   assert.match(source, /const privacyHref = buildLocalizedPath\(uiLocale, "\/privacy\/"\);/);
   assert.match(source, /<footer class="site-legal-nav">/);
   assert.match(source, /href=\{privacyHref\}/);
-  assert.match(source, /data-i18n="privacy_link"/);
-  assert.match(source, /privacy_link: "隐私政策"/);
-  assert.match(source, /privacy_link: "隱私權政策"/);
-  assert.match(source, /privacy_link: "Privacy Policy"/);
+  assert.match(contentSource, /footerPrivacy: "隐私政策"/);
+  assert.match(contentSource, /footerPrivacy: "隱私權政策"/);
+  assert.match(contentSource, /footerPrivacy: "Privacy"/);
 });
 
 test("features page contains product-led searchable content and FAQ schema hooks", () => {

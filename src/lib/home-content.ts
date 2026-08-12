@@ -56,8 +56,6 @@ type HomeContent = {
   productShowcaseAria: string;
   featureSectionTitle: string;
   featureSectionDescription: string;
-  featurePageLabel: string;
-  featurePageAria: string;
   featureMessages: HomeFeatureMessages;
   workflowTitle: string;
   workflowDescription: string;
@@ -139,11 +137,9 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     reviewAvatarLabel: "的头像",
     reviewRatingLabel: "星评价",
     productShowcaseAria: "Lumno 的四项核心功能",
-    featureSectionTitle: "把浏览器里的高频动作，收进一个入口",
+    featureSectionTitle: "极简强大，你的 100% 新标签页。",
     featureSectionDescription:
-      "无需离开当前页面，也不用记住每个功能藏在哪里。Lumno 让搜索、切换与继续探索保持在同一条操作路径里。",
-    featurePageLabel: "查看全部功能与场景",
-    featurePageAria: "查看 Lumno 的全部功能与使用场景",
+      "书签、常用网站与快捷搜索，一个干净的新标签页全部装下（也可以隐藏）",
     featureMessages: {
       searchTitle: "一个命令栏，搜索所有浏览器资料",
       searchDesc: "同时查找标签页、书签、历史记录和常用页面",
@@ -264,11 +260,9 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     reviewAvatarLabel: "的頭像",
     reviewRatingLabel: "星評價",
     productShowcaseAria: "Lumno 的四項核心功能",
-    featureSectionTitle: "把瀏覽器裡的高頻操作，收進一個入口",
+    featureSectionTitle: "極簡而強大，你的 100% 新分頁。",
     featureSectionDescription:
-      "不用離開目前頁面，也不必記住每個功能藏在哪裡。Lumno 讓搜尋、切換與繼續探索保持在同一條操作路徑裡。",
-    featurePageLabel: "查看所有功能與情境",
-    featurePageAria: "查看 Lumno 的所有功能與使用情境",
+      "書籤、常用網站與快速搜尋，一個乾淨的新分頁全部裝下（也可以隱藏）",
     featureMessages: {
       searchTitle: "一個命令欄，搜尋所有瀏覽器資料",
       searchDesc: "同時查找分頁、書籤、瀏覽紀錄與常用頁面",
@@ -389,11 +383,9 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     reviewAvatarLabel: "avatar",
     reviewRatingLabel: "star rating",
     productShowcaseAria: "Four core Lumno features",
-    featureSectionTitle: "Bring your everyday browser actions into one place",
+    featureSectionTitle: "Minimal and powerful. A new tab that’s 100% yours.",
     featureSectionDescription:
-      "Stay on the page you are using and stop remembering where every browser feature lives. Lumno keeps search, switching, and exploration in one flow.",
-    featurePageLabel: "Explore every feature and workflow",
-    featurePageAria: "Explore all Lumno features and use cases",
+      "Bookmarks, favorite sites, and quick search—all in one clean new tab, with the option to hide any of them.",
     featureMessages: {
       searchTitle: "One command bar for everything in your browser",
       searchDesc: "Find tabs, bookmarks, history, and frequently visited pages",

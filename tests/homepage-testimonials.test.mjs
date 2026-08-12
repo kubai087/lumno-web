@@ -51,14 +51,21 @@ test("Chrome review parser reads live store markup during scheduled static build
   assert.equal(snapshot.reviews[0].reviewId, "review-1");
 });
 
-test("testimonial marquee uses two continuous lanes with hover-intent pause and reduced-motion behavior", () => {
+test("testimonial marquee fills two continuous lanes with hover-intent pause and reduced-motion behavior", () => {
   const source = readSource("src/components/home/ChromeReviewMarquee.astro");
 
   assert.match(source, /const rows = \[reviews\.slice\(0, midpoint\), reviews\.slice\(midpoint\)\]/);
   assert.match(source, /\[false, true\]\.map\(\(duplicate\)/);
   assert.match(source, /data-review-track=\{rowIndex \+ 1\}/);
+  assert.match(source, /const fillTrack = \(track: HTMLElement\) =>/);
+  assert.match(source, /1 \+ Math\.ceil\(\(lane\.clientWidth \+ gap\) \/ shiftDistance\)/);
+  assert.match(source, /track\.style\.setProperty\("--chrome-review-group-shift"/);
+  assert.match(source, /duplicate\.dataset\.reviewGroupCopy = "true"/);
+  assert.match(source, /const resizeObserver = new ResizeObserver\(fillTracks\)/);
+  assert.match(source, /marquee\.dataset\.marqueeReady = "true"/);
   assert.match(source, /chrome-review-scroll-left 38s linear infinite/);
   assert.match(source, /animation-name: chrome-review-scroll-right/);
+  assert.match(source, /translateX\(calc\(-1 \* var\(--chrome-review-group-shift\)\)\)/);
   assert.match(source, /const HOVER_PAUSE_DELAY_MS = 600/);
   assert.match(source, /const scheduleHoverPauseAfterIdle = \(\) => \{[\s\S]*?delete marquee\.dataset\.hoverPaused[\s\S]*?window\.setTimeout\([\s\S]*?HOVER_PAUSE_DELAY_MS/);
   assert.match(source, /addEventListener\("pointerenter", handlePointerEnter\)/);
@@ -72,6 +79,12 @@ test("testimonial marquee uses two continuous lanes with hover-intent pause and 
   assert.match(source, /aria-hidden=\{duplicate \? "true" : undefined\}/);
   assert.match(source, /chrome-review-marquee__proof[\s\S]*?<p>[\s\S]*?<SettingsButton/);
   assert.match(source, /variant="ghost"/);
+  assert.match(source, /src="\/assets\/lumno-newtab-monet-coastal-white\.webp"/);
+  assert.match(source, /gridSize=\{2\}[\s\S]*?ditherMode="bayer"[\s\S]*?client:visible/);
+  assert.match(source, /chrome-review-marquee__header[\s\S]*?chrome-review-marquee__frame[\s\S]*?<DitherShader[\s\S]*?chrome-review-marquee__rows/);
+  assert.match(source, /\.chrome-review-marquee__frame \{[\s\S]*?width: min\(calc\(100% - 48px\), var\(--content-width, 1360px\)\)/);
+  assert.match(source, /overflow: hidden;[\s\S]*?border-radius: 16px;[\s\S]*?background: #f7f8ef;/);
+  assert.match(source, /@media \(max-width: 760px\)[\s\S]*?\.chrome-review-marquee__frame \{[\s\S]*?width: calc\(100% - 32px\)/);
   assert.match(source, /font-size: 14\.5px;[\s\S]*?font-weight: 400/);
   assert.match(source, /chrome-review-card__identity time[\s\S]*?font-size: 12px/);
 });
@@ -99,10 +112,10 @@ test("homepage keeps reviews in Section 2 after the viewport-aware product demo"
     /<section class="hero-section"[\s\S]*?<div class="hero-demo-slot">\s*<HeroSafariDemo[\s\S]*?client:load[\s\S]*?\/>\s*<\/div>\s*<\/section>\s*<ChromeReviewMarquee[\s\S]*?reviews=\{chromeStoreReviews\.reviews\}/,
   );
   assert.match(source, /padding: 120px 0 80px/);
-  assert.match(source, /height: clamp\(300px, calc\(100svh - 470px\), 620px\)/);
+  assert.match(source, /height: max\(300px, calc\(100svh - 470px\)\)/);
   assert.match(source, /margin-top: clamp\(52px, 4\.5vw, 72px\)/);
   assert.match(source, /@media \(max-width: 760px\)[\s\S]*?padding: 120px 0 52px/);
-  assert.match(source, /@media \(max-width: 760px\)[\s\S]*?height: clamp\(220px, calc\(100svh - 530px\), 440px\)/);
+  assert.match(source, /@media \(max-width: 760px\)[\s\S]*?height: max\(220px, calc\(100svh - 500px\)\)/);
   assert.match(source, /@media \(max-width: 760px\)[\s\S]*?margin-top: 36px/);
   assert.match(source, /@media \(min-width: 761px\) and \(max-height: 740px\)/);
 });

@@ -7,7 +7,6 @@ import {
   useState,
   type AnimationEvent as ReactAnimationEvent,
   type CSSProperties,
-  type TransitionEvent as ReactTransitionEvent,
 } from "react";
 import { AnimatePresence, motion, type Variants } from "motion/react";
 
@@ -42,6 +41,9 @@ const HOME_INTRO_FALLBACK_MS = 5_200;
 const HOME_INTRO_STABLE_FRAME_COUNT = 8;
 const HOME_INTRO_STABLE_FRAME_LIMIT = 120;
 const HOME_INTRO_RECT_EPSILON = 0.5;
+const HOME_INTRO_DESKTOP_SCALE_MAX = 1.32;
+const HOME_INTRO_MOBILE_SCALE_MIN = 0.94;
+const HOME_INTRO_MOBILE_SCALE_MAX = 1.02;
 const CURSOR_PATH = "M8.5 6.5 L43.5 28.7 L29.3 33 L20.8 50 Z";
 const HERO_INTRO_SEQUENCE = [
   { id: "browser-search", durationMs: 6_200 },
@@ -50,6 +52,13 @@ const HERO_INTRO_SEQUENCE = [
 ] as const;
 const COMMAND_BROWSER_PAGE_START_MS = 5_200;
 const COMMAND_BROWSER_PAGE_HOLD_MS = 1_800;
+const SEARCH_RESULT_CURSOR_DELAY_MS = 1_640;
+const SEARCH_RESULT_CURSOR_DURATION_MS = 2_600;
+const SEARCH_RESULT_HIGHLIGHT_LAG_MS = 120;
+const SEARCH_RESULT_HIGHLIGHT_START_MS =
+  SEARCH_RESULT_CURSOR_DELAY_MS
+  + SEARCH_RESULT_CURSOR_DURATION_MS
+  + SEARCH_RESULT_HIGHLIGHT_LAG_MS;
 const CURSOR_TIP_OFFSET_X = 5;
 const CURSOR_TIP_OFFSET_Y = 5;
 const CHROME_STORE_FAVICON =
@@ -837,11 +846,15 @@ function DemoCursorLayer({ mode }: { mode: CursorMode }) {
 
       const stageRect = stage.getBoundingClientRect();
       const targetRect = target.getBoundingClientRect();
-      const left = targetRect.left - stageRect.left
-        + targetRect.width * horizontalRatio
+      const stageScaleX = stageRect.width / Math.max(stage.offsetWidth, 1);
+      const stageScaleY = stageRect.height / Math.max(stage.offsetHeight, 1);
+      const renderedLeft = targetRect.left - stageRect.left
+        + targetRect.width * horizontalRatio;
+      const renderedTop = targetRect.top - stageRect.top
+        + targetRect.height * verticalRatio;
+      const left = renderedLeft / Math.max(stageScaleX, Number.EPSILON)
         - CURSOR_TIP_OFFSET_X;
-      const top = targetRect.top - stageRect.top
-        + targetRect.height * verticalRatio
+      const top = renderedTop / Math.max(stageScaleY, Number.EPSILON)
         - CURSOR_TIP_OFFSET_Y;
 
       stage.style.setProperty(`--${name}-cursor-left`, `${left.toFixed(2)}px`);
@@ -884,11 +897,13 @@ function DemoCursorLayer({ mode }: { mode: CursorMode }) {
       scheduleCursorSync,
       delay,
     ));
+    document.addEventListener("lumno:home-intro-complete", scheduleCursorSync);
     window.addEventListener("resize", scheduleCursorSync, { passive: true });
 
     return () => {
       window.cancelAnimationFrame(animationFrame);
       timeoutIds.forEach((timeoutId) => window.clearTimeout(timeoutId));
+      document.removeEventListener("lumno:home-intro-complete", scheduleCursorSync);
       window.removeEventListener("resize", scheduleCursorSync);
     };
   }, [mode]);
@@ -898,6 +913,10 @@ function DemoCursorLayer({ mode }: { mode: CursorMode }) {
       className="cursor-layer"
       data-cursor-mode={mode}
       ref={layerRef}
+      style={{
+        "--search-result-cursor-delay": `${SEARCH_RESULT_CURSOR_DELAY_MS}ms`,
+        "--search-result-cursor-duration": `${SEARCH_RESULT_CURSOR_DURATION_MS}ms`,
+      } as CSSProperties}
     >
       <DemoCursor />
     </div>
@@ -977,6 +996,9 @@ export function HeroSafariDemo({
   const autoPlayTimerRef = useRef<number | null>(null);
   const demoRef = useRef<HTMLDivElement>(null);
   const visualRef = useRef<HTMLDivElement>(null);
+  const introMaskAnimationRef = useRef<Animation | null>(null);
+  const introContentAnimationRef = useRef<Animation | null>(null);
+  const introRadiusAnimationRef = useRef<Animation | null>(null);
   const introCompletionTimerRef = useRef<number | null>(null);
   const introFallbackTimerRef = useRef<number | null>(null);
   const introLayoutFrameRef = useRef<number | null>(null);
@@ -1120,7 +1142,16 @@ export function HeroSafariDemo({
       return null;
     }
 
-    const sourceRect = visual.getBoundingClientRect();
+    const sourceWidth = window.innerWidth;
+    const sourceHeight = window.innerHeight;
+    const sourceRect: HomeIntroRect = {
+      bottom: sourceHeight,
+      height: sourceHeight,
+      left: 0,
+      right: sourceWidth,
+      top: 0,
+      width: sourceWidth,
+    };
     const targetRect = toHomeIntroRect(slot.getBoundingClientRect());
     if (
       !sourceRect.width
@@ -1151,6 +1182,22 @@ export function HeroSafariDemo({
     visual.style.setProperty("--hero-intro-target-height", `${targetRect.height.toFixed(2)}px`);
     visual.style.setProperty("--hero-intro-source-width", `${sourceRect.width.toFixed(2)}px`);
     visual.style.setProperty("--hero-intro-source-height", `${sourceRect.height.toFixed(2)}px`);
+    visual.style.setProperty(
+      "--hero-intro-mask-scale-x",
+      (sourceRect.width / targetRect.width).toFixed(6),
+    );
+    visual.style.setProperty(
+      "--hero-intro-mask-scale-y",
+      (sourceRect.height / targetRect.height).toFixed(6),
+    );
+    visual.style.setProperty(
+      "--hero-intro-content-scale-x",
+      (targetRect.width / sourceRect.width).toFixed(6),
+    );
+    visual.style.setProperty(
+      "--hero-intro-content-scale-y",
+      (targetRect.height / sourceRect.height).toFixed(6),
+    );
 
     return { demo, sourceRect, targetChanged, targetRect, visual };
   }, []);
@@ -1270,6 +1317,82 @@ export function HeroSafariDemo({
   ]);
 
   useLayoutEffect(() => {
+    if (introState !== "revealing") {
+      return undefined;
+    }
+
+    const geometry = syncHomeIntroTargetGeometry();
+    const content = visualRef.current?.querySelector(".hero-safari-mask-content");
+    if (!geometry || !(content instanceof HTMLElement)) {
+      completeHomeIntro();
+      return undefined;
+    }
+
+    const { sourceRect, targetRect, visual } = geometry;
+    const startScaleX = sourceRect.width / targetRect.width;
+    const startScaleY = sourceRect.height / targetRect.height;
+    const frameCount = 60;
+    const maskKeyframes: Keyframe[] = [];
+    const contentKeyframes: Keyframe[] = [];
+
+    for (let frame = 0; frame <= frameCount; frame += 1) {
+      const progress = frame / frameCount;
+      const scaleX = startScaleX + (1 - startScaleX) * progress;
+      const scaleY = startScaleY + (1 - startScaleY) * progress;
+      const maskTranslateX = -targetRect.left * (1 - progress);
+      const maskTranslateY = -targetRect.top * (1 - progress);
+      const contentTranslateX = -(targetRect.left * progress) / scaleX;
+      const contentTranslateY = -(targetRect.top * progress) / scaleY;
+
+      maskKeyframes.push({
+        offset: progress,
+        transform: `translate3d(${maskTranslateX.toFixed(3)}px, ${maskTranslateY.toFixed(3)}px, 0) scale(${scaleX.toFixed(6)}, ${scaleY.toFixed(6)})`,
+      });
+      contentKeyframes.push({
+        offset: progress,
+        transform: `translate3d(${contentTranslateX.toFixed(3)}px, ${contentTranslateY.toFixed(3)}px, 0) scale(${(1 / scaleX).toFixed(6)}, ${(1 / scaleY).toFixed(6)})`,
+      });
+    }
+
+    const timing: KeyframeAnimationOptions = {
+      duration: HOME_INTRO_MOVE_MS,
+      easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+      fill: "both",
+    };
+    const maskAnimation = visual.animate(maskKeyframes, timing);
+    const contentAnimation = content.animate(contentKeyframes, timing);
+    const radiusAnimation = visual.animate(
+      [{ borderRadius: "0px" }, { borderRadius: "16px" }],
+      timing,
+    );
+    introMaskAnimationRef.current = maskAnimation;
+    introContentAnimationRef.current = contentAnimation;
+    introRadiusAnimationRef.current = radiusAnimation;
+    maskAnimation.onfinish = () => reconcileHomeIntroEnd();
+
+    return () => {
+      maskAnimation.onfinish = null;
+      maskAnimation.cancel();
+      contentAnimation.cancel();
+      radiusAnimation.cancel();
+      if (introMaskAnimationRef.current === maskAnimation) {
+        introMaskAnimationRef.current = null;
+      }
+      if (introContentAnimationRef.current === contentAnimation) {
+        introContentAnimationRef.current = null;
+      }
+      if (introRadiusAnimationRef.current === radiusAnimation) {
+        introRadiusAnimationRef.current = null;
+      }
+    };
+  }, [
+    completeHomeIntro,
+    introState,
+    reconcileHomeIntroEnd,
+    syncHomeIntroTargetGeometry,
+  ]);
+
+  useLayoutEffect(() => {
     if (document.body.dataset.homeIntro !== "pending") {
       return undefined;
     }
@@ -1309,16 +1432,25 @@ export function HeroSafariDemo({
     const mobile = demoWidth <= 760;
     const desiredFocusWidth = Math.min(
       demoWidth - (mobile ? 32 : 96),
-      Math.max(focusRect.width, demoWidth * 0.54),
+      Math.max(
+        focusRect.width * (mobile ? HOME_INTRO_MOBILE_SCALE_MIN : 1),
+        demoWidth * (mobile ? 0.64 : 0.5),
+      ),
     );
     const stageScale = Math.min(
-      mobile ? 1.12 : 1.5,
-      Math.max(1, desiredFocusWidth / focusRect.width),
+      mobile ? HOME_INTRO_MOBILE_SCALE_MAX : HOME_INTRO_DESKTOP_SCALE_MAX,
+      Math.max(
+        mobile ? HOME_INTRO_MOBILE_SCALE_MIN : 1,
+        desiredFocusWidth / focusRect.width,
+      ),
     );
     const desiredFocusLeft = sourceRect.left
       + (demoWidth - focusRect.width * stageScale) / 2;
     const desiredFocusTop = sourceRect.top
-      + Math.max(72, Math.min(180, demoHeight * 0.18));
+      + Math.max(
+        mobile ? 104 : 128,
+        Math.min(mobile ? 216 : 260, demoHeight * (mobile ? 0.24 : 0.26)),
+      );
     const stageTranslateX = desiredFocusLeft
       - screenRect.left
       - (focusRect.left - screenRect.left) * stageScale;
@@ -1358,19 +1490,6 @@ export function HeroSafariDemo({
 
   const isBrowserSearch = scene.id === "browser-search";
   const isSiteSearch = scene.id === "site-search";
-  const handleHomeIntroTransitionEnd = useCallback(
-    (event: ReactTransitionEvent<HTMLDivElement>) => {
-      if (
-        event.target !== event.currentTarget
-        || event.propertyName !== "clip-path"
-      ) {
-        return;
-      }
-
-      reconcileHomeIntroEnd();
-    },
-    [reconcileHomeIntroEnd],
-  );
   const handleDemoAnimationEnd = useCallback(
     (event: ReactAnimationEvent<HTMLDivElement>) => {
       const target = event.target;
@@ -1407,7 +1526,7 @@ export function HeroSafariDemo({
   const model: BookmarkFocusModel = {
     closeOtherTabsLabel: copy.closeOtherTabsLabel,
     hoverLeadMs: 0,
-    hoverStartMs: 3200,
+    hoverStartMs: SEARCH_RESULT_HIGHLIGHT_START_MS,
     hoverStepMs: 0,
     hoverWrapStepMs: 0,
     openLabel: copy.openLabel,
@@ -1432,55 +1551,56 @@ export function HeroSafariDemo({
     >
       <div
         className="hero-safari-visual"
-        onTransitionEnd={handleHomeIntroTransitionEnd}
         ref={visualRef}
       >
-        <DitherShader
-          className="hero-safari-dither--continuous"
-          src="/assets/settings-bg-light-monet-newtab.webp"
-          gridSize={2}
-          ditherMode="bayer"
-          colorMode="original"
-          brightness={0.01}
-          contrast={1.08}
-          threshold={0.22}
-        />
-        <div aria-hidden="true" className="hero-safari-screen" inert>
-          <AnimatePresence custom={sceneDirection} mode="wait">
-            <motion.div
-              animate="center"
-              className="hero-safari-stage"
-              custom={sceneDirection}
-              data-scene-direction={sceneDirection}
-              data-scene-id={scene.id}
-              exit={reducedMotion ? undefined : "exit"}
-              initial={reducedMotion ? false : "enter"}
-              key={animationKey}
-              variants={reducedMotion ? undefined : HERO_SCENE_VARIANTS}
-            >
-              <div className={isSiteSearch ? "site-search-demo-ui" : "bookmark-focus-ui"}>
-                {isSiteSearch ? (
-                  <div className="site-search-demo-surface" key={animationKey}>
-                    <SiteSearchDemoSurface model={siteSearchDemoModel} />
-                  </div>
-                ) : scene.followups ? (
-                  <CommandSceneDemo
-                    followups={scene.followups}
-                    key={animationKey}
-                    model={model}
+        <div className="hero-safari-mask-content">
+          <DitherShader
+            className="hero-safari-dither--continuous"
+            src="/assets/settings-bg-light-monet-newtab.webp"
+            gridSize={2}
+            ditherMode="bayer"
+            colorMode="original"
+            brightness={0.01}
+            contrast={1.08}
+            threshold={0.22}
+          />
+          <div aria-hidden="true" className="hero-safari-screen" inert>
+            <AnimatePresence custom={sceneDirection} mode="wait">
+              <motion.div
+                animate="center"
+                className="hero-safari-stage"
+                custom={sceneDirection}
+                data-scene-direction={sceneDirection}
+                data-scene-id={scene.id}
+                exit={reducedMotion ? undefined : "exit"}
+                initial={reducedMotion ? false : "enter"}
+                key={animationKey}
+                variants={reducedMotion ? undefined : HERO_SCENE_VARIANTS}
+              >
+                <div className={isSiteSearch ? "site-search-demo-ui" : "bookmark-focus-ui"}>
+                  {isSiteSearch ? (
+                    <div className="site-search-demo-surface" key={animationKey}>
+                      <SiteSearchDemoSurface model={siteSearchDemoModel} />
+                    </div>
+                  ) : scene.followups ? (
+                    <CommandSceneDemo
+                      followups={scene.followups}
+                      key={animationKey}
+                      model={model}
+                    />
+                  ) : (
+                    <BookmarkFocusDemo key={animationKey} model={model} />
+                  )}
+                </div>
+                {scene.id !== "commands" ? (
+                  <DemoCursorLayer
+                    key={`cursor-${animationKey}`}
+                    mode={isBrowserSearch ? "search-result" : "site-search"}
                   />
-                ) : (
-                  <BookmarkFocusDemo key={animationKey} model={model} />
-                )}
-              </div>
-              {scene.id !== "commands" ? (
-                <DemoCursorLayer
-                  key={`cursor-${animationKey}`}
-                  mode={isBrowserSearch ? "search-result" : "site-search"}
-                />
-              ) : null}
-            </motion.div>
-          </AnimatePresence>
+                ) : null}
+              </motion.div>
+            </AnimatePresence>
+          </div>
         </div>
         <div
           aria-label={copy.scenePickerLabel}

@@ -41,23 +41,40 @@ test("homepage opens with a full-screen Search All demo and settles when results
   assert.match(component, /const HOME_INTRO_MOVE_MS = 1_240/);
   assert.match(component, /HOME_INTRO_COMPLETION_FALLBACK_MS = HOME_INTRO_MOVE_MS \+ 240/);
   assert.match(component, /const visualRef = useRef<HTMLDivElement>\(null\)/);
-  assert.match(component, /const sourceRect = visual\.getBoundingClientRect\(\)/);
+  assert.match(component, /const sourceWidth = window\.innerWidth/);
+  assert.match(component, /const sourceHeight = window\.innerHeight/);
   assert.match(component, /const targetRect = toHomeIntroRect\(slot\.getBoundingClientRect\(\)\)/);
   assert.match(component, /visual\.style\.setProperty\("--hero-intro-target-left"/);
   assert.match(component, /HOME_INTRO_STABLE_FRAME_COUNT = 8/);
   assert.match(component, /await document\.fonts\?\.ready/);
   assert.match(component, /introResizeObserverRef\.current = new ResizeObserver/);
   assert.match(component, /stableFrameCount < HOME_INTRO_STABLE_FRAME_COUNT/);
-  assert.match(component, /event\.target !== event\.currentTarget[\s\S]*?event\.propertyName !== "clip-path"[\s\S]*?reconcileHomeIntroEnd\(\)/);
+  assert.match(component, /const maskKeyframes: Keyframe\[\] = \[\]/);
+  assert.match(component, /const contentKeyframes: Keyframe\[\] = \[\]/);
+  assert.match(component, /const contentTranslateX = -\(targetRect\.left \* progress\) \/ scaleX/);
+  assert.match(component, /const maskAnimation = visual\.animate\(maskKeyframes, timing\)/);
+  assert.match(component, /const contentAnimation = content\.animate\(contentKeyframes, timing\)/);
+  assert.match(component, /const radiusAnimation = visual\.animate\([\s\S]*?borderRadius: "0px"[\s\S]*?borderRadius: "16px"/);
+  assert.match(component, /maskAnimation\.onfinish = \(\) => reconcileHomeIntroEnd\(\)/);
+  assert.doesNotMatch(component, /handleHomeIntroMaskAnimationEnd/);
   assert.doesNotMatch(component, /--hero-intro-switcher-/);
   assert.equal((component.match(/<DitherShader/g) || []).length, 1);
   assert.match(component, /className="hero-safari-dither--continuous"/);
   assert.match(component, /--hero-intro-source-width/);
   assert.match(component, /--hero-intro-source-height/);
-  assert.match(source, /\.hero-demo-slot \{[\s\S]*?height: clamp\(300px, calc\(100svh - 470px\), 620px\);/);
+  assert.match(source, /\.hero-demo-slot \{[\s\S]*?height: max\(300px, calc\(100svh - 470px\)\);/);
+  assert.match(component, /const HOME_INTRO_DESKTOP_SCALE_MAX = 1\.32/);
+  assert.match(component, /const HOME_INTRO_MOBILE_SCALE_MIN = 0\.94/);
+  assert.match(component, /const HOME_INTRO_MOBILE_SCALE_MAX = 1\.02/);
+  assert.match(component, /demoHeight \* \(mobile \? 0\.24 : 0\.26\)/);
   assert.match(styles, /\.hero-safari-demo \{[\s\S]*?position: relative;[\s\S]*?overflow: visible;/);
-  assert.match(styles, /\.hero-safari-demo\[data-home-intro="pending"\] \.hero-safari-visual,[\s\S]*?position: fixed;[\s\S]*?width: 100vw;[\s\S]*?height: 100dvh;/);
-  assert.match(styles, /\.hero-safari-demo\[data-home-intro="revealing"\] \.hero-safari-visual \{[\s\S]*?clip-path: inset\([\s\S]*?--hero-intro-target-top[\s\S]*?transition: clip-path 1240ms/);
+  assert.match(styles, /\.hero-safari-visual \{[\s\S]*?filter: none;/);
+  assert.doesNotMatch(styles, /drop-shadow\(0 28px 50px/);
+  assert.match(styles, /\.hero-safari-demo\[data-home-intro="pending"\] \.hero-safari-visual,[\s\S]*?position: fixed;[\s\S]*?width: var\(--hero-intro-target-width/);
+  assert.match(styles, /\.hero-safari-demo\[data-home-intro="pending"\] \.hero-safari-visual \{[\s\S]*?scale\([\s\S]*?--hero-intro-mask-scale-x/);
+  assert.match(styles, /\.hero-safari-demo\[data-home-intro="pending"\] \.hero-safari-mask-content,[\s\S]*?--hero-intro-content-scale-x/);
+  assert.match(styles, /\.hero-safari-demo\[data-home-intro="complete"\] \.hero-safari-mask-content \{[\s\S]*?--hero-intro-target-left/);
+  assert.doesNotMatch(styles, /hero-demo-mask-shrink|will-change:\s*clip-path/);
   assert.doesNotMatch(styles, /@keyframes hero-demo-window-settle/);
   assert.match(styles, /@keyframes hero-demo-stage-settle[\s\S]*?transform: var\(--hero-intro-stage-transform, none\);[\s\S]*?transform: none;/);
   assert.doesNotMatch(
@@ -67,7 +84,7 @@ test("homepage opens with a full-screen Search All demo and settles when results
   assert.match(styles, /\.hero-safari-demo\[data-home-intro="pending"\] \.hero-demo-page-switcher,[\s\S]*?visibility: hidden;[\s\S]*?opacity: 0;/);
   assert.match(styles, /\.hero-safari-demo\[data-home-intro="complete"\] \.hero-demo-page-switcher \{[\s\S]*?hero-demo-switcher-enter 240ms/);
   assert.doesNotMatch(styles, /hero-demo-switcher-settle|--hero-intro-switcher-/);
-  assert.match(styles, /\.hero-safari-demo\[data-home-intro="complete"\] \.hero-safari-dither--continuous \{[\s\S]*?left: calc\(-1 \* var\(--hero-intro-target-left, 0px\)\);[\s\S]*?width: var\(--hero-intro-source-width, 100%\);/);
+  assert.match(styles, /\.hero-safari-demo\[data-home-intro="pending"\] \.hero-safari-mask-content,[\s\S]*?width: var\(--hero-intro-source-width, 100%\);[\s\S]*?height: var\(--hero-intro-source-height, 100%\);/);
   assert.doesNotMatch(styles, /hero-intro-dither-out|hero-settled-dither-in|hero-safari-dither--intro|hero-safari-dither--settled/);
   assert.match(dither, /const workWidth = Math\.max\(1, Math\.ceil\(width \/ baseCellSize\)\)/);
   assert.match(dither, /data-dither-grid-size=\{gridSize\}/);
@@ -348,7 +365,10 @@ test("hero demo exposes three replayable plugin-consistent search scenes", () =>
   assert.match(component, /brandAccentRgb: \[36, 41, 46\]/);
   assert.match(component, /accentRgb: \[156, 159, 161\]/);
   assert.match(component, /hoverLeadMs: 0/);
-  assert.match(component, /hoverStartMs: 3200/);
+  assert.match(component, /const SEARCH_RESULT_CURSOR_DELAY_MS = 1_640/);
+  assert.match(component, /const SEARCH_RESULT_CURSOR_DURATION_MS = 2_600/);
+  assert.match(component, /const SEARCH_RESULT_HIGHLIGHT_LAG_MS = 120/);
+  assert.match(component, /hoverStartMs: SEARCH_RESULT_HIGHLIGHT_START_MS/);
   assert.match(component, /hoverStepMs: 0/);
   assert.match(component, /hoverWrapStepMs: 0/);
   assert.match(component, /scene\.id !== "commands" \? \(/);
@@ -358,6 +378,12 @@ test("hero demo exposes three replayable plugin-consistent search scenes", () =>
   assert.match(component, /CURSOR_TIP_OFFSET_Y = 5/);
   assert.match(component, /--\$\{name\}-cursor-left/);
   assert.match(component, /--\$\{name\}-cursor-top/);
+  assert.match(component, /const stageScaleX = stageRect\.width \/ Math\.max\(stage\.offsetWidth, 1\)/);
+  assert.match(component, /const stageScaleY = stageRect\.height \/ Math\.max\(stage\.offsetHeight, 1\)/);
+  assert.match(component, /renderedLeft \/ Math\.max\(stageScaleX, Number\.EPSILON\)/);
+  assert.match(component, /renderedTop \/ Math\.max\(stageScaleY, Number\.EPSILON\)/);
+  assert.match(component, /document\.addEventListener\("lumno:home-intro-complete", scheduleCursorSync\)/);
+  assert.match(component, /document\.removeEventListener\("lumno:home-intro-complete", scheduleCursorSync\)/);
   assert.match(component, /"search-result",[\s\S]*?data-demo-index="0"/);
   assert.match(component, /"site-search-tag",[\s\S]*?data-demo-cursor-target="site-search-tag"/);
   assert.match(component, /"site-search-menu",[\s\S]*?data-demo-cursor-target="site-search-menu"/);
@@ -396,8 +422,10 @@ test("hero demo exposes three replayable plugin-consistent search scenes", () =>
   assert.match(siteSearchComponent, /window\.requestAnimationFrame\(animateScroll\)/);
   assert.match(styles, /onboarding-overlay-input-shell-expand 980ms/);
   assert.match(styles, /onboarding-overlay-results-reveal 980ms/);
-  assert.match(styles, /onboarding-cursor-type 2600ms/);
-  assert.match(styles, /\[data-cursor-mode="search-result"\][\s\S]*?onboarding-cursor-type 2600ms/);
+  assert.match(component, /--search-result-cursor-delay/);
+  assert.match(component, /--search-result-cursor-duration/);
+  assert.match(styles, /onboarding-cursor-type[\s\S]*?--search-result-cursor-duration/);
+  assert.match(styles, /\[data-cursor-mode="search-result"\][\s\S]*?--search-result-cursor-delay/);
   assert.match(styles, /--search-result-cursor-left/);
   assert.match(styles, /--search-result-cursor-top/);
   assert.doesNotMatch(styles, /onboarding-cursor-hover-loop/);
@@ -428,8 +456,8 @@ test("hero demo exposes three replayable plugin-consistent search scenes", () =>
   assert.match(styles, /background: #fffdf8;/);
   assert.doesNotMatch(switcherStyles, /backdrop-filter/);
   assert.match(styles, /hero-demo-page-button:focus-visible/);
-  assert.match(homepage, /height: clamp\(300px, calc\(100svh - 470px\), 620px\);/);
-  assert.match(homepage, /height: clamp\(220px, calc\(100svh - 530px\), 440px\);/);
+  assert.match(homepage, /height: max\(300px, calc\(100svh - 470px\)\);/);
+  assert.match(homepage, /height: max\(220px, calc\(100svh - 500px\)\);/);
   assert.match(
     styles,
     /@media \(max-width: 760px\)[\s\S]*?\.hero-demo-page-switcher \{[\s\S]*?grid-template-columns: repeat\(3, minmax\(0, 1fr\)\);[\s\S]*?transform: none;/,

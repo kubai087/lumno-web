@@ -1,5 +1,6 @@
 ---
 import { SettingsButton } from "../extension-settings/SettingsKit";
+import { DitherShader } from "./DitherShader";
 import type { SupportedLocale } from "../../lib/locales";
 import type { ChromeStoreReview } from "../../lib/chrome-store-reviews";
 
@@ -68,56 +69,117 @@ const dateFormatter = new Intl.DateTimeFormat(locale, {
     </div>
   </div>
 
-  <div class="chrome-review-marquee__rows">
-    {rows.map((row, rowIndex) => (
-      <div class="chrome-review-marquee__lane" data-direction={rowIndex === 0 ? "left" : "right"}>
-        <div class="chrome-review-marquee__track" data-review-track={rowIndex + 1}>
-          {[false, true].map((duplicate) => (
-            <div
-              class="chrome-review-marquee__group"
-              role={duplicate ? undefined : "list"}
-              aria-hidden={duplicate ? "true" : undefined}
-            >
-              {row.map((review) => (
-                <article class="chrome-review-card" role={duplicate ? undefined : "listitem"}>
-                  <p class="chrome-review-card__quote">“{review.review}”</p>
-                  <div class="chrome-review-card__meta">
-                    <img
-                      src={review.avatarUrl}
-                      width="40"
-                      height="40"
-                      alt={`${review.reviewerId} ${avatarLabel}`}
-                      loading="lazy"
-                      decoding="async"
-                      referrerpolicy="no-referrer"
-                    />
-                    <div class="chrome-review-card__identity">
-                      <strong>{review.reviewerId}</strong>
-                      <time datetime={review.publishedAt}>
-                        {dateFormatter.format(new Date(`${review.publishedAt}T00:00:00Z`))}
-                      </time>
+  <div class="chrome-review-marquee__frame">
+    <DitherShader
+      className="chrome-review-marquee__dither"
+      src="/assets/lumno-newtab-monet-coastal-white.webp"
+      gridSize={2}
+      ditherMode="bayer"
+      colorMode="original"
+      brightness={0.01}
+      contrast={1.08}
+      threshold={0.22}
+      client:visible
+    />
+
+    <div class="chrome-review-marquee__rows">
+      {rows.map((row, rowIndex) => (
+        <div class="chrome-review-marquee__lane" data-direction={rowIndex === 0 ? "left" : "right"}>
+          <div class="chrome-review-marquee__track" data-review-track={rowIndex + 1}>
+            {[false, true].map((duplicate) => (
+              <div
+                class="chrome-review-marquee__group"
+                role={duplicate ? undefined : "list"}
+                aria-hidden={duplicate ? "true" : undefined}
+              >
+                {row.map((review) => (
+                  <article class="chrome-review-card" role={duplicate ? undefined : "listitem"}>
+                    <p class="chrome-review-card__quote">“{review.review}”</p>
+                    <div class="chrome-review-card__meta">
+                      <img
+                        src={review.avatarUrl}
+                        width="40"
+                        height="40"
+                        alt={`${review.reviewerId} ${avatarLabel}`}
+                        loading="lazy"
+                        decoding="async"
+                        referrerpolicy="no-referrer"
+                      />
+                      <div class="chrome-review-card__identity">
+                        <strong>{review.reviewerId}</strong>
+                        <time datetime={review.publishedAt}>
+                          {dateFormatter.format(new Date(`${review.publishedAt}T00:00:00Z`))}
+                        </time>
+                      </div>
+                      <span class="chrome-review-card__rating" aria-label={`${review.rating} ${ratingLabel}`}>
+                        <i class="ri-star-fill" aria-hidden="true"></i>
+                        {review.rating.toFixed(1)}
+                      </span>
                     </div>
-                    <span class="chrome-review-card__rating" aria-label={`${review.rating} ${ratingLabel}`}>
-                      <i class="ri-star-fill" aria-hidden="true"></i>
-                      {review.rating.toFixed(1)}
-                    </span>
-                  </div>
-                </article>
-              ))}
-            </div>
-          ))}
+                  </article>
+                ))}
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
-    ))}
+      ))}
+    </div>
   </div>
 </section>
 
 <script>
   const HOVER_PAUSE_DELAY_MS = 600;
 
+  const fillTrack = (track: HTMLElement) => {
+    const lane = track.closest<HTMLElement>(".chrome-review-marquee__lane");
+    const baseGroup = track.querySelector<HTMLElement>(".chrome-review-marquee__group");
+    const duplicateTemplate = track.querySelector<HTMLElement>(
+      '.chrome-review-marquee__group[aria-hidden="true"]',
+    );
+    if (!lane || !baseGroup || !duplicateTemplate) return;
+
+    const gap = Number.parseFloat(window.getComputedStyle(track).columnGap) || 0;
+    const shiftDistance = baseGroup.getBoundingClientRect().width + gap;
+    if (shiftDistance <= gap) return;
+
+    track.style.setProperty("--chrome-review-group-shift", `${shiftDistance}px`);
+
+    const minimumGroupCount = Math.max(
+      2,
+      1 + Math.ceil((lane.clientWidth + gap) / shiftDistance),
+    );
+
+    while (track.children.length < minimumGroupCount) {
+      const duplicate = duplicateTemplate.cloneNode(true) as HTMLElement;
+      duplicate.dataset.reviewGroupCopy = "true";
+      track.append(duplicate);
+    }
+
+    while (track.children.length > minimumGroupCount) {
+      const lastGroup = track.lastElementChild as HTMLElement | null;
+      if (!lastGroup?.hasAttribute("data-review-group-copy")) break;
+      lastGroup.remove();
+    }
+  };
+
   document.querySelectorAll<HTMLElement>("[data-chrome-review-marquee]").forEach((marquee) => {
     let hoverPauseTimer: number | undefined;
     let isPointerInside = false;
+    const tracks = Array.from(
+      marquee.querySelectorAll<HTMLElement>(".chrome-review-marquee__track"),
+    );
+
+    const fillTracks = () => {
+      tracks.forEach(fillTrack);
+      marquee.dataset.marqueeReady = "true";
+    };
+
+    fillTracks();
+
+    const resizeObserver = new ResizeObserver(fillTracks);
+    marquee.querySelectorAll<HTMLElement>(".chrome-review-marquee__lane").forEach((lane) => {
+      resizeObserver.observe(lane);
+    });
 
     const clearHoverPauseTimer = () => {
       if (hoverPauseTimer === undefined) return;
@@ -170,7 +232,36 @@ const dateFormatter = new Intl.DateTimeFormat(locale, {
     width: 100%;
     margin-top: 0;
     padding: clamp(80px, 7vw, 104px) 0 clamp(72px, 6vw, 92px);
-    border-top: 1px solid var(--line, #e2e6e9);
+  }
+
+  .chrome-review-marquee__frame {
+    position: relative;
+    isolation: isolate;
+    width: min(calc(100% - 48px), var(--content-width, 1360px));
+    margin: 0 auto;
+    padding: clamp(24px, 2.5vw, 36px) 0;
+    overflow: hidden;
+    border-radius: 16px;
+    background: #f7f8ef;
+  }
+
+  :global(.chrome-review-marquee__dither) {
+    z-index: 0;
+    border-radius: inherit;
+    background: url("/assets/lumno-newtab-monet-coastal-white.webp") center / cover no-repeat;
+    pointer-events: none;
+  }
+
+  :global(.chrome-review-marquee__dither canvas) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    image-rendering: pixelated;
+  }
+
+  .chrome-review-marquee__rows {
+    position: relative;
+    z-index: 1;
   }
 
   .chrome-review-marquee__header {
@@ -247,10 +338,15 @@ const dateFormatter = new Intl.DateTimeFormat(locale, {
     display: flex;
     gap: 12px;
     will-change: transform;
+  }
+
+  .chrome-review-marquee[data-marquee-ready="true"] .chrome-review-marquee__track {
     animation: chrome-review-scroll-left 38s linear infinite;
   }
 
-  [data-direction="right"] .chrome-review-marquee__track {
+  .chrome-review-marquee[data-marquee-ready="true"]
+    [data-direction="right"]
+    .chrome-review-marquee__track {
     animation-name: chrome-review-scroll-right;
     animation-duration: 44s;
   }
@@ -353,18 +449,22 @@ const dateFormatter = new Intl.DateTimeFormat(locale, {
   }
 
   @keyframes chrome-review-scroll-left {
-    to { transform: translateX(calc(-50% - 6px)); }
+    to { transform: translateX(calc(-1 * var(--chrome-review-group-shift))); }
   }
 
   @keyframes chrome-review-scroll-right {
-    from { transform: translateX(calc(-50% - 6px)); }
+    from { transform: translateX(calc(-1 * var(--chrome-review-group-shift))); }
     to { transform: translateX(0); }
   }
 
   @media (max-width: 760px) {
     .chrome-review-marquee {
-      margin-top: 0;
       padding: 72px 0 64px;
+    }
+
+    .chrome-review-marquee__frame {
+      width: calc(100% - 32px);
+      padding: 20px 0;
     }
 
     .chrome-review-marquee__header {

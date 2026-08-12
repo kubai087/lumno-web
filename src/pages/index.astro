@@ -35,6 +35,8 @@ interface Props {
 
 const EDGE_STORE_URL = "https://microsoftedge.microsoft.com/addons/detail/pfbklkaefmfamjpibfiapaiihlddhchc";
 const GITHUB_URL = "https://github.com/kubai087/lumno-extension";
+const GITHUB_ISSUE_URL = `${GITHUB_URL}/issues/new/choose`;
+const GITHUB_PULL_REQUEST_URL = `${GITHUB_URL}/compare`;
 const GITHUB_LICENSE_URL = `${GITHUB_URL}/blob/main/LICENSE`;
 const CHROME_REVIEW_URL = `${CHROME_STORE_URL}/reviews?utm_source=item-share-cb`;
 const { chrome: chromeStoreVersion, edge: edgeStoreVersion } = await getStoreVersions({
@@ -63,6 +65,28 @@ const heroTitleSegments = heroTitleCommaIndex >= 0
       content.heroTitle.slice(heroTitleCommaIndex + 1).trimStart(),
     ]
   : [content.heroTitle];
+const heroDescriptionLines = content.heroDescription.split("\n");
+const heroDescriptionNoWrapPhrases = uiLocale === "zh-CN"
+  ? [
+      "Lumno 是一个开源的",
+      "浏览器命令栏",
+      "及新标签页插件",
+      "可从任何网页随时唤起",
+      "搜索标签页",
+      "书签",
+      "历史记录",
+      "和常用网站",
+      "无需来回翻找",
+    ]
+  : [];
+const heroDescriptionPhrasePattern = heroDescriptionNoWrapPhrases.length
+  ? new RegExp(`(${heroDescriptionNoWrapPhrases.join("|")})`, "g")
+  : null;
+const heroDescriptionLineChunks = heroDescriptionLines.map((line) =>
+  (heroDescriptionPhrasePattern ? line.split(heroDescriptionPhrasePattern) : [line])
+    .filter(Boolean)
+    .map((text) => ({ text, noWrap: heroDescriptionNoWrapPhrases.includes(text) })),
+);
 const homeHref = buildLocalizedPath(uiLocale, "/");
 const featuresHref = buildLocalizedPath(uiLocale, "/features/");
 const onboardingHref = buildLocalizedPath(uiLocale, "/onboarding/");
@@ -127,7 +151,7 @@ const structuredData = [
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="stylesheet" href="/assets/remixicon.css" />
   </head>
-  <body data-locale={uiLocale}>
+  <body data-home-intro="pending" data-locale={uiLocale}>
     <header class="top-nav">
       <a
         class="top-nav-brand"
@@ -143,16 +167,26 @@ const structuredData = [
         <HomeNavGhostLinks
           releaseHref={releaseHref}
           repositoryHref={GITHUB_URL}
+          repositoryIssueHref={GITHUB_ISSUE_URL}
+          repositoryPullRequestHref={GITHUB_PULL_REQUEST_URL}
+          contactXHref={COMMUNITY_LINKS.xUrl}
+          contactXiaohongshuHref={COMMUNITY_LINKS.xiaohongshuUrl}
           releaseLabel={content.navRelease}
-          feedbackLabel={content.navFeedback}
           repositoryLabel={content.navRepository}
-          featureRequestLabel={content.navFeatureRequest}
+          repositoryMenuLabel={content.navRepositoryMenuAria}
+          repositoryHomeLabel={content.navRepositoryHome}
+          repositoryIssueLabel={content.navRepositoryIssue}
+          repositoryPullRequestLabel={content.navRepositoryPullRequest}
+          communityLabel={content.navCommunity}
+          contactLabel={content.navContact}
+          contactMenuLabel={content.navContactMenuAria}
+          contactXLabel={content.navContactX}
+          contactXiaohongshuLabel={content.navContactXiaohongshu}
           menuLabel={content.navMoreMenuAria}
-          panelTitle={content.communityPanelTitle}
+          panelTitle={content.qrcodeTitle}
           qrImageSrc={COMMUNITY_LINKS.wechatQrImagePath}
           qrImageAlt={content.qrcodeImageAlt}
           qrCloseLabel={content.qrcodeCloseAria}
-          qrRefreshLabel={content.qrcodeRefreshAria}
           client:load
         />
         <LanguageMenu
@@ -161,18 +195,20 @@ const structuredData = [
           iconOnly
           client:load
         />
-        <InstallMenu
-          label={content.installLabel}
-          ariaLabel={content.installAria}
-          chromeUrl={CHROME_STORE_URL}
-          edgeUrl={EDGE_STORE_URL}
-          chromeLabel={content.installChromeStoreLabel}
-          edgeLabel={content.installEdgeStoreLabel}
-          chromeVersion={chromeStoreVersion}
-          edgeVersion={edgeStoreVersion}
-          chromeRecommendation={content.installChromeRecommendation}
-          client:load
-        />
+        <div class="top-nav-install-slot">
+          <InstallMenu
+            label={content.installLabel}
+            ariaLabel={content.installAria}
+            chromeUrl={CHROME_STORE_URL}
+            edgeUrl={EDGE_STORE_URL}
+            chromeLabel={content.installChromeStoreLabel}
+            edgeLabel={content.installEdgeStoreLabel}
+            chromeVersion={chromeStoreVersion}
+            edgeVersion={edgeStoreVersion}
+            chromeRecommendation={content.installChromeRecommendation}
+            client:load
+          />
+        </div>
       </nav>
     </header>
 
@@ -198,7 +234,15 @@ const structuredData = [
               ))}
             </span>
           </h1>
-          <p>{content.heroDescription}</p>
+          <p class="hero-description">
+            {heroDescriptionLineChunks.map((chunks) => (
+              <span class="hero-description-line">
+                {chunks.map(({ text, noWrap }) => (
+                  <span class:list={{ "hero-description-phrase": noWrap }}>{text}</span>
+                ))}
+              </span>
+            ))}
+          </p>
           <div class="hero-actions">
             <HeroInstallTooltip
               label={content.heroInstallLabel}
@@ -233,12 +277,14 @@ const structuredData = [
             </a>{heroOpenSourceSuffix}
           </p>
         </div>
-        <HeroSafariDemo
-          ariaLabel={content.heroDemoAria}
-          builtinSiteSearchProviders={builtinSiteSearchProviders}
-          locale={uiLocale}
-          client:load
-        />
+        <div class="hero-demo-slot">
+          <HeroSafariDemo
+            ariaLabel={content.heroDemoAria}
+            builtinSiteSearchProviders={builtinSiteSearchProviders}
+            locale={uiLocale}
+            client:load
+          />
+        </div>
       </section>
 
       <ChromeReviewMarquee
@@ -505,13 +551,24 @@ const structuredData = [
 
       const topNav = document.querySelector(".top-nav");
       const heroTitle = document.getElementById("hero-title");
-      if (topNav instanceof HTMLElement && heroTitle instanceof HTMLElement) {
+      const heroInstallPrimary = document.getElementById("hero-install-primary");
+      if (
+        topNav instanceof HTMLElement
+        && heroTitle instanceof HTMLElement
+        && heroInstallPrimary instanceof HTMLElement
+      ) {
         let navOverlapFrame = 0;
         const updateNavOverlap = () => {
           navOverlapFrame = 0;
           const navBottom = topNav.getBoundingClientRect().bottom;
           const titleTop = heroTitle.getBoundingClientRect().top;
-          document.body.classList.toggle("has-nav-overlap", window.scrollY > 0 && titleTop < navBottom - 1);
+          const heroInstallBottom = heroInstallPrimary.getBoundingClientRect().bottom;
+          const hasNavOverlap = window.scrollY > 0 && titleTop < navBottom - 1;
+          document.body.classList.toggle("has-nav-overlap", hasNavOverlap);
+          document.body.classList.toggle(
+            "has-nav-install",
+            hasNavOverlap && heroInstallBottom <= navBottom,
+          );
         };
         const scheduleNavOverlapUpdate = () => {
           if (navOverlapFrame) return;
@@ -520,7 +577,9 @@ const structuredData = [
         updateNavOverlap();
         window.addEventListener("scroll", scheduleNavOverlapUpdate, { passive: true });
         window.addEventListener("resize", scheduleNavOverlapUpdate);
-        new ResizeObserver(scheduleNavOverlapUpdate).observe(topNav);
+        const navResizeObserver = new ResizeObserver(scheduleNavOverlapUpdate);
+        navResizeObserver.observe(topNav);
+        navResizeObserver.observe(heroInstallPrimary);
       }
 
     </script>
@@ -561,6 +620,7 @@ const structuredData = [
         scroll-behavior: smooth;
         scroll-padding-top: 88px;
         background: var(--bg);
+        scrollbar-gutter: stable;
       }
 
       body {
@@ -570,6 +630,11 @@ const structuredData = [
         background-color: var(--bg);
         font-family: "Open Sans", "PingFang SC", "Microsoft JhengHei", "Microsoft YaHei", sans-serif;
         -webkit-font-smoothing: antialiased;
+      }
+
+      body[data-scroll-locked] {
+        --removed-body-scroll-bar-size: 0px !important;
+        margin-right: 0 !important;
       }
 
       button,
@@ -584,31 +649,48 @@ const structuredData = [
       .top-nav {
         position: fixed;
         top: 18px;
-        left: 50%;
+        left: 0;
+        right: var(--removed-body-scroll-bar-size, 0px);
         z-index: 50;
-        width: min(calc(100% - 48px), var(--content-width));
+        width: min(calc(100% - 48px - var(--removed-body-scroll-bar-size, 0px)), var(--content-width));
+        margin-inline: auto;
         min-height: 56px;
         padding: 7px;
         display: flex;
         align-items: center;
         justify-content: space-between;
         gap: 18px;
-        transform: translateX(-50%);
         border: 1px solid transparent;
         border-radius: 999px;
+        overflow: clip;
         background: transparent;
         box-shadow: none;
         backdrop-filter: blur(0);
         -webkit-backdrop-filter: blur(0);
+        opacity: 1;
+        translate: 0 0;
+        transform: translateY(0);
         contain: layout;
         transition:
+          min-height 180ms ease,
+          padding 180ms ease,
+          opacity 480ms ease,
+          translate 620ms cubic-bezier(0.22, 1, 0.36, 1),
+          transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
           background-color 180ms ease,
           border-color 180ms ease,
           box-shadow 180ms ease,
           backdrop-filter 180ms ease;
       }
 
+      .top-nav:has(.lumno-settings-select[data-open="true"]) {
+        overflow: visible;
+      }
+
       body.has-nav-overlap .top-nav {
+        min-height: 58px;
+        padding: 6px 8px;
+        transform: translateY(-10px);
         border-color: rgba(211, 217, 226, 0.78);
         background: rgba(255, 255, 255, 0.84);
         box-shadow: 0 10px 32px rgba(35, 43, 52, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
@@ -632,11 +714,16 @@ const structuredData = [
       }
 
       .top-nav-actions {
+        --top-nav-action-gap: 8px;
         display: flex;
         align-items: center;
         justify-content: flex-end;
         gap: 8px;
         margin-right: 2.5px;
+      }
+
+      body:not(.has-nav-install) .top-nav-actions {
+        margin-right: 1px;
       }
 
       .top-nav-ghost-links {
@@ -679,6 +766,60 @@ const structuredData = [
 
       .install-menu {
         z-index: 1;
+      }
+
+      .top-nav-install-slot {
+        display: grid;
+        grid-template-columns: 0fr;
+        min-width: 0;
+        margin-left: calc(var(--top-nav-action-gap) * -1);
+        overflow: clip;
+        border-radius: 999px;
+        clip-path: inset(0 round 999px);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition:
+          grid-template-columns 240ms cubic-bezier(0.22, 1, 0.36, 1),
+          margin-left 240ms cubic-bezier(0.22, 1, 0.36, 1),
+          opacity 160ms ease,
+          visibility 0s linear 240ms;
+      }
+
+      .top-nav-install-slot .install-menu {
+        min-width: 0;
+      }
+
+      .top-nav-install-slot .top-nav-install {
+        white-space: nowrap;
+        opacity: 0;
+        translate: calc(100% + 8px) 0;
+        transition:
+          translate 260ms cubic-bezier(0.22, 1, 0.36, 1),
+          opacity 160ms ease,
+          transform 120ms ease,
+          background 160ms ease,
+          border-color 160ms ease,
+          box-shadow 160ms ease;
+      }
+
+      body.has-nav-install .top-nav-install-slot {
+        grid-template-columns: 1fr;
+        margin-left: 0;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transition-delay: 0s;
+      }
+
+      body.has-nav-install .top-nav-install-slot .top-nav-install {
+        opacity: 1;
+        translate: 0 0;
+      }
+
+      .top-nav-install-slot:has(.install-menu[data-open="true"]) {
+        overflow: visible;
+        clip-path: none;
       }
 
       .brand {
@@ -813,7 +954,12 @@ const structuredData = [
         max-width: 760px;
         margin: 0 auto;
         text-align: center;
-        animation: hero-copy-in 680ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+      }
+
+      .hero-copy > * {
+        transition:
+          opacity 520ms ease,
+          translate 680ms cubic-bezier(0.22, 1, 0.36, 1);
       }
 
       .hero-copy h1 {
@@ -875,12 +1021,19 @@ const structuredData = [
       }
 
       .hero-copy > p {
-        max-width: 590px;
+        max-width: 660px;
         margin: 18px auto 0;
         color: var(--text-sub);
         font-size: clamp(16px, 1.35vw, 18px);
         line-height: 1.72;
-        white-space: pre-line;
+      }
+
+      .hero-description-line {
+        display: block;
+      }
+
+      .hero-description-phrase {
+        white-space: nowrap;
       }
 
       .hero-actions {
@@ -892,10 +1045,69 @@ const structuredData = [
         margin-top: 22px;
       }
 
-      .hero-section .hero-safari-demo {
+      .hero-demo-slot {
+        position: relative;
+        z-index: 2;
+        width: 100%;
         height: clamp(300px, calc(100svh - 470px), 620px);
-        aspect-ratio: auto;
         margin-top: clamp(52px, 4.5vw, 72px);
+      }
+
+      .hero-demo-slot .hero-safari-demo {
+        width: 100%;
+        height: 100%;
+        aspect-ratio: auto;
+        margin: 0;
+      }
+
+      body[data-home-intro="pending"],
+      body[data-home-intro="revealing"] {
+        overflow: hidden;
+      }
+
+      body[data-home-intro="pending"] main > :not(.hero-section),
+      body[data-home-intro="revealing"] main > :not(.hero-section),
+      body[data-home-intro="pending"] .site-legal-nav,
+      body[data-home-intro="revealing"] .site-legal-nav {
+        visibility: hidden;
+        opacity: 0;
+      }
+
+      body[data-home-intro="pending"] .top-nav,
+      body[data-home-intro="pending"] .hero-copy > * {
+        visibility: hidden;
+        opacity: 0;
+        translate: 0 -16px;
+        pointer-events: none;
+      }
+
+      body[data-home-intro="pending"] .hero-copy > * {
+        translate: 0 22px;
+      }
+
+      body[data-home-intro="revealing"] .top-nav {
+        transition-delay: 120ms;
+      }
+
+      body[data-home-intro="revealing"] .hero-copy h1 {
+        transition-delay: 280ms;
+      }
+
+      body[data-home-intro="revealing"] .hero-description {
+        transition-delay: 410ms;
+      }
+
+      body[data-home-intro="revealing"] .hero-actions {
+        transition-delay: 540ms;
+      }
+
+      body[data-home-intro="revealing"] .hero-open-source-note {
+        transition-delay: 660ms;
+      }
+
+      body[data-home-intro="pending"] .hero-demo-page-switcher,
+      body[data-home-intro="revealing"] .hero-demo-page-switcher {
+        pointer-events: none;
       }
 
       .hero-actions-button {
@@ -925,11 +1137,6 @@ const structuredData = [
 
       .hero-license-link:hover {
         color: var(--text-main);
-      }
-
-      @keyframes hero-copy-in {
-        from { opacity: 0; transform: translateY(18px); }
-        to { opacity: 1; transform: translateY(0); }
       }
 
       .section {
@@ -1353,13 +1560,33 @@ const structuredData = [
         }
       }
 
+      @media (min-width: 761px) and (max-width: 840px) {
+        body.has-nav-install .top-nav-ghost-links {
+          display: none;
+        }
+
+        body.has-nav-install .top-nav-more-shell {
+          display: block;
+          position: relative;
+        }
+
+        body.has-nav-install .top-nav-more-menu {
+          display: block;
+          position: static;
+        }
+      }
+
       @media (max-width: 760px) {
         .top-nav {
           top: max(10px, env(safe-area-inset-top));
-          width: min(calc(100% - 32px), var(--content-width));
+          width: min(calc(100% - 32px - var(--removed-body-scroll-bar-size, 0px)), var(--content-width));
           min-height: 58px;
           padding: 5px;
           gap: 10px;
+        }
+
+        body.has-nav-overlap .top-nav {
+          transform: translateY(-7px);
         }
 
         .top-nav-brand img {
@@ -1368,6 +1595,7 @@ const structuredData = [
         }
 
         .top-nav-actions {
+          --top-nav-action-gap: 6px;
           gap: 6px;
           margin-right: 3px;
         }
@@ -1391,13 +1619,11 @@ const structuredData = [
           gap: 2px;
           border-color: rgba(211, 217, 226, 0.9);
           border-radius: 18px;
-          background: rgba(255, 255, 255, 0.96);
+          background: var(--lumno-menu-bg, #fff);
           box-shadow:
             0 18px 48px rgba(35, 43, 52, 0.16),
             0 3px 12px rgba(35, 43, 52, 0.08),
             inset 0 1px 0 rgba(255, 255, 255, 0.92);
-          backdrop-filter: blur(20px) saturate(1.12);
-          -webkit-backdrop-filter: blur(20px) saturate(1.12);
           transform-origin: top center;
         }
 
@@ -1443,15 +1669,14 @@ const structuredData = [
           gap: 0;
         }
 
-        .hero-section .hero-safari-demo {
+        .hero-demo-slot {
           height: clamp(220px, calc(100svh - 530px), 440px);
-          aspect-ratio: auto;
           margin-top: 36px;
         }
 
         .hero-copy h1 {
           max-width: 620px;
-          font-size: clamp(28px, 8.5vw, 40px);
+          font-size: clamp(34px, 10vw, 44px);
           letter-spacing: -0.048em;
         }
 
@@ -1470,9 +1695,18 @@ const structuredData = [
         }
 
         .hero-copy > p {
+          max-width: 330px;
           margin-top: 22px;
           font-size: 15px;
-          line-height: 1.65;
+          line-height: 1.7;
+        }
+
+        .hero-description-line {
+          text-wrap: balance;
+        }
+
+        .hero-description-line + .hero-description-line {
+          margin-top: 8px;
         }
 
         .hero-actions {
@@ -1592,7 +1826,7 @@ const structuredData = [
           padding-top: 80px;
         }
 
-        .hero-section .hero-safari-demo {
+        .hero-demo-slot {
           margin-top: 40px;
         }
       }
@@ -1628,6 +1862,7 @@ const structuredData = [
         }
 
         .top-nav-actions {
+          --top-nav-action-gap: 4px;
           gap: 4px;
           margin-right: 0;
         }
@@ -1669,6 +1904,21 @@ const structuredData = [
           animation-iteration-count: 1 !important;
           transition-duration: 0.01ms !important;
         }
+
+        body[data-home-intro="pending"] {
+          overflow: auto;
+        }
+
+        body[data-home-intro="pending"] main > :not(.hero-section),
+        body[data-home-intro="pending"] .site-legal-nav,
+        body[data-home-intro="pending"] .top-nav,
+        body[data-home-intro="pending"] .hero-copy > * {
+          visibility: visible;
+          opacity: 1;
+          translate: 0 0;
+          pointer-events: auto;
+        }
+
       }
     </style>
   </body>

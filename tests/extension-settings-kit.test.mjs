@@ -45,6 +45,13 @@ test("settings controls expose semantic form and popup states", async () => {
   assert.match(source, /role="radiogroup"/);
   assert.match(source, /aria-pressed=/);
   assert.match(source, /aria-label=\{item\.label\}/);
+  assert.match(source, /children\?: ReadonlyArray<SettingsSelectItem<T>>/);
+  assert.match(source, /"aria-expanded": expandable \? expanded : undefined/);
+  assert.match(source, /"data-depth": depth/);
+  assert.match(source, /const toggleExpandedValue = [\s\S]*?setExpandedValues\(\(currentValues\) =>/);
+  assert.match(source, /event\.key !== "Enter" && event\.key !== " "[\s\S]*?toggleExpandedValue\(item\.value\)/);
+  assert.match(source, /const closeMenu = [\s\S]*?setExpandedValues\(new Set\(\)\);[\s\S]*?const toggleMenu = \(\) =>/);
+  assert.match(source, /className="lumno-settings-select-submenu"[\s\S]*?aria-hidden=\{!expanded\}[\s\S]*?data-expanded=\{expanded\}/);
 });
 
 test("settings styles are scoped under the Lumno settings namespace", async () => {
@@ -54,6 +61,7 @@ test("settings styles are scoped under the Lumno settings namespace", async () =
   assert.match(source, /\.lumno-settings-select-menu\s*\{[\s\S]*?--lumno-settings-menu-closed-transform:\s*translateY\(-6px\)\s*scale\(0\.96,\s*0\.86\);[\s\S]*?opacity:\s*0;[\s\S]*?visibility:\s*hidden;[\s\S]*?transform:\s*var\(--lumno-settings-menu-closed-transform\);[\s\S]*?will-change:\s*transform,\s*opacity;[\s\S]*?opacity\s+170ms\s+ease,[\s\S]*?transform\s+360ms\s+cubic-bezier\(0\.2,\s*1\.45,\s*0\.35,\s*1\)/);
   assert.match(source, /\.lumno-settings-select-menu\[data-placement="above"\]/);
   assert.match(source, /\.lumno-settings-select-menu\[data-open="true"\]/);
+  assert.match(source, /\.lumno-settings-select-submenu\s*\{[\s\S]*?grid-template-rows:\s*0fr;[\s\S]*?grid-template-rows 240ms[\s\S]*?\.lumno-settings-select-submenu\[data-expanded="true"\]\s*\{[\s\S]*?grid-template-rows:\s*1fr;/);
   assert.match(source, /\.lumno-settings-select\[data-trigger-variant\]\s*\{[\s\S]*?min-width:\s*0;/);
   assert.match(source, /\.lumno-settings-select\[data-open="true"\]\s*\{[\s\S]*?z-index:\s*2;/);
   assert.match(

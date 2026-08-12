@@ -1,13 +1,22 @@
-import { useEffect, useId, useRef, useState, type RefObject } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import {
   SettingsButton,
   SettingsSelect,
   type SettingsSelectItem,
 } from "../extension-settings/SettingsKit";
+import { CommunityQrDialogPanel } from "../home/CommunityQrDialog";
+import { Dialog, DialogTrigger } from "../ui/dialog";
 import "./home-nav-ghost-links.css";
 
-type NavGhostLinkValue = "release" | "feedback" | "repository" | "feature-request";
-type CommunityAction = Extract<NavGhostLinkValue, "feedback" | "feature-request">;
+type NavGhostLinkValue = "community" | "release" | "repository" | "contact";
+type CommunityAction = Extract<NavGhostLinkValue, "community">;
+type RepositoryActionValue = "repository-issue" | "repository-pull-request";
+type ContactActionValue = "contact-x" | "contact-xiaohongshu";
+type MobileNavItemValue =
+  | NavGhostLinkValue
+  | "repository-home"
+  | RepositoryActionValue
+  | ContactActionValue;
 
 type NavGhostLink = {
   value: NavGhostLinkValue;
@@ -18,125 +27,73 @@ type NavGhostLink = {
   analyticsLabel: string;
   external?: boolean;
   communityAction?: CommunityAction;
+  requiresPrimary?: boolean;
 };
 
 interface Props {
   releaseHref: string;
   repositoryHref: string;
+  repositoryIssueHref: string;
+  repositoryPullRequestHref: string;
+  contactXHref: string;
+  contactXiaohongshuHref: string;
   releaseLabel: string;
-  feedbackLabel: string;
   repositoryLabel: string;
-  featureRequestLabel: string;
+  repositoryMenuLabel: string;
+  repositoryHomeLabel: string;
+  repositoryIssueLabel: string;
+  repositoryPullRequestLabel: string;
+  communityLabel: string;
+  contactLabel: string;
+  contactMenuLabel: string;
+  contactXLabel: string;
+  contactXiaohongshuLabel: string;
   menuLabel: string;
   panelTitle: string;
   qrImageSrc: string;
   qrImageAlt: string;
   qrCloseLabel: string;
-  qrRefreshLabel: string;
-}
-
-function CommunityQrPopover({
-  id,
-  titleId,
-  panelTitle,
-  qrImageSrc,
-  qrImageAlt,
-  qrCloseLabel,
-  qrRefreshLabel,
-  qrVersion,
-  refreshing,
-  mobile = false,
-  closeButtonRef,
-  onClose,
-  onRefresh,
-}: {
-  id: string;
-  titleId: string;
-  panelTitle: string;
-  qrImageSrc: string;
-  qrImageAlt: string;
-  qrCloseLabel: string;
-  qrRefreshLabel: string;
-  qrVersion: number;
-  refreshing: boolean;
-  mobile?: boolean;
-  closeButtonRef?: RefObject<HTMLButtonElement | null>;
-  onClose: () => void;
-  onRefresh: () => void;
-}) {
-  const versionedQrSrc = qrVersion > 0
-    ? `${qrImageSrc}${qrImageSrc.includes("?") ? "&" : "?"}refresh=${qrVersion}`
-    : qrImageSrc;
-
-  return (
-    <div
-      className={`top-nav-community-popover${mobile ? " top-nav-community-popover-mobile" : ""}`}
-      id={id}
-      role="dialog"
-      aria-modal="false"
-      aria-labelledby={titleId}
-    >
-      <div className="top-nav-community-popover-header">
-        <h2 id={titleId}>{panelTitle}</h2>
-        <div className="top-nav-community-popover-actions">
-          <button
-            className="top-nav-community-popover-action top-nav-community-popover-refresh"
-            type="button"
-            aria-label={qrRefreshLabel}
-            aria-busy={refreshing}
-            data-loading={refreshing ? "true" : undefined}
-            disabled={refreshing}
-            onClick={onRefresh}
-          >
-            <i className="ri-refresh-line" aria-hidden="true" />
-          </button>
-          <button
-            className="top-nav-community-popover-action"
-            type="button"
-            aria-label={qrCloseLabel}
-            onClick={onClose}
-            ref={closeButtonRef}
-          >
-            <i className="ri-close-line" aria-hidden="true" />
-          </button>
-        </div>
-      </div>
-      <img
-        className="top-nav-community-qr-image"
-        src={versionedQrSrc}
-        alt={qrImageAlt}
-        width="866"
-        height="1280"
-        loading="lazy"
-      />
-    </div>
-  );
 }
 
 export default function HomeNavGhostLinks({
   releaseHref,
   repositoryHref,
+  repositoryIssueHref,
+  repositoryPullRequestHref,
+  contactXHref,
+  contactXiaohongshuHref,
   releaseLabel,
-  feedbackLabel,
   repositoryLabel,
-  featureRequestLabel,
+  repositoryMenuLabel,
+  repositoryHomeLabel,
+  repositoryIssueLabel,
+  repositoryPullRequestLabel,
+  communityLabel,
+  contactLabel,
+  contactMenuLabel,
+  contactXLabel,
+  contactXiaohongshuLabel,
   menuLabel,
   panelTitle,
   qrImageSrc,
   qrImageAlt,
   qrCloseLabel,
-  qrRefreshLabel,
 }: Props) {
   const [activeCommunityAction, setActiveCommunityAction] = useState<CommunityAction | null>(null);
-  const [qrVersion, setQrVersion] = useState(0);
-  const [refreshing, setRefreshing] = useState(false);
-  const desktopRef = useRef<HTMLDivElement>(null);
-  const mobileRef = useRef<HTMLDivElement>(null);
+  const [showPrimaryNavigation, setShowPrimaryNavigation] = useState(false);
   const activeTriggerRef = useRef<HTMLElement | null>(null);
-  const mobileCloseButtonRef = useRef<HTMLButtonElement>(null);
   const idPrefix = useId().replaceAll(":", "");
 
   const links: NavGhostLink[] = [
+    {
+      value: "community",
+      label: communityLabel,
+      analyticsEvent: "open_feedback_qrcode",
+      analyticsCategory: "cta",
+      analyticsLabel: "home_header_community",
+      communityAction: "community",
+      requiresPrimary: true,
+    },
     {
       value: "release",
       label: releaseLabel,
@@ -144,14 +101,6 @@ export default function HomeNavGhostLinks({
       analyticsEvent: "open_release_page",
       analyticsCategory: "navigation",
       analyticsLabel: "home_header_release",
-    },
-    {
-      value: "feedback",
-      label: feedbackLabel,
-      analyticsEvent: "open_feedback_qrcode",
-      analyticsCategory: "cta",
-      analyticsLabel: "home_header_feedback",
-      communityAction: "feedback",
     },
     {
       value: "repository",
@@ -163,85 +112,225 @@ export default function HomeNavGhostLinks({
       external: true,
     },
     {
-      value: "feature-request",
-      label: featureRequestLabel,
-      analyticsEvent: "open_feature_request_qrcode",
+      value: "contact",
+      label: contactLabel,
+      analyticsEvent: "open_contact_menu",
       analyticsCategory: "cta",
-      analyticsLabel: "home_header_feature_request",
-      communityAction: "feature-request",
+      analyticsLabel: "home_header_contact",
     },
   ];
+  const visibleLinks = links.filter((link) => !link.requiresPrimary || showPrimaryNavigation);
+  const repositoryActionItems: ReadonlyArray<SettingsSelectItem<RepositoryActionValue>> = [
+    {
+      value: "repository-issue",
+      label: repositoryIssueLabel,
+      iconClass: "ri-error-warning-line",
+      href: repositoryIssueHref,
+      target: "_blank",
+      rel: "noreferrer noopener",
+      analyticsEvent: "open_github_new_issue",
+      analyticsCategory: "cta",
+      analyticsLabel: "home_header_github_issue",
+    },
+    {
+      value: "repository-pull-request",
+      label: repositoryPullRequestLabel,
+      iconClass: "ri-git-pull-request-line",
+      href: repositoryPullRequestHref,
+      target: "_blank",
+      rel: "noreferrer noopener",
+      analyticsEvent: "open_github_new_pull_request",
+      analyticsCategory: "cta",
+      analyticsLabel: "home_header_github_pull_request",
+    },
+  ];
+  const contactActionItems: ReadonlyArray<SettingsSelectItem<ContactActionValue>> = [
+    {
+      value: "contact-x",
+      label: contactXLabel,
+      iconClass: "ri-twitter-x-line",
+      href: contactXHref,
+      target: "_blank",
+      rel: "noreferrer noopener",
+      analyticsEvent: "open_author_x",
+      analyticsCategory: "cta",
+      analyticsLabel: "home_header_author_x",
+    },
+    {
+      value: "contact-xiaohongshu",
+      label: contactXiaohongshuLabel,
+      iconClass: "ri-book-open-line",
+      href: contactXiaohongshuHref,
+      target: "_blank",
+      rel: "noreferrer noopener",
+      analyticsEvent: "open_author_xiaohongshu",
+      analyticsCategory: "cta",
+      analyticsLabel: "home_header_author_xiaohongshu",
+    },
+  ];
+  const mobileRepositoryActionItems: ReadonlyArray<SettingsSelectItem<MobileNavItemValue>> = [
+    {
+      value: "repository-home",
+      label: repositoryHomeLabel,
+      iconClass: "ri-github-line",
+      href: repositoryHref,
+      target: "_blank",
+      rel: "noreferrer noopener",
+      analyticsEvent: "open_github_repo",
+      analyticsCategory: "cta",
+      analyticsLabel: "home_header_github",
+    },
+    ...repositoryActionItems,
+  ];
 
-  const closePopover = (restoreFocus = false) => {
+  const closeCommunityDialog = (restoreFocus = false) => {
     setActiveCommunityAction(null);
-    setRefreshing(false);
     if (restoreFocus) {
       window.requestAnimationFrame(() => activeTriggerRef.current?.focus());
     }
   };
 
-  const toggleCommunityPopover = (action: CommunityAction, trigger: HTMLElement | null) => {
+  const openCommunityDialog = (action: CommunityAction, trigger: HTMLElement | null) => {
     activeTriggerRef.current = trigger;
-    setActiveCommunityAction((current) => current === action ? null : action);
-  };
-
-  const refreshQrCode = () => {
-    setRefreshing(true);
-    setQrVersion(Date.now());
-    window.setTimeout(() => setRefreshing(false), 520);
+    setActiveCommunityAction(action);
   };
 
   useEffect(() => {
-    if (!activeCommunityAction) return;
-
-    const handlePointerDown = (event: PointerEvent) => {
-      const target = event.target as Node;
-      if (!desktopRef.current?.contains(target) && !mobileRef.current?.contains(target)) {
-        closePopover();
+    const updatePrimaryNavigation = () => {
+      const hasPrimaryNavigation = document.body.classList.contains("has-nav-install");
+      setShowPrimaryNavigation(hasPrimaryNavigation);
+      if (!hasPrimaryNavigation) {
+        setActiveCommunityAction(null);
       }
     };
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") closePopover(true);
+    const observer = new MutationObserver(updatePrimaryNavigation);
+
+    updatePrimaryNavigation();
+    observer.observe(document.body, { attributes: true, attributeFilter: ["class"] });
+    return () => observer.disconnect();
+  }, []);
+
+  const menuItems: ReadonlyArray<SettingsSelectItem<MobileNavItemValue>> = visibleLinks.map((link) => {
+    const navItem: SettingsSelectItem<MobileNavItemValue> = {
+      value: link.value,
+      label: link.label,
+      href: link.href,
+      target: link.external ? "_blank" : undefined,
+      rel: link.external ? "noreferrer noopener" : undefined,
+      analyticsEvent: link.analyticsEvent,
+      analyticsCategory: link.analyticsCategory,
+      analyticsLabel: link.analyticsLabel,
+      onSelect: link.communityAction
+        ? () => {
+            const menuTrigger = document.getElementById("top-nav-more-toggle");
+            openCommunityDialog(link.communityAction!, menuTrigger);
+          }
+        : () => closeCommunityDialog(),
     };
 
-    document.addEventListener("pointerdown", handlePointerDown);
-    document.addEventListener("keydown", handleKeyDown);
-    return () => {
-      document.removeEventListener("pointerdown", handlePointerDown);
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [activeCommunityAction]);
-
-  useEffect(() => {
-    if (!activeCommunityAction || !window.matchMedia("(max-width: 760px)").matches) return;
-    const frame = window.requestAnimationFrame(() => mobileCloseButtonRef.current?.focus());
-    return () => window.cancelAnimationFrame(frame);
-  }, [activeCommunityAction]);
-
-  const menuItems: ReadonlyArray<SettingsSelectItem<NavGhostLinkValue>> = links.map((link) => ({
-    value: link.value,
-    label: link.label,
-    href: link.href,
-    target: link.external ? "_blank" : undefined,
-    rel: link.external ? "noreferrer noopener" : undefined,
-    analyticsEvent: link.analyticsEvent,
-    analyticsCategory: link.analyticsCategory,
-    analyticsLabel: link.analyticsLabel,
-    onSelect: link.communityAction
-      ? () => {
-          const menuTrigger = document.getElementById("top-nav-more-toggle");
-          toggleCommunityPopover(link.communityAction!, menuTrigger);
-        }
-      : () => closePopover(),
-  }));
-
-  const mobilePopoverId = `${idPrefix}-mobile-community-popover`;
-  const mobilePopoverTitleId = `${mobilePopoverId}-title`;
+    if (link.value === "repository") {
+      return {
+        ...navItem,
+        href: undefined,
+        target: undefined,
+        rel: undefined,
+        analyticsEvent: "toggle_mobile_repository_menu",
+        onSelect: undefined,
+        children: mobileRepositoryActionItems,
+      };
+    }
+    if (link.value === "contact") {
+      return {
+        ...navItem,
+        onSelect: undefined,
+        children: contactActionItems,
+      };
+    }
+    return navItem;
+  });
 
   return (
-    <>
-      <div className="top-nav-ghost-links" ref={desktopRef}>
+    <Dialog
+      open={activeCommunityAction === "community"}
+      onOpenChange={(open) => {
+        if (open) {
+          setActiveCommunityAction("community");
+          return;
+        }
+        closeCommunityDialog(true);
+      }}
+    >
+      <div className="top-nav-ghost-links">
         {links.map((link) => {
+          if (link.value === "repository") {
+            return (
+              <div
+                className="top-nav-repository-group"
+                key={link.analyticsLabel}
+                onPointerDown={() => closeCommunityDialog()}
+              >
+                <SettingsButton
+                  as="a"
+                  variant="ghost"
+                  className="top-nav-ghost-button"
+                  href={link.href!}
+                  aria-label={link.label}
+                  title={link.label}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  data-analytics-event={link.analyticsEvent}
+                  data-analytics-category={link.analyticsCategory}
+                  data-analytics-label={link.analyticsLabel}
+                >
+                  {link.label}
+                </SettingsButton>
+                <SettingsSelect
+                  className="top-nav-repository-menu"
+                  id={`${idPrefix}-repository-toggle`}
+                  menuId={`${idPrefix}-repository-dropdown`}
+                  menuRole="menu"
+                  optionRole="menuitem"
+                  triggerMode="icon"
+                  triggerIconClass="ri-arrow-down-s-line"
+                  triggerClassName="top-nav-repository-toggle"
+                  menuClassName="top-nav-repository-dropdown"
+                  optionClassName="top-nav-repository-option"
+                  label={repositoryMenuLabel}
+                  defaultValue="repository-issue"
+                  showSelected={false}
+                  focusFirstItemOnOpen
+                  restoreFocusOnEscape
+                  items={repositoryActionItems}
+                />
+              </div>
+            );
+          }
+
+          if (link.value === "contact") {
+            return (
+              <SettingsSelect
+                className="top-nav-contact-menu"
+                id={`${idPrefix}-contact-toggle`}
+                menuId={`${idPrefix}-contact-dropdown`}
+                menuRole="menu"
+                optionRole="menuitem"
+                triggerVariant="ghost"
+                triggerIconClass="ri-arrow-down-s-line"
+                triggerLabel={contactLabel}
+                triggerClassName="top-nav-ghost-button top-nav-contact-toggle"
+                menuClassName="top-nav-contact-dropdown"
+                optionClassName="top-nav-contact-option"
+                label={contactMenuLabel}
+                defaultValue="contact-x"
+                showSelected={false}
+                focusFirstItemOnOpen
+                restoreFocusOnEscape
+                items={contactActionItems}
+                key={link.analyticsLabel}
+              />
+            );
+          }
+
           if (!link.communityAction) {
             return (
               <SettingsButton
@@ -263,50 +352,37 @@ export default function HomeNavGhostLinks({
             );
           }
 
-          const open = activeCommunityAction === link.communityAction;
-          const popoverId = `${idPrefix}-${link.communityAction}-popover`;
-          const popoverTitleId = `${popoverId}-title`;
           return (
             <div
-              className="top-nav-community-item"
-              data-open={open ? "true" : "false"}
+              className="top-nav-community-slot"
+              data-visible={showPrimaryNavigation ? "true" : "false"}
+              aria-hidden={!showPrimaryNavigation}
               key={link.analyticsLabel}
             >
-              <SettingsButton
-                variant="ghost"
-                className="top-nav-ghost-button"
-                aria-label={link.label}
-                title={link.label}
-                aria-haspopup="dialog"
-                aria-expanded={open}
-                aria-controls={popoverId}
-                data-analytics-event={link.analyticsEvent}
-                data-analytics-category={link.analyticsCategory}
-                data-analytics-label={link.analyticsLabel}
-                onClick={(event) => toggleCommunityPopover(link.communityAction!, event.currentTarget)}
-              >
-                {link.label}
-              </SettingsButton>
-              {open ? (
-                <CommunityQrPopover
-                  id={popoverId}
-                  titleId={popoverTitleId}
-                  panelTitle={panelTitle}
-                  qrImageSrc={qrImageSrc}
-                  qrImageAlt={qrImageAlt}
-                  qrCloseLabel={qrCloseLabel}
-                  qrRefreshLabel={qrRefreshLabel}
-                  qrVersion={qrVersion}
-                  refreshing={refreshing}
-                  onClose={() => closePopover(true)}
-                  onRefresh={refreshQrCode}
-                />
-              ) : null}
+              <div className="top-nav-community-item">
+                <DialogTrigger asChild>
+                  <SettingsButton
+                    variant="ghost"
+                    className="top-nav-ghost-button"
+                    aria-label={link.label}
+                    title={link.label}
+                    disabled={!showPrimaryNavigation}
+                    data-analytics-event={link.analyticsEvent}
+                    data-analytics-category={link.analyticsCategory}
+                    data-analytics-label={link.analyticsLabel}
+                    onClick={(event) => {
+                      activeTriggerRef.current = event.currentTarget;
+                    }}
+                  >
+                    {link.label}
+                  </SettingsButton>
+                </DialogTrigger>
+              </div>
             </div>
           );
         })}
       </div>
-      <div className="top-nav-more-shell" ref={mobileRef}>
+      <div className="top-nav-more-shell">
         <SettingsSelect
           className="top-nav-more-menu"
           id="top-nav-more-toggle"
@@ -325,24 +401,13 @@ export default function HomeNavGhostLinks({
           restoreFocusOnEscape
           items={menuItems}
         />
-        {activeCommunityAction ? (
-          <CommunityQrPopover
-            id={mobilePopoverId}
-            titleId={mobilePopoverTitleId}
-            panelTitle={panelTitle}
-            qrImageSrc={qrImageSrc}
-            qrImageAlt={qrImageAlt}
-            qrCloseLabel={qrCloseLabel}
-            qrRefreshLabel={qrRefreshLabel}
-            qrVersion={qrVersion}
-            refreshing={refreshing}
-            mobile
-            closeButtonRef={mobileCloseButtonRef}
-            onClose={() => closePopover(true)}
-            onRefresh={refreshQrCode}
-          />
-        ) : null}
       </div>
-    </>
+      <CommunityQrDialogPanel
+        title={panelTitle}
+        qrImageSrc={qrImageSrc}
+        qrImageAlt={qrImageAlt}
+        closeLabel={qrCloseLabel}
+      />
+    </Dialog>
   );
 }

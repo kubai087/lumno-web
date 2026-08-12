@@ -349,6 +349,8 @@ export function SettingsSegmentedControl<T extends string>({
 export type SettingsSelectItem<T extends string = string> = {
   value: T;
   label: string;
+  children?: ReadonlyArray<SettingsSelectItem<T>>;
+  labelSuffix?: ReactNode;
   iconClass?: string;
   meta?: ReactNode;
   i18n?: string;
@@ -436,27 +438,48 @@ export function SettingsSelect<T extends string>({
     onChange: onValueChange,
   });
   const [open, setOpen] = useState(() => getInitialMenuOpenState(menuId));
+  const [expandedValues, setExpandedValues] = useState<Set<T>>(() => new Set());
   const selectRef = useRef<HTMLDivElement>(null);
   const optionRefs = useRef<Array<HTMLButtonElement | HTMLAnchorElement | null>>([]);
-  const selectedItem = items.find((item) => item.value === currentValue) || items[0];
+  const allItems = items.flatMap((item) => [item, ...(item.children || [])]);
+  const selectedItem = allItems.find((item) => item.value === currentValue) || items[0];
 
   const closeMenu = (restoreFocus = false) => {
     setOpen(false);
+    setExpandedValues(new Set());
     if (restoreFocus && id && typeof window !== "undefined") {
       window.setTimeout(() => document.getElementById(id)?.focus(), 0);
     }
   };
 
+  const toggleMenu = () => {
+    if (open) closeMenu();
+    else setOpen(true);
+  };
+
+  const toggleExpandedValue = (itemValue: T) => {
+    setExpandedValues((currentValues) => {
+      const nextValues = new Set(currentValues);
+      if (nextValues.has(itemValue)) nextValues.delete(itemValue);
+      else nextValues.add(itemValue);
+      return nextValues;
+    });
+  };
+
+  const getFocusableOptions = () =>
+    optionRefs.current.filter((option) => option !== null && option.tabIndex !== -1);
+
   const moveFocus = (event: ReactKeyboardEvent<HTMLDivElement>, direction: 1 | -1) => {
-    const currentIndex = optionRefs.current.findIndex((option) => option === document.activeElement);
+    const focusableOptions = getFocusableOptions();
+    const currentIndex = focusableOptions.findIndex((option) => option === document.activeElement);
     const nextIndex =
       currentIndex < 0
         ? direction === 1
           ? 0
-          : optionRefs.current.length - 1
-        : (currentIndex + direction + optionRefs.current.length) % optionRefs.current.length;
+          : focusableOptions.length - 1
+        : (currentIndex + direction + focusableOptions.length) % focusableOptions.length;
     event.preventDefault();
-    optionRefs.current[nextIndex]?.focus();
+    focusableOptions[nextIndex]?.focus();
   };
 
   const handleMenuKeyDown = (event: ReactKeyboardEvent<HTMLDivElement>) => {
@@ -464,11 +487,11 @@ export function SettingsSelect<T extends string>({
     if (event.key === "ArrowUp") moveFocus(event, -1);
     if (event.key === "Home") {
       event.preventDefault();
-      optionRefs.current[0]?.focus();
+      getFocusableOptions()[0]?.focus();
     }
     if (event.key === "End") {
       event.preventDefault();
-      optionRefs.current[optionRefs.current.length - 1]?.focus();
+      getFocusableOptions().at(-1)?.focus();
     }
     if (event.key === "Escape") {
       event.preventDefault();
@@ -497,7 +520,7 @@ export function SettingsSelect<T extends string>({
 
   useEffect(() => {
     if (!open || !focusFirstItemOnOpen) return;
-    const frame = window.requestAnimationFrame(() => optionRefs.current[0]?.focus());
+    const frame = window.requestAnimationFrame(() => getFocusableOptions()[0]?.focus());
     return () => window.cancelAnimationFrame(frame);
   }, [focusFirstItemOnOpen, open]);
 
@@ -553,7 +576,7 @@ export function SettingsSelect<T extends string>({
         data-i18n-aria-label={triggerDataI18nAriaLabel}
         onClick={(event) => {
           event.stopPropagation();
-          setOpen((isOpen) => !isOpen);
+          toggleMenu();
         }}
       />
     ) : triggerVariant ? (
@@ -570,7 +593,7 @@ export function SettingsSelect<T extends string>({
         data-i18n-aria-label={triggerDataI18nAriaLabel}
         onClick={(event) => {
           event.stopPropagation();
-          setOpen((isOpen) => !isOpen);
+          toggleMenu();
         }}
         onKeyDown={(event) => {
           if (event.key === "Escape") {
@@ -602,7 +625,7 @@ export function SettingsSelect<T extends string>({
         data-i18n-aria-label={triggerDataI18nAriaLabel}
         onClick={(event) => {
           event.stopPropagation();
-          setOpen((isOpen) => !isOpen);
+          toggleMenu();
         }}
       >
         {triggerContent}
@@ -611,6 +634,101 @@ export function SettingsSelect<T extends string>({
         ) : null}
       </button>
     );
+
+  const renderOption = (item: SettingsSelectItem<T>, depth: 0 | 1, hidden = false) => {
+    const selected = item.value === currentValue;
+    const expandable = Boolean(item.children?.length);
+    const expanded = expandable && expandedValues.has(item.value);
+    const optionIndex = allItems.indexOf(item);
+    const optionClassNames = joinClassNames(
+      "lumno-settings-select-option",
+      optionClassName,
+      selected && item.i18n && "is-active",
+    );
+    const optionContent = (
+      <>
+        <span className="lumno-settings-select-option-label">
+          {item.iconClass ? <i className={item.iconClass} aria-hidden="true" /> : null}
+          {item.label}
+          {item.labelSuffix}
+        </span>
+        {expandable ? (
+          <span className="lumno-settings-select-option-expand-icon" aria-hidden="true">
+            <i className="ri-arrow-right-s-line" />
+          </span>
+        ) : item.meta || (showSelected && selected) ? (
+          <span className="lumno-settings-select-option-meta">
+            {item.meta}
+            {showSelected && selected ? <i className="ri-check-line" aria-hidden="true" /> : null}
+          </span>
+        ) : null}
+      </>
+    );
+    const optionAttributes = {
+      role: optionRole,
+      "aria-selected": optionRole === "option" ? selected : undefined,
+      "aria-checked": optionRole === "menuitemradio" ? selected : undefined,
+      "aria-expanded": expandable ? expanded : undefined,
+      "data-selected": showSelected ? selected : undefined,
+      "data-depth": depth,
+      "data-expandable": expandable ? "true" : undefined,
+      "data-expanded": expandable ? String(expanded) : undefined,
+      "data-lang-value": item.i18n ? item.value : undefined,
+      "data-i18n": item.i18n,
+      "data-analytics-event": item.analyticsEvent,
+      "data-analytics-category": item.analyticsCategory,
+      "data-analytics-label": item.analyticsLabel,
+      tabIndex: hidden ? -1 : undefined,
+      onKeyDown: expandable
+        ? (event: ReactKeyboardEvent<HTMLElement>) => {
+            if (event.key !== "Enter" && event.key !== " ") return;
+            event.preventDefault();
+            toggleExpandedValue(item.value);
+          }
+        : undefined,
+      onClick: () => {
+        if (expandable) {
+          toggleExpandedValue(item.value);
+          return;
+        }
+        item.onSelect?.();
+        setCurrentValue(item.value);
+        closeMenu();
+      },
+    };
+
+    if (item.href && !expandable) {
+      return (
+        <a
+          {...optionAttributes}
+          className={optionClassNames}
+          href={item.href}
+          target={item.target}
+          rel={item.rel}
+          ref={(element) => {
+            optionRefs.current[optionIndex] = element;
+          }}
+          key={item.value}
+        >
+          {optionContent}
+        </a>
+      );
+    }
+
+    return (
+      <button
+        {...optionAttributes}
+        className={optionClassNames}
+        type="button"
+        ref={(element) => {
+          optionRefs.current[optionIndex] = element;
+        }}
+        key={item.value}
+      >
+        {optionContent}
+      </button>
+    );
+  };
 
   return (
     <div
@@ -633,73 +751,24 @@ export function SettingsSelect<T extends string>({
         onKeyDown={handleMenuKeyDown}
       >
         {items.map((item) => {
-          const selected = item.value === currentValue;
-          const optionClassNames = joinClassNames(
-            "lumno-settings-select-option",
-            optionClassName,
-            selected && item.i18n && "is-active",
-          );
-          const optionContent = (
-            <>
-              <span className="lumno-settings-select-option-label">
-                {item.iconClass ? <i className={item.iconClass} aria-hidden="true" /> : null}
-                {item.label}
-              </span>
-              {item.meta || (showSelected && selected) ? (
-                <span className="lumno-settings-select-option-meta">
-                  {item.meta}
-                  {showSelected && selected ? <i className="ri-check-line" aria-hidden="true" /> : null}
-                </span>
-              ) : null}
-            </>
-          );
-          const optionAttributes = {
-            role: optionRole,
-            "aria-selected": optionRole === "option" ? selected : undefined,
-            "aria-checked": optionRole === "menuitemradio" ? selected : undefined,
-            "data-selected": showSelected ? selected : undefined,
-            "data-lang-value": item.i18n ? item.value : undefined,
-            "data-i18n": item.i18n,
-            "data-analytics-event": item.analyticsEvent,
-            "data-analytics-category": item.analyticsCategory,
-            "data-analytics-label": item.analyticsLabel,
-            onClick: () => {
-              item.onSelect?.();
-              setCurrentValue(item.value);
-              closeMenu();
-            },
-          };
-
-          if (item.href) {
-            return (
-              <a
-                {...optionAttributes}
-                className={optionClassNames}
-                href={item.href}
-                target={item.target}
-                rel={item.rel}
-                ref={(element) => {
-                  optionRefs.current[items.indexOf(item)] = element;
-                }}
-                key={item.value}
-              >
-                {optionContent}
-              </a>
-            );
-          }
+          const expanded = Boolean(item.children?.length && expandedValues.has(item.value));
+          if (!item.children?.length) return renderOption(item, 0);
 
           return (
-            <button
-              {...optionAttributes}
-              className={optionClassNames}
-              type="button"
-              ref={(element) => {
-                optionRefs.current[items.indexOf(item)] = element;
-              }}
-              key={item.value}
-            >
-              {optionContent}
-            </button>
+            <div className="lumno-settings-select-branch" key={item.value}>
+              {renderOption(item, 0)}
+              <div
+                className="lumno-settings-select-submenu"
+                role="group"
+                aria-label={item.label}
+                aria-hidden={!expanded}
+                data-expanded={expanded}
+              >
+                <div className="lumno-settings-select-submenu-inner">
+                  {item.children.map((child) => renderOption(child, 1, !expanded))}
+                </div>
+              </div>
+            </div>
           );
         })}
       </div>

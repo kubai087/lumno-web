@@ -20,8 +20,15 @@ type HomeContent = {
   navTrust: string;
   navRelease: string;
   navRepository: string;
-  navFeedback: string;
-  navFeatureRequest: string;
+  navRepositoryMenuAria: string;
+  navRepositoryHome: string;
+  navRepositoryIssue: string;
+  navRepositoryPullRequest: string;
+  navCommunity: string;
+  navContact: string;
+  navContactMenuAria: string;
+  navContactX: string;
+  navContactXiaohongshu: string;
   navMoreMenuAria: string;
   installLabel: string;
   installAria: string;
@@ -83,11 +90,9 @@ type HomeContent = {
   footerCopyright: string;
   languageLabel: string;
   languageSelectAria: string;
-  communityPanelTitle: string;
   qrcodeTitle: string;
   qrcodeImageAlt: string;
   qrcodeCloseAria: string;
-  qrcodeRefreshAria: string;
 };
 
 export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
@@ -98,8 +103,15 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     navTrust: "隐私与开源",
     navRelease: "更新日志",
     navRepository: "代码仓库",
-    navFeedback: "反馈",
-    navFeatureRequest: "功能许愿",
+    navRepositoryMenuAria: "打开代码仓库操作",
+    navRepositoryHome: "访问仓库",
+    navRepositoryIssue: "提 Issue",
+    navRepositoryPullRequest: "提 PR",
+    navCommunity: "反馈&功能许愿",
+    navContact: "联系作者",
+    navContactMenuAria: "打开作者主页",
+    navContactX: "X",
+    navContactXiaohongshu: "小红书",
     navMoreMenuAria: "打开更多导航",
     installLabel: "安装 Lumno",
     installAria: "打开 Lumno 安装选项",
@@ -109,17 +121,17 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     githubAria: "访问 Lumno GitHub 仓库",
     heroTitle: "让浏览器的一切，一搜即达",
     heroDescription:
-      "Lumno 是一个开源的浏览器命令栏，可从任何网页随时唤起。\n搜索标签页、书签、历史记录和常用网站，无需来回翻找。",
+      "Lumno 是一个开源的浏览器命令栏及新标签页插件，可从任何网页随时唤起。\n搜索标签页、书签、历史记录和常用网站，无需来回翻找。",
     heroInstallLabel: "通过 Chrome 商店安装",
     heroInstallAria: "通过 Chrome 应用商店安装 Lumno",
-    heroBrowserTooltipLabel: "支持所有 Chromium 内核浏览器",
-    heroCommunityLabel: "反馈 and 功能许愿",
+    heroBrowserTooltipLabel: "支持大部分 Chromium 内核浏览器",
+    heroCommunityLabel: "反馈 & 功能许愿",
     heroCommunityAria: "打开 Lumno 反馈与功能许愿二维码",
     heroOpenSourceNote: "基于 GPL-3.0 开源",
     heroLicenseLabel: "GPL-3.0",
     heroLicenseAria: "在新标签页查看 Lumno 的 GPL-3.0 开源协议",
     heroDemoAria: "Lumno 聚焦搜索输入框与光标动画",
-    reviewsTitle: "深受用户信赖，与用户共创。",
+    reviewsTitle: "专注用户体验，与用户共创",
     reviewsSummary: (averageRating, ratingCount) =>
       `${averageRating.toFixed(1)} 分 · ${ratingCount} 个评分`,
     reviewsSourceLabel: "查看所有评价",
@@ -205,11 +217,9 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerCopyright: "Lumno. 开源浏览器扩展。",
     languageLabel: "简体中文",
     languageSelectAria: "选择语言",
-    communityPanelTitle: "反馈与功能许愿",
     qrcodeTitle: "微信群二维码",
     qrcodeImageAlt: "Lumno 微信群二维码",
     qrcodeCloseAria: "关闭二维码弹窗",
-    qrcodeRefreshAria: "刷新二维码",
   },
   "zh-TW": {
     navigationAria: "主導覽",
@@ -218,8 +228,15 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     navTrust: "隱私與開源",
     navRelease: "更新日誌",
     navRepository: "程式碼",
-    navFeedback: "意見回饋",
-    navFeatureRequest: "功能許願",
+    navRepositoryMenuAria: "開啟程式碼儲存庫操作",
+    navRepositoryHome: "造訪程式碼庫",
+    navRepositoryIssue: "提 Issue",
+    navRepositoryPullRequest: "提 PR",
+    navCommunity: "意見回饋&功能許願",
+    navContact: "聯絡作者",
+    navContactMenuAria: "開啟作者主頁",
+    navContactX: "X",
+    navContactXiaohongshu: "小紅書",
     navMoreMenuAria: "開啟更多導覽",
     installLabel: "安裝 Lumno",
     installAria: "開啟 Lumno 安裝選項",
@@ -232,8 +249,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
       "Lumno 是一個開源的瀏覽器命令欄，可從任何網頁隨時喚起。\n搜尋分頁、書籤、瀏覽紀錄與常用網站，不用來回翻找。",
     heroInstallLabel: "透過 Chrome 線上商店安裝",
     heroInstallAria: "透過 Chrome 線上應用程式商店安裝 Lumno",
-    heroBrowserTooltipLabel: "支援所有 Chromium 核心瀏覽器",
-    heroCommunityLabel: "意見回饋 and 功能許願",
+    heroBrowserTooltipLabel: "支援大部分 Chromium 核心瀏覽器",
+    heroCommunityLabel: "意見回饋 & 功能許願",
     heroCommunityAria: "開啟 Lumno 意見回饋與功能許願二維碼",
     heroOpenSourceNote: "基於 GPL-3.0 開源",
     heroLicenseLabel: "GPL-3.0",
@@ -325,11 +342,9 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerCopyright: "Lumno. 開源瀏覽器擴充功能。",
     languageLabel: "繁體中文",
     languageSelectAria: "選擇語言",
-    communityPanelTitle: "意見回饋與功能許願",
     qrcodeTitle: "微信群二維碼",
     qrcodeImageAlt: "Lumno 微信群二維碼",
     qrcodeCloseAria: "關閉二維碼彈窗",
-    qrcodeRefreshAria: "重新整理二維碼",
   },
   en: {
     navigationAria: "Primary navigation",
@@ -338,8 +353,15 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     navTrust: "Privacy & open source",
     navRelease: "Release",
     navRepository: "Repository",
-    navFeedback: "Feedback",
-    navFeatureRequest: "Feature requests",
+    navRepositoryMenuAria: "Open repository actions",
+    navRepositoryHome: "Open repository",
+    navRepositoryIssue: "Open an issue",
+    navRepositoryPullRequest: "Open a pull request",
+    navCommunity: "Feedback & feature requests",
+    navContact: "Contact the author",
+    navContactMenuAria: "Open the author's profiles",
+    navContactX: "X",
+    navContactXiaohongshu: "Xiaohongshu",
     navMoreMenuAria: "Open more navigation",
     installLabel: "Install Lumno",
     installAria: "Open Lumno install options",
@@ -352,8 +374,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
       "Lumno is an open-source command bar for your browser.\nFind tabs, bookmarks, history, and favorite sites in one search.",
     heroInstallLabel: "Install from the Chrome Web Store",
     heroInstallAria: "Install Lumno from the Chrome Web Store",
-    heroBrowserTooltipLabel: "Works with all Chromium-based browsers",
-    heroCommunityLabel: "Feedback and feature requests",
+    heroBrowserTooltipLabel: "Works with most Chromium-based browsers",
+    heroCommunityLabel: "Feedback & feature requests",
     heroCommunityAria: "Open the Lumno feedback and feature-request QR code",
     heroOpenSourceNote: "Open source under GPL-3.0",
     heroLicenseLabel: "GPL-3.0",
@@ -445,11 +467,9 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerCopyright: "Lumno. An open-source browser extension.",
     languageLabel: "English",
     languageSelectAria: "Choose language",
-    communityPanelTitle: "Feedback & feature requests",
     qrcodeTitle: "WeChat group QR code",
     qrcodeImageAlt: "QR code for the Lumno WeChat group",
     qrcodeCloseAria: "Close the QR code dialog",
-    qrcodeRefreshAria: "Refresh the QR code",
   },
 };
 

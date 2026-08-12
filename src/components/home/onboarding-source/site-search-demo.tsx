@@ -209,6 +209,7 @@ function ModePrefix({ item }: { item: SiteSearchCaseModel }) {
     <span
       aria-hidden="true"
       className="x-lumno-search-input-mode__prefix site-search-demo-mode-prefix"
+      data-demo-cursor-target="site-search-tag"
     >
       {item.favicon ? (
         <span className="x-lumno-search-input-mode__prefix-icon-frame">
@@ -331,6 +332,7 @@ function ScopeMenu({ model }: { model: SiteSearchScopeMenuModel }) {
     >
       <div
         className="x-lumno-search-input-mode__menu-content"
+        data-demo-cursor-target="site-search-menu"
         ref={contentRef}
         role="presentation"
       >

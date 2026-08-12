@@ -51,7 +51,7 @@ test("Chrome review parser reads live store markup during scheduled static build
   assert.equal(snapshot.reviews[0].reviewId, "review-1");
 });
 
-test("testimonial marquee uses two continuous lanes with pause and reduced-motion behavior", () => {
+test("testimonial marquee uses two continuous lanes with hover-intent pause and reduced-motion behavior", () => {
   const source = readSource("src/components/home/ChromeReviewMarquee.astro");
 
   assert.match(source, /const rows = \[reviews\.slice\(0, midpoint\), reviews\.slice\(midpoint\)\]/);
@@ -59,7 +59,14 @@ test("testimonial marquee uses two continuous lanes with pause and reduced-motio
   assert.match(source, /data-review-track=\{rowIndex \+ 1\}/);
   assert.match(source, /chrome-review-scroll-left 38s linear infinite/);
   assert.match(source, /animation-name: chrome-review-scroll-right/);
-  assert.match(source, /\.chrome-review-marquee:hover \.chrome-review-marquee__track/);
+  assert.match(source, /const HOVER_PAUSE_DELAY_MS = 600/);
+  assert.match(source, /const scheduleHoverPauseAfterIdle = \(\) => \{[\s\S]*?delete marquee\.dataset\.hoverPaused[\s\S]*?window\.setTimeout\([\s\S]*?HOVER_PAUSE_DELAY_MS/);
+  assert.match(source, /addEventListener\("pointerenter", handlePointerEnter\)/);
+  assert.match(source, /addEventListener\("pointermove", handlePointerMove\)/);
+  assert.match(source, /window\.addEventListener\("scroll", handleScrollActivity, \{ passive: true \}\)/);
+  assert.match(source, /addEventListener\("pointerleave"[\s\S]*?delete marquee\.dataset\.hoverPaused/);
+  assert.match(source, /\.chrome-review-marquee\[data-hover-paused="true"\] \.chrome-review-marquee__track/);
+  assert.doesNotMatch(source, /\.chrome-review-marquee:hover \.chrome-review-marquee__track/);
   assert.match(source, /@media \(prefers-reduced-motion: reduce\)/);
   assert.match(source, /animation: none/);
   assert.match(source, /aria-hidden=\{duplicate \? "true" : undefined\}/);
@@ -89,7 +96,7 @@ test("homepage keeps reviews in Section 2 after the viewport-aware product demo"
 
   assert.match(
     source,
-    /<section class="hero-section"[\s\S]*?<HeroSafariDemo[\s\S]*?client:load[\s\S]*?\/>\s*<\/section>\s*<ChromeReviewMarquee[\s\S]*?reviews=\{chromeStoreReviews\.reviews\}/,
+    /<section class="hero-section"[\s\S]*?<div class="hero-demo-slot">\s*<HeroSafariDemo[\s\S]*?client:load[\s\S]*?\/>\s*<\/div>\s*<\/section>\s*<ChromeReviewMarquee[\s\S]*?reviews=\{chromeStoreReviews\.reviews\}/,
   );
   assert.match(source, /padding: 120px 0 80px/);
   assert.match(source, /height: clamp\(300px, calc\(100svh - 470px\), 620px\)/);
@@ -103,7 +110,7 @@ test("homepage keeps reviews in Section 2 after the viewport-aware product demo"
 test("review marquee copy is localized for every homepage locale", () => {
   const source = readSource("src/lib/home-content.ts");
 
-  assert.match(source, /reviewsTitle: "深受用户信赖，与用户共创。"/);
+  assert.match(source, /reviewsTitle: "专注用户体验，与用户共创"/);
   assert.match(source, /reviewsTitle: "深受使用者信賴，與使用者共創。"/);
   assert.match(source, /reviewsTitle: "Trusted by users, built with users\."/);
   assert.equal((source.match(/reviewsAriaLabel:/g) || []).length, 4);

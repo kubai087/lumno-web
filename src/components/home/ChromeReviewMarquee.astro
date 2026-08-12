@@ -112,6 +112,57 @@ const dateFormatter = new Intl.DateTimeFormat(locale, {
   </div>
 </section>
 
+<script>
+  const HOVER_PAUSE_DELAY_MS = 600;
+
+  document.querySelectorAll<HTMLElement>("[data-chrome-review-marquee]").forEach((marquee) => {
+    let hoverPauseTimer: number | undefined;
+    let isPointerInside = false;
+
+    const clearHoverPauseTimer = () => {
+      if (hoverPauseTimer === undefined) return;
+      window.clearTimeout(hoverPauseTimer);
+      hoverPauseTimer = undefined;
+    };
+
+    const scheduleHoverPauseAfterIdle = () => {
+      clearHoverPauseTimer();
+      delete marquee.dataset.hoverPaused;
+      hoverPauseTimer = window.setTimeout(() => {
+        marquee.dataset.hoverPaused = "true";
+        hoverPauseTimer = undefined;
+      }, HOVER_PAUSE_DELAY_MS);
+    };
+
+    const handlePointerEnter = (event: PointerEvent) => {
+      if (event.pointerType !== "mouse") return;
+      isPointerInside = true;
+      scheduleHoverPauseAfterIdle();
+    };
+
+    const handlePointerMove = (event: PointerEvent) => {
+      if (event.pointerType !== "mouse" || !isPointerInside) return;
+      scheduleHoverPauseAfterIdle();
+    };
+
+    const handleScrollActivity = () => {
+      if (!isPointerInside) return;
+      scheduleHoverPauseAfterIdle();
+    };
+
+    marquee.addEventListener("pointerenter", handlePointerEnter);
+    marquee.addEventListener("pointermove", handlePointerMove);
+
+    marquee.addEventListener("pointerleave", () => {
+      isPointerInside = false;
+      clearHoverPauseTimer();
+      delete marquee.dataset.hoverPaused;
+    });
+
+    window.addEventListener("scroll", handleScrollActivity, { passive: true });
+  });
+</script>
+
 <style>
   .chrome-review-marquee {
     position: relative;
@@ -204,7 +255,7 @@ const dateFormatter = new Intl.DateTimeFormat(locale, {
     animation-duration: 44s;
   }
 
-  .chrome-review-marquee:hover .chrome-review-marquee__track,
+  .chrome-review-marquee[data-hover-paused="true"] .chrome-review-marquee__track,
   .chrome-review-marquee:focus-within .chrome-review-marquee__track {
     animation-play-state: paused;
   }

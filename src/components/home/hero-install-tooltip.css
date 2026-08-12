@@ -1,17 +1,46 @@
 .hero-install-butterfly {
-  display: inline-grid;
+  position: relative;
+  display: inline-block;
   width: 18px;
   height: 18px;
   flex: 0 0 18px;
-  place-items: center;
+  color: #ababab;
+  contain: layout size style;
+  overflow: visible;
 }
 
-.hero-install-butterfly img {
+.hero-install-butterfly-wing {
+  position: absolute;
+  inset: 0;
   display: block;
-  width: 18px;
-  height: 18px;
-  object-fit: contain;
-  filter: sepia(100%) saturate(260%) hue-rotate(164deg) brightness(112%) contrast(94%);
+  width: 100%;
+  height: 100%;
+  transform-origin: 24% 77%;
+  pointer-events: none;
+}
+
+.hero-install-butterfly-wing svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  shape-rendering: geometricPrecision;
+}
+
+.hero-install-butterfly-wing-back {
+  opacity: 0.28;
+  transform: translate(0.5px, 0.2px) rotate(12deg) scale(0.97);
+}
+
+.hero-install-butterfly-wing-front {
+  opacity: 0.72;
+  transform: translate(-0.2px, 0.1px) rotate(-8deg) scale(1.01);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-install-butterfly animate,
+  .hero-install-butterfly animateTransform {
+    display: none;
+  }
 }
 
 .hero-browser-tooltip-content {

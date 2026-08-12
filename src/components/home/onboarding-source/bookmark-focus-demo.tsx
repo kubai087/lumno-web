@@ -5,11 +5,15 @@ import {
 } from 'react';
 import { HighlightedText } from './site-search-demo';
 
+const BROWSER_INTERNAL_URL_PATTERN = /^(?:chrome|edge|brave|vivaldi|opera):\/\/|^about:/i;
+
 export interface BookmarkFocusResult {
   actionTagKey?: string;
   actionTagLabel?: string;
+  browserPageIconClass?: string;
   commandText?: string;
   detail?: string;
+  fallbackIconClass?: string;
   favicon?: string;
   historyDeletable?: boolean;
   iconClass?: string;
@@ -18,6 +22,7 @@ export interface BookmarkFocusResult {
   theme?: BookmarkFocusResultTheme;
   title?: string;
   type?: string;
+  url?: string;
   visitButtonHidden?: boolean;
   visitButtonLabel?: string;
 }
@@ -38,6 +43,7 @@ export interface BookmarkFocusResultTheme {
 }
 
 export interface BookmarkFocusModel {
+  closeOtherTabsLabel: string;
   hoverLeadMs: number;
   hoverStartMs: number;
   hoverStepMs: number;
@@ -45,6 +51,7 @@ export interface BookmarkFocusModel {
   openLabel: string;
   overlayAriaLabel: string;
   panelId: string;
+  presentation?: 'animated' | 'complete';
   query: string;
   reducedMotion: boolean;
   removeHistoryLabel: string;
@@ -92,14 +99,22 @@ function ResultFavicon({
   const [failed, setFailed] = useState(false);
   const type = String(result.type || '');
   const favicon = String(result.favicon || '').trim();
+  const browserPageIconClass = String(result.browserPageIconClass || '').trim();
+  const hasBrowserPageIcon = type === 'browserPage' && Boolean(browserPageIconClass);
+  const browserPageFallbackIcon = String(
+    result.fallbackIconClass || (
+      BROWSER_INTERNAL_URL_PATTERN.test(String(result.url || ''))
+        ? 'ri-link'
+        : 'ri-window-2-line'
+    )
+  );
   const usesInlineIcon = [
     'newtab',
     'googleSuggest',
-    'browserPage',
     'commandNewTab',
     'commandSettings'
   ].includes(type);
-  const hasImage = Boolean(!usesInlineIcon && favicon && !failed);
+  const hasImage = Boolean(!usesInlineIcon && !hasBrowserPageIcon && favicon && !failed);
   let content = (
     <SuggestionInlineIcon iconClass="ri-link" />
   );
@@ -107,8 +122,6 @@ function ResultFavicon({
     content = (
       <SuggestionInlineIcon iconClass="ri-search-line" tone="subtext" />
     );
-  } else if (type === 'browserPage') {
-    content = <SuggestionInlineIcon iconClass="ri-link" />;
   } else if (type === 'commandNewTab') {
     content = (
       <SuggestionInlineIcon iconClass="ri-add-line" tone="subtext" />
@@ -121,6 +134,13 @@ function ResultFavicon({
     content = (
       <SuggestionInlineIcon iconClass="ri-scissors-cut-line" tone="subtext" />
     );
+  } else if (hasBrowserPageIcon) {
+    content = (
+      <SuggestionInlineIcon
+        className="x-ov-suggestion-favicon x-ov-suggestion-favicon--browser-page-icon"
+        iconClass={browserPageIconClass}
+      />
+    );
   } else if (result.iconClass) {
     content = (
       <SuggestionInlineIcon iconClass={String(result.iconClass)} tone="subtext" />
@@ -130,11 +150,23 @@ function ResultFavicon({
       <img
         alt=""
         className="x-ov-suggestion-favicon"
+        data-fallback-icon-name={
+          type === 'browserPage'
+            ? browserPageFallbackIcon
+            : undefined
+        }
+        data-object-fit="contain"
         decoding="async"
         loading="eager"
         onError={() => setFailed(true)}
         referrerPolicy="no-referrer"
         src={favicon}
+      />
+    );
+  } else if (type === 'browserPage') {
+    content = (
+      <SuggestionInlineIcon
+        iconClass={browserPageFallbackIcon}
       />
     );
   }
@@ -143,7 +175,7 @@ function ResultFavicon({
     <span
       className="x-ov-suggestion-icon-slot"
       data-emphasis={active ? 'true' : 'false'}
-      data-favicon={hasImage ? 'true' : 'false'}
+      data-favicon={hasImage || hasBrowserPageIcon ? 'true' : 'false'}
     >
       {content}
     </span>
@@ -347,7 +379,17 @@ function OverlayResult({
   );
 }
 
-function QueryText({ query }: { query: string }) {
+function QueryText({
+  complete,
+  query
+}: {
+  complete: boolean;
+  query: string;
+}) {
+  if (complete) {
+    return <span className="lumno-overlay-query-text">{query}</span>;
+  }
+
   const characters = Array.from(String(query || ''));
   const stepMs = 1040 / Math.max(1, characters.length);
   return (
@@ -377,11 +419,14 @@ function OverlayPanel({
   activeIndex: number;
   model: BookmarkFocusModel;
 }) {
+  const complete = model.presentation === 'complete';
+
   return (
     <div
       aria-label={model.overlayAriaLabel}
       className="lumno-overlay-panel"
       data-demo-scene={model.sceneId}
+      data-presentation={complete ? 'complete' : 'animated'}
       id={model.panelId}
     >
       <div className="x-lumno-search-input x-lumno-search-input__container">
@@ -393,7 +438,7 @@ function OverlayPanel({
           className="x-lumno-search-input__field lumno-overlay-query"
           role="searchbox"
         >
-          <QueryText key={model.sceneId} query={model.query} />
+          <QueryText complete={complete} key={model.sceneId} query={model.query} />
           <span aria-hidden="true" className="lumno-overlay-query-caret" />
         </div>
         <span className="x-lumno-search-input__divider" />
@@ -403,6 +448,13 @@ function OverlayPanel({
           type="button"
         >
           <Icon className="ri-settings-line ri-size-16" />
+        </button>
+        <button
+          aria-label={model.closeOtherTabsLabel}
+          className="x-ov-close-other-tabs"
+          type="button"
+        >
+          <Icon className="ri-brush-2-line ri-size-16" />
         </button>
         <div
           className="x-lumno-search-input-mode__badge"
@@ -427,12 +479,13 @@ function OverlayPanel({
 
 export function BookmarkFocusDemo({ model }: { model: BookmarkFocusModel }) {
   const resultCount = model.results.length;
+  const complete = model.presentation === 'complete';
   const [activeIndex, setActiveIndex] = useState(
-    model.reducedMotion && resultCount > 0 ? 0 : -1
+    (model.reducedMotion || complete) && resultCount > 0 ? 0 : -1
   );
 
   useEffect(() => {
-    if (model.reducedMotion) {
+    if (model.reducedMotion || complete) {
       setActiveIndex(resultCount > 0 ? 0 : -1);
       return undefined;
     }
@@ -483,6 +536,7 @@ export function BookmarkFocusDemo({ model }: { model: BookmarkFocusModel }) {
     model.hoverStartMs,
     model.hoverStepMs,
     model.hoverWrapStepMs,
+    complete,
     model.reducedMotion,
     model.sceneId,
     resultCount

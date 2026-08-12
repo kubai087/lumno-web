@@ -32,13 +32,14 @@ test("homepage toolbar exposes Chrome and Edge install options", () => {
   assert.match(menuSource, /<SettingsBadge>\{edgeVersionTag\}<\/SettingsBadge>/);
   assert.match(
     menuSource,
-    /<SettingsBadge tone="accent">\{chromeRecommendation\}<\/SettingsBadge>[\s\S]*<SettingsBadge>\{chromeVersionTag\}<\/SettingsBadge>/,
+    /label:\s*chromeLabel,[\s\S]*labelSuffix:\s*chromeVersionTag \? <SettingsBadge>\{chromeVersionTag\}<\/SettingsBadge>[\s\S]*meta:\s*<SettingsBadge tone="accent">\{chromeRecommendation\}<\/SettingsBadge>/,
   );
   const menuStyles = readSource("src/components/navigation/install-menu.css");
   assert.match(
     menuStyles,
-    /\.install-menu \.lumno-settings-badge-accent\s*\{[\s\S]*border:\s*1px solid #bfdbfe;[\s\S]*border-radius:\s*8px;[\s\S]*background:\s*#eef6ff;[\s\S]*color:\s*#1e3a8a;/,
+    /\.install-menu \.lumno-settings-badge-accent\s*\{[\s\S]*border-radius:\s*8px;[\s\S]*linear-gradient[\s\S]*color:\s*#1e3a8a;[\s\S]*animation:\s*install-menu-recommendation-shine/,
   );
+  assert.doesNotMatch(menuStyles, /\.install-menu \.lumno-settings-badge-accent\s*\{[\s\S]*border:/);
 });
 
 test("homepage install store names and recommendation are localized", () => {

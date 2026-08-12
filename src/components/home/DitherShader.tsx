@@ -4,6 +4,7 @@ type DitheringMode = "bayer" | "halftone" | "noise" | "crosshatch";
 type ColorMode = "original" | "grayscale";
 
 interface DitherShaderProps {
+  className?: string;
   src: string;
   gridSize?: number;
   ditherMode?: DitheringMode;
@@ -23,7 +24,6 @@ const BAYER_MATRIX_4X4 = [
 ];
 
 const RESIZE_RENDER_DELAY_MS = 90;
-const MAX_DITHER_WIDTH = 720;
 
 const clamp = (value: number, min: number, max: number) =>
   Math.max(min, Math.min(max, value));
@@ -37,6 +37,7 @@ const luminance = (red: number, green: number, blue: number) =>
  * the source image's palette instead of converting it to black and white.
  */
 export function DitherShader({
+  className,
   src,
   gridSize = 4,
   ditherMode = "bayer",
@@ -52,6 +53,7 @@ export function DitherShader({
   const dimensionsRef = useRef({ width: 0, height: 0 });
   const resizeTimerRef = useRef<number | null>(null);
   const renderFrameRef = useRef<number | null>(null);
+  const introSourceDimensionsRef = useRef<{ height: number; width: number } | null>(null);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -73,10 +75,11 @@ export function DitherShader({
       }
 
       const baseCellSize = Math.max(1, Math.floor(gridSize * pixelRatio));
-      const sourceCellsWide = Math.max(1, Math.ceil(width / baseCellSize));
-      const qualityScale = Math.min(1, MAX_DITHER_WIDTH / sourceCellsWide);
-      const workWidth = Math.max(1, Math.round(sourceCellsWide * qualityScale));
-      const workHeight = Math.max(1, Math.round((height / baseCellSize) * qualityScale));
+      // Keep one canvas pixel equal to one fixed-size dither cell. Capping the
+      // backing buffer would enlarge cells on wide screens and make the grain
+      // visibly breathe while the intro window changes size.
+      const workWidth = Math.max(1, Math.ceil(width / baseCellSize));
+      const workHeight = Math.max(1, Math.ceil(height / baseCellSize));
 
       if (!sourceCanvas) {
         sourceCanvas = document.createElement("canvas");
@@ -131,7 +134,7 @@ export function DitherShader({
       const outputPixels = outputData.data;
       const levels = 8;
       const colorStep = 255 / (levels - 1);
-      const patternScale = Math.max(1, 2 / qualityScale);
+      const patternScale = 2;
 
       for (let y = 0; y < workHeight; y += 1) {
         for (let x = 0; x < workWidth; x += 1) {
@@ -220,6 +223,21 @@ export function DitherShader({
       const nextHeight = Math.floor(entry.contentRect.height);
       if (nextWidth < 1 || nextHeight < 1) return;
 
+      const demo = container.closest(".hero-safari-demo");
+      const introState = demo?.getAttribute("data-home-intro");
+      if (introState === "pending" || introState === "revealing") {
+        introSourceDimensionsRef.current = { height: nextHeight, width: nextWidth };
+      } else if (introState === "complete" && introSourceDimensionsRef.current) {
+        const sourceDimensions = introSourceDimensionsRef.current;
+        const keepsIntroSourceBuffer =
+          dimensionsRef.current.width === sourceDimensions.width
+          && dimensionsRef.current.height === sourceDimensions.height;
+        introSourceDimensionsRef.current = null;
+        if (keepsIntroSourceBuffer) {
+          return;
+        }
+      }
+
       const current = dimensionsRef.current;
       if (current.width === nextWidth && current.height === nextHeight) return;
       dimensionsRef.current = { width: nextWidth, height: nextHeight };
@@ -247,7 +265,12 @@ export function DitherShader({
   }, [brightness, colorMode, contrast, ditherMode, gridSize, objectFit, pixelRatio, src, threshold]);
 
   return (
-    <div ref={containerRef} className="hero-safari-dither" aria-hidden="true">
+    <div
+      ref={containerRef}
+      className={["hero-safari-dither", className].filter(Boolean).join(" ")}
+      aria-hidden="true"
+      data-dither-grid-size={gridSize}
+    >
       <canvas ref={canvasRef} aria-hidden="true" />
     </div>
   );

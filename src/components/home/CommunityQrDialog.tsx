@@ -18,6 +18,40 @@ interface Props {
   externalHref?: string;
 }
 
+interface CommunityQrDialogPanelProps {
+  title: string;
+  qrImageSrc: string;
+  qrImageAlt: string;
+  closeLabel: string;
+}
+
+export function CommunityQrDialogPanel({
+  title,
+  qrImageSrc,
+  qrImageAlt,
+  closeLabel,
+}: CommunityQrDialogPanelProps) {
+  return (
+    <DialogContent
+      aria-describedby={undefined}
+      closeLabel={closeLabel}
+      className="max-h-[calc(100dvh-3rem)] max-w-[390px] gap-0 overflow-y-auto p-6"
+    >
+      <DialogHeader className="pr-10">
+        <DialogTitle>{title}</DialogTitle>
+      </DialogHeader>
+      <img
+        className="mt-4 block h-auto w-full rounded-lg bg-muted"
+        src={qrImageSrc}
+        alt={qrImageAlt}
+        width="866"
+        height="1280"
+        loading="lazy"
+      />
+    </DialogContent>
+  );
+}
+
 export function CommunityQrDialog({
   triggerLabel,
   triggerAriaLabel,
@@ -57,23 +91,12 @@ export function CommunityQrDialog({
   return (
     <Dialog>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
-      <DialogContent
-        aria-describedby={undefined}
+      <CommunityQrDialogPanel
+        title={title}
+        qrImageSrc={qrImageSrc}
+        qrImageAlt={qrImageAlt}
         closeLabel={closeLabel}
-        className="max-h-[calc(100dvh-3rem)] max-w-[390px] gap-0 overflow-y-auto p-6"
-      >
-        <DialogHeader className="pr-10">
-          <DialogTitle>{title}</DialogTitle>
-        </DialogHeader>
-        <img
-          className="mt-4 block h-auto w-full rounded-lg bg-muted"
-          src={qrImageSrc}
-          alt={qrImageAlt}
-          width="866"
-          height="1280"
-          loading="lazy"
-        />
-      </DialogContent>
+      />
     </Dialog>
   );
 }

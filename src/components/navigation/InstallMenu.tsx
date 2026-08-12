@@ -39,13 +39,9 @@ export default function InstallMenu({
     {
       value: "chrome",
       label: chromeLabel,
+      labelSuffix: chromeVersionTag ? <SettingsBadge>{chromeVersionTag}</SettingsBadge> : null,
       iconClass: "ri-chrome-fill install-menu-store-icon install-menu-store-icon-chrome",
-      meta: chromeVersionTag ? (
-        <>
-          <SettingsBadge tone="accent">{chromeRecommendation}</SettingsBadge>
-          <SettingsBadge>{chromeVersionTag}</SettingsBadge>
-        </>
-      ) : null,
+      meta: <SettingsBadge tone="accent">{chromeRecommendation}</SettingsBadge>,
       href: chromeUrl,
       target: "_blank",
       rel: "noreferrer noopener",
@@ -56,8 +52,8 @@ export default function InstallMenu({
     {
       value: "edge",
       label: edgeLabel,
+      labelSuffix: edgeVersionTag ? <SettingsBadge>{edgeVersionTag}</SettingsBadge> : null,
       iconClass: "ri-edge-new-fill install-menu-store-icon install-menu-store-icon-edge",
-      meta: edgeVersionTag ? <SettingsBadge>{edgeVersionTag}</SettingsBadge> : null,
       href: edgeUrl,
       target: "_blank",
       rel: "noreferrer noopener",

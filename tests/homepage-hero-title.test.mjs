@@ -41,17 +41,28 @@ test("mobile hero copy preserves curved-screen safe spacing", () => {
     source,
     /@media \(max-width:\s*760px\)[\s\S]*?\.hero-copy\s*\{[\s\S]*?padding-left:\s*max\(8px,\s*env\(safe-area-inset-left\)\);[\s\S]*?padding-right:\s*max\(8px,\s*env\(safe-area-inset-right\)\);/,
   );
-  assert.match(source, /font-size:\s*clamp\(28px,\s*8\.5vw,\s*40px\);/);
+  assert.match(source, /font-size:\s*clamp\(34px,\s*10vw,\s*44px\);/);
 });
 
-test("localized hero descriptions preserve their intentional sentence break", () => {
+test("localized hero descriptions preserve the desktop break and rebalance on mobile", () => {
   const descriptionsWithLineBreak = contentSource.match(
     /heroDescription:\s*\n\s*"[^"\n]*\\n[^"\n]*"/g,
   );
 
   assert.equal(descriptionsWithLineBreak?.length, 3);
+  assert.match(source, /const heroDescriptionNoWrapPhrases = uiLocale === "zh-CN"/);
+  assert.match(source, /"及新标签页插件"/);
+  assert.match(source, /"可从任何网页随时唤起"/);
+  assert.match(source, /"历史记录"/);
+  assert.match(source, /"和常用网站"/);
   assert.match(
     source,
-    /\.hero-copy > p\s*\{[\s\S]*?white-space:\s*pre-line;/,
+    /<p class="hero-description">[\s\S]*?heroDescriptionLineChunks\.map\([\s\S]*?class="hero-description-line"[\s\S]*?class:list=\{\{ "hero-description-phrase": noWrap \}\}/,
+  );
+  assert.match(source, /\.hero-description-line\s*\{[\s\S]*?display:\s*block;/);
+  assert.match(source, /\.hero-description-phrase\s*\{[\s\S]*?white-space:\s*nowrap;/);
+  assert.match(
+    source,
+    /@media \(max-width:\s*760px\)[\s\S]*?\.hero-copy > p\s*\{[\s\S]*?max-width:\s*330px;[\s\S]*?line-height:\s*1\.7;[\s\S]*?\.hero-description-line\s*\{[\s\S]*?text-wrap:\s*balance;[\s\S]*?\.hero-description-line \+ \.hero-description-line\s*\{[\s\S]*?margin-top:\s*8px;/,
   );
 });

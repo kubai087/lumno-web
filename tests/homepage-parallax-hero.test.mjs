@@ -31,6 +31,6 @@ test("homepage third section uses the Aceternity Hero Parallax composition", () 
   assert.doesNotMatch(componentSource, /hero-parallax__link/);
   assert.doesNotMatch(pageSource, /linkLabel=\{content\.featurePageLabel\}/);
   assert.doesNotMatch(pageSource, /linkAriaLabel=\{content\.featurePageAria\}/);
-  assert.match(copySource, /featureSectionTitle: "极简强大，你的 100% 新标签页。"/);
+  assert.match(copySource, /featureSectionTitle: "极简强大，你的 100% 新标签页"/);
   assert.match(copySource, /featureSectionDescription:\s*"书签、常用网站与快捷搜索，一个干净的新标签页全部装下（也可以隐藏）"/);
 });

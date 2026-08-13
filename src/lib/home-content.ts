@@ -137,7 +137,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     reviewAvatarLabel: "的头像",
     reviewRatingLabel: "星评价",
     productShowcaseAria: "Lumno 的四项核心功能",
-    featureSectionTitle: "极简强大，你的 100% 新标签页。",
+    featureSectionTitle: "极简强大，你的 100% 新标签页",
     featureSectionDescription:
       "书签、常用网站与快捷搜索，一个干净的新标签页全部装下（也可以隐藏）",
     featureMessages: {

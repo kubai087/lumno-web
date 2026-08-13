@@ -87,6 +87,11 @@ test("testimonial marquee fills two continuous lanes with hover-intent pause and
   assert.match(source, /@media \(max-width: 760px\)[\s\S]*?\.chrome-review-marquee__frame \{[\s\S]*?width: calc\(100% - 32px\)/);
   assert.match(source, /font-size: 14\.5px;[\s\S]*?font-weight: 400/);
   assert.match(source, /chrome-review-card__identity time[\s\S]*?font-size: 12px/);
+  assert.match(source, /\.chrome-review-card \{[\s\S]*?min-height: 172px/);
+  assert.match(
+    source,
+    /@media \(max-width: 760px\)[\s\S]*?\.chrome-review-card \{[\s\S]*?min-height: 150px/,
+  );
 });
 
 test("homepage visible typography never defines text below twelve pixels", () => {
@@ -128,4 +133,17 @@ test("review marquee copy is localized for every homepage locale", () => {
   assert.match(source, /reviewsTitle: "Trusted by users, built with users\."/);
   assert.equal((source.match(/reviewsAriaLabel:/g) || []).length, 4);
   assert.equal((source.match(/reviewsSourceLabel:/g) || []).length, 4);
+});
+
+test("Chinese review heading uses the homepage hero title scale", () => {
+  const source = readSource("src/components/home/ChromeReviewMarquee.astro");
+
+  assert.match(
+    source,
+    /\.chrome-review-marquee__header h2 \{[\s\S]*?font-size: clamp\(36px, 3\.6vw, 48px\)/,
+  );
+  assert.match(
+    source,
+    /@media \(max-width: 760px\)[\s\S]*?\.chrome-review-marquee__header h2 \{[\s\S]*?font-size: clamp\(34px, 10vw, 44px\)/,
+  );
 });

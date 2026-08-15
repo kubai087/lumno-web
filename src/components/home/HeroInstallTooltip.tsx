@@ -101,8 +101,8 @@ export function HeroInstallTooltip({
             data-analytics-category="conversion"
             data-analytics-label="home_hero_install"
           >
-            {HERO_BUTTERFLY_MARK}
             {label}
+            {HERO_BUTTERFLY_MARK}
           </SettingsButton>
         </TooltipTrigger>
         <TooltipContent

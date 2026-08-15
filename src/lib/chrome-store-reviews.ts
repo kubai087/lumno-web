@@ -22,11 +22,20 @@ const REQUEST_TIMEOUT_MS = 8_000;
 
 export const CHROME_STORE_REVIEW_SNAPSHOT: ChromeStoreReviewSnapshot = {
   sourceUrl: CHROME_STORE_REVIEW_URL,
-  capturedAt: "2026-08-09",
+  capturedAt: "2026-08-15",
   averageRating: 5,
-  ratingCount: 12,
+  ratingCount: 13,
   source: "fallback",
   reviews: [
+    {
+      reviewId: "b6f9cc9a-3d5c-45bb-87d4-ef897761ba2d",
+      reviewerId: "weiyi Josscii",
+      avatarUrl:
+        "https://lh3.googleusercontent.com/a/ACg8ocIYsxsdi30lw0dp672g9BEBr2hae86Zx8SinpHqJG9t5LlwZA=s96-w96-h96",
+      rating: 5,
+      review: "非常好看好用的启动页，功能越来越多啦！",
+      publishedAt: "2026-08-10",
+    },
     {
       reviewId: "yashon-2026-08-05",
       reviewerId: "Yashon张一瞬呀（Yashon张一瞬呀）",

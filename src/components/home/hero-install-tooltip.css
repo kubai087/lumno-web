@@ -4,7 +4,9 @@
   width: 18px;
   height: 18px;
   flex: 0 0 18px;
-  color: #ababab;
+  /* Compensate for the animated SVG's transparent trailing canvas. */
+  margin-inline-end: -6px;
+  color: #f4f7fb;
   contain: layout size style;
   overflow: visible;
 }
@@ -27,12 +29,12 @@
 }
 
 .hero-install-butterfly-wing-back {
-  opacity: 0.28;
+  opacity: 0.38;
   transform: translate(0.5px, 0.2px) rotate(12deg) scale(0.97);
 }
 
 .hero-install-butterfly-wing-front {
-  opacity: 0.72;
+  opacity: 0.86;
   transform: translate(-0.2px, 0.1px) rotate(-8deg) scale(1.01);
 }
 

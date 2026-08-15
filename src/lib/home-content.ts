@@ -43,16 +43,10 @@ type HomeContent = {
   heroBrowserTooltipLabel: string;
   heroCommunityLabel: string;
   heroCommunityAria: string;
-  heroOpenSourceNote: string;
-  heroLicenseLabel: string;
-  heroLicenseAria: string;
   heroDemoAria: string;
   reviewsTitle: string;
-  reviewsSummary: (averageRating: number, ratingCount: number) => string;
-  reviewsSourceLabel: string;
   reviewsAriaLabel: string;
   reviewAvatarLabel: string;
-  reviewRatingLabel: string;
   productShowcaseAria: string;
   featureSectionTitle: string;
   featureSectionDescription: string;
@@ -119,25 +113,18 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     githubAria: "访问 Lumno GitHub 仓库",
     heroTitle: "让浏览器的一切，一搜即达",
     heroDescription:
-      "Lumno 是一个开源的浏览器命令栏及新标签页插件，可从任何网页随时唤起。\n搜索标签页、书签、历史记录和常用网站，无需来回翻找。",
+      "Lumno ，开源浏览器命令栏与新标签页插件",
     heroInstallLabel: "通过 Chrome 商店安装",
     heroInstallAria: "通过 Chrome 应用商店安装 Lumno",
-    heroBrowserTooltipLabel: "支持大部分 Chromium 内核浏览器",
+    heroBrowserTooltipLabel: "基于 GPL-3.0 开源，支持大部分 Chromium 内核浏览器",
     heroCommunityLabel: "反馈 & 功能许愿",
     heroCommunityAria: "打开 Lumno 反馈与功能许愿二维码",
-    heroOpenSourceNote: "基于 GPL-3.0 开源",
-    heroLicenseLabel: "GPL-3.0",
-    heroLicenseAria: "在新标签页查看 Lumno 的 GPL-3.0 开源协议",
     heroDemoAria: "Lumno 聚焦搜索输入框与光标动画",
     reviewsTitle: "专注用户体验，与用户共创",
-    reviewsSummary: (averageRating, ratingCount) =>
-      `${averageRating.toFixed(1)} 分 · ${ratingCount} 个评分`,
-    reviewsSourceLabel: "查看所有评价",
     reviewsAriaLabel: "Chrome 应用商店的真实用户评价轮播",
     reviewAvatarLabel: "的头像",
-    reviewRatingLabel: "星评价",
     productShowcaseAria: "Lumno 的四项核心功能",
-    featureSectionTitle: "极简强大，你的 100% 新标签页",
+    featureSectionTitle: "极简强大，你的满分新标签页",
     featureSectionDescription:
       "书签、常用网站与快捷搜索，一个干净的新标签页全部装下（也可以隐藏）",
     featureMessages: {
@@ -245,20 +232,13 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
       "Lumno 是一個開源的瀏覽器命令欄，可從任何網頁隨時喚起。\n搜尋分頁、書籤、瀏覽紀錄與常用網站，不用來回翻找。",
     heroInstallLabel: "透過 Chrome 線上商店安裝",
     heroInstallAria: "透過 Chrome 線上應用程式商店安裝 Lumno",
-    heroBrowserTooltipLabel: "支援大部分 Chromium 核心瀏覽器",
+    heroBrowserTooltipLabel: "基於 GPL-3.0 開源，支援大部分 Chromium 核心瀏覽器",
     heroCommunityLabel: "意見回饋 & 功能許願",
     heroCommunityAria: "開啟 Lumno 意見回饋與功能許願二維碼",
-    heroOpenSourceNote: "基於 GPL-3.0 開源",
-    heroLicenseLabel: "GPL-3.0",
-    heroLicenseAria: "在新分頁查看 Lumno 的 GPL-3.0 開源授權條款",
     heroDemoAria: "Lumno 聚焦搜尋輸入框與游標動畫",
     reviewsTitle: "深受使用者信賴，與使用者共創。",
-    reviewsSummary: (averageRating, ratingCount) =>
-      `${averageRating.toFixed(1)} 分 · ${ratingCount} 個評分`,
-    reviewsSourceLabel: "查看所有評價",
     reviewsAriaLabel: "Chrome 線上應用程式商店的真實使用者評價輪播",
     reviewAvatarLabel: "的頭像",
-    reviewRatingLabel: "星評價",
     productShowcaseAria: "Lumno 的四項核心功能",
     featureSectionTitle: "極簡而強大，你的 100% 新分頁。",
     featureSectionDescription:
@@ -368,20 +348,13 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
       "Lumno is an open-source command bar for your browser.\nFind tabs, bookmarks, history, and favorite sites in one search.",
     heroInstallLabel: "Install from the Chrome Web Store",
     heroInstallAria: "Install Lumno from the Chrome Web Store",
-    heroBrowserTooltipLabel: "Works with most Chromium-based browsers",
+    heroBrowserTooltipLabel: "Open source under GPL-3.0, with support for most Chromium-based browsers",
     heroCommunityLabel: "Feedback & feature requests",
     heroCommunityAria: "Open the Lumno feedback and feature-request QR code",
-    heroOpenSourceNote: "Open source under GPL-3.0",
-    heroLicenseLabel: "GPL-3.0",
-    heroLicenseAria: "View Lumno's GPL-3.0 license on GitHub in a new tab",
     heroDemoAria: "Animated Lumno focus-search input and pointer",
     reviewsTitle: "Trusted by users, built with users.",
-    reviewsSummary: (averageRating, ratingCount) =>
-      `${averageRating.toFixed(1)} · ${ratingCount} ${ratingCount === 1 ? "rating" : "ratings"}`,
-    reviewsSourceLabel: "Read all reviews",
     reviewsAriaLabel: "Real user reviews from the Chrome Web Store",
     reviewAvatarLabel: "avatar",
-    reviewRatingLabel: "star rating",
     productShowcaseAria: "Four core Lumno features",
     featureSectionTitle: "Minimal and powerful. A new tab that’s 100% yours.",
     featureSectionDescription:

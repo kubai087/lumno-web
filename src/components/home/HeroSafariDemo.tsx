@@ -1005,6 +1005,7 @@ export function HeroSafariDemo({
   const introResizeObserverRef = useRef<ResizeObserver | null>(null);
   const introTargetRectRef = useRef<HomeIntroRect | null>(null);
   const introRevealRequestedRef = useRef(false);
+  const introScrollSkipRequestedRef = useRef(false);
   const introResultsSignaledRef = useRef(false);
   const sceneIndexRef = useRef(initialSceneIndex);
   const userHasSelectedSceneRef = useRef(false);
@@ -1135,6 +1136,13 @@ export function HeroSafariDemo({
   }, [clearHomeIntroLayoutWatch]);
 
   const syncHomeIntroTargetGeometry = useCallback(() => {
+    // These custom properties become the static background crop once the intro
+    // is complete. Never replace that snapshot with an offscreen scroll
+    // position, or the dither layer is translated out of its clipping frame.
+    if (document.body.dataset.homeIntro === "complete") {
+      return null;
+    }
+
     const demo = demoRef.current;
     const visual = visualRef.current;
     const slot = demo?.closest(".hero-demo-slot");
@@ -1201,6 +1209,20 @@ export function HeroSafariDemo({
 
     return { demo, sourceRect, targetChanged, targetRect, visual };
   }, []);
+
+  const completeHomeIntroForScroll = useCallback(() => {
+    if (introScrollSkipRequestedRef.current) {
+      return;
+    }
+
+    introScrollSkipRequestedRef.current = true;
+    // The intro mask is positioned with viewport-relative geometry. A scroll can
+    // still update `scrollY` while the body is temporarily overflow-hidden, so
+    // lock that geometry to the current position before switching back to the
+    // in-document clipping container.
+    syncHomeIntroTargetGeometry();
+    completeHomeIntro();
+  }, [completeHomeIntro, syncHomeIntroTargetGeometry]);
 
   const reconcileHomeIntroEnd = useCallback(() => {
     if (document.body.dataset.homeIntro !== "revealing") {
@@ -1397,8 +1419,13 @@ export function HeroSafariDemo({
       return undefined;
     }
 
-    if (reducedMotion || window.scrollY > 1 || Boolean(window.location.hash)) {
+    if (reducedMotion || Boolean(window.location.hash)) {
       completeHomeIntro();
+      return undefined;
+    }
+
+    if (window.scrollY > 1) {
+      completeHomeIntroForScroll();
       return undefined;
     }
 
@@ -1483,10 +1510,30 @@ export function HeroSafariDemo({
   }, [
     clearHomeIntroLayoutWatch,
     completeHomeIntro,
+    completeHomeIntroForScroll,
     reducedMotion,
     revealHomeIntro,
     syncHomeIntroTargetGeometry,
   ]);
+
+  useEffect(() => {
+    if (introState === "complete") {
+      return undefined;
+    }
+
+    const handleHomeIntroScroll = () => {
+      if (window.scrollY > 1) {
+        completeHomeIntroForScroll();
+      }
+    };
+
+    window.addEventListener("scroll", handleHomeIntroScroll, { passive: true });
+    handleHomeIntroScroll();
+
+    return () => {
+      window.removeEventListener("scroll", handleHomeIntroScroll);
+    };
+  }, [completeHomeIntroForScroll, introState]);
 
   const isBrowserSearch = scene.id === "browser-search";
   const isSiteSearch = scene.id === "site-search";
@@ -1494,7 +1541,8 @@ export function HeroSafariDemo({
     (event: ReactAnimationEvent<HTMLDivElement>) => {
       const target = event.target;
       if (
-        !isBrowserSearch
+        document.body.dataset.homeIntro !== "pending"
+        || !isBrowserSearch
         || !isAutoPlaying
         || introResultsSignaledRef.current
         || !(target instanceof HTMLElement)
@@ -1511,6 +1559,13 @@ export function HeroSafariDemo({
     },
     [isAutoPlaying, isBrowserSearch, revealHomeIntro, syncHomeIntroTargetGeometry],
   );
+  const handleHomeIntroSkip = useCallback(() => {
+    if (document.body.dataset.homeIntro !== "pending") {
+      return;
+    }
+
+    revealHomeIntro();
+  }, [revealHomeIntro]);
   const animationKey = `${locale}-${scene.id}-${replayKey}`;
   const siteSearchDemoModel = useMemo(
     () => ({
@@ -1551,6 +1606,7 @@ export function HeroSafariDemo({
     >
       <div
         className="hero-safari-visual"
+        onClick={handleHomeIntroSkip}
         ref={visualRef}
       >
         <div className="hero-safari-mask-content">

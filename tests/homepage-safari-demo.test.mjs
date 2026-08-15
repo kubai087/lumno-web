@@ -14,14 +14,14 @@ test("homepage places the onboarding browser skeleton directly below the hero co
 
   assert.match(
     source,
-    /<div class="hero-copy">[\s\S]*?<p class="hero-description">[\s\S]*?heroDescriptionLineChunks\.map[\s\S]*?<div class="hero-actions">[\s\S]*?class="hero-open-source-note"[\s\S]*?<\/div>\s*<div class="hero-demo-slot">\s*<HeroSafariDemo/,
+    /<div class="hero-copy">[\s\S]*?<p class="hero-description">[\s\S]*?heroDescriptionLineChunks\.map[\s\S]*?<div class="hero-actions">[\s\S]*?<\/div>\s*<\/div>\s*<div class="hero-demo-slot">\s*<HeroSafariDemo/,
   );
   assert.match(source, /ariaLabel=\{content\.heroDemoAria\}/);
   assert.match(source, /locale=\{uiLocale\}/);
   assert.match(source, /client:load/);
 });
 
-test("homepage opens with a full-screen Search All demo and settles when results appear", () => {
+test("homepage opens with a full-screen Search All demo and can settle early on click or scroll", () => {
   const source = readSource("src/pages/index.astro");
   const component = readSource("src/components/home/HeroSafariDemo.tsx");
   const styles = readSource("src/components/home/hero-safari-demo.css");
@@ -37,7 +37,17 @@ test("homepage opens with a full-screen Search All demo and settles when results
   assert.match(component, /document\.body\.dataset\.homeIntro = introState/);
   assert.match(component, /introState === "complete" && previousIntroState !== "complete"/);
   assert.match(component, /const syncHomeIntroTargetGeometry = useCallback/);
+  assert.match(component, /document\.body\.dataset\.homeIntro === "complete"[\s\S]*?return null;/);
   assert.match(component, /introResultsSignaledRef\.current = true;\s*syncHomeIntroTargetGeometry\(\)/);
+  assert.match(component, /document\.body\.dataset\.homeIntro !== "pending"[\s\S]*?!isBrowserSearch/);
+  assert.match(component, /const completeHomeIntroForScroll = useCallback\(\(\) => \{[\s\S]*?syncHomeIntroTargetGeometry\(\);[\s\S]*?completeHomeIntro\(\);/);
+  assert.match(component, /const introScrollSkipRequestedRef = useRef\(false\)/);
+  assert.match(component, /if \(introScrollSkipRequestedRef\.current\) \{\s*return;\s*\}[\s\S]*?introScrollSkipRequestedRef\.current = true;/);
+  assert.match(component, /if \(window\.scrollY > 1\) \{\s*completeHomeIntroForScroll\(\);/);
+  assert.match(component, /window\.addEventListener\("scroll", handleHomeIntroScroll, \{ passive: true \}\)/);
+  assert.match(component, /window\.removeEventListener\("scroll", handleHomeIntroScroll\)/);
+  assert.match(component, /const handleHomeIntroSkip = useCallback\(\(\) => \{[\s\S]*?document\.body\.dataset\.homeIntro !== "pending"[\s\S]*?revealHomeIntro\(\)/);
+  assert.match(component, /className="hero-safari-visual"\s*onClick=\{handleHomeIntroSkip\}/);
   assert.match(component, /const HOME_INTRO_MOVE_MS = 1_240/);
   assert.match(component, /HOME_INTRO_COMPLETION_FALLBACK_MS = HOME_INTRO_MOVE_MS \+ 240/);
   assert.match(component, /const visualRef = useRef<HTMLDivElement>\(null\)/);
@@ -109,6 +119,7 @@ test("homepage hero exposes install and community actions below the subtitle", (
   );
   assert.match(source, /<HeroInstallTooltip[\s\S]*?href=\{CHROME_STORE_URL\}[\s\S]*?client:load/);
   assert.match(installTooltip, /<TooltipTrigger asChild>[\s\S]*?<SettingsButton[\s\S]*?variant="primary"/);
+  assert.match(installTooltip, /<SettingsButton[\s\S]*?\{label\}[\s\S]*?\{HERO_BUTTERFLY_MARK\}/);
   assert.match(source, /<CommunityQrDialog[\s\S]*?triggerLabel=\{content\.heroCommunityLabel\}[\s\S]*?triggerVariant="hero"[\s\S]*?client:load/);
   assert.match(communityDialog, /<SettingsButton[\s\S]*?variant="secondary"/);
   assert.match(installTooltip, /const HERO_BUTTERFLY_MARK = \([\s\S]*?className="hero-install-butterfly"/);
@@ -186,8 +197,10 @@ test("homepage install tooltip communicates broad Chromium browser support", () 
   );
   assert.match(
     installTooltipStyles,
-    /\.hero-install-butterfly\s*\{[\s\S]*?width:\s*18px;[\s\S]*?height:\s*18px;[\s\S]*?flex:\s*0 0 18px;[\s\S]*?color:\s*#ababab;[\s\S]*?contain:\s*layout size style;/,
+    /\.hero-install-butterfly\s*\{[\s\S]*?width:\s*18px;[\s\S]*?height:\s*18px;[\s\S]*?flex:\s*0 0 18px;[\s\S]*?margin-inline-end:\s*-6px;[\s\S]*?color:\s*#f4f7fb;[\s\S]*?contain:\s*layout size style;/,
   );
+  assert.match(installTooltipStyles, /\.hero-install-butterfly-wing-back\s*\{[\s\S]*?opacity:\s*0\.38;/);
+  assert.match(installTooltipStyles, /\.hero-install-butterfly-wing-front\s*\{[\s\S]*?opacity:\s*0\.86;/);
   assert.match(installTooltipStyles, /@media \(prefers-reduced-motion: reduce\)/);
   assert.doesNotMatch(installTooltipStyles, /(?:sepia|saturate|hue-rotate)\(/);
   assert.doesNotMatch(installTooltip, /className="hero-browser-tooltip"/);
@@ -201,29 +214,22 @@ test("homepage install tooltip communicates broad Chromium browser support", () 
   assert.match(sharedTooltipStyles, /border-radius:\s*10px/);
   assert.match(sharedTooltipStyles, /0 16px 36px rgba\(17, 24, 39, 0\.08\)/);
   assert.doesNotMatch(installTooltip, /function (Chrome|Edge|Comet|Brave|Opera|Helium)Logo/);
-  assert.match(content, /支持大部分 Chromium 内核浏览器/);
-  assert.match(content, /支援大部分 Chromium 核心瀏覽器/);
-  assert.match(content, /Works with most Chromium-based browsers/);
+  assert.match(content, /基于 GPL-3\.0 开源，支持大部分 Chromium 内核浏览器/);
+  assert.match(content, /基於 GPL-3\.0 開源，支援大部分 Chromium 核心瀏覽器/);
+  assert.match(content, /Open source under GPL-3\.0, with support for most Chromium-based browsers/);
 });
 
-test("homepage hero underlines GPL-3.0 as the new-tab license link", () => {
+test("homepage moves the open-source note into the install tooltip", () => {
   const source = readSource("src/pages/index.astro");
   const content = readSource("src/lib/home-content.ts");
 
-  assert.match(source, /const GITHUB_LICENSE_URL = `\$\{GITHUB_URL\}\/blob\/main\/LICENSE`/);
+  assert.match(source, /tooltipLabel=\{content\.heroBrowserTooltipLabel\}/);
+  assert.doesNotMatch(source, /GITHUB_LICENSE_URL|hero-open-source-note|hero-license-link/);
+  assert.doesNotMatch(content, /heroOpenSourceNote|heroLicenseLabel|heroLicenseAria/);
   assert.match(
-    source,
-    /<div class="hero-actions">[\s\S]*?<\/div>\s*<p class="hero-open-source-note">/,
+    content,
+    /heroBrowserTooltipLabel: "基于 GPL-3\.0 开源，支持大部分 Chromium 内核浏览器"/,
   );
-  assert.match(
-    source,
-    /<a[\s\S]*?class="hero-license-link"[\s\S]*?href=\{GITHUB_LICENSE_URL\}[\s\S]*?target="_blank"[\s\S]*?rel="noreferrer noopener"/,
-  );
-  assert.match(source, /aria-label=\{content\.heroLicenseAria\}/);
-  assert.match(source, /data-analytics-event="open_github_license"/);
-  assert.match(source, /\.hero-license-link \{[\s\S]*?text-decoration:\s*underline;/);
-  assert.match(content, /heroOpenSourceNote: "基于 GPL-3\.0 开源"/);
-  assert.match(content, /heroLicenseLabel: "GPL-3\.0"/);
   assert.doesNotMatch(content, /隐私边界透明|隱私界線透明|transparent privacy boundaries/);
 });
 
@@ -436,9 +442,15 @@ test("hero demo exposes three replayable plugin-consistent search scenes", () =>
   assert.match(styles, /site-search-demo-mode-prefix[\s\S]*?border-radius: 10px;/);
   assert.match(styles, /site-search-demo-mode-prefix[\s\S]*?background: rgba\(var\(--site-search-demo-brand-accent-rgb/);
   assert.doesNotMatch(styles, /\.site-search-demo-mode-prefix__chevron\s*\{[^}]*margin-left:/);
-  assert.match(styles, /site-search-demo-mode-prefix__icon[\s\S]*?width: 15px;[\s\S]*?height: 15px;/);
-  assert.match(styles, /--site-search-demo-mode-padding: 160px;/);
-  assert.match(styles, /site-search-demo-prefix-press 320ms/);
+  assert.match(siteSearchComponent, /<button[\s\S]*?className="x-lumno-search-input-mode__prefix site-search-demo-mode-prefix"[\s\S]*?type="button"/);
+  assert.match(siteSearchComponent, /const prefixWidth = Math\.ceil\(prefix\.offsetWidth\)/);
+  assert.match(siteSearchComponent, /basePadding \+ prefixWidth \+ prefixGap/);
+  assert.match(styles, /site-search-demo-mode-prefix[\s\S]*?padding: 0 6px;/);
+  assert.match(styles, /site-search-demo-mode-prefix__icon[\s\S]*?width: 20px;[\s\S]*?height: 20px;/);
+  assert.match(styles, /site-search-demo-prefix-enter 180ms cubic-bezier\(0\.16, 1, 0\.3, 1\)/);
+  assert.match(styles, /site-search-demo-prefix-icon-pop 180ms linear/);
+  assert.match(styles, /translateY\(-50%\) translateX\(-4px\) scaleX\(0\.92\)/);
+  assert.match(styles, /site-search-demo-prefix-press 320ms[\s\S]*?forwards;/);
   assert.match(styles, /site-search-demo-scope-menu-open 420ms/);
   assert.match(styles, /height: min\(220px, 36vh\);/);
   assert.match(styles, /onboarding-cursor-site-search-open 6600ms/);
@@ -452,8 +464,10 @@ test("hero demo exposes three replayable plugin-consistent search scenes", () =>
   assert.match(component, /hero-demo-page-indicator/);
   assert.match(component, /x: direction === "forward" \? 42 : -42/);
   assert.match(styles, /transform: translate3d\(calc\(var\(--hero-demo-scene-index, 0\) \* 100%\)/);
-  assert.match(styles, /var\(--green-soft, #e9f2e8\) 68%/);
-  assert.match(styles, /background: #fffdf8;/);
+  assert.match(styles, /var\(--green-soft, #e9f2e8\) 48%/);
+  assert.match(styles, /background: color-mix\(in srgb, #fffdf8 78%, transparent\);/);
+  assert.match(styles, /var\(--green-ink, #4d6653\) 8%, transparent/);
+  assert.match(styles, /0 1px 4px color-mix\(in srgb, #3a342b 6%, transparent\)/);
   assert.doesNotMatch(switcherStyles, /backdrop-filter/);
   assert.match(styles, /hero-demo-page-button:focus-visible/);
   assert.match(homepage, /height: max\(300px, calc\(100svh - 470px\)\);/);

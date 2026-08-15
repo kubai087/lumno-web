@@ -205,11 +205,32 @@ function TypedText({
 }
 
 function ModePrefix({ item }: { item: SiteSearchCaseModel }) {
+  const prefixRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    const prefix = prefixRef.current;
+    const card = prefix?.closest('.site-search-demo-card');
+    if (!prefix || !(card instanceof HTMLElement)) {
+      return;
+    }
+
+    const basePadding = prefix.offsetLeft;
+    const prefixGap = 8;
+    const prefixWidth = Math.ceil(prefix.offsetWidth);
+    card.style.setProperty(
+      '--site-search-demo-mode-padding',
+      `${Math.max(basePadding + prefixWidth + prefixGap, basePadding)}px`
+    );
+  }, [item.favicon, item.iconClass, item.modeLabel, item.prefixLabel]);
+
   return (
-    <span
+    <button
       aria-hidden="true"
       className="x-lumno-search-input-mode__prefix site-search-demo-mode-prefix"
       data-demo-cursor-target="site-search-tag"
+      ref={prefixRef}
+      tabIndex={-1}
+      type="button"
     >
       {item.favicon ? (
         <span className="x-lumno-search-input-mode__prefix-icon-frame">
@@ -235,7 +256,7 @@ function ModePrefix({ item }: { item: SiteSearchCaseModel }) {
         className="ri-icon ri-arrow-down-s-line ri-size-16 site-search-demo-mode-prefix__chevron"
         data-search-input-mode-prefix-chevron=""
       />
-    </span>
+    </button>
   );
 }
 

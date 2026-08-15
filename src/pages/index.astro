@@ -38,8 +38,6 @@ const EDGE_STORE_URL = "https://microsoftedge.microsoft.com/addons/detail/pfbklk
 const GITHUB_URL = "https://github.com/kubai087/lumno-extension";
 const GITHUB_ISSUE_URL = `${GITHUB_URL}/issues/new/choose`;
 const GITHUB_PULL_REQUEST_URL = `${GITHUB_URL}/compare`;
-const GITHUB_LICENSE_URL = `${GITHUB_URL}/blob/main/LICENSE`;
-const CHROME_REVIEW_URL = `${CHROME_STORE_URL}/reviews?utm_source=item-share-cb`;
 const FEATURE_PARALLAX_THUMBNAILS = [
   "/assets/search@3x.png",
   "/assets/sitesearch@3x.png",
@@ -72,9 +70,6 @@ const seoPath = Astro.props.seoPath || "/";
 const routeLanguageMap = Astro.props.routeLanguageMap || buildRouteLanguageMap("/");
 const uiLocale = forcedLocale || DEFAULT_LOCALE;
 const content = getHomeContent(uiLocale);
-const [heroOpenSourcePrefix = "", heroOpenSourceSuffix = ""] = content.heroOpenSourceNote.split(
-  content.heroLicenseLabel,
-);
 const heroTitleCommaIndex = uiLocale === "zh-CN" ? content.heroTitle.indexOf("，") : -1;
 const heroTitleSeparator = heroTitleCommaIndex >= 0 ? content.heroTitle[heroTitleCommaIndex] : "";
 const heroTitleSegments = heroTitleCommaIndex >= 0
@@ -86,15 +81,9 @@ const heroTitleSegments = heroTitleCommaIndex >= 0
 const heroDescriptionLines = content.heroDescription.split("\n");
 const heroDescriptionNoWrapPhrases = uiLocale === "zh-CN"
   ? [
-      "Lumno 是一个开源的",
-      "浏览器命令栏",
-      "及新标签页插件",
-      "可从任何网页随时唤起",
-      "搜索标签页",
-      "书签",
-      "历史记录",
-      "和常用网站",
-      "无需来回翻找",
+      "Lumno ，",
+      "开源浏览器命令栏",
+      "与新标签页插件",
     ]
   : [];
 const heroDescriptionPhrasePattern = heroDescriptionNoWrapPhrases.length
@@ -291,20 +280,6 @@ const structuredData = [
               client:load
             />
           </div>
-          <p class="hero-open-source-note">
-            {heroOpenSourcePrefix}<a
-              class="hero-license-link"
-              href={GITHUB_LICENSE_URL}
-              target="_blank"
-              rel="noreferrer noopener"
-              aria-label={content.heroLicenseAria}
-              data-analytics-event="open_github_license"
-              data-analytics-category="trust"
-              data-analytics-label="home_hero_license"
-            >
-              {content.heroLicenseLabel}
-            </a>{heroOpenSourceSuffix}
-          </p>
         </div>
         <div class="hero-demo-slot">
           <HeroSafariDemo
@@ -316,21 +291,6 @@ const structuredData = [
         </div>
       </section>
 
-      <ChromeReviewMarquee
-        title={content.reviewsTitle}
-        summary={content.reviewsSummary(
-          chromeStoreReviews.averageRating,
-          chromeStoreReviews.ratingCount,
-        )}
-        sourceLabel={content.reviewsSourceLabel}
-        ariaLabel={content.reviewsAriaLabel}
-        avatarLabel={content.reviewAvatarLabel}
-        ratingLabel={content.reviewRatingLabel}
-        reviewUrl={CHROME_REVIEW_URL}
-        locale={uiLocale}
-        reviews={chromeStoreReviews.reviews}
-      />
-
       <section id="features" class="section feature-intro" aria-labelledby="features-title">
         <HeroParallax
           products={featureParallaxProducts}
@@ -340,6 +300,13 @@ const structuredData = [
           client:visible
         />
       </section>
+
+      <ChromeReviewMarquee
+        title={content.reviewsTitle}
+        ariaLabel={content.reviewsAriaLabel}
+        avatarLabel={content.reviewAvatarLabel}
+        reviews={chromeStoreReviews.reviews}
+      />
 
       <section id="workflow" class="section workflow-section" aria-labelledby="workflow-title">
         <div class="section-heading">
@@ -1125,10 +1092,6 @@ const structuredData = [
         transition-delay: 540ms;
       }
 
-      body[data-home-intro="revealing"] .hero-open-source-note {
-        transition-delay: 660ms;
-      }
-
       body[data-home-intro="pending"] .hero-demo-page-switcher,
       body[data-home-intro="revealing"] .hero-demo-page-switcher {
         pointer-events: none;
@@ -1141,26 +1104,6 @@ const structuredData = [
         font-weight: 650;
         line-height: 1.4;
         white-space: nowrap;
-      }
-
-      .hero-copy > .hero-open-source-note {
-        margin: 10px auto 0;
-        color: var(--text-sub);
-        font-size: 12px;
-        line-height: 1.5;
-      }
-
-      .hero-license-link {
-        color: inherit;
-        font-weight: 600;
-        text-decoration: underline;
-        text-decoration-thickness: 1px;
-        text-underline-offset: 3px;
-        white-space: nowrap;
-      }
-
-      .hero-license-link:hover {
-        color: var(--text-main);
       }
 
       .section {
@@ -1199,6 +1142,7 @@ const structuredData = [
 
       .feature-intro {
         position: relative;
+        width: 100%;
         padding: 0;
         overflow: clip;
         border-top: 0;
@@ -1778,15 +1722,15 @@ const structuredData = [
           padding: 80px 0;
         }
 
+        .feature-intro {
+          width: 100%;
+        }
+
         .section-heading h2,
         .trust-copy h2,
         .browser-section h2,
         .final-cta h2 {
           font-size: 34px;
-        }
-
-        .feature-intro {
-          width: 100%;
         }
 
         .workflow-section,

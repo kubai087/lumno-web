@@ -44,17 +44,20 @@ test("mobile hero copy preserves curved-screen safe spacing", () => {
   assert.match(source, /font-size:\s*clamp\(34px,\s*10vw,\s*44px\);/);
 });
 
-test("localized hero descriptions preserve the desktop break and rebalance on mobile", () => {
+test("simplified Chinese hero description is one sentence and localized copy rebalances on mobile", () => {
   const descriptionsWithLineBreak = contentSource.match(
     /heroDescription:\s*\n\s*"[^"\n]*\\n[^"\n]*"/g,
   );
 
-  assert.equal(descriptionsWithLineBreak?.length, 3);
+  assert.equal(descriptionsWithLineBreak?.length, 2);
+  assert.match(
+    contentSource,
+    /"Lumno ，开源浏览器命令栏与新标签页插件"/,
+  );
   assert.match(source, /const heroDescriptionNoWrapPhrases = uiLocale === "zh-CN"/);
-  assert.match(source, /"及新标签页插件"/);
-  assert.match(source, /"可从任何网页随时唤起"/);
-  assert.match(source, /"历史记录"/);
-  assert.match(source, /"和常用网站"/);
+  assert.match(source, /"Lumno ，"/);
+  assert.match(source, /"开源浏览器命令栏"/);
+  assert.match(source, /"与新标签页插件"/);
   assert.match(
     source,
     /<p class="hero-description">[\s\S]*?heroDescriptionLineChunks\.map\([\s\S]*?class="hero-description-line"[\s\S]*?class:list=\{\{ "hero-description-phrase": noWrap \}\}/,

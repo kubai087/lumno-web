@@ -37,38 +37,38 @@ export function HeroParallax({
   const thirdRow = products.slice(10, 15);
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start start", "end start"],
+    offset: ["start 55%", "end 18%"],
   });
 
   const translateX = useSpring(
-    useTransform(scrollYProgress, [0, 1], [0, 1000]),
+    useTransform(scrollYProgress, [0, 0.72], [0, 820]),
     SPRING_CONFIG,
   );
   const translateXReverse = useSpring(
-    useTransform(scrollYProgress, [0, 1], [0, -1000]),
+    useTransform(scrollYProgress, [0, 0.72], [0, -820]),
     SPRING_CONFIG,
   );
   const rotateX = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [15, 0]),
+    useTransform(scrollYProgress, [0, 0.18], [15, 0]),
     SPRING_CONFIG,
   );
   const opacity = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [0.2, 1]),
+    useTransform(scrollYProgress, [0, 0.18], [0.2, 1]),
     SPRING_CONFIG,
   );
   const rotateZ = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [20, 0]),
+    useTransform(scrollYProgress, [0, 0.18], [20, 0]),
     SPRING_CONFIG,
   );
   const translateY = useSpring(
-    useTransform(scrollYProgress, [0, 0.2], [-700, 500]),
+    useTransform(scrollYProgress, [0, 0.18], [-700, -300]),
     SPRING_CONFIG,
   );
 
   return (
     <div
       ref={containerRef}
-      className="hero-parallax relative flex h-[220svh] flex-col self-auto overflow-hidden py-24 antialiased [perspective:1000px] [transform-style:preserve-3d] md:h-[300vh] md:py-40"
+      className="hero-parallax relative flex h-[200svh] flex-col self-auto overflow-hidden py-24 antialiased [perspective:1000px] [transform-style:preserve-3d] md:h-[250vh] md:py-40"
       data-hero-parallax
     >
       <HeroParallaxHeader
@@ -177,7 +177,7 @@ interface ProductCardProps {
 export function ProductCard({ product, translate, shouldReduceMotion }: ProductCardProps) {
   return (
     <motion.article
-      className="group/product relative h-56 w-[18rem] shrink-0 overflow-hidden rounded-2xl bg-card shadow-xl ring-1 ring-border md:h-96 md:w-[30rem] md:rounded-[20px]"
+      className="relative h-56 w-[18rem] shrink-0 overflow-hidden rounded-2xl bg-card shadow-xl ring-1 ring-border md:h-96 md:w-[30rem] md:rounded-[20px]"
       style={{ x: shouldReduceMotion ? 0 : translate }}
       whileHover={shouldReduceMotion ? undefined : { y: -18 }}
       data-hero-parallax-card
@@ -194,10 +194,6 @@ export function ProductCard({ product, translate, shouldReduceMotion }: ProductC
           sizes="(min-width: 768px) 480px, 288px"
         />
       </a>
-      <div className="pointer-events-none absolute inset-0 bg-foreground/75 opacity-0 transition-opacity duration-200 group-hover/product:opacity-100"></div>
-      <h3 className="pointer-events-none absolute bottom-5 left-5 max-w-[calc(100%_-_2.5rem)] text-base font-semibold text-background opacity-0 transition-opacity duration-200 group-hover/product:opacity-100 md:text-xl">
-        {product.title}
-      </h3>
     </motion.article>
   );
 }

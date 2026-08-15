@@ -1,71 +1,29 @@
 ---
-import { SettingsButton } from "../extension-settings/SettingsKit";
 import { DitherShader } from "./DitherShader";
-import type { SupportedLocale } from "../../lib/locales";
 import type { ChromeStoreReview } from "../../lib/chrome-store-reviews";
 
 interface Props {
   title: string;
-  summary: string;
-  sourceLabel: string;
   ariaLabel: string;
   avatarLabel: string;
-  ratingLabel: string;
-  reviewUrl: string;
-  locale: SupportedLocale;
   reviews: readonly ChromeStoreReview[];
 }
 
 const {
   title,
-  summary,
-  sourceLabel,
   ariaLabel,
   avatarLabel,
-  ratingLabel,
-  reviewUrl,
-  locale,
   reviews,
 } = Astro.props;
 
 const midpoint = Math.ceil(reviews.length / 2);
 const rows = [reviews.slice(0, midpoint), reviews.slice(midpoint)];
-const dateFormatter = new Intl.DateTimeFormat(locale, {
-  year: "numeric",
-  month: "short",
-  day: "numeric",
-  timeZone: "UTC",
-});
 ---
 
 <section class="chrome-review-marquee" aria-label={ariaLabel} data-chrome-review-marquee>
   <div class="chrome-review-marquee__header">
     <div class="chrome-review-marquee__heading">
       <h2>{title}</h2>
-      <div class="chrome-review-marquee__proof">
-        <p>
-          <span class="chrome-review-marquee__stars" aria-hidden="true">
-            {Array.from({ length: 5 }, (_, index) => <i class="ri-star-fill" data-star-index={index}></i>)}
-          </span>
-          <span>{summary}</span>
-        </p>
-        <SettingsButton
-          as="a"
-          variant="ghost"
-          className="chrome-review-marquee__source"
-          href={reviewUrl}
-          target="_blank"
-          rel="noreferrer noopener"
-          aria-label={sourceLabel}
-          iconClass="ri-arrow-right-up-line"
-          iconPosition="end"
-          data-analytics-event="open_chrome_web_store_reviews"
-          data-analytics-category="social-proof"
-          data-analytics-label="home_review_marquee"
-        >
-          {sourceLabel}
-        </SettingsButton>
-      </div>
     </div>
   </div>
 
@@ -98,8 +56,8 @@ const dateFormatter = new Intl.DateTimeFormat(locale, {
                     <div class="chrome-review-card__meta">
                       <img
                         src={review.avatarUrl}
-                        width="40"
-                        height="40"
+                        width="32"
+                        height="32"
                         alt={`${review.reviewerId} ${avatarLabel}`}
                         loading="lazy"
                         decoding="async"
@@ -107,14 +65,7 @@ const dateFormatter = new Intl.DateTimeFormat(locale, {
                       />
                       <div class="chrome-review-card__identity">
                         <strong>{review.reviewerId}</strong>
-                        <time datetime={review.publishedAt}>
-                          {dateFormatter.format(new Date(`${review.publishedAt}T00:00:00Z`))}
-                        </time>
                       </div>
-                      <span class="chrome-review-card__rating" aria-label={`${review.rating} ${ratingLabel}`}>
-                        <i class="ri-star-fill" aria-hidden="true"></i>
-                        {review.rating.toFixed(1)}
-                      </span>
                     </div>
                   </article>
                 ))}
@@ -266,7 +217,6 @@ const dateFormatter = new Intl.DateTimeFormat(locale, {
 
   .chrome-review-marquee__header {
     width: min(calc(100% - 24px), 1180px);
-    min-height: 82px;
     margin: 0 auto 20px;
     display: grid;
     place-items: center;
@@ -285,40 +235,6 @@ const dateFormatter = new Intl.DateTimeFormat(locale, {
     line-height: 1.2;
     letter-spacing: -0.035em;
     font-weight: 570;
-  }
-
-  .chrome-review-marquee__proof {
-    margin-top: 10px;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-  }
-
-  .chrome-review-marquee__header p {
-    margin: 0;
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    color: var(--text-soft, #89919a);
-    font-size: 14px;
-    line-height: 1.4;
-  }
-
-  .chrome-review-marquee__stars {
-    display: inline-flex;
-    gap: 1px;
-    color: #f3a928;
-    font-size: 14px;
-  }
-
-  :global(.chrome-review-marquee__source) {
-    min-height: 34px;
-    padding: 6px 10px;
-    color: var(--text-sub, #626870);
-    font-size: 13px;
-    font-weight: 500;
   }
 
   .chrome-review-marquee__rows {
@@ -382,9 +298,9 @@ const dateFormatter = new Intl.DateTimeFormat(locale, {
     display: -webkit-box;
     overflow: hidden;
     color: var(--text-main, #15171a);
-    font-size: 14.5px;
+    font-size: 16px;
     font-weight: 400;
-    line-height: 1.6;
+    line-height: 1.55;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 3;
   }
@@ -392,14 +308,14 @@ const dateFormatter = new Intl.DateTimeFormat(locale, {
   .chrome-review-card__meta {
     min-width: 0;
     display: grid;
-    grid-template-columns: 40px minmax(0, 1fr) auto;
+    grid-template-columns: 32px minmax(0, 1fr);
     align-items: center;
-    gap: 11px;
+    gap: 9px;
   }
 
   .chrome-review-card__meta img {
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
     display: block;
     border-radius: 50%;
     object-fit: cover;
@@ -411,8 +327,7 @@ const dateFormatter = new Intl.DateTimeFormat(locale, {
     min-width: 0;
   }
 
-  .chrome-review-card__identity strong,
-  .chrome-review-card__identity time {
+  .chrome-review-card__identity strong {
     display: block;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -421,31 +336,9 @@ const dateFormatter = new Intl.DateTimeFormat(locale, {
 
   .chrome-review-card__identity strong {
     color: var(--text-main, #15171a);
-    font-size: 13px;
-    line-height: 1.35;
-    font-weight: 500;
-  }
-
-  .chrome-review-card__identity time {
-    margin-top: 3px;
-    color: var(--text-soft, #89919a);
     font-size: 12px;
     line-height: 1.35;
-  }
-
-  .chrome-review-card__rating {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    color: #bd7610;
-    font-size: 13px;
     font-weight: 500;
-    font-variant-numeric: tabular-nums;
-  }
-
-  .chrome-review-card__rating i {
-    color: #f3a928;
-    font-size: 13px;
   }
 
   @keyframes chrome-review-scroll-left {
@@ -478,16 +371,6 @@ const dateFormatter = new Intl.DateTimeFormat(locale, {
       font-size: clamp(34px, 10vw, 44px);
     }
 
-    .chrome-review-marquee__proof {
-      margin-top: 8px;
-      gap: 4px;
-    }
-
-    :global(.chrome-review-marquee__source) {
-      padding-inline: 8px;
-      font-size: 12.5px;
-    }
-
     .chrome-review-marquee__lane {
       -webkit-mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
       mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
@@ -502,7 +385,7 @@ const dateFormatter = new Intl.DateTimeFormat(locale, {
     }
 
     .chrome-review-card__quote {
-      font-size: 14px;
+      font-size: 16px;
     }
   }
 

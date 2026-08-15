@@ -12,13 +12,17 @@ const readSource = (file) => fs.readFileSync(path.join(workspaceRoot, file), "ut
 
 test("Chrome review snapshot keeps public reviewer identity, avatar, score, and review text", () => {
   assert.match(CHROME_STORE_REVIEW_SNAPSHOT.sourceUrl, /nggfkkbmogmadfoikakkfegkoilfcfao\/reviews/);
-  assert.equal(CHROME_STORE_REVIEW_SNAPSHOT.capturedAt, "2026-08-09");
+  assert.equal(CHROME_STORE_REVIEW_SNAPSHOT.capturedAt, "2026-08-15");
   assert.equal(CHROME_STORE_REVIEW_SNAPSHOT.averageRating, 5);
-  assert.equal(CHROME_STORE_REVIEW_SNAPSHOT.ratingCount, 12);
-  assert.equal(CHROME_STORE_REVIEW_SNAPSHOT.reviews.length, 8);
+  assert.equal(CHROME_STORE_REVIEW_SNAPSHOT.ratingCount, 13);
+  assert.equal(CHROME_STORE_REVIEW_SNAPSHOT.reviews.length, 9);
   assert.ok(CHROME_STORE_REVIEW_SNAPSHOT.reviews.every((review) => review.rating === 5));
   assert.ok(CHROME_STORE_REVIEW_SNAPSHOT.reviews.every((review) => review.avatarUrl));
-  assert.match(CHROME_STORE_REVIEW_SNAPSHOT.reviews[0].review, /微动效很丝滑/);
+  assert.equal(CHROME_STORE_REVIEW_SNAPSHOT.reviews[0].reviewId, "b6f9cc9a-3d5c-45bb-87d4-ef897761ba2d");
+  assert.equal(CHROME_STORE_REVIEW_SNAPSHOT.reviews[0].reviewerId, "weiyi Josscii");
+  assert.equal(CHROME_STORE_REVIEW_SNAPSHOT.reviews[0].publishedAt, "2026-08-10");
+  assert.match(CHROME_STORE_REVIEW_SNAPSHOT.reviews[0].review, /非常好看好用的启动页/);
+  assert.match(CHROME_STORE_REVIEW_SNAPSHOT.reviews[1].review, /微动效很丝滑/);
   assert.match(CHROME_STORE_REVIEW_SNAPSHOT.reviews.at(-1).review, /用了 Lumno 之后就回不去了/);
 });
 
@@ -77,16 +81,20 @@ test("testimonial marquee fills two continuous lanes with hover-intent pause and
   assert.match(source, /@media \(prefers-reduced-motion: reduce\)/);
   assert.match(source, /animation: none/);
   assert.match(source, /aria-hidden=\{duplicate \? "true" : undefined\}/);
-  assert.match(source, /chrome-review-marquee__proof[\s\S]*?<p>[\s\S]*?<SettingsButton/);
-  assert.match(source, /variant="ghost"/);
+  assert.doesNotMatch(source, /chrome-review-marquee__proof/);
+  assert.doesNotMatch(source, /open_chrome_web_store_reviews/);
   assert.match(source, /src="\/assets\/lumno-newtab-monet-coastal-white\.webp"/);
   assert.match(source, /gridSize=\{2\}[\s\S]*?ditherMode="bayer"[\s\S]*?client:visible/);
   assert.match(source, /chrome-review-marquee__header[\s\S]*?chrome-review-marquee__frame[\s\S]*?<DitherShader[\s\S]*?chrome-review-marquee__rows/);
   assert.match(source, /\.chrome-review-marquee__frame \{[\s\S]*?width: min\(calc\(100% - 48px\), var\(--content-width, 1360px\)\)/);
   assert.match(source, /overflow: hidden;[\s\S]*?border-radius: 16px;[\s\S]*?background: #f7f8ef;/);
   assert.match(source, /@media \(max-width: 760px\)[\s\S]*?\.chrome-review-marquee__frame \{[\s\S]*?width: calc\(100% - 32px\)/);
-  assert.match(source, /font-size: 14\.5px;[\s\S]*?font-weight: 400/);
-  assert.match(source, /chrome-review-card__identity time[\s\S]*?font-size: 12px/);
+  assert.match(source, /font-size: 16px;[\s\S]*?font-weight: 400/);
+  assert.match(source, /grid-template-columns: 32px minmax\(0, 1fr\)/);
+  assert.match(source, /\.chrome-review-card__meta img \{[\s\S]*?width: 32px;[\s\S]*?height: 32px/);
+  assert.match(source, /\.chrome-review-card__identity strong \{[\s\S]*?font-size: 12px/);
+  assert.doesNotMatch(source, /<time\b|chrome-review-card__rating|ratingLabel|dateFormatter/);
+  assert.doesNotMatch(source, /reviewRatingLabel:/);
   assert.match(source, /\.chrome-review-card \{[\s\S]*?min-height: 172px/);
   assert.match(
     source,
@@ -109,12 +117,21 @@ test("homepage visible typography never defines text below twelve pixels", () =>
   }
 });
 
-test("homepage keeps reviews in Section 2 after the viewport-aware product demo", () => {
+test("homepage places the new-tab showcase before the review section", () => {
   const source = readSource("src/pages/index.astro");
+
+  const heroIndex = source.indexOf('<section class="hero-section"');
+  const featuresIndex = source.indexOf('<section id="features"');
+  const reviewsIndex = source.indexOf("<ChromeReviewMarquee");
+
+  assert.ok(heroIndex >= 0, "homepage hero section should exist");
+  assert.ok(featuresIndex >= 0, "homepage new-tab showcase should exist");
+  assert.ok(reviewsIndex >= 0, "homepage review section should exist");
+  assert.ok(heroIndex < featuresIndex && featuresIndex < reviewsIndex);
 
   assert.match(
     source,
-    /<section class="hero-section"[\s\S]*?<div class="hero-demo-slot">\s*<HeroSafariDemo[\s\S]*?client:load[\s\S]*?\/>\s*<\/div>\s*<\/section>\s*<ChromeReviewMarquee[\s\S]*?reviews=\{chromeStoreReviews\.reviews\}/,
+    /<section class="hero-section"[\s\S]*?<div class="hero-demo-slot">\s*<HeroSafariDemo[\s\S]*?client:load[\s\S]*?\/>\s*<\/div>\s*<\/section>[\s\S]*?<section id="features" class="section feature-intro"[\s\S]*?<HeroParallax[\s\S]*?client:visible[\s\S]*?\/>\s*<\/section>\s*<ChromeReviewMarquee[\s\S]*?reviews=\{chromeStoreReviews\.reviews\}/,
   );
   assert.match(source, /padding: 120px 0 80px/);
   assert.match(source, /height: max\(300px, calc\(100svh - 470px\)\)/);
@@ -132,7 +149,7 @@ test("review marquee copy is localized for every homepage locale", () => {
   assert.match(source, /reviewsTitle: "深受使用者信賴，與使用者共創。"/);
   assert.match(source, /reviewsTitle: "Trusted by users, built with users\."/);
   assert.equal((source.match(/reviewsAriaLabel:/g) || []).length, 4);
-  assert.equal((source.match(/reviewsSourceLabel:/g) || []).length, 4);
+  assert.doesNotMatch(source, /reviewsSummary:|reviewsSourceLabel:/);
 });
 
 test("Chinese review heading uses the homepage hero title scale", () => {

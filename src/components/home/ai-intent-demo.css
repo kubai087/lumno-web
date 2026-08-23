@@ -1,0 +1,555 @@
+.ai-intent-demo {
+  --demo-text: #243130;
+  --demo-muted: rgba(36, 49, 48, 0.76);
+  --demo-border: rgba(255, 255, 255, 0.64);
+  --interaction-x: 50%;
+  --interaction-y: 50%;
+  --cursor-start-x: 50%;
+  --cursor-start-y: 50%;
+  --cursor-end-x: 60%;
+  --cursor-end-y: 50%;
+  position: relative;
+  width: 100%;
+  min-height: 0;
+  aspect-ratio: 1203 / 753;
+  isolation: isolate;
+  overflow: hidden;
+  border: 0;
+  border-radius: 16px;
+  background: #e7eadf;
+  box-shadow: none;
+  color: var(--demo-text);
+  font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+.ai-intent-demo__wallpaper,
+.ai-intent-demo__scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.ai-intent-demo__wallpaper {
+  z-index: -2;
+  background: url("/assets/lumno-newtab-monet-coastal-white.webp") center / cover no-repeat;
+  transform: scale(1.035);
+}
+
+.ai-intent-demo__scrim {
+  z-index: -1;
+  background: linear-gradient(112deg, rgba(250, 252, 249, 0.56), rgba(246, 249, 244, 0.28));
+}
+
+.ai-intent-demo__article {
+  position: absolute;
+  top: 50%;
+  left: 8.8%;
+  width: min(76%, 640px);
+  padding: clamp(34px, 5vw, 64px) clamp(26px, 4.2vw, 54px);
+  box-sizing: border-box;
+  border: 1px solid var(--demo-border);
+  border-radius: 20px;
+  background: rgba(255, 255, 252, 0.42);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.58), 0 12px 46px rgba(45, 58, 42, 0.07);
+  backdrop-filter: blur(18px) saturate(117%);
+  -webkit-backdrop-filter: blur(18px) saturate(117%);
+  transform: translateY(-50%);
+}
+
+.ai-intent-demo__body {
+  margin: 0;
+  color: var(--demo-muted);
+  cursor: text;
+  font-size: clamp(16px, 1.52vw, 21px);
+  letter-spacing: -0.018em;
+  line-height: 1.9;
+  text-wrap: pretty;
+}
+
+.ai-intent-demo__selection {
+  position: relative;
+  z-index: 0;
+  display: inline;
+  color: #22332d;
+  background: rgba(146, 202, 242, 0);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  cursor: text;
+  transition: background-color 160ms ease, color 160ms ease;
+}
+
+.ai-intent-demo[data-phase="selecting"] .ai-intent-demo__selection,
+.ai-intent-demo[data-phase="mark"] .ai-intent-demo__selection,
+.ai-intent-demo[data-phase="toolbar"] .ai-intent-demo__selection,
+.ai-intent-demo[data-phase="sending"] .ai-intent-demo__selection {
+  background: rgba(146, 202, 242, 0.68);
+}
+
+.ai-intent-demo__interaction {
+  position: absolute;
+  top: var(--interaction-y);
+  left: var(--interaction-x);
+  z-index: 3;
+  display: block;
+  transform: translateY(0);
+  transition: transform 160ms ease;
+}
+
+.ai-intent-demo[data-phase="toolbar"] .ai-intent-demo__interaction {
+  transform: translateY(-10px);
+}
+
+.ai-intent-demo__surface {
+  --lumno-selection-surface-radius: 13px;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0;
+  height: 38px;
+  padding: 3px;
+  border: 1px solid transparent;
+  border-radius: var(--lumno-selection-surface-radius);
+  background: transparent;
+  color: light-dark(#18181b, #e7e8eb);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: none;
+  opacity: 0;
+  transform: translateY(-3px) scale(0.96);
+  transition: opacity 140ms ease, transform 160ms ease;
+  box-sizing: border-box;
+  overflow: visible;
+  contain: layout style;
+}
+
+.ai-intent-demo[data-phase="mark"] .ai-intent-demo__surface,
+.ai-intent-demo[data-phase="toolbar"] .ai-intent-demo__surface {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.ai-intent-demo[data-phase="sending"] .ai-intent-demo__surface {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(0) scale(0.96);
+}
+
+.ai-intent-demo__material {
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: 0;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  border: 1px solid light-dark(rgba(15, 23, 42, 0.12), rgba(255, 255, 255, 0.13));
+  border-radius: inherit;
+  background: light-dark(rgba(244, 245, 247, 0.94), rgba(26, 27, 31, 0.92));
+  -webkit-backdrop-filter: blur(14px) saturate(130%);
+  backdrop-filter: blur(14px) saturate(130%);
+  box-shadow:
+    inset 0 0 0 1px light-dark(rgba(255, 255, 255, 0.3), transparent),
+    0 8px 24px light-dark(rgba(15, 23, 42, 0.14), rgba(0, 0, 0, 0.38)),
+    0 2px 6px light-dark(rgba(15, 23, 42, 0.08), rgba(0, 0, 0, 0.24));
+  pointer-events: none;
+}
+
+.ai-intent-demo__material::before {
+  position: absolute;
+  inset: 0;
+  border-radius: calc(var(--lumno-selection-surface-radius) - 1px);
+  background:
+    radial-gradient(125% 165% at 50% -38%, light-dark(rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0.16)) 0%, transparent 72%),
+    radial-gradient(115% 145% at 50% 138%, light-dark(rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.08)) 0%, transparent 78%);
+  content: "";
+  pointer-events: none;
+}
+
+.ai-intent-demo__surface > * {
+  position: relative;
+  z-index: 1;
+}
+
+.ai-intent-demo__surface > .ai-intent-demo__material {
+  position: absolute;
+  z-index: 0;
+}
+
+.ai-intent-demo__surface[data-icon-only="true"] {
+  height: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  overflow: visible;
+}
+
+.ai-intent-demo__surface[data-icon-only="true"] .ai-intent-demo__material {
+  display: none;
+}
+
+.ai-intent-demo__surface[data-icon-only="true"] .ai-intent-demo__content {
+  flex: 0 0 auto;
+  overflow: visible;
+}
+
+.ai-intent-demo__surface[data-icon-only="false"] {
+  padding-inline-end: 1px;
+}
+
+.ai-intent-demo__surface button {
+  appearance: none;
+  border: 0;
+  margin: 0;
+  padding: 0 8px;
+  min-height: 30px;
+  border-radius: 9px;
+  corner-shape: superellipse(1.25);
+  background: transparent;
+  color: inherit;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font: 400 12px/1.2 "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.ai-intent-demo__surface button:hover,
+.ai-intent-demo__surface button:focus-visible {
+  background: light-dark(rgba(15, 23, 42, 0.065), rgba(255, 255, 255, 0.1));
+  outline: none;
+}
+
+.ai-intent-demo__surface button:focus-visible {
+  box-shadow: inset 0 0 0 1px light-dark(rgba(15, 23, 42, 0.2), rgba(255, 255, 255, 0.28));
+}
+
+.ai-intent-demo__surface button:disabled {
+  opacity: 0.56;
+  cursor: default;
+}
+
+.ai-intent-demo__main {
+  position: relative;
+  width: 30px;
+  min-height: 30px;
+  padding: 0 !important;
+  border-radius: 9px !important;
+  flex: 0 0 auto;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(2px) scale(0.9);
+  transition: background 120ms ease, backdrop-filter 120ms ease,
+    opacity 160ms ease, transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ai-intent-demo__surface[data-icon-only="true"] .ai-intent-demo__main {
+  width: 18px;
+  min-height: 18px;
+  border-radius: 5px !important;
+  background: rgba(250, 250, 250, 0.76);
+  -webkit-backdrop-filter: blur(10px) saturate(150%);
+  backdrop-filter: blur(10px) saturate(150%);
+}
+
+.ai-intent-demo__surface[data-icon-only="true"] .ai-intent-demo__main::before {
+  position: absolute;
+  inset: -5px;
+  content: "";
+}
+
+.ai-intent-demo[data-phase="mark"] .ai-intent-demo__surface[data-icon-only="true"] .ai-intent-demo__main,
+.ai-intent-demo__surface[data-icon-only="false"] .ai-intent-demo__main {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+.ai-intent-demo__surface[data-icon-only="true"] .ai-intent-demo__main:hover,
+.ai-intent-demo__surface[data-icon-only="true"] .ai-intent-demo__main:focus-visible {
+  background: rgba(255, 255, 255, 0.94);
+  -webkit-backdrop-filter: blur(10px) saturate(140%);
+  backdrop-filter: blur(10px) saturate(140%);
+}
+
+.ai-intent-demo__surface[data-icon-only="true"] .ai-intent-demo__main:focus-visible {
+  box-shadow: none;
+}
+
+.ai-intent-demo__main img {
+  display: block;
+  width: 17px;
+  height: 17px;
+  object-fit: contain;
+}
+
+.ai-intent-demo__surface[data-icon-only="true"] .ai-intent-demo__main img {
+  width: 12px;
+  height: 12px;
+  filter: brightness(0.28) contrast(1.18);
+  opacity: 0.9;
+}
+
+.ai-intent-demo__content {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex: 0 1 auto;
+  min-width: 0;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.ai-intent-demo__actions-viewport {
+  display: flex;
+  align-items: center;
+  flex: 0 1 auto;
+  min-width: 0;
+  justify-content: flex-end;
+  overflow: hidden;
+}
+
+.ai-intent-demo__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  transform-origin: left center;
+  gap: 0;
+  opacity: 0;
+  transform: translateX(-8px);
+}
+
+.ai-intent-demo[data-phase="toolbar"] .ai-intent-demo__toolbar {
+  opacity: 1;
+  transform: translateX(0);
+  transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1) 30ms,
+    opacity 180ms ease-out 50ms;
+}
+
+.ai-intent-demo__toolbar:focus {
+  outline: none;
+}
+
+.ai-intent-demo__toolbar button {
+  position: relative;
+}
+
+.ai-intent-demo__toolbar button + button {
+  margin-inline-start: 7px;
+}
+
+.ai-intent-demo__toolbar button + button::before {
+  position: absolute;
+  inset-inline-start: -4px;
+  top: 50%;
+  width: 1px;
+  height: 18px;
+  background: light-dark(rgba(15, 23, 42, 0.12), rgba(255, 255, 255, 0.16));
+  content: "";
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.ai-intent-demo__toolbar:hover button:focus-visible:not(:hover) {
+  background: transparent;
+  box-shadow: none;
+}
+
+.ai-intent-demo__primary-divider {
+  display: block;
+  width: 1px;
+  height: 18px;
+  margin-inline: 3px;
+  background: light-dark(rgba(15, 23, 42, 0.12), rgba(255, 255, 255, 0.16));
+  pointer-events: none;
+  flex: 0 0 auto;
+}
+
+.ai-intent-demo__action-icon {
+  display: block;
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+  color: currentColor;
+  font-size: 16px;
+  line-height: 16px;
+}
+
+.ai-intent-demo__action-label {
+  display: block;
+  overflow: hidden;
+}
+
+.ai-intent-demo__surface[data-icon-only="false"] .ai-intent-demo__material {
+  animation: ai-intent-demo-material-in 260ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.ai-intent-demo__surface[hidden],
+.ai-intent-demo__actions-viewport[hidden],
+.ai-intent-demo__primary-divider[hidden] {
+  display: none;
+}
+
+@keyframes ai-intent-demo-material-in {
+  from {
+    opacity: 0.72;
+    transform: scaleX(0.2);
+    transform-origin: left center;
+  }
+
+  to {
+    opacity: 1;
+    transform: scaleX(1);
+    transform-origin: left center;
+  }
+}
+
+.ai-intent-demo__sending {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: max-content;
+  margin: 0;
+  padding: 6px 10px;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  border-radius: 999px;
+  background: rgba(245, 247, 245, 0.93);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.12);
+  color: #18181b;
+  font-size: 12px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(5px) scale(0.95);
+}
+
+.ai-intent-demo[data-phase="sending"] .ai-intent-demo__sending {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition: opacity 120ms ease, transform 160ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ai-intent-demo__cursor {
+  position: absolute;
+  top: var(--cursor-start-y);
+  left: var(--cursor-start-x);
+  z-index: 5;
+  width: 16px;
+  height: 28px;
+  opacity: 0;
+  pointer-events: none;
+  filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.96)) drop-shadow(0 3px 5px rgba(15, 23, 42, 0.22));
+  transform: translate(-50%, -50%);
+  animation: ai-intent-demo-cursor 3.3s cubic-bezier(0.2, 1, 0.36, 1) both;
+}
+
+.ai-intent-demo__cursor-stem {
+  position: absolute;
+  top: 2px;
+  left: 50%;
+  width: 2px;
+  height: 24px;
+  border-radius: 2px;
+  background: #303030;
+  transform: translateX(-50%);
+}
+
+.ai-intent-demo__cursor-cap {
+  position: absolute;
+  left: 50%;
+  width: 14px;
+  height: 2px;
+  border-radius: 2px;
+  background: #303030;
+  transform: translateX(-50%);
+}
+
+.ai-intent-demo__cursor-cap--top {
+  top: 1px;
+}
+
+.ai-intent-demo__cursor-cap--bottom {
+  bottom: 1px;
+}
+
+@keyframes ai-intent-demo-cursor {
+  0%,
+  12% {
+    top: var(--cursor-start-y);
+    left: var(--cursor-start-x);
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+
+  18%,
+  30% {
+    top: var(--cursor-start-y);
+    left: var(--cursor-start-x);
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  56%,
+  68% {
+    top: var(--cursor-end-y);
+    left: var(--cursor-end-x);
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  78%,
+  100% {
+    top: var(--cursor-end-y);
+    left: var(--cursor-end-x);
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.94);
+  }
+}
+
+.ai-intent-demo[data-phase="mark"] .ai-intent-demo__cursor,
+.ai-intent-demo[data-phase="toolbar"] .ai-intent-demo__cursor,
+.ai-intent-demo[data-phase="sending"] .ai-intent-demo__cursor {
+  animation: none;
+  opacity: 0;
+}
+
+@media (max-width: 760px) {
+  .ai-intent-demo {
+    aspect-ratio: 5 / 4.4;
+  }
+
+  .ai-intent-demo__article {
+    top: 46%;
+    left: 6%;
+    width: 88%;
+    padding: 24px 20px;
+  }
+
+  .ai-intent-demo__body {
+    font-size: 15px;
+    line-height: 1.78;
+  }
+
+  .ai-intent-demo__surface button {
+    gap: 4px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ai-intent-demo__cursor {
+    display: none;
+  }
+
+  .ai-intent-demo__surface,
+  .ai-intent-demo__toolbar,
+  .ai-intent-demo__sending,
+  .ai-intent-demo__selection,
+  .ai-intent-demo__interaction,
+  .ai-intent-demo__material {
+    animation: none !important;
+    transition: none !important;
+  }
+}

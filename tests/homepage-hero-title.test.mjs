@@ -52,11 +52,11 @@ test("simplified Chinese hero description is one sentence and localized copy reb
   assert.equal(descriptionsWithLineBreak?.length, 2);
   assert.match(
     contentSource,
-    /"Lumno ，开源浏览器命令栏与新标签页插件"/,
+    /"Lumno ，开源网页聚焦搜索命令栏与新标签页插件"/,
   );
   assert.match(source, /const heroDescriptionNoWrapPhrases = uiLocale === "zh-CN"/);
   assert.match(source, /"Lumno ，"/);
-  assert.match(source, /"开源浏览器命令栏"/);
+  assert.match(source, /"开源网页聚焦搜索命令栏"/);
   assert.match(source, /"与新标签页插件"/);
   assert.match(
     source,

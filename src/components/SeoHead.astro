@@ -80,6 +80,7 @@ const normalizedCurrentHreflang = locale === "en_US" ? "en" : locale.replace("_"
 {keywordContent ? <meta name="keywords" content={keywordContent} /> : null}
 <link rel="canonical" href={canonicalUrl} />
 <link rel="alternate" type="text/plain" href={new URL("/llms.txt", SITE_URL).toString()} title="Lumno for answer engines" />
+<link rel="stylesheet" href="/continuous-corners.css" />
 {alternates.map((item) => (
   <link rel="alternate" hreflang={item.hreflang} href={item.href} />
 ))}

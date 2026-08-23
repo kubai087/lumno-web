@@ -40,7 +40,9 @@ test("homepage opens with a full-screen Search All demo and can settle early on 
   assert.match(component, /document\.body\.dataset\.homeIntro === "complete"[\s\S]*?return null;/);
   assert.match(component, /introResultsSignaledRef\.current = true;\s*syncHomeIntroTargetGeometry\(\)/);
   assert.match(component, /document\.body\.dataset\.homeIntro !== "pending"[\s\S]*?!isBrowserSearch/);
-  assert.match(component, /const completeHomeIntroForScroll = useCallback\(\(\) => \{[\s\S]*?syncHomeIntroTargetGeometry\(\);[\s\S]*?completeHomeIntro\(\);/);
+  assert.match(component, /const toDocumentHomeIntroRect = \([\s\S]*?scrollY: number[\s\S]*?\};/);
+  assert.match(component, /const syncHomeIntroTargetGeometry = useCallback\(\s*\(\{ preserveDocumentPosition = false \}[^)]*\) => \{[\s\S]*?const viewportTargetRect = toHomeIntroRect\(slot\.getBoundingClientRect\(\)\);[\s\S]*?preserveDocumentPosition[\s\S]*?toDocumentHomeIntroRect\(viewportTargetRect, window\.scrollX, window\.scrollY\)/);
+  assert.match(component, /const completeHomeIntroForScroll = useCallback\(\(\) => \{[\s\S]*?syncHomeIntroTargetGeometry\(\{ preserveDocumentPosition: true \}\);[\s\S]*?completeHomeIntro\(\);/);
   assert.match(component, /const introScrollSkipRequestedRef = useRef\(false\)/);
   assert.match(component, /if \(introScrollSkipRequestedRef\.current\) \{\s*return;\s*\}[\s\S]*?introScrollSkipRequestedRef\.current = true;/);
   assert.match(component, /if \(window\.scrollY > 1\) \{\s*completeHomeIntroForScroll\(\);/);
@@ -53,7 +55,7 @@ test("homepage opens with a full-screen Search All demo and can settle early on 
   assert.match(component, /const visualRef = useRef<HTMLDivElement>\(null\)/);
   assert.match(component, /const sourceWidth = window\.innerWidth/);
   assert.match(component, /const sourceHeight = window\.innerHeight/);
-  assert.match(component, /const targetRect = toHomeIntroRect\(slot\.getBoundingClientRect\(\)\)/);
+  assert.match(component, /const viewportTargetRect = toHomeIntroRect\(slot\.getBoundingClientRect\(\)\)/);
   assert.match(component, /visual\.style\.setProperty\("--hero-intro-target-left"/);
   assert.match(component, /HOME_INTRO_STABLE_FRAME_COUNT = 8/);
   assert.match(component, /await document\.fonts\?\.ready/);
@@ -384,6 +386,7 @@ test("hero demo exposes three replayable plugin-consistent search scenes", () =>
   assert.match(component, /CURSOR_TIP_OFFSET_Y = 5/);
   assert.match(component, /--\$\{name\}-cursor-left/);
   assert.match(component, /--\$\{name\}-cursor-top/);
+  assert.doesNotMatch(component, /lumno-overlay-query-text|lumno-overlay-query-caret|queryTrackingFrame|trackQueryCaret/);
   assert.match(component, /const stageScaleX = stageRect\.width \/ Math\.max\(stage\.offsetWidth, 1\)/);
   assert.match(component, /const stageScaleY = stageRect\.height \/ Math\.max\(stage\.offsetHeight, 1\)/);
   assert.match(component, /renderedLeft \/ Math\.max\(stageScaleX, Number\.EPSILON\)/);
@@ -434,6 +437,12 @@ test("hero demo exposes three replayable plugin-consistent search scenes", () =>
   assert.match(styles, /\[data-cursor-mode="search-result"\][\s\S]*?--search-result-cursor-delay/);
   assert.match(styles, /--search-result-cursor-left/);
   assert.match(styles, /--search-result-cursor-top/);
+  assert.match(styles, /--search-result-input-cursor-left: 29%;/);
+  assert.match(styles, /--search-result-input-cursor-top: 22%;/);
+  assert.match(styles, /--search-result-input-cursor-travel: 48px;/);
+  assert.match(styles, /62%,\s*72%[\s\S]*?--search-result-input-cursor-travel/);
+  assert.match(styles, /@media \(max-width: 760px\)[\s\S]*?--search-result-input-cursor-left: 27%;[\s\S]*?--search-result-input-cursor-travel: 36px;/);
+  assert.doesNotMatch(styles, /onboarding-cursor-type-mobile/);
   assert.doesNotMatch(styles, /onboarding-cursor-hover-loop/);
   assert.doesNotMatch(styles, /onboarding-command-cursor-hide/);
   assert.match(styles, /site-search-demo-tab-hint-cycle 1120ms/);
@@ -450,7 +459,7 @@ test("hero demo exposes three replayable plugin-consistent search scenes", () =>
   assert.match(styles, /site-search-demo-prefix-enter 180ms cubic-bezier\(0\.16, 1, 0\.3, 1\)/);
   assert.match(styles, /site-search-demo-prefix-icon-pop 180ms linear/);
   assert.match(styles, /translateY\(-50%\) translateX\(-4px\) scaleX\(0\.92\)/);
-  assert.match(styles, /site-search-demo-prefix-press 320ms[\s\S]*?forwards;/);
+  assert.doesNotMatch(styles, /site-search-demo-prefix-press|site-search-demo-prefix-click-ring/);
   assert.match(styles, /site-search-demo-scope-menu-open 420ms/);
   assert.match(styles, /height: min\(220px, 36vh\);/);
   assert.match(styles, /onboarding-cursor-site-search-open 6600ms/);

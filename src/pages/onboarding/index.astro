@@ -1363,7 +1363,16 @@ const structuredData = [
 
       .qrcode-modal-panel {
         --qrcode-panel-radius: 16px;
+        --qrcode-panel-border-width: 0px;
         --qrcode-panel-padding: 20px;
+        --qrcode-panel-content-radius: max(
+          0px,
+          calc(
+            var(--qrcode-panel-radius) -
+            var(--qrcode-panel-border-width) -
+            var(--qrcode-panel-padding)
+          )
+        );
         position: relative;
         width: min(92vw, 380px);
         border-radius: var(--qrcode-panel-radius);
@@ -1396,7 +1405,7 @@ const structuredData = [
       .qrcode-modal-image {
         display: block;
         width: 100%;
-        border-radius: max(0px, calc(var(--qrcode-panel-radius) - var(--qrcode-panel-padding)));
+        border-radius: var(--qrcode-panel-content-radius);
       }
 
       .right-pane {

@@ -751,14 +751,25 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
       }
 
       .lang-menu {
+        --language-menu-radius: 12px;
+        --language-menu-border-width: 1px;
+        --language-menu-padding: 6px;
+        --language-option-radius: max(
+          0px,
+          calc(
+            var(--language-menu-radius) -
+            var(--language-menu-border-width) -
+            var(--language-menu-padding)
+          )
+        );
         position: absolute;
         right: 0;
         bottom: calc(100% + 8px);
         z-index: 36;
         min-width: 180px;
-        padding: 6px;
-        border: 1px solid #e2e2e2;
-        border-radius: 12px;
+        padding: var(--language-menu-padding);
+        border: var(--language-menu-border-width) solid #e2e2e2;
+        border-radius: var(--language-menu-radius);
         background: #ffffff;
         box-shadow: 0 14px 28px rgba(0, 0, 0, 0.12);
         display: flex;
@@ -783,7 +794,7 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
         width: 100%;
         padding: 7px 9px;
         border: 0;
-        border-radius: 8px;
+        border-radius: var(--language-option-radius, 8px);
         background: transparent;
         color: #3f4650;
         cursor: pointer;

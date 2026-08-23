@@ -518,6 +518,17 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
       }
 
       .lang-menu {
+        --language-menu-radius: 12px;
+        --language-menu-border-width: 1px;
+        --language-menu-padding: 6px;
+        --language-option-radius: max(
+          0px,
+          calc(
+            var(--language-menu-radius) -
+            var(--language-menu-border-width) -
+            var(--language-menu-padding)
+          )
+        );
         position: absolute;
         right: 0;
         bottom: calc(100% + 8px);
@@ -525,9 +536,9 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         z-index: 36;
         min-width: 180px;
         background: #fff;
-        border: 1px solid #e2e2e2;
-        border-radius: 12px;
-        padding: 6px;
+        border: var(--language-menu-border-width) solid #e2e2e2;
+        border-radius: var(--language-menu-radius);
+        padding: var(--language-menu-padding);
         display: flex;
         flex-direction: column;
         gap: 4px;
@@ -551,7 +562,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         width: 100%;
         border: 0;
         background: transparent;
-        border-radius: 8px;
+        border-radius: var(--language-option-radius, 8px);
         text-align: left;
         padding: 7px 9px;
         color: #3f4650;
@@ -592,7 +603,16 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
 
       .qrcode-modal-panel {
         --qrcode-panel-radius: 16px;
+        --qrcode-panel-border-width: 0px;
         --qrcode-panel-padding: 20px;
+        --qrcode-panel-content-radius: max(
+          0px,
+          calc(
+            var(--qrcode-panel-radius) -
+            var(--qrcode-panel-border-width) -
+            var(--qrcode-panel-padding)
+          )
+        );
         position: relative;
         width: min(92vw, 380px);
         border-radius: var(--qrcode-panel-radius);
@@ -625,7 +645,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
       .qrcode-modal-image {
         display: block;
         width: 100%;
-        border-radius: max(0px, calc(var(--qrcode-panel-radius) - var(--qrcode-panel-padding)));
+        border-radius: var(--qrcode-panel-content-radius);
       }
 
       main {

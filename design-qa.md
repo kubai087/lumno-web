@@ -60,3 +60,46 @@
 - The mobile title intentionally truncates within the compact demo card; the full title remains available in the desktop reference-matched state.
 
 final result: passed
+
+---
+
+# Design QA — Homepage scroll-triggered glass navigation
+
+- Source visual truth: `/tmp/lumno-home-nav-scroll-8ho28m/reference.png`
+- Desktop implementation screenshot: `/tmp/lumno-home-nav-scroll-8ho28m/floating-nav-final.png`
+- Viewport: 1280 × 720 CSS px, in-app browser; source raster normalized from 2912 × 374 px to 1265 × 162 px for header-region review.
+- State: Simplified Chinese homepage, hero install CTA fully above the viewport, floating install navigation settled.
+
+## Findings
+
+- No actionable P0, P1, or P2 differences remain for the requested scroll behavior.
+- Fonts and typography: the existing Open Sans navigation labels and primary-button weight remain intact; no new per-item animation changes their optical position during entry.
+- Spacing and layout rhythm: the first-screen header and the fixed glass header share the same 58 px frame, so the fixed state does not reflow its child controls. Desktop and 390 px mobile checks had no horizontal overflow.
+- Colors and visual tokens: the post-CTA surface uses the existing semi-opaque white, border, shadow, and 18 px backdrop blur shown in the supplied visual direction.
+- Image quality and asset fidelity: no nav imagery or icon assets were changed.
+- Copy and content: the fixed state preserves the existing feedback link, language control, navigation links, and `安装 Lumno` primary control.
+- Accessibility and motion: the primary control still opens its installation menu, and the menu changes the nav clipping to visible. `prefers-reduced-motion` disables the only entry animation.
+
+## Full-view and focused comparison evidence
+
+- The supplied navigation reference and the browser-rendered implementation were opened together for comparison. Their source image densities differ, so the header review used the normalized 1265 px-wide source rather than comparing raw pixels.
+- The implementation retains the reference's full-width floating pill, centered navigation group, right-side language button and dark primary install control. The visible hero content beneath is intentionally different because this check targets the navigation behavior rather than the reference's demo panel.
+
+## Interaction checks
+
+- At the first screen, the header is `position: absolute` and scrolls with the hero instead of sticking.
+- Once the hero install CTA has fully passed the viewport top, the same header becomes `position: fixed`, receives the glass surface, and enters from `translateY(-24px)` while its 8 px blur resolves to zero.
+- The entry is a single 320 ms `ease-out` container animation: no overshoot, no elastic curve, and no independent link, language, community, or primary-button entrance transition.
+- Scrolling back over the threshold first runs a 180 ms accelerating (`cubic-bezier(0.4, 0, 1, 1)`) upward fade and blur while the nav stays fixed; only then does the header return to its non-sticky transparent state.
+- Reversing the scroll before that exit finishes cancels the pending exit and holds the floating nav in its settled state. It does not replay the entry animation or flash back to the first-screen header.
+- At 390 × 844, the same threshold, fixed state, visible primary control, and no-overflow behavior were verified.
+
+## Comparison history
+
+- Iteration 1 — P1: the nav was fixed before the CTA had passed. Fixed by making the initial header absolute and switching to the fixed glass state only after the CTA clears the viewport.
+- Iteration 2 — P2: the fixed state included a small overshoot and independently animated controls. Fixed by using one non-bouncing container entrance and making all inner controls render in their final state.
+- Iteration 3 — P2: returning to the hero removed the fixed navigation abruptly. Fixed by preserving the fixed state during a fast non-linear upward exit before restoring the first-screen header.
+- Iteration 4 — pass: the final browser state matches the requested two-stage behavior and preserves the functional install menu.
+- Iteration 5 — regression: rapid upward/downward reversal now has a source-level regression assertion for canceling the pending exit in place, retaining the settled floating navigation without replaying its entry.
+
+final result: passed

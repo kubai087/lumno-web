@@ -97,6 +97,18 @@ const getHomeIntroRectDelta = (
   Math.abs(first.height - second.height),
 );
 
+const toDocumentHomeIntroRect = (
+  rect: HomeIntroRect,
+  scrollX: number,
+  scrollY: number,
+): HomeIntroRect => ({
+  ...rect,
+  bottom: rect.bottom + scrollY,
+  left: rect.left + scrollX,
+  right: rect.right + scrollX,
+  top: rect.top + scrollY,
+});
+
 const HERO_SCENE_VARIANTS: Variants = {
   enter: (direction: SceneDirection) => ({
     opacity: 0,
@@ -1135,80 +1147,86 @@ export function HeroSafariDemo({
     setIntroState("complete");
   }, [clearHomeIntroLayoutWatch]);
 
-  const syncHomeIntroTargetGeometry = useCallback(() => {
-    // These custom properties become the static background crop once the intro
-    // is complete. Never replace that snapshot with an offscreen scroll
-    // position, or the dither layer is translated out of its clipping frame.
-    if (document.body.dataset.homeIntro === "complete") {
-      return null;
-    }
+  const syncHomeIntroTargetGeometry = useCallback(
+    ({ preserveDocumentPosition = false }: { preserveDocumentPosition?: boolean } = {}) => {
+      // These custom properties become the static background crop once the intro
+      // is complete. Never replace that snapshot with an offscreen scroll
+      // position, or the dither layer is translated out of its clipping frame.
+      if (document.body.dataset.homeIntro === "complete") {
+        return null;
+      }
 
-    const demo = demoRef.current;
-    const visual = visualRef.current;
-    const slot = demo?.closest(".hero-demo-slot");
-    if (!demo || !visual || !slot) {
-      return null;
-    }
+      const demo = demoRef.current;
+      const visual = visualRef.current;
+      const slot = demo?.closest(".hero-demo-slot");
+      if (!demo || !visual || !slot) {
+        return null;
+      }
 
-    const sourceWidth = window.innerWidth;
-    const sourceHeight = window.innerHeight;
-    const sourceRect: HomeIntroRect = {
-      bottom: sourceHeight,
-      height: sourceHeight,
-      left: 0,
-      right: sourceWidth,
-      top: 0,
-      width: sourceWidth,
-    };
-    const targetRect = toHomeIntroRect(slot.getBoundingClientRect());
-    if (
-      !sourceRect.width
-      || !sourceRect.height
-      || !targetRect.width
-      || !targetRect.height
-    ) {
-      return null;
-    }
+      const sourceWidth = window.innerWidth;
+      const sourceHeight = window.innerHeight;
+      const sourceRect: HomeIntroRect = {
+        bottom: sourceHeight,
+        height: sourceHeight,
+        left: 0,
+        right: sourceWidth,
+        top: 0,
+        width: sourceWidth,
+      };
+      const viewportTargetRect = toHomeIntroRect(slot.getBoundingClientRect());
+      const targetRect = preserveDocumentPosition
+        ? toDocumentHomeIntroRect(viewportTargetRect, window.scrollX, window.scrollY)
+        : viewportTargetRect;
+      if (
+        !sourceRect.width
+        || !sourceRect.height
+        || !targetRect.width
+        || !targetRect.height
+      ) {
+        return null;
+      }
 
-    const previousTargetRect = introTargetRectRef.current;
-    const targetChanged = previousTargetRect
-      ? getHomeIntroRectDelta(previousTargetRect, targetRect) > HOME_INTRO_RECT_EPSILON
-      : false;
-    introTargetRectRef.current = targetRect;
+      const previousTargetRect = introTargetRectRef.current;
+      const targetChanged = previousTargetRect
+        ? getHomeIntroRectDelta(previousTargetRect, targetRect) > HOME_INTRO_RECT_EPSILON
+        : false;
+      introTargetRectRef.current = targetRect;
 
-    visual.style.setProperty("--hero-intro-target-top", `${targetRect.top.toFixed(2)}px`);
-    visual.style.setProperty(
-      "--hero-intro-target-right",
-      `${Math.max(0, sourceRect.right - targetRect.right).toFixed(2)}px`,
-    );
-    visual.style.setProperty(
-      "--hero-intro-target-bottom",
-      `${Math.max(0, sourceRect.bottom - targetRect.bottom).toFixed(2)}px`,
-    );
-    visual.style.setProperty("--hero-intro-target-left", `${targetRect.left.toFixed(2)}px`);
-    visual.style.setProperty("--hero-intro-target-width", `${targetRect.width.toFixed(2)}px`);
-    visual.style.setProperty("--hero-intro-target-height", `${targetRect.height.toFixed(2)}px`);
-    visual.style.setProperty("--hero-intro-source-width", `${sourceRect.width.toFixed(2)}px`);
-    visual.style.setProperty("--hero-intro-source-height", `${sourceRect.height.toFixed(2)}px`);
-    visual.style.setProperty(
-      "--hero-intro-mask-scale-x",
-      (sourceRect.width / targetRect.width).toFixed(6),
-    );
-    visual.style.setProperty(
-      "--hero-intro-mask-scale-y",
-      (sourceRect.height / targetRect.height).toFixed(6),
-    );
-    visual.style.setProperty(
-      "--hero-intro-content-scale-x",
-      (targetRect.width / sourceRect.width).toFixed(6),
-    );
-    visual.style.setProperty(
-      "--hero-intro-content-scale-y",
-      (targetRect.height / sourceRect.height).toFixed(6),
-    );
+      visual.style.setProperty("--hero-intro-target-top", `${targetRect.top.toFixed(2)}px`);
+      visual.style.setProperty(
+        "--hero-intro-target-right",
+        `${Math.max(0, sourceRect.right - targetRect.right).toFixed(2)}px`,
+      );
+      visual.style.setProperty(
+        "--hero-intro-target-bottom",
+        `${Math.max(0, sourceRect.bottom - targetRect.bottom).toFixed(2)}px`,
+      );
+      visual.style.setProperty("--hero-intro-target-left", `${targetRect.left.toFixed(2)}px`);
+      visual.style.setProperty("--hero-intro-target-width", `${targetRect.width.toFixed(2)}px`);
+      visual.style.setProperty("--hero-intro-target-height", `${targetRect.height.toFixed(2)}px`);
+      visual.style.setProperty("--hero-intro-source-width", `${sourceRect.width.toFixed(2)}px`);
+      visual.style.setProperty("--hero-intro-source-height", `${sourceRect.height.toFixed(2)}px`);
+      visual.style.setProperty(
+        "--hero-intro-mask-scale-x",
+        (sourceRect.width / targetRect.width).toFixed(6),
+      );
+      visual.style.setProperty(
+        "--hero-intro-mask-scale-y",
+        (sourceRect.height / targetRect.height).toFixed(6),
+      );
+      visual.style.setProperty(
+        "--hero-intro-content-scale-x",
+        (targetRect.width / sourceRect.width).toFixed(6),
+      );
+      visual.style.setProperty(
+        "--hero-intro-content-scale-y",
+        (targetRect.height / sourceRect.height).toFixed(6),
+      );
 
-    return { demo, sourceRect, targetChanged, targetRect, visual };
-  }, []);
+      return { demo, sourceRect, targetChanged, targetRect, visual };
+    },
+    [],
+  );
 
   const completeHomeIntroForScroll = useCallback(() => {
     if (introScrollSkipRequestedRef.current) {
@@ -1216,11 +1234,10 @@ export function HeroSafariDemo({
     }
 
     introScrollSkipRequestedRef.current = true;
-    // The intro mask is positioned with viewport-relative geometry. A scroll can
-    // still update `scrollY` while the body is temporarily overflow-hidden, so
-    // lock that geometry to the current position before switching back to the
-    // in-document clipping container.
-    syncHomeIntroTargetGeometry();
+    // The intro mask is positioned with viewport-relative geometry while it is
+    // active. Once it returns to the document flow, preserve the Hero's
+    // document position instead of freezing an offscreen viewport rect.
+    syncHomeIntroTargetGeometry({ preserveDocumentPosition: true });
     completeHomeIntro();
   }, [completeHomeIntro, syncHomeIntroTargetGeometry]);
 

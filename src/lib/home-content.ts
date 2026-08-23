@@ -50,6 +50,8 @@ type HomeContent = {
   productShowcaseAria: string;
   featureSectionTitle: string;
   featureSectionDescription: string;
+  aiIntentTitle: string;
+  aiIntentDescription: string;
   featureMessages: HomeFeatureMessages;
   workflowTitle: string;
   workflowDescription: string;
@@ -113,7 +115,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     githubAria: "访问 Lumno GitHub 仓库",
     heroTitle: "让浏览器的一切，一搜即达",
     heroDescription:
-      "Lumno ，开源浏览器命令栏与新标签页插件",
+      "Lumno ，开源网页聚焦搜索命令栏与新标签页插件",
     heroInstallLabel: "通过 Chrome 商店安装",
     heroInstallAria: "通过 Chrome 应用商店安装 Lumno",
     heroBrowserTooltipLabel: "基于 GPL-3.0 开源，支持大部分 Chromium 内核浏览器",
@@ -124,9 +126,11 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     reviewsAriaLabel: "Chrome 应用商店的真实用户评价轮播",
     reviewAvatarLabel: "的头像",
     productShowcaseAria: "Lumno 的四项核心功能",
-    featureSectionTitle: "极简强大，你的满分新标签页",
+    featureSectionTitle: "你的满分新标签页",
     featureSectionDescription:
-      "书签、常用网站与快捷搜索，一个干净的新标签页全部装下（也可以隐藏）",
+      "不论是追求“极简”还是“功能性”，均可自由定制",
+    aiIntentTitle: "划词提问，即刻跳转至常用网页 AI",
+    aiIntentDescription: "本地意图识别，只在你需要时才出现",
     featureMessages: {
       searchTitle: "一个命令栏，搜索所有浏览器资料",
       searchDesc: "同时查找标签页、书签、历史记录和常用页面",
@@ -243,6 +247,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     featureSectionTitle: "極簡而強大，你的 100% 新分頁。",
     featureSectionDescription:
       "書籤、常用網站與快速搜尋，一個乾淨的新分頁全部裝下（也可以隱藏）",
+    aiIntentTitle: "劃詞提問，即刻跳轉至常用網頁 AI",
+    aiIntentDescription: "本機意圖辨識，只在你需要時才出現",
     featureMessages: {
       searchTitle: "一個命令欄，搜尋所有瀏覽器資料",
       searchDesc: "同時查找分頁、書籤、瀏覽紀錄與常用頁面",
@@ -359,6 +365,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     featureSectionTitle: "Minimal and powerful. A new tab that’s 100% yours.",
     featureSectionDescription:
       "Bookmarks, favorite sites, and quick search—all in one clean new tab, with the option to hide any of them.",
+    aiIntentTitle: "Ask about selected text, then jump straight to the web AI you use most",
+    aiIntentDescription: "Local intent detection appears only when you need it",
     featureMessages: {
       searchTitle: "One command bar for everything in your browser",
       searchDesc: "Find tabs, bookmarks, history, and frequently visited pages",

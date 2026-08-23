@@ -66,14 +66,25 @@
 }
 
 .lumno-settings-tabs {
+  --lumno-settings-tabs-radius: 12px;
+  --lumno-settings-tabs-border-width: 1px;
+  --lumno-settings-tabs-padding: 4px;
+  --lumno-settings-tab-radius: max(
+    0px,
+    calc(
+      var(--lumno-settings-tabs-radius) -
+      var(--lumno-settings-tabs-border-width) -
+      var(--lumno-settings-tabs-padding)
+    )
+  );
   display: flex;
   gap: 8px;
   max-width: 100%;
   margin-bottom: 18px;
-  padding: 4px;
+  padding: var(--lumno-settings-tabs-padding);
   overflow-x: auto;
-  border: 1px solid var(--lumno-control-border);
-  border-radius: 12px;
+  border: var(--lumno-settings-tabs-border-width) solid var(--lumno-control-border);
+  border-radius: var(--lumno-settings-tabs-radius);
   background: var(--lumno-tab-bg);
   scrollbar-width: none;
 }
@@ -100,7 +111,7 @@
   gap: 6px;
   min-height: 34px;
   padding: 8px 12px;
-  border-radius: 10px;
+  border-radius: var(--lumno-settings-tab-radius);
   background: transparent;
   color: var(--lumno-tab-inactive-text);
   font-size: 13px;
@@ -383,13 +394,24 @@
 }
 
 .lumno-settings-segmented {
+  --lumno-settings-segmented-radius: 10px;
+  --lumno-settings-segmented-border-width: 1px;
+  --lumno-settings-segmented-padding: 2px;
+  --lumno-settings-segment-radius: max(
+    0px,
+    calc(
+      var(--lumno-settings-segmented-radius) -
+      var(--lumno-settings-segmented-border-width) -
+      var(--lumno-settings-segmented-padding)
+    )
+  );
   display: inline-flex;
   align-items: stretch;
   gap: 4px;
   min-height: 32px;
-  padding: 2px;
-  border: 1px solid var(--lumno-control-border);
-  border-radius: 10px;
+  padding: var(--lumno-settings-segmented-padding);
+  border: var(--lumno-settings-segmented-border-width) solid var(--lumno-control-border);
+  border-radius: var(--lumno-settings-segmented-radius);
   background: var(--lumno-control-bg);
 }
 
@@ -400,7 +422,7 @@
   gap: 5px;
   min-width: 36px;
   padding: 6px 8px;
-  border-radius: 8px;
+  border-radius: var(--lumno-settings-segment-radius);
   background: transparent;
   color: var(--lumno-panel-subtext);
   font-size: 12px;
@@ -487,6 +509,18 @@
 }
 
 .lumno-settings-select-menu {
+  --lumno-settings-menu-radius: 17px;
+  --lumno-settings-menu-border-width: 1px;
+  --lumno-settings-menu-border-color: rgba(0, 0, 0, 0.14);
+  --lumno-settings-menu-padding: 6px;
+  --lumno-settings-option-radius: max(
+    0px,
+    calc(
+      var(--lumno-settings-menu-radius) -
+      var(--lumno-settings-menu-border-width) -
+      var(--lumno-settings-menu-padding)
+    )
+  );
   --lumno-settings-menu-closed-transform: translateY(-6px) scale(0.96, 0.86);
   --lumno-settings-menu-open-transform: translateY(0) scale(1, 1);
   position: absolute;
@@ -495,12 +529,12 @@
   right: 0;
   width: max-content;
   min-width: 100%;
-  padding: 6px;
+  padding: var(--lumno-settings-menu-padding);
   display: flex;
   flex-direction: column;
   gap: 4px;
-  border: 1px solid var(--lumno-control-border, rgba(15, 23, 42, 0.08));
-  border-radius: 12px;
+  border: var(--lumno-settings-menu-border-width) solid var(--lumno-settings-menu-border-color);
+  border-radius: var(--lumno-settings-menu-radius);
   background: var(--lumno-menu-bg, #fff);
   box-shadow: 0 12px 30px rgba(15, 23, 42, 0.16), 0 2px 8px rgba(15, 23, 42, 0.08);
   opacity: 0;
@@ -513,6 +547,10 @@
     opacity 170ms ease,
     transform 360ms cubic-bezier(0.2, 1.45, 0.35, 1),
     visibility 0s linear 360ms;
+}
+
+.lumno-settings-kit[data-theme="dark"] .lumno-settings-select-menu {
+  --lumno-settings-menu-border-color: rgba(255, 255, 255, 0.16);
 }
 
 .lumno-settings-select-menu[data-placement="above"] {
@@ -576,7 +614,7 @@
   justify-content: space-between;
   gap: 14px;
   padding: 9px 10px;
-  border-radius: 9px;
+  border-radius: var(--lumno-settings-option-radius, 9px);
   background: transparent;
   color: var(--lumno-panel-text, #111827);
   font-size: 13px;

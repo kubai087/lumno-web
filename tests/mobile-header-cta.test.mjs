@@ -79,7 +79,7 @@ test("homepage install menu keeps the primary trigger and ordered store links", 
   assert.match(styles, /@media \(prefers-reduced-motion:\s*reduce\)[\s\S]*?animation:\s*none;/);
 });
 
-test("homepage nav install appears only after the hero primary CTA has passed", () => {
+test("homepage glass navigation enters after the hero primary CTA has scrolled away", () => {
   const source = fs.readFileSync(path.join(workspaceRoot, "src/pages/index.astro"), "utf8");
   const heroInstall = fs.readFileSync(
     path.join(workspaceRoot, "src/components/home/HeroInstallTooltip.tsx"),
@@ -90,11 +90,11 @@ test("homepage nav install appears only after the hero primary CTA has passed", 
   assert.match(source, /<div class="top-nav-install-slot">[\s\S]*?<InstallMenu/);
   assert.match(
     source,
-    /const hasNavOverlap = window\.scrollY > 0 && titleTop < navBottom - 1;[\s\S]*?"has-nav-overlap", hasNavOverlap[\s\S]*?"has-nav-install",[\s\S]*?hasNavOverlap && heroInstallBottom <= navBottom/,
+    /const heroInstallBottom = heroInstallPrimary\.getBoundingClientRect\(\)\.bottom;[\s\S]*?const shouldShowNavInstall = window\.scrollY > 0 && heroInstallBottom <= 0;[\s\S]*?if \(!document\.body\.classList\.contains\("has-nav-install"\)\) \{[\s\S]*?enterNavInstall\(\);/,
   );
   assert.match(
     source,
-    /\.top-nav-install-slot\s*\{[\s\S]*?grid-template-columns:\s*0fr;[\s\S]*?margin-left:\s*calc\(var\(--top-nav-action-gap\) \* -1\);[\s\S]*?overflow:\s*clip;[\s\S]*?border-radius:\s*999px;[\s\S]*?clip-path:\s*inset\(0 round 999px\);[\s\S]*?opacity:\s*0;[\s\S]*?visibility:\s*hidden;[\s\S]*?transition:[\s\S]*?margin-left 240ms/,
+    /\.top-nav-install-slot\s*\{[\s\S]*?grid-template-columns:\s*0fr;[\s\S]*?margin-left:\s*calc\(var\(--top-nav-action-gap\) \* -1\);[\s\S]*?overflow:\s*clip;[\s\S]*?border-radius:\s*999px;[\s\S]*?clip-path:\s*inset\(0 round 999px\);[\s\S]*?opacity:\s*0;[\s\S]*?visibility:\s*hidden;/,
   );
   assert.match(
     source,
@@ -108,20 +108,16 @@ test("homepage nav install appears only after the hero primary CTA has passed", 
   );
   assert.match(
     source,
-    /\.top-nav-install-slot \.top-nav-install\s*\{[\s\S]*?opacity:\s*0;[\s\S]*?translate:\s*calc\(100% \+ 8px\) 0;[\s\S]*?transition:/,
+    /\.top-nav-install-slot \.top-nav-install\s*\{\s*white-space:\s*nowrap;\s*\}/,
   );
   assert.match(
     source,
     /body\.has-nav-install \.top-nav-install-slot\s*\{[\s\S]*?grid-template-columns:\s*1fr;[\s\S]*?margin-left:\s*0;[\s\S]*?opacity:\s*1;[\s\S]*?visibility:\s*visible;/,
   );
-  assert.match(
-    source,
-    /body\.has-nav-install \.top-nav-install-slot \.top-nav-install\s*\{[\s\S]*?translate:\s*0 0;/,
-  );
   assert.doesNotMatch(
     source,
-    /\.top-nav-install-slot\s*\{[^}]*transform:\s*translateY/,
-    "the nav install control should enter horizontally without vertical motion",
+    /\.top-nav-install-slot\s*\{[^}]*transition:/,
+    "the primary control should not animate independently of the floating navigation",
   );
 });
 
@@ -220,6 +216,11 @@ test("homepage navbar matches the content width and reveals after the hero intro
     /\.top-nav\s*\{[\s\S]*?contain:\s*layout;/,
     "the fixed navbar should isolate its layout from content below",
   );
+  assert.match(
+    source,
+    /html\s*\{[\s\S]*?overscroll-behavior-y:\s*none;/,
+    "the homepage should disable top overscroll bounce so rapid return-to-top does not flash the navbar",
+  );
 });
 
 test("homepage navbar animates in the community action and reuses the CTA dialog", () => {
@@ -283,9 +284,10 @@ test("homepage navbar animates in the community action and reuses the CTA dialog
   assert.match(ghostLinks, /menuRole="menu"[\s\S]*optionRole="menuitem"/);
   assert.match(ghostLinks, /showSelected=\{false\}/);
   assert.match(ghostLinks, /className="top-nav-community-slot"[\s\S]*?data-visible=\{showPrimaryNavigation \? "true" : "false"\}/);
-  assert.match(ghostLinkStyles, /\.top-nav-community-slot\s*\{[\s\S]*?grid-template-columns:\s*0fr;[\s\S]*?overflow:\s*clip;[\s\S]*?transition:[\s\S]*?grid-template-columns 300ms/);
+  assert.match(ghostLinkStyles, /\.top-nav-community-slot\s*\{[\s\S]*?grid-template-columns:\s*0fr;[\s\S]*?overflow:\s*clip;[\s\S]*?pointer-events:\s*none;/);
   assert.match(ghostLinkStyles, /\.top-nav-community-slot\[data-visible="true"\]\s*\{[\s\S]*?grid-template-columns:\s*1fr;[\s\S]*?opacity:\s*1;[\s\S]*?visibility:\s*visible;/);
-  assert.match(ghostLinkStyles, /\.top-nav-community-slot \.top-nav-ghost-button\s*\{[\s\S]*?translate:\s*-14px 0;[\s\S]*?\.top-nav-community-slot\[data-visible="true"\] \.top-nav-ghost-button\s*\{[\s\S]*?translate:\s*0 0;/);
+  assert.doesNotMatch(ghostLinkStyles, /\.top-nav-community-slot\s*\{[^}]*transition:/);
+  assert.doesNotMatch(ghostLinkStyles, /\.top-nav-community-slot \.top-nav-ghost-button\s*\{/);
   assert.doesNotMatch(ghostLinkStyles, /top-nav-community-popover/);
 
   assert.match(
@@ -323,18 +325,44 @@ test("homepage navbar animates in the community action and reuses the CTA dialog
   );
   assert.match(
     source,
-    /body\.has-nav-overlap \.top-nav\s*\{[\s\S]*?min-height:\s*58px;[\s\S]*?padding:\s*6px 8px;[\s\S]*?transform:\s*translateY\(-10px\);[\s\S]*?background:\s*rgba\(255, 255, 255, 0\.84\);[\s\S]*?box-shadow:/,
-    "the overlap state should add a roomier floating surface and move it closer to the viewport top",
+    /\.top-nav\s*\{[\s\S]*?position:\s*absolute;[\s\S]*?top:\s*18px;[\s\S]*?min-height:\s*58px;[\s\S]*?padding:\s*6px 8px;[\s\S]*?body\.has-nav-install \.top-nav\s*\{[\s\S]*?position:\s*fixed;[\s\S]*?top:\s*6px;[\s\S]*?background:\s*rgba\(255, 255, 255, 0\.84\);[\s\S]*?backdrop-filter:\s*blur\(18px\);[\s\S]*?body\.has-nav-install:not\(\.is-nav-install-settled\) \.top-nav\s*\{[\s\S]*?animation:\s*top-nav-surface-enter 320ms ease-out/,
+    "the initial header should scroll away before the fixed glass surface appears",
   );
   assert.match(
     source,
-    /@media \(max-width:\s*760px\)[\s\S]*?body\.has-nav-overlap \.top-nav\s*\{[\s\S]*?transform:\s*translateY\(-7px\);/,
-    "the mobile overlap state should move closer to the safe-area edge without touching it",
+    /@keyframes top-nav-surface-enter\s*\{[\s\S]*?from\s*\{[\s\S]*?transform:\s*translateY\(-24px\);[\s\S]*?filter:\s*blur\(8px\);[\s\S]*?to\s*\{[\s\S]*?transform:\s*translateY\(0\);[\s\S]*?filter:\s*blur\(0\);/,
+    "the glass navigation should descend from above while resolving its blur",
   );
-  assert.match(source, /\.top-nav\s*\{[\s\S]*?transition:[\s\S]*?transform 220ms[\s\S]*?background-color 180ms/);
-  assert.match(source, /const heroTitle = document\.getElementById\("hero-title"\);/);
-  assert.match(source, /window\.scrollY > 0 && titleTop < navBottom - 1/);
-  assert.match(source, /classList\.toggle\("has-nav-overlap"/);
+  assert.doesNotMatch(source, /top-nav-surface-enter\s*\{[\s\S]*?62%/);
+  assert.doesNotMatch(source, /top-nav-surface-enter 320ms cubic-bezier/);
+  assert.match(
+    source,
+    /if \(navInstallExitTimeout\) \{[\s\S]*?window\.clearTimeout\(navInstallExitTimeout\);[\s\S]*?navInstallExitTimeout = 0;[\s\S]*?document\.body\.classList\.remove\("is-nav-install-exiting"\);[\s\S]*?document\.body\.classList\.add\("is-nav-install-settled"\);[\s\S]*?return;/,
+    "rapidly returning below the CTA should cancel the exit and preserve the settled floating navigation without replaying entry",
+  );
+  assert.match(source, /document\.body\.classList\.add\("is-nav-install-exiting"\);[\s\S]*?window\.setTimeout\(finishNavInstallExit, 120\)/);
+  assert.match(
+    source,
+    /const finishNavInstallExit = \(\) => \{[\s\S]*?topNav\.dataset\.navSurface = "hero";[\s\S]*?document\.body\.classList\.remove\([\s\S]*?"has-nav-install"/,
+    "returning to the hero header should clear the glass surface before removing the fixed-nav state",
+  );
+  assert.match(
+    source,
+    /const enterNavInstall = \(\) => \{[\s\S]*?topNav\.removeAttribute\("data-nav-surface"\);[\s\S]*?document\.body\.classList\.add\("has-nav-install"\)/,
+    "entering the fixed navigation should restore the glass surface state",
+  );
+  assert.match(
+    source,
+    /body\.has-nav-install\.is-nav-install-exiting \.top-nav\s*\{[\s\S]*?animation:\s*top-nav-surface-exit 120ms cubic-bezier\(0\.4, 0, 1, 1\) both;[\s\S]*?@keyframes top-nav-surface-exit\s*\{[\s\S]*?transform:\s*translateY\(-28px\);[\s\S]*?filter:\s*blur\(8px\);/,
+    "scrolling back up should quickly ease the fixed navigation out before restoring the hero header",
+  );
+  assert.match(source, /@media \(prefers-reduced-motion:\s*reduce\)[\s\S]*?body\.has-nav-install \.top-nav\s*\{[\s\S]*?animation:\s*none;/);
+  assert.match(
+    source,
+    /\.top-nav\[data-nav-surface="hero"\]\s*\{[\s\S]*?background:\s*transparent;[\s\S]*?box-shadow:\s*none;[\s\S]*?transition:\s*none;/,
+    "the restored hero header should not retain glass navigation visuals or transitions",
+  );
+  assert.doesNotMatch(source, /has-nav-overlap/);
 });
 
 test("mobile release feedback CTA matches the icon-only social buttons", () => {

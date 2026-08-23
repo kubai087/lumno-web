@@ -117,22 +117,36 @@ test("homepage visible typography never defines text below twelve pixels", () =>
   }
 });
 
-test("homepage places the new-tab showcase before the review section", () => {
+test("homepage places the new-tab showcase and AI intent page before the review section", () => {
   const source = readSource("src/pages/index.astro");
 
   const heroIndex = source.indexOf('<section class="hero-section"');
   const featuresIndex = source.indexOf('<section id="features"');
+  const aiIntentIndex = source.indexOf('<section id="ai-intent"');
   const reviewsIndex = source.indexOf("<ChromeReviewMarquee");
 
   assert.ok(heroIndex >= 0, "homepage hero section should exist");
   assert.ok(featuresIndex >= 0, "homepage new-tab showcase should exist");
+  assert.ok(aiIntentIndex >= 0, "homepage AI intent page should exist");
   assert.ok(reviewsIndex >= 0, "homepage review section should exist");
-  assert.ok(heroIndex < featuresIndex && featuresIndex < reviewsIndex);
+  assert.ok(heroIndex < featuresIndex && featuresIndex < aiIntentIndex && aiIntentIndex < reviewsIndex);
 
   assert.match(
     source,
-    /<section class="hero-section"[\s\S]*?<div class="hero-demo-slot">\s*<HeroSafariDemo[\s\S]*?client:load[\s\S]*?\/>\s*<\/div>\s*<\/section>[\s\S]*?<section id="features" class="section feature-intro"[\s\S]*?<HeroParallax[\s\S]*?client:visible[\s\S]*?\/>\s*<\/section>\s*<ChromeReviewMarquee[\s\S]*?reviews=\{chromeStoreReviews\.reviews\}/,
+    /<section class="hero-section"[\s\S]*?<div class="hero-demo-slot">\s*<HeroSafariDemo[\s\S]*?client:load[\s\S]*?\/>\s*<\/div>\s*<\/section>[\s\S]*?<section id="features" class="section feature-intro"[\s\S]*?<HeroParallax[\s\S]*?client:visible[\s\S]*?\/>\s*<\/section>[\s\S]*?<section id="ai-intent" class="section ai-intent-section"[\s\S]*?<div class="ai-intent-placeholder"[\s\S]*?<\/section>\s*<ChromeReviewMarquee[\s\S]*?reviews=\{chromeStoreReviews\.reviews\}/,
   );
+  assert.match(source, /<h2 id="ai-intent-title" class="hero-parallax__title">/);
+  assert.match(source, /<span class="hero-title-segment">\{content\.aiIntentTitle\}<\/span>/);
+  assert.match(source, /<p class="hero-parallax__description">\{content\.aiIntentDescription\}<\/p>/);
+  assert.match(source, /\.ai-intent-section\s*\{[\s\S]*?grid-template-columns: minmax\(0, 0\.82fr\) minmax\(0, 1\.18fr\)/);
+  assert.match(source, /\.ai-intent-section\s*\{[\s\S]*?border-top: 0;/);
+  assert.match(source, /\.ai-intent-placeholder\s*\{[\s\S]*?aspect-ratio: 1203 \/ 753;[\s\S]*?border-radius: 16px/);
+  assert.match(source, /@media \(max-width: 1080px\)[\s\S]*?\.ai-intent-section\s*\{[\s\S]*?grid-template-columns: 1fr/);
+  assert.match(source, /@media \(max-width: 760px\)[\s\S]*?\.ai-intent-copy \.hero-parallax__title\s*\{[\s\S]*?font-size: clamp\(34px, 10vw, 44px\)/);
+  assert.match(source, /@media \(max-width: 760px\)[\s\S]*?\.feature-intro\s*\{[\s\S]*?padding: 0;/);
+  const copySource = readSource("src/lib/home-content.ts");
+  assert.match(copySource, /aiIntentTitle: "划词提问，即刻跳转至常用网页 AI"/);
+  assert.match(copySource, /aiIntentDescription: "本地意图识别，只在你需要时才出现"/);
   assert.match(source, /padding: 120px 0 80px/);
   assert.match(source, /height: max\(300px, calc\(100svh - 470px\)\)/);
   assert.match(source, /margin-top: clamp\(52px, 4\.5vw, 72px\)/);

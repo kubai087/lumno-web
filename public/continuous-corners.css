@@ -1,0 +1,42 @@
+/*
+ * Lumno Web continuous corners
+ *
+ * The extension uses this same progressive enhancement for its rounded
+ * surfaces. Keep the existing border-radius values as the fallback and only
+ * change the corner curve when the browser supports the CSS Corner Shape API.
+ *
+ * The important flag is intentional: a few shared controls use `all: unset`,
+ * which would otherwise reset corner-shape after this stylesheet is loaded.
+ */
+:root {
+  --lumno-corner-shape: superellipse(1.25);
+}
+
+@supports (corner-shape: superellipse(1.25)) {
+  :where(*) {
+    corner-shape: var(--lumno-corner-shape) !important;
+  }
+
+  :where(*::before, *::after) {
+    corner-shape: var(--lumno-corner-shape) !important;
+  }
+
+  /*
+   * These controls intentionally use a capsule silhouette. A superellipse
+   * applied to a radius that is already clamped to half the control height
+   * makes the ends look optically flatter, especially on narrow nav bars.
+   * Keep their original round geometry while the rest of the site uses the
+   * continuous-corner enhancement.
+   */
+  :where(
+    .top-nav,
+    .top-nav-install-slot,
+    .lumno-settings-button:not(.lumno-settings-icon-button),
+    .lumno-settings-icon-button,
+    .pill-btn,
+    .pill-btn::before,
+    .pill-btn::after
+  ) {
+    corner-shape: round !important;
+  }
+}

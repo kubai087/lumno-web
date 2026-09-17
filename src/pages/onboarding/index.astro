@@ -288,7 +288,6 @@ const structuredData = [
       keywords={pageKeywords}
       alternates={alternateLinks}
       locale={ogLocale}
-      i18nTitleKey="page_title_ui"
       structuredData={structuredData}
     />
     <link rel="icon" href="/favicon.ico" sizes="any" />
@@ -2767,7 +2766,7 @@ const structuredData = [
       import "../../scripts/language-preference";
       import "../../scripts/language-runtime";
     </script>
-    <script define:vars={{ forcedLocale, routeLanguageMap, entryContextConfig, communityLinks: COMMUNITY_LINKS }}>
+    <script define:vars={{ forcedLocale, routeLanguageMap, pageTitleByLocale, entryContextConfig, communityLinks: COMMUNITY_LINKS }}>
       const FORCED_LOCALE = forcedLocale;
       const ROUTE_LANGUAGE_MAP = routeLanguageMap;
       const ENTRY_CONTEXT_CONFIG = entryContextConfig;
@@ -3023,6 +3022,7 @@ const structuredData = [
 
       function applyI18n(locale) {
         const resolvedLocale = I18N_MESSAGES[locale] ? locale : FALLBACK_LOCALE;
+        document.title = pageTitleByLocale[resolvedLocale] || pageTitleByLocale[FALLBACK_LOCALE];
         document.documentElement.lang = resolvedLocale;
         document.body.setAttribute("data-locale", resolvedLocale);
         document.body.classList.toggle("is-locale-en", resolvedLocale === "en");
@@ -3089,8 +3089,12 @@ const structuredData = [
 
       function initLanguageRuntime() {
         if (!window.__lumnoLanguagePreference || !window.__lumnoLanguageRuntime) return null;
+        const storedMode = window.__lumnoLanguagePreference.getStoredLanguageMode(LANGUAGE_STORAGE_KEY);
+        // Public canonical routes stay stable; extension entries still use browser language.
+        const initialForcedLocale = FORCED_LOCALE ||
+          (!INITIAL_ENTRY_CONTEXT.isExtensionEntry && !storedMode ? FALLBACK_LOCALE : null);
         return window.__lumnoLanguageRuntime.setupLanguageRuntime({
-          forcedLocale: FORCED_LOCALE,
+          forcedLocale: initialForcedLocale,
           getSystemLocale,
           normalizeLanguageMode,
           routeLanguageMap: ROUTE_LANGUAGE_MAP,

@@ -9,6 +9,24 @@ function readSource(file) {
   return fs.readFileSync(path.join(workspaceRoot, file), "utf8");
 }
 
+test("public pages retain page-specific SEO titles after language initialization", () => {
+  for (const file of ["src/pages/index.astro", "src/pages/onboarding/index.astro", "src/pages/release/index.astro"]) {
+    const source = readSource(file);
+    assert.doesNotMatch(source, /i18nTitleKey="page_title_ui"/, file);
+    assert.match(source, /define:vars=\{\{[^\n]*pageTitleByLocale/, file);
+    assert.match(source, /document\.title = pageTitleByLocale\[resolvedLocale\]/, file);
+  }
+});
+
+test("public entry pages stay stable without overriding extension browser-language entry", () => {
+  for (const file of ["src/pages/onboarding/index.astro", "src/pages/release/index.astro"]) {
+    const source = readSource(file);
+    assert.match(source, /!INITIAL_ENTRY_CONTEXT\.isExtensionEntry && !storedMode \? FALLBACK_LOCALE : null/, file);
+    assert.match(source, /forcedLocale: initialForcedLocale/, file);
+    assert.match(source, /shouldRedirect: \(\) => !INITIAL_ENTRY_CONTEXT\.isExtensionEntry/, file);
+  }
+});
+
 test("homepage keeps a crawlable entry to the full feature SEO page", () => {
   const source = readSource("src/pages/index.astro");
 

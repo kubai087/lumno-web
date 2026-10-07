@@ -1,6 +1,7 @@
 ---
 import SeoHead from "../../components/SeoHead.astro";
 import { fetchReleases, formatDate, parseReleaseBody, type ParsedReleaseBody, type ReleaseLocaleContent } from "../../lib/releases";
+import { getStoreVersions } from "../../lib/store-versions";
 import { marked } from "marked";
 import {
   SITE_NAME,
@@ -169,11 +170,10 @@ const structuredData = [
   }),
 ];
 
-const chromeStoreVersion = String(
-  import.meta.env.PUBLIC_CHROME_STORE_VERSION ||
-    import.meta.env.CHROME_STORE_VERSION ||
-    "",
-).trim();
+const { chrome: chromeStoreVersion } = await getStoreVersions({
+  chrome: import.meta.env.PUBLIC_CHROME_STORE_VERSION || import.meta.env.CHROME_STORE_VERSION,
+  edge: import.meta.env.PUBLIC_EDGE_STORE_VERSION || import.meta.env.EDGE_STORE_VERSION,
+});
 
 function renderMdInline(markdown: string): string {
   return marked.parseInline(markdown || "", { async: false });
@@ -207,8 +207,8 @@ function compareVersion(a: string, b: string): number {
   return 0;
 }
 
-function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_reviewing" {
-  if (!chromeStoreVersion) return "chrome_reviewing";
+function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_reviewing" | null {
+  if (!chromeStoreVersion) return null;
   return compareVersion(chromeStoreVersion, tag) >= 0
     ? "chrome_published"
     : "chrome_reviewing";
@@ -1366,12 +1366,12 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
                               <i class="ri-chrome-fill" aria-hidden="true"></i>
                               <span data-i18n={chromeStatusKey}>Published</span>
                             </a>
-                          ) : (
+                          ) : chromeStatusKey ? (
                             <span class="chip chip-status chip-chrome is-reviewing">
                               <i class="ri-chrome-fill" aria-hidden="true"></i>
-                              <span data-i18n={chromeStatusKey}>In Review</span>
+                              <span data-i18n={chromeStatusKey}>{uiLocale === "en" ? "Awaiting store update" : "商店待更新"}</span>
                             </span>
-                          )}
+                          ) : null}
                         </div>
 
                         <div class="entry-localized" data-release-locale="zh-CN">
@@ -1581,7 +1581,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
           github_published: "已发布",
           github_unpublished: "未发布",
           chrome_published: "已发布",
-          chrome_reviewing: "审核中",
+          chrome_reviewing: "商店待更新",
           read_on_github: "在 GitHub 查看",
           no_releases_title: "暂无发布记录",
           no_releases_desc: "创建 GitHub Release 后，将在下一次部署时自动显示。"
@@ -1611,7 +1611,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
           github_published: "已發布",
           github_unpublished: "未發布",
           chrome_published: "已發布",
-          chrome_reviewing: "審核中",
+          chrome_reviewing: "商店待更新",
           read_on_github: "在 GitHub 查看",
           no_releases_title: "暫無發布記錄",
           no_releases_desc: "建立 GitHub Release 後，將在下一次部署時自動顯示。"
@@ -1641,7 +1641,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
           github_published: "Published",
           github_unpublished: "Not published",
           chrome_published: "Published",
-          chrome_reviewing: "Under review",
+          chrome_reviewing: "Awaiting store update",
           read_on_github: "View on GitHub",
           no_releases_title: "No releases yet",
           no_releases_desc: "Publish a GitHub Release and it will appear here after the next deploy."

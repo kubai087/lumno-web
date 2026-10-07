@@ -59,7 +59,7 @@ jobs:
             echo "PUBLIC_CHROME_STORE_VERSION=$CHROME_VERSION" >> "$GITHUB_ENV"
             echo "Resolved Chrome Web Store version: $CHROME_VERSION"
           else
-            echo "Could not resolve Chrome Web Store version. Keep fallback review status."
+            echo "Could not resolve Chrome Web Store version. The release page will retry the store lookup and omit unavailable status."
           fi
           if [ -n "$EDGE_VERSION" ]; then
             echo "PUBLIC_EDGE_STORE_VERSION=$EDGE_VERSION" >> "$GITHUB_ENV"

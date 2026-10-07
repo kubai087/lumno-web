@@ -1,0 +1,466 @@
+---
+import type { HomeNewTabScene } from "../../../lib/home-content";
+import SceneBookmark from "./SceneBookmark.astro";
+import SceneCursor from "./SceneCursor.astro";
+import SceneFolderIcon from "./SceneFolderIcon.astro";
+import SceneSearch from "./SceneSearch.astro";
+import { ICON_LINKS, REFERENCE_LINKS, ROOT_LINKS } from "./scene-data";
+
+interface Props {
+  scene: HomeNewTabScene;
+  alt: string;
+}
+
+const { scene, alt } = Astro.props;
+
+// Top level: folders first, then plain links, as the extension sorts them.
+const rootItems = [
+  ...scene.folders.slice(0, 3).map((name) => ({ name, link: undefined })),
+  { name: ROOT_LINKS[0].name, link: ROOT_LINKS[0] },
+];
+const opened = scene.folders[0];
+---
+
+<!--
+  The three bookmark layouts, at the extension's real sizes. The card's layout
+  tabs (NewTabFeatureCard) pick one. The first pass walks through all three
+  and plays each one's move; once a visitor picks a tab, only that layout
+  plays. It rests on the top bar with its dropdown open, the server markup.
+-->
+<div class="nts-scene bm" data-bookmarks-scene role="img" aria-label={alt}>
+
+  <!-- Folders: click in, and the crumbs follow. -->
+  <div class="bm-view" data-view="folder" data-active="false" aria-hidden="true">
+    <div class="bm-head">
+      <span class="bm-crumbs" data-crumbs data-level="child">
+        <span>{scene.bookmarksHeading}</span>
+        <span class="bm-crumbs__child"><i>/</i>{opened}</span>
+      </span>
+      <span class="bm-pager"><i class="ri-arrow-left-s-line"></i><i class="ri-arrow-right-s-line"></i></span>
+    </div>
+    <div class="bm-grids" data-grids data-level="child">
+      <div class="bm-grid bm-grid--root">
+        {rootItems.map((item, index) => <SceneBookmark name={item.name} link={item.link} data-card={String(index)} data-hover="false" />)}
+      </div>
+      <div class="bm-grid bm-grid--child">
+        {REFERENCE_LINKS.slice(0, 4).map((link) => <SceneBookmark name={link.name} link={link} />)}
+      </div>
+    </div>
+  </div>
+
+  <!-- Nested menus: rest on a folder, then open the folder inside it. -->
+  <div class="bm-view" data-view="list" data-active="false" aria-hidden="true">
+    <div class="bm-head">
+      <span class="bm-crumbs"><span>{scene.bookmarksHeading}</span></span>
+      <span class="bm-pager"><i class="ri-arrow-left-s-line"></i><i class="ri-arrow-right-s-line"></i></span>
+    </div>
+    <div class="bm-grids">
+      <div class="bm-grid">
+        {rootItems.map((item, index) => <SceneBookmark name={item.name} link={item.link} data-card={String(index)} data-hover={String(index === 0)} />)}
+      </div>
+    </div>
+    <div class="nts-menu bm-cascade" data-menu data-open="true">
+      <p class="nts-menu__title">{opened}</p>
+      {REFERENCE_LINKS.slice(0, 1).map((link) => <SceneBookmark row name={link.name} link={link} data-item data-active="false" />)}
+      <span class="nts-menu__item bm-sub-row" data-item data-active="true">
+        <SceneFolderIcon />
+        {scene.subfolder}
+        <i class="ri-arrow-right-s-line nts-menu__chevron"></i>
+        <span class="nts-menu nts-menu--side bm-sub" data-submenu data-open="true">
+          {ICON_LINKS.map((link, index) => (
+            <SceneBookmark row name={link.name} link={link} data-sub-item data-active={String(index === ICON_LINKS.length - 1)} />
+          ))}
+        </span>
+      </span>
+    </div>
+  </div>
+
+  <!-- Top bar: along the screen's top edge, as on a real page. -->
+  <div class="bm-view" data-view="top" data-active="true">
+    <div class="bm-page" aria-hidden="true">
+      <!-- newtab.css .x-nt-bookmarks-topbar: 36px frosted bar, 28px items. -->
+      <div class="bm-bar">
+        {scene.folders.slice(0, 6).map((name, index) => (
+          <span class="bm-bar__item" data-bar-item={index === 0 ? "" : undefined} data-hover={String(index === 0)}>
+            <SceneFolderIcon />
+            {name}
+          </span>
+        ))}
+      </div>
+      <div class="bm-home">
+        <p class="nts-clock">09:41</p>
+        <div class="bm-home__search"><SceneSearch placeholder={scene.searchPlaceholder} /></div>
+      </div>
+      <div class="nts-menu bm-drop" data-menu data-open="true">
+        {REFERENCE_LINKS.slice(0, 4).map((link, index) => (
+          <SceneBookmark row name={link.name} link={link} data-item data-active={String(index === 2)} />
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <SceneCursor />
+</div>
+
+<style>
+  .bm-view {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 360ms ease;
+  }
+
+  .bm-view[data-active="true"] {
+    opacity: 1;
+  }
+
+  /* ---------- Header: crumbs and pager (newtab.css bookmarks header) ---------- */
+
+  .bm-head {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    left: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 24px;
+  }
+
+  .bm-crumbs {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-left: 2px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .bm-crumbs__child {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    transform: translateX(-6px);
+    transition:
+      opacity 220ms ease,
+      transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .bm-crumbs__child i {
+    color: #6b7280;
+    font-size: 12px;
+    font-style: normal;
+  }
+
+  .bm-crumbs[data-level="child"] .bm-crumbs__child {
+    opacity: 1;
+    transform: none;
+  }
+
+  .bm-pager {
+    display: flex;
+    gap: 4px;
+  }
+
+  .bm-pager i {
+    display: grid;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 8px;
+    color: #000;
+    font-size: 16px;
+  }
+
+  .bm-pager i:first-child {
+    opacity: 0.34;
+  }
+
+  /* ---------- Grid: two columns of real-size cards ---------- */
+
+  .bm-grids {
+    position: absolute;
+    top: 54px;
+    right: 18px;
+    left: 18px;
+  }
+
+  .bm-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .bm-grid--child {
+    position: absolute;
+    inset: 0 0 auto;
+  }
+
+  .bm-grid > :global(*) {
+    transition:
+      opacity 240ms ease calc(var(--i, 0) * 30ms),
+      transform 360ms cubic-bezier(0.22, 1, 0.36, 1) calc(var(--i, 0) * 30ms),
+      background-color 170ms ease;
+  }
+
+  .bm-grid > :global(:nth-child(2)) { --i: 1; }
+  .bm-grid > :global(:nth-child(3)) { --i: 2; }
+  .bm-grid > :global(:nth-child(4)) { --i: 3; }
+
+  /* Opening a folder: the top level steps back and its contents rise in. */
+  .bm-grids[data-level="child"] .bm-grid--root > :global(*) {
+    opacity: 0;
+    transform: scale(0.97);
+    transition-delay: 0ms;
+  }
+
+  .bm-grids[data-level="root"] .bm-grid--child > :global(*) {
+    opacity: 0;
+    transform: translateY(8px);
+    transition-delay: 0ms;
+  }
+
+  /* ---------- Hover menu under the first folder, with a nested level ---------- */
+
+  /* Sized to their rows, so both levels fit side by side in the screen. */
+  .bm-cascade {
+    top: 113px;
+    left: 18px;
+    min-width: 0;
+  }
+
+  .bm-sub-row {
+    position: relative;
+  }
+
+  /* Opens upward from its row, so it stays inside the card. */
+  .bm-sub {
+    min-width: 0;
+    bottom: -7px;
+    left: calc(100% + 11px);
+    transform-origin: left bottom;
+  }
+
+  /* ---------- Top bar layout ---------- */
+
+  .bm-page {
+    position: absolute;
+    inset: 0;
+  }
+
+  .bm-bar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    box-sizing: border-box;
+    height: 36px;
+    padding: 4px;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(15, 23, 42, 0.065);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(248, 250, 252, 0.62));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.14);
+    backdrop-filter: blur(14px) saturate(118%);
+    -webkit-backdrop-filter: blur(14px) saturate(118%);
+    -webkit-mask-image: linear-gradient(90deg, #000 82%, transparent);
+    mask-image: linear-gradient(90deg, #000 82%, transparent);
+  }
+
+  .bm-bar__item {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: 7px;
+    box-sizing: border-box;
+    height: 28px;
+    padding: 4px 8px;
+    border-radius: 7px;
+    color: #111827;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 18px;
+    white-space: nowrap;
+    transition: background-color 110ms ease;
+  }
+
+  .bm-bar__item :global(.nts-folder) {
+    width: 21px;
+    height: 21px;
+    transform: translateY(1px);
+  }
+
+  .bm-bar__item[data-hover="true"] {
+    background: rgba(37, 99, 235, 0.075);
+  }
+
+  .bm-home {
+    position: absolute;
+    top: 64px;
+    right: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .bm-home__search {
+    width: min(280px, calc(100% - 40px));
+    margin-top: 24px;
+  }
+
+  .bm-drop {
+    top: 40px;
+    left: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bm-view {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  import { Timeline, centerOf, clickCursor, hideCursor, moveCursor, playOnView, setActive } from "./scene-runtime";
+
+  const all = (root: Element, selector: string) => Array.from(root.querySelectorAll<HTMLElement>(selector));
+  const one = (root: Element, selector: string) => root.querySelector<HTMLElement>(selector)!;
+
+  type Ctx = { root: HTMLElement; view: HTMLElement; cursor: HTMLElement; timeline: Timeline };
+
+  /** Each layout's start state, and its move from `at`; a move returns its end time. */
+  const LAYOUTS: Record<string, { reset(view: HTMLElement): void; play(ctx: Ctx, at: number): number }> = {
+    folder: {
+      reset(view) {
+        one(view, "[data-grids]").dataset.level = "root";
+        one(view, "[data-crumbs]").dataset.level = "root";
+        setActive(all(view, "[data-card]"), -1, "hover");
+      },
+      play({ root, view, cursor, timeline }, at) {
+        const card = one(view, '[data-card="0"]');
+        timeline.at(at, () => moveCursor(cursor, centerOf(root, card, 20, 6), 800));
+        timeline.at(at + 800, () => (card.dataset.hover = "true"));
+        clickCursor(timeline, cursor, at + 1100);
+        timeline.at(at + 1100, () => (card.dataset.pressed = "true"));
+        timeline.at(at + 1240, () => {
+          card.dataset.pressed = "false";
+          card.dataset.hover = "false";
+          one(view, "[data-grids]").dataset.level = "child";
+          one(view, "[data-crumbs]").dataset.level = "child";
+        });
+        return at + 2200;
+      },
+    },
+    list: {
+      reset(view) {
+        one(view, "[data-menu]").dataset.open = "false";
+        one(view, "[data-submenu]").dataset.open = "false";
+        setActive(all(view, "[data-item]"), -1);
+        setActive(all(view, "[data-sub-item]"), -1);
+        setActive(all(view, "[data-card]"), -1, "hover");
+      },
+      play({ root, view, cursor, timeline }, at) {
+        const card = one(view, '[data-card="0"]');
+        const menu = one(view, "[data-menu]");
+        const items = all(view, "[data-item]");
+        const submenu = one(view, "[data-submenu]");
+        const subItems = all(view, "[data-sub-item]");
+        timeline.at(at, () => moveCursor(cursor, centerOf(root, card, 24, 4), 800));
+        timeline.at(at + 800, () => {
+          card.dataset.hover = "true";
+          menu.dataset.open = "true";
+        });
+        [0, items.length - 1].forEach((index, step) => {
+          const time = at + 1400 + step * 650;
+          timeline.at(time, () => moveCursor(cursor, centerOf(root, items[index], -24, 2), 440));
+          timeline.at(time + 300, () => setActive(items, index));
+        });
+        timeline.at(at + 2400, () => (submenu.dataset.open = "true"));
+        timeline.at(at + 2800, () => moveCursor(cursor, centerOf(root, subItems[subItems.length - 1], -30, 2), 520));
+        timeline.at(at + 3240, () => setActive(subItems, subItems.length - 1));
+        return at + 4000;
+      },
+    },
+    top: {
+      reset(view) {
+        one(view, "[data-menu]").dataset.open = "false";
+        setActive(all(view, "[data-item]"), -1);
+        one(view, "[data-bar-item]").dataset.hover = "false";
+      },
+      play({ root, view, cursor, timeline }, at) {
+        const item = one(view, "[data-bar-item]");
+        const menu = one(view, "[data-menu]");
+        const items = all(view, "[data-item]");
+        timeline.at(at, () => moveCursor(cursor, centerOf(root, item, 8, 3), 800));
+        timeline.at(at + 800, () => (item.dataset.hover = "true"));
+        clickCursor(timeline, cursor, at + 1050);
+        timeline.at(at + 1110, () => (menu.dataset.open = "true"));
+        [0, 2].forEach((index, step) => {
+          const time = at + 1600 + step * 560;
+          timeline.at(time, () => moveCursor(cursor, centerOf(root, items[index], -10, 2), 400));
+          timeline.at(time + 260, () => setActive(items, index));
+        });
+        return at + 3500;
+      },
+    },
+  };
+
+  document.querySelectorAll<HTMLElement>("[data-bookmarks-scene]").forEach((root) => {
+    const tabs = all(root.closest("article") || root, "[data-bm-tabs] button");
+    const views = all(root, "[data-view]");
+    const cursor = one(root, "[data-cursor]");
+    // Until a visitor picks a layout, a pass tours all three.
+    let picked = -1;
+
+    const show = (index: number) => {
+      setActive(views, index);
+      tabs.forEach((tab, tabIndex) => {
+        tab.dataset.active = String(tabIndex === index);
+        tab.setAttribute("aria-pressed", String(tabIndex === index));
+      });
+    };
+
+    const layoutOf = (view: HTMLElement) => LAYOUTS[view.dataset.view || ""];
+
+    const player = playOnView(root, {
+      reset() {
+        const shown = picked >= 0 ? [views[picked]] : views;
+        shown.forEach((view) => layoutOf(view).reset(view));
+        show(picked >= 0 ? picked : 0);
+        cursor.style.transitionDuration = "0ms, 200ms";
+        cursor.style.transform = `translate(${root.clientWidth * 0.62}px, ${root.clientHeight + 20}px)`;
+        hideCursor(cursor);
+      },
+      play(timeline) {
+        if (picked >= 0) {
+          const view = views[picked];
+          return layoutOf(view).play({ root, view, cursor, timeline }, 200) + 300;
+        }
+        let at = 300;
+        views.forEach((view, index) => {
+          if (index > 0) {
+            timeline.at(at, () => {
+              hideCursor(cursor);
+              show(index);
+            });
+            at += 500;
+          }
+          at = layoutOf(view).play({ root, view, cursor, timeline }, at) + 700;
+        });
+        return at;
+      },
+    });
+
+    tabs.forEach((tab, index) => {
+      tab.addEventListener("click", () => {
+        picked = index;
+        show(index);
+        player.replay();
+      });
+    });
+  });
+</script>

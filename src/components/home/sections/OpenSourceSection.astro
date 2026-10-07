@@ -21,7 +21,6 @@ const POINTS: Array<{ id: HomeTrustId; icon: string }> = [
 <section id="open-source" class="home-section open-source" aria-labelledby="open-source-title">
   <div class="open-source__layout">
     <header class="home-section__head home-section__head--start open-source__head">
-      <p class="home-eyebrow">{content.eyebrow}</p>
       <h2 id="open-source-title" class="home-h2"><span>{content.title}</span></h2>
       <p class="home-lead">{content.description}</p>
       <div class="open-source__links">
@@ -53,10 +52,10 @@ const POINTS: Array<{ id: HomeTrustId; icon: string }> = [
     <ul class="home-sheet open-source__points">
       {POINTS.map(({ id, icon }) => (
         <li>
-          <i class:list={["open-source__icon", icon]} aria-hidden="true"></i>
+          <i class:list={["home-cell__icon", icon]} aria-hidden="true"></i>
           <div>
-            <h3>{content.points[id].title}</h3>
-            <p>{content.points[id].description}</p>
+            <h3 class="home-cell__title">{content.points[id].title}</h3>
+            <p class="home-cell__text">{content.points[id].description}</p>
           </div>
         </li>
       ))}
@@ -92,33 +91,17 @@ const POINTS: Array<{ id: HomeTrustId; icon: string }> = [
     margin-top: 28px;
   }
 
+  /* Rows rather than tiles in this narrow column: the chip sits beside the title. */
   .open-source__points li {
     display: grid;
-    grid-template-columns: 24px minmax(0, 1fr);
+    grid-template-columns: 32px minmax(0, 1fr);
+    align-items: start;
     gap: 16px;
-    padding: 28px 32px;
   }
 
-  .open-source__icon {
-    margin-top: 1px;
-    color: var(--home-ink-soft);
-    font-size: 20px;
-    line-height: 1.4;
-  }
-
-  h3 {
-    margin: 0;
-    color: var(--home-ink);
-    font-size: 18px;
-    font-weight: 650;
-    line-height: 1.4;
-  }
-
-  .open-source__points p {
-    margin: 6px 0 0;
-    color: var(--text-sub, #626870);
-    font-size: 15px;
-    line-height: 1.68;
+  .open-source__points .home-cell__title {
+    /* Centres the first line on the 32px chip. */
+    padding-top: 4px;
   }
 
   .open-source__browsers {
@@ -149,9 +132,10 @@ const POINTS: Array<{ id: HomeTrustId; icon: string }> = [
 
   .open-source__browsers li {
     padding: 6px 14px;
-    border: 1px solid var(--home-card-border);
+    border: 1px solid var(--home-hairline-control);
     border-radius: 999px;
     background: var(--home-card);
+    box-shadow: var(--home-shadow-chip);
     color: var(--home-ink-soft);
     font-size: 14px;
     font-weight: 600;
@@ -164,12 +148,6 @@ const POINTS: Array<{ id: HomeTrustId; icon: string }> = [
 
     .open-source__head {
       position: static;
-    }
-  }
-
-  @media (max-width: 620px) {
-    .open-source__points li {
-      padding: 22px;
     }
   }
 </style>

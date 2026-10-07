@@ -1,0 +1,21 @@
+---
+interface Props {
+  title: string;
+  lead: string;
+}
+
+const { title, lead } = Astro.props;
+---
+
+<!--
+  Heading for one part of the new tab section, in the shared .home-part-head
+  style (styles/home.css): the claim in ink, the explanation in grey right
+  under it, and room on the right for controls.
+-->
+<header class="home-part-head">
+  <div class="home-part-head__copy">
+    <h3 class="home-part-head__title">{title}</h3>
+    <p class="home-part-head__lead">{lead}</p>
+  </div>
+  <slot />
+</header>

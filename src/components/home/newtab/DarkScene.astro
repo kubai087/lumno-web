@@ -1,0 +1,141 @@
+---
+import type { HomeNewTabScene } from "../../../lib/home-content";
+import SceneCursor from "./SceneCursor.astro";
+import SceneSearch from "./SceneSearch.astro";
+import { DAY_NIGHT_PAIRS, wallpaper } from "./scene-data";
+
+interface Props {
+  scene: HomeNewTabScene;
+  alt: string;
+}
+
+const { scene, alt } = Astro.props;
+const MODES = [
+  { mode: "light", icon: "ri-sun-line", label: scene.lightLabel },
+  { mode: "dark", icon: "ri-moon-clear-line", label: scene.darkLabel },
+  { mode: "system", icon: "ri-computer-line", label: scene.systemLabel },
+];
+const LAYERS = [
+  { theme: "light", time: "09:41", pick: 0 },
+  { theme: "dark", time: "23:30", pick: 1 },
+] as const;
+---
+
+<!--
+  The same new tab by day and by night, each with its own wallpaper; night
+  grows out of the top-right corner when the mode switch flips. Each pass
+  starts on day and ends on night, which is also the resting frame.
+-->
+<div class="nts-scene dk" data-dark-scene data-mode="dark" role="img" aria-label={alt}>
+  {LAYERS.map(({ theme, time, pick }) => (
+    <div class="dk-layer" data-layer={theme} data-theme={theme} aria-hidden="true">
+      <div class="nts-wall">
+        {DAY_NIGHT_PAIRS.map((pair, index) => (
+          <img src={wallpaper(pair[pick])} alt="" width="1280" height="720" loading="lazy" decoding="async" data-wall data-active={String(index === 0)} />
+        ))}
+      </div>
+      <div class="dk-page">
+        <p class="nts-clock">{time}</p>
+        <div class="dk-search"><SceneSearch placeholder={scene.searchPlaceholder} /></div>
+      </div>
+    </div>
+  ))}
+
+  <div class="nts-tabs nts-tabs--float dk-tabs" aria-hidden="true" data-tabs>
+    <span class="nts-tabs__indicator"></span>
+    {MODES.map(({ mode, icon, label }) => (
+      <span class="nts-tab" data-tab={mode} data-active={String(mode === "dark")}><i class={icon}></i>{label}</span>
+    ))}
+  </div>
+
+  <SceneCursor />
+</div>
+
+<style>
+  .dk {
+    --origin: 100% 0%;
+  }
+
+  .dk-layer {
+    position: absolute;
+    inset: 0;
+    isolation: isolate;
+  }
+
+  .dk-layer[data-layer="dark"] {
+    clip-path: circle(0 at var(--origin));
+    transition: clip-path 1100ms cubic-bezier(0.65, 0, 0.35, 1);
+  }
+
+  .dk[data-mode="dark"] .dk-layer[data-layer="dark"] {
+    clip-path: circle(150% at var(--origin));
+  }
+
+  /* Rewinding to day for a new pass happens in one frame. */
+  .dk[data-instant] .dk-layer[data-layer="dark"] {
+    transition: none;
+  }
+
+  /* Clock and search, lifted a little to leave the bottom to the switch. */
+  .dk-page {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+    padding: 0 20px 64px;
+  }
+
+  .dk-search {
+    width: min(320px, 100%);
+  }
+
+  .dk-tabs {
+    position: absolute;
+    bottom: 18px;
+    left: 50%;
+    z-index: 2;
+    translate: -50% 0;
+  }
+</style>
+
+<script>
+  import { Timeline, centerOf, clickCursor, moveCursor, playOnView, prefersReducedMotion, selectTab, setActive } from "./scene-runtime";
+
+  document.querySelectorAll<HTMLElement>("[data-dark-scene]").forEach((root) => {
+    if (prefersReducedMotion()) return;
+    const tabsEl = root.querySelector<HTMLElement>("[data-tabs]")!;
+    const tabs = Array.from(root.querySelectorAll<HTMLElement>("[data-tab]"));
+    const cursor = root.querySelector<HTMLElement>("[data-cursor]")!;
+    const day = Array.from(root.querySelectorAll<HTMLElement>('[data-layer="light"] [data-wall]'));
+    const night = Array.from(root.querySelectorAll<HTMLElement>('[data-layer="dark"] [data-wall]'));
+    let pair = 0;
+    let passes = 0;
+
+    selectTab(tabsEl, tabs.findIndex((tab) => tab.dataset.active === "true"), false);
+
+    // A pass rewinds to day, then flips to night. Replays move on to the next day/night pair.
+    playOnView(root, {
+      reset() {
+        if (passes++ > 0) pair = (pair + 1) % day.length;
+        setActive(day, pair);
+        setActive(night, pair);
+        root.dataset.instant = "";
+        root.dataset.mode = "light";
+        selectTab(tabsEl, 0, false);
+        requestAnimationFrame(() => root.removeAttribute("data-instant"));
+      },
+      play(timeline: Timeline) {
+        timeline.at(500, () => moveCursor(cursor, centerOf(root, tabs[1], 6, 4), 700));
+        clickCursor(timeline, cursor, 1300);
+        timeline.at(1300, () => {
+          selectTab(tabsEl, 1);
+          root.dataset.mode = "dark";
+        });
+        return 2600;
+      },
+    });
+  });
+</script>

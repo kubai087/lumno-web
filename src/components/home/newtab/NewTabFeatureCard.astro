@@ -1,0 +1,225 @@
+---
+import type { HOME_CONTENT, HomeNewTabBookmarkView } from "../../../lib/home-content";
+import BookmarksScene from "./BookmarksScene.astro";
+import ClockScene from "./ClockScene.astro";
+import DarkScene from "./DarkScene.astro";
+import DockScene from "./DockScene.astro";
+import WallpaperScene from "./WallpaperScene.astro";
+import ZenScene from "./ZenScene.astro";
+import "./newtab-scene.css";
+
+type Content = (typeof HOME_CONTENT)["en"]["newTab"];
+export type FeatureId = "wallpapers" | "dark" | "clock" | "bookmarks" | "dock" | "zen";
+
+interface Props {
+  id: FeatureId;
+  content: Content;
+}
+
+const { id, content } = Astro.props;
+const copy = content[id];
+const { scene } = content;
+const BOOKMARK_VIEWS: HomeNewTabBookmarkView[] = ["folder", "list", "top"];
+// The bookmark card rests on its last layout; the tabs start there too.
+const RESTING_VIEW = BOOKMARK_VIEWS.length - 1;
+---
+
+<!--
+  One feature: title and copy over an animated illustration. Every
+  illustration sits in the same browser window, inset from the card's top and
+  sides and running off its bottom, with the extension's UI inside at its real
+  size. Faint diagonal lines fill the card and fade in toward the window, so
+  copy and art read as one surface. The illustration plays once when first
+  seen; hovering the card lifts it and replays it.
+-->
+<article class="ntf" aria-labelledby={`ntf-title-${id}`}>
+  <h4 id={`ntf-title-${id}`}>{copy.title}</h4>
+  <p class="ntf-text">{copy.description}</p>
+  {id === "bookmarks" && (
+    <div class="lumno-settings-kit lumno-settings-tabs ntf-tabs" role="group" aria-label={copy.label} data-bm-tabs>
+      {BOOKMARK_VIEWS.map((view, index) => (
+        <button
+          type="button"
+          class="lumno-settings-tab"
+          data-active={String(index === RESTING_VIEW)}
+          aria-pressed={index === RESTING_VIEW ? "true" : "false"}
+        >
+          {content.bookmarks.views[view]}
+        </button>
+      ))}
+    </div>
+  )}
+  <div class="ntf-art">
+    <div class="ntf-window">
+      <!-- Browser chrome: window controls and an empty address bar, as on a fresh tab. -->
+      <div class="ntf-chrome" aria-hidden="true">
+        <span class="ntf-lights"><i></i><i></i><i></i></span>
+        <span class="ntf-address"><i class="ri-search-line"></i></span>
+      </div>
+      <div class="ntf-page">
+        {id === "wallpapers" && <WallpaperScene scene={scene} alt={copy.alt} />}
+        {id === "dark" && <DarkScene scene={scene} alt={copy.alt} />}
+        {id === "clock" && <ClockScene scene={scene} alt={copy.alt} />}
+        {id === "bookmarks" && <BookmarksScene scene={scene} alt={copy.alt} />}
+        {id === "dock" && <DockScene scene={scene} alt={copy.alt} />}
+        {id === "zen" && <ZenScene scene={scene} alt={copy.alt} />}
+      </div>
+    </div>
+  </div>
+</article>
+
+<style>
+  /* The shared paper card (styles/home.css): gradient ring, highlight, card shadow. */
+  .ntf {
+    --edge: var(--home-edge);
+    --pad: calc(var(--home-card-pad) - 1px);
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow: hidden;
+    border: 1px solid transparent;
+    border-radius: var(--home-radius-xl);
+    background:
+      linear-gradient(var(--home-paper), var(--home-paper)) padding-box,
+      var(--home-ring) border-box;
+    box-shadow: var(--home-highlight), var(--home-shadow-card);
+    transition:
+      background-color 240ms ease,
+      box-shadow 240ms ease,
+      transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* Dense, faint diagonal lines, absent behind the copy and full behind the window. */
+  .ntf::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: repeating-linear-gradient(-45deg, rgba(var(--edge), 0.075) 0 1px, transparent 1px 7px);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 18%, #000 62%);
+    mask-image: linear-gradient(to bottom, transparent 18%, #000 62%);
+    pointer-events: none;
+  }
+
+  /* Hover: the card lifts and brightens, a cue that the illustration replays. */
+  @media (hover: hover) {
+    .ntf:hover {
+      box-shadow:
+        var(--home-highlight),
+        0 2px 4px rgba(var(--edge), 0.05),
+        0 24px 48px -26px rgba(var(--edge), 0.3);
+      transform: translateY(-3px);
+    }
+  }
+
+  h4 {
+    margin: 0;
+    padding: var(--pad) var(--pad) 0;
+    color: var(--home-ink);
+    font-size: var(--home-title-md);
+    font-weight: 650;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  .ntf-text {
+    max-width: 460px;
+    margin: var(--home-title-gap) 0 0;
+    padding: 0 var(--pad);
+    color: var(--text-sub, #626870);
+    font-size: var(--home-body);
+    line-height: var(--home-body-leading);
+    text-wrap: pretty;
+  }
+
+  /* Layout tabs for the bookmark card: real controls, so they live with the copy. */
+  .ntf-tabs {
+    align-self: flex-start;
+    max-width: calc(100% - 2 * var(--pad));
+    margin: 16px var(--pad) 0;
+    background: rgba(var(--edge), 0.05);
+  }
+
+  /* The art sits at the bottom of every card, so cards of any copy length line up. */
+  .ntf-art {
+    position: relative;
+    flex: none;
+    height: 340px;
+    margin-top: auto;
+  }
+
+  /* The browser window, the same frame in every card, its sides on the copy's edges. */
+  .ntf-window {
+    position: absolute;
+    inset: 24px var(--pad) 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 12px 12px 0 0;
+    background: #fafafa;
+    box-shadow:
+      0 0 0 1px rgba(var(--edge), 0.12),
+      0 16px 40px -18px rgba(var(--edge), 0.32);
+  }
+
+  .ntf-chrome {
+    position: relative;
+    display: flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    height: 34px;
+    border-bottom: 1px solid rgba(var(--edge), 0.08);
+    background: #eef0f2;
+  }
+
+  .ntf-lights {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    display: flex;
+    gap: 6px;
+    translate: 0 -50%;
+  }
+
+  .ntf-lights i {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: rgba(var(--edge), 0.16);
+  }
+
+  /* An empty address bar, centred on the window. */
+  .ntf-address {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    width: min(52%, 280px);
+    height: 20px;
+    padding: 0 8px;
+    border-radius: 6px;
+    background: #fff;
+    box-shadow: 0 0 0 1px rgba(var(--edge), 0.08);
+    color: rgba(var(--edge), 0.35);
+    font-size: 11px;
+  }
+
+  .ntf-page {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ntf {
+      transition: none;
+    }
+
+    .ntf:hover {
+      transform: none;
+    }
+  }
+</style>

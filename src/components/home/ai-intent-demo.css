@@ -1,202 +1,446 @@
 .ai-intent-demo {
-  --demo-text: #243130;
-  --demo-muted: rgba(36, 49, 48, 0.76);
-  --demo-border: rgba(255, 255, 255, 0.64);
-  --interaction-x: 50%;
-  --interaction-y: 50%;
-  --cursor-start-x: 50%;
-  --cursor-start-y: 50%;
-  --cursor-end-x: 60%;
-  --cursor-end-y: 50%;
-  position: relative;
+  --demo-ink: #1f2624;
+  --demo-muted: rgba(36, 49, 48, 0.68);
+  --demo-group: #1a73e8;
+  --demo-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --demo-glide: cubic-bezier(0.45, 0, 0.2, 1);
+  --anchor-x: 70%;
+  --anchor-y: 50%;
+  --cursor-x: 50%;
+  --cursor-y: 60%;
+  --status-w: 140px;
+  --fly-to-x: 60%;
+  --fly-to-y: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   width: 100%;
-  min-height: 0;
-  aspect-ratio: 1203 / 753;
-  isolation: isolate;
-  overflow: hidden;
-  border: 0;
-  border-radius: 16px;
-  background: #e7eadf;
-  box-shadow: none;
-  color: var(--demo-text);
+  color: var(--demo-ink);
   font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
-.ai-intent-demo__wallpaper,
-.ai-intent-demo__scrim {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
+/* ---------- Stage: a frosted browser resting on the wallpaper ---------- */
+
+.ai-intent-demo__stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1203 / 753;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: var(--home-radius-xl, 28px);
+  background: #e7eadf;
 }
 
 .ai-intent-demo__wallpaper {
-  z-index: -2;
-  background: url("/assets/lumno-newtab-monet-coastal-white.webp") center / cover no-repeat;
-  transform: scale(1.035);
-}
-
-.ai-intent-demo__scrim {
+  position: absolute;
+  inset: 0;
   z-index: -1;
-  background: linear-gradient(112deg, rgba(250, 252, 249, 0.56), rgba(246, 249, 244, 0.28));
+  background: url("/assets/lumno-newtab-monet-coastal-white.webp") center / cover no-repeat;
+  transform: scale(1.04);
+  pointer-events: none;
 }
 
-.ai-intent-demo__article {
+/* Chrome and page read as one object: a translucent shell holding an inset paper card. */
+.ai-intent-demo__window {
+  position: absolute;
+  inset: 7.5% 6.5%;
+  display: flex;
+  flex-direction: column;
+  padding: 0 6px 6px;
+  border-radius: 18px;
+  background: rgba(248, 250, 246, 0.62);
+  -webkit-backdrop-filter: blur(22px) saturate(140%);
+  backdrop-filter: blur(22px) saturate(140%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.72),
+    0 30px 70px rgba(var(--home-edge, 32, 38, 46), 0.18),
+    0 6px 18px rgba(var(--home-edge, 32, 38, 46), 0.07);
+}
+
+.ai-intent-demo__tabs {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+  height: 44px;
+  padding: 0 6px;
+  overflow: hidden;
+}
+
+.ai-intent-demo__lights {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 6px;
+  margin-inline-end: 8px;
+}
+
+.ai-intent-demo__lights i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(31, 38, 36, 0.16);
+}
+
+.ai-intent-demo__tab {
+  display: inline-flex;
+  flex: 0 1 auto;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  height: 30px;
+  padding: 0 12px;
+  border-radius: 9px;
+  color: rgba(31, 38, 36, 0.66);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.ai-intent-demo__tab > span:last-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ai-intent-demo__tab--page {
+  max-width: 190px;
+  background: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.07), 0 0 0 0.5px rgba(15, 23, 42, 0.05);
+  color: var(--demo-ink);
+}
+
+.ai-intent-demo__tab--page i {
+  color: rgba(31, 38, 36, 0.5);
+  font-size: 14px;
+}
+
+/* Chrome tab group: a solid label chip, with the group colour running under its tabs. */
+.ai-intent-demo__group {
+  position: relative;
+  display: inline-flex;
+  flex: 0 1 auto;
+  align-items: center;
+  min-width: 0;
+  height: 30px;
+  margin-inline-start: 6px;
+  transition: opacity 360ms ease;
+}
+
+.ai-intent-demo__group[data-pending="true"],
+.ai-intent-demo__group[data-leaving="true"] {
+  opacity: 0;
+}
+
+.ai-intent-demo__group::after {
+  position: absolute;
+  right: 4px;
+  bottom: -4px;
+  left: 2px;
+  height: 2.5px;
+  border-radius: 2px;
+  background: var(--demo-group);
+  content: "";
+}
+
+.ai-intent-demo__group-label {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  height: 20px;
+  margin-inline-end: 4px;
+  padding: 0 7px;
+  border-radius: 6px;
+  background: var(--demo-group);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.ai-intent-demo__tab--ai {
+  --tab-pad: 10px;
+  position: relative;
+  max-width: 124px;
+  padding: 0 var(--tab-pad);
+  transition: max-width 440ms var(--demo-ease), padding 440ms var(--demo-ease);
+}
+
+/* The slot is reserved while the pill is shown, then opens just ahead of its arrival. */
+.ai-intent-demo__tab--ai[data-state="reserved"] {
+  max-width: 0;
+  padding-inline: 0;
+}
+
+/* Thin separators between inactive tabs, as in Chrome's tab strip. */
+.ai-intent-demo__tab--ai + .ai-intent-demo__tab--ai:not([data-state="reserved"])::before {
   position: absolute;
   top: 50%;
-  left: 8.8%;
-  width: min(76%, 640px);
-  padding: clamp(34px, 5vw, 64px) clamp(26px, 4.2vw, 54px);
-  box-sizing: border-box;
-  border: 1px solid var(--demo-border);
-  border-radius: 20px;
-  background: rgba(255, 255, 252, 0.42);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.58), 0 12px 46px rgba(45, 58, 42, 0.07);
-  backdrop-filter: blur(18px) saturate(117%);
-  -webkit-backdrop-filter: blur(18px) saturate(117%);
+  left: 0;
+  width: 1px;
+  height: 14px;
+  background: rgba(31, 38, 36, 0.16);
+  content: "";
   transform: translateY(-50%);
+}
+
+.ai-intent-demo__tab--ai > * {
+  transition: opacity 220ms ease;
+}
+
+.ai-intent-demo__tab--ai[data-state="reserved"] > * {
+  opacity: 0;
+}
+
+/* Cross-fade with the arriving spinner so the hand-off reads as one object. */
+.ai-intent-demo__tab--ai[data-state="opening"] > * {
+  opacity: 0;
+  animation: ai-intent-demo-fade-in 180ms ease 600ms both;
+}
+
+.ai-intent-demo__tab--ai[data-state="landed"] {
+  animation: ai-intent-demo-tab-landed 1200ms ease both;
+}
+
+.ai-intent-demo__tab--ai[data-state="landed"] .ai-intent-demo__tab-icon img {
+  animation: ai-intent-demo-icon-in 320ms var(--demo-ease) both;
+}
+
+.ai-intent-demo__tab-icon {
+  position: relative;
+  display: block;
+  flex: 0 0 auto;
+  width: 14px;
+  height: 14px;
+}
+
+.ai-intent-demo__tab-icon img {
+  display: block;
+  width: 14px;
+  height: 14px;
+}
+
+.ai-intent-demo__spinner {
+  display: inline-block;
+  flex: 0 0 auto;
+  width: 12px;
+  height: 12px;
+  box-sizing: border-box;
+  border: 1.6px solid rgba(26, 115, 232, 0.22);
+  border-top-color: var(--demo-group);
+  border-radius: 50%;
+  animation: ai-intent-demo-spin 700ms linear infinite;
+}
+
+.ai-intent-demo__tab-icon .ai-intent-demo__spinner {
+  position: absolute;
+  inset: 1px;
+  display: none;
+}
+
+.ai-intent-demo__tab--ai[data-state="opening"] .ai-intent-demo__spinner,
+.ai-intent-demo__tab--ai[data-state="loading"] .ai-intent-demo__spinner {
+  display: block;
+}
+
+.ai-intent-demo__tab--ai[data-state="opening"] img,
+.ai-intent-demo__tab--ai[data-state="loading"] img {
+  visibility: hidden;
+}
+
+/* ---------- Page ---------- */
+
+.ai-intent-demo__page {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  padding: clamp(22px, 3vw, 38px) clamp(24px, 3.8vw, 50px);
+  border-radius: 12px;
+  background: #fffffd;
+  box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.05), 0 1px 3px rgba(15, 23, 42, 0.05);
+}
+
+.ai-intent-demo__kicker {
+  margin: 0;
+  color: #6d7f63;
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.ai-intent-demo__title {
+  margin: 6px 0 clamp(12px, 1.6vw, 18px);
+  color: var(--demo-ink);
+  font-size: clamp(20px, 2vw, 27px);
+  font-weight: 620;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+[data-locale="en"] .ai-intent-demo__title {
+  font-family: "EB Garamond", Georgia, serif;
+  font-size: clamp(23px, 2.3vw, 31px);
+  font-weight: 600;
+  letter-spacing: -0.01em;
 }
 
 .ai-intent-demo__body {
   margin: 0;
   color: var(--demo-muted);
   cursor: text;
-  font-size: clamp(16px, 1.52vw, 21px);
-  letter-spacing: -0.018em;
-  line-height: 1.9;
+  font-size: clamp(14px, 1.28vw, 18px);
+  letter-spacing: -0.01em;
+  line-height: 1.92;
   text-wrap: pretty;
 }
 
-.ai-intent-demo__selection {
-  position: relative;
-  z-index: 0;
-  display: inline;
-  color: #22332d;
-  background: rgba(146, 202, 242, 0);
-  box-decoration-break: clone;
-  -webkit-box-decoration-break: clone;
-  cursor: text;
-  transition: background-color 160ms ease, color 160ms ease;
+[data-locale^="zh"] .ai-intent-demo__body {
+  letter-spacing: 0.01em;
 }
 
-.ai-intent-demo[data-phase="selecting"] .ai-intent-demo__selection,
-.ai-intent-demo[data-phase="mark"] .ai-intent-demo__selection,
-.ai-intent-demo[data-phase="toolbar"] .ai-intent-demo__selection,
-.ai-intent-demo[data-phase="sending"] .ai-intent-demo__selection {
-  background: rgba(146, 202, 242, 0.68);
+.ai-intent-demo__selection {
+  border-radius: 2px;
+  color: #1c2a26;
+  background: rgba(146, 202, 242, 0.62);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  transition: background-color 360ms ease, color 360ms ease;
 }
+
+.ai-intent-demo[data-phase="clearing"] .ai-intent-demo__selection {
+  color: inherit;
+  background: rgba(146, 202, 242, 0);
+}
+
+/* ---------- Lumno mark that unfolds into the toolbar ---------- */
 
 .ai-intent-demo__interaction {
   position: absolute;
-  top: var(--interaction-y);
-  left: var(--interaction-x);
+  top: var(--anchor-y);
+  left: var(--anchor-x);
   z-index: 3;
-  display: block;
-  transform: translateY(0);
-  transition: transform 160ms ease;
+  transform: translate(-100%, -50%);
 }
 
-.ai-intent-demo[data-phase="toolbar"] .ai-intent-demo__interaction {
-  transform: translateY(-10px);
+/* The whole surface travels: it is the request on its way to the new tab. */
+.ai-intent-demo[data-phase="flying"] .ai-intent-demo__interaction,
+.ai-intent-demo[data-phase="landing"] .ai-intent-demo__interaction {
+  top: var(--fly-to-y);
+  left: var(--fly-to-x);
 }
 
+.ai-intent-demo[data-phase="flying"] .ai-intent-demo__interaction {
+  transition:
+    top 720ms cubic-bezier(0.45, 0.1, 0.2, 1),
+    left 720ms cubic-bezier(0.6, 0, 0.3, 1);
+}
+
+/*
+ * The toolbar is always laid out at full width. The material layer starts as a
+ * small square behind the mark and widens leftwards into the full bar, so the
+ * mark never jumps and the extension's radius and shadow stay intact.
+ */
 .ai-intent-demo__surface {
   --lumno-selection-surface-radius: 13px;
   position: relative;
   display: inline-flex;
   align-items: center;
-  justify-content: flex-start;
-  gap: 0;
   height: 38px;
-  padding: 3px;
-  border: 1px solid transparent;
-  border-radius: var(--lumno-selection-surface-radius);
-  background: transparent;
-  color: light-dark(#18181b, #e7e8eb);
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
-  box-shadow: none;
-  opacity: 0;
-  transform: translateY(-3px) scale(0.96);
-  transition: opacity 140ms ease, transform 160ms ease;
+  padding: 3px 1px 3px 3px;
+  color: #18181b;
   box-sizing: border-box;
-  overflow: visible;
-  contain: layout style;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms ease;
 }
 
 .ai-intent-demo[data-phase="mark"] .ai-intent-demo__surface,
-.ai-intent-demo[data-phase="toolbar"] .ai-intent-demo__surface {
+.ai-intent-demo[data-phase="toolbar"] .ai-intent-demo__surface,
+.ai-intent-demo[data-phase="press"] .ai-intent-demo__surface {
   opacity: 1;
-  transform: translateY(0) scale(1);
+  pointer-events: auto;
 }
 
-.ai-intent-demo[data-phase="sending"] .ai-intent-demo__surface {
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(0) scale(0.96);
+.ai-intent-demo[data-phase="sending"] .ai-intent-demo__surface,
+.ai-intent-demo[data-phase="flying"] .ai-intent-demo__surface {
+  opacity: 1;
+}
+
+/* On arrival the dot dissolves into the tab's own spinner. */
+.ai-intent-demo[data-phase="landing"] .ai-intent-demo__surface {
+  transition: opacity 180ms ease;
 }
 
 .ai-intent-demo__material {
   position: absolute;
-  inset: 0 auto 0 0;
+  top: 4px;
+  right: 2px;
+  bottom: 4px;
   z-index: 0;
-  width: 100%;
+  width: 30px;
   box-sizing: border-box;
-  overflow: hidden;
-  border: 1px solid light-dark(rgba(15, 23, 42, 0.12), rgba(255, 255, 255, 0.13));
-  border-radius: inherit;
-  background: light-dark(rgba(244, 245, 247, 0.94), rgba(26, 27, 31, 0.92));
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  border-radius: 9px;
+  background: rgba(244, 245, 247, 0.94);
   -webkit-backdrop-filter: blur(14px) saturate(130%);
   backdrop-filter: blur(14px) saturate(130%);
   box-shadow:
-    inset 0 0 0 1px light-dark(rgba(255, 255, 255, 0.3), transparent),
-    0 8px 24px light-dark(rgba(15, 23, 42, 0.14), rgba(0, 0, 0, 0.38)),
-    0 2px 6px light-dark(rgba(15, 23, 42, 0.08), rgba(0, 0, 0, 0.24));
+    inset 0 0 0 1px rgba(255, 255, 255, 0.3),
+    0 8px 24px rgba(15, 23, 42, 0.14),
+    0 2px 6px rgba(15, 23, 42, 0.08);
   pointer-events: none;
+  transition:
+    width 420ms var(--demo-ease),
+    top 420ms var(--demo-ease),
+    right 420ms var(--demo-ease),
+    bottom 420ms var(--demo-ease),
+    border-radius 420ms var(--demo-ease);
+}
+
+.ai-intent-demo[data-phase="toolbar"] .ai-intent-demo__material,
+.ai-intent-demo[data-phase="press"] .ai-intent-demo__material {
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  border-radius: var(--lumno-selection-surface-radius);
+}
+
+/* After the click the bar folds into the status pill... */
+.ai-intent-demo[data-phase="sending"] .ai-intent-demo__material {
+  top: 3px;
+  right: 0;
+  bottom: 3px;
+  width: var(--status-w);
+  border-radius: 16px;
+  transition-duration: 360ms;
+}
+
+/* ...and the pill folds into a dot as it sets off. */
+.ai-intent-demo[data-phase="flying"] .ai-intent-demo__material,
+.ai-intent-demo[data-phase="landing"] .ai-intent-demo__material {
+  top: 6px;
+  right: 0;
+  bottom: 6px;
+  width: 26px;
+  border-radius: 13px;
+  transition-duration: 300ms;
 }
 
 .ai-intent-demo__material::before {
   position: absolute;
   inset: 0;
-  border-radius: calc(var(--lumno-selection-surface-radius) - 1px);
+  border-radius: inherit;
   background:
-    radial-gradient(125% 165% at 50% -38%, light-dark(rgba(255, 255, 255, 0.76), rgba(255, 255, 255, 0.16)) 0%, transparent 72%),
-    radial-gradient(115% 145% at 50% 138%, light-dark(rgba(255, 255, 255, 0.28), rgba(255, 255, 255, 0.08)) 0%, transparent 78%);
+    radial-gradient(125% 165% at 50% -38%, rgba(255, 255, 255, 0.76) 0%, transparent 72%),
+    radial-gradient(115% 145% at 50% 138%, rgba(255, 255, 255, 0.28) 0%, transparent 78%);
   content: "";
-  pointer-events: none;
 }
 
-.ai-intent-demo__surface > * {
+.ai-intent-demo__content {
   position: relative;
   z-index: 1;
-}
-
-.ai-intent-demo__surface > .ai-intent-demo__material {
-  position: absolute;
-  z-index: 0;
-}
-
-.ai-intent-demo__surface[data-icon-only="true"] {
-  height: auto;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  box-shadow: none;
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
-  overflow: visible;
-}
-
-.ai-intent-demo__surface[data-icon-only="true"] .ai-intent-demo__material {
-  display: none;
-}
-
-.ai-intent-demo__surface[data-icon-only="true"] .ai-intent-demo__content {
-  flex: 0 0 auto;
-  overflow: visible;
-}
-
-.ai-intent-demo__surface[data-icon-only="false"] {
-  padding-inline-end: 1px;
+  display: flex;
+  align-items: center;
 }
 
 .ai-intent-demo__surface button {
@@ -216,68 +460,37 @@
   font: 400 12px/1.2 "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   white-space: nowrap;
   cursor: pointer;
+  transition: background-color 160ms ease, transform 140ms ease;
 }
 
 .ai-intent-demo__surface button:hover,
-.ai-intent-demo__surface button:focus-visible {
-  background: light-dark(rgba(15, 23, 42, 0.065), rgba(255, 255, 255, 0.1));
+.ai-intent-demo__surface button:focus-visible,
+.ai-intent-demo[data-phase="mark"] .ai-intent-demo__main {
+  background: rgba(15, 23, 42, 0.065);
   outline: none;
 }
 
-.ai-intent-demo__surface button:focus-visible {
-  box-shadow: inset 0 0 0 1px light-dark(rgba(15, 23, 42, 0.2), rgba(255, 255, 255, 0.28));
+.ai-intent-demo[data-phase="press"] .ai-intent-demo__toolbar button[data-primary="true"] {
+  background: rgba(15, 23, 42, 0.13);
+  transform: scale(0.95);
 }
 
-.ai-intent-demo__surface button:disabled {
-  opacity: 0.56;
-  cursor: default;
+.ai-intent-demo__surface button:focus-visible {
+  box-shadow: inset 0 0 0 1px rgba(15, 23, 42, 0.2);
 }
 
 .ai-intent-demo__main {
-  position: relative;
   width: 30px;
   min-height: 30px;
   padding: 0 !important;
-  border-radius: 9px !important;
   flex: 0 0 auto;
+}
+
+.ai-intent-demo[data-phase="sending"] .ai-intent-demo__main,
+.ai-intent-demo[data-phase="flying"] .ai-intent-demo__main,
+.ai-intent-demo[data-phase="landing"] .ai-intent-demo__main {
   opacity: 0;
-  pointer-events: none;
-  transform: translateY(2px) scale(0.9);
-  transition: background 120ms ease, backdrop-filter 120ms ease,
-    opacity 160ms ease, transform 200ms cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.ai-intent-demo__surface[data-icon-only="true"] .ai-intent-demo__main {
-  width: 18px;
-  min-height: 18px;
-  border-radius: 5px !important;
-  background: rgba(250, 250, 250, 0.76);
-  -webkit-backdrop-filter: blur(10px) saturate(150%);
-  backdrop-filter: blur(10px) saturate(150%);
-}
-
-.ai-intent-demo__surface[data-icon-only="true"] .ai-intent-demo__main::before {
-  position: absolute;
-  inset: -5px;
-  content: "";
-}
-
-.ai-intent-demo[data-phase="mark"] .ai-intent-demo__surface[data-icon-only="true"] .ai-intent-demo__main,
-.ai-intent-demo__surface[data-icon-only="false"] .ai-intent-demo__main {
-  opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0) scale(1);
-}
-
-.ai-intent-demo__surface[data-icon-only="true"] .ai-intent-demo__main:hover,
-.ai-intent-demo__surface[data-icon-only="true"] .ai-intent-demo__main:focus-visible {
-  background: rgba(255, 255, 255, 0.94);
-  -webkit-backdrop-filter: blur(10px) saturate(140%);
-  backdrop-filter: blur(10px) saturate(140%);
-}
-
-.ai-intent-demo__surface[data-icon-only="true"] .ai-intent-demo__main:focus-visible {
-  box-shadow: none;
+  transition: opacity 140ms ease;
 }
 
 .ai-intent-demo__main img {
@@ -287,51 +500,62 @@
   object-fit: contain;
 }
 
-.ai-intent-demo__surface[data-icon-only="true"] .ai-intent-demo__main img {
-  width: 12px;
-  height: 12px;
-  filter: brightness(0.28) contrast(1.18);
-  opacity: 0.9;
+.ai-intent-demo__status {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 14px 0 12px;
+  font-size: 12px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-50%);
+  transition: opacity 120ms ease;
 }
 
-.ai-intent-demo__content {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  flex: 0 1 auto;
-  min-width: 0;
-  border-radius: 2px;
+.ai-intent-demo__status-label {
+  display: inline-block;
+  max-width: 200px;
   overflow: hidden;
 }
 
-.ai-intent-demo__actions-viewport {
-  display: flex;
-  align-items: center;
-  flex: 0 1 auto;
-  min-width: 0;
-  justify-content: flex-end;
-  overflow: hidden;
+.ai-intent-demo[data-phase="sending"] .ai-intent-demo__status {
+  opacity: 1;
+  transition: opacity 220ms ease 150ms;
+}
+
+.ai-intent-demo[data-phase="flying"] .ai-intent-demo__status,
+.ai-intent-demo[data-phase="landing"] .ai-intent-demo__status {
+  gap: 0;
+  padding: 0 7px;
+  opacity: 1;
+  transition: gap 300ms var(--demo-ease), padding 300ms var(--demo-ease);
+}
+
+.ai-intent-demo[data-phase="flying"] .ai-intent-demo__status-label,
+.ai-intent-demo[data-phase="landing"] .ai-intent-demo__status-label {
+  max-width: 0;
+  opacity: 0;
+  transition: max-width 300ms var(--demo-ease), opacity 140ms ease;
 }
 
 .ai-intent-demo__toolbar {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  transform-origin: left center;
-  gap: 0;
   opacity: 0;
-  transform: translateX(-8px);
+  transform: translateX(10px);
+  transition: opacity 160ms ease, transform 300ms var(--demo-ease);
 }
 
-.ai-intent-demo[data-phase="toolbar"] .ai-intent-demo__toolbar {
+.ai-intent-demo[data-phase="toolbar"] .ai-intent-demo__toolbar,
+.ai-intent-demo[data-phase="press"] .ai-intent-demo__toolbar {
   opacity: 1;
   transform: translateX(0);
-  transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1) 30ms,
-    opacity 180ms ease-out 50ms;
-}
-
-.ai-intent-demo__toolbar:focus {
-  outline: none;
+  transition: opacity 240ms ease 90ms, transform 380ms var(--demo-ease) 40ms;
 }
 
 .ai-intent-demo__toolbar button {
@@ -348,15 +572,10 @@
   top: 50%;
   width: 1px;
   height: 18px;
-  background: light-dark(rgba(15, 23, 42, 0.12), rgba(255, 255, 255, 0.16));
+  background: rgba(15, 23, 42, 0.12);
   content: "";
   transform: translateY(-50%);
   pointer-events: none;
-}
-
-.ai-intent-demo__toolbar:hover button:focus-visible:not(:hover) {
-  background: transparent;
-  box-shadow: none;
 }
 
 .ai-intent-demo__primary-divider {
@@ -364,9 +583,16 @@
   width: 1px;
   height: 18px;
   margin-inline: 3px;
-  background: light-dark(rgba(15, 23, 42, 0.12), rgba(255, 255, 255, 0.16));
-  pointer-events: none;
+  background: rgba(15, 23, 42, 0.12);
   flex: 0 0 auto;
+  opacity: 0;
+  transition: opacity 160ms ease;
+}
+
+.ai-intent-demo[data-phase="toolbar"] .ai-intent-demo__primary-divider,
+.ai-intent-demo[data-phase="press"] .ai-intent-demo__primary-divider {
+  opacity: 1;
+  transition: opacity 240ms ease 90ms;
 }
 
 .ai-intent-demo__action-icon {
@@ -384,157 +610,247 @@
   overflow: hidden;
 }
 
-.ai-intent-demo__surface[data-icon-only="false"] .ai-intent-demo__material {
-  animation: ai-intent-demo-material-in 260ms cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.ai-intent-demo__surface[hidden],
-.ai-intent-demo__actions-viewport[hidden],
-.ai-intent-demo__primary-divider[hidden] {
-  display: none;
-}
-
-@keyframes ai-intent-demo-material-in {
-  from {
-    opacity: 0.72;
-    transform: scaleX(0.2);
-    transform-origin: left center;
-  }
-
-  to {
-    opacity: 1;
-    transform: scaleX(1);
-    transform-origin: left center;
-  }
-}
-
-.ai-intent-demo__sending {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: max-content;
-  margin: 0;
-  padding: 6px 10px;
-  border: 1px solid rgba(15, 23, 42, 0.12);
-  border-radius: 999px;
-  background: rgba(245, 247, 245, 0.93);
-  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.12);
-  color: #18181b;
-  font-size: 12px;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(5px) scale(0.95);
-}
-
-.ai-intent-demo[data-phase="sending"] .ai-intent-demo__sending {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-  transition: opacity 120ms ease, transform 160ms cubic-bezier(0.22, 1, 0.36, 1);
-}
+/* ---------- One cursor that glides between every step ---------- */
 
 .ai-intent-demo__cursor {
   position: absolute;
-  top: var(--cursor-start-y);
-  left: var(--cursor-start-x);
-  z-index: 5;
-  width: 16px;
-  height: 28px;
-  opacity: 0;
+  top: var(--cursor-y);
+  left: var(--cursor-x);
+  z-index: 6;
+  width: 0;
+  height: 0;
   pointer-events: none;
-  filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.96)) drop-shadow(0 3px 5px rgba(15, 23, 42, 0.22));
-  transform: translate(-50%, -50%);
-  animation: ai-intent-demo-cursor 3.3s cubic-bezier(0.2, 1, 0.36, 1) both;
+  transition: top 620ms var(--demo-glide), left 620ms var(--demo-glide);
 }
 
-.ai-intent-demo__cursor-stem {
+.ai-intent-demo[data-phase="selecting"] .ai-intent-demo__cursor {
+  transition: top 60ms linear, left 60ms linear;
+}
+
+.ai-intent-demo__caret,
+.ai-intent-demo__arrow {
+  position: absolute;
+  transition: opacity 180ms ease, transform 160ms ease;
+}
+
+.ai-intent-demo__caret {
+  top: -13px;
+  left: -8px;
+  width: 16px;
+  height: 26px;
+  filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.96)) drop-shadow(0 3px 5px rgba(15, 23, 42, 0.2));
+}
+
+.ai-intent-demo__arrow {
+  top: -2px;
+  left: -3px;
+  width: 18px;
+  height: 22px;
+  opacity: 0;
+  filter: drop-shadow(0 3px 5px rgba(15, 23, 42, 0.25));
+  transform-origin: 3px 2px;
+}
+
+.ai-intent-demo[data-cursor="arrow"] .ai-intent-demo__caret {
+  opacity: 0;
+}
+
+.ai-intent-demo[data-cursor="arrow"] .ai-intent-demo__arrow {
+  opacity: 1;
+}
+
+.ai-intent-demo[data-phase="press"] .ai-intent-demo__arrow {
+  transform: scale(0.86);
+}
+
+.ai-intent-demo__caret-stem {
   position: absolute;
   top: 2px;
   left: 50%;
   width: 2px;
-  height: 24px;
+  height: 22px;
   border-radius: 2px;
   background: #303030;
   transform: translateX(-50%);
 }
 
-.ai-intent-demo__cursor-cap {
+.ai-intent-demo__caret-cap {
   position: absolute;
   left: 50%;
-  width: 14px;
+  width: 12px;
   height: 2px;
   border-radius: 2px;
   background: #303030;
   transform: translateX(-50%);
 }
 
-.ai-intent-demo__cursor-cap--top {
+.ai-intent-demo__caret-cap--top {
   top: 1px;
 }
 
-.ai-intent-demo__cursor-cap--bottom {
+.ai-intent-demo__caret-cap--bottom {
   bottom: 1px;
 }
 
-@keyframes ai-intent-demo-cursor {
-  0%,
-  12% {
-    top: var(--cursor-start-y);
-    left: var(--cursor-start-x);
+/* ---------- Scenario switcher ---------- */
+
+.ai-intent-demo__scenarios {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.ai-intent-demo__scenario {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 34px;
+  margin: 0;
+  padding: 0 14px;
+  border: 1px solid var(--home-hairline-control, rgba(32, 38, 46, 0.1));
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.5);
+  color: var(--text-soft, #89919a);
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color 240ms ease, border-color 240ms ease, color 240ms ease, box-shadow 240ms ease;
+}
+
+.ai-intent-demo__scenario i {
+  font-size: 14px;
+}
+
+.ai-intent-demo__scenario .ri-arrow-right-line {
+  opacity: 0.5;
+}
+
+.ai-intent-demo__scenario:hover {
+  color: #5a5247;
+}
+
+.ai-intent-demo__scenario[aria-pressed="true"] {
+  border-color: rgba(var(--home-edge, 32, 38, 46), 0.16);
+  background: #fff;
+  color: #2f2a22;
+  box-shadow: 0 6px 18px rgba(var(--home-edge, 32, 38, 46), 0.08);
+}
+
+.ai-intent-demo__scenario-kind {
+  color: inherit;
+  opacity: 0.72;
+}
+
+@keyframes ai-intent-demo-fade-in {
+  from {
     opacity: 0;
-    transform: translate(-50%, -50%) scale(0.9);
   }
 
-  18%,
-  30% {
-    top: var(--cursor-start-y);
-    left: var(--cursor-start-x);
+  to {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
-
-  56%,
-  68% {
-    top: var(--cursor-end-y);
-    left: var(--cursor-end-x);
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
-
-  78%,
-  100% {
-    top: var(--cursor-end-y);
-    left: var(--cursor-end-x);
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.94);
   }
 }
 
-.ai-intent-demo[data-phase="mark"] .ai-intent-demo__cursor,
-.ai-intent-demo[data-phase="toolbar"] .ai-intent-demo__cursor,
-.ai-intent-demo[data-phase="sending"] .ai-intent-demo__cursor {
-  animation: none;
-  opacity: 0;
+@keyframes ai-intent-demo-tab-landed {
+  0% {
+    background: rgba(26, 115, 232, 0.16);
+  }
+
+  100% {
+    background: rgba(26, 115, 232, 0);
+  }
+}
+
+@keyframes ai-intent-demo-icon-in {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes ai-intent-demo-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @media (max-width: 760px) {
-  .ai-intent-demo {
-    aspect-ratio: 5 / 4.4;
+  .ai-intent-demo__stage {
+    aspect-ratio: 3 / 4;
   }
 
-  .ai-intent-demo__article {
-    top: 46%;
-    left: 6%;
-    width: 88%;
-    padding: 24px 20px;
+  .ai-intent-demo__window {
+    inset: 5% 4%;
+    padding: 0 4px 4px;
+  }
+
+  .ai-intent-demo__lights {
+    display: none;
+  }
+
+  .ai-intent-demo__tab--page {
+    max-width: 120px;
+  }
+
+  .ai-intent-demo__group-label {
+    padding: 0 5px;
+  }
+
+  .ai-intent-demo__tab--ai {
+    --tab-pad: 6px;
+  }
+
+  .ai-intent-demo__tab--ai > span:last-child {
+    display: none;
+  }
+
+  .ai-intent-demo__page {
+    padding: 20px 18px;
   }
 
   .ai-intent-demo__body {
-    font-size: 15px;
-    line-height: 1.78;
+    font-size: 14.5px;
+    line-height: 1.85;
   }
 
   .ai-intent-demo__surface button {
     gap: 4px;
+  }
+
+  .ai-intent-demo__scenarios {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .ai-intent-demo__scenario {
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: center;
+    align-content: center;
+    gap: 5px 4px;
+    height: 54px;
+    padding: 0 6px;
+    border-radius: 14px;
+    font-size: 12px;
+  }
+
+  .ai-intent-demo__scenario-kind {
+    grid-column: 1 / -1;
+    font-size: 11px;
+  }
+
+  .ai-intent-demo__scenario .ri-arrow-right-line {
+    display: none;
   }
 }
 
@@ -543,12 +859,8 @@
     display: none;
   }
 
-  .ai-intent-demo__surface,
-  .ai-intent-demo__toolbar,
-  .ai-intent-demo__sending,
-  .ai-intent-demo__selection,
-  .ai-intent-demo__interaction,
-  .ai-intent-demo__material {
+  .ai-intent-demo *,
+  .ai-intent-demo *::before {
     animation: none !important;
     transition: none !important;
   }

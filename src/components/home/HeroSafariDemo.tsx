@@ -247,6 +247,7 @@ interface LocaleDemoCopy {
   siteSearchDemo: SiteSearchDemoModel;
   scopeMenuCopy: ScopeMenuCopy;
   settingsLabel: string;
+  skipIntroLabel: string;
 }
 
 const GITHUB_SITE_SEARCH_THEME = {
@@ -662,6 +663,7 @@ const COPY_BY_LOCALE: Record<SupportedLocale, LocaleDemoCopy> = {
     openLabel: "新开",
     removeHistoryLabel: "移除该历史",
     scenePickerLabel: "搜索演示场景",
+    skipIntroLabel: "点击任意处跳过",
     scenes: SCENES_BY_LOCALE["zh-CN"],
     siteSearchDemo: {
       cases: [{
@@ -704,6 +706,7 @@ const COPY_BY_LOCALE: Record<SupportedLocale, LocaleDemoCopy> = {
     openLabel: "開啟",
     removeHistoryLabel: "移除此歷史紀錄",
     scenePickerLabel: "搜尋示範場景",
+    skipIntroLabel: "點按任意處略過",
     scenes: SCENES_BY_LOCALE["zh-TW"],
     siteSearchDemo: {
       cases: [{
@@ -746,6 +749,7 @@ const COPY_BY_LOCALE: Record<SupportedLocale, LocaleDemoCopy> = {
     openLabel: "Open",
     removeHistoryLabel: "Remove from history",
     scenePickerLabel: "Search demo scenes",
+    skipIntroLabel: "Click anywhere to skip",
     scenes: SCENES_BY_LOCALE.en,
     siteSearchDemo: {
       cases: [{
@@ -1266,7 +1270,9 @@ export function HeroSafariDemo({
     completeHomeIntro();
   }, [completeHomeIntro, syncHomeIntroTargetGeometry]);
 
-  const revealHomeIntro = useCallback(() => {
+  const revealHomeIntro = useCallback((
+    { skipLoadWait = false }: { skipLoadWait?: boolean } = {},
+  ) => {
     if (
       document.body.dataset.homeIntro !== "pending"
       || introRevealRequestedRef.current
@@ -1280,7 +1286,9 @@ export function HeroSafariDemo({
     }
 
     const beginWhenLayoutIsStable = async () => {
-      if (document.readyState !== "complete") {
+      // A user-requested skip must not sit behind slow images or third-party
+      // scripts; the stable-frame sampling below still guards the target rect.
+      if (!skipLoadWait && document.readyState !== "complete") {
         await new Promise<void>((resolve) => {
           window.addEventListener("load", () => resolve(), { once: true });
         });
@@ -1400,8 +1408,11 @@ export function HeroSafariDemo({
     };
     const maskAnimation = visual.animate(maskKeyframes, timing);
     const contentAnimation = content.animate(contentKeyframes, timing);
+    // Settles on the homepage panel radius (--home-radius-xl), like every card below it.
+    const settledRadius =
+      getComputedStyle(visual).getPropertyValue("--home-radius-xl").trim() || "28px";
     const radiusAnimation = visual.animate(
-      [{ borderRadius: "0px" }, { borderRadius: "16px" }],
+      [{ borderRadius: "0px" }, { borderRadius: settledRadius }],
       timing,
     );
     introMaskAnimationRef.current = maskAnimation;
@@ -1509,7 +1520,7 @@ export function HeroSafariDemo({
 
     demo.dataset.introReady = "true";
     introFallbackTimerRef.current = window.setTimeout(
-      revealHomeIntro,
+      () => revealHomeIntro(),
       HOME_INTRO_FALLBACK_MS,
     );
 
@@ -1581,8 +1592,45 @@ export function HeroSafariDemo({
       return;
     }
 
-    revealHomeIntro();
+    revealHomeIntro({ skipLoadWait: true });
   }, [revealHomeIntro]);
+
+  useEffect(() => {
+    if (introState !== "pending") {
+      return undefined;
+    }
+
+    // The body is scroll-locked while the intro is pending, so treat scroll
+    // gestures and navigation keys as an explicit skip.
+    const skipKeys = new Set([
+      "ArrowDown",
+      "End",
+      "Enter",
+      "Escape",
+      "PageDown",
+      " ",
+    ]);
+    const handleWheel = (event: WheelEvent) => {
+      if (event.deltaY > 0) {
+        handleHomeIntroSkip();
+      }
+    };
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (skipKeys.has(event.key)) {
+        handleHomeIntroSkip();
+      }
+    };
+
+    window.addEventListener("wheel", handleWheel, { passive: true });
+    window.addEventListener("touchmove", handleHomeIntroSkip, { passive: true });
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("wheel", handleWheel);
+      window.removeEventListener("touchmove", handleHomeIntroSkip);
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [handleHomeIntroSkip, introState]);
   const animationKey = `${locale}-${scene.id}-${replayKey}`;
   const siteSearchDemoModel = useMemo(
     () => ({
@@ -1622,7 +1670,7 @@ export function HeroSafariDemo({
       ref={demoRef}
     >
       <div
-        className="hero-safari-visual"
+        className="hero-safari-visual home-media"
         onClick={handleHomeIntroSkip}
         ref={visualRef}
       >
@@ -1674,6 +1722,16 @@ export function HeroSafariDemo({
               </motion.div>
             </AnimatePresence>
           </div>
+          {introState !== "complete" ? (
+            <button
+              className="hero-intro-skip-hint"
+              tabIndex={introState === "pending" ? 0 : -1}
+              onClick={handleHomeIntroSkip}
+              type="button"
+            >
+              {copy.skipIntroLabel}
+            </button>
+          ) : null}
         </div>
         <div
           aria-label={copy.scenePickerLabel}

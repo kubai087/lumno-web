@@ -1,6 +1,8 @@
 ---
 import { LUMNO_SITE_SEARCH_ICON_ROOT } from "../../../lib/lumno-search-providers";
 import type { HOME_CONTENT } from "../../../lib/home-content";
+import { COMMAND_BAR_SHORTCUT } from "../../../lib/shortcut-keys";
+import { ShortcutKeys } from "../../ui/shortcut-keys";
 
 type Content = (typeof HOME_CONTENT)["en"]["commandBar"];
 
@@ -9,241 +11,261 @@ interface Props {
   locale: string;
 }
 
-const { content, locale } = Astro.props;
-const isChinese = locale.startsWith("zh");
+const { content } = Astro.props;
+
+/*
+ * Illustrations are drawn here rather than imported from the onboarding demo, but
+ * every number follows lumno-extension's own overlay styles: the 28px panel, 56px
+ * input, 52px rows with a 16px radius, bare 16px favicons, 26px action tags with an
+ * "Enter" key and the 52px scope-menu tiles.
+ */
+
+// Same glyphs the extension ships for its site-search providers.
+const GLYPH_EXT: Record<string, string> = {
+  dbai: "png",
+  gs: "png",
+  jd: "png",
+  mx: "png",
+  qw: "png",
+  rd: "png",
+  tb: "png",
+  xhs: "png",
+  zh: "png",
+};
+const glyph = (key: string) => `${LUMNO_SITE_SEARCH_ICON_ROOT}/glyph-${key}.${GLYPH_EXT[key] || "svg"}`;
 const tile = (key: string) => `${LUMNO_SITE_SEARCH_ICON_ROOT}/tile-${key}.png`;
 
-// Every stage sits on one of the wallpapers the extension ships for its new tab.
-const STAGE = {
-  search: "/assets/bento/monet-field-white.webp",
-  site: "/assets/bento/seurat-park-white.webp",
-  ai: "/assets/bento/impressionist-orchard-white.webp",
-  aggregate: "/assets/bento/pointillist-lakeside-white.webp",
-  commands: "/assets/bento/monet-lily-pond-white.webp",
+// Brand accents the extension samples from each favicon; null keeps the neutral theme.
+const ACCENT: Record<string, [number, number, number] | null> = {
+  bb: [251, 114, 153],
+  dbai: [56, 132, 255],
+  ds: [77, 107, 254],
+  gg: [66, 133, 244],
+  gh: null,
+  gm: [66, 133, 244],
+  gpt: null,
+  gs: [66, 133, 244],
+  jd: [225, 37, 27],
+  kimi: null,
+  mx: [234, 70, 93],
+  pplx: [32, 128, 141],
+  qw: [97, 92, 237],
+  rd: [255, 69, 0],
+  tb: [255, 80, 0],
+  wk: null,
+  xhs: [255, 36, 66],
+  yt: [255, 0, 0],
+  zh: [5, 109, 232],
+  zw: null,
 };
 
-const RESULT_ICONS = [
-  { icon: "ri-figma-fill", color: "#f24e1e" },
-  { icon: "ri-notion-fill", color: "#111827" },
-  { icon: "ri-google-fill", color: "#4285f4" },
-];
-
-// Keys and aliases come from lumno-extension/assets/data/site-search.json.
-const SCOPE_MENU = isChinese
-  ? [
-      { key: "yt", name: "YouTube" },
-      { key: "bb", name: "Bilibili" },
-      { key: "zh", name: "知乎" },
-      { key: "xhs", name: "小红书" },
-    ]
-  : [
-      { key: "yt", name: "YouTube" },
-      { key: "rd", name: "Reddit" },
-      { key: "wk", name: "Wikipedia" },
-      { key: "sf", name: "Stack Overflow" },
-    ];
-
-const AI_PROVIDERS = isChinese
-  ? [
-      { key: "gpt", name: "ChatGPT" },
-      { key: "ds", name: "DeepSeek" },
-      { key: "kimi", name: "Kimi" },
-      { key: "dbai", name: "豆包" },
-    ]
-  : [
-      { key: "gpt", name: "ChatGPT" },
-      { key: "gm", name: "Gemini" },
-      { key: "pplx", name: "Perplexity" },
-      { key: "ds", name: "DeepSeek" },
-    ];
-
-const AGGREGATE_TILE_BY_SOURCE: Record<string, string> = {
-  淘宝: "tb",
-  京东: "jd",
-  小红书: "xhs",
-  Google: "gg",
-  YouTube: "yt",
-  Reddit: "rd",
-  "Google Scholar": "gs",
-  GitHub: "gh",
+/**
+ * Mirrors the extension's favicon theme builder: each surface is the accent
+ * blended into white at a fixed strength. Neutral sites reuse its GitHub theme.
+ */
+const themeStyle = (key: string, fallback: [number, number, number] = [66, 133, 244]) => {
+  const accent = key in ACCENT ? ACCENT[key] : fallback;
+  if (!accent) {
+    return [
+      "--accent: 111, 115, 122",
+      "--row-bg: rgb(236, 236, 237)",
+      "--tag-bg: rgb(229, 230, 231)",
+      "--tag-border: rgb(194, 196, 197)",
+      "--key-bg: rgb(245, 245, 246)",
+      "--key-border: rgb(208, 209, 211)",
+      "--mark-bg: rgb(200, 201, 203)",
+    ].join(";");
+  }
+  const mix = (amount: number) =>
+    `rgb(${accent.map((channel) => Math.round(255 + (channel - 255) * amount)).join(", ")})`;
+  return [
+    `--accent: ${accent.join(", ")}`,
+    `--row-bg: ${mix(0.145)}`,
+    `--tag-bg: ${mix(0.24)}`,
+    `--tag-border: ${mix(0.49)}`,
+    `--key-bg: ${mix(0.09)}`,
+    `--key-border: ${mix(0.354)}`,
+    `--mark-bg: ${mix(0.41)}`,
+  ].join(";");
 };
+
+/** Splits a title around every case-insensitive occurrence of `mark`. */
+const highlight = (text: string, mark: string) => {
+  const parts: Array<{ text: string; hit: boolean }> = [];
+  const lower = text.toLowerCase();
+  const needle = mark.toLowerCase();
+  let cursor = 0;
+  let index = needle ? lower.indexOf(needle) : -1;
+  while (index >= 0) {
+    if (index > cursor) parts.push({ text: text.slice(cursor, index), hit: false });
+    parts.push({ text: text.slice(index, index + needle.length), hit: true });
+    cursor = index + needle.length;
+    index = lower.indexOf(needle, cursor);
+  }
+  if (cursor < text.length) parts.push({ text: text.slice(cursor), hit: false });
+  return parts;
+};
+
+
+const { search, siteSearch, ai } = content;
+const pickedProvider = ai.providers[ai.pick] || ai.providers[0];
 ---
 
 <section id="features" class="home-section command-bar" aria-labelledby="command-bar-title">
   <header class="home-section__head">
-    <p class="home-eyebrow">{content.eyebrow}</p>
+    <p class="home-eyebrow">
+      {content.eyebrow}
+      <ShortcutKeys keys={COMMAND_BAR_SHORTCUT} className="home-eyebrow__keys" />
+    </p>
     <h2 id="command-bar-title" class="home-h2"><span>{content.title}</span></h2>
     <p class="home-lead">{content.description}</p>
   </header>
 
-  <div class="home-sheet bento">
-    <article class="bento-cell bento-cell--search">
-      <p class="bento-label"><i class="ri-search-line" aria-hidden="true"></i>{content.search.label}</p>
-      <h3>{content.search.title}</h3>
-      <p class="bento-text">{content.search.description}</p>
-      <div class="stage" aria-hidden="true">
-        <img class="stage__art" src={STAGE.search} alt="" width="1200" height="675" loading="lazy" decoding="async" />
-        <span class="lx-note stage__note">{content.search.hint}</span>
-        <div class="lx-panel stage__panel stage__panel--float">
-          <div class="lx-input">
-            <i class="ri-search-line"></i>
-            <span>{content.search.query}</span>
-            <span class="lx-caret"></span>
+  <div class="bento">
+    {/* ---------- Unified search: the lead card spans the sheet ---------- */}
+    <article class="bento-cell bento-cell--wide">
+      <div class="stage" data-bento-demo="search" aria-hidden="true">
+        <div class="ov" data-rows="shown">
+          <div class="ov-input">
+            <i class="ri-search-line ov-input__icon"></i>
+            <span class="ov-field"><span class="ov-query" data-query data-text={search.query}>{search.query}</span><span class="ov-caret"></span></span>
+            <i class="ri-brush-2-line ov-input__tool ov-input__tool--second"></i>
+            <i class="ri-settings-line ov-input__tool"></i>
+            <span class="ov-divider"></span>
           </div>
-          <ul class="lx-rows">
-            {content.search.results.map((result, index) => (
-              <li class:list={["lx-row", { "is-active": index === 0 }]}>
-                <span class="lx-favicon" style={`color:${RESULT_ICONS[index].color}`}>
-                  <i class={RESULT_ICONS[index].icon}></i>
-                </span>
-                <span class="lx-row__text">
-                  <strong>{result.title}</strong>
-                  <small>{result.url}</small>
-                </span>
-                {index === 0 ? (
-                  <span class="lx-tag lx-tag--action">
-                    {content.search.switchLabel}
-                    <span class="lx-tag__key">↵</span>
+          <div class="ov-reveal">
+            <div class="ov-rows">
+              {search.results.map((result, index) => (
+                <div class="ov-row" data-row data-active={index === 0 ? "true" : "false"} style={`--i:${index};${themeStyle(result.icon)}`}>
+                  <span class="ov-row__icon"><img src={glyph(result.icon)} width="16" height="16" alt="" loading="lazy" decoding="async" /></span>
+                  <span class="ov-row__text">
+                    <span class="ov-row__title">
+                      {highlight(result.title, search.mark).map((part) => (part.hit ? <mark>{part.text}</mark> : part.text))}
+                    </span>
+                    <span class="ov-row__detail">{result.detail}</span>
+                    <span class="ov-row__source" data-kind={result.kind}>{result.source}</span>
                   </span>
-                ) : (
-                  <span class="lx-tag">{result.source}</span>
-                )}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </article>
-
-    <article class="bento-cell bento-cell--site">
-      <p class="bento-label"><i class="ri-global-line" aria-hidden="true"></i>{content.siteSearch.label}</p>
-      <h3>{content.siteSearch.title}</h3>
-      <p class="bento-text">{content.siteSearch.description}</p>
-      <div class="stage" aria-hidden="true">
-        <img class="stage__art" src={STAGE.site} alt="" width="1200" height="675" loading="lazy" decoding="async" />
-        <div class="stage__column">
-          <div class="lx-panel lx-panel--pill">
-            <div class="lx-input lx-input--pill">
-              <span class="lx-scope">
-                <img src={tile("gh")} width="18" height="18" alt="" loading="lazy" decoding="async" />
-                {content.siteSearch.target}
-              </span>
-              <span class="lx-caret"></span>
-              <span class="lx-tag lx-tag--key">Tab</span>
+                  <span class="ov-row__right">
+                    <span class="ov-action">{result.kind === "tab" ? search.switchLabel : search.openLabel}<kbd>Enter</kbd></span>
+                    <span class="ov-visit">{result.kind === "tab" ? search.switchLabel : search.openLabel}<i class="ri-arrow-right-line"></i></span>
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
-          <ul class="lx-menu">
-            {SCOPE_MENU.map((provider, index) => (
-              <li class:list={{ "is-active": index === 0 }}>
-                <img src={tile(provider.key)} width="20" height="20" alt="" loading="lazy" decoding="async" />
-                <span>{provider.name}</span>
-                <kbd>{provider.key}</kbd>
-              </li>
-            ))}
-          </ul>
         </div>
+      </div>
+      <div class="bento-copy">
+        <p class="bento-label"><i class="ri-search-line" aria-hidden="true"></i>{search.label}</p>
+        <h3>{search.title}</h3>
+        <p class="bento-text">{search.description}</p>
       </div>
     </article>
 
-    <article class="bento-cell bento-cell--ai">
-      <p class="bento-label"><i class="ri-sparkling-2-line" aria-hidden="true"></i>{content.ai.label}</p>
-      <h3>{content.ai.title}</h3>
-      <p class="bento-text">{content.ai.description}</p>
-      <div class="stage" aria-hidden="true">
-        <img class="stage__art" src={STAGE.ai} alt="" width="1200" height="675" loading="lazy" decoding="async" />
-        <div class="stage__column">
-          <div class="lx-panel lx-panel--pill">
-            <div class="lx-input lx-input--pill">
-              <span class="lx-scope">
-                <img src={tile(AI_PROVIDERS[1].key)} width="18" height="18" alt="" loading="lazy" decoding="async" />
-                {AI_PROVIDERS[1].name}
-              </span>
-              <span class="lx-input__query">{content.ai.prompt}</span>
-            </div>
+    {/* ---------- Site search ---------- */}
+    <article class="bento-cell">
+      <div class="stage" data-bento-demo="site" aria-hidden="true">
+        <div class="ov" data-rows="shown" data-chip="shown" data-hint="hidden" style={themeStyle("gh")}>
+          <div class="ov-input">
+            <i class="ri-search-line ov-input__icon"></i>
+            <span class="ov-chip">
+              <img src={glyph("gh")} width="20" height="20" alt="" loading="lazy" decoding="async" />
+              <span>{siteSearch.target}</span>
+              <i class="ri-arrow-down-s-line"></i>
+            </span>
+            <span class="ov-field">
+              <span class="ov-query" data-query data-keyword={siteSearch.keyword} data-text={siteSearch.query}>{siteSearch.query}</span><span class="ov-caret"></span>
+            </span>
+            <span class="ov-tabhint"><kbd>Tab</kbd>{siteSearch.tabHint}</span>
+            <i class="ri-settings-line ov-input__tool"></i>
+            <span class="ov-divider"></span>
           </div>
-          <ul class="lx-menu">
-            {AI_PROVIDERS.map((provider, index) => (
-              <li class:list={{ "is-active": index === 1 }}>
-                <img src={tile(provider.key)} width="20" height="20" alt="" loading="lazy" decoding="async" />
-                <span>{provider.name}</span>
-                {index === 1 && <kbd>↵</kbd>}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-    </article>
-
-    <article class="bento-cell bento-cell--aggregate">
-      <p class="bento-label"><i class="ri-stack-line" aria-hidden="true"></i>{content.aggregate.label}</p>
-      <h3>{content.aggregate.title}</h3>
-      <p class="bento-text">{content.aggregate.description}</p>
-      <div class="stage" aria-hidden="true">
-        <img class="stage__art" src={STAGE.aggregate} alt="" width="1200" height="675" loading="lazy" decoding="async" />
-        <div class="lx-browser">
-          <div class="lx-browser__strip">
-            <span class="lx-browser__lights"><i></i><i></i><i></i></span>
-            <span class="lx-browser__group">{content.aggregate.groupLabel}</span>
-            {content.aggregate.sources.map((source, index) => (
-              <span class:list={["lx-browser__tab", { "is-active": index === 0 }]}>
-                <img
-                  src={tile(AGGREGATE_TILE_BY_SOURCE[source] || "gg")}
-                  width="16"
-                  height="16"
-                  alt=""
-                  loading="lazy"
-                  decoding="async"
-                />
-                <span>{source}</span>
-              </span>
-            ))}
-          </div>
-          <div class="lx-browser__toolbar">
-            <i class="ri-arrow-left-s-line"></i>
-            <i class="ri-arrow-right-s-line"></i>
-            <i class="ri-refresh-line"></i>
-            <span class="lx-browser__omnibox">{content.aggregate.query}</span>
-          </div>
-          <div class="lx-browser__page">
-            {[0, 1, 2].map((index) => (
-              <div class="lx-result">
-                <span class:list={["lx-result__thumb", `lx-result__thumb--${index}`]}></span>
-                <span class="lx-result__lines">
-                  <span class="lx-skeleton lx-skeleton--title"></span>
-                  <span class="lx-skeleton"></span>
-                  <span class="lx-skeleton lx-skeleton--short"></span>
+          <div class="ov-reveal">
+            <div class="ov-rows">
+              <div class="ov-row" data-row data-active="true" style={`--i:0;${themeStyle("gh")}`}>
+                <span class="ov-row__icon"><img src={glyph("gh")} width="16" height="16" alt="" loading="lazy" decoding="async" /></span>
+                <span class="ov-row__text">
+                  <span class="ov-row__title">{highlight(siteSearch.resultTitle, siteSearch.query).map((part) => (part.hit ? <mark>{part.text}</mark> : part.text))}</span>
+                </span>
+                <span class="ov-row__right">
+                  <span class="ov-action">{siteSearch.actionLabel}<kbd>Enter</kbd></span>
                 </span>
               </div>
-            ))}
+              <div class="ov-row" data-row data-active="false" style="--i:1">
+                <span class="ov-row__icon ov-row__icon--inline"><i class="ri-search-line"></i></span>
+                <span class="ov-row__text"><span class="ov-row__title">{siteSearch.fallbackTitle}</span></span>
+                <span class="ov-row__right">
+                  <span class="ov-visit">{siteSearch.actionLabel}<i class="ri-arrow-right-line"></i></span>
+                </span>
+              </div>
+            </div>
           </div>
         </div>
+      </div>
+      <div class="bento-copy">
+        <p class="bento-label"><i class="ri-global-line" aria-hidden="true"></i>{siteSearch.label}</p>
+        <h3>{siteSearch.title}</h3>
+        <p class="bento-text">{siteSearch.description}</p>
       </div>
     </article>
 
-    <article class="bento-cell bento-cell--commands">
-      <div class="bento-cell__copy">
-        <p class="bento-label"><i class="ri-slash-commands-2" aria-hidden="true"></i>{content.commands.label}</p>
-        <h3>{content.commands.title}</h3>
-        <p class="bento-text">{content.commands.description}</p>
-      </div>
-      <div class="stage" aria-hidden="true">
-        <img class="stage__art" src={STAGE.commands} alt="" width="1200" height="675" loading="lazy" decoding="async" />
-        <div class="lx-panel stage__panel stage__panel--bleed">
-          <div class="lx-input">
-            <i class="ri-search-line"></i>
-            <span>/</span>
-            <span class="lx-caret"></span>
+    {/* ---------- Ask AI: the search-scope menu ---------- */}
+    <article class="bento-cell">
+      <div class="stage" data-bento-demo="ai" data-pick={ai.pick} aria-hidden="true">
+        <div class="ov" data-view="rows" data-chip="shown" style={themeStyle(pickedProvider.key)}>
+          <div class="ov-input">
+            <i class="ri-search-line ov-input__icon"></i>
+            <span class="ov-chip" data-ai-chip>
+              <img src={glyph(pickedProvider.key)} width="20" height="20" alt="" loading="lazy" decoding="async" />
+              <span>{pickedProvider.name}</span>
+              <i class="ri-arrow-down-s-line"></i>
+            </span>
+            <span class="ov-field"><span class="ov-query" data-query data-text={ai.prompt}>{ai.prompt}</span><span class="ov-caret"></span></span>
+            <i class="ri-settings-line ov-input__tool"></i>
+            <span class="ov-divider"></span>
           </div>
-          <ul class="lx-rows">
-            {content.commands.items.map((item, index) => (
-              <li class:list={["lx-row lx-row--command", { "is-active": index === 0 }]}>
-                <code>{item.command}</code>
-                <span class="lx-row__text"><strong>{item.label}</strong></span>
-                {index === 0 && <span class="lx-tag lx-tag--action"><span class="lx-tag__key">↵</span></span>}
-              </li>
-            ))}
-          </ul>
+          <div class="ov-menu-wrap">
+            <div class="ov-menu">
+              <p class="ov-menu__group">{ai.groupLabel}</p>
+              <div class="ov-menu__grid">
+                {ai.providers.map((provider, index) => (
+                  <span
+                    class="ov-menu__item"
+                    data-menu-item
+                    data-checked={index === ai.pick ? "true" : "false"}
+                    data-name={provider.name}
+                    data-glyph={glyph(provider.key)}
+                    data-theme={themeStyle(provider.key)}
+                  >
+                    <span class="ov-menu__tile"><img src={tile(provider.key)} width="36" height="36" alt="" loading="lazy" decoding="async" /></span>
+                    <span class="ov-menu__label">{provider.name}</span>
+                    <i class="ri-check-line ov-menu__check"></i>
+                  </span>
+                ))}
+              </div>
+              <div class="ov-menu__footer">
+                <span><kbd class="ov-menu__key ov-menu__key--wide" data-nav-key>←↑↓→</kbd>{ai.navigateLabel}</span>
+                <span><kbd class="ov-menu__key" data-select-key>Enter</kbd>{ai.selectLabel}</span>
+              </div>
+            </div>
+          </div>
+          <div class="ov-reveal">
+            <div class="ov-rows">
+              <div class="ov-row" data-row data-active="true" style="--i:0">
+                <span class="ov-row__icon"><img data-ai-row-icon src={glyph(pickedProvider.key)} width="16" height="16" alt="" loading="lazy" decoding="async" /></span>
+                <span class="ov-row__text"><span class="ov-row__title">{ai.resultTitle}</span></span>
+                <span class="ov-row__right">
+                  <span class="ov-action">{ai.actionLabel}<kbd>Enter</kbd></span>
+                </span>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+      <div class="bento-copy">
+        <p class="bento-label"><i class="ri-search-ai-line" aria-hidden="true"></i>{ai.label}</p>
+        <h3>{ai.title}</h3>
+        <p class="bento-text">{ai.description}</p>
       </div>
     </article>
   </div>
@@ -251,72 +273,80 @@ const AGGREGATE_TILE_BY_SOURCE: Record<string, string> = {
 
 <style>
   /*
-   * One framed sheet split by hairlines (cells share borders), in the restrained
-   * spirit of the rest of the page. Each stage is a crop of a Lumno wallpaper with
-   * the extension's real overlay UI on top, using the extension's own tokens.
+   * A wide lead card over two equal ones, each its own card with a hairline
+   * that brightens toward the corners. The stage is a dot grid that fades out
+   * around the illustration of the extension's real UI, and the copy sits
+   * underneath it.
+   *
+   * The card is a near-neutral grey a step below the #fafafa page, tinted the
+   * same faint cool as the extension's own greys (a warm tint reads as dirty
+   * yellow on the neutral page): it reads as a tray, and the white panel stays
+   * the brightest thing in it.
    */
   .bento {
-    --lx-text: #111827;
-    --lx-muted: #6b7280;
-    --lx-icon: #9ca3af;
-    --lx-divider: #e5e7eb;
-    --lx-active: #e4edfa;
-    --lx-action: #d2e0f6;
-    --lx-action-key: #eef3fc;
-    --lx-tag: #f3f4f6;
-    --lx-panel-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.97) 0%, rgba(255, 255, 255, 0.95) 100%);
-    --lx-panel-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.7),
-      0 2px 6px -1px rgba(15, 23, 42, 0.11),
-      0 20px 48px -8px rgba(15, 23, 42, 0.15);
-    --lx-menu-shadow: 0 0 0 1px rgba(15, 23, 42, 0.06), 0 10px 24px rgba(15, 23, 42, 0.12);
-
-    grid-template-columns: repeat(12, minmax(0, 1fr));
+    --card-bg: var(--home-paper);
+    --card-edge: var(--home-edge);
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
   }
 
+  /*
+   * Fill and hairline come from one element (padding-box over border-box), so
+   * both share a single anti-aliased edge. A separate ring layer on top lets the
+   * fill's soft edge bleed past the ring at the corners.
+   */
   .bento-cell {
+    position: relative;
+    isolation: isolate;
     display: flex;
     flex-direction: column;
-    padding: clamp(28px, 3vw, 40px);
+    /* The 1px ring is part of the inset, so copy lands --home-card-pad from the edge. */
+    padding: calc(var(--home-card-inset) - 1px) calc(var(--home-card-inset) - 1px) calc(var(--home-card-pad) - 1px);
+    border: 1px solid transparent;
+    border-radius: var(--home-radius-xl);
+    background:
+      linear-gradient(var(--card-bg), var(--card-bg)) padding-box,
+      var(--home-ring) border-box;
+    box-shadow: var(--home-highlight), var(--home-shadow-card);
   }
 
-  .bento-cell--search,
-  .bento-cell--aggregate {
-    grid-column: span 7;
-  }
-
-  .bento-cell--site,
-  .bento-cell--ai {
-    grid-column: span 5;
-  }
-
-  .bento-cell--commands {
+  .bento-cell--wide {
     grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    align-items: center;
-    gap: clamp(28px, 4vw, 56px);
   }
 
+  .bento-copy {
+    margin-top: 12px;
+    padding-inline: calc(var(--home-card-pad) - var(--home-card-inset));
+  }
+
+  /* Feature tag: a white pill that lifts off the grey card like the panel does. */
   .bento-label {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
+    height: 28px;
     margin: 0 0 14px;
-    color: var(--text-soft, #89919a);
-    font-size: 13px;
+    padding: 0 11px 0 9px;
+    border: 1px solid var(--home-hairline-control);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.78);
+    box-shadow: var(--home-shadow-chip);
+    color: #4b5563;
+    font-size: 12.5px;
     font-weight: 600;
-    line-height: 1.4;
+    line-height: 1;
   }
 
   .bento-label i {
-    font-size: 15px;
+    color: #9ca3af;
+    font-size: 14px;
   }
 
   h3 {
     margin: 0;
     color: var(--home-ink);
-    font-size: clamp(20px, 1.8vw, 24px);
+    font-size: var(--home-title-lg);
     font-weight: 650;
     line-height: 1.3;
     letter-spacing: -0.02em;
@@ -325,526 +355,916 @@ const AGGREGATE_TILE_BY_SOURCE: Record<string, string> = {
 
   .bento-text {
     max-width: 460px;
-    margin: 10px 0 0;
+    margin: var(--home-title-gap) 0 0;
     color: var(--text-sub, #626870);
-    font-size: 15px;
-    line-height: 1.68;
+    font-size: var(--home-body);
+    line-height: var(--home-body-leading);
     text-wrap: pretty;
   }
 
-  /* ---------- Stage: a wallpaper crop that frames one piece of real UI ---------- */
+  /* ---------- Stage ---------- */
 
   .stage {
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
     position: relative;
     isolation: isolate;
-    height: 320px;
-    margin-top: auto;
-    overflow: hidden;
-    border-radius: 16px;
-    box-shadow: inset 0 0 0 1px rgba(32, 38, 46, 0.06);
+    /* Room for the AI scope menu (about 270px), little more for the resting frame. */
+    height: 300px;
+    /* Not clipped: the panel's soft shadow has to fall onto the card unbroken. */
+    container-type: inline-size;
+    font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+    -webkit-font-smoothing: antialiased;
   }
 
-  .bento-cell:not(.bento-cell--commands) .stage {
-    margin-top: 28px;
-  }
-
-  .stage__art {
+  /* Dot grid, strongest behind the panel and fading before the card edge. */
+  .stage::before {
+    content: "";
     position: absolute;
     inset: 0;
     z-index: -1;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    background-image: radial-gradient(rgba(var(--card-edge), 0.24) 1px, transparent 1.5px);
+    background-size: 14px 14px;
+    background-position: center;
+    /* closest-side reaches zero at every edge, so no stage size leaves a cut line. */
+    -webkit-mask-image: radial-gradient(closest-side at 50% 45%, #000 40%, transparent 100%);
+    mask-image: radial-gradient(closest-side at 50% 45%, #000 40%, transparent 100%);
   }
 
-  .stage__panel {
+  kbd {
+    font: inherit;
+  }
+
+  /* ---------- Overlay panel (extension: 28px radius, 56px input) ---------- */
+
+  .ov {
     position: absolute;
+    top: 28px;
     left: 50%;
-    width: min(88%, 520px);
-    transform: translateX(-50%);
-  }
-
-  /* The panel runs past the bottom edge, so the UI reads as live rather than boxed. */
-  .stage__panel--bleed {
-    top: 44px;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-
-  .stage__panel--float {
-    top: 50%;
-    transform: translate(-50%, -46%);
-  }
-
-  .stage__note {
-    position: absolute;
-    top: 14px;
-    right: 16px;
-    z-index: 2;
-  }
-
-  .stage__column {
-    position: absolute;
-    inset: 32px 0 auto;
-    display: grid;
-    justify-items: center;
-    gap: 10px;
-    padding: 0 20px;
-  }
-
-  /* ---------- Extension surfaces (values taken from the overlay stylesheet) ---------- */
-
-  .lx-panel {
+    width: min(468px, calc(100% - 32px));
     overflow: hidden;
+    border: 1px solid rgba(0, 0, 0, 0.14);
     border-radius: 28px;
-    background: var(--lx-panel-bg);
-    box-shadow: var(--lx-panel-shadow);
-    color: var(--lx-text);
-    -webkit-backdrop-filter: blur(18px);
-    backdrop-filter: blur(18px);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.97) 0%, rgba(255, 255, 255, 0.95) 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.7),
+      0 2px 6px -1px rgba(15, 23, 42, 0.11),
+      0 20px 48px -8px rgba(15, 23, 42, 0.15);
+    color: #111827;
+    transform: translateX(-50%);
+    transition:
+      opacity 260ms ease,
+      transform 360ms var(--ease),
+      filter 260ms ease;
   }
 
-  .lx-panel--pill {
-    width: min(100%, 380px);
-    border-radius: 999px;
+  .bento-cell--wide .stage {
+    height: 320px;
   }
 
-  .lx-input {
+  .bento-cell--wide .ov {
+    top: 40px;
+    width: min(620px, calc(100% - 32px));
+  }
+
+  .ov-input {
+    position: relative;
     display: flex;
     align-items: center;
-    gap: 10px;
     height: 56px;
-    padding: 0 22px;
-    border-bottom: 1px solid var(--lx-divider);
+    padding: 0 84px 0 50px;
+  }
+
+  .ov-input__icon {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    color: #9ca3af;
     font-size: 16px;
+    line-height: 1;
+    transform: translateY(-50%);
   }
 
-  .lx-input--pill {
-    height: 52px;
-    padding: 0 10px 0 8px;
-    border-bottom: 0;
-  }
-
-  .lx-input i {
-    color: var(--lx-icon);
-    font-size: 19px;
-  }
-
-  .lx-input__query {
-    min-width: 0;
-    overflow: hidden;
-    color: var(--lx-text);
-    font-size: 14px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .lx-caret {
-    width: 1.5px;
-    height: 19px;
-    margin-left: -7px;
-    border-radius: 1px;
-    background: #7db7ff;
-    animation: lx-caret 1.1s steps(1) infinite;
-  }
-
-  .lx-scope {
-    flex: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    height: 34px;
-    padding: 0 12px 0 8px;
-    border-radius: 999px;
-    background: var(--lx-active);
-    font-size: 14px;
-    font-weight: 600;
-  }
-
-  .lx-scope img,
-  .lx-menu img,
-  .lx-browser__tab img {
-    display: block;
-    border-radius: 5px;
-  }
-
-  .lx-rows {
-    display: grid;
-    gap: 4px;
-    margin: 0;
-    padding: 10px;
-    list-style: none;
-  }
-
-  .lx-row {
-    display: grid;
-    grid-template-columns: 28px minmax(0, 1fr) auto;
-    align-items: center;
-    gap: 12px;
-    height: 50px;
-    padding: 0 12px;
-    border-radius: 16px;
-  }
-
-  .lx-row.is-active {
-    background: var(--lx-active);
-  }
-
-  .lx-favicon {
+  .ov-input__tool {
+    position: absolute;
+    right: 13px;
+    top: 13px;
     display: grid;
     place-items: center;
-    width: 28px;
-    height: 28px;
-    border-radius: 8px;
-    background: #fff;
-    box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.08);
+    width: 30px;
+    height: 30px;
+    color: #9ca3af;
     font-size: 16px;
   }
 
-  .lx-row__text {
-    min-width: 0;
+  .ov-input__tool--second {
+    right: 49px;
+  }
+
+  .ov-divider {
+    position: absolute;
+    left: 20px;
+    right: 20px;
+    bottom: 0;
+    height: 1px;
+    background: #e5e7eb;
+    opacity: 0.55;
+    transition: opacity 260ms ease;
+  }
+
+  .ov-field {
     display: flex;
-    align-items: baseline;
-    gap: 10px;
-  }
-
-  .lx-row__text strong,
-  .lx-row__text small {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .lx-row__text strong {
-    flex: none;
-    max-width: 70%;
+    align-items: center;
+    min-width: 0;
+    gap: 1px;
+    color: #1f2937;
     font-size: 15px;
     font-weight: 500;
+    line-height: 1.3;
+    white-space: nowrap;
   }
 
-  .lx-row__text small {
-    color: var(--lx-muted);
-    font-size: 13px;
+  .ov-query {
+    min-width: 0;
+    overflow: hidden;
   }
 
-  .lx-row--command {
-    grid-template-columns: 64px minmax(0, 1fr) auto;
+  .ov-caret {
+    flex: 0 0 auto;
+    width: 1px;
+    height: 18px;
+    margin-left: 1px;
+    border-radius: 999px;
+    background: #7db7ff;
+    animation: ov-caret 950ms steps(2, start) infinite;
   }
 
-  .lx-row--command code {
-    color: var(--lx-text);
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    font-size: 14px;
-    font-weight: 600;
+  @keyframes ov-caret {
+    to {
+      visibility: hidden;
+    }
   }
 
-  .lx-row--command .lx-row__text strong {
-    max-width: 100%;
-    color: var(--lx-muted);
-    font-weight: 400;
-  }
-
-  .lx-tag {
-    display: inline-flex;
+  /* Scope chip (extension: 32px tall, 10px radius, accent at 7.5%). */
+  .ov-chip {
+    display: none;
+    flex: 0 0 auto;
     align-items: center;
     gap: 6px;
-    height: 25px;
-    padding: 0 10px;
-    border-radius: 999px;
-    background: var(--lx-tag);
-    color: var(--lx-muted);
-    font-size: 12px;
-    font-weight: 500;
+    height: 32px;
+    margin: 0 8px 0 -6px;
+    padding: 0 6px;
+    border-radius: 10px;
+    background: rgba(var(--accent, 59, 130, 246), 0.075);
+    color: rgb(var(--accent, 59, 130, 246));
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 18px;
     white-space: nowrap;
   }
 
-  .lx-tag--action {
-    padding-right: 4px;
-    background: var(--lx-action);
-    color: var(--lx-text);
+  .ov[data-chip="shown"] .ov-chip {
+    display: inline-flex;
+    animation: ov-chip-in 220ms var(--ease) both;
   }
 
-  .lx-tag__key {
-    display: inline-grid;
-    place-items: center;
-    min-width: 20px;
-    height: 17px;
-    padding: 0 4px;
+  .ov-chip img {
+    width: 20px;
+    height: 20px;
     border-radius: 6px;
-    background: var(--lx-action-key);
+    object-fit: contain;
   }
 
-  .lx-tag--key {
-    margin-left: auto;
-    border: 1px solid rgba(15, 23, 42, 0.08);
-    background: #fff;
-    color: var(--lx-text);
+  .ov-chip i {
+    font-size: 16px;
+    opacity: 0.76;
   }
 
-  .lx-note {
-    padding: 8px 12px;
-    border: 1px solid rgba(214, 219, 227, 0.95);
-    border-radius: 12px;
-    background: linear-gradient(180deg, #ffffff, #f7f9fc);
-    box-shadow: 0 16px 36px rgba(17, 24, 39, 0.08), 0 3px 10px rgba(17, 24, 39, 0.05);
-    color: #1f2937;
+  @keyframes ov-chip-in {
+    from {
+      opacity: 0;
+      transform: translateX(-4px) scaleX(0.92);
+    }
+  }
+
+  /* "Tab · Search with GitHub" hint on the right of the input. */
+  .ov-tabhint {
+    position: absolute;
+    right: 52px;
+    top: 50%;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: #6b7280;
     font-size: 13px;
     white-space: nowrap;
+    opacity: 0;
+    transform: translateY(-50%) translateX(8px);
+    transition:
+      opacity 220ms ease,
+      transform 320ms var(--ease);
   }
 
-  .lx-menu {
-    width: min(100%, 300px);
-    margin: 0;
-    padding: 6px;
-    border-radius: 16px;
-    background: #fff;
-    box-shadow: var(--lx-menu-shadow);
-    list-style: none;
-  }
-
-  .lx-menu li {
-    display: grid;
-    grid-template-columns: 20px minmax(0, 1fr) auto;
-    align-items: center;
-    gap: 10px;
-    height: 38px;
-    padding: 0 10px;
-    border-radius: 10px;
-    color: var(--lx-text);
-    font-size: 14px;
-  }
-
-  .lx-menu li.is-active {
-    background: var(--lx-active);
-  }
-
-  .lx-menu kbd {
+  .ov-tabhint kbd {
     display: inline-grid;
     place-items: center;
-    min-width: 24px;
-    height: 20px;
+    min-width: 32px;
+    height: 22px;
     padding: 0 6px;
-    border-radius: 6px;
-    background: var(--lx-tag);
-    color: var(--lx-muted);
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    border: 1px solid rgba(0, 0, 0, 0.14);
+    border-radius: 7px;
+    background: #f3f4f6;
+    color: #6b7280;
     font-size: 12px;
+    font-weight: 700;
+    transition:
+      transform 120ms ease,
+      background-color 120ms ease;
   }
 
-  .lx-menu li.is-active kbd {
-    background: var(--lx-action);
-    color: var(--lx-text);
+  .ov[data-hint="shown"] .ov-tabhint,
+  .ov[data-hint="pressed"] .ov-tabhint {
+    opacity: 1;
+    transform: translateY(-50%);
   }
 
-  /* Browser chrome for aggregate search: cropped at the right and bottom edges. */
-  .lx-browser {
-    position: absolute;
-    top: 36px;
-    left: 36px;
-    right: -24px;
-    bottom: -24px;
+  .ov[data-hint="pressed"] .ov-tabhint kbd {
+    background: #e5e7eb;
+    transform: translateY(1px);
+  }
+
+  /* ---------- Rows (extension: 52px, 12px 16px padding, 16px radius) ---------- */
+
+  .ov-reveal {
+    display: grid;
+    grid-template-rows: 1fr;
+    transition: grid-template-rows 520ms var(--ease);
+  }
+
+  .ov-reveal > * {
+    min-height: 0;
     overflow: hidden;
-    border-radius: 14px;
-    background: #fff;
-    box-shadow: var(--lx-panel-shadow);
   }
 
-  .lx-browser__strip {
-    display: flex;
-    align-items: flex-end;
+  .ov[data-rows="hidden"] .ov-reveal {
+    grid-template-rows: 0fr;
+  }
+
+  .ov[data-rows="hidden"] .ov-divider {
+    opacity: 0;
+  }
+
+  .ov-rows {
+    display: grid;
     gap: 4px;
-    height: 44px;
-    padding: 0 12px;
-    background: #e8eaed;
+    padding: 12px;
+    transition: padding-block 520ms var(--ease);
   }
 
-  .lx-browser__lights {
-    display: inline-flex;
-    align-self: center;
-    gap: 7px;
-    margin-right: 10px;
+  /* A 0fr track still keeps its child's padding; fold it so an empty panel ends at the input. */
+  .ov[data-rows="hidden"] .ov-rows,
+  .ov[data-view="menu"] .ov-rows {
+    padding-block: 0;
   }
 
-  .lx-browser__lights i {
-    width: 11px;
-    height: 11px;
-    border-radius: 50%;
-    background: #ff5f57;
-  }
-
-  .lx-browser__lights i:nth-child(2) {
-    background: #febc2e;
-  }
-
-  .lx-browser__lights i:nth-child(3) {
-    background: #28c840;
-  }
-
-  .lx-browser__group {
-    flex: none;
-    align-self: center;
-    padding: 3px 9px;
-    border-radius: 6px;
-    background: #8ab4f8;
-    color: #0b2a5b;
-    font-size: 12px;
-    font-weight: 600;
-    white-space: nowrap;
-  }
-
-  .lx-browser__tab {
-    flex: none;
-    display: inline-flex;
+  .ov-row {
+    display: flex;
     align-items: center;
-    gap: 8px;
-    width: 150px;
-    height: 34px;
-    padding: 0 12px;
-    border-radius: 10px 10px 0 0;
-    box-shadow: inset 0 -2px 0 #8ab4f8;
-    color: #3c4043;
-    font-size: 12px;
+    gap: 12px;
+    min-width: 0;
+    min-height: 52px;
+    padding: 12px 16px;
+    border-radius: 16px;
+    background: transparent;
+    line-height: 1.5;
+    transition: background-color 380ms cubic-bezier(0.16, 1, 0.3, 1);
+    animation: ov-row-in 500ms var(--ease) both;
+    animation-delay: calc(120ms + var(--i, 0) * 170ms);
   }
 
-  .lx-browser__tab.is-active {
+  .ov[data-rows="hidden"] .ov-row {
+    animation: none;
+    opacity: 0;
+  }
+
+  @keyframes ov-row-in {
+    from {
+      opacity: 0;
+      filter: blur(3px);
+      transform: translateY(8px) scale(0.992);
+    }
+  }
+
+  .ov-row[data-active="true"] {
+    background: var(--row-bg, #e4edfa);
+  }
+
+  .ov-row__icon {
+    display: grid;
+    flex: 0 0 24px;
+    place-items: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 8px;
+  }
+
+  .ov-row__icon img {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    object-fit: contain;
+  }
+
+  .ov-row__icon i {
+    font-size: 16px;
+    line-height: 1;
+  }
+
+  .ov-row__icon--inline {
+    color: #9ca3af;
+  }
+
+  .ov-row[data-active="true"] .ov-row__icon--inline {
     background: #fff;
-    box-shadow: none;
   }
 
-  .lx-browser__tab span {
+  .ov-row__text {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+    padding-right: 8px;
+  }
+
+  .ov-row__title {
+    min-width: 0;
     overflow: hidden;
+    color: #111827;
+    font-size: 14px;
+    font-weight: 400;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 
-  .lx-browser__toolbar {
-    display: flex;
+  .ov-row[data-active="true"] .ov-row__title {
+    font-weight: 600;
+  }
+
+  .ov-row__title mark {
+    padding: 0 1px;
+    border-radius: 2px;
+    background: #cfe8ff;
+    color: #1e3a8a;
+  }
+
+  .ov-row[data-active="true"] .ov-row__title mark {
+    background: var(--mark-bg, #cfe8ff);
+    color: #111827;
+  }
+
+  .ov-row__detail {
+    flex: 0 1 auto;
+    max-width: 40%;
+    min-width: 0;
+    overflow: hidden;
+    color: #2563eb;
+    font-size: 12px;
+    line-height: 1.4;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .ov-row__source {
+    display: inline-flex;
+    flex-shrink: 0;
     align-items: center;
-    gap: 12px;
-    height: 42px;
-    padding: 0 14px;
-    border-bottom: 1px solid #eceef1;
-    color: #5f6368;
-    font-size: 16px;
+    padding: 4px 6px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    background: #f3f4f6;
+    color: #6b7280;
+    font-size: 12px;
+    line-height: 1.2;
   }
 
-  .lx-browser__omnibox {
-    flex: 1;
-    height: 28px;
-    padding: 0 14px;
-    border-radius: 999px;
-    background: #f1f3f4;
-    color: #3c4043;
-    font-size: 13px;
-    line-height: 28px;
+  .ov-row__source[data-kind="bookmark"] {
+    background: #fef3c7;
+    color: #d97706;
   }
 
-  .lx-browser__page {
-    display: grid;
-    gap: 14px;
-    padding: 20px 28px;
+  .ov-row[data-active="true"] .ov-row__source {
+    border-color: var(--tag-border);
+    background: var(--tag-bg);
+    color: #111827;
   }
 
-  .lx-result {
-    display: grid;
-    grid-template-columns: 64px minmax(0, 1fr);
+  .ov-row__right {
+    display: inline-flex;
+    flex: 0 1 auto;
     align-items: center;
-    gap: 16px;
+    justify-content: flex-end;
+    min-width: 0;
+    max-width: 56%;
+    min-height: 26px;
   }
 
-  .lx-result__thumb {
-    width: 64px;
-    height: 48px;
-    border-radius: 10px;
-    background: linear-gradient(135deg, #f3e7dc, #e9edf2);
+  .ov-action,
+  .ov-visit {
+    display: none;
+    align-items: center;
+    min-width: 0;
+    height: 26px;
+    font-size: 12px;
+    white-space: nowrap;
   }
 
-  .lx-result__thumb--1 {
-    background: linear-gradient(135deg, #e6eef8, #f1ece6);
-  }
-
-  .lx-result__thumb--2 {
-    background: linear-gradient(135deg, #ecefe6, #f4ece8);
-  }
-
-  .lx-result__lines {
-    display: grid;
-    gap: 8px;
-  }
-
-  .lx-skeleton {
-    display: block;
-    height: 9px;
+  .ov-action {
+    gap: 6px;
+    padding: 0 4px 0 8px;
+    border: 1px solid var(--tag-border, #bfdbfe);
     border-radius: 999px;
-    background: #eef0f3;
+    background: var(--tag-bg, #eef6ff);
+    color: #111827;
+    font-weight: 500;
+    animation: ov-action-in 260ms ease-out both;
   }
 
-  .lx-skeleton--title {
-    width: 38%;
-    height: 13px;
-    background: #dbe5f6;
+  .ov-action kbd {
+    display: inline-grid;
+    flex: 0 0 auto;
+    place-items: center;
+    height: 18px;
+    padding: 0 7px;
+    border: 1px solid var(--key-border, #bfdbfe);
+    border-radius: 6px;
+    background: var(--key-bg, #fff);
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.12);
+    color: #111827;
+    font-size: 12px;
+    font-weight: 500;
+    transition:
+      transform 120ms ease,
+      box-shadow 120ms ease;
   }
 
-  .lx-skeleton--short {
-    width: 62%;
+  .ov-action[data-pressed="true"] kbd {
+    box-shadow: none;
+    transform: translateY(1px);
   }
 
-  @keyframes lx-caret {
-    50% {
+  @keyframes ov-action-in {
+    from {
       opacity: 0;
     }
   }
 
-  @media (max-width: 980px) {
-    .bento-cell--search,
-    .bento-cell--site,
-    .bento-cell--ai,
-    .bento-cell--aggregate {
-      grid-column: 1 / -1;
+  .ov-visit {
+    gap: 4px;
+    padding: 0 7px 0 10px;
+    border: 1px solid transparent;
+    border-radius: 16px;
+    color: #9ca3af;
+  }
+
+  .ov-row[data-active="true"] .ov-action,
+  .ov-row:not([data-active="true"]) .ov-visit {
+    display: inline-flex;
+  }
+
+  /* ---------- Search-scope menu (extension: 52px tiles, 36px icons) ---------- */
+
+  .ov-menu-wrap {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 420ms var(--ease);
+  }
+
+  .ov-menu-wrap > * {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .ov[data-view="menu"] .ov-menu-wrap {
+    grid-template-rows: 1fr;
+  }
+
+  .ov[data-view="menu"] .ov-reveal {
+    grid-template-rows: 0fr;
+  }
+
+  .ov[data-view="menu"] .ov-row {
+    animation: none;
+    opacity: 0;
+  }
+
+  .ov-menu__group {
+    margin: 0;
+    padding: 16px 18px 6px;
+    color: #64748b;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 16px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .ov-menu__grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 6px 4px;
+    padding: 0 16px 14px;
+  }
+
+  .ov-menu__item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    min-width: 0;
+    min-height: 86px;
+    padding: 6px 4px;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    color: #111827;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 16px;
+    text-align: center;
+  }
+
+  /* Like the extension: ✓ and tint mark the current scope, arrow keys move a solid ring. */
+  .ov-menu__item[data-checked="true"] {
+    border-color: rgba(var(--accent, 37, 99, 235), 0.32);
+    background: rgba(var(--accent, 37, 99, 235), 0.08);
+  }
+
+  .ov-menu__item[data-focused="true"] {
+    border-color: rgb(var(--accent, 37, 99, 235));
+  }
+
+  .ov-menu__tile {
+    display: grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+  }
+
+  .ov-menu__tile img {
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
+  }
+
+  .ov-menu__label {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .ov-menu__check {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    color: rgb(var(--accent, 37, 99, 235));
+    font-size: 14px;
+    opacity: 0;
+  }
+
+  .ov-menu__item[data-checked="true"] .ov-menu__check {
+    opacity: 1;
+  }
+
+  .ov-menu__footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 18px;
+    min-height: 42px;
+    padding: 8px 16px 9px;
+    border-top: 1px solid rgba(148, 163, 184, 0.2);
+    color: #64748b;
+    font-size: 12px;
+    line-height: 18px;
+  }
+
+  .ov-menu__footer span {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .ov-menu__key {
+    display: inline-grid;
+    place-items: center;
+    min-height: 22px;
+    padding: 0 7px;
+    border: 1px solid rgba(148, 163, 184, 0.24);
+    border-radius: 6px;
+    background: #f3f4f6;
+    color: #6b7280;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition:
+      transform 120ms ease,
+      background-color 120ms ease;
+  }
+
+  .ov-menu__key[data-pressed="true"] {
+    background: #e5e7eb;
+    transform: translateY(1px);
+  }
+
+  .ov-menu__key--wide {
+    min-width: 58px;
+    letter-spacing: 0.08em;
+  }
+
+  /* ---------- Responsive ---------- */
+
+  /* Below the extension's comfortable width the URL line yields to the title. */
+  @container (max-width: 560px) {
+    .ov-row__detail {
+      display: none;
+    }
+  }
+
+  @container (max-width: 440px) {
+    .ov-menu__grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 
-    .bento-cell--commands {
+    .ov-menu__item:nth-child(n + 5) {
+      display: none;
+    }
+  }
+
+  /* Phone width: titles keep the room; the action shrinks to its Enter key. */
+  @container (max-width: 360px) {
+    .ov-row__source,
+    .ov-input__tool--second,
+    .ov-tabhint,
+    .ov-row:not([data-active="true"]) .ov-visit {
+      display: none;
+    }
+
+    .ov-action {
+      padding-left: 4px;
+      font-size: 0;
+    }
+
+    .ov-input {
+      padding-right: 48px;
+    }
+  }
+
+  @media (max-width: 980px) {
+    .bento {
       grid-template-columns: minmax(0, 1fr);
     }
   }
 
   @media (max-width: 620px) {
     .bento {
-      border-radius: 20px;
+      gap: 12px;
     }
 
-    .bento-cell {
-      padding: 24px 20px;
+    .bento-cell--wide .stage {
+      height: 300px;
     }
 
-    .stage {
-      height: 290px;
-    }
-
-    .stage__panel {
-      width: calc(100% - 28px);
-    }
-
-    .stage__note {
-      display: none;
-    }
-
-    .lx-row__text small {
-      display: none;
-    }
-
-    .lx-row__text strong {
-      max-width: 100%;
-    }
-
-    .lx-browser {
-      left: 18px;
+    .bento-cell--wide .ov {
+      top: 28px;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .lx-caret {
-      animation: none;
+    .ov-caret,
+    .ov-row,
+    .ov-action,
+    .ov-chip {
+      animation: none !important;
     }
   }
 </style>
+
+<script>
+  /*
+   * Each stage plays its short scripted demo once, the first time it is mostly
+   * on screen, and then rests on the finished frame so the copy below can be
+   * read without motion pulling the eye back. Hovering a card with a mouse
+   * replays it. The server markup is the finished state, so reduced-motion and
+   * no-JS visitors still see a complete illustration.
+   */
+  type Stage = HTMLElement;
+
+  class Timeline {
+    private timers: number[] = [];
+
+    at(ms: number, run: () => void) {
+      this.timers.push(window.setTimeout(run, ms));
+    }
+
+    stop() {
+      this.timers.forEach((timer) => window.clearTimeout(timer));
+      this.timers = [];
+    }
+  }
+
+  const one = <T extends Element = HTMLElement>(root: Element, selector: string) =>
+    root.querySelector(selector) as T;
+  const all = <T extends Element = HTMLElement>(root: Element, selector: string) =>
+    Array.from(root.querySelectorAll(selector)) as T[];
+
+  /** Types `text` into `target` one character at a time; returns the end time. */
+  function type(timeline: Timeline, target: HTMLElement, text: string, start: number, step = 110) {
+    const characters = Array.from(text);
+    characters.forEach((_, index) => {
+      timeline.at(start + (index + 1) * step, () => {
+        target.textContent = characters.slice(0, index + 1).join("");
+      });
+    });
+    return start + characters.length * step;
+  }
+
+  function setActive(items: HTMLElement[], index: number) {
+    items.forEach((item, itemIndex) => {
+      item.dataset.active = itemIndex === index ? "true" : "false";
+    });
+  }
+
+  function press(timeline: Timeline, key: HTMLElement | null, at: number, hold = 160) {
+    if (!key) return;
+    timeline.at(at, () => (key.dataset.pressed = "true"));
+    timeline.at(at + hold, () => (key.dataset.pressed = "false"));
+  }
+
+  /** The keyboard ring; the extension keeps it separate from the checked scope. */
+  function focusProvider(stage: Stage, index: number) {
+    all(stage, "[data-menu-item]").forEach((item, itemIndex) => {
+      item.dataset.focused = itemIndex === index ? "true" : "false";
+    });
+  }
+
+  function selectProvider(stage: Stage, index: number) {
+    const items = all(stage, "[data-menu-item]");
+    const item = items[index];
+    if (!item) return;
+    items.forEach((candidate, candidateIndex) => {
+      candidate.dataset.checked = candidateIndex === index ? "true" : "false";
+    });
+    one(stage, ".ov").setAttribute("style", item.dataset.theme || "");
+    const chip = one(stage, "[data-ai-chip]");
+    one<HTMLImageElement>(chip, "img").src = item.dataset.glyph || "";
+    one(chip, "span").textContent = item.dataset.name || "";
+    one<HTMLImageElement>(stage, "[data-ai-row-icon]").src = item.dataset.glyph || "";
+  }
+
+  type Demo = {
+    reset(stage: Stage): void;
+    /** Schedules one pass and returns its length in milliseconds. */
+    play(stage: Stage, timeline: Timeline): number;
+  };
+
+  const DEMOS: Record<string, Demo> = {
+    search: {
+      reset(stage) {
+        one(stage, ".ov").dataset.rows = "hidden";
+        one(stage, "[data-query]").textContent = "";
+        setActive(all(stage, "[data-row]"), -1);
+      },
+      play(stage, timeline) {
+        const panel = one(stage, ".ov");
+        const query = one(stage, "[data-query]");
+        const rows = all(stage, "[data-row]");
+        const typed = type(timeline, query, query.dataset.text || "", 400, 130);
+        timeline.at(typed + 200, () => (panel.dataset.rows = "shown"));
+        let at = typed + 1000;
+        [0, 1, 2, 0].forEach((index) => {
+          timeline.at(at, () => setActive(rows, index));
+          at += 1150;
+        });
+        return at + 600;
+      },
+    },
+
+    site: {
+      reset(stage) {
+        const panel = one(stage, ".ov");
+        panel.dataset.rows = "hidden";
+        panel.dataset.chip = "hidden";
+        panel.dataset.hint = "hidden";
+        one(stage, "[data-query]").textContent = "";
+      },
+      play(stage, timeline) {
+        const panel = one(stage, ".ov");
+        const query = one(stage, "[data-query]");
+        let at = type(timeline, query, query.dataset.keyword || "", 400, 170);
+        timeline.at(at + 200, () => (panel.dataset.hint = "shown"));
+        at += 1300;
+        timeline.at(at, () => (panel.dataset.hint = "pressed"));
+        timeline.at(at + 180, () => {
+          panel.dataset.hint = "hidden";
+          panel.dataset.chip = "shown";
+          query.textContent = "";
+        });
+        at = type(timeline, query, query.dataset.text || "", at + 520, 120);
+        timeline.at(at + 220, () => (panel.dataset.rows = "shown"));
+        return at + 600;
+      },
+    },
+
+    ai: {
+      reset(stage) {
+        one(stage, ".ov").dataset.view = "menu";
+        one(stage, "[data-query]").textContent = "";
+        selectProvider(stage, 0);
+        focusProvider(stage, -1);
+      },
+      play(stage, timeline) {
+        const panel = one(stage, ".ov");
+        const query = one(stage, "[data-query]");
+        const pick = Number(stage.dataset.pick || 0);
+        // Arrow keys walk the ring from the first tile; only Enter switches the scope.
+        let at = 900;
+        for (let index = 0; index <= pick; index += 1) {
+          press(timeline, one<HTMLElement>(stage, "[data-nav-key]"), at);
+          timeline.at(at, () => focusProvider(stage, index));
+          at += 650;
+        }
+        at += 250;
+        press(timeline, one<HTMLElement>(stage, "[data-select-key]"), at);
+        timeline.at(at, () => selectProvider(stage, pick));
+        at += 700;
+        timeline.at(at, () => {
+          focusProvider(stage, -1);
+          panel.dataset.view = "rows";
+        });
+        at = type(timeline, query, query.dataset.text || "", at + 360, 95);
+        return at + 600;
+      },
+    },
+  };
+
+  function start() {
+    const stages = all(document.documentElement, "[data-bento-demo]");
+    if (!stages.length || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const playing = new Map<Stage, Timeline>();
+    const finished = new Set<Stage>();
+
+    // Cards that come into view together start in reading order, a beat apart,
+    // so only one thing is moving when the eye lands on it.
+    const STAGGER = 1500;
+    let nextStart = 0;
+
+    const run = (stage: Stage, stagger = false) => {
+      const demo = DEMOS[stage.dataset.bentoDemo || ""];
+      if (!demo) return;
+      playing.get(stage)?.stop();
+      const timeline = new Timeline();
+      playing.set(stage, timeline);
+      finished.delete(stage);
+      demo.reset(stage);
+      const now = performance.now();
+      const delay = stagger ? Math.max(0, nextStart - now) : 0;
+      if (stagger) nextStart = now + delay + STAGGER;
+      timeline.at(delay, () => {
+        timeline.at(demo.play(stage, timeline), () => {
+          playing.delete(stage);
+          finished.add(stage);
+        });
+      });
+    };
+
+    // A pass cut short by scrolling away starts over when the card comes back.
+    const observer = new IntersectionObserver(
+      (entries) => {
+        // Entries are not guaranteed to arrive in document order.
+        const ordered = [...entries].sort((a, b) => stages.indexOf(a.target as Stage) - stages.indexOf(b.target as Stage));
+        ordered.forEach((entry) => {
+          const stage = entry.target as Stage;
+          if (entry.isIntersecting) {
+            if (!playing.has(stage) && !finished.has(stage)) run(stage, true);
+          } else if (playing.has(stage)) {
+            playing.get(stage)?.stop();
+            playing.delete(stage);
+          }
+        });
+      },
+      { threshold: 0.6 },
+    );
+
+    stages.forEach((stage) => {
+      DEMOS[stage.dataset.bentoDemo || ""]?.reset(stage);
+      observer.observe(stage);
+      stage.closest(".bento-cell")?.addEventListener("pointerenter", (event) => {
+        if ((event as PointerEvent).pointerType === "mouse" && finished.has(stage)) run(stage);
+      });
+    });
+  }
+
+  start();
+</script>

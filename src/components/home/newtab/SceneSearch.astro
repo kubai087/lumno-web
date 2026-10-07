@@ -1,0 +1,14 @@
+---
+interface Props {
+  placeholder: string;
+}
+
+const { placeholder } = Astro.props;
+---
+
+<div class="nts-search" data-search>
+  <i class="ri-search-line"></i>
+  <span class="nts-search__field"><span class="nts-search__text" data-search-text></span><span class="nts-search__caret"></span><span class="nts-search__placeholder">{placeholder}</span></span>
+  <span class="nts-search__badge" data-search-badge hidden></span>
+  <i class="ri-settings-line"></i>
+</div>

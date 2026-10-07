@@ -1,0 +1,146 @@
+---
+import type { HomeNewTabScene } from "../../../lib/home-content";
+import SceneSearch from "./SceneSearch.astro";
+
+interface Props {
+  scene: HomeNewTabScene;
+  alt: string;
+}
+
+const { scene, alt } = Astro.props;
+const quotes = scene.quotes || [];
+---
+
+<!-- The clock ticks with seconds; on Chinese pages the quote under the search box turns over once. -->
+<div class="nts-scene clk" data-clock-scene role="img" aria-label={alt}>
+  <div class="clk-page" aria-hidden="true">
+    <p class="nts-clock">09:41:<span class="clk-sec" data-seconds>00</span></p>
+    <div class="clk-search"><SceneSearch placeholder={scene.searchPlaceholder} /></div>
+    {quotes.length > 0 && (
+      <p class="clk-quote">
+        <span class="clk-quote__line" data-quote data-quotes={JSON.stringify(quotes)}>{quotes[0]}</span>
+      </p>
+    )}
+  </div>
+</div>
+
+<style>
+  .clk-page {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 12px;
+  }
+
+  .clk-page :global(.nts-clock) {
+    display: flex;
+    align-items: center;
+    height: 70px;
+  }
+
+  .clk-search {
+    width: min(324px, calc(100% - 40px));
+    margin-top: 18px;
+  }
+
+  /* Seconds swap softly (newtab.css: 0.68 opacity, 0.985 scale, 120ms). */
+  .clk-sec {
+    display: inline-block;
+  }
+
+  .clk-sec[data-tick] {
+    animation: clk-tick 120ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  @keyframes clk-tick {
+    from {
+      opacity: 0.68;
+      transform: scale(0.985);
+    }
+  }
+
+  /* remote-content.css: LXGW WenKai or a Song face, 15px, 0.04em, at 82%. */
+  .clk-page .clk-quote {
+    position: relative;
+    margin-top: 12px;
+    padding: 3px 0;
+    color: #6b7280;
+    font-family: "LXGW WenKai", "Songti SC", "Songti TC", "STSong", "SimSun", "Noto Serif CJK SC", serif;
+    font-size: 15px;
+    line-height: 1.6;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+
+  /* The old line fades out, then the new one settles in. */
+  .clk-quote__line {
+    display: inline-block;
+    opacity: 0.82;
+    transition:
+      opacity 420ms ease,
+      filter 420ms ease;
+  }
+
+  .clk-quote__line[data-leaving] {
+    opacity: 0;
+    filter: blur(3px);
+  }
+
+  .clk-quote__line[data-swap] {
+    animation: clk-quote 560ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes clk-quote {
+    from {
+      opacity: 0;
+      filter: blur(3px);
+      transform: translateY(4px);
+    }
+  }
+</style>
+
+<script>
+  import { Timeline, playOnView, prefersReducedMotion } from "./scene-runtime";
+
+  const replay = (element: HTMLElement, attribute: string) => {
+    element.removeAttribute(attribute);
+    void element.offsetWidth;
+    element.setAttribute(attribute, "");
+  };
+
+  document.querySelectorAll<HTMLElement>("[data-clock-scene]").forEach((root) => {
+    if (prefersReducedMotion()) return;
+    const seconds = root.querySelector<HTMLElement>("[data-seconds]")!;
+    const quote = root.querySelector<HTMLElement>("[data-quote]");
+    const quotes: string[] = quote ? JSON.parse(quote.dataset.quotes || "[]") : [];
+    let elapsed = 0;
+    let quoteIndex = 0;
+
+    const tick = () => {
+      elapsed = (elapsed + 1) % 60;
+      seconds.textContent = String(elapsed).padStart(2, "0");
+      replay(seconds, "data-tick");
+    };
+
+    // Eight seconds of clock; halfway through, the quote quietly turns over.
+    playOnView(root, {
+      reset() {},
+      play(timeline: Timeline) {
+        for (let second = 1; second <= 8; second += 1) timeline.at(second * 1000, tick);
+        if (quote && quotes.length > 1) {
+          timeline.at(3800, () => quote.setAttribute("data-leaving", ""));
+          timeline.at(4240, () => {
+            quote.removeAttribute("data-leaving");
+            quoteIndex = (quoteIndex + 1) % quotes.length;
+            quote.textContent = quotes[quoteIndex];
+            replay(quote, "data-swap");
+          });
+        }
+        return 8000;
+      },
+    });
+  });
+</script>

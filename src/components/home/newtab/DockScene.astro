@@ -1,0 +1,255 @@
+---
+import type { HomeNewTabScene } from "../../../lib/home-content";
+import SceneCursor from "./SceneCursor.astro";
+import SceneSearch from "./SceneSearch.astro";
+import SceneShortcuts from "./SceneShortcuts.astro";
+
+interface Props {
+  scene: HomeNewTabScene;
+  alt: string;
+}
+
+const { scene, alt } = Astro.props;
+---
+
+<!-- A pointer sweeps the shortcut row; a real mouse over the card takes over. -->
+<div class="nts-scene dock" data-dock-scene role="img" aria-label={alt}>
+  <div class="dock-page" aria-hidden="true">
+    <div class="dock-search"><SceneSearch placeholder={scene.searchPlaceholder} /></div>
+    <div class="dock-row" data-dock-row>
+      <SceneShortcuts />
+    </div>
+  </div>
+  <span class="nts-tooltip dock-tip" data-tip aria-hidden="true">ChatGPT</span>
+  <SceneCursor />
+</div>
+
+<style>
+  .dock-page {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding-bottom: 16px;
+  }
+
+  .dock-search {
+    width: min(292px, calc(100% - 40px));
+  }
+
+  /* Wider than the card: the ends fade out instead of being cut. */
+  .dock-row {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding-top: 16px;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  }
+
+  /* Resting frame: the pointer has just landed on ChatGPT. */
+  .dock-row :global(.nts-shortcut:nth-child(5)) {
+    --dock-scale: 1.28;
+    --dock-rise: -6px;
+  }
+
+  .dock-row :global(.nts-shortcut:nth-child(4)) {
+    --dock-scale: 1.14;
+    --dock-rise: -3px;
+    --dock-shift: -4px;
+  }
+
+  .dock-row :global(.nts-shortcut:nth-child(6)) {
+    --dock-scale: 1.14;
+    --dock-rise: -3px;
+    --dock-shift: 4px;
+  }
+
+  .dock[data-live] .dock-row :global(.nts-shortcut) {
+    --dock-scale: 1;
+    --dock-rise: 0px;
+    --dock-shift: 0px;
+  }
+
+  /* The tooltip sits under the hovered tile; its spot is set by script. */
+  .dock-tip {
+    top: 0;
+    left: 0;
+    z-index: 4;
+    opacity: 0;
+    transform: translate(var(--x, 0px), calc(var(--y, 0px) + 4px)) translateX(-50%);
+    transition:
+      opacity 120ms ease,
+      transform 120ms ease;
+  }
+
+  .dock-tip[data-visible="true"] {
+    opacity: 1;
+    transform: translate(var(--x, 0px), var(--y, 0px)) translateX(-50%);
+  }
+
+  /* No script: pin it under ChatGPT, the tile in the resting frame. */
+  .dock:not([data-live]) .dock-tip {
+    top: calc(50% + 72px);
+    left: calc(50% + 68px);
+    opacity: 1;
+    transform: translateX(-50%);
+  }
+
+  .dock :global(.nts-cursor) {
+    transition-property: opacity;
+  }
+</style>
+
+<script>
+  import { Timeline, playOnView, prefersReducedMotion } from "./scene-runtime";
+
+  type Point = { x: number; y: number };
+
+  const smoothstep = (value: number) => value * value * (3 - 2 * value);
+  const easeInOut = (value: number) => (value < 0.5 ? 4 * value ** 3 : 1 - (-2 * value + 2) ** 3 / 2);
+
+  document.querySelectorAll<HTMLElement>("[data-dock-scene]").forEach((root) => {
+    if (prefersReducedMotion()) return;
+    const row = root.querySelector<HTMLElement>("[data-dock-row]")!;
+    const tiles = Array.from(row.querySelectorAll<HTMLElement>("[data-shortcut]"));
+    const icons = tiles.map((tile) => tile.firstElementChild as HTMLElement);
+    const tip = root.querySelector<HTMLElement>("[data-tip]")!;
+    const cursor = root.querySelector<HTMLElement>("[data-cursor]")!;
+    let pointerIsReal = false;
+    // Once a real mouse has been over the row, it owns the row: no more script.
+    let handedOver = false;
+    let frame = 0;
+
+    /** Icon centers in scene coordinates; tiles never move, only their icons do. */
+    const measure = () => {
+      const base = root.getBoundingClientRect();
+      return tiles.map((tile) => {
+        const rect = tile.getBoundingClientRect();
+        return { x: rect.left - base.left + rect.width / 2, y: rect.top - base.top + rect.height / 2, bottom: rect.bottom - base.top };
+      });
+    };
+
+    /*
+     * lumno-extension/src/newtab/shortcut-dock.js: influence fades over
+     * max(144px, four icon widths), the hovered tile grows 28% and rises 6px,
+     * and its two neighbours on each side lean away from it.
+     */
+    const magnify = (pointer: Point | null) => {
+      const centers = measure();
+      const radius = Math.max(144, 48 * 4);
+      let active = -1;
+      if (pointer && Math.abs(pointer.y - centers[0].y) < 40) {
+        let best = Infinity;
+        centers.forEach((center, index) => {
+          const distance = Math.abs(pointer.x - center.x);
+          if (distance < best) {
+            best = distance;
+            active = index;
+          }
+        });
+        if (best > 32) active = -1;
+      }
+      icons.forEach((icon, index) => {
+        const offset = index - active;
+        if (!pointer || active < 0 || Math.abs(offset) > 2) {
+          icon.style.removeProperty("--dock-scale");
+          icon.style.removeProperty("--dock-rise");
+          icon.style.removeProperty("--dock-shift");
+          return;
+        }
+        const raw = Math.max(0, 1 - Math.abs(pointer.x - centers[index].x) / radius);
+        const eased = smoothstep(raw);
+        const side = Math.sign(offset);
+        const shift = side === 0 ? 0 : (side * 16 * eased * (1 - eased)) / Math.abs(offset);
+        icon.style.setProperty("--dock-scale", (1 + 0.28 * eased).toFixed(3));
+        icon.style.setProperty("--dock-rise", `${Math.round(-6 * eased)}px`);
+        icon.style.setProperty("--dock-shift", `${Math.round(shift)}px`);
+      });
+      if (active >= 0) {
+        tip.textContent = tiles[active].dataset.name || "";
+        tip.style.setProperty("--x", `${centers[active].x}px`);
+        tip.style.setProperty("--y", `${centers[active].bottom + 6}px`);
+        tip.dataset.visible = "true";
+      } else {
+        tip.dataset.visible = "false";
+      }
+    };
+
+    let at: Point = { x: 0, y: 0 };
+    const place = (point: Point) => {
+      at = point;
+      cursor.style.transform = `translate(${point.x.toFixed(1)}px, ${point.y.toFixed(1)}px)`;
+      if (!pointerIsReal) magnify(point);
+    };
+
+    /** Glides the fake pointer, updating the row every frame. */
+    const glide = (to: Point, duration: number) => {
+      cancelAnimationFrame(frame);
+      if (handedOver) return;
+      const from = at;
+      const start = performance.now();
+      const step = (now: number) => {
+        const progress = Math.min(1, (now - start) / duration);
+        const eased = easeInOut(progress);
+        place({ x: from.x + (to.x - from.x) * eased, y: from.y + (to.y - from.y) * eased });
+        if (progress < 1) frame = requestAnimationFrame(step);
+      };
+      frame = requestAnimationFrame(step);
+    };
+
+    root.dataset.live = "";
+    magnify(null);
+
+    // Hovering doesn't replay this one: the visitor's own pointer is the demo.
+    playOnView(
+      root,
+      {
+        reset() {
+          cancelAnimationFrame(frame);
+          if (handedOver) return;
+          const centers = measure();
+          place({ x: centers[5].x + 20, y: centers[5].y + 90 });
+          magnify(null);
+        },
+        play(timeline: Timeline) {
+          if (handedOver) return 0;
+          const centers = measure();
+          const y = centers[0].y + 6;
+          // Only the tiles inside the card: the outer ones sit under the fade.
+          const left = centers[1];
+          const right = centers[5];
+          const pick = centers[4];
+          timeline.at(0, () => (cursor.dataset.visible = String(!pointerIsReal)));
+          timeline.at(80, () => glide({ x: right.x, y }, 700));
+          timeline.at(900, () => glide({ x: left.x, y }, 2400));
+          timeline.at(3500, () => glide({ x: pick.x + 2, y }, 1300));
+          return 4900;
+        },
+      },
+      { replayOnHover: false },
+    );
+
+    // A real mouse drives the row directly; the scripted pointer steps aside.
+    root.addEventListener("pointermove", (event) => {
+      if (event.pointerType !== "mouse") return;
+      pointerIsReal = true;
+      if (!handedOver) {
+        handedOver = true;
+        cancelAnimationFrame(frame);
+        cursor.dataset.visible = "false";
+      }
+      const base = root.getBoundingClientRect();
+      magnify({ x: event.clientX - base.left, y: event.clientY - base.top });
+    });
+    // Leaving lets every tile settle back; nothing replays.
+    root.addEventListener("pointerleave", () => {
+      if (!pointerIsReal) return;
+      pointerIsReal = false;
+      magnify(null);
+    });
+  });
+</script>

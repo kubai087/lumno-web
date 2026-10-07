@@ -3,7 +3,6 @@ import { DitherShader } from "./DitherShader";
 import type { ChromeStoreReview } from "../../lib/chrome-store-reviews";
 
 interface Props {
-  eyebrow: string;
   title: string;
   summary: string;
   storeUrl: string;
@@ -14,7 +13,6 @@ interface Props {
 }
 
 const {
-  eyebrow,
   title,
   summary,
   storeUrl,
@@ -35,11 +33,10 @@ const rows = [reviews.slice(0, midpoint), reviews.slice(midpoint)];
   data-chrome-review-marquee
 >
   <header class="home-section__head chrome-review-marquee__header">
-    <p class="home-eyebrow">{eyebrow}</p>
     <h2 id="reviews-title" class="home-h2"><span>{title}</span></h2>
     <p class="home-lead">
       <span class="chrome-review-marquee__stars" aria-hidden="true">★★★★★</span>
-      {summary}
+      {summary.split("\n").map((line, index) => (index > 0 ? [<br />, line] : line))}
     </p>
     <a
       class="home-link chrome-review-marquee__store"
@@ -55,7 +52,7 @@ const rows = [reviews.slice(0, midpoint), reviews.slice(midpoint)];
     </a>
   </header>
 
-  <div class="chrome-review-marquee__frame">
+  <div class="chrome-review-marquee__frame home-media">
     <DitherShader
       className="chrome-review-marquee__dither"
       src="/assets/lumno-newtab-monet-coastal-white.webp"
@@ -224,7 +221,7 @@ const rows = [reviews.slice(0, midpoint), reviews.slice(midpoint)];
     margin: 0 auto;
     padding: clamp(24px, 2.5vw, 36px) 0;
     overflow: hidden;
-    border-radius: 16px;
+    border-radius: var(--home-radius-xl);
     background: #f7f8ef;
   }
 
@@ -251,8 +248,10 @@ const rows = [reviews.slice(0, midpoint), reviews.slice(midpoint)];
     width: min(calc(100% - 48px), 720px);
   }
 
+  /* Own line, so narrow screens never strand the stars with half of the summary. */
   .chrome-review-marquee__stars {
-    margin-right: 6px;
+    display: block;
+    margin-bottom: 2px;
     color: #e0a526;
     letter-spacing: 0.08em;
   }
@@ -305,14 +304,15 @@ const rows = [reviews.slice(0, midpoint), reviews.slice(midpoint)];
   .chrome-review-card {
     width: clamp(310px, 29vw, 400px);
     min-height: 172px;
-    padding: 22px;
+    padding: 24px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     gap: 20px;
-    border: 1px solid rgba(211, 217, 226, 0.78);
-    border-radius: 16px;
+    border: 1px solid var(--home-hairline-control);
+    border-radius: var(--home-radius-md);
     background: rgba(255, 255, 255, 0.88);
+    box-shadow: var(--home-shadow-chip);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
   }
@@ -346,7 +346,7 @@ const rows = [reviews.slice(0, midpoint), reviews.slice(midpoint)];
     overflow: hidden;
     border-radius: 50%;
     background: var(--home-olive-soft, #eef2ea);
-    box-shadow: inset 0 0 0 1px rgba(17, 24, 39, 0.08);
+    box-shadow: inset 0 0 0 1px var(--home-card-border);
   }
 
   .chrome-review-card__avatar::before {
@@ -391,7 +391,7 @@ const rows = [reviews.slice(0, midpoint), reviews.slice(midpoint)];
 
   @media (max-width: 760px) {
     .chrome-review-marquee {
-      padding: 72px 0 64px;
+      padding: 72px 0;
     }
 
     .chrome-review-marquee__frame {
@@ -413,7 +413,6 @@ const rows = [reviews.slice(0, midpoint), reviews.slice(midpoint)];
       min-height: 150px;
       padding: 18px;
       gap: 16px;
-      border-radius: 14px;
     }
 
     .chrome-review-card__quote {

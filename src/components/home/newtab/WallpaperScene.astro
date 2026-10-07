@@ -1,0 +1,237 @@
+---
+import type { HomeNewTabScene } from "../../../lib/home-content";
+import SceneCursor from "./SceneCursor.astro";
+import SceneSearch from "./SceneSearch.astro";
+import { PANEL_WALLPAPERS, wallpaper, wallpaperThumb } from "./scene-data";
+
+interface Props {
+  scene: HomeNewTabScene;
+  alt: string;
+}
+
+const { scene, alt } = Astro.props;
+---
+
+<!--
+  The new tab with its appearance panel open in the bottom-right corner, where
+  the extension puts it. Picking a built-in swaps the wallpaper behind it.
+-->
+<div class="nts-scene wp" data-wallpaper-scene role="img" aria-label={alt}>
+  <div class="nts-wall">
+    {PANEL_WALLPAPERS.map((name, index) => (
+      <img src={wallpaper(name)} alt="" width="1280" height="720" loading="lazy" decoding="async" data-wall data-active={String(index === 0)} />
+    ))}
+  </div>
+
+  <div class="wp-page" aria-hidden="true">
+    <p class="nts-clock">09:41</p>
+    <div class="wp-search"><SceneSearch placeholder={scene.searchPlaceholder} /></div>
+  </div>
+
+  <!-- newtab.css .x-nt-wallpaper-panel: 20px inset, 18px radius, hairline, soft drop. -->
+  <div class="wp-panel" aria-hidden="true">
+    <div class="wp-row">
+      <span class="wp-label">{scene.sourceLabel}</span>
+      <span class="wp-tabs">
+        {scene.sources.map((source, index) => <span class="wp-tab" data-active={String(index === 0)}>{source}</span>)}
+      </span>
+    </div>
+    <div class="wp-grid">
+      {PANEL_WALLPAPERS.map((name, index) => (
+        <span class="wp-tile" data-thumb data-selected={String(index === 0)}>
+          <img src={wallpaperThumb(name)} alt="" width="512" height="288" loading="lazy" decoding="async" />
+          <span class="wp-check"><i class="ri-check-line"></i></span>
+        </span>
+      ))}
+    </div>
+  </div>
+
+  <SceneCursor />
+</div>
+
+<style>
+  .wp {
+    --panel-width: min(320px, calc(100% - 32px));
+  }
+
+  /* The page itself, centred in the room the panel leaves. */
+  .wp-page {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: calc(var(--panel-width) + 16px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+    padding: 0 20px 20px;
+  }
+
+  .wp-search {
+    width: min(260px, 100%);
+  }
+
+  .wp-panel {
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    box-sizing: border-box;
+    width: var(--panel-width);
+    padding: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.14);
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.1);
+  }
+
+  .wp-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+  }
+
+  .wp-label {
+    padding-left: 2px;
+    font-size: 13px;
+    line-height: 1.25;
+  }
+
+  /* Segmented tabs hugging their labels, as on a setting row. */
+  .wp-tabs {
+    display: flex;
+    min-height: 30px;
+    box-sizing: border-box;
+    padding: 2px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 10px;
+    background: rgba(17, 24, 39, 0.04);
+  }
+
+  .wp-tab {
+    display: inline-flex;
+    align-items: center;
+    height: 24px;
+    padding: 0 8px;
+    border-radius: 7px;
+    color: #6b7280;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .wp-tab[data-active="true"] {
+    background: rgba(255, 255, 255, 0.82);
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.12);
+    color: #111827;
+  }
+
+  .wp-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+    padding: 2px;
+  }
+
+  .wp-tile {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 16 / 9;
+    border-radius: 9px;
+    transition: transform 140ms ease;
+  }
+
+  .wp-tile img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .wp-tile::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: 2px solid transparent;
+    border-radius: inherit;
+    transition: border-color 170ms ease;
+  }
+
+  .wp-tile[data-selected="true"]::after {
+    border-color: #6b7280;
+  }
+
+  .wp-tile[data-pressed="true"] {
+    transform: scale(0.97);
+  }
+
+  .wp-check {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    width: 16px;
+    height: 16px;
+    box-sizing: border-box;
+    border: 1px solid #040404;
+    border-radius: 999px;
+    background: linear-gradient(180deg, #404859 0%, #273042 100%);
+    box-shadow:
+      0 3px 2px rgba(0, 0, 0, 0.05),
+      0 2px 2px rgba(0, 0, 0, 0.09);
+    color: #fff;
+    font-size: 11px;
+    opacity: 0;
+    transform: scale(0.82);
+    transition:
+      opacity 160ms ease,
+      transform 200ms cubic-bezier(0.2, 0.85, 0.2, 1.2);
+  }
+
+  .wp-tile[data-selected="true"] .wp-check {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Narrow screens: the panel alone, over the wallpaper. */
+  @container (max-width: 560px) {
+    .wp-page {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  import { Timeline, centerOf, clickCursor, moveCursor, playOnView, setActive } from "./scene-runtime";
+
+  document.querySelectorAll<HTMLElement>("[data-wallpaper-scene]").forEach((root) => {
+    const walls = Array.from(root.querySelectorAll<HTMLElement>("[data-wall]"));
+    const tiles = Array.from(root.querySelectorAll<HTMLElement>("[data-thumb]"));
+    const cursor = root.querySelector<HTMLElement>("[data-cursor]")!;
+    let current = 0;
+
+    playOnView(root, {
+      reset() {},
+      play(timeline: Timeline) {
+        const next = (current + 1) % tiles.length;
+        const tile = tiles[next];
+        timeline.at(0, () => moveCursor(cursor, centerOf(root, tile, 8, 6), 760));
+        clickCursor(timeline, cursor, 900);
+        timeline.at(900, () => (tile.dataset.pressed = "true"));
+        timeline.at(1040, () => {
+          tile.dataset.pressed = "false";
+          current = next;
+          setActive(tiles, next, "selected");
+          setActive(walls, next);
+        });
+        return 2200;
+      },
+    });
+  });
+</script>

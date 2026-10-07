@@ -4,16 +4,63 @@
  */
 
 :root {
-  --home-section-width: 1180px;
+  /* Matches the hero and nav so every section shares their edges. */
+  --home-section-width: 1360px;
   --home-ink: #2f2a22;
   --home-ink-soft: #5a5247;
   --home-olive: #6d7f63;
   --home-olive-soft: #eef2ea;
   --home-card: #ffffff;
-  --home-card-border: rgba(32, 38, 46, 0.08);
-  --home-card-shadow: 0 1px 2px rgba(32, 38, 46, 0.04), 0 12px 32px -18px rgba(32, 38, 46, 0.18);
-  --home-radius-lg: 24px;
+  --home-card-border: rgba(var(--home-edge), 0.08);
+  --home-card-shadow: var(--home-shadow-card);
+
+  /*
+   * Surface system. Every hairline and shadow is the same cool ink at a
+   * different strength, and every framed surface uses one of three radii:
+   *   xl    feature cards and full-width panels
+   *   inner media inset in a card, so it stays concentric (xl - card inset)
+   *   md    small cards that sit on a panel (reviews)
+   * Framed surfaces come in two fills with one edge and one lift: paper cards
+   * (grey, gradient ring) for demos and text, media (pictures, flat inset
+   * hairline) for wallpapers and screenshots. White controls (tags, pills,
+   * arrows, secondary buttons) are pills with the control hairline and the
+   * chip shadow.
+   */
+  --home-edge: 32, 38, 46;
+  --home-radius-xl: 28px;
   --home-radius-md: 16px;
+  --home-radius-inner: calc(var(--home-radius-xl) - var(--home-card-inset));
+  --home-card-inset: 8px;
+  --home-card-pad: 32px;
+  --home-paper: #f3f4f6;
+  --home-hairline-control: rgba(var(--home-edge), 0.1);
+  --home-ring: linear-gradient(
+    135deg,
+    rgba(var(--home-edge), 0.16),
+    rgba(var(--home-edge), 0.07) 38%,
+    rgba(var(--home-edge), 0.07) 62%,
+    rgba(var(--home-edge), 0.16)
+  );
+  --home-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  --home-media-ring: inset 0 0 0 1px rgba(var(--home-edge), 0.08);
+  --home-shadow-chip: 0 1px 2px rgba(var(--home-edge), 0.05);
+
+  /*
+   * Type ladder. Three heading levels, one body size:
+   *   section  eyebrow + .home-h2 + .home-lead (a page-level claim)
+   *   part     .home-part-head: claim in ink, the explanation in grey at the
+   *            same size, for a group inside a section or a minor section
+   *   card     title-lg on feature cards, title-md on carousel cards,
+   *            title-sm on text-only cells and FAQ rows; body under all of them
+   */
+  --home-part-size: clamp(20px, 2vw, 26px);
+  --home-title-lg: clamp(20px, 1.8vw, 24px);
+  --home-title-md: 20px;
+  --home-title-sm: 17px;
+  --home-body: 15px;
+  --home-body-leading: 1.65;
+  --home-title-gap: 8px;
+  --home-shadow-card: 0 1px 2px rgba(var(--home-edge), 0.04), 0 16px 40px -28px rgba(var(--home-edge), 0.22);
   --home-select: #eaf2fe;
   --home-select-ink: #1f5fbf;
   --home-heading-gradient: linear-gradient(180deg, #2f2a22 0%, #5a5247 100%);
@@ -39,13 +86,46 @@
 .home-eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 10px;
   margin: 0 0 14px;
-  color: var(--home-olive);
-  font-size: 13px;
-  font-weight: 650;
-  letter-spacing: 0.04em;
+  color: var(--home-ink-soft);
+  font-size: 15px;
+  font-weight: 500;
   line-height: 1.4;
+}
+
+/*
+ * Feature eyebrows show how the feature is triggered: keycaps for shortcuts,
+ * a text-selection highlight for selection AI.
+ */
+.home-eyebrow__keys {
+  display: inline-flex;
+  gap: 3px;
+}
+
+.home-eyebrow .home-kbd {
+  min-width: 22px;
+  height: 22px;
+  padding: 0 5px;
+  border-radius: 6px;
+  color: var(--home-ink-soft);
+  font-size: 12px;
+  font-style: normal;
+  letter-spacing: 0;
+}
+
+/* Shortcuts render both spellings; the head script sets html[data-platform]. Mac is the no-JS default. */
+html:not([data-platform="other"]) [data-key-other],
+html[data-platform="other"] [data-key-mac] {
+  display: none;
+}
+
+.home-eyebrow__selection {
+  margin-inline: -3px;
+  padding: 1px 3px;
+  border-radius: 3px;
+  background: var(--home-select);
+  color: var(--home-select-ink);
 }
 
 .home-h2 {
@@ -58,10 +138,34 @@
   text-wrap: balance;
 }
 
-/* CJK headings break at punctuation (after the comma), not in the middle of a word. */
+/*
+ * CJK display copy breaks between phrases (at punctuation and spaces), never inside a word,
+ * so copy should be written in short clauses. Negative tracking that suits Latin glyphs
+ * crowds Han characters.
+ */
 [data-locale^="zh"] .home-h2 {
   word-break: keep-all;
   overflow-wrap: anywhere;
+  line-height: 1.26;
+  letter-spacing: -0.01em;
+}
+
+/* A "\n" in lead copy marks a sentence that should start on its own line. */
+.home-lead--lines,
+.hero-parallax__description {
+  white-space: pre-line;
+}
+
+[data-locale^="zh"] .home-lead,
+[data-locale^="zh"] .hero-parallax__description,
+[data-locale^="zh"] .home-cell__title,
+[data-locale^="zh"] .home-cell__text,
+[data-locale^="zh"] .command-bar .bento h3,
+[data-locale^="zh"] .command-bar .bento p {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  line-break: strict;
+  letter-spacing: 0.01em;
 }
 
 .home-h2 > span {
@@ -93,7 +197,7 @@
   position: relative;
   overflow: hidden;
   border: 1px solid var(--home-card-border);
-  border-radius: var(--home-radius-lg);
+  border-radius: var(--home-radius-xl);
   background: var(--home-card);
   box-shadow: var(--home-card-shadow);
 }
@@ -121,7 +225,7 @@
   min-width: 1.9em;
   height: 1.9em;
   padding: 0 0.45em;
-  border: 1px solid rgba(32, 38, 46, 0.12);
+  border: 1px solid rgba(var(--home-edge), 0.12);
   border-bottom-width: 2px;
   border-radius: 7px;
   background: #fff;
@@ -160,9 +264,18 @@
 }
 
 [data-locale="en"] .home-eyebrow {
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: 12px;
+  font-family: "EB Garamond", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  font-size: 19px;
+  font-style: italic;
+  font-weight: 500;
+}
+
+@media (max-width: 620px) {
+  :root {
+    --home-radius-xl: 24px;
+    --home-card-inset: 6px;
+    --home-card-pad: 24px;
+  }
 }
 
 @media (max-width: 760px) {
@@ -181,8 +294,53 @@
 }
 
 /*
- * Hairline sheet: one framed surface whose cells share 1px dividers.
- * Shared by the feature bento, utilities, and trust points so the page reads as one system.
+ * Part head: a heading for a group of cards inside a section, or for a minor
+ * section. The claim and its explanation share one size so they read as one
+ * sentence; only the colour steps down. Controls can sit on the right.
+ */
+.home-part-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin: 0 0 24px;
+  padding: 0 4px;
+}
+
+.home-part-head__copy {
+  max-width: 620px;
+}
+
+.home-part-head__title,
+.home-part-head__lead {
+  margin: 0;
+  font-size: var(--home-part-size);
+  font-weight: 650;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.home-part-head__title {
+  color: var(--home-ink);
+}
+
+.home-part-head__lead {
+  color: var(--text-soft, #89919a);
+  font-weight: 550;
+}
+
+[data-locale^="zh"] .home-part-head__title,
+[data-locale^="zh"] .home-part-head__lead {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  letter-spacing: 0;
+}
+
+/*
+ * Hairline sheet: a paper card whose cells share 1px dividers, for text-only
+ * lists (utilities, trust points). Same fill, ring and lift as the feature
+ * cards, so the page has one kind of card rather than a grey one and a white one.
  */
 .home-sheet {
   display: grid;
@@ -190,28 +348,75 @@
   margin: 0;
   padding: 0;
   overflow: hidden;
-  border: 1px solid rgba(32, 38, 46, 0.08);
-  border-radius: 24px;
-  background: rgba(32, 38, 46, 0.08);
+  border: 1px solid transparent;
+  border-radius: var(--home-radius-xl);
+  background:
+    linear-gradient(var(--home-card-border), var(--home-card-border)) padding-box,
+    linear-gradient(var(--home-paper), var(--home-paper)) padding-box,
+    var(--home-ring) border-box;
+  box-shadow: var(--home-shadow-card);
   list-style: none;
 }
 
 .home-sheet > * {
   min-width: 0;
-  background: #fcfcfb;
+  padding: var(--home-card-pad);
+  background: var(--home-paper);
 }
 
-.home-sheet__label {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin: 0 0 12px;
-  color: var(--text-soft, #89919a);
-  font-size: 13px;
-  font-weight: 600;
+/*
+ * Media panel: a picture framed like a card (wallpaper panels, the hero, the
+ * AI demo). The hairline sits on top of the image so pale edges still end
+ * cleanly. The element must already be positioned.
+ */
+.home-media {
+  border-radius: var(--home-radius-xl);
+  box-shadow: var(--home-shadow-card);
+}
+
+.home-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  border-radius: inherit;
+  box-shadow: var(--home-media-ring);
+  pointer-events: none;
+}
+
+/*
+ * Text-only cell inside a sheet: icon chip, small title, body. The chip is
+ * the same white material as the feature cards' label pills, so everything
+ * that sits on the grey paper is one kind of object.
+ */
+.home-cell__icon {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--home-hairline-control);
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: var(--home-shadow-chip);
+  color: #4b5563;
+  font-size: 17px;
+  line-height: 1;
+}
+
+.home-cell__title {
+  margin: 0;
+  color: var(--home-ink);
+  font-size: var(--home-title-sm);
+  font-weight: 650;
   line-height: 1.4;
+  letter-spacing: -0.01em;
 }
 
-.home-sheet__label i {
-  font-size: 16px;
+.home-cell__text {
+  margin: var(--home-title-gap) 0 0;
+  color: var(--text-sub, #626870);
+  font-size: var(--home-body);
+  line-height: var(--home-body-leading);
+  text-wrap: pretty;
 }

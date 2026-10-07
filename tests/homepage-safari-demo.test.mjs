@@ -48,8 +48,14 @@ test("homepage opens with a full-screen Search All demo and can settle early on 
   assert.match(component, /if \(window\.scrollY > 1\) \{\s*completeHomeIntroForScroll\(\);/);
   assert.match(component, /window\.addEventListener\("scroll", handleHomeIntroScroll, \{ passive: true \}\)/);
   assert.match(component, /window\.removeEventListener\("scroll", handleHomeIntroScroll\)/);
-  assert.match(component, /const handleHomeIntroSkip = useCallback\(\(\) => \{[\s\S]*?document\.body\.dataset\.homeIntro !== "pending"[\s\S]*?revealHomeIntro\(\)/);
-  assert.match(component, /className="hero-safari-visual"\s*onClick=\{handleHomeIntroSkip\}/);
+  assert.match(component, /const handleHomeIntroSkip = useCallback\(\(\) => \{[\s\S]*?document\.body\.dataset\.homeIntro !== "pending"[\s\S]*?revealHomeIntro\(\{ skipLoadWait: true \}\)/);
+  assert.match(component, /if \(!skipLoadWait && document\.readyState !== "complete"\)/);
+  assert.match(component, /window\.addEventListener\("wheel", handleWheel, \{ passive: true \}\)/);
+  assert.match(component, /window\.addEventListener\("keydown", handleKeyDown\)/);
+  assert.match(component, /className="hero-intro-skip-hint"[\s\S]*?onClick=\{handleHomeIntroSkip\}[\s\S]*?\{copy\.skipIntroLabel\}/);
+  assert.match(component, /skipIntroLabel: "点击任意处跳过"/);
+  assert.match(component, /skipIntroLabel: "Click anywhere to skip"/);
+  assert.match(component, /className="hero-safari-visual home-media"\s*onClick=\{handleHomeIntroSkip\}/);
   assert.match(component, /const HOME_INTRO_MOVE_MS = 1_240/);
   assert.match(component, /HOME_INTRO_COMPLETION_FALLBACK_MS = HOME_INTRO_MOVE_MS \+ 240/);
   assert.match(component, /const visualRef = useRef<HTMLDivElement>\(null\)/);
@@ -66,7 +72,7 @@ test("homepage opens with a full-screen Search All demo and can settle early on 
   assert.match(component, /const contentTranslateX = -\(targetRect\.left \* progress\) \/ scaleX/);
   assert.match(component, /const maskAnimation = visual\.animate\(maskKeyframes, timing\)/);
   assert.match(component, /const contentAnimation = content\.animate\(contentKeyframes, timing\)/);
-  assert.match(component, /const radiusAnimation = visual\.animate\([\s\S]*?borderRadius: "0px"[\s\S]*?borderRadius: "16px"/);
+  assert.match(component, /getPropertyValue\("--home-radius-xl"\)[\s\S]*?const radiusAnimation = visual\.animate\([\s\S]*?borderRadius: "0px"[\s\S]*?borderRadius: settledRadius/);
   assert.match(component, /maskAnimation\.onfinish = \(\) => reconcileHomeIntroEnd\(\)/);
   assert.doesNotMatch(component, /handleHomeIntroMaskAnimationEnd/);
   assert.doesNotMatch(component, /--hero-intro-switcher-/);

@@ -6,6 +6,7 @@ import FaqSection from "../components/home/sections/FaqSection.astro";
 import FinalCta from "../components/home/sections/FinalCta.astro";
 import OpenSourceSection from "../components/home/sections/OpenSourceSection.astro";
 import SiteFooter from "../components/home/sections/SiteFooter.astro";
+import NewTabSection from "../components/home/sections/NewTabSection.astro";
 import UtilitiesSection from "../components/home/sections/UtilitiesSection.astro";
 import { CommunityQrDialog } from "../components/home/CommunityQrDialog";
 import { HeroInstallTooltip } from "../components/home/HeroInstallTooltip";
@@ -25,6 +26,7 @@ import "../styles/home.css";
 import { getChromeStoreReviews, selectShowcaseReviews } from "../lib/chrome-store-reviews";
 import { COMMUNITY_LINKS } from "../lib/community";
 import { getHomeContent } from "../lib/home-content";
+import { NEW_TAB_SHORTCUT } from "../lib/shortcut-keys";
 import { getLumnoBuiltinSiteSearchProviders } from "../lib/lumno-search-providers";
 import { DEFAULT_LOCALE, buildLocalizedPath, buildRouteLanguageMap, type SupportedLocale } from "../lib/locales";
 import { getStoreVersions } from "../lib/store-versions";
@@ -50,23 +52,8 @@ const EDGE_STORE_URL = "https://microsoftedge.microsoft.com/addons/detail/pfbklk
 const GITHUB_URL = "https://github.com/kubai087/lumno-extension";
 const GITHUB_ISSUE_URL = `${GITHUB_URL}/issues/new/choose`;
 const GITHUB_PULL_REQUEST_URL = `${GITHUB_URL}/compare`;
-const FEATURE_PARALLAX_THUMBNAILS = [
-  "/assets/feature-newtab/newtab-01.webp",
-  "/assets/feature-newtab/newtab-02.webp",
-  "/assets/feature-newtab/newtab-03.webp",
-  "/assets/feature-newtab/newtab-04.webp",
-  "/assets/feature-newtab/newtab-05.webp",
-  "/assets/feature-newtab/newtab-06.webp",
-  "/assets/feature-newtab/newtab-01.webp",
-  "/assets/feature-newtab/newtab-02.webp",
-  "/assets/feature-newtab/newtab-03.webp",
-  "/assets/feature-newtab/newtab-04.webp",
-  "/assets/feature-newtab/newtab-05.webp",
-  "/assets/feature-newtab/newtab-06.webp",
-  "/assets/feature-newtab/newtab-01.webp",
-  "/assets/feature-newtab/newtab-02.webp",
-  "/assets/feature-newtab/newtab-03.webp",
-] as const;
+// Real renders of the extension's new tab per locale (see NewTabSection.astro).
+const FEATURE_PARALLAX_COUNT = 15;
 const { chrome: chromeStoreVersion, edge: edgeStoreVersion } = await getStoreVersions({
   chrome:
     import.meta.env.PUBLIC_CHROME_STORE_VERSION ||
@@ -97,10 +84,10 @@ const featuresHref = buildLocalizedPath(uiLocale, "/features/");
 const onboardingHref = buildLocalizedPath(uiLocale, "/onboarding/");
 const releaseHref = buildLocalizedPath(uiLocale, "/release/");
 const privacyHref = buildLocalizedPath(uiLocale, "/privacy/");
-const newTabParallaxProducts = FEATURE_PARALLAX_THUMBNAILS.map((thumbnail) => ({
+const newTabParallaxProducts = Array.from({ length: FEATURE_PARALLAX_COUNT }, (_, index) => ({
   title: content.newTab.screenshotAlt,
   link: featuresHref,
-  thumbnail,
+  thumbnail: `/assets/feature-newtab/${uiLocale}/parallax-${String(index + 1).padStart(2, "0")}.webp`,
 }));
 const showcaseReviews = selectShowcaseReviews(chromeStoreReviews.reviews);
 const reviewSummary = content.reviews.summary
@@ -173,6 +160,9 @@ const structuredData = [
       // The hero intro hides the page until the demo hydrates. Gate that on JS so crawlers and
       // no-JS visitors always get visible content, and lift it if hydration never finishes.
       document.documentElement.setAttribute("data-home-intro-js", "");
+      // Shortcut keycaps render both spellings; show Ctrl/Shift instead of ⌘/⇧ off Apple platforms.
+      const platformHint = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || "";
+      document.documentElement.setAttribute("data-platform", /mac|iphone|ipad|ios/i.test(platformHint) ? "mac" : "other");
       const liftStalledHomeIntro = () => {
         // Background tabs legitimately pause the intro; only intervene once the page is visible.
         if (document.visibilityState !== "visible") {
@@ -328,9 +318,9 @@ const structuredData = [
 
       <section id="ai-intent" class="home-section ai-intent-section" aria-labelledby="ai-intent-title">
         <header class="home-section__head home-section__head--start ai-intent-copy">
-          <p class="home-eyebrow">{content.aiIntent.eyebrow}</p>
+          <p class="home-eyebrow"><mark class="home-eyebrow__selection">{content.aiIntent.eyebrow}</mark></p>
           <h2 id="ai-intent-title" class="home-h2"><span>{content.aiIntent.title}</span></h2>
-          <p class="home-lead">{content.aiIntent.description}</p>
+          <p class="home-lead home-lead--lines">{content.aiIntent.description}</p>
         </header>
         <div class="ai-intent-demo-slot">
           <AiIntentDemo locale={uiLocale} client:visible />
@@ -341,20 +331,18 @@ const structuredData = [
         <HeroParallax
           products={newTabParallaxProducts}
           eyebrow={content.newTab.eyebrow}
+          eyebrowKeys={NEW_TAB_SHORTCUT}
           title={content.newTab.title}
           description={content.newTab.description}
           headingId="new-tab-title"
           client:visible
         />
-        <ul class="new-tab-highlights">
-          {content.newTab.highlights.map((highlight) => <li>{highlight}</li>)}
-        </ul>
+        <NewTabSection content={content.newTab} locale={uiLocale} />
       </section>
 
       <UtilitiesSection content={content.utilities} />
 
       <ChromeReviewMarquee
-        eyebrow={content.reviews.eyebrow}
         title={content.reviews.title}
         summary={reviewSummary}
         storeUrl={chromeStoreReviews.sourceUrl}
@@ -864,9 +852,12 @@ const structuredData = [
         display: grid;
         grid-template-columns: 1fr;
         max-width: var(--content-width);
-        align-content: start;
+        /* Only kicks in when the demo is width-capped (portrait screens). */
+        align-content: center;
         justify-items: center;
         isolation: isolate;
+        /* Lets the demo slot cap its height by the section width (cqw). */
+        container-type: inline-size;
       }
 
       .hero-copy {
@@ -1009,6 +1000,8 @@ const structuredData = [
         z-index: 2;
         width: 100%;
         height: max(300px, calc(100svh - 500px));
+        /* Portrait screens: don't stretch past the demo's native ratio. */
+        max-height: calc(100cqw * 753 / 1203);
         margin-top: clamp(44px, 4vw, 64px);
       }
 
@@ -1120,8 +1113,7 @@ const structuredData = [
 
       .ai-intent-demo-slot {
         width: 100%;
-        aspect-ratio: 1203 / 753;
-        min-height: 320px;
+        min-width: 0;
       }
 
       .feature-intro {
@@ -1141,34 +1133,9 @@ const structuredData = [
         color: var(--text-sub);
         font-size: clamp(16px, 1.3vw, 18px);
         line-height: 1.72;
+        text-wrap: balance;
       }
 
-      .new-tab-highlights {
-        position: relative;
-        z-index: 2;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 8px;
-        width: min(calc(100% - 48px), 860px);
-        /* The card stage settles 300px above its layout box (plus the md:py-40 padding);
-           pull the chips up into that empty space. */
-        margin: -380px auto 0;
-        padding: 0;
-        list-style: none;
-      }
-
-      .new-tab-highlights li {
-        padding: 7px 14px;
-        border: 1px solid var(--home-card-border);
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.86);
-        color: var(--home-ink-soft);
-        font-size: 14px;
-        font-weight: 600;
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-      }
 
       :focus-visible {
         outline: 3px solid rgba(75, 167, 221, 0.38);
@@ -1296,6 +1263,7 @@ const structuredData = [
 
         .hero-demo-slot {
           height: max(220px, calc(100svh - 500px));
+          max-height: calc(100cqw * 7 / 6);
           margin-top: 36px;
         }
 
@@ -1363,18 +1331,6 @@ const structuredData = [
           gap: 32px;
         }
 
-        .ai-intent-demo-slot {
-          min-height: 240px;
-        }
-
-        .new-tab-highlights {
-          width: calc(100% - 32px);
-          margin-top: -320px;
-        }
-
-        .new-tab-highlights li {
-          font-size: 13px;
-        }
       }
 
       @media (min-width: 761px) and (max-height: 740px) {

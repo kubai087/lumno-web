@@ -1,0 +1,217 @@
+---
+import type { HOME_CONTENT } from "../../../lib/home-content";
+import NewTabFeatureCard, { type FeatureId } from "./NewTabFeatureCard.astro";
+import NewTabPartHead from "./NewTabPartHead.astro";
+
+type Content = (typeof HOME_CONTENT)["en"]["newTab"];
+
+interface Props {
+  content: Content;
+}
+
+const { content } = Astro.props;
+const { toolsPart } = content;
+const CARDS: FeatureId[] = ["bookmarks", "dock", "clock", "zen"];
+---
+
+<!--
+  The everyday tools, in the Raycast store's manner: a heading with arrows
+  that step one card, over a track that runs past the content column to the
+  edge of the window. The arrows hide when every card already fits.
+-->
+<section class="ntc" data-ntc aria-label={toolsPart.title}>
+  <NewTabPartHead title={toolsPart.title} lead={toolsPart.lead}>
+    <div class="ntc-nav" data-ntc-nav>
+      <button type="button" class="ntc-arrow" data-ntc-step="-1" aria-label={toolsPart.previous} disabled>
+        <i class="ri-arrow-left-s-line" aria-hidden="true"></i>
+      </button>
+      <button type="button" class="ntc-arrow" data-ntc-step="1" aria-label={toolsPart.next}>
+        <i class="ri-arrow-right-s-line" aria-hidden="true"></i>
+      </button>
+    </div>
+  </NewTabPartHead>
+
+  <div class="ntc-viewport" data-ntc-viewport tabindex="0" aria-label={toolsPart.title}>
+    <ul class="ntc-track">
+      {CARDS.map((id) => (
+        <li class="ntc-item" data-ntc-card>
+          <NewTabFeatureCard id={id} content={content} />
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .ntc {
+    --card-width: 460px;
+    --card-gap: 16px;
+    --edge: var(--home-edge, 32, 38, 46);
+    grid-column: 1 / -1;
+    min-width: 0;
+    margin-top: clamp(72px, 8vw, 112px);
+  }
+
+  .ntc-nav {
+    display: flex;
+    flex: none;
+    gap: 10px;
+  }
+
+  .ntc[data-fits] .ntc-nav {
+    visibility: hidden;
+  }
+
+  .ntc-arrow {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 1px solid rgba(var(--edge), 0.12);
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(var(--edge), 0.06);
+    color: var(--home-ink, #15171a);
+    font-size: 20px;
+    cursor: pointer;
+    transition:
+      background-color 160ms ease,
+      opacity 160ms ease,
+      transform 160ms ease;
+  }
+
+  .ntc-arrow:hover:not(:disabled) {
+    background: var(--home-paper, #f3f4f6);
+  }
+
+  .ntc-arrow:active:not(:disabled) {
+    transform: scale(0.94);
+  }
+
+  .ntc-arrow:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+
+  .ntc-arrow:focus-visible,
+  .ntc-viewport:focus-visible {
+    outline: 2px solid var(--home-select-ink, #3b82f6);
+    outline-offset: 2px;
+  }
+
+  /*
+   * The viewport spans the window; its side padding puts the first card on the
+   * content column and lets the last one scroll all the way in. The vertical
+   * padding is room for card shadows and the hover lift, which a scroller
+   * would otherwise clip.
+   */
+  .ntc-viewport {
+    position: relative;
+    margin: -24px calc(50% - 50vw) -40px;
+    padding: 24px calc(50vw - 50%) 40px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    /* Cards scrolled past the content column fade out instead of crowding the margin. */
+    -webkit-mask-image: linear-gradient(90deg, transparent calc(var(--inset, 0px) - 64px), #000 calc(var(--inset, 0px) - 4px));
+    mask-image: linear-gradient(90deg, transparent calc(var(--inset, 0px) - 64px), #000 calc(var(--inset, 0px) - 4px));
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .ntc-viewport::-webkit-scrollbar {
+    display: none;
+  }
+
+  .ntc-track {
+    display: flex;
+    gap: var(--card-gap);
+    width: max-content;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .ntc-item {
+    display: flex;
+    flex: none;
+    width: var(--card-width);
+    scroll-snap-align: start;
+  }
+
+  @media (max-width: 760px) {
+    .ntc {
+      --card-width: min(340px, calc(100vw - 48px));
+      --card-gap: 12px;
+    }
+
+    .ntc-nav {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ntc-arrow {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  /*
+   * The arrows step one card. Snap points start on the content column, so the
+   * viewport's scroll padding is set to its side padding once it is known.
+   */
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  document.querySelectorAll<HTMLElement>("[data-ntc]").forEach((root) => {
+    const viewport = root.querySelector<HTMLElement>("[data-ntc-viewport]")!;
+    const cards = Array.from(root.querySelectorAll<HTMLElement>("[data-ntc-card]"));
+    const [previous, next] = Array.from(root.querySelectorAll<HTMLButtonElement>("[data-ntc-step]"));
+    const behavior: ScrollBehavior = reduceMotion ? "auto" : "smooth";
+
+    const inset = () => parseFloat(getComputedStyle(viewport).paddingLeft) || 0;
+    const step = () => (cards[1] ? cards[1].offsetLeft - cards[0].offsetLeft : viewport.clientWidth);
+    const currentIndex = () => Math.round(viewport.scrollLeft / step());
+    // Where a smooth scroll is heading, so quick repeated clicks keep counting from there.
+    let target = -1;
+    let settle = 0;
+    const scrollToCard = (index: number) => {
+      target = Math.max(0, Math.min(cards.length - 1, index));
+      viewport.scrollTo({ left: cards[target].offsetLeft - inset(), behavior });
+    };
+
+    const sync = () => {
+      const max = viewport.scrollWidth - viewport.clientWidth;
+      previous.disabled = viewport.scrollLeft <= 2;
+      next.disabled = viewport.scrollLeft >= max - 2;
+      root.toggleAttribute("data-fits", max <= 2);
+    };
+
+    const fitPadding = () => {
+      viewport.style.scrollPaddingInline = `${inset()}px`;
+      viewport.style.setProperty("--inset", `${inset()}px`);
+      sync();
+    };
+
+    [previous, next].forEach((button) => {
+      button.addEventListener("click", () => {
+        scrollToCard((target >= 0 ? target : currentIndex()) + Number(button.dataset.ntcStep));
+      });
+    });
+
+    let frame = 0;
+    viewport.addEventListener(
+      "scroll",
+      () => {
+        cancelAnimationFrame(frame);
+        frame = requestAnimationFrame(sync);
+        window.clearTimeout(settle);
+        settle = window.setTimeout(() => (target = -1), 160);
+      },
+      { passive: true },
+    );
+    new ResizeObserver(fitPadding).observe(viewport);
+    fitPadding();
+  });
+</script>

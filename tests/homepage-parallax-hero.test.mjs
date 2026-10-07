@@ -12,8 +12,15 @@ test("homepage second section uses the Aceternity Hero Parallax composition", ()
   const copySource = readSource("src/lib/home-content.ts");
   const fullBleedFeatureRules = pageSource.match(/\.feature-intro\s*\{[^}]*width:\s*100%;[^}]*\}/g) || [];
 
-  assert.match(pageSource, /const FEATURE_PARALLAX_THUMBNAILS = \[[\s\S]*?\] as const/);
-  assert.equal((pageSource.match(/\/assets\/feature-newtab\/newtab-\d+\.webp/g) || []).length, 15);
+  // Fifteen real new tab renders per locale, one per card.
+  assert.match(pageSource, /const FEATURE_PARALLAX_COUNT = 15;/);
+  assert.match(pageSource, /\/assets\/feature-newtab\/\$\{uiLocale\}\/parallax-\$\{String\(index \+ 1\)\.padStart\(2, "0"\)\}\.webp/);
+  for (const locale of ["zh-CN", "zh-TW", "en"]) {
+    for (let index = 1; index <= 15; index += 1) {
+      const file = `public/assets/feature-newtab/${locale}/parallax-${String(index).padStart(2, "0")}.webp`;
+      assert.ok(fs.existsSync(path.join(workspaceRoot, file)), `${file} is missing`);
+    }
+  }
   assert.match(pageSource, /<section id="new-tab" class="feature-intro"[\s\S]*?<HeroParallax/);
   assert.match(pageSource, /products=\{newTabParallaxProducts\}/);
   assert.match(pageSource, /title: content\.newTab\.screenshotAlt/);
@@ -81,7 +88,8 @@ test("homepage second section uses the Aceternity Hero Parallax composition", ()
     pageSource,
     /@media \(max-width: 760px\)[\s\S]*?--hero-parallax-row-loop-offset: -102\.5rem/,
   );
-  assert.match(copySource, /title: "新标签页，也可以是一幅画"/);
+  assert.match(copySource, /title: "每次打开，都是一幅画"/);
   assert.match(pageSource, /eyebrow=\{content\.newTab\.eyebrow\}/);
-  assert.match(pageSource, /<ul class="new-tab-highlights">/);
+  // Feature cards follow the parallax inside the same section.
+  assert.match(pageSource, /<HeroParallax[\s\S]*?<NewTabSection content=\{content\.newTab\} locale=\{uiLocale\} \/>[\s\S]*?<\/section>/);
 });

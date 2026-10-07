@@ -1,0 +1,540 @@
+/*
+ * Primitives shared by the new tab illustrations, drawn at the extension's
+ * real sizes. Values come from lumno-extension: newtab.css, shared/tokens.css,
+ * shared/tooltip.css, shared/switch.css, and the measured 1440px render that
+ * NewTabMock also follows.
+ */
+
+.nts-scene {
+  --nts-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --nts-ease-menu: cubic-bezier(0.2, 1.45, 0.35, 1);
+  --nts-ease-emphasized: cubic-bezier(0.2, 0.9, 0.2, 1);
+  position: absolute;
+  inset: 0;
+  isolation: isolate;
+  overflow: hidden;
+  color: #111827;
+  font-family: "Open Sans", "PingFang SC", -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+  -webkit-user-select: none;
+  container-type: size;
+}
+
+.nts-scene img {
+  -webkit-user-drag: none;
+}
+
+.nts-scene p {
+  margin: 0;
+}
+
+/* ---------- Wallpaper: the screen's own background, layers crossfading ---------- */
+
+.nts-wall {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: #ece9e2;
+}
+
+[data-theme="dark"] .nts-wall {
+  background: #16181c;
+}
+
+.nts-wall img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.04);
+  transition:
+    opacity 800ms ease,
+    transform 1400ms var(--nts-ease);
+}
+
+.nts-wall img[data-active="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Clock: Open Sans at 86% width, weight 320 ---------- */
+/* Drawn a step smaller than the extension's 54px: the window here is far narrower than a real tab. */
+
+.nts-clock {
+  color: rgb(42 50 68);
+  font-family: "Open Sans", sans-serif;
+  font-size: var(--nts-clock-size, 44px);
+  font-weight: 320;
+  font-variation-settings: "wdth" 86;
+  font-variant-numeric: tabular-nums;
+  line-height: 0.86;
+  letter-spacing: -0.055em;
+  white-space: nowrap;
+  transition: color 600ms ease;
+}
+
+/* ---------- Search entry: 56px tall, 26px radius, frosted white ---------- */
+
+.nts-search {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  height: 56px;
+  padding: 0 20px;
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  border-radius: 26px;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.01);
+  backdrop-filter: blur(18px) saturate(1.65);
+  -webkit-backdrop-filter: blur(18px) saturate(1.65);
+  color: #111827;
+  font-size: 16px;
+  transition:
+    background-color 600ms ease,
+    border-color 600ms ease,
+    color 600ms ease;
+}
+
+.nts-search > i {
+  flex: none;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.nts-search > i:first-child {
+  color: #6b7280;
+}
+
+.nts-search > i:last-child {
+  margin-left: 14px;
+  color: #9ca3af;
+}
+
+.nts-search__field {
+  position: relative;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  min-width: 0;
+  height: 100%;
+  margin-left: 14px;
+  overflow: hidden;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+.nts-search__placeholder {
+  position: absolute;
+  left: 0;
+  overflow: hidden;
+  max-width: 100%;
+  color: #9ca3af;
+  text-overflow: ellipsis;
+}
+
+.nts-search__text:not(:empty) ~ .nts-search__placeholder {
+  display: none;
+}
+
+.nts-search__caret {
+  display: none;
+  width: 1.5px;
+  height: 20px;
+  margin-left: 1px;
+  border-radius: 1px;
+  background: #111827;
+  animation: nts-caret 1.06s steps(1) infinite;
+}
+
+.nts-search[data-focus="true"] .nts-search__caret {
+  display: block;
+}
+
+@keyframes nts-caret {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Slash-command badge (mode-commands.js): a quiet pill at the end of the field. */
+.nts-search__badge {
+  flex: none;
+  margin-left: 10px;
+  padding: 5px 9px;
+  border-radius: 999px;
+  background: rgba(17, 24, 39, 0.06);
+  color: #4b5563;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: transform 140ms ease;
+}
+
+.nts-search__badge[data-pressed="true"] {
+  transform: scale(0.94);
+}
+
+.nts-search__badge[hidden] {
+  display: none;
+}
+
+/* ---------- Shortcut row: 64px slots 4px apart, 48px tiles, 28px favicons ---------- */
+
+.nts-shortcuts {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 4px;
+}
+
+.nts-shortcut {
+  position: relative;
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+}
+
+.nts-shortcut__icon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  background: rgb(var(--tint));
+  transform: translate3d(var(--dock-shift, 0px), var(--dock-rise, 0px), 0) scale(var(--dock-scale, 1));
+  transform-origin: 50% 100%;
+  transition:
+    transform 300ms var(--nts-ease),
+    background-color 600ms ease;
+}
+
+.nts-shortcut__icon img {
+  display: block;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+/* ---------- Tooltip (shared/tooltip.css) ---------- */
+
+.nts-tooltip {
+  position: absolute;
+  padding: 8px 12px;
+  border: 1px solid rgba(214, 219, 227, 0.95);
+  border-radius: 10px;
+  background: linear-gradient(180deg, #fff 0%, #f7f9fc 100%);
+  box-shadow:
+    0 16px 36px rgba(17, 24, 39, 0.08),
+    0 3px 10px rgba(17, 24, 39, 0.05);
+  color: #556070;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.35;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* ---------- Bookmark card (newtab.css: 51px, 16px radius, 22px favicon) ---------- */
+
+.nts-card {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  box-sizing: border-box;
+  min-width: 0;
+  height: 51px;
+  padding: 13px 15px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  transition:
+    transform 170ms var(--nts-ease),
+    background-color 170ms ease,
+    opacity 260ms ease;
+}
+
+.nts-card[data-hover="true"] {
+  background: rgba(255, 255, 255, 0.94);
+}
+
+.nts-card[data-pressed="true"] {
+  transform: scale(0.97);
+}
+
+.nts-card__title {
+  overflow: hidden;
+  min-width: 0;
+  color: #111827;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.35;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Favicon stand-in: a brand glyph on the extension's 22px, 7px-radius chip. */
+.nts-fav {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 7px;
+  background: rgba(241, 245, 249, 0.92);
+  color: var(--c, #111827);
+  font-size: 15px;
+  line-height: 1;
+}
+
+.nts-card .nts-folder {
+  width: 28px;
+  height: 28px;
+}
+
+/* ---------- Bookmark menu (cascade level: 12px radius, 6px inset, 32px rows) ---------- */
+
+.nts-menu {
+  position: absolute;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  row-gap: 4px;
+  box-sizing: border-box;
+  width: max-content;
+  min-width: 180px;
+  padding: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow:
+    0 18px 34px rgba(15, 23, 42, 0.12),
+    0 2px 4px rgba(15, 23, 42, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.74);
+  backdrop-filter: blur(18px) saturate(135%);
+  -webkit-backdrop-filter: blur(18px) saturate(135%);
+  opacity: 0;
+  transform: scale(0.96, 0.86);
+  transform-origin: top left;
+  transition:
+    opacity 170ms ease,
+    transform 360ms var(--nts-ease-menu);
+}
+
+.nts-menu[data-open="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+/* A submenu slides out sideways from its row. */
+.nts-menu--side {
+  transform: translateX(-8px) scale(0.88, 0.98);
+  transform-origin: left center;
+}
+
+.nts-menu__title {
+  padding: 4px 8px 2px;
+  color: #7a8491;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.nts-menu__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-sizing: border-box;
+  min-height: 32px;
+  padding: 0 8px;
+  border-radius: 8px;
+  color: #263140;
+  font-size: 14px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background-color 120ms ease;
+}
+
+.nts-menu__item[data-active="true"] {
+  background: rgba(15, 23, 42, 0.07);
+}
+
+.nts-menu__item .nts-fav {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  background: transparent;
+  font-size: 16px;
+}
+
+.nts-menu__item .nts-folder {
+  width: 22px;
+  height: 22px;
+  margin: 0 -2px;
+}
+
+.nts-menu__chevron {
+  margin-left: auto;
+  padding-left: 12px;
+  color: #94a3b8;
+  font-size: 16px;
+}
+
+/* ---------- Segmented tabs (newtab.css: 30px track, 28px tabs, sliding indicator) ---------- */
+
+.nts-tabs {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-sizing: border-box;
+  min-height: 30px;
+  padding: 2px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 10px;
+  background: rgba(17, 24, 39, 0.04);
+}
+
+.nts-tabs__indicator {
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  left: 0;
+  width: 0;
+  border-radius: 7px;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.12);
+  transition:
+    transform 220ms var(--nts-ease-emphasized),
+    width 220ms var(--nts-ease-emphasized);
+}
+
+.nts-tab {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 28px;
+  padding: 0 10px;
+  border-radius: 7px;
+  color: #6b7280;
+  font-size: 12px;
+  white-space: nowrap;
+  transition: color 200ms ease;
+}
+
+.nts-tab i {
+  font-size: 13px;
+}
+
+.nts-tab[data-active="true"] {
+  color: #111827;
+}
+
+/* Floating over a screen (mode switches): a frosted white pill. */
+.nts-tabs--float {
+  border-color: rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.86);
+  box-shadow: 0 10px 24px -12px rgba(15, 23, 42, 0.3);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+}
+
+.nts-tabs--float .nts-tabs__indicator {
+  background: rgba(17, 24, 39, 0.07);
+  box-shadow: none;
+}
+
+/* Until a script measures the tabs, the active one carries the white itself. */
+.nts-tabs:not([data-measured]) .nts-tab[data-active="true"] {
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.12);
+}
+
+/* ---------- Pointer ---------- */
+
+.nts-cursor {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 30;
+  width: 22px;
+  height: 22px;
+  /* The tip of the arrow, not the box corner, lands on the point. */
+  margin: -3px 0 0 -5px;
+  opacity: 0;
+  filter: drop-shadow(0 1px 1.5px rgba(0, 0, 0, 0.28));
+  transition-property: transform, opacity;
+  transition-duration: 700ms, 200ms;
+  transition-timing-function: cubic-bezier(0.45, 0, 0.2, 1), ease;
+  pointer-events: none;
+}
+
+.nts-cursor[data-visible="true"] {
+  opacity: 1;
+}
+
+.nts-cursor svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-origin: 25% 15%;
+  transition: transform 120ms ease;
+}
+
+.nts-cursor[data-pressed="true"] svg {
+  transform: scale(0.84);
+}
+
+/* ---------- Dark theme ---------- */
+
+[data-theme="dark"] .nts-clock {
+  color: rgba(243, 244, 246, 0.88);
+}
+
+[data-theme="dark"] .nts-search {
+  border-color: rgba(255, 255, 255, 0.16);
+  background: rgba(32, 33, 36, 0.78);
+  color: #f3f4f6;
+}
+
+[data-theme="dark"] .nts-search > i:first-child {
+  color: #9ca3af;
+}
+
+[data-theme="dark"] .nts-search > i:last-child,
+[data-theme="dark"] .nts-search__placeholder {
+  color: #6b7280;
+}
+
+[data-theme="dark"] .nts-shortcut__icon {
+  background: rgba(255, 255, 255, 0.09);
+}
+
+[data-theme="dark"] .nts-shortcut[data-mono] img {
+  filter: invert(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nts-shortcut__icon,
+  .nts-search,
+  .nts-card,
+  .nts-menu,
+  .nts-clock {
+    transition: none;
+  }
+
+  .nts-search__caret {
+    animation: none;
+  }
+}

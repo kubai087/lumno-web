@@ -1,0 +1,114 @@
+/*
+ * One extension pixel at the 1440px render width. The parent must be an inline-size
+ * container whose width maps to that render (the filter stage does).
+ */
+.nt-mock {
+  --u: calc(100cqw / 1440);
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  color: #111827;
+  font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+  pointer-events: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Clock: Open Sans at 86% width and weight 320, as the extension sets it. */
+.nt-mock__time {
+  position: absolute;
+  top: calc(222 * var(--u));
+  right: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: calc(70 * var(--u));
+  color: rgb(42 50 68);
+  font-size: calc(54 * var(--u));
+  font-weight: 320;
+  font-variation-settings: "wdth" 86;
+  font-variant-numeric: tabular-nums;
+  line-height: 0.86;
+  letter-spacing: -0.055em;
+}
+
+/* Search entry: 640 × 56, 26px radius, frosted white. */
+.nt-mock__search {
+  position: absolute;
+  top: calc(320 * var(--u));
+  left: calc(400 * var(--u));
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  width: calc(640 * var(--u));
+  height: calc(56 * var(--u));
+  padding: 0 calc(20 * var(--u));
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  border-radius: calc(26 * var(--u));
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 calc(8 * var(--u)) calc(20 * var(--u)) rgba(0, 0, 0, 0.01);
+  backdrop-filter: blur(18px) saturate(1.65);
+  -webkit-backdrop-filter: blur(18px) saturate(1.65);
+}
+
+.nt-mock__search-icon,
+.nt-mock__settings {
+  flex: none;
+  font-size: calc(16 * var(--u));
+  line-height: 1;
+}
+
+.nt-mock__search-icon {
+  color: #6b7280;
+}
+
+.nt-mock__settings {
+  margin-left: auto;
+  color: #9ca3af;
+}
+
+.nt-mock__placeholder {
+  overflow: hidden;
+  margin-left: calc(14 * var(--u));
+  color: #9ca3af;
+  font-size: calc(16 * var(--u));
+  line-height: 1.4;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* Shortcut row: 64px slots 4px apart, 48px tinted tiles, 28px favicons. */
+.nt-mock__shortcuts {
+  position: absolute;
+  top: calc(388 * var(--u));
+  right: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  gap: calc(4 * var(--u));
+}
+
+.nt-mock__tile {
+  display: grid;
+  place-items: center;
+  width: calc(64 * var(--u));
+  height: calc(64 * var(--u));
+}
+
+.nt-mock__tile::before {
+  content: "";
+  grid-area: 1 / 1;
+  width: calc(48 * var(--u));
+  height: calc(48 * var(--u));
+  border-radius: calc(16 * var(--u));
+  background: var(--nt-mock-tint);
+}
+
+.nt-mock__tile img {
+  grid-area: 1 / 1;
+  display: block;
+  width: calc(28 * var(--u));
+  height: calc(28 * var(--u));
+  border-radius: calc(6 * var(--u));
+  object-fit: cover;
+}

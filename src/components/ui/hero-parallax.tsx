@@ -8,7 +8,9 @@ import {
   useTransform,
 } from "motion/react";
 import type { MotionValue, Transition } from "motion/react";
+import type { ShortcutKey } from "@/lib/shortcut-keys";
 import { cn } from "@/lib/utils";
+import { ShortcutKeys } from "./shortcut-keys";
 
 export interface HeroParallaxProduct {
   title: string;
@@ -19,6 +21,8 @@ export interface HeroParallaxProduct {
 interface HeroParallaxProps {
   products: readonly HeroParallaxProduct[];
   eyebrow?: string;
+  /** Keys that trigger the feature, shown as keycaps after the eyebrow. */
+  eyebrowKeys?: readonly ShortcutKey[];
   title: string;
   description: string;
   headingId: string;
@@ -43,6 +47,7 @@ const LOOP_COPY_COUNT = 3;
 export function HeroParallax({
   products,
   eyebrow,
+  eyebrowKeys,
   title,
   description,
   headingId,
@@ -91,6 +96,7 @@ export function HeroParallax({
       <HeroParallaxHeader
         ref={headerRef}
         eyebrow={eyebrow}
+        eyebrowKeys={eyebrowKeys}
         title={title}
         description={description}
         headingId={headingId}
@@ -134,6 +140,7 @@ export function HeroParallax({
 interface HeroParallaxHeaderProps {
   ref: Ref<HTMLDivElement>;
   eyebrow?: string;
+  eyebrowKeys?: readonly ShortcutKey[];
   title: string;
   description: string;
   headingId: string;
@@ -143,6 +150,7 @@ interface HeroParallaxHeaderProps {
 function HeroParallaxHeader({
   ref,
   eyebrow,
+  eyebrowKeys,
   title,
   description,
   headingId,
@@ -166,6 +174,7 @@ function HeroParallaxHeader({
           transition={HERO_COPY_TRANSITION}
         >
           {eyebrow}
+          {eyebrowKeys?.length ? <ShortcutKeys keys={eyebrowKeys} className="home-eyebrow__keys" /> : null}
         </motion.p>
       ) : null}
       <motion.h2

@@ -3,8 +3,10 @@ import { DitherShader } from "./DitherShader";
 import type { ChromeStoreReview } from "../../lib/chrome-store-reviews";
 
 interface Props {
+  eyebrow: string;
+  /** Average store rating, already formatted (e.g. "4.8"). */
+  rating: string;
   title: string;
-  summary: string;
   storeUrl: string;
   storeLinkLabel: string;
   ariaLabel: string;
@@ -13,8 +15,9 @@ interface Props {
 }
 
 const {
+  eyebrow,
+  rating,
   title,
-  summary,
   storeUrl,
   storeLinkLabel,
   ariaLabel,
@@ -33,23 +36,26 @@ const rows = [reviews.slice(0, midpoint), reviews.slice(midpoint)];
   data-chrome-review-marquee
 >
   <header class="home-section__head chrome-review-marquee__header">
-    <h2 id="reviews-title" class="home-h2"><span>{title}</span></h2>
-    <p class="home-lead">
-      <span class="chrome-review-marquee__stars" aria-hidden="true">★★★★★</span>
-      {summary.split("\n").map((line, index) => (index > 0 ? [<br />, line] : line))}
-    </p>
+    <!-- Eyebrow like the feature sections': where the reviews live, then the rating as a chip. -->
     <a
-      class="home-link chrome-review-marquee__store"
+      class="home-eyebrow chrome-review-marquee__store"
       href={storeUrl}
       target="_blank"
       rel="noreferrer noopener"
+      title={storeLinkLabel}
       data-analytics-event="open_chrome_web_store_reviews"
       data-analytics-category="navigation"
       data-analytics-label="home_reviews_store"
     >
-      {storeLinkLabel}
-      <i class="ri-arrow-right-up-line" aria-hidden="true"></i>
+      <img src="/assets/browser-logos/chrome.webp" width="18" height="18" alt="" decoding="async" />
+      {eyebrow}
+      <span class="chrome-review-marquee__rating">
+        <i class="ri-star-fill" aria-hidden="true"></i>
+        {rating}
+      </span>
+      <i class="ri-arrow-right-up-line chrome-review-marquee__arrow" aria-hidden="true"></i>
     </a>
+    <h2 id="reviews-title" class="home-h2"><span>{title}</span></h2>
   </header>
 
   <div class="chrome-review-marquee__frame home-media">
@@ -248,16 +254,53 @@ const rows = [reviews.slice(0, midpoint), reviews.slice(midpoint)];
     width: min(calc(100% - 48px), 720px);
   }
 
-  /* Own line, so narrow screens never strand the stars with half of the summary. */
-  .chrome-review-marquee__stars {
-    display: block;
-    margin-bottom: 2px;
-    color: #e0a526;
-    letter-spacing: 0.08em;
+  .chrome-review-marquee__store {
+    gap: 8px;
+    text-decoration: none;
+    transition: color 160ms ease;
   }
 
-  .chrome-review-marquee__store {
-    margin-top: 18px;
+  .chrome-review-marquee__store:hover {
+    color: var(--home-ink);
+  }
+
+  .chrome-review-marquee__store img {
+    flex: none;
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Sits in the eyebrow the way keycaps do in the feature sections. */
+  .chrome-review-marquee__rating {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    height: 22px;
+    padding: 0 7px 0 6px;
+    border: 1px solid var(--home-card-border);
+    border-radius: 6px;
+    background: var(--home-card);
+    color: var(--home-ink);
+    font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .chrome-review-marquee__rating i {
+    color: #e0a526;
+    font-size: 13px;
+  }
+
+  .chrome-review-marquee__arrow {
+    margin-left: -2px;
+    font-size: 14px;
+    transition: transform 160ms ease;
+  }
+
+  .chrome-review-marquee__store:hover .chrome-review-marquee__arrow {
+    transform: translate(2px, -2px);
   }
 
   .chrome-review-marquee__rows {

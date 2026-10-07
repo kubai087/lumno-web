@@ -3,6 +3,7 @@ import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react
 import type { SupportedLocale } from "@/lib/locales";
 import { LUMNO_SITE_SEARCH_ICON_ROOT } from "@/lib/lumno-search-providers";
 
+import { SettingsTabs } from "../extension-settings/SettingsKit";
 import "./ai-intent-demo.css";
 
 const TOOLBAR_FALLBACK_ACTIONS = ["explain", "search", "translate"] as const;
@@ -161,6 +162,7 @@ const ACTION_ICONS: Record<Action, string> = {
   translate: "ri-translate",
 };
 
+const ARROW_PATH = "M8.5 6.5 L43.5 28.7 L29.3 33 L20.8 50 Z";
 const TEXT_CURSOR_PHASES = new Set<DemoPhase>(["idle", "selecting"]);
 const TOOLBAR_PHASES = new Set<DemoPhase>(["toolbar", "press"]);
 
@@ -180,14 +182,12 @@ function DemoCursor() {
         <span className="ai-intent-demo__caret-stem" />
         <span className="ai-intent-demo__caret-cap ai-intent-demo__caret-cap--bottom" />
       </span>
-      <svg className="ai-intent-demo__arrow" viewBox="0 0 20 24">
-        <path
-          d="M3.2 1.6v17.6l4.5-4.3 3 6.8 3-1.3-3-6.6h6.2z"
-          fill="#1d1d1f"
-          stroke="#fff"
-          strokeLinejoin="round"
-          strokeWidth="1.4"
-        />
+      {/* Same arrow as the hero demo cursor (HeroSafariDemo), drawn smaller. */}
+      <svg className="ai-intent-demo__arrow" viewBox="0 0 48 58">
+        <g transform="rotate(-6 8.5 6.5)" strokeLinecap="round" strokeLinejoin="round">
+          <path d={ARROW_PATH} fill="none" stroke="#fff" strokeWidth="10" />
+          <path d={ARROW_PATH} fill="#303030" stroke="#303030" strokeWidth="2" />
+        </g>
       </svg>
     </span>
   );
@@ -526,22 +526,15 @@ export function AiIntentDemo({ locale }: AiIntentDemoProps) {
         </div>
       </div>
 
-      <div aria-label={copy.scenariosLabel} className="ai-intent-demo__scenarios" role="group">
-        {SCENARIO_ACTIONS.map((action, index) => (
-          <button
-            key={action}
-            aria-pressed={index === scenario}
-            className="ai-intent-demo__scenario"
-            onClick={() => jumpTo(index)}
-            type="button"
-          >
-            <span className="ai-intent-demo__scenario-kind">{copy.kinds[index]}</span>
-            <i aria-hidden="true" className="ri-arrow-right-line" />
-            <i aria-hidden="true" className={ACTION_ICONS[action]} />
-            <span>{copy.actionLabels[action]}</span>
-          </button>
-        ))}
-      </div>
+      {/* One Lumno tab bar, like the hero's page switcher; the toolbar above already shows the action. */}
+      <SettingsTabs
+        ariaLabel={copy.scenariosLabel}
+        className="lumno-settings-kit ai-intent-demo__scenarios"
+        itemClassName="ai-intent-demo__scenario"
+        items={SCENARIO_ACTIONS.map((action, index) => ({ value: action, label: copy.kinds[index] }))}
+        onValueChange={(action) => jumpTo(SCENARIO_ACTIONS.indexOf(action))}
+        value={SCENARIO_ACTIONS[scenario]}
+      />
     </div>
   );
 }

@@ -14,16 +14,14 @@ const { scene, alt } = Astro.props;
 ---
 
 <!--
-  /zen typed into the search box: shortcuts, bookmarks and their buttons tuck
-  away until it is typed again. The resting frame is the Zen state the copy describes.
+  The busy page first: search on top, shortcuts and bookmarks under it. /zen
+  brings up the extension's own suggestion row, Enter tucks everything else
+  away and the search box settles in the middle. Server markup is that Zen state.
 -->
 <div class="nts-scene zen" data-zen-scene data-zen="on" role="img" aria-label={alt}>
   <div class="zen-page" aria-hidden="true">
-    <div class="zen-search" data-badge-on={scene.zenOn} data-badge-off={scene.zenOff}>
-      <SceneSearch placeholder={scene.searchPlaceholder} />
-    </div>
-    <div class="zen-tuck zen-tiles" style="--order: 0"><SceneShortcuts /></div>
-    <div class="zen-tuck zen-bookmarks" style="--order: 1">
+    <div class="zen-tuck zen-tiles" style="--order: 1"><SceneShortcuts /></div>
+    <div class="zen-tuck zen-bookmarks" style="--order: 0">
       <div class="zen-head">
         <span>{scene.bookmarksHeading}</span>
         <span class="zen-pager"><i class="ri-arrow-left-s-line"></i><i class="ri-arrow-right-s-line"></i></span>
@@ -32,6 +30,17 @@ const { scene, alt } = Astro.props;
         <SceneBookmark name={scene.folders[0]} />
         <SceneBookmark name={ROOT_LINKS[0].name} link={ROOT_LINKS[0]} />
       </div>
+    </div>
+    <div class="zen-search" data-badge-off={scene.zenOff}>
+      <!-- newtab.css suggestions surface: the box grows down into one panel. -->
+      <div class="zen-suggest" data-suggest>
+        <span class="zen-suggest__row" data-suggest-row>
+          <img src="/assets/feature-newtab/lumno.png" width="18" height="18" alt="" decoding="async" draggable="false" />
+          <span class="zen-suggest__title">{scene.zenEnter}</span>
+          <i class="ri-corner-down-left-line"></i>
+        </span>
+      </div>
+      <SceneSearch placeholder={scene.searchPlaceholder} />
     </div>
   </div>
 </div>
@@ -43,32 +52,49 @@ const { scene, alt } = Astro.props;
   }
 
   /* Same order as the new tab: search, then shortcuts under it, then bookmarks. */
+  .zen-search {
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    width: min(352px, calc(100% - 40px));
+    translate: -50% 0;
+    transition: top 760ms cubic-bezier(0.65, 0, 0.35, 1) 160ms;
+  }
+
+  /* Once everything else has gone, the search box settles in the middle. */
+  .zen[data-zen="on"] .zen-search {
+    top: calc(50% - 21px);
+  }
+
+  .zen-search :global(.nts-search) {
+    position: relative;
+    transition:
+      border-color 160ms ease,
+      background-color 160ms ease,
+      box-shadow 160ms ease;
+  }
+
+  /* The open panel owns the outline, so the box and its rows read as one surface. */
+  .zen-search[data-open] :global(.nts-search) {
+    border-color: transparent;
+    background: transparent;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+
   .zen-tiles {
     position: absolute;
-    top: 102px;
+    top: 84px;
     right: 0;
     left: 0;
     -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
     mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
   }
 
-  /* The search box drifts to the middle once everything else has gone. */
-  .zen-search {
-    position: absolute;
-    top: 34px;
-    left: 50%;
-    width: min(324px, calc(100% - 40px));
-    translate: -50% 0;
-    transition: top 700ms cubic-bezier(0.65, 0, 0.35, 1);
-  }
-
-  .zen[data-zen="on"] .zen-search {
-    top: calc(50% - 28px);
-  }
-
   .zen-bookmarks {
     position: absolute;
-    top: 184px;
+    top: 164px;
     right: 22px;
     left: 22px;
   }
@@ -110,12 +136,79 @@ const { scene, alt } = Astro.props;
     gap: 12px;
   }
 
-  /* Tuck away: each group fades and drifts toward its nearest edge, a beat apart. */
+  /*
+   * newtab.css suggestions at the scene's 3/4 search scale: the surface grows
+   * down out of the box, rows 52px tall with a 13px radius, the active one grey.
+   */
+  .zen-suggest {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    box-sizing: border-box;
+    padding: 42px 6px 6px;
+    border: 1px solid rgba(0, 0, 0, 0.14);
+    border-radius: 19.5px;
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    clip-path: inset(0 0 calc(100% - 42px) 0 round 19.5px);
+    transition:
+      clip-path 260ms var(--nts-ease),
+      opacity 120ms ease;
+  }
+
+  .zen-search[data-open] .zen-suggest {
+    opacity: 1;
+    clip-path: inset(-40px -40px -40px -40px round 19.5px);
+  }
+
+  .zen-suggest__row {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    height: 39px;
+    padding: 0 12px;
+    border-radius: 10px;
+    background: #f3f4f6;
+    color: #111827;
+    font-size: 12px;
+    transition:
+      transform 140ms ease,
+      background-color 140ms ease;
+  }
+
+  .zen-suggest__row[data-pressed="true"] {
+    background: #e5e7eb;
+    transform: scale(0.985);
+  }
+
+  .zen-suggest__row img {
+    flex: none;
+    width: 18px;
+    height: 18px;
+  }
+
+  .zen-suggest__title {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .zen-suggest__row i {
+    flex: none;
+    color: #9ca3af;
+    font-size: 13px;
+  }
+
+  /* Tuck away: bookmarks first, then the shortcut row, each sinking and blurring out. */
   .zen-tuck {
     transition:
-      opacity 420ms ease calc(var(--order) * 70ms),
-      transform 620ms cubic-bezier(0.22, 1, 0.36, 1) calc(var(--order) * 70ms),
-      filter 420ms ease calc(var(--order) * 70ms);
+      opacity 420ms ease calc(var(--order) * 90ms),
+      transform 620ms cubic-bezier(0.22, 1, 0.36, 1) calc(var(--order) * 90ms),
+      filter 420ms ease calc(var(--order) * 90ms);
   }
 
   .zen[data-zen="on"] .zen-tuck {
@@ -124,59 +217,70 @@ const { scene, alt } = Astro.props;
   }
 
   .zen[data-zen="on"] .zen-tiles {
-    transform: translateY(12px);
+    transform: translateY(12px) scale(0.97);
   }
 
   .zen[data-zen="on"] .zen-bookmarks {
-    transform: translateY(18px);
+    transform: translateY(18px) scale(0.97);
+  }
+
+  /* Reset jumps straight back to the busy page instead of animating to it. */
+  .zen[data-instant] :global(*) {
+    transition: none !important;
   }
 
   @media (prefers-reduced-motion: reduce) {
     .zen-tuck,
-    .zen-search {
+    .zen-search,
+    .zen-suggest {
       transition: none;
     }
   }
 </style>
 
 <script>
-  import { Timeline, playOnView, typeText } from "./scene-runtime";
+  import { playOnView, typeText } from "./scene-runtime";
 
   document.querySelectorAll<HTMLElement>("[data-zen-scene]").forEach((root) => {
     const holder = root.querySelector<HTMLElement>(".zen-search")!;
     const search = holder.querySelector<HTMLElement>("[data-search]")!;
     const text = holder.querySelector<HTMLElement>("[data-search-text]")!;
     const badge = holder.querySelector<HTMLElement>("[data-search-badge]")!;
-
-    /** Types /zen, shows the extension's mode badge, then presses Enter. */
-    const toggle = (timeline: Timeline, start: number, turnOn: boolean) => {
-      timeline.at(start, () => (search.dataset.focus = "true"));
-      const typed = typeText(timeline, text, "/zen", start + 300, 150);
-      timeline.at(typed + 160, () => {
-        // The badge names the current state, so it reads "off" right before turning on.
-        badge.textContent = (turnOn ? holder.dataset.badgeOff : holder.dataset.badgeOn) || "";
-        badge.hidden = false;
-      });
-      timeline.at(typed + 900, () => (badge.dataset.pressed = "true"));
-      timeline.at(typed + 1040, () => {
-        badge.dataset.pressed = "false";
-        badge.hidden = true;
-        text.textContent = "";
-        search.dataset.focus = "false";
-        root.dataset.zen = turnOn ? "on" : "off";
-      });
-      return typed + 1040;
-    };
+    const row = holder.querySelector<HTMLElement>("[data-suggest-row]")!;
+    badge.textContent = holder.dataset.badgeOff || "";
 
     playOnView(root, {
       reset() {
+        root.dataset.instant = "";
         root.dataset.zen = "off";
+        delete holder.dataset.open;
         text.textContent = "";
         badge.hidden = true;
+        row.dataset.pressed = "false";
         search.dataset.focus = "false";
+        void root.offsetWidth;
+        delete root.dataset.instant;
       },
       play(timeline) {
-        return toggle(timeline, 700, true) + 800;
+        timeline.at(500, () => (search.dataset.focus = "true"));
+        const typed = typeText(timeline, text, "/zen", 700, 140);
+        // "/z" already matches only /zen (mode-commands.js): the badge names the
+        // current state and the one suggestion row offers to switch.
+        timeline.at(700 + 2 * 140 + 60, () => {
+          badge.hidden = false;
+          holder.dataset.open = "";
+        });
+        const enter = typed + 900;
+        timeline.at(enter, () => (row.dataset.pressed = "true"));
+        timeline.at(enter + 160, () => {
+          delete holder.dataset.open;
+          row.dataset.pressed = "false";
+          badge.hidden = true;
+          text.textContent = "";
+          search.dataset.focus = "false";
+          root.dataset.zen = "on";
+        });
+        return enter + 160 + 1100;
       },
     });
   });

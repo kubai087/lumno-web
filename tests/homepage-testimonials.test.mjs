@@ -149,11 +149,12 @@ test("homepage places the new-tab showcase and AI intent page before the review 
 test("review marquee copy is localized for every homepage locale", () => {
   const source = readSource("src/lib/home-content.ts");
 
-  assert.match(source, /title: "被认真使用，也被认真回应"/);
-  assert.match(source, /title: "被認真使用，也被認真回應"/);
-  assert.match(source, /title: "Loved by the people who use it"/);
-  // Rating and count come from the live Chrome Web Store snapshot, never hard-coded copy.
-  assert.equal((source.match(/summary: "[^"]*\{rating\}[^"]*\{count\}[^"]*"/g) || []).length, 3);
+  assert.match(source, /title: "与用户共创，打磨每一处体验"/);
+  assert.match(source, /title: "與使用者共創，打磨每一處體驗"/);
+  assert.match(source, /title: "Built with our users, polished in every detail"/);
+  assert.match(source, /eyebrow: "Chrome 应用商店"/);
+  assert.match(source, /eyebrow: "Chrome 線上應用程式商店"/);
+  assert.match(source, /eyebrow: "Chrome Web Store"/);
   assert.equal((source.match(/storeLinkLabel:/g) || []).length, 4);
 });
 

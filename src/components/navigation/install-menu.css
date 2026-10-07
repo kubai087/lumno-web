@@ -1,16 +1,22 @@
 .install-menu .lumno-settings-select-menu {
-  width: min(360px, calc(100vw - 48px));
+  width: min(312px, calc(100vw - 48px));
   padding: 6px;
 }
 
 .install-menu .lumno-settings-select-option {
-  min-height: 42px;
-  gap: 14px;
-  padding: 8px 10px;
+  gap: 12px;
+  padding: 8px 10px 8px 8px;
   font-size: 14px;
 }
 
+/* Two-line row: icon tile spans both lines, store name on top, version + note below. */
 .install-menu .lumno-settings-select-option-label {
+  display: grid;
+  flex: 1 1 auto;
+  grid-template-columns: 34px minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  column-gap: 12px;
+  row-gap: 2px;
   min-width: 0;
   align-items: center;
   line-height: 20px;
@@ -18,13 +24,22 @@
 
 .install-menu-store-icon {
   display: inline-flex;
-  flex: 0 0 18px;
-  width: 18px;
-  height: 18px;
+  grid-row: 1 / 3;
+  grid-column: 1;
+  width: 34px;
+  height: 34px;
   align-items: center;
   justify-content: center;
-  font-size: 17px;
+  border-radius: 10px;
+  background: rgba(15, 23, 42, 0.05);
+  font-size: 19px;
   line-height: 1;
+  transition: background 160ms ease;
+}
+
+.install-menu .lumno-settings-select-option:hover .install-menu-store-icon,
+.install-menu .lumno-settings-select-option:focus-visible .install-menu-store-icon {
+  background: #ffffff;
 }
 
 .install-menu-store-icon-chrome {
@@ -35,44 +50,44 @@
   color: #0a96d8;
 }
 
-.install-menu .lumno-settings-select-option-meta {
-  flex: 1 1 auto;
-  min-width: max-content;
-  margin-left: auto;
-  align-items: center;
-  justify-content: flex-end;
+.install-menu-option-detail {
+  grid-row: 2;
+  grid-column: 2;
   color: var(--lumno-panel-subtext, #6b7280);
-  line-height: 1;
-}
-
-.install-menu .lumno-settings-badge {
-  box-sizing: border-box;
-  height: 18px;
-  min-height: 18px;
-  justify-content: center;
-  padding: 0 6px;
-  background: rgba(15, 23, 42, 0.07);
-  color: #4b5563;
   font-size: 12px;
+  font-weight: 400;
   font-variant-numeric: tabular-nums;
-  line-height: 1;
+  line-height: 16px;
   letter-spacing: 0.01em;
   white-space: nowrap;
 }
 
+.install-menu .lumno-settings-select-option-meta {
+  flex: 0 0 auto;
+  margin-left: auto;
+  align-items: center;
+  justify-content: flex-end;
+  line-height: 1;
+}
+
 .install-menu .lumno-settings-badge-accent {
-  height: 22px;
-  min-height: 22px;
-  padding: 0 6px;
+  box-sizing: border-box;
+  height: 20px;
+  min-height: 20px;
+  justify-content: center;
+  padding: 0 7px;
   border-radius: 8px;
   overflow: hidden;
   background:
-    linear-gradient(110deg, #eef6ff 0%, #eef6ff 38%, #ffffff 50%, #eef6ff 62%, #eef6ff 100%);
+    linear-gradient(110deg, #eef4ff 0%, #eef4ff 38%, #ffffff 50%, #eef4ff 62%, #eef4ff 100%);
   background-position: 140% 50%;
   background-size: 260% 100%;
   color: #1e3a8a;
-  font-size: 14px;
-  font-weight: 500;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
   animation: install-menu-recommendation-shine 3.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
   will-change: background-position;
 }
@@ -87,28 +102,9 @@
   }
 }
 
-@media (max-width: 420px) {
-  .install-menu .lumno-settings-select-menu {
-    width: min(330px, calc(100vw - 48px));
-  }
-
-  .install-menu .lumno-settings-select-option {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    min-height: 0;
-    gap: 2px 10px;
-    padding: 6px 9px;
-  }
-
-  .install-menu .lumno-settings-select-option-meta {
-    grid-column: 1 / -1;
-    justify-self: end;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   .install-menu .lumno-settings-badge-accent {
     animation: none;
-    background: #eef6ff;
+    background: #eef4ff;
   }
 }

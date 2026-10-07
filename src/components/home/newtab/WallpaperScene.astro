@@ -13,22 +13,22 @@ const { scene, alt } = Astro.props;
 ---
 
 <!--
-  The new tab with its appearance panel open in the bottom-right corner, where
-  the extension puts it. Picking a built-in swaps the wallpaper behind it.
+  The whole new tab with its appearance panel open in the bottom-right corner,
+  where the extension puts it. Picking a built-in swaps the wallpaper behind it.
 -->
-<div class="nts-scene wp" data-wallpaper-scene role="img" aria-label={alt}>
+<div class="nts-scene nts-scene--page wp" data-wallpaper-scene role="img" aria-label={alt}>
   <div class="nts-wall">
     {PANEL_WALLPAPERS.map((name, index) => (
       <img src={wallpaper(name)} alt="" width="1280" height="720" loading="lazy" decoding="async" data-wall data-active={String(index === 0)} />
     ))}
   </div>
 
-  <div class="wp-page" aria-hidden="true">
+  <div class="nts-page wp-page" aria-hidden="true">
     <p class="nts-clock">09:41</p>
-    <div class="wp-search"><SceneSearch placeholder={scene.searchPlaceholder} /></div>
+    <div class="nts-page__search"><SceneSearch placeholder={scene.searchPlaceholder} /></div>
   </div>
 
-  <!-- newtab.css .x-nt-wallpaper-panel: 20px inset, 18px radius, hairline, soft drop. -->
+  <!-- newtab.css .x-nt-wallpaper-panel: 424px wide, 20px padding, 18px radius, hairline, soft drop. -->
   <div class="wp-panel" aria-hidden="true">
     <div class="wp-row">
       <span class="wp-label">{scene.sourceLabel}</span>
@@ -50,27 +50,9 @@ const { scene, alt } = Astro.props;
 </div>
 
 <style>
-  .wp {
-    --panel-width: min(320px, calc(100% - 32px));
-  }
-
-  /* The page itself, centred in the room the panel leaves. */
+  /* Clock and search sit high, leaving the lower right to the panel. */
   .wp-page {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: calc(var(--panel-width) + 16px);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 22px;
-    padding: 0 20px 20px;
-  }
-
-  .wp-search {
-    width: min(260px, 100%);
+    --nts-page-top: 52px;
   }
 
   .wp-panel {
@@ -81,7 +63,7 @@ const { scene, alt } = Astro.props;
     flex-direction: column;
     gap: 18px;
     box-sizing: border-box;
-    width: var(--panel-width);
+    width: min(424px, calc(100% - 32px));
     padding: 20px;
     border: 1px solid rgba(0, 0, 0, 0.14);
     border-radius: 18px;
@@ -199,8 +181,8 @@ const { scene, alt } = Astro.props;
     transform: none;
   }
 
-  /* Narrow screens: the panel alone, over the wallpaper. */
-  @container (max-width: 560px) {
+  /* Narrow windows: the panel alone, over the wallpaper. */
+  @container (max-width: 640px) {
     .wp-page {
       display: none;
     }
@@ -208,9 +190,11 @@ const { scene, alt } = Astro.props;
 </style>
 
 <script>
+  import { adaptClockInk } from "./scene-clock-ink";
   import { Timeline, centerOf, clickCursor, moveCursor, playOnView, setActive } from "./scene-runtime";
 
   document.querySelectorAll<HTMLElement>("[data-wallpaper-scene]").forEach((root) => {
+    adaptClockInk(root);
     const walls = Array.from(root.querySelectorAll<HTMLElement>("[data-wall]"));
     const tiles = Array.from(root.querySelectorAll<HTMLElement>("[data-thumb]"));
     const cursor = root.querySelector<HTMLElement>("[data-cursor]")!;

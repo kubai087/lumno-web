@@ -308,7 +308,7 @@ const opened = scene.folders[0];
   }
 
   .bm-home__search {
-    width: min(280px, calc(100% - 40px));
+    width: min(352px, calc(100% - 40px));
     margin-top: 24px;
   }
 
@@ -326,6 +326,7 @@ const opened = scene.folders[0];
 
 <script>
   import { Timeline, centerOf, clickCursor, hideCursor, moveCursor, playOnView, setActive } from "./scene-runtime";
+  import { attachTabsIndicator } from "../../extension-settings/tabs-indicator";
 
   const all = (root: Element, selector: string) => Array.from(root.querySelectorAll<HTMLElement>(selector));
   const one = (root: Element, selector: string) => root.querySelector<HTMLElement>(selector)!;
@@ -411,6 +412,8 @@ const opened = scene.folders[0];
 
   document.querySelectorAll<HTMLElement>("[data-bookmarks-scene]").forEach((root) => {
     const tabs = all(root.closest("article") || root, "[data-bm-tabs] button");
+    const tabBar = (root.closest("article") || root).querySelector<HTMLElement>("[data-bm-tabs]");
+    if (tabBar) attachTabsIndicator(tabBar);
     const views = all(root, "[data-view]");
     const cursor = one(root, "[data-cursor]");
     // Until a visitor picks a layout, a pass tours all three.

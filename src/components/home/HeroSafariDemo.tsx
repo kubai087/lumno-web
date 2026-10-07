@@ -27,6 +27,7 @@ import {
   type SiteSearchDemoModel,
   type SiteSearchScopeMenuModel,
 } from "./onboarding-source/site-search-demo";
+import { SettingsTabs } from "../extension-settings/SettingsKit";
 import { DitherShader } from "./DitherShader";
 
 import "./onboarding-source/search-input.css";
@@ -46,13 +47,13 @@ const HOME_INTRO_MOBILE_SCALE_MIN = 0.94;
 const HOME_INTRO_MOBILE_SCALE_MAX = 1.02;
 const CURSOR_PATH = "M8.5 6.5 L43.5 28.7 L29.3 33 L20.8 50 Z";
 const HERO_INTRO_SEQUENCE = [
-  { id: "browser-search", durationMs: 6_200 },
+  { id: "browser-search", durationMs: 5_680 },
   { id: "site-search", durationMs: 7_200 },
-  { id: "commands", durationMs: 10_800 },
+  { id: "commands", durationMs: 10_280 },
 ] as const;
-const COMMAND_BROWSER_PAGE_START_MS = 5_200;
+const COMMAND_BROWSER_PAGE_START_MS = 4_680;
 const COMMAND_BROWSER_PAGE_HOLD_MS = 1_800;
-const SEARCH_RESULT_CURSOR_DELAY_MS = 1_640;
+const SEARCH_RESULT_CURSOR_DELAY_MS = 1_120;
 const SEARCH_RESULT_CURSOR_DURATION_MS = 2_600;
 const SEARCH_RESULT_HIGHLIGHT_LAG_MS = 120;
 const SEARCH_RESULT_HIGHLIGHT_START_MS =
@@ -907,7 +908,7 @@ function DemoCursorLayer({ mode }: { mode: CursorMode }) {
 
     scheduleCursorSync();
     const syncDelays = mode === "search-result"
-      ? [3_000, 4_300]
+      ? [2_480, 3_780]
       : [2_800, 4_800, 6_350];
     const timeoutIds = syncDelays.map((delay) => window.setTimeout(
       scheduleCursorSync,
@@ -1733,33 +1734,15 @@ export function HeroSafariDemo({
             </button>
           ) : null}
         </div>
-        <div
-          aria-label={copy.scenePickerLabel}
-          className="hero-demo-page-switcher"
+        <SettingsTabs
+          ariaLabel={`${copy.scenePickerLabel} · ${ariaLabel}`}
+          className="lumno-settings-kit hero-demo-page-switcher"
           data-auto-playing={isAutoPlaying ? "true" : "false"}
-          role="group"
-          style={
-            {
-              "--hero-demo-scene-count": copy.scenes.length,
-              "--hero-demo-scene-index": sceneIndex,
-            } as CSSProperties
-          }
-        >
-          <span aria-hidden="true" className="hero-demo-page-indicator" />
-          {copy.scenes.map((item, index) => (
-            <button
-              aria-label={`${item.label} · ${ariaLabel}`}
-              aria-pressed={index === sceneIndex}
-              className="hero-demo-page-button"
-              data-active={index === sceneIndex ? "true" : "false"}
-              key={item.id}
-              onClick={() => handleSceneSelect(index)}
-              type="button"
-            >
-              {item.label}
-            </button>
-          ))}
-        </div>
+          itemClassName="hero-demo-page-button"
+          items={copy.scenes.map((item) => ({ value: item.id, label: item.label }))}
+          onValueChange={(id) => handleSceneSelect(copy.scenes.findIndex((item) => item.id === id))}
+          value={copy.scenes[sceneIndex].id}
+        />
       </div>
     </div>
   );

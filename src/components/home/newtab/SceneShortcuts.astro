@@ -4,7 +4,7 @@ import { SHORTCUTS } from "./scene-data";
 
 <div class="nts-shortcuts" data-shortcuts>
   {SHORTCUTS.map((shortcut) => (
-    <span class="nts-shortcut" data-shortcut data-name={shortcut.name} data-mono={shortcut.mono ? "" : undefined} style={`--tint: ${shortcut.tint}`}>
+    <span class="nts-shortcut" data-shortcut data-name={shortcut.name} data-mono={shortcut.mono ? "" : undefined} data-bare={shortcut.bare ? "" : undefined} style={`--tint: ${shortcut.tint}${shortcut.size ? `; --glyph: ${shortcut.size}px` : ""}`}>
       <span class="nts-shortcut__icon">
         <img src={shortcut.src} width="28" height="28" alt="" loading="lazy" decoding="async" draggable="false" />
       </span>

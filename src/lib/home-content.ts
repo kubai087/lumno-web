@@ -30,8 +30,9 @@ export type HomeNewTabScene = {
   folders: string[];
   /** A folder inside the expanded one, so the menu shows a second level. */
   subfolder: string;
-  zenOn: string;
   zenOff: string;
+  /** The suggestion row /zen brings up (mode-commands.js zen_enable_title). */
+  zenEnter: string;
   /** Chinese UIs only: the extension's quote line comes from Hitokoto, which serves Chinese text. */
   quotes?: string[];
 };
@@ -60,6 +61,7 @@ type HomeContent = {
   installChromeStoreLabel: string;
   installEdgeStoreLabel: string;
   installChromeRecommendation: string;
+  installChromeRecommendationNote: string;
 
   heroTitle: string;
   // Optional editorial two-line slogan: a roman lead line and an italic accent line.
@@ -111,7 +113,9 @@ type HomeContent = {
     title: string;
     description: string;
     screenshotAlt: string;
-    filters: HomeNewTabFeature & {
+    /** The filter lab sits under the wallpaper part heading, so it has no title of its own. */
+    filters: {
+      alt: string;
       tablistLabel: string;
       /** Accessible name of the before/after divider. */
       compareLabel: string;
@@ -138,39 +142,48 @@ type HomeContent = {
     items: Record<HomeUtilityId, HomeCard>;
   };
   reviews: {
+    /** Store name in the eyebrow; the live rating renders beside it. */
+    eyebrow: string;
     title: string;
-    /** `{rating}` and `{count}` are filled from the Chrome Web Store snapshot. */
-    summary: string;
     ariaLabel: string;
     avatarLabel: string;
     storeLinkLabel: string;
   };
   openSource: {
     title: string;
-    description: string;
-    points: Record<HomeTrustId, HomeCard>;
+    /* Card titles only: each card's illustration carries the detail. */
+    points: Record<HomeTrustId, string>;
+    /* Labels inside the card illustrations. */
+    art: {
+      /* A data checklist with every item crossed out. */
+      privacy: {
+        title: string;
+        status: string;
+        items: Record<"history" | "bookmarks" | "searches" | "usage" | "location", string>;
+      };
+      /* A settings file and the three places it can go: tab label + where it ends up. */
+      sync: Record<"browser" | "webdav" | "file", { label: string; destination: string }>;
+    };
     browsersLabel: string;
     browserNames: string[];
     githubLabel: string;
-    privacyLabel: string;
   };
   faqTitle: string;
+  faqAskLabel: string;
   faqItems: HomeFaqItem[];
-  finalTitle: string;
+  /** Under the hero title where the closing CTA repeats it. */
   finalDescription: string;
-  viewSourceLabel: string;
-  viewSourceAria: string;
 
   footerTagline: string;
   footerProduct: string;
-  footerResources: string;
-  footerCommunity: string;
+  footerSupport: string;
   footerFeatures: string;
-  footerQuickStart: string;
   footerRelease: string;
+  footerReportIssue: string;
   footerPrivacy: string;
-  footerGithub: string;
   footerFeedback: string;
+  footerSocialAria: string;
+  footerGithub: string;
   footerCopyright: string;
   languageLabel: string;
   languageSelectAria: string;
@@ -201,7 +214,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     installAria: "打开 Lumno 安装选项",
     installChromeStoreLabel: "Chrome 应用商店",
     installEdgeStoreLabel: "Microsoft Edge 加载项",
-    installChromeRecommendation: "推荐 · 更新更快",
+    installChromeRecommendation: "推荐",
+    installChromeRecommendationNote: "更新更快",
 
     heroTitle: "让浏览器的一切，一搜即达",
     heroDescription:
@@ -216,7 +230,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     commandBar: {
       eyebrow: "聚焦搜索",
       title: "一个快捷键，想去哪就去哪",
-      description: "不用翻书签，不用挨个找标签页。敲几个字，回车直达。",
+      description: "在任意网页按下快捷键，命令栏就地浮现，不用切走当前页面。\n敲几个字，回车直达标签页、书签和网站。",
       search: {
         label: "统一搜索",
         title: "标签页、书签、历史，一搜全有",
@@ -234,7 +248,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
       siteSearch: {
         label: "站内搜索",
         title: "跳过首页，直接站内搜",
-        description: "知乎、B 站、GitHub 等\u00A046\u00A0个网站，敲简称按 Tab 就能直接搜。",
+        description: "知乎、B 站、GitHub 等\u00A046\u00A0个网站，敲简称按 Tab 直接搜。",
         keyword: "gh",
         target: "GitHub",
         query: "lumno",
@@ -268,17 +282,14 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
       eyebrow: "划词 AI",
       title: "选中文字，随手问 AI",
       description:
-        "问句给解答，术语给解释，外文给翻译。\n本地识别意图，AI 在后台作答，不打断阅读。",
+        "自研算法判断需求，只在合适时出现。\n点一下，AI 在后台标签页回答。",
     },
     newTab: {
       eyebrow: "新标签页",
       title: "每次打开，都是一幅画",
-      description: "印象派与山水壁纸，搭配颗粒、抖色滤镜，书签和常用网站一点即达。\n极简还是丰富，由你决定。",
+      description: "名画与山水壁纸、多种滤镜，书签和常用网站一点即达。\n极简或丰富，由你决定。",
       screenshotAlt: "Lumno 新标签页截图：壁纸、搜索框与常用网站卡片",
       filters: {
-        label: "壁纸滤镜",
-        title: "同一张壁纸，八种质感",
-        description: "换个滤镜，换种心情。拖动中线，和原图比一比。",
         alt: "Lumno 新标签页在同一张雪中村庄油画壁纸上应用不同滤镜的效果",
         tablistLabel: "切换壁纸滤镜预览",
         compareLabel: "拖动对比原图与滤镜效果",
@@ -297,38 +308,38 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
       wallpapers: {
         label: "壁纸",
         title: "每天打开，都有新风景",
-        description: "同一张壁纸看久了会腻。名画、Bing 每日一图、自然与城市摄影，每天自动换一张。",
+        description: "名画、Bing 每日一图与风光摄影，每天自动换新。",
         alt: "Lumno 外观设置面板：在内置壁纸之间切换",
       },
       dark: {
         label: "深色模式",
         title: "深夜打开，不再刺眼",
-        description: "熬夜时一开新标签页就被白屏晃到？深色模式跟随系统切换，还配一张夜景壁纸。",
+        description: "跟随系统切换深色，并换上一张夜景壁纸。",
         alt: "深色模式下的 Lumno 新标签页，月夜山水壁纸",
       },
       bookmarks: {
         label: "书签",
         title: "书签再多，也不用翻找",
-        description: "收藏了几百个网站，书签栏却放不下？按文件夹点进去、悬停展开，或排在页面顶部，一眼找到。",
+        description: "三种书签布局任选，几百个书签也能一眼找到。",
         alt: "Lumno 新标签页的三种书签布局：多层文件夹、多级列表与顶部书签栏",
         views: { folder: "多层文件夹", list: "多级列表", top: "顶部书签栏" },
       },
       dock: {
         label: "快捷方式",
         title: "常用网站，一点就到",
-        description: "每天必开的那几个网站，排成一行放在搜索框下。鼠标经过，像 Dock 一样放大。",
+        description: "常用网站排在搜索框下，悬停时像 Dock 一样放大。",
         alt: "悬停时放大的快捷方式图标",
       },
       clock: {
         label: "时间与名句",
         title: "抬眼看时间，顺便读句诗",
-        description: "看时间不用再瞄屏幕角落。时钟就在搜索框上方，下面每天配一句诗词。",
+        description: "时钟就在搜索框上方，下方每天换一句诗词。",
         alt: "搜索框上方的时钟与下方的每日名句",
       },
       zen: {
         label: "Zen 模式",
         title: "想专注时，只留搜索框",
-        description: "书签和卡片太多容易分心。输入 /zen 全部收起，再输一次就回来。",
+        description: "输入 /zen 一键收起其他内容，再输一次即可恢复。",
         alt: "Zen 模式下只剩搜索框的新标签页",
       },
       scene: {
@@ -341,17 +352,17 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         systemLabel: "跟随系统",
         folders: ["参考", "设计规范", "灵感", "竞品", "AI 调研", "设计系统"],
         subfolder: "图标",
-        zenOn: "Zen：已开启",
         zenOff: "Zen：已关闭",
+        zenEnter: "Lumno：进入 Zen 模式",
         quotes: ["无边落木萧萧下，不尽长江滚滚来。", "行到水穷处，坐看云起时。", "海内存知己，天涯若比邻。", "长风破浪会有时，直挂云帆济沧海。"],
       },
       wallpaperPart: {
         title: "一张好壁纸，看不腻",
-        lead: "每天自动换新，深夜换夜景，同一幅画还能换出八种质感。",
+        lead: "每天自动换新，深夜换夜景，同一幅画还能玩出八种质感。",
       },
       toolsPart: {
-        title: "该在的都在，不用的就收起",
-        lead: "常用网站、书签和时间一眼可见；想专注时，只留一个搜索框。",
+        title: "功能强大，也能极简",
+        lead: "常用网站、书签、时钟与诗词一应俱全；想专注时，一键只留搜索框。",
         previous: "上一张",
         next: "下一张",
       },
@@ -360,86 +371,115 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
       title: "还有这些顺手的小功能",
       description: "每一项都能单独开关，只留你用得上的。",
       items: {
-        clip: { title: "网页剪裁", description: "剪下网页的一角，悬浮在旁边，边看边对照。" },
+        clip: { title: "网页剪裁", description: "剪下网页一角，悬浮窗实时更新。" },
         autoPip: {
           title: "视频自动画中画",
-          description: "切走标签页，视频自动缩成小窗继续播放。YouTube、B 站、Netflix 都支持。",
+          description: "切走标签页，视频自动小窗续播。",
         },
         progress: {
           title: "追剧追更卡片",
-          description: "把在追的剧和小说钉在新标签页。看到哪一集，卡片就记到哪一集。",
+          description: "钉在新标签页，自动记住看到哪集。",
         },
-        sync: { title: "WebDAV 同步", description: "设置、图标和壁纸，也能通过坚果云或自建服务同步。" },
-        pinned: { title: "固定标签页恢复", description: "浏览器重启后，固定的标签页自动回来。" },
-        languages: { title: "多语言界面", description: "简体中文、繁體中文、English、日本語，也能跟随浏览器。" },
+        sync: { title: "WebDAV 同步", description: "设置、图标和壁纸，跨浏览器同步。" },
+        pinned: { title: "固定标签页恢复", description: "重启浏览器，固定标签页自动恢复。" },
+        languages: { title: "多语言界面", description: "简繁中文、英文、日文随心切换。" },
       },
     },
     reviews: {
-      title: "被认真使用，也被认真回应",
-      summary: "Chrome 应用商店 {rating} 分 · {count} 条评价\n不少新功能，正是来自用户的建议。",
+      eyebrow: "Chrome 应用商店",
+      title: "与用户共创，打磨每一处体验",
       ariaLabel: "Chrome 应用商店的真实用户评价轮播",
       avatarLabel: "的头像",
       storeLinkLabel: "查看全部评价",
     },
     openSource: {
-      title: "代码开源，数据归你",
-      description: "以 GPL-3.0 协议开源，没有广告，也没有信息流。每一项联网功能，开不开都由你决定。",
+      title: "隐私与安全，放在首位",
       points: {
-        local: { title: "本地检索", description: "标签页、书签和历史，都在本地检索，不会上传到 Lumno\u00A0服务器。" },
-        source: { title: "代码公开", description: "每一行代码都在 GitHub 上，欢迎提\u00A0Issue，也欢迎提\u00A0PR。" },
-        optional: { title: "同步与统计可选", description: "账号同步、WebDAV 和使用统计默认关闭，隐私政策里写得清清楚楚。" },
+        local: "不收集任何使用数据",
+        source: "基于 GPL-3.0 协议开源",
+        optional: "支持多种配置同步方式",
+      },
+      art: {
+        privacy: {
+          title: "Lumno 收集的数据",
+          status: "不收集",
+          items: { history: "浏览记录", bookmarks: "书签与标签页", searches: "搜索内容", usage: "使用统计", location: "位置信息" },
+        },
+        sync: {
+          browser: { label: "浏览器同步", destination: "随浏览器账号同步到你的其他设备" },
+          webdav: { label: "WebDAV", destination: "保存到你自己的 WebDAV 服务器" },
+          file: { label: "导出文件", destination: "导出为文件，换台电脑直接导入" },
+        },
       },
       browsersLabel: "适用于 Chrome、Edge 和大多数 Chromium 内核浏览器",
       browserNames: BROWSER_NAMES,
       githubLabel: "在 GitHub 查看源码",
-      privacyLabel: "阅读隐私政策",
     },
     faqTitle: "常见问题",
+    faqAskLabel: "在 GitHub 提问",
     faqItems: [
       {
         question: "默认快捷键是什么？可以修改吗？",
         answer:
-          "默认按 ⌘ ⇧ K（Windows 为 Ctrl + Shift + K）唤起命令栏，⌘ ⇧ L 会预填当前页面链接。如果与其他软件冲突，可以在 chrome://extensions/shortcuts 中修改。",
+          "默认 ⌘ ⇧ K，Windows 上是 Ctrl + Shift + K，可在 `chrome://extensions/shortcuts` 修改。改成 ⌘ T，手感和 Arc 一样。",
       },
       {
         question: "支持哪些浏览器？",
-        answer: "支持可以安装 Chrome 扩展的 Chromium 内核浏览器，包括 Chrome、Edge、Dia、Brave、Vivaldi 等。Safari 和 Firefox 暂不支持。",
+        answer:
+          "支持 Chrome、Edge、Dia、Brave、Vivaldi 等 Chromium 内核浏览器，暂不支持 Safari 和 Firefox。在 Dia 中可使用命令栏，新标签页暂不可用。",
       },
       {
         question: "从 Arc 迁移过来，能找回熟悉的命令栏吗？",
-        answer: "可以。Lumno 受 Arc 式交互启发（与 Arc 无关联），在 Dia、Chrome 或 Edge 中保留随时唤起、统一搜索和快速切换的工作流。",
+        answer: "可以。Lumno 受 Arc 式交互启发（与 Arc 无关联），在 Dia、Chrome、Edge 中提供随时唤起、统一搜索和快速切换。把快捷键改成 ⌘ T，用法和 Arc 一样。",
       },
       {
-        question: "Lumno 会上传我的浏览数据吗？",
+        question: "可以只用命令栏，保留原来的新标签页吗？",
         answer:
-          "不会。标签页、书签和历史记录在本地检索，不会发送到 Lumno 服务器。只有当你使用网页搜索、AI 搜索，或主动开启账号同步、使用统计时，才会产生对应的网络请求。",
+          "可以。保持 Lumno 开启，再重新安装原来的新标签页扩展即可，命令栏照常使用。",
+      },
+      {
+        question: "新标签页的地址栏里，为什么是一串扩展网址？",
+        answer:
+          "这是「输入框自动聚焦」：光标直接落在 Lumno 的搜索框里。在新标签页的外观设置中关闭它，地址栏即恢复空白。",
+      },
+      {
+        question: "命令栏的深浅色和系统不一致，怎么办？",
+        answer:
+          "「跟随系统」模式还会参考网页颜色。只想跟随系统，在设置的「外观」中关闭「基于网页色彩自动变更主题色」。",
       },
       {
         question: "为什么有些页面里唤不出命令栏？",
         answer:
-          "浏览器不允许扩展在 chrome:// 设置页、应用商店等受限页面中运行，这时 Lumno 会改为在新标签页里打开搜索。本地 PDF 和 HTML 文件需要在扩展详情页开启「允许访问文件网址」。",
+          "`chrome://` 设置页、应用商店等受限页面不允许扩展运行，Lumno 会改在新标签页打开搜索。本地 PDF 和 HTML 文件需在扩展详情页开启「允许访问文件网址」。",
+      },
+      {
+        question: "设置能在多台设备之间同步吗？",
+        answer:
+          "可以。默认随浏览器账号同步；开启 WebDAV（支持坚果云和自建服务器）后，还能跨浏览器同步图标和壁纸。",
+      },
+      {
+        question: "Lumno 会上传我的浏览数据吗？",
+        answer:
+          "不会。标签页、书签和历史记录都在本地检索。只有网页搜索或 AI 搜索时，内容才会发给你选择的搜索引擎或 AI 网站。",
       },
       {
         question: "Lumno 免费吗？",
-        answer: "完全免费。代码在 GitHub 以 GPL-3.0 协议开源，你可以查看实现、提交问题或参与改进。",
+        answer: "完全免费，代码在 GitHub 以 GPL-3.0 协议开源。",
       },
     ],
-    finalTitle: "少些翻找，多些专注",
-    finalDescription: "免费安装，然后在任意网页按下 ⌘\u00A0⇧\u00A0K。",
-    viewSourceLabel: "查看源代码",
-    viewSourceAria: "在 GitHub 查看 Lumno 源代码",
+    finalDescription: "开源浏览器命令栏与新标签页。",
 
     footerTagline: "开源的浏览器命令栏、聚焦搜索与极简新标签页。",
     footerProduct: "产品",
-    footerResources: "资源",
-    footerCommunity: "社区",
+    footerSupport: "支持",
     footerFeatures: "全部功能",
-    footerQuickStart: "安装后上手",
     footerRelease: "更新日志",
+    footerReportIssue: "报告问题",
     footerPrivacy: "隐私政策",
-    footerGithub: "GitHub",
     footerFeedback: "反馈与提需",
-    footerCopyright: "Lumno · 开源浏览器扩展",
+    footerSocialAria: "关注 Lumno",
+    footerGithub: "GitHub",
+    footerCopyright: "Lumno",
     languageLabel: "简体中文",
     languageSelectAria: "选择语言",
     qrcodeTitle: "微信群二维码",
@@ -465,7 +505,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     installAria: "開啟 Lumno 安裝選項",
     installChromeStoreLabel: "Chrome 線上應用程式商店",
     installEdgeStoreLabel: "Microsoft Edge 附加元件",
-    installChromeRecommendation: "推薦 · 更新更快",
+    installChromeRecommendation: "推薦",
+    installChromeRecommendationNote: "更新更快",
 
     heroTitle: "瀏覽器裡的一切，一搜就到",
     heroDescription:
@@ -480,7 +521,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     commandBar: {
       eyebrow: "聚焦搜尋",
       title: "一個快捷鍵，想去哪就去哪",
-      description: "不用翻書籤，不用逐一找分頁。打幾個字，按 Enter 直達。",
+      description: "在任何網頁按下快捷鍵，命令列就地浮現，不必離開目前頁面。\n打幾個字，按 Enter 直達分頁、書籤和網站。",
       search: {
         label: "統一搜尋",
         title: "分頁、書籤、瀏覽紀錄，一搜就有",
@@ -498,7 +539,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
       siteSearch: {
         label: "站內搜尋",
         title: "跳過首頁，直接站內搜",
-        description: "YouTube、維基百科、GitHub 等\u00A046\u00A0個網站，輸入簡稱按 Tab 就能直接搜。",
+        description: "YouTube、維基百科、GitHub 等\u00A046\u00A0個網站，輸入簡稱按 Tab 直接搜。",
         keyword: "gh",
         target: "GitHub",
         query: "lumno",
@@ -532,17 +573,14 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
       eyebrow: "劃詞 AI",
       title: "選取文字，順手問 AI",
       description:
-        "問句給解答，術語給解釋，外文給翻譯。\n本機辨識意圖，AI 在背景作答，不打斷閱讀。",
+        "自研演算法判斷需求，只在合適時出現。\n點一下，AI 在背景分頁回答。",
     },
     newTab: {
       eyebrow: "新分頁",
       title: "每次開啟，都是一幅畫",
-      description: "印象派與山水桌布，搭配顆粒、抖色濾鏡，書籤和常用網站一點就到。\n極簡或豐富，由你決定。",
+      description: "名畫與山水桌布、多種濾鏡，書籤和常用網站一點就到。\n極簡或豐富，由你決定。",
       screenshotAlt: "Lumno 新分頁截圖：桌布、搜尋框與常用網站卡片",
       filters: {
-        label: "桌布濾鏡",
-        title: "同一張桌布，八種質感",
-        description: "換個濾鏡，換種心情。拖曳中線，和原圖比一比。",
         alt: "Lumno 新分頁在同一張雪中村莊油畫桌布上套用不同濾鏡的效果",
         tablistLabel: "切換桌布濾鏡預覽",
         compareLabel: "拖曳比較原圖與濾鏡效果",
@@ -561,38 +599,38 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
       wallpapers: {
         label: "桌布",
         title: "每天打開，都有新風景",
-        description: "同一張桌布看久了會膩。名畫、Bing 每日一圖、自然與城市攝影，每天自動換一張。",
+        description: "名畫、Bing 每日一圖與風景攝影，每天自動換新。",
         alt: "Lumno 外觀設定面板：在內建桌布之間切換",
       },
       dark: {
         label: "深色模式",
         title: "深夜打開，不再刺眼",
-        description: "熬夜時一開新分頁就被白畫面閃到？深色模式跟隨系統切換，還配一張夜景桌布。",
+        description: "跟隨系統切換深色，並換上一張夜景桌布。",
         alt: "深色模式下的 Lumno 新分頁，月夜山水桌布",
       },
       bookmarks: {
         label: "書籤",
         title: "書籤再多，也不用翻找",
-        description: "收藏了幾百個網站，書籤列卻放不下？依資料夾點進去、停在上面展開，或排在頁面頂端，一眼就找到。",
+        description: "三種書籤版面任選，幾百個書籤也能一眼找到。",
         alt: "Lumno 新分頁的三種書籤版面：多層資料夾、多層選單與頂部書籤列",
         views: { folder: "多層資料夾", list: "多層選單", top: "頂部書籤列" },
       },
       dock: {
         label: "捷徑",
         title: "常用網站，一點就到",
-        description: "每天必開的那幾個網站，排成一列放在搜尋框下。滑鼠經過時，像 Dock 一樣放大。",
+        description: "常用網站排在搜尋框下，滑過時像 Dock 一樣放大。",
         alt: "滑鼠停留時放大的捷徑圖示",
       },
       clock: {
         label: "時間與名句",
         title: "抬眼看時間，順便讀一句詩",
-        description: "看時間不必再瞄螢幕角落。時鐘就在搜尋框上方，底下每天配一句詩詞。",
+        description: "時鐘就在搜尋框上方，底下每天換一句詩詞。",
         alt: "搜尋框上方的時鐘與下方的每日名句",
       },
       zen: {
         label: "Zen 模式",
         title: "想專心時，只留搜尋框",
-        description: "書籤和卡片太多容易分心。輸入 /zen 全部收起，再輸入一次就回來。",
+        description: "輸入 /zen 一鍵收起其他內容，再輸入一次即可恢復。",
         alt: "Zen 模式下只剩搜尋框的新分頁",
       },
       scene: {
@@ -605,17 +643,17 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         systemLabel: "跟隨系統",
         folders: ["參考", "設計規範", "靈感", "競品", "AI 調研", "設計系統"],
         subfolder: "圖示",
-        zenOn: "Zen：已開啟",
         zenOff: "Zen：已關閉",
+        zenEnter: "Lumno：進入 Zen 模式",
         quotes: ["無邊落木蕭蕭下，不盡長江滾滾來。", "行到水窮處，坐看雲起時。", "海內存知己，天涯若比鄰。", "長風破浪會有時，直掛雲帆濟滄海。"],
       },
       wallpaperPart: {
         title: "一張好桌布，看不膩",
-        lead: "每天自動換新，深夜換夜景，同一幅畫還能換出八種質感。",
+        lead: "每天自動換新，深夜換夜景，同一幅畫還能玩出八種質感。",
       },
       toolsPart: {
-        title: "該在的都在，用不到的就收起",
-        lead: "常用網站、書籤和時間一眼可見；想專心時，只留一個搜尋框。",
+        title: "功能強大，也能極簡",
+        lead: "常用網站、書籤、時鐘與詩詞一應俱全；想專心時，一鍵只留搜尋框。",
         previous: "上一張",
         next: "下一張",
       },
@@ -624,86 +662,115 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
       title: "還有這些貼心的小功能",
       description: "每一項都能單獨開關，只留你用得到的。",
       items: {
-        clip: { title: "網頁擷取", description: "擷取網頁的一角，浮在一旁，邊看邊對照。" },
+        clip: { title: "網頁擷取", description: "擷取網頁一角，懸浮視窗即時更新。" },
         autoPip: {
           title: "影片自動子母畫面",
-          description: "切到別的分頁，影片自動縮成小視窗繼續播。YouTube、Netflix、Twitch 都支援。",
+          description: "切走分頁，影片自動轉小視窗續播。",
         },
         progress: {
           title: "追劇追更卡片",
-          description: "把在追的劇和小說釘在新分頁。看到哪一集，卡片就記到哪一集。",
+          description: "釘在新分頁，自動記住看到哪一集。",
         },
-        sync: { title: "WebDAV 同步", description: "設定、圖示和桌布，也能透過堅果雲或自架服務同步。" },
-        pinned: { title: "釘選分頁復原", description: "瀏覽器重新啟動後，釘選的分頁自動回來。" },
-        languages: { title: "多語系介面", description: "繁體中文、简体中文、English、日本語，也能跟隨瀏覽器。" },
+        sync: { title: "WebDAV 同步", description: "設定、圖示和桌布，跨瀏覽器同步。" },
+        pinned: { title: "釘選分頁復原", description: "重啟瀏覽器，釘選分頁自動復原。" },
+        languages: { title: "多語系介面", description: "繁簡中文、英文、日文隨心切換。" },
       },
     },
     reviews: {
-      title: "被認真使用，也被認真回應",
-      summary: "Chrome 線上應用程式商店 {rating} 分 · {count} 則評價\n許多新功能，正是來自使用者的建議。",
+      eyebrow: "Chrome 線上應用程式商店",
+      title: "與使用者共創，打磨每一處體驗",
       ariaLabel: "Chrome 線上應用程式商店的真實使用者評價輪播",
       avatarLabel: "的頭像",
       storeLinkLabel: "查看所有評價",
     },
     openSource: {
-      title: "程式碼開源，資料歸你",
-      description: "以 GPL-3.0 授權開源，沒有廣告，也沒有資訊流。每一項連網功能，開不開都由你決定。",
+      title: "隱私與安全，放在首位",
       points: {
-        local: { title: "本機檢索", description: "分頁、書籤和瀏覽紀錄，都在本機檢索，不會上傳到 Lumno\u00A0伺服器。" },
-        source: { title: "程式碼公開", description: "每一行程式碼都在 GitHub 上，歡迎提\u00A0Issue，也歡迎發\u00A0PR。" },
-        optional: { title: "同步與統計可選", description: "帳號同步、WebDAV 和使用統計預設關閉，隱私權政策裡寫得清清楚楚。" },
+        local: "不蒐集任何使用資料",
+        source: "基於 GPL-3.0 授權開源",
+        optional: "支援多種設定同步方式",
+      },
+      art: {
+        privacy: {
+          title: "Lumno 蒐集的資料",
+          status: "不蒐集",
+          items: { history: "瀏覽紀錄", bookmarks: "書籤與分頁", searches: "搜尋內容", usage: "使用統計", location: "位置資訊" },
+        },
+        sync: {
+          browser: { label: "瀏覽器同步", destination: "隨瀏覽器帳號同步到你的其他裝置" },
+          webdav: { label: "WebDAV", destination: "存到你自己的 WebDAV 伺服器" },
+          file: { label: "匯出檔案", destination: "匯出成檔案，換台電腦直接匯入" },
+        },
       },
       browsersLabel: "適用於 Chrome、Edge 與大多數 Chromium 核心瀏覽器",
       browserNames: BROWSER_NAMES,
       githubLabel: "在 GitHub 查看原始碼",
-      privacyLabel: "閱讀隱私權政策",
     },
     faqTitle: "常見問題",
+    faqAskLabel: "在 GitHub 提問",
     faqItems: [
       {
         question: "預設快捷鍵是什麼？可以修改嗎？",
         answer:
-          "預設按 ⌘ ⇧ K（Windows 為 Ctrl + Shift + K）喚起命令列，⌘ ⇧ L 會預先填入目前頁面連結。若與其他軟體衝突，可在 chrome://extensions/shortcuts 修改。",
+          "預設 ⌘ ⇧ K，Windows 上是 Ctrl + Shift + K，可在 `chrome://extensions/shortcuts` 修改。改成 ⌘ T，手感和 Arc 一樣。",
       },
       {
         question: "支援哪些瀏覽器？",
-        answer: "支援可安裝 Chrome 擴充功能的 Chromium 核心瀏覽器，包括 Chrome、Edge、Dia、Brave、Vivaldi 等。目前不支援 Safari 與 Firefox。",
+        answer:
+          "支援 Chrome、Edge、Dia、Brave、Vivaldi 等 Chromium 核心瀏覽器，目前不支援 Safari 與 Firefox。在 Dia 中可使用命令列，新分頁暫時無法使用。",
       },
       {
         question: "從 Arc 搬過來，能找回熟悉的命令列嗎？",
-        answer: "可以。Lumno 受 Arc 式互動啟發（與 Arc 無關聯），在 Dia、Chrome 或 Edge 中延續隨時喚起、統一搜尋與快速切換的工作流程。",
+        answer: "可以。Lumno 受 Arc 式互動啟發（與 Arc 無關聯），在 Dia、Chrome、Edge 中提供隨時喚起、統一搜尋與快速切換。把快捷鍵改成 ⌘ T，用法和 Arc 一樣。",
       },
       {
-        question: "Lumno 會上傳我的瀏覽資料嗎？",
+        question: "可以只用命令列，保留原本的新分頁嗎？",
         answer:
-          "不會。分頁、書籤與瀏覽紀錄在本機檢索，不會傳送到 Lumno 伺服器。只有在你使用網頁搜尋、AI 搜尋，或主動開啟帳號同步、使用統計時，才會產生相應的網路請求。",
+          "可以。讓 Lumno 保持啟用，再重新安裝原本的新分頁擴充功能即可，命令列照常使用。",
+      },
+      {
+        question: "新分頁的網址列裡，為什麼是一串擴充功能網址？",
+        answer:
+          "這是「輸入框自動聚焦」：游標直接停在 Lumno 的搜尋框。到新分頁的外觀設定中關閉它，網址列就會恢復空白。",
+      },
+      {
+        question: "命令列的深淺色和系統不一致，怎麼辦？",
+        answer:
+          "「跟隨系統」模式也會參考網頁顏色。只想跟隨系統，到設定的「外觀」關閉「依網頁色彩自動變更主題色」。",
       },
       {
         question: "為什麼有些頁面叫不出命令列？",
         answer:
-          "瀏覽器不允許擴充功能在 chrome:// 設定頁、線上商店等受限頁面執行，這時 Lumno 會改在新分頁開啟搜尋。本機 PDF 與 HTML 檔案需要在擴充功能詳細資料頁開啟「允許存取檔案網址」。",
+          "`chrome://` 設定頁、線上商店等受限頁面不允許擴充功能執行，Lumno 會改在新分頁開啟搜尋。本機 PDF 與 HTML 檔案需在擴充功能詳細資料頁開啟「允許存取檔案網址」。",
+      },
+      {
+        question: "設定能在多台裝置之間同步嗎？",
+        answer:
+          "可以。預設隨瀏覽器帳號同步；開啟 WebDAV（支援堅果雲與自架伺服器）後，還能跨瀏覽器同步圖示與桌布。",
+      },
+      {
+        question: "Lumno 會上傳我的瀏覽資料嗎？",
+        answer:
+          "不會。分頁、書籤與瀏覽紀錄都在本機檢索。只有網頁搜尋或 AI 搜尋時，內容才會傳給你選擇的搜尋引擎或 AI 網站。",
       },
       {
         question: "Lumno 免費嗎？",
-        answer: "完全免費。程式碼在 GitHub 以 GPL-3.0 授權開源，你可以查看實作、回報問題或參與改進。",
+        answer: "完全免費，程式碼在 GitHub 以 GPL-3.0 授權開源。",
       },
     ],
-    finalTitle: "少些翻找，多些專注",
-    finalDescription: "免費安裝，然後在任何網頁按下 ⌘\u00A0⇧\u00A0K。",
-    viewSourceLabel: "查看原始碼",
-    viewSourceAria: "在 GitHub 查看 Lumno 原始碼",
+    finalDescription: "開源瀏覽器命令列與新分頁。",
 
     footerTagline: "開源的瀏覽器命令列、聚焦搜尋與極簡新分頁。",
     footerProduct: "產品",
-    footerResources: "資源",
-    footerCommunity: "社群",
+    footerSupport: "支援",
     footerFeatures: "所有功能",
-    footerQuickStart: "安裝後上手",
     footerRelease: "更新日誌",
+    footerReportIssue: "回報問題",
     footerPrivacy: "隱私權政策",
-    footerGithub: "GitHub",
     footerFeedback: "意見與需求",
-    footerCopyright: "Lumno · 開源瀏覽器擴充功能",
+    footerSocialAria: "追蹤 Lumno",
+    footerGithub: "GitHub",
+    footerCopyright: "Lumno",
     languageLabel: "繁體中文",
     languageSelectAria: "選擇語言",
     qrcodeTitle: "微信群二維碼",
@@ -729,7 +796,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     installAria: "Open Lumno install options",
     installChromeStoreLabel: "Chrome Web Store",
     installEdgeStoreLabel: "Microsoft Edge Add-ons",
-    installChromeRecommendation: "Recommended · Faster updates",
+    installChromeRecommendation: "Recommended",
+    installChromeRecommendationNote: "Faster updates",
 
     heroTitle: "Your browser, at command.",
     heroTitleSerif: { lead: "Your browser,", accent: "at command." },
@@ -745,7 +813,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     commandBar: {
       eyebrow: "Focus search",
       title: "One shortcut to anywhere",
-      description: "No bookmark digging, no tab hunting. Type a few letters and hit Return.",
+      description: "Press the shortcut on any page and the command bar appears right where you are.\nType a few letters and hit Return to reach any tab, bookmark, or site.",
       search: {
         label: "Unified search",
         title: "Tabs, bookmarks, history. One search.",
@@ -797,18 +865,15 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
       eyebrow: "Selection AI",
       title: "Select text. Ask AI.",
       description:
-        "Questions get answers, jargon gets explained, foreign text gets translated. Lumno reads the intent on-device and lets AI reply in a background tab.",
+        "Shows up only when it's useful. One click, and AI answers in a background tab.",
     },
     newTab: {
       eyebrow: "New tab",
       title: "Open to a work of art.",
       description:
-        "Impressionist and ink-wash wallpapers, grain and dither filters, and your bookmarks one click away. Keep it minimal, or make it yours.",
+        "Painted wallpapers, film-like filters, and your bookmarks one click away. Minimal or full, your call.",
       screenshotAlt: "Lumno new tab with a wallpaper, search box, and site cards",
       filters: {
-        label: "Wallpaper filters",
-        title: "One wallpaper, eight textures",
-        description: "A new filter, a new mood. Drag the line to compare it with the original.",
         alt: "The Lumno new tab with different filters applied to the same snowy village painting",
         tablistLabel: "Preview wallpaper filters",
         compareLabel: "Drag to compare the original with the filter",
@@ -827,38 +892,38 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
       wallpapers: {
         label: "Wallpapers",
         title: "Something new to look at, every day",
-        description: "The same background gets old fast. Classic paintings, Bing's photo of the day, and nature and city shots rotate in on their own.",
+        description: "Classic paintings, Bing's photo of the day, and landscape shots, refreshed daily.",
         alt: "The Lumno appearance panel switching between built-in wallpapers",
       },
       dark: {
         label: "Dark mode",
         title: "Easy on the eyes at midnight",
-        description: "No more blinding white tabs late at night. Dark mode follows your system and brings its own night wallpaper.",
+        description: "Follows your system, with a night wallpaper to match.",
         alt: "The Lumno new tab in dark mode with a moonlit ink-wash wallpaper",
       },
       bookmarks: {
         label: "Bookmarks",
         title: "Hundreds of bookmarks, zero digging",
-        description: "When the bookmarks bar can't hold them all, click into folders, hover to expand, or line them up along the top.",
+        description: "Three layouts keep hundreds of bookmarks within reach.",
         alt: "Three bookmark layouts on the Lumno new tab: folders, nested menus, and a top bar",
         views: { folder: "Folders", list: "Nested menus", top: "Top bar" },
       },
       dock: {
         label: "Shortcuts",
         title: "Your go-to sites, one click away",
-        description: "The sites you open every day sit right under the search box and magnify under your pointer, like the Dock.",
+        description: "Daily sites sit under the search box and magnify like the Dock.",
         alt: "Shortcut icons magnifying under the pointer",
       },
       clock: {
         label: "Clock",
         title: "The time, right where you look",
-        description: "Stop glancing at the corner of your screen. A clock sits right above the search box, seconds optional.",
+        description: "A clock sits right above the search box, seconds optional.",
         alt: "A clock with seconds above the search box",
       },
       zen: {
         label: "Zen mode",
         title: "Just the search box, when you need to focus",
-        description: "A busy page pulls you away. Type /zen to tuck everything aside, and type it again to bring it back.",
+        description: "Type /zen to tuck everything else away. Type it again to restore.",
         alt: "The new tab in Zen mode, with only the search box",
       },
       scene: {
@@ -871,105 +936,134 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         systemLabel: "Follow system",
         folders: ["Reference", "Guidelines", "Inspiration", "Competitors", "AI research", "Design systems"],
         subfolder: "Icons",
-        zenOn: "Zen: On",
         zenOff: "Zen: Off",
+        zenEnter: "Lumno: enter Zen mode",
       },
       wallpaperPart: {
         title: "Wallpapers that never get old",
-        lead: "A new one every day, a night version after dark, and eight textures for the one you love.",
+        lead: "A new one every day, a night version after dark, and eight ways to play with the one you love.",
       },
       toolsPart: {
-        title: "Everything at hand, nothing in the way",
-        lead: "Your sites, bookmarks, and the time at a glance, and just a search box when you need to focus.",
+        title: "Full-featured, or as minimal as you like",
+        lead: "Shortcuts, bookmarks, and a clock, all on hand. When it’s time to focus, one command leaves just the search box.",
         previous: "Previous",
         next: "Next",
       },
     },
     utilities: {
       title: "Small things that add up",
-      description: "Each one has its own switch in Settings. Keep what you use, turn off the rest.",
+      description: "Each one has its own switch. Keep only what you use.",
       items: {
-        clip: { title: "Web Clip", description: "Clip any part of a page and keep it floating beside you." },
+        clip: { title: "Web Clip", description: "Clip any part of a page into a floating window that stays live." },
         autoPip: {
           title: "Auto Picture-in-Picture",
-          description: "Switch tabs and the playing video keeps going in a floating window—on YouTube, Netflix, Twitch, and more.",
+          description: "Switch tabs and the video keeps playing in a floating window.",
         },
         progress: {
           title: "Progress cards",
-          description: "Pin a show or a novel on your new tab. The card follows you to the next episode or chapter.",
+          description: "Pin a show or novel to your new tab. It tracks your latest episode or chapter.",
         },
-        sync: { title: "WebDAV sync", description: "Sync settings, icons, and wallpapers through your own WebDAV server, too." },
+        sync: { title: "WebDAV sync", description: "Sync settings, icons, and wallpapers across browsers." },
         pinned: { title: "Pinned tab recovery", description: "Pinned web tabs come back automatically after the browser restarts." },
         languages: { title: "Your language", description: "English, 日本語, 简体中文, and 繁體中文—or follow your browser." },
       },
     },
     reviews: {
-      title: "Loved by the people who use it",
-      summary: "Rated {rating} from {count} reviews on the Chrome Web Store.\nMany features started as user requests.",
+      eyebrow: "Chrome Web Store",
+      title: "Built with our users, polished in every detail",
       ariaLabel: "Real user reviews from the Chrome Web Store",
       avatarLabel: "avatar",
       storeLinkLabel: "Read all reviews",
     },
     openSource: {
-      title: "Open source, private by default.",
-      description: "Lumno is GPL-3.0 licensed. No ads, no feeds, and every connected feature is yours to switch on.",
+      title: "Private and secure by design.",
       points: {
-        local: { title: "Searches stay local", description: "Tabs, bookmarks, and history are searched in your browser and never sent to Lumno servers." },
-        source: { title: "Every line is public", description: "Read the code on GitHub, report an issue, or send a pull request." },
-        optional: { title: "Sync is opt-in", description: "Account sync, WebDAV, and usage analytics are off by default and explained in the privacy policy." },
+        local: "Collects no usage data",
+        source: "Open source under GPL-3.0",
+        optional: "Several ways to sync settings",
+      },
+      art: {
+        privacy: {
+          title: "Data Lumno collects",
+          status: "Not collected",
+          items: { history: "Browsing history", bookmarks: "Bookmarks & tabs", searches: "Searches", usage: "Usage stats", location: "Location" },
+        },
+        sync: {
+          browser: { label: "Browser sync", destination: "Follows your browser account to every device" },
+          webdav: { label: "WebDAV", destination: "Saved to your own WebDAV server" },
+          file: { label: "Export file", destination: "Export once, import on any computer" },
+        },
       },
       browsersLabel: "Works in Chrome, Edge, and most Chromium-based browsers",
       browserNames: BROWSER_NAMES,
       githubLabel: "View source on GitHub",
-      privacyLabel: "Read the privacy policy",
     },
     faqTitle: "Questions, answered",
+    faqAskLabel: "Ask on GitHub",
     faqItems: [
       {
         question: "What is the default shortcut? Can I change it?",
         answer:
-          "Press ⌘ ⇧ K (Ctrl + Shift + K on Windows) to open the command bar, or ⌘ ⇧ L to open it with the current page link filled in. Change either one at chrome://extensions/shortcuts.",
+          "⌘ ⇧ K by default, or Ctrl + Shift + K on Windows. Change it at `chrome://extensions/shortcuts`. Set it to ⌘ T and it feels just like Arc.",
       },
       {
         question: "Which browsers are supported?",
-        answer: "Any Chromium-based browser that installs Chrome extensions, including Chrome, Edge, Dia, Brave, and Vivaldi. Safari and Firefox are not supported yet.",
+        answer:
+          "Chromium browsers that install Chrome extensions, including Chrome, Edge, Dia, Brave, and Vivaldi. Safari and Firefox aren’t supported yet. In Dia, you get the command bar but not Lumno’s new tab.",
       },
       {
         question: "I’m moving from Arc. Will this feel familiar?",
         answer:
-          "That’s the idea. Lumno is inspired by Arc-style interactions (and not affiliated with Arc), bringing an always-ready command bar, unified search, and fast switching to Dia, Chrome, or Edge.",
+          "That’s the idea. Inspired by Arc-style interactions (and not affiliated with Arc), Lumno brings an always-ready command bar, unified search, and fast switching to Dia, Chrome, or Edge. Set the shortcut to ⌘ T and it opens right where Arc’s did.",
       },
       {
-        question: "Does Lumno upload my browsing data?",
+        question: "Can I keep my current new tab and just use the command bar?",
         answer:
-          "No. Tabs, bookmarks, and history are searched locally and never sent to Lumno servers. Network requests only happen when you run a web or AI search, or turn on account sync or usage analytics yourself.",
+          "Yes. Leave Lumno on and reinstall your other new tab extension. The command bar keeps working.",
+      },
+      {
+        question: "Why does the address bar show an extension URL on a new tab?",
+        answer:
+          "That’s “Automatically focus input” putting your cursor in Lumno’s search box. Turn it off in the new tab’s appearance settings to keep the address bar empty.",
+      },
+      {
+        question: "The command bar doesn’t match my system’s light or dark mode.",
+        answer:
+          "Follow system also takes cues from each page’s colors. To follow only your system, turn off “Adapt theme colors to each webpage” under Settings › Appearance.",
       },
       {
         question: "Why doesn’t the command bar open on some pages?",
         answer:
-          "Browsers block extensions on restricted pages like chrome:// settings and the Web Store, so Lumno opens search in a new tab instead. For local PDF and HTML files, turn on “Allow access to file URLs” on the extension’s details page.",
+          "Browsers block extensions on restricted pages like `chrome://` settings and the Web Store, so Lumno opens search in a new tab. For local PDF and HTML files, turn on “Allow access to file URLs” on the extension’s details page.",
+      },
+      {
+        question: "Can I sync my settings across devices?",
+        answer:
+          "Yes. Settings sync through your browser account by default. Turn on WebDAV (Nutstore or your own server) to sync across browsers, icons and wallpapers included.",
+      },
+      {
+        question: "Does Lumno upload my browsing data?",
+        answer:
+          "No. Tabs, bookmarks, and history are searched locally. Only web and AI searches go out, to the engine or AI site you picked.",
       },
       {
         question: "Is Lumno free?",
-        answer: "Completely. The code is open source under GPL-3.0 on GitHub, where you can read it, report issues, or contribute.",
+        answer: "Completely, and it’s open source under GPL-3.0 on GitHub.",
       },
     ],
-    finalTitle: "Less searching. More doing.",
-    finalDescription: "Install Lumno for free, then press ⌘\u00A0⇧\u00A0K on any page.",
-    viewSourceLabel: "View source",
-    viewSourceAria: "View Lumno source code on GitHub",
+    finalDescription: "Open-source command bar and new tab for your browser.",
 
     footerTagline: "An open-source command bar and minimalist new tab for your browser.",
     footerProduct: "Product",
-    footerResources: "Resources",
-    footerCommunity: "Community",
+    footerSupport: "Support",
     footerFeatures: "All features",
-    footerQuickStart: "Getting started",
     footerRelease: "Release notes",
-    footerPrivacy: "Privacy",
-    footerGithub: "GitHub",
+    footerReportIssue: "Report an issue",
+    footerPrivacy: "Privacy policy",
     footerFeedback: "Feedback & requests",
-    footerCopyright: "Lumno · Open-source browser extension",
+    footerSocialAria: "Follow Lumno",
+    footerGithub: "GitHub",
+    footerCopyright: "Lumno",
     languageLabel: "English",
     languageSelectAria: "Choose language",
     qrcodeTitle: "WeChat group QR code",

@@ -90,11 +90,15 @@ export function playOnView(
   return { replay: () => run(0) };
 }
 
-/** Center of `target` in `root`'s coordinates (both untransformed). */
+/** Center of `target` in `root`'s own pixels, so scaled scenes (.nts-scene--page) land too. */
 export function centerOf(root: HTMLElement, target: Element, dx = 0, dy = 0) {
   const base = root.getBoundingClientRect();
   const rect = target.getBoundingClientRect();
-  return { x: rect.left - base.left + rect.width / 2 + dx, y: rect.top - base.top + rect.height / 2 + dy };
+  const scale = base.width / root.offsetWidth || 1;
+  return {
+    x: (rect.left - base.left + rect.width / 2) / scale + dx,
+    y: (rect.top - base.top + rect.height / 2) / scale + dy,
+  };
 }
 
 /** Glides the fake pointer to a point inside its scene. */

@@ -3,7 +3,7 @@ import privacyPolicyZhCn from "../content/privacy-policy.md?raw";
 import privacyPolicyZhTw from "../content/privacy-policy.zh-TW.md?raw";
 import type { SupportedLocale } from "./locales";
 
-export const PRIVACY_LAST_UPDATED = "2026-08-02";
+export const PRIVACY_LAST_UPDATED = "2026-10-08";
 
 type PrivacyPageContent = {
   pageTitle: string;
@@ -35,9 +35,9 @@ type PrivacyPageContent = {
 
 export const PRIVACY_CONTENT: Record<SupportedLocale, PrivacyPageContent> = {
   "zh-CN": {
-    pageTitle: "Lumno 隐私政策｜本地处理、账号同步与使用统计",
+    pageTitle: "Lumno 隐私政策｜本地处理、浏览器同步与 WebDAV",
     pageDescription:
-      "Lumno 隐私政策：说明扩展的本地处理、账号登录、配置与媒体同步、可选账号关联使用统计，以及第三方服务请求。",
+      "Lumno 隐私政策：说明扩展如何在本机处理数据、通过浏览器同步或你自己的 WebDAV 同步配置，以及会发起哪些第三方请求。",
     pageKeywords: ["Lumno 隐私政策", "Chrome 扩展隐私政策", "浏览器扩展隐私声明"],
     breadcrumbLabel: "隐私政策",
     brandHomeAria: "返回 Lumno 首页",
@@ -54,7 +54,7 @@ export const PRIVACY_CONTENT: Record<SupportedLocale, PrivacyPageContent> = {
     authorLabel: "联系作者",
     articleTitle: "隐私政策",
     intro:
-      "Lumno 默认尽量在浏览器本地处理历史、书签和标签页。登录后，你可以选择跨设备同步配置与自定义媒体；扩展内产品使用统计保持关闭，只有你主动开启后才会上传明确列出的数字和配置属性。",
+      "Lumno 没有账号，也不收集使用数据。历史、书签和标签页只在你的浏览器中处理；设置通过浏览器自带的同步保存，也可以同步到你自己的 WebDAV 服务器。",
     footerTitle: "对这份说明有疑问？",
     footerBeforeEmail: "请通过",
     footerAfterEmail: "联系我们，或返回",
@@ -64,9 +64,9 @@ export const PRIVACY_CONTENT: Record<SupportedLocale, PrivacyPageContent> = {
     policySource: privacyPolicyZhCn,
   },
   "zh-TW": {
-    pageTitle: "Lumno 隱私權政策｜本機處理、帳號同步與使用統計",
+    pageTitle: "Lumno 隱私權政策｜本機處理、瀏覽器同步與 WebDAV",
     pageDescription:
-      "Lumno 隱私權政策：說明擴充功能的本機處理、帳號登入、設定與媒體同步、選用的帳號關聯使用統計，以及第三方服務請求。",
+      "Lumno 隱私權政策：說明擴充功能如何在本機處理資料、透過瀏覽器同步或你自己的 WebDAV 同步設定，以及會發起哪些第三方請求。",
     pageKeywords: ["Lumno 隱私權政策", "Chrome 擴充功能隱私權政策", "瀏覽器擴充功能隱私權聲明"],
     breadcrumbLabel: "隱私權政策",
     brandHomeAria: "返回 Lumno 首頁",
@@ -83,7 +83,7 @@ export const PRIVACY_CONTENT: Record<SupportedLocale, PrivacyPageContent> = {
     authorLabel: "聯絡作者",
     articleTitle: "隱私權政策",
     intro:
-      "Lumno 預設盡量在瀏覽器本機處理瀏覽紀錄、書籤與分頁。登入後，你可以選擇跨裝置同步設定與自訂媒體；擴充功能內的產品使用統計預設關閉，只有在你主動開啟後，才會上傳明確列出的數字與設定屬性。",
+      "Lumno 沒有帳號，也不蒐集使用資料。瀏覽紀錄、書籤與分頁只在你的瀏覽器中處理；設定透過瀏覽器內建的同步保存，也可以同步到你自己的 WebDAV 伺服器。",
     footerTitle: "對這份說明有疑問？",
     footerBeforeEmail: "請透過",
     footerAfterEmail: "與我們聯絡，或返回",
@@ -93,9 +93,9 @@ export const PRIVACY_CONTENT: Record<SupportedLocale, PrivacyPageContent> = {
     policySource: privacyPolicyZhTw,
   },
   en: {
-    pageTitle: "Lumno Privacy Policy | Local Data, Sync & Analytics",
+    pageTitle: "Lumno Privacy Policy | Local Data, Browser Sync & WebDAV",
     pageDescription:
-      "Read how Lumno handles browser data locally, account sign-in, settings and media sync, optional account-linked usage metrics, and third-party requests.",
+      "Read how Lumno processes browser data on your device, syncs settings through your browser or your own WebDAV server, and which third-party requests it makes.",
     pageKeywords: ["Lumno privacy policy", "Chrome extension privacy policy", "browser extension privacy notice"],
     breadcrumbLabel: "Privacy Policy",
     brandHomeAria: "Back to the Lumno homepage",
@@ -112,7 +112,7 @@ export const PRIVACY_CONTENT: Record<SupportedLocale, PrivacyPageContent> = {
     authorLabel: "Contact the author",
     articleTitle: "Privacy Policy",
     intro:
-      "Lumno keeps history, bookmarks, and tabs in your browser whenever possible. After signing in, you can choose to sync settings and custom media across devices. In-extension product usage metrics stay off unless you explicitly enable them, and only the listed numeric events and configuration attributes are uploaded.",
+      "Lumno has no accounts and collects no usage data. History, bookmarks, and tabs are processed only in your browser; settings sync through your browser's built-in sync, or to your own WebDAV server.",
     footerTitle: "Questions about this notice?",
     footerBeforeEmail: "Email us at",
     footerAfterEmail: "or return to the",

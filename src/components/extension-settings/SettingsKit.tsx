@@ -9,11 +9,14 @@ import {
   type AnchorHTMLAttributes,
   type ButtonHTMLAttributes,
   type KeyboardEvent as ReactKeyboardEvent,
+  type HTMLAttributes,
   type InputHTMLAttributes,
   type ReactElement,
+  type RefObject,
   type ReactNode,
 } from "react";
 import "./settings-kit.css";
+import { attachTabsIndicator } from "./tabs-indicator";
 
 type SettingsTheme = "light" | "dark";
 
@@ -39,6 +42,11 @@ function useControllableValue<T>({
   };
 
   return [currentValue, setValue] as const;
+}
+
+/** Slides one white block under the active tab; see tabs-indicator.ts. */
+function useTabsIndicator(ref: RefObject<HTMLElement | null>) {
+  useEffect(() => (ref.current ? attachTabsIndicator(ref.current) : undefined), [ref]);
 }
 
 export function SettingsSurface({
@@ -74,25 +82,54 @@ export function SettingsTabs<T extends string>({
   value,
   onValueChange,
   ariaLabel,
+  className,
+  itemClassName,
+  ...rest
 }: {
   items: Array<SettingsTabItem<T>>;
   value: T;
   onValueChange: (value: T) => void;
   ariaLabel: string;
-}) {
+  className?: string;
+  itemClassName?: string;
+} & Omit<HTMLAttributes<HTMLDivElement>, "role" | "aria-label" | "className" | "onChange">) {
+  const trackRef = useRef<HTMLDivElement>(null);
+  useTabsIndicator(trackRef);
+
+  // Arrow keys, Home and End move between tabs, as in a native tab bar.
+  const handleKeyDown = (event: ReactKeyboardEvent<HTMLButtonElement>, index: number) => {
+    const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[event.key];
+    let next = -1;
+    if (step) next = (index + step + items.length) % items.length;
+    if (event.key === "Home") next = 0;
+    if (event.key === "End") next = items.length - 1;
+    if (next < 0) return;
+    event.preventDefault();
+    onValueChange(items[next].value);
+    const buttons = trackRef.current?.querySelectorAll<HTMLButtonElement>("[role='tab']");
+    buttons?.[next]?.focus();
+  };
+
   return (
-    <div className="lumno-settings-tabs" role="tablist" aria-label={ariaLabel}>
-      {items.map((item) => {
+    <div
+      {...rest}
+      ref={trackRef}
+      className={joinClassNames("lumno-settings-tabs", className)}
+      role="tablist"
+      aria-label={ariaLabel}
+    >
+      {items.map((item, index) => {
         const active = item.value === value;
         return (
           <button
-            className="lumno-settings-tab"
+            className={joinClassNames("lumno-settings-tab", itemClassName)}
             type="button"
             role="tab"
             aria-selected={active}
             tabIndex={active ? 0 : -1}
             data-active={active}
             onClick={() => onValueChange(item.value)}
+            onKeyDown={(event) => handleKeyDown(event, index)}
             key={item.value}
           >
             {item.iconClass ? <i className={item.iconClass} aria-hidden="true" /> : null}
@@ -321,9 +358,12 @@ export function SettingsSegmentedControl<T extends string>({
     defaultValue: fallbackValue,
     onChange: onValueChange,
   });
+  const trackRef = useRef<HTMLDivElement>(null);
+  useTabsIndicator(trackRef);
 
   return (
     <div
+      ref={trackRef}
       className={joinClassNames("lumno-settings-segmented", className)}
       role="group"
       aria-label={label}

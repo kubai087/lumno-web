@@ -1,0 +1,86 @@
+---
+/*
+ * Icon chip for sheet cells, drawn as inline SVG so the glyph can be animated
+ * line by line. The shapes are Remix Icon's own (v4.9.1, the same version as
+ * the icon font), so at rest the chip looks exactly like the font glyph did.
+ *
+ * Two layers: the original filled outline, shown at rest, and the icon split
+ * into its parts (home-cell-icon-parts.ts). On hover the fill steps aside,
+ * each part makes its own entrance, and once the last one has settled the
+ * fill takes over again.
+ */
+import cloudLine from "../../assets/home-icons/cloud-line.svg?raw";
+import githubLine from "../../assets/home-icons/github-line.svg?raw";
+import pictureInPicture2Line from "../../assets/home-icons/picture-in-picture-2-line.svg?raw";
+import playList2Line from "../../assets/home-icons/play-list-2-line.svg?raw";
+import pushpinLine from "../../assets/home-icons/pushpin-line.svg?raw";
+import screenshot2Line from "../../assets/home-icons/screenshot-2-line.svg?raw";
+import shieldCheckLine from "../../assets/home-icons/shield-check-line.svg?raw";
+import toggleLine from "../../assets/home-icons/toggle-line.svg?raw";
+import translate2 from "../../assets/home-icons/translate-2.svg?raw";
+import { HOME_CELL_ICON_PARTS, type HomeCellIconPart } from "./home-cell-icon-parts";
+
+const ICONS = {
+  "cloud-line": cloudLine,
+  "github-line": githubLine,
+  "picture-in-picture-2-line": pictureInPicture2Line,
+  "play-list-2-line": playList2Line,
+  "pushpin-line": pushpinLine,
+  "screenshot-2-line": screenshot2Line,
+  "shield-check-line": shieldCheckLine,
+  "toggle-line": toggleLine,
+  "translate-2": translate2,
+};
+
+export type HomeCellIconName = keyof typeof ICONS;
+
+interface Props {
+  name: HomeCellIconName;
+}
+
+const { name } = Astro.props;
+const d = ICONS[name].match(/\sd="([^"]+)"/)?.[1];
+if (!d) throw new Error(`HomeCellIcon: no path data in ${name}.svg`);
+
+const parts: HomeCellIconPart[] = HOME_CELL_ICON_PARTS[name];
+const handoff = Math.max(...parts.map(({ motion }) => motion.at + motion.dur));
+
+// Motion parameters become custom properties; lengths are grid units, which
+// CSS reads as px inside the SVG's user space.
+const motionStyle = ({ motion }: HomeCellIconPart) => {
+  const vars = [`--at: ${motion.at}ms`, `--dur: ${motion.dur}ms`];
+  if (motion.type === "pop" && motion.peak) vars.push(`--peak: ${motion.peak}`);
+  if (motion.type === "slide") vars.push(`--dx: ${motion.from[0]}px`, `--dy: ${motion.from[1]}px`);
+  if (motion.type === "swing" || motion.type === "wag") vars.push(`--rotate: ${motion.rotate}deg`);
+  const origin = "origin" in motion ? motion.origin : undefined;
+  if (origin) vars.push("transform-box: view-box", `transform-origin: ${origin[0]}px ${origin[1]}px`);
+  return vars.join("; ");
+};
+---
+
+<span class="home-cell__icon" aria-hidden="true">
+  <svg
+    viewBox="0 0 24 24"
+    width="17"
+    height="17"
+    focusable="false"
+    shape-rendering="geometricPrecision"
+    style={`--handoff: ${handoff}ms`}
+  >
+    <path class="home-cell__icon-fill" d={d} />
+    <g class="home-cell__icon-trace">
+      {parts.map((part) => (
+        <path
+          d={part.d}
+          data-motion={part.motion.type}
+          pathLength={part.motion.type === "draw" ? "1" : undefined}
+          stroke-width={part.width ?? 2}
+          stroke-linejoin={part.join ?? "round"}
+          stroke-linecap={part.cap ?? "butt"}
+          stroke-miterlimit={part.miterLimit?.toString()}
+          style={motionStyle(part)}
+        />
+      ))}
+    </g>
+  </svg>
+</span>

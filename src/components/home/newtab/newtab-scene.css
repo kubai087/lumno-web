@@ -30,6 +30,39 @@
   margin: 0;
 }
 
+/*
+ * Whole-page scenes (wallpaper, dark mode): the new tab laid out as the
+ * extension lays it out, at real sizes, then scaled with the window around it.
+ * The chrome above is drawn at about 0.7 of a real toolbar (34px bar, 20px
+ * address field), so the page uses the same factor and wallpaper, clock,
+ * search and panel keep the proportions they have on a real screen.
+ * Scripts measure in the scene's own pixels (scene-runtime centerOf).
+ */
+.nts-scene--page {
+  --nts-scale: 0.7;
+  --nts-clock-size: 54px;
+  inset: 0 auto auto 0;
+  width: calc(100% / var(--nts-scale));
+  height: calc(100% / var(--nts-scale));
+  transform: scale(var(--nts-scale));
+  transform-origin: 0 0;
+}
+
+/* Clock over search, centred as on the extension's page (search: 90vw, at most 640px). */
+.nts-page {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  padding: var(--nts-page-top, 72px) 20px 0;
+}
+
+.nts-page__search {
+  width: min(640px, 90%);
+}
+
 /* ---------- Wallpaper: the screen's own background, layers crossfading ---------- */
 
 .nts-wall {
@@ -62,10 +95,11 @@
 }
 
 /* ---------- Clock: Open Sans at 86% width, weight 320 ---------- */
-/* Drawn a step smaller than the extension's 54px: the window here is far narrower than a real tab. */
+/* Close-up scenes draw it a step smaller than the extension's 54px; whole-page scenes use 54px. */
+/* Over a wallpaper, scene-clock-ink.ts sets an ink sampled from what is behind it. */
 
 .nts-clock {
-  color: rgb(42 50 68);
+  color: var(--nts-clock-ink, rgb(42 50 68));
   font-family: "Open Sans", sans-serif;
   font-size: var(--nts-clock-size, 44px);
   font-weight: 320;
@@ -74,25 +108,43 @@
   line-height: 0.86;
   letter-spacing: -0.055em;
   white-space: nowrap;
-  transition: color 600ms ease;
+  text-shadow:
+    0 1px 2px var(--nts-clock-shadow, transparent),
+    0 0 10px var(--nts-clock-halo, transparent);
+  transition:
+    color 600ms ease,
+    text-shadow 600ms ease;
 }
 
-/* ---------- Search entry: 56px tall, 26px radius, frosted white ---------- */
+/*
+ * ---------- Search entry: 56px tall, 26px radius, frosted white ----------
+ * Card scenes draw it at 3/4 size, so a box as long as the real one's
+ * proportions fits the card; whole-page scenes are already scaled as a page.
+ */
+
+.nts-scene {
+  --nts-search-scale: 0.75;
+}
+
+.nts-scene--page {
+  --nts-search-scale: 1;
+}
 
 .nts-search {
+  --k: var(--nts-search-scale, 1);
   display: flex;
   align-items: center;
   box-sizing: border-box;
-  height: 56px;
-  padding: 0 20px;
+  height: calc(56px * var(--k));
+  padding: 0 calc(20px * var(--k));
   border: 1px solid rgba(0, 0, 0, 0.14);
-  border-radius: 26px;
+  border-radius: calc(26px * var(--k));
   background: rgba(255, 255, 255, 0.9);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.01);
   backdrop-filter: blur(18px) saturate(1.65);
   -webkit-backdrop-filter: blur(18px) saturate(1.65);
   color: #111827;
-  font-size: 16px;
+  font-size: calc(16px * var(--k));
   transition:
     background-color 600ms ease,
     border-color 600ms ease,
@@ -101,7 +153,7 @@
 
 .nts-search > i {
   flex: none;
-  font-size: 16px;
+  font-size: calc(16px * var(--k));
   line-height: 1;
 }
 
@@ -110,7 +162,7 @@
 }
 
 .nts-search > i:last-child {
-  margin-left: 14px;
+  margin-left: calc(14px * var(--k));
   color: #9ca3af;
 }
 
@@ -121,7 +173,7 @@
   align-items: center;
   min-width: 0;
   height: 100%;
-  margin-left: 14px;
+  margin-left: calc(14px * var(--k));
   overflow: hidden;
   line-height: 1.4;
   white-space: nowrap;
@@ -143,7 +195,7 @@
 .nts-search__caret {
   display: none;
   width: 1.5px;
-  height: 20px;
+  height: calc(20px * var(--k));
   margin-left: 1px;
   border-radius: 1px;
   background: #111827;
@@ -163,12 +215,12 @@
 /* Slash-command badge (mode-commands.js): a quiet pill at the end of the field. */
 .nts-search__badge {
   flex: none;
-  margin-left: 10px;
-  padding: 5px 9px;
+  margin-left: calc(10px * var(--k));
+  padding: calc(5px * var(--k)) calc(9px * var(--k));
   border-radius: 999px;
   background: rgba(17, 24, 39, 0.06);
   color: #4b5563;
-  font-size: 12px;
+  font-size: max(10px, calc(12px * var(--k)));
   font-weight: 600;
   white-space: nowrap;
   transition: transform 140ms ease;
@@ -220,6 +272,19 @@
   height: 28px;
   border-radius: 6px;
   object-fit: cover;
+}
+
+/* Glyph straight on the tile. */
+.nts-shortcut[data-bare] img {
+  width: var(--glyph, 26px);
+  height: var(--glyph, 26px);
+  border-radius: 0;
+  object-fit: contain;
+}
+
+/* Multiply drops the white square some monochrome favicons ship with. */
+.nts-shortcut[data-bare][data-mono] img {
+  mix-blend-mode: multiply;
 }
 
 /* ---------- Tooltip (shared/tooltip.css) ---------- */
@@ -282,18 +347,42 @@
   text-overflow: ellipsis;
 }
 
-/* Favicon stand-in: a brand glyph on the extension's 22px, 7px-radius chip. */
+/* Favicon (newtab.css .x-nt-bookmark-icon): 22px on a 7px-radius chip. The
+   brand vectors are full-bleed, so a little inset stands in for a favicon's own margin. */
 .nts-fav {
-  display: grid;
+  display: block;
   flex: none;
-  place-items: center;
+  box-sizing: border-box;
   width: 22px;
   height: 22px;
+  padding: 3px;
   border-radius: 7px;
   background: rgba(241, 245, 249, 0.92);
-  color: var(--c, #111827);
-  font-size: 15px;
-  line-height: 1;
+}
+
+.nts-fav svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Folder icon (newtab.css .x-nt-bookmark-icon--figma): only the closed paths
+   draw; the open ones are morph targets, kept hidden as in the extension. */
+.nts-folder {
+  display: inline-flex;
+  flex: none;
+  overflow: visible;
+}
+
+.nts-folder svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.nts-folder .x-nt-folder-shape--hover {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .nts-card .nts-folder {
@@ -368,18 +457,18 @@
   background: rgba(15, 23, 42, 0.07);
 }
 
+/* .x-nt-bookmark-cascade-icon: a bare 18px favicon. */
 .nts-menu__item .nts-fav {
   width: 18px;
   height: 18px;
+  padding: 1px;
   border-radius: 4px;
   background: transparent;
-  font-size: 16px;
 }
 
 .nts-menu__item .nts-folder {
   width: 22px;
   height: 22px;
-  margin: 0 -2px;
 }
 
 .nts-menu__chevron {
@@ -468,12 +557,12 @@
   top: 0;
   left: 0;
   z-index: 30;
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 24px;
   /* The tip of the arrow, not the box corner, lands on the point. */
-  margin: -3px 0 0 -5px;
+  margin: -3px 0 0 -4px;
   opacity: 0;
-  filter: drop-shadow(0 1px 1.5px rgba(0, 0, 0, 0.28));
+  filter: drop-shadow(0 5px 7px rgba(15, 23, 42, 0.24));
   transition-property: transform, opacity;
   transition-duration: 700ms, 200ms;
   transition-timing-function: cubic-bezier(0.45, 0, 0.2, 1), ease;
@@ -488,7 +577,8 @@
   display: block;
   width: 100%;
   height: 100%;
-  transform-origin: 25% 15%;
+  overflow: visible;
+  transform-origin: 18% 11%;
   transition: transform 120ms ease;
 }
 
@@ -499,7 +589,7 @@
 /* ---------- Dark theme ---------- */
 
 [data-theme="dark"] .nts-clock {
-  color: rgba(243, 244, 246, 0.88);
+  color: var(--nts-clock-ink, rgba(243, 244, 246, 0.88));
 }
 
 [data-theme="dark"] .nts-search {
@@ -523,6 +613,10 @@
 
 [data-theme="dark"] .nts-shortcut[data-mono] img {
   filter: invert(1);
+}
+
+[data-theme="dark"] .nts-shortcut[data-bare][data-mono] img {
+  mix-blend-mode: screen;
 }
 
 @media (prefers-reduced-motion: reduce) {

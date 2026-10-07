@@ -35,7 +35,7 @@ const CARDS: FeatureId[] = ["bookmarks", "dock", "clock", "zen"];
     <ul class="ntc-track">
       {CARDS.map((id) => (
         <li class="ntc-item" data-ntc-card>
-          <NewTabFeatureCard id={id} content={content} />
+          <NewTabFeatureCard id={id} content={content} butterfly />
         </li>
       ))}
     </ul>
@@ -49,7 +49,7 @@ const CARDS: FeatureId[] = ["bookmarks", "dock", "clock", "zen"];
     --edge: var(--home-edge, 32, 38, 46);
     grid-column: 1 / -1;
     min-width: 0;
-    margin-top: clamp(72px, 8vw, 112px);
+    margin-top: clamp(112px, 12vw, 168px);
   }
 
   .ntc-nav {

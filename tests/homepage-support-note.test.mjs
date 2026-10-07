@@ -28,12 +28,12 @@ test("homepage toolbar exposes Chrome and Edge install options", () => {
   assert.match(menuSource, /iconClass: "ri-edge-new-fill/);
   assert.match(menuSource, /href: chromeUrl/);
   assert.match(menuSource, /href: edgeUrl/);
-  assert.match(menuSource, /<SettingsBadge>\{chromeVersionTag\}<\/SettingsBadge>/);
-  assert.match(menuSource, /<SettingsBadge>\{edgeVersionTag\}<\/SettingsBadge>/);
+  assert.match(source, /chromeRecommendationNote=\{content\.installChromeRecommendationNote\}/);
   assert.match(
     menuSource,
-    /label:\s*chromeLabel,[\s\S]*labelSuffix:\s*chromeVersionTag \? <SettingsBadge>\{chromeVersionTag\}<\/SettingsBadge>[\s\S]*meta:\s*<SettingsBadge tone="accent">\{chromeRecommendation\}<\/SettingsBadge>/,
+    /label:\s*chromeLabel,[\s\S]*labelSuffix:\s*renderOptionDetail\(chromeVersionTag, chromeRecommendationNote\)[\s\S]*meta:\s*<SettingsBadge tone="accent">\{chromeRecommendation\}<\/SettingsBadge>/,
   );
+  assert.match(menuSource, /labelSuffix:\s*renderOptionDetail\(edgeVersionTag\)/);
   const menuStyles = readSource("src/components/navigation/install-menu.css");
   assert.match(
     menuStyles,
@@ -56,9 +56,9 @@ test("homepage install store names and recommendation are localized", () => {
     assert.ok(source.includes(label), `missing localized store label: ${label}`);
   }
 
-  assert.match(source, /installChromeRecommendation: "推荐 · 更新更快"/);
-  assert.match(source, /installChromeRecommendation: "推薦 · 更新更快"/);
-  assert.match(source, /installChromeRecommendation: "Recommended · Faster updates"/);
+  assert.match(source, /installChromeRecommendation: "推荐",\s*installChromeRecommendationNote: "更新更快"/);
+  assert.match(source, /installChromeRecommendation: "推薦",\s*installChromeRecommendationNote: "更新更快"/);
+  assert.match(source, /installChromeRecommendation: "Recommended",\s*installChromeRecommendationNote: "Faster updates"/);
 });
 
 test("store versions fall back to the live Chrome and Edge stores", () => {
@@ -89,8 +89,6 @@ test("homepage is a product narrative while onboarding remains a separate route"
   assert.deepEqual([...order].sort((a, b) => a - b), order, "sections should keep the narrative order");
 
   assert.match(readSource("src/components/home/sections/CommandBarSection.astro"), /id="features"/);
-  assert.match(source, /const onboardingHref = buildLocalizedPath\(uiLocale, "\/onboarding\/"\);/);
-  assert.match(source, /href: onboardingHref/);
   // Onboarding owns the shortcut-setup walkthrough; the homepage only mentions the URL in FAQ copy.
   assert.doesNotMatch(source, /chrome:\/\/extensions\/shortcuts/);
 });

@@ -16,6 +16,7 @@ interface Props {
   closeLabel: string;
   triggerVariant: "hero" | "footer";
   externalHref?: string;
+  analyticsLabel?: string;
 }
 
 interface CommunityQrDialogPanelProps {
@@ -61,10 +62,11 @@ export function CommunityQrDialog({
   closeLabel,
   triggerVariant,
   externalHref,
+  analyticsLabel = "home_hero_community",
 }: Props) {
   if (externalHref) {
     return (
-      <a href={externalHref} target="_blank" rel="noreferrer noopener">
+      <a className="community-footer-trigger" href={externalHref} target="_blank" rel="noreferrer noopener">
         {triggerLabel}
       </a>
     );
@@ -78,7 +80,7 @@ export function CommunityQrDialog({
       aria-label={triggerAriaLabel}
       data-analytics-event="open_community_qrcode"
       data-analytics-category="cta"
-      data-analytics-label="home_hero_community"
+      data-analytics-label={analyticsLabel}
     >
       {triggerLabel}
     </SettingsButton>

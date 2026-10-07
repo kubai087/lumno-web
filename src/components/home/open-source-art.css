@@ -1,0 +1,347 @@
+/*
+ * Illustrations inside the open source cards (OpenSourceArt.tsx). Each one
+ * fills the white panel the card draws; colours come from the homepage's
+ * edge ink so the art sits on the same paper as everything else.
+ */
+
+/* ---------- Shared window: the terminal's grey title bar ---------- */
+
+.osa-window {
+  --osa-edge: var(--home-edge, 32, 38, 46);
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #fff;
+  color: #1f2937;
+}
+
+.osa-window__bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  height: 34px;
+  padding: 0 12px;
+  border-bottom: 1px solid rgba(var(--osa-edge), 0.08);
+  background: #eef0f2;
+}
+
+.osa-window__dots {
+  display: flex;
+  flex: none;
+  gap: 6px;
+}
+
+.osa-window__dots span {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(var(--osa-edge), 0.16);
+}
+
+.osa-window__title {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+  overflow: hidden;
+  color: #6b7280;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.osa-window__title i {
+  font-size: 13px;
+}
+
+/* ---------- Privacy: a data checklist, struck through item by item ---------- */
+
+.osa-data {
+  margin: 0;
+  padding: 6px 16px;
+  list-style: none;
+}
+
+.osa-data li {
+  --delay: calc(0.25s + var(--i) * 0.22s);
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  height: 36px;
+  border-bottom: 1px solid rgba(var(--osa-edge), 0.06);
+  color: #374151;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.osa-data li > i {
+  flex: none;
+  color: #9ca3af;
+  font-size: 15px;
+}
+
+/* The strike is drawn left to right over the name. */
+.osa-data__name {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  transition: color 0.3s ease;
+}
+
+.osa-data__name::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1.5px;
+  border-radius: 1px;
+  background: #4b5563;
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+.osa-data__status {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+  padding-left: 12px;
+  color: #6b7280;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0;
+  translate: -4px 0;
+}
+
+.osa-data__status i {
+  font-size: 14px;
+}
+
+.osa-data[data-state="run"] .osa-data__name::after {
+  animation: osa-strike 0.36s cubic-bezier(0.65, 0, 0.35, 1) var(--delay) forwards;
+}
+
+.osa-data[data-state="run"] .osa-data__name {
+  animation: osa-fade-ink 0.3s ease calc(var(--delay) + 0.2s) forwards;
+}
+
+.osa-data[data-state="run"] .osa-data__status {
+  animation: osa-status-in 0.3s ease calc(var(--delay) + 0.24s) forwards;
+}
+
+.osa-data[data-state="done"] .osa-data__name {
+  color: #9ca3af;
+}
+
+.osa-data[data-state="done"] .osa-data__name::after {
+  transform: none;
+}
+
+.osa-data[data-state="done"] .osa-data__status {
+  opacity: 1;
+  translate: none;
+}
+
+@keyframes osa-strike {
+  to { transform: scaleX(1); }
+}
+
+@keyframes osa-fade-ink {
+  to { color: #9ca3af; }
+}
+
+@keyframes osa-status-in {
+  to { opacity: 1; translate: none; }
+}
+
+/* ---------- Sync: one settings file, three ways out ---------- */
+
+.osa-json {
+  margin: 0;
+  padding: 14px 16px 12px;
+}
+
+.osa-json code {
+  display: grid;
+  font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+  font-size: 12px;
+  line-height: 19px;
+  color: #6b7280;
+  white-space: pre;
+}
+
+.osa-json b {
+  color: #1f2937;
+  font-weight: 500;
+}
+
+.osa-sync {
+  padding: 12px 16px 0;
+  border-top: 1px solid rgba(var(--osa-edge), 0.06);
+}
+
+/* A segmented control whose pill slides to the active tab. */
+.osa-sync__tabs {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  height: 30px;
+  padding: 2px;
+  border-radius: 9px;
+  background: rgba(var(--osa-edge), 0.06);
+}
+
+.osa-sync__pill {
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  left: 2px;
+  width: calc((100% - 4px) / 3);
+  border-radius: 7px;
+  background: #fff;
+  box-shadow:
+    0 0 0 0.5px rgba(var(--osa-edge), 0.08),
+    0 1px 3px rgba(var(--osa-edge), 0.12);
+  transform: translateX(calc(var(--active) * 100%));
+  transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.osa-sync__tab {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-width: 0;
+  overflow: hidden;
+  color: #6b7280;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: color 0.3s ease;
+}
+
+.osa-sync__tab[data-active] {
+  color: #1f2937;
+}
+
+.osa-sync__dest {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 12px 2px 0;
+  color: #4b5563;
+  font-size: 12.5px;
+  font-weight: 500;
+  white-space: nowrap;
+  animation: osa-dest-in 0.36s ease both;
+}
+
+.osa-sync__dest i {
+  flex: none;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+@keyframes osa-dest-in {
+  from { opacity: 0; translate: 0 4px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .osa-sync__pill,
+  .osa-sync__dest {
+    transition: none;
+    animation: none;
+  }
+}
+
+/* ---------- Source: MagicUI Terminal, restyled as the site's window ---------- */
+
+.osa-terminal-anchor {
+  position: absolute;
+  inset: 0;
+}
+
+/*
+ * Plain (unlayered) rules, so they win over the component's Tailwind
+ * utilities without touching its source.
+ */
+.osa-terminal {
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  max-height: none;
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background: #fff;
+  color: #1f2937;
+}
+
+.osa-terminal > div:first-child,
+.osa-terminal__bar {
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  align-items: center;
+  height: 34px;
+  padding: 0 12px;
+  border-bottom: 1px solid rgba(var(--home-edge), 0.08);
+  background: #eef0f2;
+}
+
+.osa-terminal > div:first-child > div {
+  gap: 6px;
+}
+
+.osa-terminal > div:first-child div div,
+.osa-terminal__bar span {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(var(--home-edge), 0.16);
+}
+
+.osa-terminal pre {
+  margin: 0;
+  padding: 16px 0 16px 16px;
+}
+
+.osa-terminal code {
+  display: grid;
+  gap: 6px;
+  overflow: hidden;
+  /* A line longer than a narrow card fades out at the edge instead of being cut. */
+  -webkit-mask-image: linear-gradient(to left, transparent, #000 28px);
+  mask-image: linear-gradient(to left, transparent, #000 28px);
+  font-family: "SF Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+
+.osa-terminal__cmd,
+.osa-terminal__out {
+  display: block;
+  min-height: 1.5em;
+  font-family: inherit;
+  font-size: 12px;
+  line-height: 1.5;
+  letter-spacing: 0;
+  white-space: pre;
+}
+
+.osa-terminal__cmd {
+  color: #1f2937;
+  font-weight: 500;
+}
+
+.osa-terminal__out {
+  color: #6b7280;
+}
+
+.osa-terminal__out--strong {
+  color: #111827;
+  font-weight: 600;
+}

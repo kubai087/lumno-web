@@ -1,0 +1,956 @@
+---
+import type { HomeUtilityId } from "../../lib/home-content";
+import SceneFavicon from "./newtab/SceneFavicon.astro";
+
+/*
+ * Hover art for a utilities cell: a small patterned tile in the cell's empty
+ * right side, showing the feature in one short scene. Hidden at rest; on
+ * hover it fades in and the scene plays once (and replays on the next
+ * hover), like the cell icon beside it.
+ *
+ * Every element's resting style is the scene's final frame, so reduced
+ * motion simply shows the result, and leaving mid-play never snaps.
+ * Nothing here is language-specific (the language menu lists endonyms).
+ */
+interface Props {
+  id: HomeUtilityId;
+}
+
+const { id } = Astro.props;
+
+const LANGUAGES = ["简体中文", "繁體中文", "English", "日本語"];
+const BARS = [42, 64, 50, 78, 36];
+---
+
+<div class={`util-art util-art--${id}`} aria-hidden="true">
+  <div class="util-art__stage">
+    {id === "clip" && (
+      <>
+        <div class="ua-page">
+          <span class="ua-line ua-line--strong" style="--w: 40px" />
+          <span class="ua-line" style="--w: 62px" />
+          <span class="ua-chart">
+            {BARS.map((h, i) => <i class={i === BARS.length - 1 ? "ua-clip__live" : undefined} style={`--h: ${h}%`} />)}
+          </span>
+          <span class="ua-line" style="--w: 54px" />
+          <span class="ua-line" style="--w: 34px" />
+          <span class="ua-clip__marquee" />
+        </div>
+        <div class="ua-clip__float">
+          <span class="ua-clip__grip" />
+          <span class="ua-chart">
+            {BARS.map((h, i) => <i class={i === BARS.length - 1 ? "ua-clip__live" : undefined} style={`--h: ${h}%`} />)}
+          </span>
+        </div>
+      </>
+    )}
+
+    {id === "autoPip" && (
+      <>
+        <div class="ua-win ua-pip">
+          <div class="ua-win__tabs">
+            <span class="ua-tab ua-pip__tab ua-pip__tab--video"><SceneFavicon icon="youtube" /><i class="ua-tab__label" /></span>
+            <span class="ua-tab ua-pip__tab ua-pip__tab--next"><SceneFavicon icon="github" /><i class="ua-tab__label" /></span>
+          </div>
+          <div class="ua-win__body ua-pip__page">
+            <span class="ua-line ua-line--strong" style="--w: 46px" />
+            <span class="ua-line" style="--w: 84px" />
+            <span class="ua-line" style="--w: 70px" />
+            <span class="ua-line" style="--w: 40px" />
+          </div>
+        </div>
+        <div class="ua-pip__video">
+          <i class="ri-play-fill" />
+          <span class="ua-pip__track"><span class="ua-pip__played" /></span>
+        </div>
+      </>
+    )}
+
+    {id === "progress" && (
+      <>
+        <div class="ua-card ua-card--behind" />
+        <div class="ua-card">
+          <div class="ua-card__head">
+            <SceneFavicon icon="youtube" />
+            <span class="ua-line ua-line--strong" style="--w: 46px" />
+            <i class="ri-pushpin-fill ua-card__pin" />
+          </div>
+          <div class="ua-card__foot">
+            <span class="ua-ep">
+              EP
+              <span class="ua-ep__window"><span class="ua-ep__reel"><span>12</span><span>13</span></span></span>
+            </span>
+            <span class="ua-radar"><i class="ri-radar-line" /></span>
+          </div>
+          <span class="ua-card__track"><span class="ua-card__watched" /></span>
+        </div>
+      </>
+    )}
+
+    {id === "sync" && (
+      <>
+        {["from", "to"].map((side) => (
+          <div class={`ua-nt ua-sync__${side}`}>
+            <span class="ua-nt__wall" />
+            <span class="ua-nt__wall ua-nt__wall--new" />
+            <span class="ua-nt__search" />
+            <span class="ua-nt__icons"><i /><i /><i /><i class="ua-nt__added" /></span>
+          </div>
+        ))}
+        <span class="ua-sync__badge">
+          <i class="ri-refresh-line ua-sync__spin" />
+          <i class="ri-check-line ua-sync__done" />
+        </span>
+      </>
+    )}
+
+    {id === "pinned" && (
+      <div class="ua-win ua-pin">
+        <div class="ua-win__tabs">
+          {["github", "figma", "youtube"].map((icon, i) => (
+            <span class:list={["ua-tab", "ua-tab--pinned", "ua-pin__tab", { "ua-tab--active": i === 0 }]} style={`--i: ${i}`}>
+              <SceneFavicon icon={icon} />
+            </span>
+          ))}
+          <span class="ua-tab ua-pin__tab" style="--i: 3"><i class="ua-tab__label" /></span>
+        </div>
+        <div class="ua-win__body">
+          <span class="ua-pin__lines">
+            <span class="ua-line ua-line--strong" style="--w: 50px" />
+            <span class="ua-line" style="--w: 86px" />
+            <span class="ua-line" style="--w: 64px" />
+          </span>
+          <i class="ri-restart-line ua-pin__restart" />
+        </div>
+      </div>
+    )}
+
+    {id === "languages" && (
+      <div class="ua-menu">
+        <span class="ua-menu__mark"><i class="ri-check-line" /></span>
+        {LANGUAGES.map((language) => <span class="ua-menu__row">{language}</span>)}
+      </div>
+    )}
+  </div>
+</div>
+
+<style>
+  /* ---------- Tile ---------- */
+
+  .util-art {
+    --ua-shadow: 47, 42, 34;
+    --ua-accent: #3462ad;
+    --ua-ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --ua-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    bottom: 10px;
+    display: none;
+    width: 144px;
+    overflow: hidden;
+    border-radius: 16px;
+    isolation: isolate;
+    background: #fafafa;
+    box-shadow: inset 0 0 0 1px rgba(var(--home-edge), 0.07);
+    opacity: 0;
+    transform: translateY(6px) scale(0.97);
+    transform-origin: right center;
+    transition:
+      opacity 220ms ease,
+      transform 420ms var(--ua-ease);
+    pointer-events: none;
+  }
+
+  /*
+   * The new tab feature cards' material (NewTabFeatureCard .ntf-panel): one
+   * flat neutral with dense, faint diagonal lines. Lumno has no soft colour
+   * washes, so the tiles share this rather than a tint each.
+   */
+  .util-art::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background: repeating-linear-gradient(-45deg, rgba(var(--home-edge), 0.06) 0 1px, transparent 1px 7px);
+  }
+
+  /* Only where there is a pointer to hover with and room beside the text
+     (the cell sets the matching text width). */
+  @media (hover: hover) {
+    @container utility (min-width: 316px) {
+      .util-art {
+        display: block;
+      }
+    }
+  }
+
+  :global(.utilities__grid > li:hover) > .util-art {
+    opacity: 1;
+    transform: none;
+  }
+
+  .util-art__stage {
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+    width: 126px;
+    height: 118px;
+    transform: translate(-50%, -50%);
+  }
+
+  .util-art :global(.nts-fav) {
+    width: 10px;
+    height: 10px;
+    padding: 0;
+    border-radius: 0;
+    background: none;
+  }
+
+  /* ---------- Shared bits ---------- */
+
+  .ua-line {
+    display: block;
+    flex: none;
+    width: var(--w);
+    height: 4px;
+    border-radius: 2px;
+    background: #e5e9ef;
+  }
+
+  .ua-line--strong {
+    height: 5px;
+    background: #cdd4de;
+  }
+
+  .ua-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    box-sizing: border-box;
+    padding: 4px 5px;
+    border-radius: 5px;
+    background: #f4f6fa;
+  }
+
+  .ua-chart i {
+    flex: 1;
+    height: var(--h);
+    border-radius: 1.5px;
+    background: #b9c9e0;
+  }
+
+  .ua-chart .ua-clip__live {
+    background: var(--ua-accent);
+  }
+
+  .ua-win {
+    position: absolute;
+    overflow: hidden;
+    border-radius: 9px;
+    background: #fff;
+    box-shadow:
+      0 0 0 1px rgba(var(--ua-shadow), 0.06),
+      0 8px 20px -10px rgba(var(--ua-shadow), 0.25);
+  }
+
+  .ua-win__tabs {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 20px;
+    padding: 0 5px;
+    background: #eef1f5;
+  }
+
+  .ua-tab {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    box-sizing: border-box;
+    width: 46px;
+    height: 16px;
+    padding: 0 6px;
+    border-radius: 6px 6px 0 0;
+  }
+
+  .ua-tab--pinned {
+    justify-content: center;
+    width: 22px;
+    padding: 0;
+  }
+
+  .ua-tab--active {
+    background: #fff;
+  }
+
+  .ua-tab__label {
+    flex: 1;
+    height: 3px;
+    border-radius: 2px;
+    background: #cdd4de;
+  }
+
+  .ua-win__body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 9px 8px;
+  }
+
+  /* ---------- Web clip: drag a selection, the piece floats out, keeps updating ---------- */
+
+  .ua-page {
+    position: absolute;
+    top: 6px;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    box-sizing: border-box;
+    width: 94px;
+    height: 92px;
+    padding: 9px;
+    border-radius: 9px;
+    background: #fff;
+    box-shadow:
+      0 0 0 1px rgba(var(--ua-shadow), 0.06),
+      0 8px 20px -12px rgba(var(--ua-shadow), 0.25);
+  }
+
+  .ua-page .ua-chart {
+    width: 60px;
+    height: 30px;
+  }
+
+  .ua-clip__marquee {
+    position: absolute;
+    top: 27px;
+    left: 6px;
+    width: 66px;
+    height: 36px;
+    box-sizing: border-box;
+    border: 1.5px dashed var(--ua-accent);
+    border-radius: 7px;
+    background: rgba(52, 98, 173, 0.06);
+  }
+
+  .ua-clip__float {
+    position: absolute;
+    top: 52px;
+    left: 54px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    box-sizing: border-box;
+    width: 72px;
+    height: 58px;
+    padding: 5px 6px 6px;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow:
+      0 0 0 1px rgba(var(--ua-shadow), 0.06),
+      0 14px 26px -12px rgba(var(--ua-shadow), 0.3);
+  }
+
+  .ua-clip__grip {
+    width: 16px;
+    height: 3px;
+    border-radius: 2px;
+    background: #dde2ea;
+  }
+
+  .ua-clip__float .ua-chart {
+    align-self: stretch;
+    flex: 1;
+  }
+
+  /* ---------- Auto PiP: switch tabs, the video shrinks into a corner and plays on ---------- */
+
+  .ua-pip__tab--next {
+    background: #fff;
+  }
+
+  .ua-pip {
+    top: 6px;
+    left: 0;
+    width: 118px;
+    height: 92px;
+  }
+
+  .ua-pip__video {
+    position: absolute;
+    top: 68px;
+    left: 62px;
+    display: grid;
+    place-items: center;
+    width: 64px;
+    height: 40px;
+    overflow: hidden;
+    border-radius: 7px;
+    background: linear-gradient(180deg, #404859, #273042);
+    box-shadow:
+      0 0 0 1px rgba(var(--ua-shadow), 0.1),
+      0 12px 24px -10px rgba(var(--ua-shadow), 0.5);
+    color: #fff;
+    font-size: 14px;
+  }
+
+  .ua-pip__track {
+    position: absolute;
+    right: 6px;
+    bottom: 5px;
+    left: 6px;
+    height: 2px;
+    border-radius: 1px;
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  .ua-pip__played {
+    display: block;
+    width: 72%;
+    height: 100%;
+    border-radius: inherit;
+    background: #e07a5f;
+  }
+
+  /* ---------- Progress card: the next episode replaces the pinned one ---------- */
+
+  .ua-card {
+    position: absolute;
+    top: 30px;
+    left: 3px;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+    box-sizing: border-box;
+    width: 120px;
+    height: 66px;
+    padding: 10px 10px 0;
+    border-radius: 12px;
+    background: #fff;
+    box-shadow:
+      0 0 0 1px rgba(var(--ua-shadow), 0.06),
+      0 10px 22px -12px rgba(var(--ua-shadow), 0.3);
+  }
+
+  .ua-card--behind {
+    top: 22px;
+    left: 13px;
+    width: 100px;
+    background: #f3f3f4;
+    box-shadow: 0 0 0 1px rgba(var(--ua-shadow), 0.07);
+  }
+
+  .ua-card__head {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .ua-card :global(.nts-fav) {
+    width: 14px;
+    height: 14px;
+  }
+
+  .ua-card__pin {
+    margin-left: auto;
+    color: #9aa3af;
+    font-size: 10px;
+    line-height: 1;
+  }
+
+  .ua-card__foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .ua-ep {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: #9aa3af;
+    font-size: 9px;
+    font-weight: 650;
+    letter-spacing: 0.04em;
+  }
+
+  .ua-ep__window {
+    display: block;
+    height: 18px;
+    overflow: hidden;
+    color: var(--home-ink);
+    font-size: 15px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0;
+    line-height: 18px;
+  }
+
+  .ua-ep__reel {
+    display: flex;
+    flex-direction: column;
+    transform: translateY(-18px);
+  }
+
+  .ua-radar {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #f3ead6;
+    color: #9a7435;
+    font-size: 12px;
+  }
+
+  .ua-radar::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    border: 1.5px solid #c9a35e;
+    opacity: 0;
+  }
+
+  .ua-card__track {
+    position: absolute;
+    right: 10px;
+    bottom: 8px;
+    left: 10px;
+    height: 3px;
+    border-radius: 2px;
+    background: #f1f3f6;
+  }
+
+  .ua-card__watched {
+    display: block;
+    width: 12%;
+    height: 100%;
+    border-radius: inherit;
+    background: #c9a35e;
+  }
+
+  /* ---------- Sync: one browser changes, the other follows ---------- */
+
+  .ua-nt {
+    position: absolute;
+    width: 78px;
+    height: 56px;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow:
+      0 0 0 1.5px #fff,
+      0 10px 22px -12px rgba(var(--ua-shadow), 0.35);
+  }
+
+  .ua-sync__from {
+    top: 4px;
+    left: 0;
+  }
+
+  .ua-sync__to {
+    top: 58px;
+    left: 48px;
+  }
+
+  .ua-nt__wall {
+    position: absolute;
+    inset: 0;
+    background: #e8eef2 url("/assets/feature-newtab/wallpapers/monet-coastal-white-thumb.webp") center 80% / cover;
+  }
+
+  .ua-nt__wall--new {
+    background-color: #f1e9df;
+    background-image: url("/assets/feature-newtab/wallpapers/monet-lily-pond-white-thumb.webp");
+  }
+
+  .ua-nt__search {
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    width: 44px;
+    height: 8px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 0 0 0.5px rgba(var(--ua-shadow), 0.14);
+    transform: translateX(-50%);
+  }
+
+  .ua-nt__icons {
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    display: flex;
+    gap: 4px;
+    transform: translateX(-50%);
+  }
+
+  .ua-nt__icons i {
+    width: 9px;
+    height: 9px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 0 0 0.5px rgba(var(--ua-shadow), 0.12);
+  }
+
+  .ua-sync__badge {
+    position: absolute;
+    top: 46px;
+    left: 50px;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow:
+      0 0 0 1px rgba(var(--ua-shadow), 0.06),
+      0 6px 14px -6px rgba(var(--ua-shadow), 0.35);
+    font-size: 14px;
+    line-height: 1;
+  }
+
+  .ua-sync__badge i {
+    grid-area: 1 / 1;
+  }
+
+  .ua-sync__spin {
+    color: var(--ua-accent);
+    opacity: 0;
+  }
+
+  .ua-sync__done {
+    color: #6d7f63;
+  }
+
+  /* ---------- Pinned tabs: restart, and they come back one by one ---------- */
+
+  .ua-pin {
+    top: 12px;
+    left: 2px;
+    width: 122px;
+    height: 94px;
+  }
+
+  .ua-pin .ua-win__body {
+    position: relative;
+    height: 74px;
+    box-sizing: border-box;
+  }
+
+  .ua-pin__lines {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .ua-pin__restart {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -9px 0 0 -9px;
+    color: #6d7f63;
+    font-size: 18px;
+    line-height: 1;
+    opacity: 0;
+  }
+
+  /* ---------- Languages: the check moves down the menu ---------- */
+
+  .ua-menu {
+    position: absolute;
+    top: 8px;
+    left: 9px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    box-sizing: border-box;
+    width: 108px;
+    padding: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow:
+      0 14px 28px -12px rgba(var(--ua-shadow), 0.26),
+      0 2px 4px rgba(var(--ua-shadow), 0.05);
+  }
+
+  .ua-menu__row {
+    position: relative;
+    z-index: 1;
+    height: 23px;
+    padding: 0 8px;
+    color: #374151;
+    font-size: 10.5px;
+    font-weight: 500;
+    line-height: 23px;
+    white-space: nowrap;
+  }
+
+  .ua-menu__mark {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    left: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    height: 23px;
+    padding-right: 6px;
+    border-radius: 7px;
+    background: rgba(17, 24, 39, 0.06);
+    color: var(--ua-accent);
+    font-size: 12px;
+  }
+
+  /* ---------- Motion (hover only; every resting style above is the last frame) ---------- */
+
+  @media (prefers-reduced-motion: no-preference) {
+    :global(.utilities__grid > li:hover) .ua-clip__marquee {
+      animation: ua-marquee 420ms var(--ua-ease) 220ms both;
+    }
+
+    :global(.utilities__grid > li:hover) .ua-clip__float {
+      animation: ua-float-out 560ms var(--ua-spring) 700ms both;
+    }
+
+    :global(.utilities__grid > li:hover) .ua-chart .ua-clip__live {
+      animation: ua-live 520ms var(--ua-spring) 1350ms both;
+    }
+
+    :global(.utilities__grid > li:hover) .ua-pip__tab--video {
+      animation: ua-tab-leave 1ms linear 520ms both;
+    }
+
+    :global(.utilities__grid > li:hover) .ua-pip__tab--next {
+      animation: ua-tab-enter 1ms linear 520ms both;
+    }
+
+    :global(.utilities__grid > li:hover) .ua-pip__page {
+      animation: ua-fade-in 260ms ease 560ms both;
+    }
+
+    :global(.utilities__grid > li:hover) .ua-pip__video {
+      animation: ua-pip-shrink 620ms var(--ua-spring) 620ms both;
+    }
+
+    :global(.utilities__grid > li:hover) .ua-pip__played {
+      animation: ua-played 2400ms linear 200ms both;
+    }
+
+    :global(.utilities__grid > li:hover) .ua-card__watched {
+      animation: ua-watched 1500ms var(--ua-ease) 250ms both;
+    }
+
+    :global(.utilities__grid > li:hover) .ua-ep__reel {
+      animation: ua-roll 480ms var(--ua-spring) 1150ms both;
+    }
+
+    :global(.utilities__grid > li:hover) .ua-radar::after {
+      animation: ua-ping 900ms var(--ua-ease) 1050ms 2 both;
+    }
+
+    :global(.utilities__grid > li:hover) .ua-sync__from .ua-nt__wall--new {
+      animation: ua-fade-in 420ms ease 300ms both;
+    }
+
+    :global(.utilities__grid > li:hover) .ua-sync__from .ua-nt__added {
+      animation: ua-pop 420ms var(--ua-spring) 520ms both;
+    }
+
+    :global(.utilities__grid > li:hover) .ua-sync__spin {
+      animation: ua-spin 640ms var(--ua-ease) 760ms both;
+    }
+
+    :global(.utilities__grid > li:hover) .ua-sync__done {
+      animation: ua-pop 360ms var(--ua-spring) 1360ms both;
+    }
+
+    :global(.utilities__grid > li:hover) .ua-sync__to .ua-nt__wall--new {
+      animation: ua-fade-in 420ms ease 1400ms both;
+    }
+
+    :global(.utilities__grid > li:hover) .ua-sync__to .ua-nt__added {
+      animation: ua-pop 420ms var(--ua-spring) 1560ms both;
+    }
+
+    :global(.utilities__grid > li:hover) .ua-pin__restart {
+      animation: ua-restart 760ms var(--ua-ease) 160ms both;
+    }
+
+    :global(.utilities__grid > li:hover) .ua-pin__lines {
+      animation: ua-fade-in 300ms ease 900ms both;
+    }
+
+    :global(.utilities__grid > li:hover) .ua-pin__tab {
+      animation: ua-pop 440ms var(--ua-spring) calc(860ms + var(--i) * 120ms) both;
+    }
+
+    :global(.utilities__grid > li:hover) .ua-menu__mark {
+      animation: ua-menu-walk 2000ms var(--ua-ease) 300ms both;
+    }
+  }
+
+  @keyframes ua-fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @keyframes ua-pop {
+    from {
+      opacity: 0;
+      transform: scale(0.3);
+    }
+  }
+
+  @keyframes ua-marquee {
+    from {
+      clip-path: inset(0 100% 100% 0 round 7px);
+    }
+    to {
+      clip-path: inset(0 0 0 0 round 7px);
+    }
+  }
+
+  @keyframes ua-float-out {
+    from {
+      opacity: 0;
+      transform: translate(-46px, -26px) scale(0.85);
+    }
+    30% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes ua-live {
+    from {
+      height: 34%;
+    }
+  }
+
+  @keyframes ua-tab-leave {
+    from {
+      background: #fff;
+    }
+    to {
+      background: transparent;
+    }
+  }
+
+  @keyframes ua-tab-enter {
+    from {
+      background: transparent;
+    }
+    to {
+      background: #fff;
+    }
+  }
+
+  @keyframes ua-pip-shrink {
+    from {
+      top: 32px;
+      left: 6px;
+      width: 106px;
+      height: 62px;
+      border-radius: 4px;
+      box-shadow:
+        0 0 0 0 rgba(var(--ua-shadow), 0),
+        0 0 0 0 rgba(var(--ua-shadow), 0);
+    }
+  }
+
+  @keyframes ua-played {
+    from {
+      width: 28%;
+    }
+  }
+
+  @keyframes ua-watched {
+    0% {
+      width: 58%;
+    }
+    55%,
+    62% {
+      width: 100%;
+    }
+    72% {
+      width: 4%;
+    }
+  }
+
+  @keyframes ua-roll {
+    from {
+      transform: none;
+    }
+  }
+
+  @keyframes ua-ping {
+    from {
+      opacity: 0.9;
+      transform: scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: scale(2.1);
+    }
+  }
+
+  @keyframes ua-spin {
+    0% {
+      opacity: 0;
+      transform: rotate(-90deg);
+    }
+    20%,
+    80% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes ua-restart {
+    0% {
+      opacity: 0;
+      transform: rotate(0);
+    }
+    20%,
+    75% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+      transform: rotate(-360deg);
+    }
+  }
+
+  @keyframes ua-menu-walk {
+    0%,
+    10% {
+      transform: none;
+    }
+    22%,
+    34% {
+      transform: translateY(25px);
+    }
+    46%,
+    58% {
+      transform: translateY(50px);
+    }
+    70%,
+    82% {
+      transform: translateY(75px);
+    }
+    100% {
+      transform: none;
+    }
+  }
+</style>

@@ -22,11 +22,11 @@ const LAYERS = [
 ---
 
 <!--
-  The same new tab by day and by night, each with its own wallpaper; night
+  The whole new tab by day and by night, each with its own wallpaper; night
   grows out of the top-right corner when the mode switch flips. Each pass
   starts on day and ends on night, which is also the resting frame.
 -->
-<div class="nts-scene dk" data-dark-scene data-mode="dark" role="img" aria-label={alt}>
+<div class="nts-scene nts-scene--page dk" data-dark-scene data-mode="dark" role="img" aria-label={alt}>
   {LAYERS.map(({ theme, time, pick }) => (
     <div class="dk-layer" data-layer={theme} data-theme={theme} aria-hidden="true">
       <div class="nts-wall">
@@ -34,9 +34,9 @@ const LAYERS = [
           <img src={wallpaper(pair[pick])} alt="" width="1280" height="720" loading="lazy" decoding="async" data-wall data-active={String(index === 0)} />
         ))}
       </div>
-      <div class="dk-page">
+      <div class="nts-page dk-page">
         <p class="nts-clock">{time}</p>
-        <div class="dk-search"><SceneSearch placeholder={scene.searchPlaceholder} /></div>
+        <div class="nts-page__search"><SceneSearch placeholder={scene.searchPlaceholder} /></div>
       </div>
     </div>
   ))}
@@ -76,25 +76,14 @@ const LAYERS = [
     transition: none;
   }
 
-  /* Clock and search, lifted a little to leave the bottom to the switch. */
+  /* Clock and search where the extension puts them; the switch floats at the bottom. */
   .dk-page {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 22px;
-    padding: 0 20px 64px;
-  }
-
-  .dk-search {
-    width: min(320px, 100%);
+    --nts-page-top: 84px;
   }
 
   .dk-tabs {
     position: absolute;
-    bottom: 18px;
+    bottom: 28px;
     left: 50%;
     z-index: 2;
     translate: -50% 0;
@@ -102,9 +91,11 @@ const LAYERS = [
 </style>
 
 <script>
+  import { adaptClockInk } from "./scene-clock-ink";
   import { Timeline, centerOf, clickCursor, moveCursor, playOnView, prefersReducedMotion, selectTab, setActive } from "./scene-runtime";
 
   document.querySelectorAll<HTMLElement>("[data-dark-scene]").forEach((root) => {
+    adaptClockInk(root);
     if (prefersReducedMotion()) return;
     const tabsEl = root.querySelector<HTMLElement>("[data-tabs]")!;
     const tabs = Array.from(root.querySelectorAll<HTMLElement>("[data-tab]"));

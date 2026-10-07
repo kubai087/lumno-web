@@ -76,6 +76,9 @@ interface Props {
   ariaLabel: string;
   href: string;
   tooltipLabel: string;
+  /** The hero's button keeps the default id: the nav install pill watches it scroll away. */
+  id?: string;
+  analyticsLabel?: string;
 }
 
 export function HeroInstallTooltip({
@@ -83,6 +86,8 @@ export function HeroInstallTooltip({
   ariaLabel,
   href,
   tooltipLabel,
+  id = "hero-install-primary",
+  analyticsLabel = "home_hero_install",
 }: Props) {
   return (
     <TooltipProvider delayDuration={180} skipDelayDuration={100}>
@@ -90,7 +95,7 @@ export function HeroInstallTooltip({
         <TooltipTrigger asChild>
           <SettingsButton
             as="a"
-            id="hero-install-primary"
+            id={id}
             variant="primary"
             className="hero-actions-button"
             href={href}
@@ -99,7 +104,7 @@ export function HeroInstallTooltip({
             aria-label={ariaLabel}
             data-analytics-event="open_chrome_web_store"
             data-analytics-category="conversion"
-            data-analytics-label="home_hero_install"
+            data-analytics-label={analyticsLabel}
           >
             {label}
             {HERO_BUTTERFLY_MARK}

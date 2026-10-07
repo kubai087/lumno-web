@@ -1,11 +1,28 @@
-<!-- The extension's folder glyph (bookmark-folder-icon.js), flattened to solid fills with the sheet peeking out. -->
-<svg class="nts-folder" viewBox="3 1 25 23" aria-hidden="true" focusable="false">
-  <path
-    d="M7.24 2.5h3.4c.55 0 .74 0 .9.05.15.04.3.1.43.18.14.09.28.22.65.62l.96 1c.35.36.58.6.86.78.21.13.45.23.7.3.32.07.65.07 1.15.07h7.47c.59 0 1 0 1.32.03.31.03.49.07.62.15.27.14.49.36.63.62.07.14.12.32.15.63.02.32.03.73.03 1.31v11.52c0 .59 0 1-.03 1.32-.03.31-.08.49-.15.62-.14.27-.36.49-.63.63-.13.07-.31.12-.62.15-.32.02-.73.03-1.32.03H7.24c-.59 0-1 0-1.32-.03-.31-.03-.49-.08-.62-.15a1.5 1.5 0 0 1-.63-.63c-.07-.13-.12-.31-.15-.62-.02-.32-.02-.73-.02-1.32V5.24c0-.59 0-1 .02-1.32.03-.31.08-.49.15-.62.14-.27.36-.49.63-.63.13-.07.31-.12.62-.15.32-.02.73-.02 1.32-.02Z"
-    fill="#8db7ff"
-    stroke="#5393ff"
-  ></path>
-  <rect x="7" y="9" width="17" height="9" rx="1" fill="#fff"></rect>
-  <path d="M13 11h5" stroke="#dde8fb" stroke-linecap="round"></path>
-  <rect x="4.5" y="10.5" width="22" height="12" rx="2.6" fill="#b9d3ff" stroke="#5393ff"></rect>
-</svg>
+---
+import { folderSvg } from "./folder-icon";
+import { nextSceneId } from "./scene-ids";
+---
+
+<!--
+  The extension's folder icon. Like the extension, it opens while its card or
+  bar item is hovered, or while its menu row is active (the row's submenu is open).
+-->
+<span class="nts-folder" data-folder-icon set:html={folderSvg(nextSceneId("folder"))} />
+
+<script>
+  import { playFolderOpen, setFolderOpen } from "./folder-icon";
+  import { prefersReducedMotion } from "./scene-runtime";
+
+  const OWNER = ".nts-card, .nts-menu__item, .bm-bar__item";
+  const isOpen = (owner: HTMLElement) => owner.dataset.hover === "true" || owner.dataset.active === "true";
+
+  document.querySelectorAll<HTMLElement>("[data-folder-icon]").forEach((icon) => {
+    const owner = icon.parentElement?.closest<HTMLElement>(OWNER);
+    if (!owner) return;
+    setFolderOpen(icon, isOpen(owner));
+    new MutationObserver(() => {
+      if (prefersReducedMotion()) setFolderOpen(icon, isOpen(owner));
+      else playFolderOpen(icon, isOpen(owner));
+    }).observe(owner, { attributes: true, attributeFilter: ["data-hover", "data-active"] });
+  });
+</script>

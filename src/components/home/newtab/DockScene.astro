@@ -37,7 +37,7 @@ const { scene, alt } = Astro.props;
   }
 
   .dock-search {
-    width: min(292px, calc(100% - 40px));
+    width: min(352px, calc(100% - 40px));
   }
 
   /* Wider than the card: the ends fade out instead of being cut. */
@@ -142,7 +142,17 @@ const { scene, alt } = Astro.props;
       const centers = measure();
       const radius = Math.max(144, 48 * 4);
       let active = -1;
-      if (pointer && Math.abs(pointer.y - centers[0].y) < 40) {
+      // The whole row is one hit area (tile edge to tile edge, gaps included),
+      // so sliding across it hands off tile to tile instead of dropping out
+      // between them and snapping every icon back.
+      const half = 34;
+      const inRow =
+        pointer &&
+        pointer.y > centers[0].y - 48 &&
+        pointer.y < centers[0].y + 40 &&
+        pointer.x > centers[0].x - half &&
+        pointer.x < centers[centers.length - 1].x + half;
+      if (pointer && inRow) {
         let best = Infinity;
         centers.forEach((center, index) => {
           const distance = Math.abs(pointer.x - center.x);
@@ -151,7 +161,6 @@ const { scene, alt } = Astro.props;
             active = index;
           }
         });
-        if (best > 32) active = -1;
       }
       icons.forEach((icon, index) => {
         const offset = index - active;

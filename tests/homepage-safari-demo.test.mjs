@@ -138,8 +138,10 @@ test("homepage hero exposes install and community actions below the subtitle", (
   assert.doesNotMatch(installTooltip, /lumno-selection-mark\.png/);
   assert.doesNotMatch(installTooltip, /iconClass=|ri-arrow-right-up-line/);
   assert.doesNotMatch(communityDialog, /iconClass=|ri-feedback-line/);
-  assert.match(installTooltip, /href=\{href\}[\s\S]*?data-analytics-label="home_hero_install"/);
-  assert.match(communityDialog, /data-analytics-event="open_community_qrcode"[\s\S]*?data-analytics-label="home_hero_community"/);
+  // The closing CTA reuses both buttons under its own analytics labels; the hero keeps the defaults.
+  assert.match(installTooltip, /analyticsLabel = "home_hero_install"[\s\S]*?href=\{href\}[\s\S]*?data-analytics-label=\{analyticsLabel\}/);
+  assert.match(communityDialog, /analyticsLabel = "home_hero_community"[\s\S]*?data-analytics-event="open_community_qrcode"[\s\S]*?data-analytics-label=\{analyticsLabel\}/);
+  assert.match(source, /<FinalCta[\s\S]*?<HeroInstallTooltip[\s\S]*?id="final-install-primary"[\s\S]*?analyticsLabel="home_final_install"[\s\S]*?<CommunityQrDialog[\s\S]*?analyticsLabel="home_final_community"/);
   assert.match(communityDialog, /hero-community-button/);
   assert.match(source, /\.hero-actions-button \{[\s\S]*?padding: 8px 16px;[\s\S]*?font-size: 14px;/);
   assert.match(source, /\.hero-actions-button \{[\s\S]*?padding: 7px 14px;[\s\S]*?font-size: 13px;/);
@@ -347,7 +349,7 @@ test("hero demo exposes three replayable plugin-consistent search scenes", () =>
   assert.match(component, /actionTagLabel: "新开"/);
   assert.match(component, /actionTagLabel: "新開"/);
   assert.match(component, /actionTagLabel: "New Tab"/);
-  assert.match(component, /COMMAND_BROWSER_PAGE_START_MS = 5_200/);
+  assert.match(component, /COMMAND_BROWSER_PAGE_START_MS = 4_680/);
   assert.match(component, /COMMAND_BROWSER_PAGE_HOLD_MS = 1_800/);
   assert.match(component, /presentation: "complete"/);
   assert.match(component, /setPhaseIndex\(index \+ 1\)/);
@@ -361,12 +363,13 @@ test("hero demo exposes three replayable plugin-consistent search scenes", () =>
   assert.match(component, /actionTagLabel: "切换"/);
   assert.doesNotMatch(component, /setInterval/);
   assert.match(component, /hero-demo-page-switcher/);
-  assert.match(component, /aria-pressed=\{index === sceneIndex\}/);
+  assert.match(component, /<SettingsTabs[\s\S]*?className="lumno-settings-kit hero-demo-page-switcher"/);
+  assert.match(component, /value=\{copy\.scenes\[sceneIndex\]\.id\}/);
   assert.match(component, /setReplayKey\(\(currentKey\) => currentKey \+ 1\)/);
   assert.match(component, /HERO_INTRO_SEQUENCE = \[/);
   assert.match(component, /\{ id: "site-search", durationMs: 7_200 \}/);
-  assert.match(component, /\{ id: "commands", durationMs: 10_800 \}/);
-  assert.match(component, /\{ id: "browser-search", durationMs: 6_200 \}/);
+  assert.match(component, /\{ id: "commands", durationMs: 10_280 \}/);
+  assert.match(component, /\{ id: "browser-search", durationMs: 5_680 \}/);
   assert.match(component, /setIsAutoPlaying\(false\)/);
   assert.match(component, /data-auto-playing=\{isAutoPlaying \? "true" : "false"\}/);
   assert.match(component, /AnimatePresence custom=\{sceneDirection\} mode="wait"/);
@@ -383,7 +386,7 @@ test("hero demo exposes three replayable plugin-consistent search scenes", () =>
   assert.match(component, /brandAccentRgb: \[36, 41, 46\]/);
   assert.match(component, /accentRgb: \[156, 159, 161\]/);
   assert.match(component, /hoverLeadMs: 0/);
-  assert.match(component, /const SEARCH_RESULT_CURSOR_DELAY_MS = 1_640/);
+  assert.match(component, /const SEARCH_RESULT_CURSOR_DELAY_MS = 1_120/);
   assert.match(component, /const SEARCH_RESULT_CURSOR_DURATION_MS = 2_600/);
   assert.match(component, /const SEARCH_RESULT_HIGHLIGHT_LAG_MS = 120/);
   assert.match(component, /hoverStartMs: SEARCH_RESULT_HIGHLIGHT_START_MS/);
@@ -480,13 +483,9 @@ test("hero demo exposes three replayable plugin-consistent search scenes", () =>
   assert.match(styles, /\.site-search-demo-stack \{[\s\S]*?top: 18%;/);
   assert.match(styles, /@media \(max-width: 760px\)[\s\S]*?\.lumno-overlay-panel \{[\s\S]*?top: 7%;[\s\S]*?\.site-search-demo-stack \{[\s\S]*?top: 7%;/);
   assert.match(component, /data-scene-direction=\{sceneDirection\}/);
-  assert.match(component, /hero-demo-page-indicator/);
   assert.match(component, /x: direction === "forward" \? 42 : -42/);
-  assert.match(styles, /transform: translate3d\(calc\(var\(--hero-demo-scene-index, 0\) \* 100%\)/);
-  assert.match(styles, /var\(--green-soft, #e9f2e8\) 48%/);
-  assert.match(styles, /background: color-mix\(in srgb, #fffdf8 78%, transparent\);/);
-  assert.match(styles, /var\(--green-ink, #4d6653\) 8%, transparent/);
-  assert.match(styles, /0 1px 4px color-mix\(in srgb, #3a342b 6%, transparent\)/);
+  assert.doesNotMatch(component, /hero-demo-page-indicator/);
+  assert.doesNotMatch(styles, /hero-demo-page-indicator/);
   assert.doesNotMatch(switcherStyles, /backdrop-filter/);
   assert.match(styles, /hero-demo-page-button:focus-visible/);
   assert.match(homepage, /height: max\(300px, calc\(100svh - 500px\)\);/);

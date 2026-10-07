@@ -131,6 +131,47 @@
   box-shadow: 0 1px 3px rgba(15, 23, 42, 0.1);
 }
 
+/* Sliding indicator (tabs-indicator.ts): one white block slides under the active
+   tab. Until it is placed, the active tab paints its own background. */
+.lumno-settings-tabs,
+.lumno-settings-segmented {
+  position: relative;
+}
+
+.lumno-tabs-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  border-radius: var(--lumno-settings-tab-radius, var(--lumno-settings-segment-radius, 8px));
+  background: var(--lumno-tab-active-bg);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.1);
+  pointer-events: none;
+}
+
+[data-indicator="ready"] > .lumno-tabs-indicator {
+  transition:
+    transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    width 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.lumno-settings-segmented > .lumno-tabs-indicator {
+  border-radius: var(--lumno-settings-segment-radius);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.12);
+}
+
+.lumno-settings-tab,
+.lumno-settings-segment {
+  position: relative;
+  z-index: 1;
+}
+
+[data-indicator="ready"] > .lumno-settings-tab[data-active="true"],
+[data-indicator="ready"] > .lumno-settings-segment[data-active="true"] {
+  background: transparent;
+  box-shadow: none;
+}
+
 .lumno-settings-tab:focus-visible,
 .lumno-settings-segment:focus-visible,
 .lumno-settings-select-trigger:focus-visible,

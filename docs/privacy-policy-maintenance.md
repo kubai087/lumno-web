@@ -4,34 +4,32 @@
 
 ## 当前覆盖范围
 
-- Lumno 浏览器扩展 0.9.30 及以上版本；
-- `lumno.kubai.design` 公开页面和敏感账号页面；
-- Supabase 账号、同步、自定义媒体和可选产品使用统计；
-- Google / GitHub OAuth 身份关联；
-- Google / GitHub 社交登录；
+- Lumno 浏览器扩展 0.9.57 及以上版本（0.9.40 起已移除 Lumno 账号、Supabase 云同步和产品使用统计）；
+- `lumno.kubai.design` 公开页面；
+- 浏览器内置同步（`chrome.storage.sync`）、可选 WebDAV 同步和配置导出 / 导入；
 - 用户主动发起的搜索、AI、选中文字与 favicon 请求；
+- 每日一言、Bing、Lorem Picsum 和克利夫兰艺术博物馆的在线壁纸请求；
 - VibeLoft 和部署时可能启用的 Google Analytics 官网统计。
+
+Lumno 不运营存放用户数据的服务器。若重新引入账号、云端存储或遥测，属于第 4 类触发项，必须在上线前重写政策和应用商店披露。
 
 ## 事实来源
 
 | 政策事实 | 代码或配置来源 |
 | --- | --- |
 | 扩展权限与页面访问范围 | `lumno-extension/manifest.json` |
-| 可同步设置和统计允许字段 | `lumno-extension/src/shared/cloud-sync-schema.js` |
-| 统计默认关闭、本机暂存与上传 | `lumno-extension/src/background/usage-analytics-runtime.js` |
+| 应用商店数据披露 | `lumno-extension/docs/chrome-web-store-data-disclosure.md` |
+| WebDAV 同步范围、凭据存储与服务器文件 | `lumno-extension/docs/webdav-sync.md`、`src/background/webdav-sync.js`、`src/shared/webdav-contract.js` |
 | 搜索建议、AI 与 favicon 网络请求 | `lumno-extension/src/background/background.js`、`ai-provider-submit.js` |
-| 账号会话、同步和媒体传输 | `lumno-extension/src/background/supabase-transport.js` |
-| 云端表、RLS 和保存期限 | `lumno-extension/supabase/migrations/` |
-| 永久删除账号的实际范围 | `lumno-extension/supabase/functions/delete-account/index.ts` |
-| 官网统计与敏感页面例外 | `src/components/SeoHead.astro`、`src/layouts/AuthLayout.astro` |
-| 服务商、项目区域和部署配置 | Supabase / Google / GitHub 控制台与部署环境变量 |
+| 壁纸与每日一言请求 | `lumno-extension/docs/chrome-web-store-data-disclosure.md` 中的数据保留与公开链接一节 |
+| 官网统计 | `src/components/SeoHead.astro` |
 
 ## 必须触发政策复查的变更
 
 以下任一项变化时，不能只改应用商店表单或产品文案，必须同步复查三种语言正文：
 
 1. Manifest 新增或扩大权限、host permission、content script 匹配范围；
-2. 新增同步键、统计指标、统计维度、配置快照字段或账号资料字段；
+2. 新增同步键、WebDAV 快照字段，或引入任何统计指标、账号资料字段；
 3. 新增第三方 API、AI / 搜索服务、网站统计、错误监控、客服或邮件服务；
 4. 改变默认同意状态、账号要求、同步方式、媒体上传行为或本机 / 云端边界；
 5. 改变项目区域、服务商、保存期限、匿名汇总方式、备份或删除流程；
@@ -42,7 +40,7 @@
 ## 发布前检查
 
 1. 从简体中文事实源更新繁体中文和英文，不通过逐句机器直译替代法律含义复核；
-2. 对照 Manifest、云端 schema、Edge Functions 和官网脚本重新核对“收集什么、为何使用、给谁、保存多久、如何删除”；
+2. 对照 Manifest、WebDAV 实现、应用商店数据披露和官网脚本重新核对“收集什么、为何使用、给谁、保存多久、如何删除”；
 3. 确认 Chrome Web Store Privacy practices、商店描述、产品内显著披露和本政策完全一致；
 4. 对新采集确认其对扩展单一用途确有必要，并在采集前提供显著披露与适用的明确同意；
 5. 更新 `PRIVACY_LAST_UPDATED`，运行隐私页测试、完整测试和静态构建；

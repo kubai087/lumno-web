@@ -15,11 +15,17 @@ interface Props {
   chromeVersion?: string;
   edgeVersion?: string;
   chromeRecommendation: string;
+  chromeRecommendationNote: string;
 }
 
 function formatVersionTag(version?: string) {
   const normalizedVersion = String(version || "").trim().replace(/^v/i, "");
   return normalizedVersion ? `v${normalizedVersion}` : null;
+}
+
+function renderOptionDetail(...parts: Array<string | null>) {
+  const text = parts.filter(Boolean).join(" · ");
+  return text ? <span className="install-menu-option-detail">{text}</span> : null;
 }
 
 export default function InstallMenu({
@@ -32,6 +38,7 @@ export default function InstallMenu({
   chromeVersion,
   edgeVersion,
   chromeRecommendation,
+  chromeRecommendationNote,
 }: Props) {
   const chromeVersionTag = formatVersionTag(chromeVersion);
   const edgeVersionTag = formatVersionTag(edgeVersion);
@@ -39,7 +46,7 @@ export default function InstallMenu({
     {
       value: "chrome",
       label: chromeLabel,
-      labelSuffix: chromeVersionTag ? <SettingsBadge>{chromeVersionTag}</SettingsBadge> : null,
+      labelSuffix: renderOptionDetail(chromeVersionTag, chromeRecommendationNote),
       iconClass: "ri-chrome-fill install-menu-store-icon install-menu-store-icon-chrome",
       meta: <SettingsBadge tone="accent">{chromeRecommendation}</SettingsBadge>,
       href: chromeUrl,
@@ -52,7 +59,7 @@ export default function InstallMenu({
     {
       value: "edge",
       label: edgeLabel,
-      labelSuffix: edgeVersionTag ? <SettingsBadge>{edgeVersionTag}</SettingsBadge> : null,
+      labelSuffix: renderOptionDetail(edgeVersionTag),
       iconClass: "ri-edge-new-fill install-menu-store-icon install-menu-store-icon-edge",
       href: edgeUrl,
       target: "_blank",

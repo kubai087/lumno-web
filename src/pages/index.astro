@@ -17,6 +17,7 @@ import HomeNavGhostLinks from "../components/navigation/HomeNavGhostLinks";
 import InstallMenu from "../components/navigation/InstallMenu";
 import { HeroParallax } from "../components/ui/hero-parallax";
 import logoIconSvg from "../assets/onboarding/logo.svg?raw";
+import xiaohongshuIconSvg from "../assets/home-icons/xiaohongshu-line.svg?raw";
 import "@fontsource/eb-garamond/600.css";
 import "@fontsource/eb-garamond/500-italic.css";
 import ebGaramondLatin600 from "@fontsource/eb-garamond/files/eb-garamond-latin-600-normal.woff2?url";
@@ -26,7 +27,6 @@ import "../styles/home.css";
 import { getChromeStoreReviews, selectShowcaseReviews } from "../lib/chrome-store-reviews";
 import { COMMUNITY_LINKS } from "../lib/community";
 import { getHomeContent } from "../lib/home-content";
-import { NEW_TAB_SHORTCUT } from "../lib/shortcut-keys";
 import { getLumnoBuiltinSiteSearchProviders } from "../lib/lumno-search-providers";
 import { DEFAULT_LOCALE, buildLocalizedPath, buildRouteLanguageMap, type SupportedLocale } from "../lib/locales";
 import { getStoreVersions } from "../lib/store-versions";
@@ -81,7 +81,6 @@ const heroTitleSegments = heroTitleCommaIndex >= 0
 const heroDescriptionLines = content.heroDescription.split("\n");
 const homeHref = buildLocalizedPath(uiLocale, "/");
 const featuresHref = buildLocalizedPath(uiLocale, "/features/");
-const onboardingHref = buildLocalizedPath(uiLocale, "/onboarding/");
 const releaseHref = buildLocalizedPath(uiLocale, "/release/");
 const privacyHref = buildLocalizedPath(uiLocale, "/privacy/");
 const newTabParallaxProducts = Array.from({ length: FEATURE_PARALLAX_COUNT }, (_, index) => ({
@@ -90,9 +89,6 @@ const newTabParallaxProducts = Array.from({ length: FEATURE_PARALLAX_COUNT }, (_
   thumbnail: `/assets/feature-newtab/${uiLocale}/parallax-${String(index + 1).padStart(2, "0")}.webp`,
 }));
 const showcaseReviews = selectShowcaseReviews(chromeStoreReviews.reviews);
-const reviewSummary = content.reviews.summary
-  .replace("{rating}", chromeStoreReviews.averageRating.toFixed(1))
-  .replace("{count}", String(chromeStoreReviews.ratingCount));
 const FOOTER_LANGUAGES = [
   { code: "zh-CN", label: "简体中文" },
   { code: "zh-TW", label: "繁體中文" },
@@ -238,6 +234,7 @@ const structuredData = [
             chromeVersion={chromeStoreVersion}
             edgeVersion={edgeStoreVersion}
             chromeRecommendation={content.installChromeRecommendation}
+            chromeRecommendationNote={content.installChromeRecommendationNote}
             client:load
           />
         </div>
@@ -331,7 +328,6 @@ const structuredData = [
         <HeroParallax
           products={newTabParallaxProducts}
           eyebrow={content.newTab.eyebrow}
-          eyebrowKeys={NEW_TAB_SHORTCUT}
           title={content.newTab.title}
           description={content.newTab.description}
           headingId="new-tab-title"
@@ -343,8 +339,9 @@ const structuredData = [
       <UtilitiesSection content={content.utilities} />
 
       <ChromeReviewMarquee
+        eyebrow={content.reviews.eyebrow}
+        rating={chromeStoreReviews.averageRating.toFixed(1)}
         title={content.reviews.title}
-        summary={reviewSummary}
         storeUrl={chromeStoreReviews.sourceUrl}
         storeLinkLabel={content.reviews.storeLinkLabel}
         ariaLabel={content.reviews.ariaLabel}
@@ -352,49 +349,79 @@ const structuredData = [
         reviews={showcaseReviews}
       />
 
-      <OpenSourceSection content={content.openSource} githubUrl={GITHUB_URL} privacyHref={privacyHref} />
+      <OpenSourceSection content={content.openSource} githubUrl={GITHUB_URL} />
 
-      <FaqSection title={content.faqTitle} items={content.faqItems} />
-
-      <FinalCta
-        title={content.finalTitle}
-        description={content.finalDescription}
-        chromeLabel={content.heroInstallLabel}
-        chromeUrl={CHROME_STORE_URL}
-        edgeLabel={content.installEdgeStoreLabel}
-        edgeUrl={EDGE_STORE_URL}
-        sourceLabel={content.viewSourceLabel}
-        sourceAria={content.viewSourceAria}
-        githubUrl={GITHUB_URL}
+      <FaqSection
+        title={content.faqTitle}
+        askLabel={content.faqAskLabel}
+        askHref={GITHUB_ISSUE_URL}
+        items={content.faqItems}
       />
+
+      <FinalCta title={content.heroTitle} description={content.finalDescription}>
+        <HeroInstallTooltip
+          id="final-install-primary"
+          analyticsLabel="home_final_install"
+          label={content.heroInstallLabel}
+          ariaLabel={content.heroInstallAria}
+          href={CHROME_STORE_URL}
+          tooltipLabel={content.heroBrowserTooltipLabel}
+          client:visible
+        />
+        <CommunityQrDialog
+          analyticsLabel="home_final_community"
+          triggerLabel={content.heroCommunityLabel}
+          triggerAriaLabel={content.heroCommunityAria}
+          title={content.qrcodeTitle}
+          qrImageSrc={COMMUNITY_LINKS.wechatQrImagePath}
+          qrImageAlt={content.qrcodeImageAlt}
+          closeLabel={content.qrcodeCloseAria}
+          triggerVariant="hero"
+          client:visible
+        />
+      </FinalCta>
     </main>
 
     <SiteFooter
       homeHref={homeHref}
       tagline={content.footerTagline}
+      socialAria={content.footerSocialAria}
+      socials={[
+        {
+          label: content.footerGithub,
+          href: GITHUB_URL,
+          iconClass: "ri-github-line",
+          analyticsEvent: "open_github_repo",
+          analyticsLabel: "home_footer_github",
+        },
+        {
+          label: content.navContactX,
+          href: COMMUNITY_LINKS.xUrl,
+          iconClass: "ri-twitter-x-line",
+          analyticsEvent: "open_author_x",
+          analyticsLabel: "home_footer_author_x",
+        },
+        {
+          label: content.navContactXiaohongshu,
+          href: COMMUNITY_LINKS.xiaohongshuUrl,
+          iconSvg: xiaohongshuIconSvg,
+          analyticsEvent: "open_author_xiaohongshu",
+          analyticsLabel: "home_footer_author_xiaohongshu",
+        },
+      ]}
       columns={[
         {
           title: content.footerProduct,
           links: [
             { label: content.footerFeatures, href: featuresHref },
-            { label: content.footerQuickStart, href: onboardingHref },
-            { label: content.installChromeStoreLabel, href: CHROME_STORE_URL, external: true },
-            { label: content.installEdgeStoreLabel, href: EDGE_STORE_URL, external: true },
-          ],
-        },
-        {
-          title: content.footerResources,
-          links: [
             { label: content.footerRelease, href: releaseHref },
-            { label: content.footerPrivacy, href: privacyHref },
-            { label: content.footerGithub, href: GITHUB_URL, external: true },
           ],
         },
         {
-          title: content.footerCommunity,
+          title: content.footerSupport,
           links: [
-            { label: content.navContactX, href: COMMUNITY_LINKS.xUrl, external: true },
-            { label: content.navContactXiaohongshu, href: COMMUNITY_LINKS.xiaohongshuUrl, external: true },
+            { label: content.footerReportIssue, href: GITHUB_ISSUE_URL, external: true },
+            { label: content.footerPrivacy, href: privacyHref },
           ],
         },
       ]}
@@ -408,6 +435,7 @@ const structuredData = [
         externalHref: uiLocale === "zh-CN" ? undefined : COMMUNITY_LINKS.discordUrl,
       }}
       copyright={content.footerCopyright}
+      licenseHref={`${GITHUB_URL}/blob/main/LICENSE`}
       languages={FOOTER_LANGUAGES.map((language) => ({
         ...language,
         href: routeLanguageMap[language.code],
@@ -1107,8 +1135,11 @@ const structuredData = [
         align-items: center;
       }
 
+      /* Center the copy on the browser frame, not frame + scenario switcher:
+         reserve the switcher's height (40px) and the demo's gap (16px) below it. */
       .ai-intent-copy {
         margin-bottom: 0;
+        padding-bottom: 56px;
       }
 
       .ai-intent-demo-slot {
@@ -1156,6 +1187,10 @@ const structuredData = [
         .ai-intent-section {
           grid-template-columns: minmax(0, 1fr);
           gap: 40px;
+        }
+
+        .ai-intent-copy {
+          padding-bottom: 0;
         }
       }
 

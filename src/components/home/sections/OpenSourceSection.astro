@@ -1,153 +1,322 @@
 ---
 import type { HOME_CONTENT, HomeTrustId } from "../../../lib/home-content";
+import { SettingsButton } from "../../extension-settings/SettingsKit";
+import { PrivacyListArt, SourceTerminalArt, SyncFileArt } from "../OpenSourceArt";
 
 type Content = (typeof HOME_CONTENT)["en"]["openSource"];
 
 interface Props {
   content: Content;
   githubUrl: string;
-  privacyHref: string;
 }
 
-const { content, githubUrl, privacyHref } = Astro.props;
+const { content, githubUrl } = Astro.props;
 
-const POINTS: Array<{ id: HomeTrustId; icon: string }> = [
-  { id: "local", icon: "ri-shield-check-line" },
-  { id: "source", icon: "ri-github-line" },
-  { id: "optional", icon: "ri-toggle-line" },
-];
+const POINTS: HomeTrustId[] = ["local", "source", "optional"];
+
+// Logos we ship (see HeroInstallTooltip); the caption covers the rest.
+const BROWSER_LOGOS: Record<string, string> = {
+  Chrome: "/assets/browser-logos/chrome.webp",
+  Edge: "/assets/browser-logos/edge.webp",
+  Dia: "/assets/browser-logos/dia.webp",
+  Brave: "/assets/browser-logos/brave.webp",
+  Comet: "/assets/browser-logos/comet.webp",
+  Helium: "/assets/browser-logos/helium.webp",
+};
+const browsersWithLogo = content.browserNames.filter((name) => BROWSER_LOGOS[name]);
 ---
 
 <section id="open-source" class="home-section open-source" aria-labelledby="open-source-title">
-  <div class="open-source__layout">
-    <header class="home-section__head home-section__head--start open-source__head">
+  <header class="open-source__head">
+    <div class="open-source__intro">
       <h2 id="open-source-title" class="home-h2"><span>{content.title}</span></h2>
-      <p class="home-lead">{content.description}</p>
-      <div class="open-source__links">
-        <a
-          class="home-link"
-          href={githubUrl}
-          target="_blank"
-          rel="noreferrer noopener"
-          data-analytics-event="open_github_repo"
-          data-analytics-category="cta"
-          data-analytics-label="home_open_source_github"
-        >
-          {content.githubLabel}
-          <i class="ri-arrow-right-up-line" aria-hidden="true"></i>
-        </a>
-        <a
-          class="home-link"
-          href={privacyHref}
-          data-analytics-event="open_privacy_page"
-          data-analytics-category="navigation"
-          data-analytics-label="home_open_source_privacy"
-        >
-          {content.privacyLabel}
-          <i class="ri-arrow-right-line" aria-hidden="true"></i>
-        </a>
+      <!-- Under the heading: which browsers it runs in, logos then caption. -->
+      <div class="open-source__browsers">
+        <p>{content.browsersLabel}</p>
+        <ul class="os-logos" aria-label={content.browserNames.join(", ")}>
+          {browsersWithLogo.map((name) => (
+            <li data-name={name}>
+              <img src={BROWSER_LOGOS[name]} width="20" height="20" alt={name} loading="lazy" decoding="async" />
+            </li>
+          ))}
+        </ul>
       </div>
-    </header>
+    </div>
+    <SettingsButton
+      as="a"
+      variant="secondary"
+      className="hero-actions-button open-source__github"
+      iconClass="ri-github-fill"
+      href={githubUrl}
+      target="_blank"
+      rel="noreferrer noopener"
+      data-analytics-event="open_github_repo"
+      data-analytics-category="cta"
+      data-analytics-label="home_open_source_github"
+    >
+      {content.githubLabel}
+    </SettingsButton>
+  </header>
 
-    <ul class="home-sheet open-source__points">
-      {POINTS.map(({ id, icon }) => (
-        <li>
-          <i class:list={["home-cell__icon", icon]} aria-hidden="true"></i>
-          <div>
-            <h3 class="home-cell__title">{content.points[id].title}</h3>
-            <p class="home-cell__text">{content.points[id].description}</p>
+  <!--
+    Three cards in the feature cards' material: copy on top, an illustration
+    in a white panel inset from the top and sides and running off the bottom.
+  -->
+  <ul class="open-source__cards">
+    {POINTS.map((id) => (
+      <li class="os-card" data-os-card data-point={id}>
+        <h3>{content.points[id]}</h3>
+        <div class="os-card__art" aria-hidden="true">
+          <div class="os-card__panel">
+            {id === "local" && (
+              <PrivacyListArt
+                client:visible
+                title={content.art.privacy.title}
+                status={content.art.privacy.status}
+                items={content.art.privacy.items}
+              />
+            )}
+            {id === "source" && <SourceTerminalArt client:visible />}
+            {id === "optional" && <SyncFileArt client:visible channels={content.art.sync} />}
           </div>
-        </li>
-      ))}
-    </ul>
-  </div>
+        </div>
+      </li>
+    ))}
+  </ul>
 
-  <div class="open-source__browsers">
-    <p>{content.browsersLabel}</p>
-    <ul>
-      {content.browserNames.map((name) => <li>{name}</li>)}
-    </ul>
-  </div>
 </section>
 
 <style>
-  .open-source__layout {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: clamp(40px, 7vw, 112px);
-    align-items: start;
-  }
-
   .open-source__head {
-    position: sticky;
-    top: 120px;
-    margin-bottom: 0;
-  }
-
-  .open-source__links {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px 28px;
-    margin-top: 28px;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px 48px;
+    margin-bottom: clamp(36px, 4.5vw, 52px);
   }
 
-  /* Rows rather than tiles in this narrow column: the chip sits beside the title. */
-  .open-source__points li {
+  .open-source__head :global(.open-source__github) {
+    margin-bottom: 4px;
+  }
+
+  .open-source__cards {
     display: grid;
-    grid-template-columns: 32px minmax(0, 1fr);
-    align-items: start;
-    gap: 16px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
   }
 
-  .open-source__points .home-cell__title {
-    /* Centres the first line on the 32px chip. */
-    padding-top: 4px;
+  /* The feature cards' paper material (NewTabFeatureCard): ring, white rim, lift. */
+  .os-card {
+    --pad: calc(var(--home-card-pad) - 1px);
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid transparent;
+    border-radius: var(--home-radius-xl);
+    background:
+      linear-gradient(var(--home-paper), var(--home-paper)) padding-box,
+      var(--home-ring) border-box;
+    box-shadow: var(--home-highlight), var(--home-shadow-card);
+    transition:
+      box-shadow 240ms ease,
+      transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
+  /* Dense, faint diagonal lines, absent behind the copy and full behind the panel. */
+  .os-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: repeating-linear-gradient(-45deg, rgba(var(--home-edge), 0.075) 0 1px, transparent 1px 7px);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 22%, #000 64%);
+    mask-image: linear-gradient(to bottom, transparent 22%, #000 64%);
+    pointer-events: none;
+  }
+
+  @media (hover: hover) {
+    .os-card:hover {
+      box-shadow: var(--home-highlight), var(--home-shadow-card-hover);
+      transform: translateY(-3px);
+    }
+  }
+
+  .os-card h3 {
+    margin: 0;
+    padding: var(--pad) var(--pad) 0;
+    color: var(--home-ink);
+    font-size: var(--home-title-md);
+    font-weight: 650;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+  }
+
+  /* CJK copy breaks at punctuation, never inside a word (same rule as home.css). */
+  :global([data-locale^="zh"]) .os-card h3 {
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+    letter-spacing: 0;
+  }
+
+  .os-card__art {
+    position: relative;
+    flex: none;
+    height: 264px;
+    margin-top: auto;
+    padding-top: 28px;
+  }
+
+  .os-card__panel {
+    position: absolute;
+    inset: 28px var(--pad) 0;
+    overflow: hidden;
+    border-radius: 14px 14px 0 0;
+    background: #fff;
+    container-type: inline-size;
+    box-shadow:
+      0 0 0 1px rgba(var(--home-edge), 0.12),
+      0 16px 40px -18px rgba(var(--home-edge), 0.32);
+  }
+
+  /* A quiet line under the heading: small logos and a caption, no container. */
   .open-source__browsers {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between;
-    gap: 16px 32px;
-    margin-top: clamp(48px, 6vw, 80px);
-    padding-top: 28px;
-    border-top: 1px solid var(--home-card-border);
+    gap: 10px 14px;
+    margin-top: 18px;
   }
 
   .open-source__browsers p {
+    order: 2;
     margin: 0;
     color: var(--text-sub, #626870);
-    font-size: 15px;
+    font-size: 14px;
   }
 
-  .open-source__browsers ul {
+  .os-logos {
     display: flex;
-    flex-wrap: wrap;
+    align-items: center;
     gap: 8px;
     margin: 0;
     padding: 0;
     list-style: none;
   }
 
-  .open-source__browsers li {
-    padding: 6px 14px;
-    border: 1px solid var(--home-hairline-control);
-    border-radius: 999px;
-    background: var(--home-card);
-    box-shadow: var(--home-shadow-chip);
-    color: var(--home-ink-soft);
-    font-size: 14px;
-    font-weight: 600;
+  .os-logos li {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-width: 20px;
+    height: 20px;
+    transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  @media (max-width: 900px) {
-    .open-source__layout {
+  .os-logos img {
+    display: block;
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    object-fit: contain;
+  }
+
+  /* Name tag above each logo on hover. */
+  .os-logos li::after {
+    content: attr(data-name);
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    padding: 4px 8px;
+    border-radius: 6px;
+    background: #1f2328;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    opacity: 0;
+    translate: -50% 4px;
+    pointer-events: none;
+    transition:
+      opacity 160ms ease,
+      translate 160ms ease;
+  }
+
+  @media (hover: hover) {
+    .os-logos li:hover {
+      z-index: 1;
+      transform: translateY(-3px);
+    }
+
+    .os-logos li:hover::after {
+      opacity: 1;
+      translate: -50% 0;
+    }
+  }
+
+  /* Too narrow for three across: one card per row, copy beside its panel. */
+  @media (max-width: 1280px) {
+    .open-source__cards {
       grid-template-columns: minmax(0, 1fr);
     }
 
-    .open-source__head {
-      position: static;
+    .os-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+      align-items: center;
+      column-gap: 8px;
+    }
+
+    .os-card h3 {
+      padding-block: var(--pad);
+    }
+
+    .os-card::before {
+      -webkit-mask-image: linear-gradient(to right, transparent 30%, #000 70%);
+      mask-image: linear-gradient(to right, transparent 30%, #000 70%);
+    }
+
+    .os-card__panel {
+      left: 0;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .os-card {
+      display: flex;
+      /* Undo the row layout's centring, or the art (absolute content only) shrinks to nothing. */
+      align-items: stretch;
+    }
+
+    .os-card h3 {
+      padding-bottom: 0;
+    }
+
+    .os-card::before {
+      -webkit-mask-image: linear-gradient(to bottom, transparent 22%, #000 64%);
+      mask-image: linear-gradient(to bottom, transparent 22%, #000 64%);
+    }
+
+    .os-card__panel {
+      left: var(--pad);
+    }
+  }
+
+
+  @media (prefers-reduced-motion: reduce) {
+    .os-card,
+    .os-logos li {
+      transition: none;
+    }
+
+    .os-card:hover {
+      transform: none;
     }
   }
 </style>

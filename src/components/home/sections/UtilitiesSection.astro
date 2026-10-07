@@ -1,5 +1,7 @@
 ---
 import type { HOME_CONTENT, HomeUtilityId } from "../../../lib/home-content";
+import HomeCellIcon, { type HomeCellIconName } from "../HomeCellIcon.astro";
+import UtilityArt from "../UtilityArt.astro";
 
 type Content = (typeof HOME_CONTENT)["en"]["utilities"];
 
@@ -9,34 +11,35 @@ interface Props {
 
 const { content } = Astro.props;
 
-const UTILITY_ORDER: Array<{ id: HomeUtilityId; icon: string }> = [
-  { id: "clip", icon: "ri-screenshot-2-line" },
-  { id: "autoPip", icon: "ri-picture-in-picture-2-line" },
-  { id: "progress", icon: "ri-play-list-2-line" },
-  { id: "sync", icon: "ri-cloud-line" },
-  { id: "pinned", icon: "ri-pushpin-line" },
-  { id: "languages", icon: "ri-translate-2" },
+const UTILITY_ORDER: Array<{ id: HomeUtilityId; icon: HomeCellIconName }> = [
+  { id: "clip", icon: "screenshot-2-line" },
+  { id: "autoPip", icon: "picture-in-picture-2-line" },
+  { id: "progress", icon: "play-list-2-line" },
+  { id: "sync", icon: "cloud-line" },
+  { id: "pinned", icon: "pushpin-line" },
+  { id: "languages", icon: "translate-2" },
 ];
 ---
 
 <!--
-  A minor section: it reads as "and a few more" after the feature sections,
-  so it takes a part head rather than a full section title.
+  A section of its own, not a part of the new tab section above it: these
+  features have nothing to do with the new tab, so a part head here would
+  read as that section's third group. No eyebrow, since there is no single
+  trigger to show (eyebrows show how a feature is triggered).
 -->
 <section class="home-section utilities" aria-labelledby="utilities-title">
-  <header class="home-part-head">
-    <div class="home-part-head__copy">
-      <h2 id="utilities-title" class="home-part-head__title">{content.title}</h2>
-      <p class="home-part-head__lead">{content.description}</p>
-    </div>
+  <header class="home-section__head">
+    <h2 id="utilities-title" class="home-h2"><span>{content.title}</span></h2>
+    <p class="home-lead">{content.description}</p>
   </header>
 
   <ul class="home-sheet utilities__grid">
     {UTILITY_ORDER.map(({ id, icon }) => (
       <li>
-        <i class:list={["home-cell__icon", icon]} aria-hidden="true"></i>
+        <HomeCellIcon name={icon} />
         <h3 class="home-cell__title">{content.items[id].title}</h3>
         <p class="home-cell__text">{content.items[id].description}</p>
+        <UtilityArt id={id} />
       </li>
     ))}
   </ul>
@@ -47,46 +50,21 @@ const UTILITY_ORDER: Array<{ id: HomeUtilityId; icon: string }> = [
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  .home-cell__icon {
+  /* Each cell is a container so its hover art (UtilityArt) shows only when
+     there is room beside the text: 144px tile + 10px inset, 14px gap. */
+  .utilities__grid > li {
+    position: relative;
+    container: utility / inline-size;
+  }
+
+  .utilities__grid :global(.home-cell__icon) {
     margin-bottom: 20px;
-    transform-origin: top left;
-    transition:
-      transform 360ms cubic-bezier(0.34, 1.56, 0.64, 1),
-      box-shadow 240ms ease,
-      color 240ms ease;
   }
 
-  /*
-   * Hover: the chip grows from its corner (1.125 keeps it on whole pixels,
-   * 32px → 36px) and the glyph replays a small pop-in each time the pointer
-   * enters the cell.
-   */
-  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
-    .utilities__grid > li:hover .home-cell__icon {
-      transform: scale(1.125);
-      color: var(--home-ink);
-      box-shadow:
-        var(--home-shadow-chip),
-        0 6px 14px -6px rgba(15, 23, 42, 0.18);
-    }
-
-    .utilities__grid > li:hover .home-cell__icon::before {
-      animation: utilities-icon-enter 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
-    }
-  }
-
-  @keyframes utilities-icon-enter {
-    0% {
-      opacity: 0;
-      transform: translateY(7px) scale(0.55) rotate(-12deg);
-    }
-    55% {
-      opacity: 1;
-      transform: translateY(-1.5px) scale(1.08) rotate(4deg);
-    }
-    100% {
-      opacity: 1;
-      transform: none;
+  @container utility (min-width: 316px) {
+    .home-cell__title,
+    .home-cell__text {
+      max-width: calc(100% - 136px);
     }
   }
 

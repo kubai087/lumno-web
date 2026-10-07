@@ -68,12 +68,12 @@ test("homepage install menu keeps the primary trigger and ordered store links", 
 
   assert.match(source, /<SettingsSelect[\s\S]*optionRole="menuitem"[\s\S]*triggerVariant="primary"/);
   assert.match(source, /label: chromeLabel[\s\S]*label: edgeLabel/);
-  assert.match(source, /label: chromeLabel[\s\S]*labelSuffix: chromeVersionTag[\s\S]*meta: <SettingsBadge tone="accent">/);
-  assert.match(source, /label: edgeLabel[\s\S]*labelSuffix: edgeVersionTag/);
+  assert.match(source, /label: chromeLabel[\s\S]*labelSuffix: renderOptionDetail\(chromeVersionTag[\s\S]*meta: <SettingsBadge tone="accent">/);
+  assert.match(source, /label: edgeLabel[\s\S]*labelSuffix: renderOptionDetail\(edgeVersionTag\)/);
   assert.match(source, /iconClass: "ri-chrome-fill[\s\S]*iconClass: "ri-edge-new-fill/);
   assert.match(source, /analyticsEvent: "open_chrome_web_store"[\s\S]*analyticsEvent: "open_edge_addons"/);
-  assert.match(styles, /\.install-menu \.lumno-settings-select-menu\s*\{[\s\S]*?width:\s*min\(360px,\s*calc\(100vw - 48px\)\);[\s\S]*?padding:\s*6px;/);
-  assert.match(styles, /\.install-menu \.lumno-settings-select-option\s*\{[\s\S]*?min-height:\s*42px;[\s\S]*?padding:\s*8px 10px;[\s\S]*?font-size:\s*14px;/);
+  assert.match(styles, /\.install-menu \.lumno-settings-select-menu\s*\{[\s\S]*?width:\s*min\(312px,\s*calc\(100vw - 48px\)\);[\s\S]*?padding:\s*6px;/);
+  assert.match(styles, /\.install-menu \.lumno-settings-select-option\s*\{[\s\S]*?padding:\s*8px 10px 8px 8px;[\s\S]*?font-size:\s*14px;/);
   assert.match(styles, /\.lumno-settings-badge-accent\s*\{[\s\S]*?background:\s*[\s\S]*?linear-gradient[\s\S]*?animation:\s*install-menu-recommendation-shine/);
   assert.doesNotMatch(styles, /\.lumno-settings-badge-accent\s*\{[\s\S]*?border:/);
   assert.match(styles, /@media \(prefers-reduced-motion:\s*reduce\)[\s\S]*?animation:\s*none;/);
@@ -86,7 +86,7 @@ test("homepage glass navigation enters after the hero primary CTA has scrolled a
     "utf8",
   );
 
-  assert.match(heroInstall, /id="hero-install-primary"[\s\S]*?variant="primary"/);
+  assert.match(heroInstall, /id = "hero-install-primary"[\s\S]*?id=\{id\}[\s\S]*?variant="primary"/);
   assert.match(source, /<div class="top-nav-install-slot">[\s\S]*?<InstallMenu/);
   assert.match(
     source,
@@ -140,8 +140,8 @@ test("homepage navbar text never drops below fourteen pixels", () => {
   );
   assert.match(
     installMenuStyles,
-    /\.install-menu \.lumno-settings-badge\s*\{[\s\S]*?font-size:\s*12px;[\s\S]*?\.install-menu \.lumno-settings-badge-accent\s*\{[\s\S]*?font-size:\s*14px;/,
-    "store versions should be smaller while the recommendation remains fourteen pixels",
+    /\.install-menu-option-detail\s*\{[\s\S]*?font-size:\s*12px;[\s\S]*?\.install-menu \.lumno-settings-badge-accent\s*\{[\s\S]*?font-size:\s*12px;/,
+    "store versions and the recommendation pill should sit below the fourteen-pixel store names",
   );
 });
 

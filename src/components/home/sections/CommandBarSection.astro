@@ -118,7 +118,7 @@ const pickedProvider = ai.providers[ai.pick] || ai.providers[0];
       <ShortcutKeys keys={COMMAND_BAR_SHORTCUT} className="home-eyebrow__keys" />
     </p>
     <h2 id="command-bar-title" class="home-h2"><span>{content.title}</span></h2>
-    <p class="home-lead">{content.description}</p>
+    <p class="home-lead home-lead--lines">{content.description}</p>
   </header>
 
   <div class="bento">
@@ -239,7 +239,6 @@ const pickedProvider = ai.providers[ai.pick] || ai.providers[0];
                   >
                     <span class="ov-menu__tile"><img src={tile(provider.key)} width="36" height="36" alt="" loading="lazy" decoding="async" /></span>
                     <span class="ov-menu__label">{provider.name}</span>
-                    <i class="ri-check-line ov-menu__check"></i>
                   </span>
                 ))}
               </div>
@@ -273,9 +272,8 @@ const pickedProvider = ai.providers[ai.pick] || ai.providers[0];
 
 <style>
   /*
-   * A wide lead card over two equal ones, each its own card with a hairline
-   * that brightens toward the corners. The stage is a dot grid that fades out
-   * around the illustration of the extension's real UI, and the copy sits
+   * A wide lead card over two equal ones, each its own card with an even
+   * hairline. The stage is a dot grid that fades out around the illustration of the extension's real UI, and the copy sits
    * underneath it.
    *
    * The card is a near-neutral grey a step below the #fafafa page, tinted the
@@ -305,10 +303,18 @@ const pickedProvider = ai.providers[ai.pick] || ai.providers[0];
     padding: calc(var(--home-card-inset) - 1px) calc(var(--home-card-inset) - 1px) calc(var(--home-card-pad) - 1px);
     border: 1px solid transparent;
     border-radius: var(--home-radius-xl);
+    /*
+     * Lit from above: a soft white bloom behind the panel over a cool grey
+     * that deepens toward the copy, so the tray has depth instead of a flat fill.
+     */
     background:
-      linear-gradient(var(--card-bg), var(--card-bg)) padding-box,
+      radial-gradient(120% 70% at 50% 0%, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0) 62%) padding-box,
+      linear-gradient(180deg, #f4f5f7 0%, #eceef1 100%) padding-box,
       var(--home-ring) border-box;
-    box-shadow: var(--home-highlight), var(--home-shadow-card);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.9),
+      var(--home-highlight),
+      var(--home-shadow-card);
   }
 
   .bento-cell--wide {
@@ -390,8 +396,10 @@ const pickedProvider = ai.providers[ai.pick] || ai.providers[0];
     mask-image: radial-gradient(closest-side at 50% 45%, #000 40%, transparent 100%);
   }
 
+  /* line-height: 1 keeps key labels inside short keycaps (the 18px Enter key) so grid centering holds. */
   kbd {
     font: inherit;
+    line-height: 1;
   }
 
   /* ---------- Overlay panel (extension: 28px radius, 56px input) ---------- */
@@ -597,7 +605,7 @@ const pickedProvider = ai.providers[ai.pick] || ai.providers[0];
   .ov-reveal {
     display: grid;
     grid-template-rows: 1fr;
-    transition: grid-template-rows 520ms var(--ease);
+    transition: grid-template-rows 300ms var(--ease);
   }
 
   .ov-reveal > * {
@@ -617,7 +625,7 @@ const pickedProvider = ai.providers[ai.pick] || ai.providers[0];
     display: grid;
     gap: 4px;
     padding: 12px;
-    transition: padding-block 520ms var(--ease);
+    transition: padding-block 300ms var(--ease);
   }
 
   /* A 0fr track still keeps its child's padding; fold it so an empty panel ends at the input. */
@@ -637,8 +645,8 @@ const pickedProvider = ai.providers[ai.pick] || ai.providers[0];
     background: transparent;
     line-height: 1.5;
     transition: background-color 380ms cubic-bezier(0.16, 1, 0.3, 1);
-    animation: ov-row-in 500ms var(--ease) both;
-    animation-delay: calc(120ms + var(--i, 0) * 170ms);
+    animation: ov-row-in 320ms var(--ease) both;
+    animation-delay: calc(40ms + var(--i, 0) * 60ms);
   }
 
   .ov[data-rows="hidden"] .ov-row {
@@ -894,7 +902,7 @@ const pickedProvider = ai.providers[ai.pick] || ai.providers[0];
     text-align: center;
   }
 
-  /* Like the extension: ✓ and tint mark the current scope, arrow keys move a solid ring. */
+  /* Like the extension: a tint marks the current scope, arrow keys move a solid ring. */
   .ov-menu__item[data-checked="true"] {
     border-color: rgba(var(--accent, 37, 99, 235), 0.32);
     background: rgba(var(--accent, 37, 99, 235), 0.08);
@@ -922,19 +930,6 @@ const pickedProvider = ai.providers[ai.pick] || ai.providers[0];
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-  }
-
-  .ov-menu__check {
-    position: absolute;
-    top: 4px;
-    right: 4px;
-    color: rgb(var(--accent, 37, 99, 235));
-    font-size: 14px;
-    opacity: 0;
-  }
-
-  .ov-menu__item[data-checked="true"] .ov-menu__check {
-    opacity: 1;
   }
 
   .ov-menu__footer {
@@ -1140,8 +1135,8 @@ const pickedProvider = ai.providers[ai.pick] || ai.providers[0];
         const query = one(stage, "[data-query]");
         const rows = all(stage, "[data-row]");
         const typed = type(timeline, query, query.dataset.text || "", 400, 130);
-        timeline.at(typed + 200, () => (panel.dataset.rows = "shown"));
-        let at = typed + 1000;
+        timeline.at(typed + 120, () => (panel.dataset.rows = "shown"));
+        let at = typed + 600;
         [0, 1, 2, 0].forEach((index) => {
           timeline.at(at, () => setActive(rows, index));
           at += 1150;
@@ -1171,7 +1166,7 @@ const pickedProvider = ai.providers[ai.pick] || ai.providers[0];
           query.textContent = "";
         });
         at = type(timeline, query, query.dataset.text || "", at + 520, 120);
-        timeline.at(at + 220, () => (panel.dataset.rows = "shown"));
+        timeline.at(at + 120, () => (panel.dataset.rows = "shown"));
         return at + 600;
       },
     },

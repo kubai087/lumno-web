@@ -1,6 +1,7 @@
 ---
 import type { HOME_CONTENT, HomeNewTabBookmarkView } from "../../../lib/home-content";
 import BookmarksScene from "./BookmarksScene.astro";
+import CardButterfly from "./CardButterfly.astro";
 import ClockScene from "./ClockScene.astro";
 import DarkScene from "./DarkScene.astro";
 import DockScene from "./DockScene.astro";
@@ -14,9 +15,11 @@ export type FeatureId = "wallpapers" | "dark" | "clock" | "bookmarks" | "dock" |
 interface Props {
   id: FeatureId;
   content: Content;
+  /** A Lumno butterfly lands on the window while the card is hovered (the tool cards). */
+  butterfly?: boolean;
 }
 
-const { id, content } = Astro.props;
+const { id, content, butterfly = false } = Astro.props;
 const copy = content[id];
 const { scene } = content;
 const BOOKMARK_VIEWS: HomeNewTabBookmarkView[] = ["folder", "list", "top"];
@@ -25,91 +28,109 @@ const RESTING_VIEW = BOOKMARK_VIEWS.length - 1;
 ---
 
 <!--
-  One feature: title and copy over an animated illustration. Every
-  illustration sits in the same browser window, inset from the card's top and
-  sides and running off its bottom, with the extension's UI inside at its real
-  size. Faint diagonal lines fill the card and fade in toward the window, so
-  copy and art read as one surface. The illustration plays once when first
-  seen; hovering the card lifts it and replays it.
+  One feature: title and copy over an animated illustration. The card is a
+  white shell with a thin rim around a near-white panel; the panel holds the
+  copy and clips the art. Every illustration sits in the same browser window,
+  inset from the panel's top and sides and running off its bottom, with the
+  extension's UI inside at its real size. Faint diagonal lines fill the panel
+  and fade in toward the window, so copy and art read as one surface. The
+  illustration plays once when first seen; hovering the card lifts it and
+  replays it.
 -->
 <article class="ntf" aria-labelledby={`ntf-title-${id}`}>
-  <h4 id={`ntf-title-${id}`}>{copy.title}</h4>
-  <p class="ntf-text">{copy.description}</p>
-  {id === "bookmarks" && (
-    <div class="lumno-settings-kit lumno-settings-tabs ntf-tabs" role="group" aria-label={copy.label} data-bm-tabs>
-      {BOOKMARK_VIEWS.map((view, index) => (
-        <button
-          type="button"
-          class="lumno-settings-tab"
-          data-active={String(index === RESTING_VIEW)}
-          aria-pressed={index === RESTING_VIEW ? "true" : "false"}
-        >
-          {content.bookmarks.views[view]}
-        </button>
-      ))}
-    </div>
-  )}
-  <div class="ntf-art">
-    <div class="ntf-window">
-      <!-- Browser chrome: window controls and an empty address bar, as on a fresh tab. -->
-      <div class="ntf-chrome" aria-hidden="true">
-        <span class="ntf-lights"><i></i><i></i><i></i></span>
-        <span class="ntf-address"><i class="ri-search-line"></i></span>
+  <div class="ntf-panel">
+    <h4 id={`ntf-title-${id}`}>{copy.title}</h4>
+    <p class="ntf-text">{copy.description}</p>
+    {id === "bookmarks" && (
+      <div class="lumno-settings-kit lumno-settings-tabs ntf-tabs" role="group" aria-label={copy.label} data-bm-tabs>
+        {BOOKMARK_VIEWS.map((view, index) => (
+          <button
+            type="button"
+            class="lumno-settings-tab"
+            data-active={String(index === RESTING_VIEW)}
+            aria-pressed={index === RESTING_VIEW ? "true" : "false"}
+          >
+            {content.bookmarks.views[view]}
+          </button>
+        ))}
       </div>
-      <div class="ntf-page">
-        {id === "wallpapers" && <WallpaperScene scene={scene} alt={copy.alt} />}
-        {id === "dark" && <DarkScene scene={scene} alt={copy.alt} />}
-        {id === "clock" && <ClockScene scene={scene} alt={copy.alt} />}
-        {id === "bookmarks" && <BookmarksScene scene={scene} alt={copy.alt} />}
-        {id === "dock" && <DockScene scene={scene} alt={copy.alt} />}
-        {id === "zen" && <ZenScene scene={scene} alt={copy.alt} />}
+    )}
+    <div class="ntf-art">
+      <div class="ntf-window">
+        <!-- Browser chrome: window controls and an empty address bar, as on a fresh tab. -->
+        <div class="ntf-chrome" aria-hidden="true">
+          <span class="ntf-lights"><i></i><i></i><i></i></span>
+          <span class="ntf-address"><i class="ri-search-line"></i></span>
+        </div>
+        <div class="ntf-page">
+          {id === "wallpapers" && <WallpaperScene scene={scene} alt={copy.alt} />}
+          {id === "dark" && <DarkScene scene={scene} alt={copy.alt} />}
+          {id === "clock" && <ClockScene scene={scene} alt={copy.alt} />}
+          {id === "bookmarks" && <BookmarksScene scene={scene} alt={copy.alt} />}
+          {id === "dock" && <DockScene scene={scene} alt={copy.alt} />}
+          {id === "zen" && <ZenScene scene={scene} alt={copy.alt} />}
+        </div>
       </div>
+      {butterfly && <CardButterfly />}
     </div>
   </div>
 </article>
 
 <style>
-  /* The shared paper card (styles/home.css): gradient ring, highlight, card shadow. */
+  /*
+   * A white shell with a hairline ring and the card shadow, then an 8px rim,
+   * then the panel: a near-white fill with its own inner hairline. Lighter
+   * than the grey paper cards, so the window inside reads as the art.
+   */
   .ntf {
     --edge: var(--home-edge);
-    --pad: calc(var(--home-card-pad) - 1px);
+    --inset: var(--home-card-inset);
+    --pad: calc(var(--home-card-pad) - var(--inset));
     position: relative;
-    isolation: isolate;
     display: flex;
-    flex-direction: column;
     width: 100%;
-    overflow: hidden;
+    box-sizing: border-box;
+    padding: var(--inset);
     border: 1px solid transparent;
     border-radius: var(--home-radius-xl);
     background:
-      linear-gradient(var(--home-paper), var(--home-paper)) padding-box,
+      linear-gradient(#fff, #fff) padding-box,
       var(--home-ring) border-box;
-    box-shadow: var(--home-highlight), var(--home-shadow-card);
+    box-shadow: var(--home-shadow-card);
     transition:
-      background-color 240ms ease,
       box-shadow 240ms ease,
       transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
+  .ntf-panel {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    min-width: 0;
+    overflow: hidden;
+    border-radius: calc(var(--home-radius-inner) - 1px);
+    background: linear-gradient(180deg, #fcfcfc 0%, #f8f8f9 100%);
+    box-shadow: inset 0 0 0 1px rgba(var(--edge), 0.07);
+  }
+
   /* Dense, faint diagonal lines, absent behind the copy and full behind the window. */
-  .ntf::before {
+  .ntf-panel::before {
     content: "";
     position: absolute;
     inset: 0;
     z-index: -1;
-    background: repeating-linear-gradient(-45deg, rgba(var(--edge), 0.075) 0 1px, transparent 1px 7px);
+    background: repeating-linear-gradient(-45deg, rgba(var(--edge), 0.06) 0 1px, transparent 1px 7px);
     -webkit-mask-image: linear-gradient(to bottom, transparent 18%, #000 62%);
     mask-image: linear-gradient(to bottom, transparent 18%, #000 62%);
     pointer-events: none;
   }
 
-  /* Hover: the card lifts and brightens, a cue that the illustration replays. */
+  /* Hover: the card lifts, a cue that the illustration replays. */
   @media (hover: hover) {
     .ntf:hover {
-      box-shadow:
-        var(--home-highlight),
-        0 2px 4px rgba(var(--edge), 0.05),
-        0 24px 48px -26px rgba(var(--edge), 0.3);
+      box-shadow: var(--home-shadow-card-hover);
       transform: translateY(-3px);
     }
   }
@@ -141,6 +162,16 @@ const RESTING_VIEW = BOOKMARK_VIEWS.length - 1;
     max-width: calc(100% - 2 * var(--pad));
     margin: 16px var(--pad) 0;
     background: rgba(var(--edge), 0.05);
+    --lumno-settings-tabs-radius: 10px;
+    --lumno-settings-tabs-padding: 3px;
+    gap: 4px;
+  }
+
+  /* A compact track: the settings kit's 34px tabs read too tall inside a card. */
+  .ntf-tabs .lumno-settings-tab {
+    min-height: 26px;
+    padding: 0 12px;
+    font-size: 12.5px;
   }
 
   /* The art sits at the bottom of every card, so cards of any copy length line up. */

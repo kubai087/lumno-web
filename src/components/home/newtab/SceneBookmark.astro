@@ -1,4 +1,5 @@
 ---
+import SceneFavicon from "./SceneFavicon.astro";
 import SceneFolderIcon from "./SceneFolderIcon.astro";
 import type { BookmarkLink } from "./scene-data";
 
@@ -15,13 +16,13 @@ const { name, link, row = false, ...data } = Astro.props;
 
 {row ? (
   <span class="nts-menu__item" {...data}>
-    {link ? <span class="nts-fav" style={`--c: ${link.color}`}><i class={link.icon}></i></span> : <SceneFolderIcon />}
+    {link ? <SceneFavicon icon={link.icon} /> : <SceneFolderIcon />}
     {name}
     {!link && <i class="ri-arrow-right-s-line nts-menu__chevron"></i>}
   </span>
 ) : (
   <span class="nts-card" {...data}>
-    {link ? <span class="nts-fav" style={`--c: ${link.color}`}><i class={link.icon}></i></span> : <SceneFolderIcon />}
+    {link ? <SceneFavicon icon={link.icon} /> : <SceneFolderIcon />}
     <span class="nts-card__title">{name}</span>
   </span>
 )}

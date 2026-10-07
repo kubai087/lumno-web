@@ -91,7 +91,7 @@ test("privacy uses branded search copy and page-appropriate structured data", ()
   const source = readSource("src/pages/privacy/index.astro");
   const contentSource = readSource("src/lib/privacy-content.ts");
 
-  assert.match(contentSource, /pageTitle: "Lumno Privacy Policy \| Local Data, Sync & Analytics"/);
+  assert.match(contentSource, /pageTitle: "Lumno Privacy Policy \| Local Data, Browser Sync & WebDAV"/);
   assert.match(contentSource, /articleTitle: "Privacy Policy"/);
   assert.doesNotMatch(source, /buildSoftwareApplicationSchema/);
   assert.match(source, /buildWebPageSchema\(/);
@@ -186,14 +186,16 @@ test("privacy policy discloses all material data paths and maintenance-sensitive
   ];
 
   for (const policy of policies) {
-    assert.match(policy, /0\.9\.30/);
+    assert.match(policy, /0\.9\.57/);
     assert.match(policy, /VibeLoft/);
     assert.match(policy, /Google Analytics/);
-    assert.match(policy, /Supabase/);
-    assert.doesNotMatch(policy, /Resend/);
-    assert.match(policy, /verified (?:email|邮箱|電子郵件)|已验证邮箱|已驗證電子郵件/i);
-    assert.match(policy, /24 (?:个月|個月|months)/);
+    assert.match(policy, /WebDAV/);
+    assert.match(policy, /`chrome\.storage\.sync`/);
+    assert.match(policy, /hitokoto|bing\.com|picsum/);
+    // No Lumno backend since 0.9.40: no hosted accounts, cloud store, or telemetry to disclose.
+    assert.doesNotMatch(policy, /Supabase|reCAPTCHA|Resend|`identity`/);
     assert.match(policy, /`tabGroups`/);
+    assert.match(policy, /`unlimitedStorage`/);
     assert.match(policy, /`alarms`/);
     assert.match(policy, /`favicon`/);
     assert.match(policy, /Chrome Web Store User Data Policy/);
@@ -204,8 +206,8 @@ test("privacy maintenance baseline maps policy claims to implementation", () => 
   const maintenance = readSource("docs/privacy-policy-maintenance.md");
 
   assert.match(maintenance, /manifest\.json/);
-  assert.match(maintenance, /cloud-sync-schema\.js/);
-  assert.match(maintenance, /delete-account\/index\.ts/);
+  assert.match(maintenance, /webdav-sync\.js/);
+  assert.match(maintenance, /chrome-web-store-data-disclosure\.md/);
   assert.match(maintenance, /SeoHead\.astro/);
   assert.match(maintenance, /Chrome Web Store Privacy practices/);
 });

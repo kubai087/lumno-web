@@ -21,7 +21,7 @@
    *   inner media inset in a card, so it stays concentric (xl - card inset)
    *   md    small cards that sit on a panel (reviews)
    * Framed surfaces come in two fills with one edge and one lift: paper cards
-   * (grey, gradient ring) for demos and text, media (pictures, flat inset
+   * (grey, hairline ring) for demos and text, media (pictures, flat inset
    * hairline) for wallpapers and screenshots. White controls (tags, pills,
    * arrows, secondary buttons) are pills with the control hairline and the
    * chip shadow.
@@ -34,22 +34,22 @@
   --home-card-pad: 32px;
   --home-paper: #f3f4f6;
   --home-hairline-control: rgba(var(--home-edge), 0.1);
-  --home-ring: linear-gradient(
-    135deg,
-    rgba(var(--home-edge), 0.16),
-    rgba(var(--home-edge), 0.07) 38%,
-    rgba(var(--home-edge), 0.07) 62%,
-    rgba(var(--home-edge), 0.16)
-  );
-  --home-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.9);
-  --home-media-ring: inset 0 0 0 1px rgba(var(--home-edge), 0.08);
+  /*
+   * One hairline strength on every side: a directional ring reads as an edge
+   * that fades in and out. The glow is a white rim all the way round, so the
+   * hairline gets the same backing on every side instead of only along the top.
+   */
+  --home-hairline: rgba(var(--home-edge), 0.1);
+  --home-ring: linear-gradient(var(--home-hairline), var(--home-hairline));
+  --home-highlight: inset 0 0 0 1px rgba(255, 255, 255, 0.7);
+  --home-media-ring: inset 0 0 0 1px var(--home-hairline);
   --home-shadow-chip: 0 1px 2px rgba(var(--home-edge), 0.05);
 
   /*
    * Type ladder. Three heading levels, one body size:
    *   section  eyebrow + .home-h2 + .home-lead (a page-level claim)
    *   part     .home-part-head: claim in ink, the explanation in grey at the
-   *            same size, for a group inside a section or a minor section
+   *            same size, for a group of cards inside a section
    *   card     title-lg on feature cards, title-md on carousel cards,
    *            title-sm on text-only cells and FAQ rows; body under all of them
    */
@@ -60,7 +60,15 @@
   --home-body: 15px;
   --home-body-leading: 1.65;
   --home-title-gap: 8px;
-  --home-shadow-card: 0 1px 2px rgba(var(--home-edge), 0.04), 0 16px 40px -28px rgba(var(--home-edge), 0.22);
+  /* Contact, a faint all-round ambient, then a soft lift: the sides and top get some depth, not just the bottom. */
+  --home-shadow-card:
+    0 1px 2px rgba(var(--home-edge), 0.04),
+    0 2px 8px -2px rgba(var(--home-edge), 0.04),
+    0 14px 32px -16px rgba(var(--home-edge), 0.14);
+  --home-shadow-card-hover:
+    0 1px 2px rgba(var(--home-edge), 0.05),
+    0 4px 12px -4px rgba(var(--home-edge), 0.06),
+    0 24px 48px -22px rgba(var(--home-edge), 0.22);
   --home-select: #eaf2fe;
   --home-select-ink: #1f5fbf;
   --home-heading-gradient: linear-gradient(180deg, #2f2a22 0%, #5a5247 100%);
@@ -178,7 +186,7 @@ html[data-platform="other"] [data-key-mac] {
 
 .home-lead {
   margin: 18px auto 0;
-  max-width: 620px;
+  max-width: 780px;
   color: var(--text-sub, #626870);
   font-size: clamp(16px, 1.3vw, 18px);
   line-height: 1.72;
@@ -294,9 +302,9 @@ html[data-platform="other"] [data-key-mac] {
 }
 
 /*
- * Part head: a heading for a group of cards inside a section, or for a minor
- * section. The claim and its explanation share one size so they read as one
- * sentence; only the colour steps down. Controls can sit on the right.
+ * Part head: a heading for a group of cards inside a section. The claim and
+ * its explanation share one size so they read as one sentence; only the
+ * colour steps down. Controls can sit on the right.
  */
 .home-part-head {
   display: flex;
@@ -308,7 +316,7 @@ html[data-platform="other"] [data-key-mac] {
 }
 
 .home-part-head__copy {
-  max-width: 620px;
+  max-width: 780px;
 }
 
 .home-part-head__title,
@@ -400,8 +408,168 @@ html[data-platform="other"] [data-key-mac] {
   background: #fff;
   box-shadow: var(--home-shadow-chip);
   color: #4b5563;
-  font-size: 17px;
-  line-height: 1;
+  transform-origin: top left;
+  transition:
+    transform 360ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 240ms ease,
+    color 240ms ease;
+}
+
+.home-cell__icon svg {
+  display: block;
+  overflow: visible;
+}
+
+.home-cell__icon-fill {
+  fill: currentColor;
+}
+
+/*
+ * The icon's parts stay hidden until hover replays them. Width, joins and
+ * caps are per-path attributes; each part's timing and motion parameters
+ * arrive as custom properties (see HomeCellIcon.astro).
+ */
+.home-cell__icon-trace {
+  opacity: 0;
+}
+
+.home-cell__icon-trace path {
+  fill: none;
+  stroke: currentColor;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.home-cell__icon-trace [data-motion="draw"] {
+  stroke-dasharray: 1 1;
+}
+
+/*
+ * Hover: the chip grows from its corner (1.125 keeps it on whole pixels,
+ * 32px → 36px) while the glyph is rebuilt part by part. When the last part
+ * has settled (--handoff), the original fill takes over again. Restarts every
+ * time the pointer enters.
+ */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .home-sheet > li:hover .home-cell__icon {
+    transform: scale(1.125);
+    color: var(--home-ink);
+    box-shadow:
+      var(--home-shadow-chip),
+      0 6px 14px -6px rgba(15, 23, 42, 0.18);
+  }
+
+  .home-sheet > li:hover .home-cell__icon-fill {
+    animation: home-cell-icon-handoff 160ms linear var(--handoff) reverse both;
+  }
+
+  .home-sheet > li:hover .home-cell__icon-trace {
+    animation: home-cell-icon-handoff 160ms linear var(--handoff) both;
+  }
+
+  .home-sheet > li:hover .home-cell__icon-trace [data-motion="draw"] {
+    animation: home-cell-icon-draw var(--dur) cubic-bezier(0.65, 0, 0.35, 1) var(--at) both;
+  }
+
+  .home-sheet > li:hover .home-cell__icon-trace [data-motion="pop"] {
+    animation: home-cell-icon-pop var(--dur) cubic-bezier(0.22, 1, 0.36, 1) var(--at) both;
+  }
+
+  .home-sheet > li:hover .home-cell__icon-trace [data-motion="slide"] {
+    animation: home-cell-icon-slide var(--dur) cubic-bezier(0.34, 1.4, 0.64, 1) var(--at) both;
+  }
+
+  .home-sheet > li:hover .home-cell__icon-trace [data-motion="swing"] {
+    animation: home-cell-icon-swing var(--dur) cubic-bezier(0.34, 1.3, 0.64, 1) var(--at) both;
+  }
+
+  .home-sheet > li:hover .home-cell__icon-trace [data-motion="wag"] {
+    animation: home-cell-icon-wag var(--dur) ease-in-out var(--at) both;
+  }
+}
+
+@keyframes home-cell-icon-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes home-cell-icon-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  55% {
+    opacity: 1;
+    transform: scale(var(--peak, 1.2));
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes home-cell-icon-slide {
+  from {
+    opacity: 0;
+    transform: translate(var(--dx), var(--dy));
+  }
+  40% {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes home-cell-icon-swing {
+  from {
+    opacity: 0;
+    transform: rotate(var(--rotate));
+  }
+  25% {
+    opacity: 1;
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes home-cell-icon-wag {
+  0% {
+    opacity: 0;
+    transform: rotate(var(--rotate));
+  }
+  20% {
+    opacity: 1;
+  }
+  35% {
+    transform: rotate(calc(var(--rotate) * -0.55));
+  }
+  60% {
+    transform: rotate(calc(var(--rotate) * 0.3));
+  }
+  82% {
+    transform: rotate(calc(var(--rotate) * -0.12));
+  }
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes home-cell-icon-handoff {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
 
 .home-cell__title {

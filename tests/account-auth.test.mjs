@@ -128,22 +128,21 @@ test("sensitive auth layout does not load site analytics or SEO scripts", () => 
   assert.match(source, /strict-origin/);
 });
 
-test("privacy policy documents account, private sync media, and bounded metrics", () => {
+test("privacy policy documents the no-backend sync model", () => {
   const source = [
-    readSource("src/pages/privacy/index.astro"),
     readSource("src/content/privacy-policy.md"),
     readSource("src/content/privacy-policy.zh-TW.md"),
     readSource("src/content/privacy-policy.en.md"),
   ].join("\n");
 
-  assert.match(source, /随机设备 ID/);
-  assert.match(source, /自定义快捷方式、搜索提供商和黑名单规则可能包含/);
-  assert.match(source, /扩展内产品使用统计\*\*默认关闭\*\*/);
-  assert.match(source, /random device ID/);
-  assert.match(source, /Custom shortcuts, search providers, and blocklist rules may contain/);
-  assert.match(source, /product usage metrics are \*\*off by default\*\*/);
-  assert.match(source, /自定义媒体存放在受访问控制的私有存储中/);
-  assert.match(source, /不上传具体网址、域名、路径、搜索词/);
-  assert.match(source, /同一时间只有你选定的一套远端同步会接收新写入/);
+  // Accounts, cloud sync, and usage metrics were removed in 0.9.40; sync is the browser's or the user's own WebDAV.
+  assert.match(source, /0\.9\.40 起不再提供 Lumno 账号、云端同步或产品使用统计/);
+  assert.match(source, /Since version 0\.9\.40, Lumno has offered no Lumno account, cloud sync, or product usage metrics/);
+  assert.match(source, /应用密码只保存在当前设备/);
+  assert.match(source, /the app password stays on the current device/);
+  assert.match(source, /WebDAV 不提供端到端加密/);
+  assert.match(source, /WebDAV is not end-to-end encrypted/);
+  assert.match(source, /暂停同步、删除连接或卸载 Lumno 都不会删除服务器文件/);
+  assert.doesNotMatch(source, /随机设备 ID|random device ID|默认关闭\*\*|off by default\*\*/);
   assert.doesNotMatch(source, /中国大陆单独告知|mainland-china-notice/);
 });

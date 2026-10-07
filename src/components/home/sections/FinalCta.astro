@@ -1,165 +1,96 @@
 ---
-import logoIconSvg from "../../../assets/onboarding/logo.svg?raw";
+import { DitherShader } from "../DitherShader";
 
 interface Props {
+  /** The hero's title, so the page closes on the pitch it opened with, and a one-line description. */
   title: string;
   description: string;
-  chromeLabel: string;
-  chromeUrl: string;
-  edgeLabel: string;
-  edgeUrl: string;
-  sourceLabel: string;
-  sourceAria: string;
-  githubUrl: string;
 }
 
-const { title, description, chromeLabel, chromeUrl, edgeLabel, edgeUrl, sourceLabel, sourceAria, githubUrl } =
-  Astro.props;
+const { title, description } = Astro.props;
 
-// The copy spells the Mac shortcut; other platforms swap in the Ctrl spelling (see html[data-platform]).
-const MAC_SHORTCUT = "⌘\u00A0⇧\u00A0K";
-const [descriptionLead, descriptionTail] = description.split(MAC_SHORTCUT);
+/*
+ * The closing callback: the hero's dithered meadow in the same media frame,
+ * with the hero's title and its two buttons (passed in as the default slot)
+ * centred on it. Before the shader hydrates, its container shows the plain
+ * wallpaper (hero-safari-demo.css).
+ */
 ---
 
 <section class="home-section final-cta" aria-labelledby="final-title">
   <div class="final-cta__panel home-media">
-    <span class="final-cta__logo" aria-hidden="true" set:html={logoIconSvg}></span>
-    <h2 id="final-title" class="home-h2"><span>{title}</span></h2>
-    <p class="home-lead">
-      {descriptionTail === undefined ? description : (
-        <>
-          {descriptionLead}<span data-key-mac>{MAC_SHORTCUT}</span><span data-key-other>Ctrl&nbsp;+&nbsp;Shift&nbsp;+&nbsp;K</span>{descriptionTail}
-        </>
-      )}
-    </p>
-    <div class="final-cta__actions">
-      <a
-        class="final-cta__button final-cta__button--primary"
-        href={chromeUrl}
-        target="_blank"
-        rel="noreferrer noopener"
-        data-analytics-event="open_chrome_web_store"
-        data-analytics-category="conversion"
-        data-analytics-label="home_final_install"
-      >
-        <i class="ri-chrome-fill" aria-hidden="true"></i>
-        {chromeLabel}
-      </a>
-      <a
-        class="final-cta__button"
-        href={edgeUrl}
-        target="_blank"
-        rel="noreferrer noopener"
-        data-analytics-event="open_edge_addons"
-        data-analytics-category="conversion"
-        data-analytics-label="home_final_edge"
-      >
-        <i class="ri-edge-fill" aria-hidden="true"></i>
-        {edgeLabel}
-      </a>
-      <a
-        class="final-cta__button final-cta__button--ghost"
-        href={githubUrl}
-        target="_blank"
-        rel="noreferrer noopener"
-        aria-label={sourceAria}
-        data-analytics-event="open_github_repo"
-        data-analytics-category="cta"
-        data-analytics-label="home_final_github"
-      >
-        <i class="ri-github-fill" aria-hidden="true"></i>
-        {sourceLabel}
-      </a>
+    <DitherShader
+      className="final-cta__wallpaper"
+      src="/assets/settings-bg-light-monet-newtab.webp"
+      gridSize={2}
+      ditherMode="bayer"
+      colorMode="original"
+      brightness={0.01}
+      contrast={1.08}
+      threshold={0.22}
+      client:visible
+    />
+    <div class="final-cta__copy">
+      <h2 id="final-title" class="home-h2"><span>{title}</span></h2>
+      <p class="home-lead">{description}</p>
+      <div class="final-cta__actions">
+        <slot />
+      </div>
     </div>
   </div>
 </section>
 
 <style>
-  .final-cta {
-    padding-top: 0;
-  }
-
   .final-cta__panel {
     position: relative;
+    display: grid;
+    min-height: clamp(460px, 44vw, 620px);
     overflow: hidden;
-    padding: clamp(56px, 8vw, 104px) clamp(24px, 6vw, 80px);
-    border-radius: var(--home-radius-xl);
-    background:
-      linear-gradient(180deg, rgba(250, 250, 250, 0) 0%, rgba(250, 250, 250, 0.5) 42%, rgba(250, 250, 250, 0.88) 100%),
-      url("/assets/lumno-newtab-monet-coastal-white.webp") center / cover no-repeat;
+    padding: clamp(48px, 6vw, 80px) clamp(24px, 6vw, 80px);
+    background: #f7f8ef;
+    place-items: center;
     text-align: center;
   }
 
-  .final-cta__logo {
-    display: block;
-    width: 64px;
-    height: 64px;
-    margin: 0 auto 28px;
-    overflow: visible;
+  /* Soft light behind the copy, so it reads on any part of the painting. */
+  .final-cta__panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: radial-gradient(ellipse 52% 42% at 50% 50%, rgba(250, 250, 246, 0.78), rgba(250, 250, 246, 0) 100%);
+    pointer-events: none;
   }
 
-  .final-cta__logo :global(svg) {
-    width: 84px;
-    height: 92px;
-    display: block;
-    transform: translate(-16px, -2px);
-    shape-rendering: geometricPrecision;
+  .final-cta__copy {
+    position: relative;
+    z-index: 3;
   }
 
+  .final-cta .home-lead {
+    margin-top: 16px;
+    color: var(--home-ink-soft);
+  }
+
+  /* Same row as the hero's buttons. */
   .final-cta__actions {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 36px;
-  }
-
-  .final-cta__button {
-    display: inline-flex;
     align-items: center;
-    gap: 8px;
-    min-height: 46px;
-    padding: 0 20px;
-    border: 1px solid var(--home-hairline-control);
-    border-radius: 999px;
-    background: #fff;
-    box-shadow: var(--home-shadow-chip);
-    color: var(--home-ink);
-    font-size: 15px;
-    font-weight: 650;
-    text-decoration: none;
-    transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
-  }
-
-  .final-cta__button:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 10px 24px -16px rgba(var(--home-edge), 0.5);
-  }
-
-  .final-cta__button--primary {
-    border-color: transparent;
-    background: #2b2f3a;
-    color: #fff;
-  }
-
-  .final-cta__button--primary:hover {
-    background: #1d2029;
-  }
-
-  .final-cta__button--ghost {
-    border-color: transparent;
-    background: transparent;
-    box-shadow: none;
-  }
-
-  .final-cta__button i {
-    font-size: 18px;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 32px;
   }
 
   @media (max-width: 620px) {
-    .final-cta__button {
-      width: 100%;
-      justify-content: center;
+    .final-cta__panel {
+      min-height: 480px;
+      padding-inline: 16px;
+    }
+
+    .final-cta__actions {
+      gap: 10px;
+      margin-top: 24px;
     }
   }
 </style>

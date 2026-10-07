@@ -1,0 +1,30 @@
+---
+import { nextSceneId } from "./scene-ids";
+
+/*
+ * A site favicon, inlined for Safari sharpness (see AGENTS.md). Ids inside
+ * the SVG get a per-instance prefix, since one mark can show several times.
+ */
+interface Props {
+  icon: string;
+}
+
+const icons = import.meta.glob<string>("../../../assets/home-favicons/*.svg", { query: "?raw", import: "default", eager: true });
+
+const { icon } = Astro.props;
+const raw = icons[`../../../assets/home-favicons/${icon}.svg`];
+if (!raw) throw new Error(`Unknown favicon: ${icon}`);
+
+const prefix = `${nextSceneId(`fav-${icon}`)}-`;
+const ids = [...raw.matchAll(/\bid="([^"]+)"/g)].map((match) => match[1]);
+const svg = ids.reduce(
+  (markup, id) =>
+    markup
+      .replaceAll(`id="${id}"`, `id="${prefix}${id}"`)
+      .replaceAll(`url(#${id})`, `url(#${prefix}${id})`)
+      .replaceAll(`href="#${id}"`, `href="#${prefix}${id}"`),
+  raw.replace("<svg ", '<svg aria-hidden="true" focusable="false" shape-rendering="geometricPrecision" '),
+);
+---
+
+<span class="nts-fav" set:html={svg} />

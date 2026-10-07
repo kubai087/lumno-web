@@ -642,13 +642,14 @@
 }
 
 .ai-intent-demo__arrow {
-  top: -2px;
-  left: -3px;
-  width: 18px;
-  height: 22px;
+  top: -3px;
+  left: -4px;
+  width: 20px;
+  height: 24px;
+  overflow: visible;
   opacity: 0;
-  filter: drop-shadow(0 3px 5px rgba(15, 23, 42, 0.25));
-  transform-origin: 3px 2px;
+  filter: drop-shadow(0 5px 7px rgba(15, 23, 42, 0.24));
+  transform-origin: 3.5px 2.7px;
 }
 
 .ai-intent-demo[data-cursor="arrow"] .ai-intent-demo__caret {
@@ -694,56 +695,21 @@
 
 /* ---------- Scenario switcher ---------- */
 
-.ai-intent-demo__scenarios {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
-}
-
-.ai-intent-demo__scenario {
-  appearance: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  height: 34px;
+/* A Lumno tab bar (SettingsTabs); only its placement and size live here. */
+.lumno-settings-tabs.ai-intent-demo__scenarios {
+  display: grid;
+  grid-auto-columns: minmax(0, 1fr);
+  grid-auto-flow: column;
+  align-self: center;
+  gap: 4px;
   margin: 0;
-  padding: 0 14px;
-  border: 1px solid var(--home-hairline-control, rgba(32, 38, 46, 0.1));
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.5);
-  color: var(--text-soft, #89919a);
-  font-family: inherit;
-  font-size: 13px;
-  font-weight: 500;
-  line-height: 1;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: background-color 240ms ease, border-color 240ms ease, color 240ms ease, box-shadow 240ms ease;
+  background: rgba(var(--home-edge, 32, 38, 46), 0.04);
 }
 
-.ai-intent-demo__scenario i {
-  font-size: 14px;
-}
-
-.ai-intent-demo__scenario .ri-arrow-right-line {
-  opacity: 0.5;
-}
-
-.ai-intent-demo__scenario:hover {
-  color: #5a5247;
-}
-
-.ai-intent-demo__scenario[aria-pressed="true"] {
-  border-color: rgba(var(--home-edge, 32, 38, 46), 0.16);
-  background: #fff;
-  color: #2f2a22;
-  box-shadow: 0 6px 18px rgba(var(--home-edge, 32, 38, 46), 0.08);
-}
-
-.ai-intent-demo__scenario-kind {
-  color: inherit;
-  opacity: 0.72;
+.ai-intent-demo__scenarios .ai-intent-demo__scenario {
+  min-width: 76px;
+  min-height: 30px;
+  padding: 0 16px;
 }
 
 @keyframes ai-intent-demo-fade-in {
@@ -825,32 +791,6 @@
 
   .ai-intent-demo__surface button {
     gap: 4px;
-  }
-
-  .ai-intent-demo__scenarios {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .ai-intent-demo__scenario {
-    display: grid;
-    grid-template-columns: auto auto;
-    justify-content: center;
-    align-content: center;
-    gap: 5px 4px;
-    height: 54px;
-    padding: 0 6px;
-    border-radius: 14px;
-    font-size: 12px;
-  }
-
-  .ai-intent-demo__scenario-kind {
-    grid-column: 1 / -1;
-    font-size: 11px;
-  }
-
-  .ai-intent-demo__scenario .ri-arrow-right-line {
-    display: none;
   }
 }
 

@@ -3,10 +3,15 @@ import logoIconSvg from "../../../assets/onboarding/logo.svg?raw";
 import { CommunityQrDialog } from "../CommunityQrDialog";
 
 type Link = { label: string; href: string; external?: boolean };
+/** A Remix icon class, or raw inline SVG for brands Remix doesn't cover. */
+type Social = { label: string; href: string; iconClass?: string; iconSvg?: string; analyticsEvent: string; analyticsLabel: string };
 
 interface Props {
   homeHref: string;
   tagline: string;
+  socialAria: string;
+  socials: Social[];
+  /** The feedback entry leads the last column, ahead of that column's links. */
   columns: Array<{ title: string; links: Link[] }>;
   feedback: {
     label: string;
@@ -18,10 +23,11 @@ interface Props {
     externalHref?: string;
   };
   copyright: string;
+  licenseHref: string;
   languages: Array<{ code: string; label: string; href: string; current: boolean }>;
 }
 
-const { homeHref, tagline, columns, feedback, copyright, languages } = Astro.props;
+const { homeHref, tagline, socialAria, socials, columns, feedback, copyright, licenseHref, languages } = Astro.props;
 ---
 
 <footer class="site-footer">
@@ -32,23 +38,34 @@ const { homeHref, tagline, columns, feedback, copyright, languages } = Astro.pro
         <img src="/assets/textlogo.svg" width="165" height="43" alt="Lumno" loading="lazy" />
       </a>
       <p>{tagline}</p>
+      <ul class="site-footer__socials" aria-label={socialAria}>
+        {socials.map((social) => (
+          <li>
+            <a
+              href={social.href}
+              target="_blank"
+              rel="noreferrer noopener"
+              aria-label={social.label}
+              title={social.label}
+              data-analytics-event={social.analyticsEvent}
+              data-analytics-category="cta"
+              data-analytics-label={social.analyticsLabel}
+            >
+              {social.iconSvg ? (
+                <span class="site-footer__social-svg" aria-hidden="true" set:html={social.iconSvg}></span>
+              ) : (
+                <i class={social.iconClass} aria-hidden="true"></i>
+              )}
+            </a>
+          </li>
+        ))}
+      </ul>
     </div>
     <nav class="site-footer__columns">
       {columns.map((column, columnIndex) => (
         <div>
           <h2>{column.title}</h2>
           <ul>
-            {column.links.map((link) => (
-              <li>
-                <a
-                  href={link.href}
-                  target={link.external ? "_blank" : undefined}
-                  rel={link.external ? "noreferrer noopener" : undefined}
-                >
-                  {link.label}
-                </a>
-              </li>
-            ))}
             {columnIndex === columns.length - 1 && (
               <li>
                 <CommunityQrDialog
@@ -64,13 +81,27 @@ const { homeHref, tagline, columns, feedback, copyright, languages } = Astro.pro
                 />
               </li>
             )}
+            {column.links.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  target={link.external ? "_blank" : undefined}
+                  rel={link.external ? "noreferrer noopener" : undefined}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
       ))}
     </nav>
   </div>
   <div class="site-footer__meta">
-    <p>© {new Date().getFullYear()} {copyright}</p>
+    <p>
+      <span>© {new Date().getFullYear()} {copyright}</span>
+      <a href={licenseHref} target="_blank" rel="noreferrer noopener">GPL-3.0</a>
+    </p>
     <ul class="site-footer__languages">
       {languages.map((language) => (
         <li>
@@ -102,7 +133,7 @@ const { homeHref, tagline, columns, feedback, copyright, languages } = Astro.pro
 
   .site-footer__main {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+    grid-template-columns: minmax(0, 1fr) auto;
     gap: 64px;
     padding: 64px 0 56px;
   }
@@ -143,10 +174,39 @@ const { homeHref, tagline, columns, feedback, copyright, languages } = Astro.pro
     line-height: 1.7;
   }
 
+  /* Icon buttons sit flush with the tagline: the first glyph lines up with the text edge. */
+  .site-footer__socials {
+    display: flex;
+    gap: 4px;
+    margin: 18px 0 0 -7px;
+  }
+
+  .site-footer .site-footer__socials a {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    font-size: 18px;
+    line-height: 1;
+    transition: color 160ms ease, background-color 160ms ease;
+  }
+
+  .site-footer__social-svg :global(svg) {
+    display: block;
+    width: 18px;
+    height: 18px;
+    shape-rendering: geometricPrecision;
+  }
+
+  .site-footer .site-footer__socials a:hover {
+    background: rgba(47, 42, 34, 0.06);
+  }
+
   .site-footer__columns {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 32px;
+    grid-template-columns: repeat(2, minmax(140px, max-content));
+    column-gap: clamp(48px, 8vw, 112px);
   }
 
   h2 {
@@ -196,7 +256,19 @@ const { homeHref, tagline, columns, feedback, copyright, languages } = Astro.pro
   }
 
   .site-footer__meta p {
+    display: flex;
+    flex-wrap: wrap;
     margin: 0;
+  }
+
+  .site-footer__meta p > * + *::before {
+    content: "·";
+    margin-inline: 8px;
+    color: var(--text-soft, #89919a);
+  }
+
+  .site-footer__meta p a {
+    font-size: 13px;
   }
 
   .site-footer__languages {
@@ -228,6 +300,8 @@ const { homeHref, tagline, columns, feedback, copyright, languages } = Astro.pro
 
     .site-footer__columns {
       grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 32px;
     }
+
   }
 </style>

@@ -1,6 +1,7 @@
 import type { SupportedLocale } from "./locales";
 
 export type HomeCard = { title: string; description: string };
+export type HomeBentoCard = HomeCard & { label: string };
 export type HomeFaqItem = { question: string; answer: string };
 export type HomeSearchResult = { source: string; title: string; url: string };
 export type HomeCommand = { command: string; label: string };
@@ -48,11 +49,11 @@ type HomeContent = {
     eyebrow: string;
     title: string;
     description: string;
-    search: HomeCard & { query: string; results: HomeSearchResult[] };
-    siteSearch: HomeCard & { keyword: string; target: string; hint: string };
-    ai: HomeCard;
-    aggregate: HomeCard & { groupLabel: string; query: string; sources: string[] };
-    commands: HomeCard & { items: HomeCommand[] };
+    search: HomeBentoCard & { query: string; hint: string; switchLabel: string; results: HomeSearchResult[] };
+    siteSearch: HomeBentoCard & { keyword: string; target: string; hint: string };
+    ai: HomeBentoCard & { prompt: string };
+    aggregate: HomeBentoCard & { groupLabel: string; query: string; sources: string[] };
+    commands: HomeBentoCard & { items: HomeCommand[] };
   };
   aiIntent: { eyebrow: string; title: string; description: string };
   newTab: {
@@ -154,10 +155,13 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
       title: "一个快捷键，接管浏览器里的高频动作",
       description: "不用再翻书签栏，也不用在几十个标签页里来回找。按下快捷键，输入几个字，回车就到。",
       search: {
+        label: "统一搜索",
         title: "标签页、书签、历史，一处搜到",
         description:
           "已打开的标签页、书签、历史记录和常用网站合在同一个结果列表里。支持拼音匹配，你常选的结果会越排越靠前。",
         query: "sheji",
+        hint: "拼音也能搜到「设计」",
+        switchLabel: "切换",
         results: [
           { source: "标签页", title: "Lumno 设计稿 – Figma", url: "figma.com" },
           { source: "书签", title: "设计规范 · 团队知识库", url: "notion.so" },
@@ -165,6 +169,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         ],
       },
       siteSearch: {
+        label: "站内搜索",
         title: "输入 gh，按 Tab 直接搜 GitHub",
         description:
           "内置 46 个常用站点与 AI 入口：YouTube、Bilibili、知乎、小红书、Google Scholar……也可以添加自定义模板和别名。",
@@ -173,11 +178,14 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         hint: "在 GitHub 中搜索",
       },
       ai: {
+        label: "AI 直达",
         title: "问题，直接交给 AI",
         description:
           "输入问题，选择 ChatGPT、Gemini、DeepSeek、Kimi、豆包、千问或元宝，Lumno 会打开对应网页并替你发送。",
+        prompt: "用三句话讲清楚量子纠缠",
       },
       aggregate: {
+        label: "聚合搜索",
         title: "一次输入，多处同时搜",
         description:
           "把 2–10 个搜索源组成一组。一次查询同时打开全部结果，并自动归入以「名称：关键词」命名的标签页组。",
@@ -186,6 +194,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         sources: ["淘宝", "京东", "小红书"],
       },
       commands: {
+        label: "斜杠指令",
         title: "斜杠指令，手不离键盘",
         description: "输入 / 调出指令；也能直接打开浏览器的扩展、下载、历史等内部页面。",
         items: [
@@ -341,9 +350,12 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
       title: "一個快捷鍵，接手瀏覽器裡的高頻動作",
       description: "不必再翻書籤列，也不用在幾十個分頁之間來回找。按下快捷鍵、打幾個字，按 Enter 就到。",
       search: {
+        label: "統一搜尋",
         title: "分頁、書籤、瀏覽紀錄，一次搜到",
         description: "已開啟的分頁、書籤、瀏覽紀錄與常用網站整合在同一份結果裡。你越常選的結果，排序就越靠前。",
         query: "設計",
+        hint: "越常選，排越前",
+        switchLabel: "切換",
         results: [
           { source: "分頁", title: "Lumno 設計稿 – Figma", url: "figma.com" },
           { source: "書籤", title: "設計規範 · 團隊知識庫", url: "notion.so" },
@@ -351,6 +363,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         ],
       },
       siteSearch: {
+        label: "站內搜尋",
         title: "輸入 gh，按 Tab 直接搜 GitHub",
         description:
           "內建 46 個常用網站與 AI 入口：YouTube、Bilibili、Reddit、Wikipedia、Google Scholar……也能加入自訂範本與別名。",
@@ -359,10 +372,13 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         hint: "在 GitHub 中搜尋",
       },
       ai: {
+        label: "AI 直達",
         title: "問題，直接交給 AI",
         description: "輸入問題，選擇 ChatGPT、Gemini、DeepSeek、Kimi、Perplexity 等，Lumno 會開啟對應網頁並替你送出。",
+        prompt: "用三句話解釋量子糾纏",
       },
       aggregate: {
+        label: "聚合搜尋",
         title: "輸入一次，多處同時搜",
         description: "把 2–10 個搜尋來源組成一組，一次查詢同時開啟所有結果，並自動歸入以「名稱：關鍵字」命名的分頁群組。",
         groupLabel: "查資料：降噪耳機 評測",
@@ -370,6 +386,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         sources: ["Google", "YouTube", "Reddit"],
       },
       commands: {
+        label: "斜線指令",
         title: "斜線指令，手不離鍵盤",
         description: "輸入 / 叫出指令；也能直接開啟瀏覽器的擴充功能、下載、紀錄等內部頁面。",
         items: [
@@ -527,10 +544,13 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
       description:
         "No more digging through the bookmarks bar or hunting across forty tabs. Press the shortcut, type a few letters, hit Return.",
       search: {
+        label: "Unified search",
         title: "Tabs, bookmarks, and history in one list",
         description:
           "Open tabs, bookmarks, history, and top sites come back as one ranked list—and the results you pick most rise to the top.",
         query: "design",
+        hint: "Learns what you pick",
+        switchLabel: "Switch",
         results: [
           { source: "Tab", title: "Lumno design file – Figma", url: "figma.com" },
           { source: "Bookmark", title: "Design guidelines · Team wiki", url: "notion.so" },
@@ -538,6 +558,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         ],
       },
       siteSearch: {
+        label: "Site search",
         title: "Type gh, press Tab, search GitHub",
         description:
           "46 built-in sites and AI tools—YouTube, Reddit, Wikipedia, Stack Overflow, Google Scholar, and more. Add your own templates and aliases.",
@@ -546,10 +567,13 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         hint: "Search GitHub",
       },
       ai: {
+        label: "Ask AI",
         title: "Hand the question to AI",
         description: "Type a question, pick ChatGPT, Gemini, Perplexity, DeepSeek, or Kimi, and Lumno opens it and sends the prompt for you.",
+        prompt: "Explain quantum entanglement in three sentences",
       },
       aggregate: {
+        label: "Aggregate search",
         title: "Search everywhere at once",
         description:
           "Bundle 2–10 sources into one scope. A single query opens every result and files them into a tab group named “Scope: query”.",
@@ -558,6 +582,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         sources: ["Google Scholar", "GitHub", "Reddit"],
       },
       commands: {
+        label: "Slash commands",
         title: "Slash commands, hands on the keys",
         description: "Type / for commands, or jump straight to built-in browser pages like Extensions, Downloads, and History.",
         items: [

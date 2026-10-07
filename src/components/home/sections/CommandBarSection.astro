@@ -13,20 +13,50 @@ const { content, locale } = Astro.props;
 const isChinese = locale.startsWith("zh");
 const tile = (key: string) => `${LUMNO_SITE_SEARCH_ICON_ROOT}/tile-${key}.png`;
 
-// Keys come from lumno-extension/assets/data/site-search.json.
-const SITE_TILES = isChinese
-  ? ["yt", "bb", "zh", "xhs", "gs", "sf", "wk", "rd", "npm", "mdn", "db", "tw"]
-  : ["yt", "rd", "wk", "sf", "gs", "hf", "npm", "mdn", "maps", "tw", "ddg", "kg"];
-const AI_TILES = [
-  { key: "gpt", name: "ChatGPT" },
-  { key: "gm", name: "Gemini" },
-  { key: "ds", name: "DeepSeek" },
-  { key: "kimi", name: "Kimi" },
-  { key: "pplx", name: "Perplexity" },
-  { key: "dbai", name: "豆包", latinName: "Doubao" },
-  { key: "qw", name: "千问", latinName: "Qwen" },
-  { key: "yb", name: "元宝", latinName: "Yuanbao" },
-] as Array<{ key: string; name: string; latinName?: string }>;
+// Every stage sits on one of the wallpapers the extension ships for its new tab.
+const STAGE = {
+  search: "/assets/bento/monet-field-white.webp",
+  site: "/assets/bento/seurat-park-white.webp",
+  ai: "/assets/bento/impressionist-orchard-white.webp",
+  aggregate: "/assets/bento/pointillist-lakeside-white.webp",
+  commands: "/assets/bento/monet-lily-pond-white.webp",
+};
+
+const RESULT_ICONS = [
+  { icon: "ri-figma-fill", color: "#f24e1e" },
+  { icon: "ri-notion-fill", color: "#111827" },
+  { icon: "ri-google-fill", color: "#4285f4" },
+];
+
+// Keys and aliases come from lumno-extension/assets/data/site-search.json.
+const SCOPE_MENU = isChinese
+  ? [
+      { key: "yt", name: "YouTube" },
+      { key: "bb", name: "Bilibili" },
+      { key: "zh", name: "知乎" },
+      { key: "xhs", name: "小红书" },
+    ]
+  : [
+      { key: "yt", name: "YouTube" },
+      { key: "rd", name: "Reddit" },
+      { key: "wk", name: "Wikipedia" },
+      { key: "sf", name: "Stack Overflow" },
+    ];
+
+const AI_PROVIDERS = isChinese
+  ? [
+      { key: "gpt", name: "ChatGPT" },
+      { key: "ds", name: "DeepSeek" },
+      { key: "kimi", name: "Kimi" },
+      { key: "dbai", name: "豆包" },
+    ]
+  : [
+      { key: "gpt", name: "ChatGPT" },
+      { key: "gm", name: "Gemini" },
+      { key: "pplx", name: "Perplexity" },
+      { key: "ds", name: "DeepSeek" },
+    ];
+
 const AGGREGATE_TILE_BY_SOURCE: Record<string, string> = {
   淘宝: "tb",
   京东: "jd",
@@ -37,7 +67,6 @@ const AGGREGATE_TILE_BY_SOURCE: Record<string, string> = {
   "Google Scholar": "gs",
   GitHub: "gh",
 };
-const RESULT_ICONS = ["ri-window-2-line", "ri-bookmark-line", "ri-history-line"];
 ---
 
 <section id="features" class="home-section command-bar" aria-labelledby="command-bar-title">
@@ -47,28 +76,38 @@ const RESULT_ICONS = ["ri-window-2-line", "ri-bookmark-line", "ri-history-line"]
     <p class="home-lead">{content.description}</p>
   </header>
 
-  <div class="command-bar__grid">
-    <article class="home-card command-bar__card command-bar__card--search">
-      <div class="command-bar__copy">
-        <h3>{content.search.title}</h3>
-        <p>{content.search.description}</p>
-      </div>
-      <div class="command-bar__visual" aria-hidden="true">
-        <div class="mock-panel">
-          <div class="mock-input">
+  <div class="home-sheet bento">
+    <article class="bento-cell bento-cell--search">
+      <p class="bento-label"><i class="ri-search-line" aria-hidden="true"></i>{content.search.label}</p>
+      <h3>{content.search.title}</h3>
+      <p class="bento-text">{content.search.description}</p>
+      <div class="stage" aria-hidden="true">
+        <img class="stage__art" src={STAGE.search} alt="" width="1200" height="675" loading="lazy" decoding="async" />
+        <span class="lx-note stage__note">{content.search.hint}</span>
+        <div class="lx-panel stage__panel stage__panel--float">
+          <div class="lx-input">
             <i class="ri-search-line"></i>
-            <span class="mock-input__text">{content.search.query}</span>
-            <span class="mock-caret"></span>
+            <span>{content.search.query}</span>
+            <span class="lx-caret"></span>
           </div>
-          <ul class="mock-results">
+          <ul class="lx-rows">
             {content.search.results.map((result, index) => (
-              <li class:list={["mock-result", { "is-selected": index === 0 }]}>
-                <span class="mock-result__icon"><i class={RESULT_ICONS[index]}></i></span>
-                <span class="mock-result__text">
+              <li class:list={["lx-row", { "is-active": index === 0 }]}>
+                <span class="lx-favicon" style={`color:${RESULT_ICONS[index].color}`}>
+                  <i class={RESULT_ICONS[index].icon}></i>
+                </span>
+                <span class="lx-row__text">
                   <strong>{result.title}</strong>
                   <small>{result.url}</small>
                 </span>
-                <span class="mock-result__source">{result.source}</span>
+                {index === 0 ? (
+                  <span class="lx-tag lx-tag--action">
+                    {content.search.switchLabel}
+                    <span class="lx-tag__key">↵</span>
+                  </span>
+                ) : (
+                  <span class="lx-tag">{result.source}</span>
+                )}
               </li>
             ))}
           </ul>
@@ -76,504 +115,735 @@ const RESULT_ICONS = ["ri-window-2-line", "ri-bookmark-line", "ri-history-line"]
       </div>
     </article>
 
-    <article class="home-card command-bar__card command-bar__card--site">
-      <div class="command-bar__copy">
-        <h3>{content.siteSearch.title}</h3>
-        <p>{content.siteSearch.description}</p>
-      </div>
-      <div class="command-bar__visual" aria-hidden="true">
-        <div class="mock-input mock-input--floating">
-          <span class="mock-scope">
-            <img src={tile("gh")} width="18" height="18" alt="" loading="lazy" decoding="async" />
-            {content.siteSearch.target}
-          </span>
-          <span class="mock-caret"></span>
-          <span class="mock-input__hint">
-            <span class="home-kbd">Tab</span>
-            {content.siteSearch.hint}
-          </span>
-        </div>
-        <ul class="tile-cloud">
-          {SITE_TILES.map((key) => (
-            <li><img src={tile(key)} width="40" height="40" alt="" loading="lazy" decoding="async" /></li>
-          ))}
-        </ul>
-      </div>
-    </article>
-
-    <article class="home-card command-bar__card command-bar__card--ai">
-      <div class="command-bar__copy">
-        <h3>{content.ai.title}</h3>
-        <p>{content.ai.description}</p>
-      </div>
-      <ul class="ai-tiles">
-        {AI_TILES.map((provider) => (
-          <li>
-            <img src={tile(provider.key)} width="44" height="44" alt="" loading="lazy" decoding="async" />
-            <span>{isChinese ? provider.name : provider.latinName || provider.name}</span>
-          </li>
-        ))}
-      </ul>
-    </article>
-
-    <article class="home-card command-bar__card command-bar__card--aggregate">
-      <div class="command-bar__copy">
-        <h3>{content.aggregate.title}</h3>
-        <p>{content.aggregate.description}</p>
-      </div>
-      <div class="command-bar__visual mock-window" aria-hidden="true">
-        <div class="mock-window__chrome">
-          <span class="mock-window__dots"><i></i><i></i><i></i></span>
-        </div>
-        <div class="mock-tabstrip">
-          <span class="mock-tabgroup">{content.aggregate.groupLabel}</span>
-          {content.aggregate.sources.map((source, index) => (
-            <span class:list={["mock-tab", { "is-active": index === 0 }]}>
-              <img
-                src={tile(AGGREGATE_TILE_BY_SOURCE[source] || "gg")}
-                width="16"
-                height="16"
-                alt=""
-                loading="lazy"
-                decoding="async"
-              />
-              <span>{content.aggregate.query} - {source}</span>
-            </span>
-          ))}
-        </div>
-        <div class="mock-window__body">
-          <span class="mock-window__url"></span>
-          <span class="mock-window__line mock-window__line--title"></span>
-          <span class="mock-window__line"></span>
-          <span class="mock-window__line mock-window__line--short"></span>
+    <article class="bento-cell bento-cell--site">
+      <p class="bento-label"><i class="ri-global-line" aria-hidden="true"></i>{content.siteSearch.label}</p>
+      <h3>{content.siteSearch.title}</h3>
+      <p class="bento-text">{content.siteSearch.description}</p>
+      <div class="stage" aria-hidden="true">
+        <img class="stage__art" src={STAGE.site} alt="" width="1200" height="675" loading="lazy" decoding="async" />
+        <div class="stage__column">
+          <div class="lx-panel lx-panel--pill">
+            <div class="lx-input lx-input--pill">
+              <span class="lx-scope">
+                <img src={tile("gh")} width="18" height="18" alt="" loading="lazy" decoding="async" />
+                {content.siteSearch.target}
+              </span>
+              <span class="lx-caret"></span>
+              <span class="lx-tag lx-tag--key">Tab</span>
+            </div>
+          </div>
+          <ul class="lx-menu">
+            {SCOPE_MENU.map((provider, index) => (
+              <li class:list={{ "is-active": index === 0 }}>
+                <img src={tile(provider.key)} width="20" height="20" alt="" loading="lazy" decoding="async" />
+                <span>{provider.name}</span>
+                <kbd>{provider.key}</kbd>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </article>
 
-    <article class="home-card command-bar__card command-bar__card--commands">
-      <div class="command-bar__copy">
+    <article class="bento-cell bento-cell--ai">
+      <p class="bento-label"><i class="ri-sparkling-2-line" aria-hidden="true"></i>{content.ai.label}</p>
+      <h3>{content.ai.title}</h3>
+      <p class="bento-text">{content.ai.description}</p>
+      <div class="stage" aria-hidden="true">
+        <img class="stage__art" src={STAGE.ai} alt="" width="1200" height="675" loading="lazy" decoding="async" />
+        <div class="stage__column">
+          <div class="lx-panel lx-panel--pill">
+            <div class="lx-input lx-input--pill">
+              <span class="lx-scope">
+                <img src={tile(AI_PROVIDERS[1].key)} width="18" height="18" alt="" loading="lazy" decoding="async" />
+                {AI_PROVIDERS[1].name}
+              </span>
+              <span class="lx-input__query">{content.ai.prompt}</span>
+            </div>
+          </div>
+          <ul class="lx-menu">
+            {AI_PROVIDERS.map((provider, index) => (
+              <li class:list={{ "is-active": index === 1 }}>
+                <img src={tile(provider.key)} width="20" height="20" alt="" loading="lazy" decoding="async" />
+                <span>{provider.name}</span>
+                {index === 1 && <kbd>↵</kbd>}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="bento-cell bento-cell--aggregate">
+      <p class="bento-label"><i class="ri-stack-line" aria-hidden="true"></i>{content.aggregate.label}</p>
+      <h3>{content.aggregate.title}</h3>
+      <p class="bento-text">{content.aggregate.description}</p>
+      <div class="stage" aria-hidden="true">
+        <img class="stage__art" src={STAGE.aggregate} alt="" width="1200" height="675" loading="lazy" decoding="async" />
+        <div class="lx-browser">
+          <div class="lx-browser__strip">
+            <span class="lx-browser__lights"><i></i><i></i><i></i></span>
+            <span class="lx-browser__group">{content.aggregate.groupLabel}</span>
+            {content.aggregate.sources.map((source, index) => (
+              <span class:list={["lx-browser__tab", { "is-active": index === 0 }]}>
+                <img
+                  src={tile(AGGREGATE_TILE_BY_SOURCE[source] || "gg")}
+                  width="16"
+                  height="16"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
+                <span>{source}</span>
+              </span>
+            ))}
+          </div>
+          <div class="lx-browser__toolbar">
+            <i class="ri-arrow-left-s-line"></i>
+            <i class="ri-arrow-right-s-line"></i>
+            <i class="ri-refresh-line"></i>
+            <span class="lx-browser__omnibox">{content.aggregate.query}</span>
+          </div>
+          <div class="lx-browser__page">
+            {[0, 1, 2].map((index) => (
+              <div class="lx-result">
+                <span class:list={["lx-result__thumb", `lx-result__thumb--${index}`]}></span>
+                <span class="lx-result__lines">
+                  <span class="lx-skeleton lx-skeleton--title"></span>
+                  <span class="lx-skeleton"></span>
+                  <span class="lx-skeleton lx-skeleton--short"></span>
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="bento-cell bento-cell--commands">
+      <div class="bento-cell__copy">
+        <p class="bento-label"><i class="ri-slash-commands-2" aria-hidden="true"></i>{content.commands.label}</p>
         <h3>{content.commands.title}</h3>
-        <p>{content.commands.description}</p>
+        <p class="bento-text">{content.commands.description}</p>
       </div>
-      <ul class="mock-commands">
-        {content.commands.items.map((item) => (
-          <li>
-            <code>{item.command}</code>
-            <span>{item.label}</span>
-          </li>
-        ))}
-      </ul>
+      <div class="stage" aria-hidden="true">
+        <img class="stage__art" src={STAGE.commands} alt="" width="1200" height="675" loading="lazy" decoding="async" />
+        <div class="lx-panel stage__panel stage__panel--bleed">
+          <div class="lx-input">
+            <i class="ri-search-line"></i>
+            <span>/</span>
+            <span class="lx-caret"></span>
+          </div>
+          <ul class="lx-rows">
+            {content.commands.items.map((item, index) => (
+              <li class:list={["lx-row lx-row--command", { "is-active": index === 0 }]}>
+                <code>{item.command}</code>
+                <span class="lx-row__text"><strong>{item.label}</strong></span>
+                {index === 0 && <span class="lx-tag lx-tag--action"><span class="lx-tag__key">↵</span></span>}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </article>
   </div>
 </section>
 
 <style>
-  .command-bar__grid {
-    display: grid;
+  /*
+   * One framed sheet split by hairlines (cells share borders), in the restrained
+   * spirit of the rest of the page. Each stage is a crop of a Lumno wallpaper with
+   * the extension's real overlay UI on top, using the extension's own tokens.
+   */
+  .bento {
+    --lx-text: #111827;
+    --lx-muted: #6b7280;
+    --lx-icon: #9ca3af;
+    --lx-divider: #e5e7eb;
+    --lx-active: #e4edfa;
+    --lx-action: #d2e0f6;
+    --lx-action-key: #eef3fc;
+    --lx-tag: #f3f4f6;
+    --lx-panel-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.97) 0%, rgba(255, 255, 255, 0.95) 100%);
+    --lx-panel-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.7),
+      0 2px 6px -1px rgba(15, 23, 42, 0.11),
+      0 20px 48px -8px rgba(15, 23, 42, 0.15);
+    --lx-menu-shadow: 0 0 0 1px rgba(15, 23, 42, 0.06), 0 10px 24px rgba(15, 23, 42, 0.12);
+
     grid-template-columns: repeat(12, minmax(0, 1fr));
-    gap: 16px;
   }
 
-  .command-bar__card {
+  .bento-cell {
     display: flex;
     flex-direction: column;
-    gap: 28px;
-    padding: clamp(24px, 2.6vw, 36px);
+    padding: clamp(28px, 3vw, 40px);
   }
 
-  .command-bar__card--search {
+  .bento-cell--search,
+  .bento-cell--aggregate {
     grid-column: span 7;
   }
 
-  .command-bar__card--site {
+  .bento-cell--site,
+  .bento-cell--ai {
     grid-column: span 5;
   }
 
-  .command-bar__card--ai {
-    grid-column: span 5;
-  }
-
-  .command-bar__card--aggregate {
-    grid-column: span 7;
-  }
-
-  .command-bar__card--commands {
+  .bento-cell--commands {
     grid-column: 1 / -1;
     display: grid;
     grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
     align-items: center;
-    gap: clamp(24px, 4vw, 56px);
+    gap: clamp(28px, 4vw, 56px);
   }
 
-  .command-bar__copy {
-    max-width: 460px;
-  }
-
-  .command-bar__visual {
-    margin-top: auto;
-  }
-
-  /* Mock command bar, modeled on the extension overlay. */
-  .mock-panel {
-    overflow: hidden;
-    border: 1px solid var(--home-card-border);
-    border-radius: 16px;
-    background: #fff;
-    box-shadow: 0 18px 40px -24px rgba(32, 38, 46, 0.35);
-  }
-
-  .mock-input {
-    display: flex;
+  .bento-label {
+    display: inline-flex;
     align-items: center;
-    gap: 10px;
-    min-height: 52px;
-    padding: 0 16px;
-    color: var(--home-ink);
+    gap: 8px;
+    margin: 0 0 14px;
+    color: var(--text-soft, #89919a);
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .bento-label i {
     font-size: 15px;
   }
 
-  .mock-panel .mock-input {
-    border-bottom: 1px solid var(--home-card-border);
-  }
-
-  .mock-input i {
-    color: var(--text-soft, #89919a);
-    font-size: 18px;
-  }
-
-  .mock-input--floating {
-    border: 1px solid var(--home-card-border);
-    border-radius: 999px;
-    background: #fff;
-    box-shadow: 0 14px 32px -22px rgba(32, 38, 46, 0.4);
-  }
-
-  .mock-caret {
-    width: 1.5px;
-    height: 18px;
-    margin-left: -6px;
-    background: var(--home-select-ink);
-    animation: mock-caret-blink 1.1s steps(1) infinite;
-  }
-
-  .mock-input__hint {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin-left: auto;
-    color: var(--text-soft, #89919a);
-    font-size: 13px;
-    white-space: nowrap;
-  }
-
-  .mock-scope {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 4px 10px 4px 5px;
-    border-radius: 999px;
-    background: var(--home-select);
-    color: var(--home-select-ink);
-    font-size: 14px;
-    font-weight: 650;
-  }
-
-  .mock-scope img {
-    border-radius: 5px;
-  }
-
-  .mock-results {
+  h3 {
     margin: 0;
-    padding: 6px;
-    list-style: none;
+    color: var(--home-ink);
+    font-size: clamp(20px, 1.8vw, 24px);
+    font-weight: 650;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
   }
 
-  .mock-result {
+  .bento-text {
+    max-width: 460px;
+    margin: 10px 0 0;
+    color: var(--text-sub, #626870);
+    font-size: 15px;
+    line-height: 1.68;
+    text-wrap: pretty;
+  }
+
+  /* ---------- Stage: a wallpaper crop that frames one piece of real UI ---------- */
+
+  .stage {
+    position: relative;
+    isolation: isolate;
+    height: 320px;
+    margin-top: auto;
+    overflow: hidden;
+    border-radius: 16px;
+    box-shadow: inset 0 0 0 1px rgba(32, 38, 46, 0.06);
+  }
+
+  .bento-cell:not(.bento-cell--commands) .stage {
+    margin-top: 28px;
+  }
+
+  .stage__art {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .stage__panel {
+    position: absolute;
+    left: 50%;
+    width: min(88%, 520px);
+    transform: translateX(-50%);
+  }
+
+  /* The panel runs past the bottom edge, so the UI reads as live rather than boxed. */
+  .stage__panel--bleed {
+    top: 44px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .stage__panel--float {
+    top: 50%;
+    transform: translate(-50%, -46%);
+  }
+
+  .stage__note {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    z-index: 2;
+  }
+
+  .stage__column {
+    position: absolute;
+    inset: 32px 0 auto;
     display: grid;
-    grid-template-columns: 32px minmax(0, 1fr) auto;
+    justify-items: center;
+    gap: 10px;
+    padding: 0 20px;
+  }
+
+  /* ---------- Extension surfaces (values taken from the overlay stylesheet) ---------- */
+
+  .lx-panel {
+    overflow: hidden;
+    border-radius: 28px;
+    background: var(--lx-panel-bg);
+    box-shadow: var(--lx-panel-shadow);
+    color: var(--lx-text);
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+  }
+
+  .lx-panel--pill {
+    width: min(100%, 380px);
+    border-radius: 999px;
+  }
+
+  .lx-input {
+    display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 10px;
-    border-radius: 10px;
-  }
-
-  .mock-result.is-selected {
-    background: var(--home-select);
-  }
-
-  .mock-result__icon {
-    display: grid;
-    place-items: center;
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
-    background: var(--surface-soft, #f4f6f8);
-    color: var(--home-ink-soft);
+    gap: 10px;
+    height: 56px;
+    padding: 0 22px;
+    border-bottom: 1px solid var(--lx-divider);
     font-size: 16px;
   }
 
-  .mock-result__text {
-    min-width: 0;
-    display: grid;
+  .lx-input--pill {
+    height: 52px;
+    padding: 0 10px 0 8px;
+    border-bottom: 0;
   }
 
-  .mock-result__text strong,
-  .mock-result__text small {
+  .lx-input i {
+    color: var(--lx-icon);
+    font-size: 19px;
+  }
+
+  .lx-input__query {
+    min-width: 0;
     overflow: hidden;
+    color: var(--lx-text);
+    font-size: 14px;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 
-  .mock-result__text strong {
-    color: var(--home-ink);
+  .lx-caret {
+    width: 1.5px;
+    height: 19px;
+    margin-left: -7px;
+    border-radius: 1px;
+    background: #7db7ff;
+    animation: lx-caret 1.1s steps(1) infinite;
+  }
+
+  .lx-scope {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 34px;
+    padding: 0 12px 0 8px;
+    border-radius: 999px;
+    background: var(--lx-active);
     font-size: 14px;
     font-weight: 600;
   }
 
-  .mock-result__text small {
-    color: var(--text-soft, #89919a);
-    font-size: 12px;
+  .lx-scope img,
+  .lx-menu img,
+  .lx-browser__tab img {
+    display: block;
+    border-radius: 5px;
   }
 
-  .mock-result__source {
-    padding: 3px 8px;
-    border-radius: 6px;
-    background: rgba(32, 38, 46, 0.05);
-    color: var(--home-ink-soft);
-    font-size: 12px;
-    font-weight: 600;
-  }
-
-  .mock-result.is-selected .mock-result__source {
-    background: rgba(31, 95, 191, 0.1);
-    color: var(--home-select-ink);
-  }
-
-  .tile-cloud {
+  .lx-rows {
     display: grid;
-    grid-template-columns: repeat(6, minmax(0, 1fr));
-    gap: 12px;
-    margin: 24px 0 0;
-    padding: 0;
+    gap: 4px;
+    margin: 0;
+    padding: 10px;
     list-style: none;
-    -webkit-mask-image: linear-gradient(to bottom, #000 45%, transparent);
-    mask-image: linear-gradient(to bottom, #000 45%, transparent);
   }
 
-  .tile-cloud li {
+  .lx-row {
+    display: grid;
+    grid-template-columns: 28px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 12px;
+    height: 50px;
+    padding: 0 12px;
+    border-radius: 16px;
+  }
+
+  .lx-row.is-active {
+    background: var(--lx-active);
+  }
+
+  .lx-favicon {
     display: grid;
     place-items: center;
-    aspect-ratio: 1;
-    border-radius: 14px;
-    background: var(--surface-soft, #f4f6f8);
-  }
-
-  .tile-cloud img,
-  .ai-tiles img {
-    display: block;
-    border-radius: 10px;
-  }
-
-  .ai-tiles {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 18px 12px;
-    margin: auto 0 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .ai-tiles li {
-    display: grid;
-    justify-items: center;
-    gap: 8px;
-    color: var(--home-ink-soft);
-    font-size: 12px;
-    font-weight: 600;
-    text-align: center;
-  }
-
-  .mock-window {
-    overflow: hidden;
-    border: 1px solid var(--home-card-border);
-    border-radius: 16px;
-    background: #e9ecef;
-    box-shadow: 0 18px 40px -26px rgba(32, 38, 46, 0.4);
-  }
-
-  .mock-window__chrome {
-    padding: 10px 12px 0;
-  }
-
-  .mock-window__dots {
-    display: inline-flex;
-    gap: 6px;
-  }
-
-  .mock-window__dots i {
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    background: rgba(32, 38, 46, 0.16);
-  }
-
-  .mock-tabstrip {
-    display: flex;
-    align-items: flex-end;
-    gap: 6px;
-    padding: 8px 8px 0;
-    overflow: hidden;
-    -webkit-mask-image: linear-gradient(to right, #000 85%, transparent);
-    mask-image: linear-gradient(to right, #000 85%, transparent);
-  }
-
-  .mock-window__body {
-    display: grid;
-    gap: 10px;
-    padding: 16px 18px 22px;
-    background: #fff;
-  }
-
-  .mock-window__url {
-    height: 26px;
-    margin-bottom: 6px;
-    border-radius: 999px;
-    background: var(--surface-soft, #f4f6f8);
-  }
-
-  .mock-window__line {
-    height: 9px;
-    border-radius: 999px;
-    background: rgba(32, 38, 46, 0.08);
-  }
-
-  .mock-window__line--title {
-    width: 46%;
-    height: 12px;
-    background: rgba(31, 95, 191, 0.18);
-  }
-
-  .mock-window__line--short {
-    width: 64%;
-  }
-
-  .mock-tabgroup {
-    flex: none;
-    align-self: center;
-    margin-bottom: 4px;
-    padding: 5px 10px;
+    width: 28px;
+    height: 28px;
     border-radius: 8px;
-    background: #8ab4f8;
-    color: #0b2a5b;
-    font-size: 12px;
-    font-weight: 700;
-    white-space: nowrap;
-  }
-
-  .mock-tab {
-    flex: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    max-width: 210px;
-    padding: 8px 12px;
-    border-bottom: 2px solid #8ab4f8;
-    border-radius: 9px 9px 0 0;
-    color: var(--home-ink-soft);
-    font-size: 13px;
-  }
-
-  .mock-tab.is-active {
-    border-bottom-color: #fff;
     background: #fff;
-    color: var(--home-ink);
+    box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.08);
+    font-size: 16px;
   }
 
-  .mock-tab img {
-    flex: none;
-    border-radius: 4px;
+  .lx-row__text {
+    min-width: 0;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
   }
 
-  .mock-tab span {
+  .lx-row__text strong,
+  .lx-row__text small {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 
-  .mock-commands {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .mock-commands li {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    min-width: 0;
-    padding: 14px 16px;
-    border: 1px solid var(--home-card-border);
-    border-radius: 14px;
-    background: var(--surface-soft, #f4f6f8);
-  }
-
-  .mock-commands code {
+  .lx-row__text strong {
     flex: none;
-    min-width: 62px;
-    color: var(--home-select-ink);
+    max-width: 70%;
+    font-size: 15px;
+    font-weight: 500;
+  }
+
+  .lx-row__text small {
+    color: var(--lx-muted);
+    font-size: 13px;
+  }
+
+  .lx-row--command {
+    grid-template-columns: 64px minmax(0, 1fr) auto;
+  }
+
+  .lx-row--command code {
+    color: var(--lx-text);
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
     font-size: 14px;
     font-weight: 600;
   }
 
-  .mock-commands span {
-    min-width: 0;
-    color: var(--home-ink-soft);
+  .lx-row--command .lx-row__text strong {
+    max-width: 100%;
+    color: var(--lx-muted);
+    font-weight: 400;
+  }
+
+  .lx-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 25px;
+    padding: 0 10px;
+    border-radius: 999px;
+    background: var(--lx-tag);
+    color: var(--lx-muted);
+    font-size: 12px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  .lx-tag--action {
+    padding-right: 4px;
+    background: var(--lx-action);
+    color: var(--lx-text);
+  }
+
+  .lx-tag__key {
+    display: inline-grid;
+    place-items: center;
+    min-width: 20px;
+    height: 17px;
+    padding: 0 4px;
+    border-radius: 6px;
+    background: var(--lx-action-key);
+  }
+
+  .lx-tag--key {
+    margin-left: auto;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    background: #fff;
+    color: var(--lx-text);
+  }
+
+  .lx-note {
+    padding: 8px 12px;
+    border: 1px solid rgba(214, 219, 227, 0.95);
+    border-radius: 12px;
+    background: linear-gradient(180deg, #ffffff, #f7f9fc);
+    box-shadow: 0 16px 36px rgba(17, 24, 39, 0.08), 0 3px 10px rgba(17, 24, 39, 0.05);
+    color: #1f2937;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  .lx-menu {
+    width: min(100%, 300px);
+    margin: 0;
+    padding: 6px;
+    border-radius: 16px;
+    background: #fff;
+    box-shadow: var(--lx-menu-shadow);
+    list-style: none;
+  }
+
+  .lx-menu li {
+    display: grid;
+    grid-template-columns: 20px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 10px;
+    height: 38px;
+    padding: 0 10px;
+    border-radius: 10px;
+    color: var(--lx-text);
     font-size: 14px;
   }
 
-  @keyframes mock-caret-blink {
+  .lx-menu li.is-active {
+    background: var(--lx-active);
+  }
+
+  .lx-menu kbd {
+    display: inline-grid;
+    place-items: center;
+    min-width: 24px;
+    height: 20px;
+    padding: 0 6px;
+    border-radius: 6px;
+    background: var(--lx-tag);
+    color: var(--lx-muted);
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 12px;
+  }
+
+  .lx-menu li.is-active kbd {
+    background: var(--lx-action);
+    color: var(--lx-text);
+  }
+
+  /* Browser chrome for aggregate search: cropped at the right and bottom edges. */
+  .lx-browser {
+    position: absolute;
+    top: 36px;
+    left: 36px;
+    right: -24px;
+    bottom: -24px;
+    overflow: hidden;
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: var(--lx-panel-shadow);
+  }
+
+  .lx-browser__strip {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 44px;
+    padding: 0 12px;
+    background: #e8eaed;
+  }
+
+  .lx-browser__lights {
+    display: inline-flex;
+    align-self: center;
+    gap: 7px;
+    margin-right: 10px;
+  }
+
+  .lx-browser__lights i {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: #ff5f57;
+  }
+
+  .lx-browser__lights i:nth-child(2) {
+    background: #febc2e;
+  }
+
+  .lx-browser__lights i:nth-child(3) {
+    background: #28c840;
+  }
+
+  .lx-browser__group {
+    flex: none;
+    align-self: center;
+    padding: 3px 9px;
+    border-radius: 6px;
+    background: #8ab4f8;
+    color: #0b2a5b;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .lx-browser__tab {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    width: 150px;
+    height: 34px;
+    padding: 0 12px;
+    border-radius: 10px 10px 0 0;
+    box-shadow: inset 0 -2px 0 #8ab4f8;
+    color: #3c4043;
+    font-size: 12px;
+  }
+
+  .lx-browser__tab.is-active {
+    background: #fff;
+    box-shadow: none;
+  }
+
+  .lx-browser__tab span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .lx-browser__toolbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 42px;
+    padding: 0 14px;
+    border-bottom: 1px solid #eceef1;
+    color: #5f6368;
+    font-size: 16px;
+  }
+
+  .lx-browser__omnibox {
+    flex: 1;
+    height: 28px;
+    padding: 0 14px;
+    border-radius: 999px;
+    background: #f1f3f4;
+    color: #3c4043;
+    font-size: 13px;
+    line-height: 28px;
+  }
+
+  .lx-browser__page {
+    display: grid;
+    gap: 14px;
+    padding: 20px 28px;
+  }
+
+  .lx-result {
+    display: grid;
+    grid-template-columns: 64px minmax(0, 1fr);
+    align-items: center;
+    gap: 16px;
+  }
+
+  .lx-result__thumb {
+    width: 64px;
+    height: 48px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #f3e7dc, #e9edf2);
+  }
+
+  .lx-result__thumb--1 {
+    background: linear-gradient(135deg, #e6eef8, #f1ece6);
+  }
+
+  .lx-result__thumb--2 {
+    background: linear-gradient(135deg, #ecefe6, #f4ece8);
+  }
+
+  .lx-result__lines {
+    display: grid;
+    gap: 8px;
+  }
+
+  .lx-skeleton {
+    display: block;
+    height: 9px;
+    border-radius: 999px;
+    background: #eef0f3;
+  }
+
+  .lx-skeleton--title {
+    width: 38%;
+    height: 13px;
+    background: #dbe5f6;
+  }
+
+  .lx-skeleton--short {
+    width: 62%;
+  }
+
+  @keyframes lx-caret {
     50% {
       opacity: 0;
     }
   }
 
   @media (max-width: 980px) {
-    .command-bar__card--search,
-    .command-bar__card--site,
-    .command-bar__card--ai,
-    .command-bar__card--aggregate {
+    .bento-cell--search,
+    .bento-cell--site,
+    .bento-cell--ai,
+    .bento-cell--aggregate {
       grid-column: 1 / -1;
     }
 
-    .command-bar__card--commands {
+    .bento-cell--commands {
       grid-template-columns: minmax(0, 1fr);
     }
   }
 
-  @media (max-width: 520px) {
-    .mock-input__hint {
+  @media (max-width: 620px) {
+    .bento {
+      border-radius: 20px;
+    }
+
+    .bento-cell {
+      padding: 24px 20px;
+    }
+
+    .stage {
+      height: 290px;
+    }
+
+    .stage__panel {
+      width: calc(100% - 28px);
+    }
+
+    .stage__note {
       display: none;
     }
 
-    .tile-cloud {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-
-    .mock-commands {
-      grid-template-columns: minmax(0, 1fr);
-    }
-
-    .mock-result__source {
+    .lx-row__text small {
       display: none;
+    }
+
+    .lx-row__text strong {
+      max-width: 100%;
+    }
+
+    .lx-browser {
+      left: 18px;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .mock-caret {
+    .lx-caret {
       animation: none;
     }
   }

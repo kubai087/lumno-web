@@ -179,3 +179,39 @@
     font-size: 18px;
   }
 }
+
+/*
+ * Hairline sheet: one framed surface whose cells share 1px dividers.
+ * Shared by the feature bento, utilities, and trust points so the page reads as one system.
+ */
+.home-sheet {
+  display: grid;
+  gap: 1px;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid rgba(32, 38, 46, 0.08);
+  border-radius: 24px;
+  background: rgba(32, 38, 46, 0.08);
+  list-style: none;
+}
+
+.home-sheet > * {
+  min-width: 0;
+  background: #fcfcfb;
+}
+
+.home-sheet__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 12px;
+  color: var(--text-soft, #89919a);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.home-sheet__label i {
+  font-size: 16px;
+}

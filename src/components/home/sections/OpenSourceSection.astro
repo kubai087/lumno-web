@@ -50,10 +50,10 @@ const POINTS: Array<{ id: HomeTrustId; icon: string }> = [
       </div>
     </header>
 
-    <ul class="open-source__points">
+    <ul class="home-sheet open-source__points">
       {POINTS.map(({ id, icon }) => (
         <li>
-          <span class="open-source__icon" aria-hidden="true"><i class={icon}></i></span>
+          <i class:list={["open-source__icon", icon]} aria-hidden="true"></i>
           <div>
             <h3>{content.points[id].title}</h3>
             <p>{content.points[id].description}</p>
@@ -92,34 +92,18 @@ const POINTS: Array<{ id: HomeTrustId; icon: string }> = [
     margin-top: 28px;
   }
 
-  .open-source__points {
-    display: grid;
-    gap: 12px;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
   .open-source__points li {
     display: grid;
-    grid-template-columns: 44px minmax(0, 1fr);
-    gap: 18px;
-    padding: 28px;
-    border: 1px solid var(--home-card-border);
-    border-radius: var(--home-radius-lg);
-    background: var(--home-card);
-    box-shadow: var(--home-card-shadow);
+    grid-template-columns: 24px minmax(0, 1fr);
+    gap: 16px;
+    padding: 28px 32px;
   }
 
   .open-source__icon {
-    display: grid;
-    place-items: center;
-    width: 44px;
-    height: 44px;
-    border-radius: 14px;
-    background: var(--home-olive-soft);
-    color: var(--home-olive);
-    font-size: 21px;
+    margin-top: 1px;
+    color: var(--home-ink-soft);
+    font-size: 20px;
+    line-height: 1.4;
   }
 
   h3 {
@@ -185,8 +169,6 @@ const POINTS: Array<{ id: HomeTrustId; icon: string }> = [
 
   @media (max-width: 620px) {
     .open-source__points li {
-      grid-template-columns: minmax(0, 1fr);
-      gap: 14px;
       padding: 22px;
     }
   }

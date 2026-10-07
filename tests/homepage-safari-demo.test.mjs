@@ -14,7 +14,7 @@ test("homepage places the onboarding browser skeleton directly below the hero co
 
   assert.match(
     source,
-    /<div class="hero-copy">[\s\S]*?<p class="hero-description">[\s\S]*?heroDescriptionLines\.map[\s\S]*?<div class="hero-actions">[\s\S]*?<p class="hero-meta">[\s\S]*?<\/p>\s*<\/div>\s*<div class="hero-demo-slot">\s*<HeroSafariDemo/,
+    /<div class="hero-copy">[\s\S]*?<p class="hero-description">[\s\S]*?heroDescriptionLines\.map[\s\S]*?<div class="hero-actions">[\s\S]*?<\/div>\s*<\/div>\s*<div class="hero-demo-slot">\s*<HeroSafariDemo/,
   );
   assert.match(source, /ariaLabel=\{content\.heroDemoAria\}/);
   assert.match(source, /locale=\{uiLocale\}/);

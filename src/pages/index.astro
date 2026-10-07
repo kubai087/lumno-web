@@ -313,19 +313,6 @@ const structuredData = [
               client:load
             />
           </div>
-          <p class="hero-meta">
-            <span class="hero-meta__shortcut">
-              {content.heroShortcutPrefix}
-              <span class="hero-meta__keys" data-shortcut-keys>
-                <kbd class="home-kbd" data-mac-key="⌘" data-other-key="Ctrl">⌘</kbd>
-                <kbd class="home-kbd">⇧</kbd>
-                <kbd class="home-kbd">K</kbd>
-              </span>
-              {content.heroShortcutSuffix}
-            </span>
-            <span class="hero-meta__dot" aria-hidden="true">·</span>
-            <span>{content.heroMetaFree}</span>
-          </p>
         </div>
         <div class="hero-demo-slot">
           <HeroSafariDemo
@@ -498,14 +485,6 @@ const structuredData = [
         };
         window.addEventListener("lumno:language-runtime-ready", retry);
         window.addEventListener("lumno:language-preference-ready", retry);
-      }
-
-      // Show the shortcut the visitor will actually press.
-      const platform = navigator.userAgentData?.platform || navigator.platform || "";
-      if (!/mac|iphone|ipad/i.test(platform)) {
-        document.querySelectorAll("[data-other-key]").forEach((key) => {
-          key.textContent = key.getAttribute("data-other-key");
-        });
       }
 
       const topNav = document.querySelector(".top-nav");
@@ -1016,14 +995,6 @@ const structuredData = [
         overflow-wrap: anywhere;
       }
 
-      /* Keyboard shortcuts mean nothing on touch-only devices. */
-      @media (hover: none) and (pointer: coarse) {
-        .hero-meta__shortcut,
-        .hero-meta__dot {
-          display: none !important;
-        }
-      }
-
       .hero-actions {
         display: flex;
         flex-wrap: wrap;
@@ -1088,10 +1059,6 @@ const structuredData = [
 
       html[data-home-intro-js] body[data-home-intro="revealing"] .hero-actions {
         transition-delay: 540ms;
-      }
-
-      html[data-home-intro-js] body[data-home-intro="revealing"] .hero-meta {
-        transition-delay: 640ms;
       }
 
       html[data-home-intro-js] body[data-home-intro="pending"] .hero-demo-page-switcher,
@@ -1201,36 +1168,6 @@ const structuredData = [
         font-weight: 600;
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
-      }
-
-      .hero-meta {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: center;
-        gap: 6px 10px;
-        margin: 20px auto 0;
-        color: var(--text-soft);
-        font-size: 13px;
-        line-height: 1.6;
-      }
-
-      .hero-copy > p.hero-meta {
-        margin-top: 20px;
-        color: var(--text-soft);
-        font-size: 13px;
-      }
-
-      .hero-meta__shortcut {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-      }
-
-      .hero-meta__keys {
-        display: inline-flex;
-        gap: 3px;
-        font-size: 12px;
       }
 
       :focus-visible {

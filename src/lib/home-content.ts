@@ -41,9 +41,6 @@ type HomeContent = {
   heroCommunityLabel: string;
   heroCommunityAria: string;
   heroDemoAria: string;
-  heroShortcutPrefix: string;
-  heroShortcutSuffix: string;
-  heroMetaFree: string;
 
   commandBar: {
     eyebrow: string;
@@ -146,9 +143,6 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     heroCommunityLabel: "反馈 & 功能许愿",
     heroCommunityAria: "打开 Lumno 反馈与功能许愿二维码",
     heroDemoAria: "Lumno 命令栏演示：搜索浏览器内容、站内搜索与指令",
-    heroShortcutPrefix: "在任意网页按下",
-    heroShortcutSuffix: "唤起",
-    heroMetaFree: "免费 · 开源",
 
     commandBar: {
       eyebrow: "聚焦搜索",
@@ -341,9 +335,6 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     heroCommunityLabel: "意見回饋 & 功能許願",
     heroCommunityAria: "開啟 Lumno 意見回饋與功能許願二維碼",
     heroDemoAria: "Lumno 命令列示範：搜尋瀏覽器內容、站內搜尋與指令",
-    heroShortcutPrefix: "在任何網頁按下",
-    heroShortcutSuffix: "喚起",
-    heroMetaFree: "免費 · 開源",
 
     commandBar: {
       eyebrow: "聚焦搜尋",
@@ -534,9 +525,6 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     heroCommunityLabel: "Feedback & requests",
     heroCommunityAria: "Open Lumno feedback and feature requests",
     heroDemoAria: "Lumno command bar demo: browser search, site search, and commands",
-    heroShortcutPrefix: "Press",
-    heroShortcutSuffix: "on any page",
-    heroMetaFree: "Free · Open source",
 
     commandBar: {
       eyebrow: "Focus search",

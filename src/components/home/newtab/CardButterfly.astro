@@ -3,8 +3,10 @@
  * The Lumno butterfly (the logo's wing, as on the install buttons), for the
  * tool cards' hover: a quiet accent, not a show. It drifts down a short way
  * onto the top of the browser window, opens its wings once and rests; leaving
- * the card lifts it off and it fades. The flight is Web Animations so a take-off mid-flight starts from
- * wherever it is; wing beats are SMIL morphs between the logo's two shapes.
+ * the card lifts it off and it fades. On touch screens it lands once the card
+ * has been in view a moment, and stays. The flight is Web Animations so a
+ * take-off mid-flight starts from wherever it is; wing beats are SMIL morphs
+ * between the logo's two shapes.
  */
 const WING_REST =
   "M4.3248 17.7823C1.22382 14.6398 -0.116749 10.2475 0.824858 6.7097C1.02033 5.97529 1.95363 5.98287 2.27212 6.67289L4.16024 10.7637C4.38415 11.2488 4.50011 11.7767 4.50011 12.311L4.50011 16L6.24277 16C7.66705 16 9.01155 16.6576 9.88596 17.7819L11.0831 19.3211C11.5044 19.8627 11.2076 20.6668 10.5235 20.7201C8.63849 20.8671 6.85452 20.3459 4.3248 17.7823Z";
@@ -92,9 +94,14 @@ const SPLINES = "0.42 0 0.58 1;0.42 0 0.58 1";
   ];
   const FLY_OUT_TO: Keyframe[] = [{ transform: "translate(-8px, -24px) rotate(-6deg)", opacity: 0 }];
 
+  // Touch screens have no hover: there it lands once, a little after the card
+  // is mostly on screen, and stays perched.
+  const LAND_DELAY = 1200;
+  const canHover = window.matchMedia("(hover: hover)").matches;
+
   document.querySelectorAll<HTMLElement>("[data-ntf-fly]").forEach((fly) => {
     const card = fly.closest("article");
-    if (!card || !window.matchMedia("(hover: hover)").matches) return;
+    if (!card) return;
     const beats = (name: string) =>
       Array.from(fly.querySelectorAll<SVGAnimateElement>(`[data-beat="${name}"]`));
     const fast = beats("fly");
@@ -104,14 +111,7 @@ const SPLINES = "0.42 0 0.58 1;0.42 0 0.58 1";
     const end = (list: SVGAnimateElement[]) => list.forEach((beat) => beat.endElement());
     let flight: Animation | null = null;
 
-    if (prefersReducedMotion()) {
-      card.addEventListener("pointerenter", () => (fly.dataset.perched = ""));
-      card.addEventListener("pointerleave", () => delete fly.dataset.perched);
-      return;
-    }
-
-    card.addEventListener("pointerenter", (event) => {
-      if (event.pointerType !== "mouse") return;
+    const land = () => {
       flight?.cancel();
       end(slow);
       begin(fast);
@@ -120,6 +120,34 @@ const SPLINES = "0.42 0 0.58 1;0.42 0 0.58 1";
         end(fast);
         begin(slow);
       };
+    };
+
+    if (!canHover) {
+      let timer: number | undefined;
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          window.clearTimeout(timer);
+          if (!entry.isIntersecting) return;
+          timer = window.setTimeout(() => {
+            observer.disconnect();
+            if (prefersReducedMotion()) fly.dataset.perched = "";
+            else land();
+          }, LAND_DELAY);
+        },
+        { threshold: 0.6 },
+      );
+      observer.observe(card);
+      return;
+    }
+
+    if (prefersReducedMotion()) {
+      card.addEventListener("pointerenter", () => (fly.dataset.perched = ""));
+      card.addEventListener("pointerleave", () => delete fly.dataset.perched);
+      return;
+    }
+
+    card.addEventListener("pointerenter", (event) => {
+      if (event.pointerType === "mouse") land();
     });
 
     card.addEventListener("pointerleave", (event) => {

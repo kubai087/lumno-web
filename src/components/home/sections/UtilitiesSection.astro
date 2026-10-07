@@ -45,13 +45,66 @@ const UTILITY_ORDER: Array<{ id: HomeUtilityId; icon: HomeCellIconName }> = [
   </ul>
 </section>
 
+<script>
+  /*
+   * Touch screens have no hover to play a cell's icon and art with, so each
+   * cell plays once, a moment after it is mostly on screen, and then rests on
+   * the finished frame like the other homepage demos. Cells that arrive
+   * together go a beat apart, in reading order.
+   */
+  const cells = Array.from(document.querySelectorAll<HTMLElement>(".utilities__grid > li"));
+
+  if (cells.length && !window.matchMedia("(hover: hover)").matches) {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      // No motion: show every art tile on its finished frame.
+      cells.forEach((cell) => (cell.dataset.played = ""));
+    } else {
+      const DELAY = 300;
+      const STAGGER = 500;
+      const timers = new Map<HTMLElement, number>();
+      let nextStart = 0;
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          [...entries]
+            .sort((a, b) => cells.indexOf(a.target as HTMLElement) - cells.indexOf(b.target as HTMLElement))
+            .forEach((entry) => {
+              const cell = entry.target as HTMLElement;
+              if (!entry.isIntersecting) {
+                // Scrolled past before it started: wait until it comes back.
+                window.clearTimeout(timers.get(cell));
+                timers.delete(cell);
+                return;
+              }
+              if (timers.has(cell)) return;
+              const now = performance.now();
+              const at = Math.max(now + DELAY, nextStart);
+              nextStart = at + STAGGER;
+              timers.set(
+                cell,
+                window.setTimeout(() => {
+                  cell.dataset.played = "";
+                  observer.unobserve(cell);
+                }, at - now),
+              );
+            });
+        },
+        { threshold: 0.7 },
+      );
+
+      cells.forEach((cell) => observer.observe(cell));
+    }
+  }
+</script>
+
 <style>
   .utilities__grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  /* Each cell is a container so its hover art (UtilityArt) shows only when
-     there is room beside the text: 144px tile + 10px inset, 14px gap. */
+  /* Each cell is a container so its art (UtilityArt) shows only when there
+     is room beside the text: 144px tile + 10px inset, 14px gap. 300px keeps
+     it on today's common phones (390px and up). */
   .utilities__grid > li {
     position: relative;
     container: utility / inline-size;
@@ -61,7 +114,7 @@ const UTILITY_ORDER: Array<{ id: HomeUtilityId; icon: HomeCellIconName }> = [
     margin-bottom: 20px;
   }
 
-  @container utility (min-width: 316px) {
+  @container utility (min-width: 300px) {
     .home-cell__title,
     .home-cell__text {
       max-width: calc(100% - 136px);

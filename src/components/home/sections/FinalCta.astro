@@ -18,7 +18,7 @@ const { title, description } = Astro.props;
 ---
 
 <section class="home-section final-cta" aria-labelledby="final-title">
-  <div class="final-cta__panel home-media">
+  <div class="final-cta__panel home-media" data-reveal>
     <DitherShader
       className="final-cta__wallpaper"
       src="/assets/settings-bg-light-monet-newtab.webp"
@@ -68,29 +68,23 @@ const { title, description } = Astro.props;
   }
 
   .final-cta .home-lead {
-    margin-top: 16px;
     color: var(--home-ink-soft);
   }
 
-  /* Same row as the hero's buttons. */
+  /* Same row, and the same steps down from the copy, as the hero's buttons. */
   .final-cta__actions {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    gap: 12px;
-    margin-top: 32px;
+    gap: var(--home-control-gap);
+    margin-top: var(--home-actions-gap);
   }
 
   @media (max-width: 620px) {
     .final-cta__panel {
       min-height: 480px;
-      padding-inline: 16px;
-    }
-
-    .final-cta__actions {
-      gap: 10px;
-      margin-top: 24px;
+      padding-inline: var(--home-space-4);
     }
   }
 </style>

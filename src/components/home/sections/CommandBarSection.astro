@@ -1,8 +1,6 @@
 ---
 import { LUMNO_SITE_SEARCH_ICON_ROOT } from "../../../lib/lumno-search-providers";
 import type { HOME_CONTENT } from "../../../lib/home-content";
-import { COMMAND_BAR_SHORTCUT } from "../../../lib/shortcut-keys";
-import { ShortcutKeys } from "../../ui/shortcut-keys";
 
 type Content = (typeof HOME_CONTENT)["en"]["commandBar"];
 
@@ -113,17 +111,13 @@ const pickedProvider = ai.providers[ai.pick] || ai.providers[0];
 
 <section id="features" class="home-section command-bar" aria-labelledby="command-bar-title">
   <header class="home-section__head">
-    <p class="home-eyebrow">
-      {content.eyebrow}
-      <ShortcutKeys keys={COMMAND_BAR_SHORTCUT} className="home-eyebrow__keys" />
-    </p>
-    <h2 id="command-bar-title" class="home-h2"><span>{content.title}</span></h2>
-    <p class="home-lead home-lead--lines">{content.description}</p>
+    <h2 id="command-bar-title" class="home-h2" data-reveal="text"><span>{content.title}</span></h2>
+    <p class="home-lead home-lead--lines" data-reveal="text">{content.description}</p>
   </header>
 
   <div class="bento">
     {/* ---------- Unified search: the lead card spans the sheet ---------- */}
-    <article class="bento-cell bento-cell--wide">
+    <article class="bento-cell bento-cell--wide" data-reveal>
       <div class="stage" data-bento-demo="search" aria-hidden="true">
         <div class="ov" data-rows="shown">
           <div class="ov-input">
@@ -163,7 +157,7 @@ const pickedProvider = ai.providers[ai.pick] || ai.providers[0];
     </article>
 
     {/* ---------- Site search ---------- */}
-    <article class="bento-cell">
+    <article class="bento-cell" data-reveal>
       <div class="stage" data-bento-demo="site" aria-hidden="true">
         <div class="ov" data-rows="shown" data-chip="shown" data-hint="hidden" style={themeStyle("gh")}>
           <div class="ov-input">
@@ -210,7 +204,7 @@ const pickedProvider = ai.providers[ai.pick] || ai.providers[0];
     </article>
 
     {/* ---------- Ask AI: the search-scope menu ---------- */}
-    <article class="bento-cell">
+    <article class="bento-cell" data-reveal>
       <div class="stage" data-bento-demo="ai" data-pick={ai.pick} aria-hidden="true">
         <div class="ov" data-view="rows" data-chip="shown" style={themeStyle(pickedProvider.key)}>
           <div class="ov-input">
@@ -286,7 +280,7 @@ const pickedProvider = ai.providers[ai.pick] || ai.providers[0];
     --card-edge: var(--home-edge);
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px;
+    gap: var(--home-grid-gap);
   }
 
   /*
@@ -322,7 +316,7 @@ const pickedProvider = ai.providers[ai.pick] || ai.providers[0];
   }
 
   .bento-copy {
-    margin-top: 12px;
+    margin-top: var(--home-space-3);
     padding-inline: calc(var(--home-card-pad) - var(--home-card-inset));
   }
 
@@ -332,10 +326,10 @@ const pickedProvider = ai.providers[ai.pick] || ai.providers[0];
     align-items: center;
     gap: 6px;
     height: 28px;
-    margin: 0 0 14px;
+    margin: 0 0 var(--home-space-3);
     padding: 0 11px 0 9px;
     border: 1px solid var(--home-hairline-control);
-    border-radius: 999px;
+    border-radius: var(--home-radius-pill);
     background: rgba(255, 255, 255, 0.78);
     box-shadow: var(--home-shadow-chip);
     color: #4b5563;
@@ -1022,10 +1016,6 @@ const pickedProvider = ai.providers[ai.pick] || ai.providers[0];
   }
 
   @media (max-width: 620px) {
-    .bento {
-      gap: 12px;
-    }
-
     .bento-cell--wide .stage {
       height: 300px;
     }

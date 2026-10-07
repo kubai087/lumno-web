@@ -4,34 +4,103 @@
  */
 
 :root {
-  /* Matches the hero and nav so every section shares their edges. */
+  /*
+   * Layout. One content column for the nav, hero, every section and the
+   * footer: the page gutter on both sides, capped at the section width.
+   */
   --home-section-width: 1360px;
+  --home-gutter: 24px;
+  --home-column: min(calc(100% - var(--home-gutter) * 2), var(--home-section-width));
+
+  /*
+   * Spacing. A 4px ladder, then one named step per level of the page, so the
+   * same relationship always gets the same distance. Each level is roughly
+   * half the one above it, which is what makes the grouping readable:
+   *   section-space  top and bottom of every section (twice this between two)
+   *   part-space     before a new part heading inside a section
+   *   head-gap       a heading block to the content it introduces
+   *   split-gap      a heading column beside its content (AI intent, FAQ)
+   *   part-head-gap  a part heading to its cards
+   *   grid-gap       card to card, in grids, rows and carousels
+   *   card-pad       card edge to its copy
+   *   art-gap        copy to the window drawn under it
+   *   card-inset     card edge to a panel nested inside it (see radius)
+   * Text stacks use their own small steps: eyebrow → title → lead → actions.
+   */
+  --home-space-1: 4px;
+  --home-space-2: 8px;
+  --home-space-3: 12px;
+  --home-space-4: 16px;
+  --home-space-5: 20px;
+  --home-space-6: 24px;
+  --home-space-8: 32px;
+  --home-space-10: 40px;
+  --home-space-12: 48px;
+  --home-space-16: 64px;
+  --home-section-space: clamp(88px, 10vw, 136px);
+  --home-part-space: clamp(112px, 12vw, 168px);
+  --home-head-gap: clamp(40px, 5vw, 64px);
+  --home-split-gap: clamp(40px, 6vw, 96px);
+  --home-part-head-gap: var(--home-space-6);
+  --home-grid-gap: var(--home-space-4);
+  --home-card-pad: var(--home-space-8);
+  --home-art-gap: var(--home-space-6);
+  --home-card-inset: var(--home-space-2);
+  --home-eyebrow-gap: var(--home-space-4);
+  --home-lead-gap: var(--home-space-5);
+  --home-actions-gap: 28px;
+  --home-control-gap: var(--home-space-3);
+
   --home-ink: #2f2a22;
   --home-ink-soft: #5a5247;
   --home-olive: #6d7f63;
   --home-olive-soft: #eef2ea;
   --home-card: #ffffff;
   --home-card-border: rgba(var(--home-edge), 0.08);
-  --home-card-shadow: var(--home-shadow-card);
+
+  /*
+   * Radius. The bigger the object, the rounder its corner, and anything
+   * nested flush in a card stays concentric with it:
+   *   xl     cards and full-width panels (feature cards, sheets, media)
+   *   inner  a panel inset in a card: xl minus the inset, so the gap between
+   *          the two curves is even all the way round
+   *   lg     small cards on a panel and list rows (reviews, FAQ rows)
+   *   md     windows and screenshots drawn inside a card
+   *   sm     icon chips, icon buttons and compact tab tracks
+   *   xs     keycaps, badges, inline code and tooltips
+   *   pill   tags, buttons and the nav bar
+   * Drawings of the extension's own UI keep the extension's numbers instead.
+   */
+  --home-radius-xl: 28px;
+  --home-radius-inner: calc(var(--home-radius-xl) - var(--home-card-inset));
+  --home-radius-lg: 16px;
+  --home-radius-md: 12px;
+  --home-radius-sm: 10px;
+  --home-radius-xs: 6px;
+  --home-radius-pill: 999px;
+
+  /*
+   * Layers. Only page-level stacking lives here; components that isolate
+   * themselves count 0, 1, 2… inside their own context.
+   *   content  sections and hero copy that must ride over the parallax
+   *   frame    the hairline drawn over a media panel's picture
+   *   intro    the hero demo while it flies in full screen
+   *   nav      the top bar and its menus
+   */
+  --home-z-content: 2;
+  --home-z-frame: 10;
+  --home-z-intro: 40;
+  --home-z-nav: 50;
 
   /*
    * Surface system. Every hairline and shadow is the same cool ink at a
-   * different strength, and every framed surface uses one of three radii:
-   *   xl    feature cards and full-width panels
-   *   inner media inset in a card, so it stays concentric (xl - card inset)
-   *   md    small cards that sit on a panel (reviews)
-   * Framed surfaces come in two fills with one edge and one lift: paper cards
-   * (grey, hairline ring) for demos and text, media (pictures, flat inset
-   * hairline) for wallpapers and screenshots. White controls (tags, pills,
-   * arrows, secondary buttons) are pills with the control hairline and the
-   * chip shadow.
+   * different strength. Framed surfaces come in two fills with one edge and
+   * one lift: paper cards (grey, hairline ring) for demos and text, media
+   * (pictures, flat inset hairline) for wallpapers and screenshots. White
+   * controls (tags, pills, arrows, secondary buttons) are pills with the
+   * control hairline and the chip shadow.
    */
   --home-edge: 32, 38, 46;
-  --home-radius-xl: 28px;
-  --home-radius-md: 16px;
-  --home-radius-inner: calc(var(--home-radius-xl) - var(--home-card-inset));
-  --home-card-inset: 8px;
-  --home-card-pad: 32px;
   --home-paper: #f3f4f6;
   --home-hairline-control: rgba(var(--home-edge), 0.1);
   /*
@@ -59,7 +128,7 @@
   --home-title-sm: 17px;
   --home-body: 15px;
   --home-body-leading: 1.65;
-  --home-title-gap: 8px;
+  --home-title-gap: var(--home-space-2);
   /* Contact, a faint all-round ambient, then a soft lift: the sides and top get some depth, not just the bottom. */
   --home-shadow-card:
     0 1px 2px rgba(var(--home-edge), 0.04),
@@ -75,14 +144,14 @@
 }
 
 .home-section {
-  width: min(calc(100% - 48px), var(--home-section-width));
+  width: var(--home-column);
   margin-inline: auto;
-  padding-block: clamp(88px, 10vw, 136px);
+  padding-block: var(--home-section-space);
 }
 
 .home-section__head {
   max-width: 720px;
-  margin: 0 auto clamp(40px, 5vw, 64px);
+  margin: 0 auto var(--home-head-gap);
   text-align: center;
 }
 
@@ -95,7 +164,7 @@
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  margin: 0 0 14px;
+  margin: 0 0 var(--home-eyebrow-gap);
   color: var(--home-ink-soft);
   font-size: 15px;
   font-weight: 500;
@@ -115,7 +184,6 @@
   min-width: 22px;
   height: 22px;
   padding: 0 5px;
-  border-radius: 6px;
   color: var(--home-ink-soft);
   font-size: 12px;
   font-style: normal;
@@ -185,7 +253,7 @@ html[data-platform="other"] [data-key-mac] {
 }
 
 .home-lead {
-  margin: 18px auto 0;
+  margin: var(--home-lead-gap) auto 0;
   max-width: 780px;
   color: var(--text-sub, #626870);
   font-size: clamp(16px, 1.3vw, 18px);
@@ -201,31 +269,6 @@ html[data-platform="other"] [data-key-mac] {
   margin-inline: 0;
 }
 
-.home-card {
-  position: relative;
-  overflow: hidden;
-  border: 1px solid var(--home-card-border);
-  border-radius: var(--home-radius-xl);
-  background: var(--home-card);
-  box-shadow: var(--home-card-shadow);
-}
-
-.home-card h3 {
-  margin: 0;
-  color: var(--home-ink);
-  font-size: 19px;
-  font-weight: 650;
-  line-height: 1.35;
-  letter-spacing: -0.015em;
-}
-
-.home-card p {
-  margin: 8px 0 0;
-  color: var(--text-sub, #626870);
-  font-size: 15px;
-  line-height: 1.68;
-}
-
 .home-kbd {
   display: inline-flex;
   align-items: center;
@@ -235,31 +278,13 @@ html[data-platform="other"] [data-key-mac] {
   padding: 0 0.45em;
   border: 1px solid rgba(var(--home-edge), 0.12);
   border-bottom-width: 2px;
-  border-radius: 7px;
+  border-radius: var(--home-radius-xs);
   background: #fff;
   color: var(--home-ink);
   font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 0.82em;
   font-weight: 650;
   line-height: 1;
-}
-
-.home-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--blue-dark, #1e729f);
-  font-size: 15px;
-  font-weight: 650;
-  text-decoration: none;
-}
-
-.home-link i {
-  transition: transform 160ms ease;
-}
-
-.home-link:hover i {
-  transform: translateX(3px);
 }
 
 /* English uses the editorial serif from the hero for section titles. */
@@ -278,26 +303,28 @@ html[data-platform="other"] [data-key-mac] {
   font-weight: 500;
 }
 
+/*
+ * Two steps down. At 760px the page tightens its rhythm (gutter, section
+ * and heading spacing, card gaps); at 620px the cards themselves shrink, and
+ * the inner radius follows the inset so nesting stays concentric.
+ */
+@media (max-width: 760px) {
+  :root {
+    --home-gutter: 16px;
+    --home-section-space: 72px;
+    --home-part-space: 88px;
+    --home-head-gap: 32px;
+    --home-grid-gap: var(--home-space-3);
+    --home-actions-gap: var(--home-space-6);
+    --home-control-gap: 10px;
+  }
+}
+
 @media (max-width: 620px) {
   :root {
     --home-radius-xl: 24px;
     --home-card-inset: 6px;
-    --home-card-pad: 24px;
-  }
-}
-
-@media (max-width: 760px) {
-  .home-section {
-    width: calc(100% - 32px);
-    padding-block: 72px;
-  }
-
-  .home-section__head {
-    margin-bottom: 32px;
-  }
-
-  .home-card h3 {
-    font-size: 18px;
+    --home-card-pad: var(--home-space-6);
   }
 }
 
@@ -310,9 +337,9 @@ html[data-platform="other"] [data-key-mac] {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  gap: 24px;
-  margin: 0 0 24px;
-  padding: 0 4px;
+  gap: var(--home-space-6);
+  margin: 0 0 var(--home-part-head-gap);
+  padding: 0 var(--home-space-1);
 }
 
 .home-part-head__copy {
@@ -386,7 +413,7 @@ html[data-platform="other"] [data-key-mac] {
   content: "";
   position: absolute;
   inset: 0;
-  z-index: 10;
+  z-index: var(--home-z-frame);
   border-radius: inherit;
   box-shadow: var(--home-media-ring);
   pointer-events: none;
@@ -404,7 +431,7 @@ html[data-platform="other"] [data-key-mac] {
   width: 32px;
   height: 32px;
   border: 1px solid var(--home-hairline-control);
-  border-radius: 10px;
+  border-radius: var(--home-radius-sm);
   background: #fff;
   box-shadow: var(--home-shadow-chip);
   color: #4b5563;
@@ -593,4 +620,43 @@ html[data-platform="other"] [data-key-mac] {
   font-size: var(--home-body);
   line-height: var(--home-body-leading);
   text-wrap: pretty;
+}
+
+/*
+ * Scroll entrance: anything marked [data-reveal] rises into place the first
+ * time it scrolls into view (scripts/home-reveal.ts); things that arrive
+ * together follow each other in document order. Headings and leads also come
+ * out of a blur, like the hero copy; pictures and cards only rise.
+ *
+ * Nothing is hidden until the script arms html[data-home-reveal], which it
+ * skips under reduced motion, so those visitors and crawlers get the page as
+ * authored. The animation only fills backwards: once it ends the element is
+ * back on its own styles, so hover lifts and transitions still work.
+ */
+html[data-home-reveal] [data-reveal]:not([data-revealed]) {
+  opacity: 0;
+}
+
+html[data-home-reveal] [data-revealed="in"] {
+  animation: home-reveal 900ms cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms) backwards;
+}
+
+html[data-home-reveal] [data-reveal="text"][data-revealed="in"] {
+  animation-name: home-reveal-text;
+  animation-duration: 760ms;
+}
+
+@keyframes home-reveal {
+  from {
+    opacity: 0;
+    translate: 0 40px;
+  }
+}
+
+@keyframes home-reveal-text {
+  from {
+    opacity: 0;
+    translate: 0 18px;
+    filter: blur(8px);
+  }
 }

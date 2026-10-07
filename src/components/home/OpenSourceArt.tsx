@@ -90,32 +90,18 @@ const CHANNELS: Array<{ id: ChannelId; icon: string }> = [
   { id: "file", icon: "ri-download-2-line" },
 ];
 
-// Long enough to read each destination before the next tab takes over.
-const CHANNEL_STEP_MS = 1300;
-
 interface SyncFileArtProps {
-  channels: Record<ChannelId, { label: string; destination: string }>;
+  channels: Record<ChannelId, string>;
 }
 
 /**
- * One settings file, three places it can go. The tabs below the file step
- * through browser sync, WebDAV and an exported file once, then stop.
+ * One settings file, three ways to carry it: browser sync, WebDAV and an
+ * exported file, listed side by side under the file.
  */
 export function SyncFileArt({ channels }: SyncFileArtProps) {
   const anchorRef = useRef<HTMLDivElement>(null);
   const { run, inView, reduceMotion } = useReplay(anchorRef);
-  const [active, setActive] = useState(0);
-
-  useEffect(() => {
-    setActive(0);
-    if (!inView || reduceMotion) return;
-    const timers = CHANNELS.slice(1).map((_, index) =>
-      window.setTimeout(() => setActive(index + 1), CHANNEL_STEP_MS * (index + 1)),
-    );
-    return () => timers.forEach((timer) => window.clearTimeout(timer));
-  }, [inView, reduceMotion, run]);
-
-  const current = CHANNELS[active];
+  const state = reduceMotion ? "done" : inView ? "run" : "idle";
 
   return (
     <div className="osa-window" ref={anchorRef}>
@@ -132,20 +118,14 @@ export function SyncFileArt({ channels }: SyncFileArtProps) {
           <span>{"}"}</span>
         </code>
       </pre>
-      <div className="osa-sync" style={{ "--active": active } as CSSProperties}>
-        <div className="osa-sync__tabs">
-          <span className="osa-sync__pill" />
-          {CHANNELS.map(({ id }, index) => (
-            <span key={id} className="osa-sync__tab" data-active={index === active ? "true" : undefined}>
-              {channels[id].label}
-            </span>
-          ))}
-        </div>
-        <p key={current.id} className="osa-sync__dest">
-          <i className={current.icon} aria-hidden="true" />
-          {channels[current.id].destination}
-        </p>
-      </div>
+      <ul key={run} className="osa-sync" data-state={state}>
+        {CHANNELS.map(({ id, icon }, index) => (
+          <li key={id} style={{ "--i": index } as CSSProperties}>
+            <i className={icon} aria-hidden="true" />
+            {channels[id]}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

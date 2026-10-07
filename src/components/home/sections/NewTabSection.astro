@@ -36,7 +36,7 @@ const START_FILTER = "blocks";
     <NewTabPartHead title={content.wallpaperPart.title} lead={content.wallpaperPart.lead} />
   </div>
 
-  <article class="nt-showcase" data-nt-switcher data-autoplay="2600" data-start={FILTERS.indexOf(START_FILTER)}>
+  <article class="nt-showcase" data-reveal data-nt-switcher data-autoplay="2600" data-start={FILTERS.indexOf(START_FILTER)}>
     <!-- Before/after: the original underneath, the picked filter clipped to the right of the divider. -->
     <div class="nt-stage nt-compare" data-nt-compare>
       <div class="nt-screen nt-screen--lab" id="nt-filter-panel" role="tabpanel" aria-label={content.filters.alt}>
@@ -109,8 +109,8 @@ const START_FILTER = "blocks";
     </div>
   </article>
 
-  <div class="nt-pair"><NewTabFeatureCard id="wallpapers" content={content} /></div>
-  <div class="nt-pair"><NewTabFeatureCard id="dark" content={content} /></div>
+  <div class="nt-pair" data-reveal><NewTabFeatureCard id="wallpapers" content={content} /></div>
+  <div class="nt-pair" data-reveal><NewTabFeatureCard id="dark" content={content} /></div>
 
   <!-- Part two: everyday tools, as a carousel of animated cards (components/home/newtab). -->
   <NewTabCarousel content={content} />
@@ -120,15 +120,15 @@ const START_FILTER = "blocks";
   .nt-features {
     --card-edge: var(--home-edge);
     position: relative;
-    z-index: 2;
+    z-index: var(--home-z-content);
     display: grid;
     grid-template-columns: repeat(6, minmax(0, 1fr));
-    gap: 16px;
-    width: min(calc(100% - 48px), var(--home-section-width));
+    gap: var(--home-grid-gap);
+    width: var(--home-column);
     /* The parallax stage settles 300px above its layout box (plus the md:py-40 padding);
        pull the cards up into that empty space, leaving a clear gap under the last row. */
     margin: -400px auto 0;
-    padding-bottom: clamp(88px, 10vw, 136px);
+    padding-bottom: var(--home-section-space);
   }
 
   /* ---------- Showcase: the filter lab, frameless ----------
@@ -141,14 +141,14 @@ const START_FILTER = "blocks";
     display: flex;
     flex-direction: column;
     min-width: 0;
-    /* Extra air before the pair of cards (on top of the grid gap). */
-    margin-bottom: 72px;
+    /* The lead picture sets off the pair of cards like a heading: head-gap in all, grid gap included. */
+    margin-bottom: calc(var(--home-head-gap) - var(--home-grid-gap));
   }
 
   .nt-part {
     grid-column: 1 / -1;
     /* Clear air under the parallax windows that settle just above. */
-    margin-top: clamp(32px, 5vw, 64px);
+    margin-top: var(--home-head-gap);
   }
 
   .nt-pair {
@@ -157,8 +157,8 @@ const START_FILTER = "blocks";
   }
 
   .nt-copy {
-    margin-top: 16px;
-    padding-inline: 4px;
+    margin-top: var(--home-space-4);
+    padding-inline: var(--home-space-1);
   }
 
   /* ---------- Switch: Lumno settings tabs plus the active tab's line ---------- */
@@ -167,7 +167,7 @@ const START_FILTER = "blocks";
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px 24px;
+    gap: var(--home-space-3) var(--home-space-6);
     min-width: 0;
   }
 
@@ -201,7 +201,7 @@ const START_FILTER = "blocks";
     position: relative;
     overflow: hidden;
     height: 340px;
-    border-radius: var(--home-radius-inner);
+    border-radius: var(--home-radius-xl);
     background: #e8eaee;
   }
 
@@ -242,7 +242,6 @@ const START_FILTER = "blocks";
   }
 
   .nt-screen--lab {
-    border-radius: var(--home-radius-xl);
     box-shadow: var(--home-shadow-card);
     /* NewTabMock sizes itself against this width. */
     container-type: inline-size;
@@ -320,21 +319,14 @@ const START_FILTER = "blocks";
     }
 
     .nt-caption {
-      padding-inline: 4px;
+      padding-inline: var(--home-space-1);
       text-align: left;
     }
   }
 
   @media (max-width: 760px) {
     .nt-features {
-      width: calc(100% - 32px);
-      gap: 12px;
       margin-top: -340px;
-      padding-bottom: 72px;
-    }
-
-    .nt-showcase {
-      margin-bottom: 40px;
     }
   }
 

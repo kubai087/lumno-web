@@ -1,6 +1,6 @@
 .hero-safari-demo {
   position: relative;
-  z-index: 2;
+  z-index: var(--home-z-content, 2);
   width: min(100%, 1280px);
   aspect-ratio: 1203 / 753;
   margin: clamp(36px, 4vw, 56px) auto 0;
@@ -22,7 +22,7 @@
   inset: auto;
   top: var(--hero-intro-target-top, 24px);
   left: var(--hero-intro-target-left, 24px);
-  z-index: 40;
+  z-index: var(--home-z-intro, 40);
   width: var(--hero-intro-target-width, calc(100vw - 48px));
   height: var(--hero-intro-target-height, calc(100dvh - 48px));
   overflow: hidden;

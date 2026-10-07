@@ -87,9 +87,8 @@ test("testimonial marquee fills two continuous lanes with hover-intent pause and
   assert.match(source, /src="\/assets\/lumno-newtab-monet-coastal-white\.webp"/);
   assert.match(source, /gridSize=\{2\}[\s\S]*?ditherMode="bayer"[\s\S]*?client:visible/);
   assert.match(source, /chrome-review-marquee__header[\s\S]*?chrome-review-marquee__frame[\s\S]*?<DitherShader[\s\S]*?chrome-review-marquee__rows/);
-  assert.match(source, /\.chrome-review-marquee__frame \{[\s\S]*?width: min\(calc\(100% - 48px\), var\(--home-section-width, 1180px\)\)/);
+  assert.match(source, /\.chrome-review-marquee__frame \{[\s\S]*?width: var\(--home-column\);/);
   assert.match(source, /overflow: hidden;[\s\S]*?border-radius: var\(--home-radius-xl\);[\s\S]*?background: #f7f8ef;/);
-  assert.match(source, /@media \(max-width: 760px\)[\s\S]*?\.chrome-review-marquee__frame \{[\s\S]*?width: calc\(100% - 32px\)/);
   assert.match(source, /font-size: 16px;[\s\S]*?font-weight: 400/);
   assert.match(source, /grid-template-columns: 32px minmax\(0, 1fr\)/);
   assert.match(source, /\.chrome-review-card__avatar \{[\s\S]*?width: 32px;[\s\S]*?height: 32px/);
@@ -135,7 +134,7 @@ test("homepage places the new-tab showcase and AI intent page before the review 
   assert.ok(reviewsIndex >= 0, "homepage review section should exist");
   assert.ok(heroIndex < aiIntentIndex && aiIntentIndex < newTabIndex && newTabIndex < reviewsIndex);
 
-  assert.match(source, /<h2 id="ai-intent-title" class="home-h2"><span>\{content\.aiIntent\.title\}<\/span><\/h2>/);
+  assert.match(source, /<h2 id="ai-intent-title" class="home-h2"[^>]*><span>\{content\.aiIntent\.title\}<\/span><\/h2>/);
   assert.match(source, /<AiIntentDemo locale=\{uiLocale\} client:visible \/>/);
   assert.match(source, /\.ai-intent-demo-slot\s*\{[\s\S]*?min-width: 0;/);
   assert.match(source, /@media \(max-width: 1080px\)[\s\S]*?\.ai-intent-section\s*\{[\s\S]*?grid-template-columns: minmax\(0, 1fr\)/);
@@ -161,7 +160,7 @@ test("review marquee copy is localized for every homepage locale", () => {
 test("review heading shares the homepage section heading system", () => {
   const source = readSource("src/components/home/ChromeReviewMarquee.astro");
 
-  assert.match(source, /<h2 id="reviews-title" class="home-h2"><span>\{title\}<\/span><\/h2>/);
+  assert.match(source, /<h2 id="reviews-title" class="home-h2"[^>]*><span>\{title\}<\/span><\/h2>/);
   assert.match(source, /<header class="home-section__head chrome-review-marquee__header">/);
 });
 

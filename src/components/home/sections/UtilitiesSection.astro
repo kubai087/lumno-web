@@ -29,11 +29,11 @@ const UTILITY_ORDER: Array<{ id: HomeUtilityId; icon: HomeCellIconName }> = [
 -->
 <section class="home-section utilities" aria-labelledby="utilities-title">
   <header class="home-section__head">
-    <h2 id="utilities-title" class="home-h2"><span>{content.title}</span></h2>
-    <p class="home-lead">{content.description}</p>
+    <h2 id="utilities-title" class="home-h2" data-reveal="text"><span>{content.title}</span></h2>
+    <p class="home-lead" data-reveal="text">{content.description}</p>
   </header>
 
-  <ul class="home-sheet utilities__grid">
+  <ul class="home-sheet utilities__grid" data-reveal>
     {UTILITY_ORDER.map(({ id, icon }) => (
       <li>
         <HomeCellIcon name={icon} />
@@ -103,15 +103,15 @@ const UTILITY_ORDER: Array<{ id: HomeUtilityId; icon: HomeCellIconName }> = [
   }
 
   /* Each cell is a container so its art (UtilityArt) shows only when there
-     is room beside the text: 144px tile + 10px inset, 14px gap. 300px keeps
-     it on today's common phones (390px and up). */
+     is room beside the text: 144px tile + the card inset, then a 16px gap.
+     300px keeps it on today's common phones (390px and up). */
   .utilities__grid > li {
     position: relative;
     container: utility / inline-size;
   }
 
   .utilities__grid :global(.home-cell__icon) {
-    margin-bottom: 20px;
+    margin-bottom: var(--home-space-5);
   }
 
   @container utility (min-width: 300px) {

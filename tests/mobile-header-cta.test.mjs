@@ -94,11 +94,11 @@ test("homepage glass navigation enters after the hero primary CTA has scrolled a
   );
   assert.match(
     source,
-    /\.top-nav-install-slot\s*\{[\s\S]*?grid-template-columns:\s*0fr;[\s\S]*?margin-left:\s*calc\(var\(--top-nav-action-gap\) \* -1\);[\s\S]*?overflow:\s*clip;[\s\S]*?border-radius:\s*999px;[\s\S]*?clip-path:\s*inset\(0 round 999px\);[\s\S]*?opacity:\s*0;[\s\S]*?visibility:\s*hidden;/,
+    /\.top-nav-install-slot\s*\{[\s\S]*?grid-template-columns:\s*0fr;[\s\S]*?margin-left:\s*calc\(var\(--top-nav-action-gap\) \* -1\);[\s\S]*?overflow:\s*clip;[\s\S]*?border-radius:\s*var\(--home-radius-pill\);[\s\S]*?clip-path:\s*inset\(0 round var\(--home-radius-pill\)\);[\s\S]*?opacity:\s*0;[\s\S]*?visibility:\s*hidden;/,
   );
   assert.match(
     source,
-    /\.top-nav\s*\{[^}]*?border-radius:\s*999px;[^}]*?overflow:\s*clip;/,
+    /\.top-nav\s*\{[^}]*?border-radius:\s*var\(--home-radius-pill\);[^}]*?overflow:\s*clip;/,
     "the navbar pill should clip the primary control while it enters from outside",
   );
   assert.match(
@@ -174,17 +174,24 @@ test("language menu keeps the shared runtime hooks when hydrated", () => {
 test("homepage navbar matches the content width and reveals after the hero intro", () => {
   const source = fs.readFileSync(path.join(workspaceRoot, "src/pages/index.astro"), "utf8");
 
-  assert.match(source, /--content-width:\s*1360px;/, "the homepage should define one shared content width");
-  assert.doesNotMatch(source, /--nav-width:/, "the navbar should not keep a separate width token");
+  const homeStyles = fs.readFileSync(path.join(workspaceRoot, "src/styles/home.css"), "utf8");
+  assert.match(homeStyles, /--home-section-width:\s*1360px;/, "the homepage should define one shared content width");
+  assert.match(homeStyles, /--home-gutter:\s*24px;/, "the homepage should define one desktop gutter");
+  assert.match(
+    homeStyles,
+    /@media \(max-width:\s*760px\)\s*\{\s*:root\s*\{[\s\S]*?--home-gutter:\s*16px;/,
+    "the gutter should tighten on phones for every column at once",
+  );
+  assert.doesNotMatch(source, /--nav-width:|--content-width:/, "the navbar should not keep a separate width token");
   assert.match(
     source,
-    /\.top-nav\s*\{[\s\S]*?width:\s*min\(calc\(100% - 48px\),\s*var\(--content-width\)\);/,
-    "the navbar should use the same width token and desktop gutters as the content",
+    /\.top-nav\s*\{[^}]*?width:\s*min\(\s*calc\(100% - var\(--home-gutter\) \* 2 - var\(--removed-body-scroll-bar-size, 0px\)\),\s*var\(--home-section-width\)\s*\);/,
+    "the navbar should use the same width token and gutters as the content",
   );
   assert.match(
     source,
-    /@media \(max-width:\s*760px\)[\s\S]*?\.top-nav\s*\{[\s\S]*?width:\s*min\(calc\(100% - 32px\),\s*var\(--content-width\)\);/,
-    "the navbar should keep the same mobile gutters as the content",
+    /\.hero-section\s*\{[^}]*?width:\s*var\(--home-column\);/,
+    "the hero should sit on the shared content column",
   );
   assert.match(
     source,
@@ -292,7 +299,7 @@ test("homepage navbar animates in the community action and reuses the CTA dialog
 
   assert.match(
     source,
-    /\.top-nav\s*\{[\s\S]*?left:\s*0;[\s\S]*?right:\s*var\(--removed-body-scroll-bar-size, 0px\);[\s\S]*?width:\s*min\(calc\(100% - 48px - var\(--removed-body-scroll-bar-size, 0px\)\), var\(--content-width\)\);[\s\S]*?margin-inline:\s*auto;[\s\S]*?\.top-nav-ghost-links\s*\{[\s\S]*?position:\s*absolute;[\s\S]*?left:\s*50%;[\s\S]*?transform:\s*translate\(-50%, -50%\);/,
+    /\.top-nav\s*\{[\s\S]*?left:\s*0;[\s\S]*?right:\s*var\(--removed-body-scroll-bar-size, 0px\);[\s\S]*?width:\s*min\(\s*calc\(100% - var\(--home-gutter\) \* 2 - var\(--removed-body-scroll-bar-size, 0px\)\),\s*var\(--home-section-width\)\s*\);[\s\S]*?margin-inline:\s*auto;[\s\S]*?\.top-nav-ghost-links\s*\{[\s\S]*?position:\s*absolute;[\s\S]*?left:\s*50%;[\s\S]*?transform:\s*translate\(-50%, -50%\);/,
     "desktop ghost links should be centered against the full navbar",
   );
   assert.match(

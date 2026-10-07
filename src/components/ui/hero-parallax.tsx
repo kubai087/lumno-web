@@ -264,7 +264,7 @@ export function ProductCard({
 }: ProductCardProps) {
   return (
     <motion.article
-      className="relative aspect-[1.585] w-[18rem] shrink-0 overflow-hidden rounded-[8px] bg-card md:w-[30rem] md:rounded-[10px]"
+      className="relative aspect-[1.585] w-[18rem] shrink-0 overflow-hidden rounded-[var(--home-radius-md,12px)] bg-card md:w-[30rem]"
       style={{ x: shouldReduceMotion ? 0 : translate }}
       aria-hidden={isLoopCopy || undefined}
       data-hero-parallax-card

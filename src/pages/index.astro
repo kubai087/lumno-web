@@ -315,11 +315,11 @@ const structuredData = [
 
       <section id="ai-intent" class="home-section ai-intent-section" aria-labelledby="ai-intent-title">
         <header class="home-section__head home-section__head--start ai-intent-copy">
-          <p class="home-eyebrow"><mark class="home-eyebrow__selection">{content.aiIntent.eyebrow}</mark></p>
-          <h2 id="ai-intent-title" class="home-h2"><span>{content.aiIntent.title}</span></h2>
-          <p class="home-lead home-lead--lines">{content.aiIntent.description}</p>
+          <p class="home-eyebrow" data-reveal="text"><mark class="home-eyebrow__selection">{content.aiIntent.eyebrow}</mark></p>
+          <h2 id="ai-intent-title" class="home-h2" data-reveal="text"><span>{content.aiIntent.title}</span></h2>
+          <p class="home-lead home-lead--lines" data-reveal="text">{content.aiIntent.description}</p>
         </header>
-        <div class="ai-intent-demo-slot">
+        <div class="ai-intent-demo-slot" data-reveal>
           <AiIntentDemo locale={uiLocale} client:visible />
         </div>
       </section>
@@ -446,6 +446,7 @@ const structuredData = [
     <script>
       import "../scripts/language-preference";
       import "../scripts/language-runtime";
+      import "../scripts/home-reveal";
     </script>
     <script define:vars={{ forcedLocale, routeLanguageMap }}>
       const FORCED_LOCALE = forcedLocale;
@@ -610,7 +611,6 @@ const structuredData = [
         --green-ink: #4d6653;
         --shadow-soft: rgba(45, 54, 62, 0.08);
         --shadow-card: rgba(45, 54, 62, 0.12);
-        --content-width: 1360px;
       }
 
       * {
@@ -654,8 +654,12 @@ const structuredData = [
         top: 18px;
         left: 0;
         right: var(--removed-body-scroll-bar-size, 0px);
-        z-index: 50;
-        width: min(calc(100% - 48px - var(--removed-body-scroll-bar-size, 0px)), var(--content-width));
+        z-index: var(--home-z-nav);
+        /* The page column, less the scrollbar a modal hides while it is open. */
+        width: min(
+          calc(100% - var(--home-gutter) * 2 - var(--removed-body-scroll-bar-size, 0px)),
+          var(--home-section-width)
+        );
         margin-inline: auto;
         min-height: 58px;
         padding: 6px 8px;
@@ -664,7 +668,7 @@ const structuredData = [
         justify-content: space-between;
         gap: 18px;
         border: 1px solid transparent;
-        border-radius: 999px;
+        border-radius: var(--home-radius-pill);
         overflow: clip;
         background: transparent;
         box-shadow: none;
@@ -824,8 +828,8 @@ const structuredData = [
         min-width: 0;
         margin-left: calc(var(--top-nav-action-gap) * -1);
         overflow: clip;
-        border-radius: 999px;
-        clip-path: inset(0 round 999px);
+        border-radius: var(--home-radius-pill);
+        clip-path: inset(0 round var(--home-radius-pill));
         opacity: 0;
         visibility: hidden;
         pointer-events: none;
@@ -867,19 +871,14 @@ const structuredData = [
       }
 
       .hero-section {
-        width: min(calc(100% - 48px), var(--content-width));
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      .hero-section {
         position: relative;
+        width: var(--home-column);
+        margin-inline: auto;
         min-height: 100svh;
         min-height: 100dvh;
         padding: 120px 0 80px;
         display: grid;
         grid-template-columns: 1fr;
-        max-width: var(--content-width);
         /* Only kicks in when the demo is width-capped (portrait screens). */
         align-content: center;
         justify-items: center;
@@ -890,7 +889,7 @@ const structuredData = [
 
       .hero-copy {
         position: relative;
-        z-index: 2;
+        z-index: var(--home-z-content);
         width: 100%;
         max-width: 760px;
         margin: 0 auto;
@@ -998,7 +997,7 @@ const structuredData = [
 
       .hero-copy > p {
         max-width: 660px;
-        margin: 18px auto 0;
+        margin: var(--home-lead-gap) auto 0;
         color: var(--text-sub);
         font-size: clamp(16px, 1.35vw, 18px);
         line-height: 1.72;
@@ -1019,13 +1018,13 @@ const structuredData = [
         flex-wrap: wrap;
         align-items: center;
         justify-content: center;
-        gap: 12px;
-        margin-top: 22px;
+        gap: var(--home-control-gap);
+        margin-top: var(--home-actions-gap);
       }
 
       .hero-demo-slot {
         position: relative;
-        z-index: 2;
+        z-index: var(--home-z-content);
         width: 100%;
         height: max(300px, calc(100svh - 500px));
         /* Portrait screens: don't stretch past the demo's native ratio. */
@@ -1131,7 +1130,7 @@ const structuredData = [
       .ai-intent-section {
         display: grid;
         grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-        gap: clamp(40px, 6vw, 96px);
+        gap: var(--home-split-gap);
         align-items: center;
       }
 
@@ -1160,7 +1159,7 @@ const structuredData = [
 
       .hero-parallax__description {
         max-width: 620px;
-        margin: 18px auto 0;
+        margin: var(--home-lead-gap) auto 0;
         color: var(--text-sub);
         font-size: clamp(16px, 1.3vw, 18px);
         line-height: 1.72;
@@ -1186,7 +1185,7 @@ const structuredData = [
 
         .ai-intent-section {
           grid-template-columns: minmax(0, 1fr);
-          gap: 40px;
+          gap: var(--home-head-gap);
         }
 
         .ai-intent-copy {
@@ -1217,7 +1216,6 @@ const structuredData = [
 
         .top-nav {
           top: max(10px, env(safe-area-inset-top));
-          width: min(calc(100% - 32px - var(--removed-body-scroll-bar-size, 0px)), var(--content-width));
           min-height: 58px;
           padding: 5px;
           gap: 10px;
@@ -1288,10 +1286,6 @@ const structuredData = [
         }
 
         .hero-section {
-          width: min(calc(100% - 32px), var(--content-width));
-        }
-
-        .hero-section {
           padding: 120px 0 52px;
           gap: 0;
         }
@@ -1330,14 +1324,12 @@ const structuredData = [
 
         .hero-copy > p {
           max-width: 330px;
-          margin-top: 22px;
           font-size: 15px;
           line-height: 1.7;
         }
 
         .hero-parallax__description {
           max-width: 330px;
-          margin-top: 22px;
           font-size: 15px;
           line-height: 1.7;
           text-wrap: balance;
@@ -1351,19 +1343,10 @@ const structuredData = [
           margin-top: 8px;
         }
 
-        .hero-actions {
-          gap: 10px;
-          margin-top: 24px;
-        }
-
         .hero-actions-button {
           min-height: 42px;
           padding: 7px 14px;
           font-size: 13px;
-        }
-
-        .ai-intent-section {
-          gap: 32px;
         }
 
       }

@@ -181,82 +181,51 @@
   font-weight: 500;
 }
 
+/* Three ways out, side by side, each appearing in turn. */
 .osa-sync {
-  padding: 12px 16px 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(max-content, 1fr));
+  margin: 0;
+  padding: 0;
   border-top: 1px solid rgba(var(--osa-edge), 0.06);
+  list-style: none;
 }
 
-/* A segmented control whose pill slides to the active tab. */
-.osa-sync__tabs {
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  height: 30px;
-  padding: 2px;
-  border-radius: 9px;
-  background: rgba(var(--osa-edge), 0.06);
-}
-
-.osa-sync__pill {
-  position: absolute;
-  top: 2px;
-  bottom: 2px;
-  left: 2px;
-  width: calc((100% - 4px) / 3);
-  border-radius: 7px;
-  background: #fff;
-  box-shadow:
-    0 0 0 0.5px rgba(var(--osa-edge), 0.08),
-    0 1px 3px rgba(var(--osa-edge), 0.12);
-  transform: translateX(calc(var(--active) * 100%));
-  transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
-}
-
-.osa-sync__tab {
-  position: relative;
-  display: grid;
-  place-items: center;
-  min-width: 0;
-  overflow: hidden;
-  color: #6b7280;
-  font-size: 12px;
-  font-weight: 600;
-  white-space: nowrap;
-  transition: color 0.3s ease;
-}
-
-.osa-sync__tab[data-active] {
-  color: #1f2937;
-}
-
-.osa-sync__dest {
+.osa-sync li {
   display: flex;
   align-items: center;
-  gap: 6px;
-  margin: 12px 2px 0;
-  color: #4b5563;
+  justify-content: center;
+  gap: 5px;
+  min-width: 0;
+  height: 44px;
+  padding: 0 4px;
+  overflow: hidden;
+  color: #374151;
   font-size: 12.5px;
-  font-weight: 500;
+  font-weight: 600;
   white-space: nowrap;
-  animation: osa-dest-in 0.36s ease both;
 }
 
-.osa-sync__dest i {
+.osa-sync li + li {
+  border-left: 1px solid rgba(var(--osa-edge), 0.06);
+}
+
+.osa-sync i {
   flex: none;
   color: #6b7280;
-  font-size: 14px;
+  font-size: 15px;
 }
 
-@keyframes osa-dest-in {
+.osa-sync[data-state="idle"] li {
+  opacity: 0;
+}
+
+.osa-sync[data-state="run"] li {
+  animation: osa-sync-in 0.4s ease calc(0.2s + var(--i) * 0.18s) both;
+}
+
+@keyframes osa-sync-in {
   from { opacity: 0; translate: 0 4px; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .osa-sync__pill,
-  .osa-sync__dest {
-    transition: none;
-    animation: none;
-  }
 }
 
 /* ---------- Source: MagicUI Terminal, restyled as the site's window ---------- */

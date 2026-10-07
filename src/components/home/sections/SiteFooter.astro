@@ -31,7 +31,7 @@ const { homeHref, tagline, socialAria, socials, columns, feedback, copyright, li
 ---
 
 <footer class="site-footer">
-  <div class="site-footer__main">
+  <div class="site-footer__main" data-reveal>
     <div class="site-footer__brand">
       <a class="site-footer__logo" href={homeHref} aria-label="Lumno">
         <span class="site-footer__icon" aria-hidden="true" set:html={logoIconSvg}></span>
@@ -127,15 +127,15 @@ const { homeHref, tagline, socialAria, socials, columns, feedback, copyright, li
 
   .site-footer__main,
   .site-footer__meta {
-    width: min(calc(100% - 48px), var(--home-section-width, 1180px));
+    width: var(--home-column);
     margin-inline: auto;
   }
 
   .site-footer__main {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
-    gap: 64px;
-    padding: 64px 0 56px;
+    gap: var(--home-space-16);
+    padding: var(--home-space-16) 0 56px;
   }
 
   .site-footer__logo {
@@ -168,7 +168,7 @@ const { homeHref, tagline, socialAria, socials, columns, feedback, copyright, li
 
   .site-footer__brand p {
     max-width: 340px;
-    margin: 16px 0 0;
+    margin: var(--home-space-4) 0 0;
     color: var(--text-sub, #626870);
     font-size: 14px;
     line-height: 1.7;
@@ -178,7 +178,7 @@ const { homeHref, tagline, socialAria, socials, columns, feedback, copyright, li
   .site-footer__socials {
     display: flex;
     gap: 4px;
-    margin: 18px 0 0 -7px;
+    margin: var(--home-space-4) 0 0 -7px;
   }
 
   .site-footer .site-footer__socials a {
@@ -186,7 +186,7 @@ const { homeHref, tagline, socialAria, socials, columns, feedback, copyright, li
     place-items: center;
     width: 32px;
     height: 32px;
-    border-radius: 8px;
+    border-radius: var(--home-radius-sm);
     font-size: 18px;
     line-height: 1;
     transition: color 160ms ease, background-color 160ms ease;
@@ -248,8 +248,8 @@ const { homeHref, tagline, socialAria, socials, columns, feedback, copyright, li
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: 12px 24px;
-    padding: 22px 0 28px;
+    gap: var(--home-space-3) var(--home-space-6);
+    padding: var(--home-space-6) 0 var(--home-space-8);
     border-top: 1px solid var(--home-card-border);
     color: var(--text-soft, #89919a);
     font-size: 13px;
@@ -288,19 +288,14 @@ const { homeHref, tagline, socialAria, socials, columns, feedback, copyright, li
   @media (max-width: 860px) {
     .site-footer__main {
       grid-template-columns: minmax(0, 1fr);
-      gap: 40px;
+      gap: var(--home-space-10);
     }
   }
 
   @media (max-width: 520px) {
-    .site-footer__main,
-    .site-footer__meta {
-      width: calc(100% - 32px);
-    }
-
     .site-footer__columns {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      column-gap: 32px;
+      column-gap: var(--home-space-8);
     }
 
   }

@@ -12,6 +12,4 @@ export type ShortcutKey = string | PlatformKey;
 export const MOD_KEY: PlatformKey = { mac: "⌘", other: "Ctrl" };
 export const SHIFT_KEY: PlatformKey = { mac: "⇧", other: "Shift" };
 
-export const COMMAND_BAR_SHORTCUT: readonly ShortcutKey[] = [MOD_KEY, SHIFT_KEY, "K"];
-
 export const shortcutKeyId = (key: ShortcutKey) => (typeof key === "string" ? key : key.mac);

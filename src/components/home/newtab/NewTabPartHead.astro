@@ -14,8 +14,8 @@ const { title, lead } = Astro.props;
 -->
 <header class="home-part-head">
   <div class="home-part-head__copy">
-    <h3 class="home-part-head__title">{title}</h3>
-    <p class="home-part-head__lead">{lead}</p>
+    <h3 class="home-part-head__title" data-reveal="text">{title}</h3>
+    <p class="home-part-head__lead" data-reveal="text">{lead}</p>
   </div>
   <slot />
 </header>

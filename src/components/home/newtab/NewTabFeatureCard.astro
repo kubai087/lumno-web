@@ -78,9 +78,11 @@ const RESTING_VIEW = BOOKMARK_VIEWS.length - 1;
 
 <style>
   /*
-   * A white shell with a hairline ring and the card shadow, then an 8px rim,
-   * then the panel: a near-white fill with its own inner hairline. Lighter
-   * than the grey paper cards, so the window inside reads as the art.
+   * A white shell with a hairline ring and the card shadow, then the card
+   * inset, then the panel: a near-white fill with its own inner hairline.
+   * Lighter than the grey paper cards, so the window inside reads as the art.
+   * The 1px ring counts toward the inset, so the panel sits exactly
+   * --home-card-inset in and its corner is the concentric --home-radius-inner.
    */
   .ntf {
     --edge: var(--home-edge);
@@ -90,7 +92,7 @@ const RESTING_VIEW = BOOKMARK_VIEWS.length - 1;
     display: flex;
     width: 100%;
     box-sizing: border-box;
-    padding: var(--inset);
+    padding: calc(var(--inset) - 1px);
     border: 1px solid transparent;
     border-radius: var(--home-radius-xl);
     background:
@@ -110,7 +112,7 @@ const RESTING_VIEW = BOOKMARK_VIEWS.length - 1;
     flex-direction: column;
     min-width: 0;
     overflow: hidden;
-    border-radius: calc(var(--home-radius-inner) - 1px);
+    border-radius: var(--home-radius-inner);
     background: linear-gradient(180deg, #fcfcfc 0%, #f8f8f9 100%);
     box-shadow: inset 0 0 0 1px rgba(var(--edge), 0.07);
   }
@@ -160,9 +162,9 @@ const RESTING_VIEW = BOOKMARK_VIEWS.length - 1;
   .ntf-tabs {
     align-self: flex-start;
     max-width: calc(100% - 2 * var(--pad));
-    margin: 16px var(--pad) 0;
+    margin: var(--home-space-4) var(--pad) 0;
     background: rgba(var(--edge), 0.05);
-    --lumno-settings-tabs-radius: 10px;
+    --lumno-settings-tabs-radius: var(--home-radius-sm);
     --lumno-settings-tabs-padding: 3px;
     gap: 4px;
   }
@@ -185,11 +187,11 @@ const RESTING_VIEW = BOOKMARK_VIEWS.length - 1;
   /* The browser window, the same frame in every card, its sides on the copy's edges. */
   .ntf-window {
     position: absolute;
-    inset: 24px var(--pad) 0;
+    inset: var(--home-art-gap) var(--pad) 0;
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    border-radius: 12px 12px 0 0;
+    border-radius: var(--home-radius-md) var(--home-radius-md) 0 0;
     background: #fafafa;
     box-shadow:
       0 0 0 1px rgba(var(--edge), 0.12),
@@ -231,7 +233,7 @@ const RESTING_VIEW = BOOKMARK_VIEWS.length - 1;
     width: min(52%, 280px);
     height: 20px;
     padding: 0 8px;
-    border-radius: 6px;
+    border-radius: var(--home-radius-xs);
     background: #fff;
     box-shadow: 0 0 0 1px rgba(var(--edge), 0.08);
     color: rgba(var(--edge), 0.35);

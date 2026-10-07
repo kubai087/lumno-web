@@ -75,7 +75,6 @@ type HomeContent = {
   heroDemoAria: string;
 
   commandBar: {
-    eyebrow: string;
     title: string;
     description: string;
     search: HomeBentoCard & {
@@ -162,7 +161,7 @@ type HomeContent = {
         items: Record<"history" | "bookmarks" | "searches" | "usage" | "location", string>;
       };
       /* A settings file and the three places it can go: tab label + where it ends up. */
-      sync: Record<"browser" | "webdav" | "file", { label: string; destination: string }>;
+      sync: Record<"browser" | "webdav" | "file", string>;
     };
     browsersLabel: string;
     browserNames: string[];
@@ -228,9 +227,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     heroDemoAria: "Lumno 命令栏演示：搜索浏览器内容、站内搜索与指令",
 
     commandBar: {
-      eyebrow: "聚焦搜索",
-      title: "一个快捷键，想去哪就去哪",
-      description: "在任意网页按下快捷键，命令栏就地浮现，不用切走当前页面。\n敲几个字，回车直达标签页、书签和网站。",
+      title: "命令栏，浏览器的万能入口",
+      description: "在任意网页随时唤出，不打断手头的事。\n切标签、找书签、搜网站、问 AI，一栏搞定。",
       search: {
         label: "统一搜索",
         title: "标签页、书签、历史，一搜全有",
@@ -406,9 +404,9 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           items: { history: "浏览记录", bookmarks: "书签与标签页", searches: "搜索内容", usage: "使用统计", location: "位置信息" },
         },
         sync: {
-          browser: { label: "浏览器同步", destination: "随浏览器账号同步到你的其他设备" },
-          webdav: { label: "WebDAV", destination: "保存到你自己的 WebDAV 服务器" },
-          file: { label: "导出文件", destination: "导出为文件，换台电脑直接导入" },
+          browser: "浏览器同步",
+          webdav: "WebDAV",
+          file: "导出文件",
         },
       },
       browsersLabel: "适用于 Chrome、Edge 和大多数 Chromium 内核浏览器",
@@ -519,9 +517,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     heroDemoAria: "Lumno 命令列示範：搜尋瀏覽器內容、站內搜尋與指令",
 
     commandBar: {
-      eyebrow: "聚焦搜尋",
-      title: "一個快捷鍵，想去哪就去哪",
-      description: "在任何網頁按下快捷鍵，命令列就地浮現，不必離開目前頁面。\n打幾個字，按 Enter 直達分頁、書籤和網站。",
+      title: "命令列，瀏覽器的萬用入口",
+      description: "在任何網頁隨時叫出，不打斷手邊的事。\n切換分頁、找書籤、搜網站、問 AI，都在這裡完成。",
       search: {
         label: "統一搜尋",
         title: "分頁、書籤、瀏覽紀錄，一搜就有",
@@ -697,9 +694,9 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           items: { history: "瀏覽紀錄", bookmarks: "書籤與分頁", searches: "搜尋內容", usage: "使用統計", location: "位置資訊" },
         },
         sync: {
-          browser: { label: "瀏覽器同步", destination: "隨瀏覽器帳號同步到你的其他裝置" },
-          webdav: { label: "WebDAV", destination: "存到你自己的 WebDAV 伺服器" },
-          file: { label: "匯出檔案", destination: "匯出成檔案，換台電腦直接匯入" },
+          browser: "瀏覽器同步",
+          webdav: "WebDAV",
+          file: "匯出檔案",
         },
       },
       browsersLabel: "適用於 Chrome、Edge 與大多數 Chromium 核心瀏覽器",
@@ -811,9 +808,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     heroDemoAria: "Lumno command bar demo: browser search, site search, and commands",
 
     commandBar: {
-      eyebrow: "Focus search",
-      title: "One shortcut to anywhere",
-      description: "Press the shortcut on any page and the command bar appears right where you are.\nType a few letters and hit Return to reach any tab, bookmark, or site.",
+      title: "One bar for everything",
+      description: "Bring it up on any page without losing your place.\nSwitch tabs, find bookmarks, search sites, or ask AI, right from here.",
       search: {
         label: "Unified search",
         title: "Tabs, bookmarks, history. One search.",
@@ -989,9 +985,9 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           items: { history: "Browsing history", bookmarks: "Bookmarks & tabs", searches: "Searches", usage: "Usage stats", location: "Location" },
         },
         sync: {
-          browser: { label: "Browser sync", destination: "Follows your browser account to every device" },
-          webdav: { label: "WebDAV", destination: "Saved to your own WebDAV server" },
-          file: { label: "Export file", destination: "Export once, import on any computer" },
+          browser: "Browser sync",
+          webdav: "WebDAV",
+          file: "Export file",
         },
       },
       browsersLabel: "Works in Chrome, Edge, and most Chromium-based browsers",

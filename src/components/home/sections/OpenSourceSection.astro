@@ -29,9 +29,9 @@ const browsersWithLogo = content.browserNames.filter((name) => BROWSER_LOGOS[nam
 <section id="open-source" class="home-section open-source" aria-labelledby="open-source-title">
   <header class="open-source__head">
     <div class="open-source__intro">
-      <h2 id="open-source-title" class="home-h2"><span>{content.title}</span></h2>
+      <h2 id="open-source-title" class="home-h2" data-reveal="text"><span>{content.title}</span></h2>
       <!-- Under the heading: which browsers it runs in, logos then caption. -->
-      <div class="open-source__browsers">
+      <div class="open-source__browsers" data-reveal="text">
         <p>{content.browsersLabel}</p>
         <ul class="os-logos" aria-label={content.browserNames.join(", ")}>
           {browsersWithLogo.map((name) => (
@@ -53,6 +53,7 @@ const browsersWithLogo = content.browserNames.filter((name) => BROWSER_LOGOS[nam
       data-analytics-event="open_github_repo"
       data-analytics-category="cta"
       data-analytics-label="home_open_source_github"
+      data-reveal
     >
       {content.githubLabel}
     </SettingsButton>
@@ -64,7 +65,7 @@ const browsersWithLogo = content.browserNames.filter((name) => BROWSER_LOGOS[nam
   -->
   <ul class="open-source__cards">
     {POINTS.map((id) => (
-      <li class="os-card" data-os-card data-point={id}>
+      <li class="os-card" data-reveal data-os-card data-point={id}>
         <h3>{content.points[id]}</h3>
         <div class="os-card__art" aria-hidden="true">
           <div class="os-card__panel">
@@ -92,18 +93,18 @@ const browsersWithLogo = content.browserNames.filter((name) => BROWSER_LOGOS[nam
     flex-wrap: wrap;
     align-items: flex-end;
     justify-content: space-between;
-    gap: 24px 48px;
-    margin-bottom: clamp(36px, 4.5vw, 52px);
+    gap: var(--home-space-6) var(--home-space-12);
+    margin-bottom: var(--home-head-gap);
   }
 
   .open-source__head :global(.open-source__github) {
-    margin-bottom: 4px;
+    margin-bottom: var(--home-space-1);
   }
 
   .open-source__cards {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 20px;
+    gap: var(--home-grid-gap);
     margin: 0;
     padding: 0;
     list-style: none;
@@ -170,14 +171,15 @@ const browsersWithLogo = content.browserNames.filter((name) => BROWSER_LOGOS[nam
     flex: none;
     height: 264px;
     margin-top: auto;
-    padding-top: 28px;
+    padding-top: var(--home-art-gap);
   }
 
+  /* The same window as the new tab feature cards: art-gap under the copy, its sides on the copy's edges. */
   .os-card__panel {
     position: absolute;
-    inset: 28px var(--pad) 0;
+    inset: var(--home-art-gap) var(--pad) 0;
     overflow: hidden;
-    border-radius: 14px 14px 0 0;
+    border-radius: var(--home-radius-md) var(--home-radius-md) 0 0;
     background: #fff;
     container-type: inline-size;
     box-shadow:
@@ -190,8 +192,8 @@ const browsersWithLogo = content.browserNames.filter((name) => BROWSER_LOGOS[nam
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 10px 14px;
-    margin-top: 18px;
+    gap: var(--home-space-2) var(--home-space-3);
+    margin-top: var(--home-lead-gap);
   }
 
   .open-source__browsers p {
@@ -234,7 +236,7 @@ const browsersWithLogo = content.browserNames.filter((name) => BROWSER_LOGOS[nam
     bottom: calc(100% + 8px);
     left: 50%;
     padding: 4px 8px;
-    border-radius: 6px;
+    border-radius: var(--home-radius-xs);
     background: #1f2328;
     color: #fff;
     font-size: 12px;
@@ -270,7 +272,7 @@ const browsersWithLogo = content.browserNames.filter((name) => BROWSER_LOGOS[nam
       display: grid;
       grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
       align-items: center;
-      column-gap: 8px;
+      column-gap: var(--home-space-2);
     }
 
     .os-card h3 {

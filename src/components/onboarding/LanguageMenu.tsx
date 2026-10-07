@@ -6,6 +6,8 @@ interface Props {
   locales?: Array<"zh-CN" | "zh-TW" | "en">;
   iconOnly?: boolean;
   placement?: "above" | "below";
+  // Localized URLs per locale; rendering options as links keeps every language version crawlable.
+  hrefs?: Record<string, string>;
 }
 
 const LANGUAGE_OPTIONS = [
@@ -20,11 +22,13 @@ export default function LanguageMenu({
   locales,
   iconOnly = false,
   placement = "below",
+  hrefs = {},
 }: Props) {
   const enabledLocales = locales?.length ? new Set(locales) : null;
   const options = enabledLocales
     ? LANGUAGE_OPTIONS.filter((option) => enabledLocales.has(option.value))
     : LANGUAGE_OPTIONS;
+  const items = options.map((option) => ({ ...option, href: hrefs[option.value] }));
   const currentValue = options.find((option) => option.label === currentLabel)?.value || options[0]?.value;
 
   return (
@@ -47,7 +51,7 @@ export default function LanguageMenu({
         openStateEvent="lumno:language-menu-state"
         label={toggleAriaLabel}
         defaultValue={currentValue}
-        items={options}
+        items={items}
       />
     </div>
   );

@@ -11,3 +11,6 @@ tmp-*.png
 
 # Local test artifacts
 test-results/
+
+# Local scratch output
+tmp/

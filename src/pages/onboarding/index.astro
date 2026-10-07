@@ -36,6 +36,7 @@ const routeLanguageMap = Astro.props.routeLanguageMap || buildScopedRouteLanguag
 const entryContextConfig = buildEntryContextConfig();
 const uiLocale = forcedLocale || DEFAULT_LOCALE;
 const homeHref = buildLocalizedPath(uiLocale, "/");
+const releaseHref = buildLocalizedPath(uiLocale, "/release/");
 const WORDMARK_TEXT = "Lumno";
 const alternateLinks = buildAlternateLinks(routeLanguageMap, "/onboarding/");
 const ogLocale = getOpenGraphLocale(uiLocale);
@@ -2464,7 +2465,7 @@ const structuredData = [
   </head>
   <body data-locale={uiLocale} class:list={{ "is-locale-en": uiLocale === "en" }}>
     <header class="top-nav">
-      <a class="top-nav-brand" href="/" aria-label="Lumno" data-analytics-event="select_home_brand" data-analytics-category="navigation" data-analytics-label="onboarding_brand">
+      <a class="top-nav-brand" href={homeHref} aria-label="Lumno" data-analytics-event="select_home_brand" data-analytics-category="navigation" data-analytics-label="onboarding_brand">
         <span class="top-nav-brand-mark" role="img" aria-label="Lumno" set:html={topWordmarkSvg}></span>
       </a>
       <div class="top-actions">
@@ -2472,7 +2473,7 @@ const structuredData = [
           <a class="pill-btn pill-btn-selected pill-btn-icon-only" href="https://github.com/kubai087/lumno-extension" target="_blank" rel="noreferrer noopener" aria-label={initialUi.settingsAria} data-i18n-aria-label="settings_aria" data-analytics-event="open_github_repo" data-analytics-category="cta" data-analytics-label="onboarding_header_github">
             <i class="ri-github-fill" aria-hidden="true"></i>
           </a>
-          <a class="pill-btn pill-btn-selected" href="/release/" aria-label={initialUi.releaseAria} data-i18n-aria-label="release_aria" data-analytics-event="open_release_page" data-analytics-category="navigation" data-analytics-label="onboarding_header_release">
+          <a class="pill-btn pill-btn-selected" href={releaseHref} aria-label={initialUi.releaseAria} data-i18n-aria-label="release_aria" data-analytics-event="open_release_page" data-analytics-category="navigation" data-analytics-label="onboarding_header_release">
             <i class="ri-file-list-3-line" aria-hidden="true"></i>
             <span data-i18n="view_release">{initialUi.viewRelease}</span>
           </a>
@@ -2665,11 +2666,12 @@ const structuredData = [
     </main>
     <LanguageMenu
       currentLabel={initialUi.languageLabel}
-    toggleAriaLabel={initialUi.languageSelectAria}
-    locales={Array.from(SUPPORTED_ONBOARDING_LANGUAGES)}
-    placement="above"
-    client:load
-  />
+      toggleAriaLabel={initialUi.languageSelectAria}
+      locales={Array.from(SUPPORTED_ONBOARDING_LANGUAGES)}
+      hrefs={routeLanguageMap}
+      placement="above"
+      client:load
+    />
     <div class="producthunt-badge-wrap producthunt-badge-wrap--page-bottom">
       <a
         class="producthunt-badge-link"

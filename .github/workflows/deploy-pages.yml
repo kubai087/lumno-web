@@ -31,6 +31,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          # Full history lets sitemap.xml read each page's real last-modified commit.
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v6

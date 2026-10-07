@@ -791,7 +791,10 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
       }
 
       .lang-option {
+        display: block;
+        box-sizing: border-box;
         width: 100%;
+        text-decoration: none;
         padding: 7px 9px;
         border: 0;
         border-radius: var(--language-option-radius, 8px);
@@ -1101,9 +1104,9 @@ const privacyPolicyHtml = marked.parse(content.policySource, {
         </span>
       </button>
       <div id="language-menu" class="lang-menu" role="menu" data-open="false">
-        <button class="lang-option" type="button" role="menuitemradio" data-lang-value="zh-CN">简体中文</button>
-        <button class="lang-option" type="button" role="menuitemradio" data-lang-value="zh-TW">繁體中文</button>
-        <button class="lang-option" type="button" role="menuitemradio" data-lang-value="en">English</button>
+        <a class="lang-option" href={routeLanguageMap["zh-CN"]} hreflang="zh-CN" lang="zh-CN" role="menuitemradio" data-lang-value="zh-CN">简体中文</a>
+        <a class="lang-option" href={routeLanguageMap["zh-TW"]} hreflang="zh-TW" lang="zh-TW" role="menuitemradio" data-lang-value="zh-TW">繁體中文</a>
+        <a class="lang-option" href={routeLanguageMap.en} hreflang="en" lang="en" role="menuitemradio" data-lang-value="en">English</a>
       </div>
     </div>
     <script>

@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { execSync } from "node:child_process";
+import { execFileSync } from "node:child_process";
 import { buildLocalizedPath, getNonDefaultLocales } from "../lib/locales";
 import { fetchReleases } from "../lib/releases";
 import { SITE_URL } from "../lib/seo";
@@ -14,13 +14,11 @@ function escapeXml(value: string): string {
 }
 
 function readLastCommitIso(paths: string[], fallback: string): string {
-  const input = paths
-    .map((item) => String(item || "").trim())
-    .filter(Boolean)
-    .join(" ");
-  if (!input) return fallback;
+  const input = paths.map((item) => String(item || "").trim()).filter(Boolean);
+  if (!input.length) return fallback;
   try {
-    const raw = execSync(`git log -1 --format=%cI -- ${input}`, {
+    // Pass paths as argv so bracketed route folders like [locale] are never shell-globbed.
+    const raw = execFileSync("git", ["log", "-1", "--format=%cI", "--", ...input], {
       stdio: ["ignore", "pipe", "ignore"],
       encoding: "utf8",
     }).trim();
@@ -34,7 +32,10 @@ export const GET: APIRoute = async () => {
   const releases = await fetchReleases();
   const now = new Date().toISOString();
   const releaseLastmod = releases[0]?.date || now;
-  const homeLastmod = readLastCommitIso(["src/pages/index.astro", "src/lib/seo.ts"], now);
+  const homeLastmod = readLastCommitIso(
+    ["src/pages/index.astro", "src/pages/[locale]/index.astro", "src/lib/home-content.ts", "src/lib/seo.ts"],
+    now,
+  );
   const featuresLastmod = readLastCommitIso(
     ["src/pages/features/index.astro", "src/pages/[locale]/features/index.astro", "src/lib/features-content.ts"],
     now,

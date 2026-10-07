@@ -173,3 +173,44 @@ test("sitemap exposes localized privacy pages", () => {
   assert.match(source, /src\/content\/privacy-policy\.zh-TW\.md/);
   assert.match(source, /src\/content\/privacy-policy\.en\.md/);
 });
+
+test("language menus expose every locale as a crawlable link", () => {
+  const menuSource = readSource("src/components/onboarding/LanguageMenu.tsx");
+  assert.match(menuSource, /href: hrefs\[option\.value\]/);
+  for (const file of ["src/pages/index.astro", "src/pages/onboarding/index.astro"]) {
+    assert.match(readSource(file), /hrefs=\{routeLanguageMap\}/, file);
+  }
+  for (const file of ["src/pages/release/index.astro", "src/pages/privacy/index.astro"]) {
+    const source = readSource(file);
+    assert.doesNotMatch(source, /<button class="lang-option"/, file);
+    assert.match(source, /<a class="lang-option" href=\{routeLanguageMap\.en\}/, file);
+  }
+  // Links stay links for crawlers; the runtime still handles persistence and navigation.
+  assert.match(readSource("src/scripts/language-runtime.ts"), /event\.preventDefault\(\);\s*const next/);
+});
+
+test("localized entry pages link to same-locale routes", () => {
+  const onboarding = readSource("src/pages/onboarding/index.astro");
+  assert.match(onboarding, /class="top-nav-brand" href=\{homeHref\}/);
+  assert.match(onboarding, /href=\{releaseHref\} aria-label=\{initialUi\.releaseAria\}/);
+  assert.match(readSource("src/pages/release/index.astro"), /<a class="brand" href=\{homeHref\}/);
+});
+
+test("release page keeps a descriptive h1 for web visitors", () => {
+  const source = readSource("src/pages/release/index.astro");
+  assert.match(source, /bannerTitle: "Lumno 更新日志"/);
+  assert.match(source, /banner_title_web: "Lumno Release Notes"/);
+  assert.match(source, /!entryContext\.isExtensionEntry\s*\? getMessage\(resolvedLocale, "banner_title_web"\)/);
+  assert.doesNotMatch(source, /\.banner-overlay \{[^}]*display: none;/);
+});
+
+test("homepage intro never hides content without JavaScript", () => {
+  const source = readSource("src/pages/index.astro");
+  assert.match(source, /document\.documentElement\.setAttribute\("data-home-intro-js", ""\)/);
+  assert.doesNotMatch(source, /^\s*body\[data-home-intro=/m);
+});
+
+test("deploy checkout keeps history for accurate sitemap lastmod", () => {
+  assert.match(readSource(".github/workflows/deploy-pages.yml"), /fetch-depth: 0/);
+  assert.match(readSource("src/pages/sitemap.xml.ts"), /execFileSync\("git", \["log"/);
+});

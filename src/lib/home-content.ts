@@ -37,6 +37,8 @@ type HomeContent = {
   installChromeRecommendation: string;
   githubAria: string;
   heroTitle: string;
+  // Optional editorial two-line slogan: a roman lead line and an italic accent line.
+  heroTitleSerif?: { lead: string; accent: string };
   heroDescription: string;
   heroInstallLabel: string;
   heroInstallAria: string;
@@ -349,7 +351,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     installEdgeStoreLabel: "Microsoft Edge Add-ons",
     installChromeRecommendation: "Recommended · Faster updates",
     githubAria: "Open the Lumno repository on GitHub",
-    heroTitle: "Find anything in your browser, from any page",
+    heroTitle: "Your browser, at command.",
+    heroTitleSerif: { lead: "Your browser,", accent: "at command." },
     heroDescription:
       "Lumno is an open-source command bar for your browser.\nFind tabs, bookmarks, history, and favorite sites in one search.",
     heroInstallLabel: "Install from the Chrome Web Store",

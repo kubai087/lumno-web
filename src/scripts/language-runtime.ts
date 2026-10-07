@@ -61,6 +61,8 @@ function bindLanguageMenuInteractions(
     }
     const languageOption = target.closest("#language-menu [data-lang-value]");
     if (languageOption) {
+      // Options are real links for crawlers; the runtime still owns persistence and navigation.
+      event.preventDefault();
       const next = languageOption.getAttribute("data-lang-value") || getSystemLocale();
       applyLanguageMode(next, { persist: true });
       setLanguageMenuOpen(false);

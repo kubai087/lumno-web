@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@astrojs/react": "^6.0.2",
+    "@fontsource/eb-garamond": "^5.3.0",
     "@supabase/supabase-js": "^2.111.0",
     "astro": "^7.1.6",
     "class-variance-authority": "^0.7.1",

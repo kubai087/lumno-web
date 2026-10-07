@@ -10,6 +10,10 @@ import HomeNavGhostLinks from "../components/navigation/HomeNavGhostLinks";
 import InstallMenu from "../components/navigation/InstallMenu";
 import { HeroParallax } from "../components/ui/hero-parallax";
 import logoIconSvg from "../assets/onboarding/logo.svg?raw";
+import "@fontsource/eb-garamond/600.css";
+import "@fontsource/eb-garamond/500-italic.css";
+import ebGaramondLatin600 from "@fontsource/eb-garamond/files/eb-garamond-latin-600-normal.woff2?url";
+import ebGaramondLatin500Italic from "@fontsource/eb-garamond/files/eb-garamond-latin-500-italic.woff2?url";
 import "../styles/globals.css";
 import { getChromeStoreReviews } from "../lib/chrome-store-reviews";
 import { COMMUNITY_LINKS } from "../lib/community";
@@ -169,6 +173,28 @@ const structuredData = [
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="stylesheet" href="/assets/remixicon.css" />
+    <script is:inline>
+      // The hero intro hides the page until the demo hydrates. Gate that on JS so crawlers and
+      // no-JS visitors always get visible content, and lift it if hydration never finishes.
+      document.documentElement.setAttribute("data-home-intro-js", "");
+      const liftStalledHomeIntro = () => {
+        // Background tabs legitimately pause the intro; only intervene once the page is visible.
+        if (document.visibilityState !== "visible") {
+          document.addEventListener("visibilitychange", () => window.setTimeout(liftStalledHomeIntro, 8000), { once: true });
+          return;
+        }
+        if (document.body && document.body.dataset.homeIntro === "pending") {
+          document.documentElement.removeAttribute("data-home-intro-js");
+        }
+      };
+      window.setTimeout(liftStalledHomeIntro, 8000);
+    </script>
+    {content.heroTitleSerif && (
+      <>
+        <link rel="preload" as="font" type="font/woff2" href={ebGaramondLatin600} crossorigin />
+        <link rel="preload" as="font" type="font/woff2" href={ebGaramondLatin500Italic} crossorigin />
+      </>
+    )}
   </head>
   <body data-home-intro="pending" data-locale={uiLocale}>
     <header class="top-nav">
@@ -211,6 +237,7 @@ const structuredData = [
         <LanguageMenu
           currentLabel={content.languageLabel}
           toggleAriaLabel={content.languageSelectAria}
+          hrefs={routeLanguageMap}
           iconOnly
           client:load
         />
@@ -236,9 +263,23 @@ const structuredData = [
         <div class="hero-copy">
           <h1
             id="hero-title"
-            class:list={{ "hero-title-has-break": heroTitleSegments.length > 1 }}
+            class:list={{
+              "hero-title-has-break": heroTitleSegments.length > 1,
+              "hero-title-serif": Boolean(content.heroTitleSerif),
+            }}
             aria-label={content.heroTitle}
           >
+            {content.heroTitleSerif ? (
+              <>
+                <span class="hero-title-line hero-title-serif-lead">
+                  <span class="hero-title-segment">{content.heroTitleSerif.lead}</span>
+                  <span class="hero-title-app-icon" aria-hidden="true" set:html={logoIconSvg}></span>
+                </span>
+                <span class="hero-title-line hero-title-serif-accent">
+                  <span class="hero-title-segment">{content.heroTitleSerif.accent}</span>
+                </span>
+              </>
+            ) : (
             <span class="hero-title-line">
               {heroTitleSegments.map((segment, index) => (
                 <span class="hero-title-segment">
@@ -252,6 +293,7 @@ const structuredData = [
                 </span>
               ))}
             </span>
+            )}
           </h1>
           <p class="hero-description">
             {heroDescriptionLineChunks.map((chunks) => (
@@ -1094,6 +1136,40 @@ const structuredData = [
         transform-origin: 24% 77%;
       }
 
+      /* English editorial slogan (Figma P1): EB Garamond roman lead + italic gradient accent. */
+      .hero-copy h1.hero-title-serif {
+        max-width: none;
+        font-family: "EB Garamond", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+        font-size: clamp(48px, 5vw, 72px);
+        line-height: 1.02;
+        letter-spacing: -0.012em;
+      }
+
+      .hero-title-serif .hero-title-line {
+        padding-block: 0.04em;
+      }
+
+      .hero-title-serif-lead {
+        font-weight: 600;
+      }
+
+      .hero-title-serif-accent {
+        font-style: italic;
+        font-weight: 500;
+      }
+
+      .hero-title-serif-accent .hero-title-segment {
+        /* Italic overhang: keep the final glyph inside the clipped gradient box. */
+        padding-inline: 0.04em 0.12em;
+        background-image: linear-gradient(180deg, #4f4839 0%, #8a7f68 60%, #b2a68d 100%);
+      }
+
+      .hero-title-serif .hero-title-app-icon {
+        --hero-icon-box: clamp(40px, 3.9vw, 56px);
+        margin-left: clamp(10px, 1.1vw, 16px);
+        vertical-align: -0.04em;
+      }
+
       .hero-title-app-icon svg {
         position: absolute;
         width: calc(var(--hero-icon-box) * 63 / 48);
@@ -1144,50 +1220,50 @@ const structuredData = [
         margin: 0;
       }
 
-      body[data-home-intro="pending"],
-      body[data-home-intro="revealing"] {
+      html[data-home-intro-js] body[data-home-intro="pending"],
+      html[data-home-intro-js] body[data-home-intro="revealing"] {
         overflow: hidden;
       }
 
-      body[data-home-intro="pending"] main > :not(.hero-section),
-      body[data-home-intro="revealing"] main > :not(.hero-section),
-      body[data-home-intro="pending"] .site-legal-nav,
-      body[data-home-intro="revealing"] .site-legal-nav {
+      html[data-home-intro-js] body[data-home-intro="pending"] main > :not(.hero-section),
+      html[data-home-intro-js] body[data-home-intro="revealing"] main > :not(.hero-section),
+      html[data-home-intro-js] body[data-home-intro="pending"] .site-legal-nav,
+      html[data-home-intro-js] body[data-home-intro="revealing"] .site-legal-nav {
         visibility: hidden;
         opacity: 0;
       }
 
-      body[data-home-intro="pending"] .top-nav,
-      body[data-home-intro="pending"] .hero-copy > * {
+      html[data-home-intro-js] body[data-home-intro="pending"] .top-nav,
+      html[data-home-intro-js] body[data-home-intro="pending"] .hero-copy > * {
         visibility: hidden;
         opacity: 0;
         translate: 0 -16px;
         pointer-events: none;
       }
 
-      body[data-home-intro="pending"] .hero-copy > * {
+      html[data-home-intro-js] body[data-home-intro="pending"] .hero-copy > * {
         translate: 0 22px;
         filter: blur(10px);
       }
 
-      body[data-home-intro="revealing"] .top-nav {
+      html[data-home-intro-js] body[data-home-intro="revealing"] .top-nav {
         transition-delay: 120ms;
       }
 
-      body[data-home-intro="revealing"] .hero-copy h1 {
+      html[data-home-intro-js] body[data-home-intro="revealing"] .hero-copy h1 {
         transition-delay: 280ms;
       }
 
-      body[data-home-intro="revealing"] .hero-description {
+      html[data-home-intro-js] body[data-home-intro="revealing"] .hero-description {
         transition-delay: 410ms;
       }
 
-      body[data-home-intro="revealing"] .hero-actions {
+      html[data-home-intro-js] body[data-home-intro="revealing"] .hero-actions {
         transition-delay: 540ms;
       }
 
-      body[data-home-intro="pending"] .hero-demo-page-switcher,
-      body[data-home-intro="revealing"] .hero-demo-page-switcher {
+      html[data-home-intro-js] body[data-home-intro="pending"] .hero-demo-page-switcher,
+      html[data-home-intro-js] body[data-home-intro="revealing"] .hero-demo-page-switcher {
         pointer-events: none;
       }
 
@@ -1843,6 +1919,11 @@ const structuredData = [
           letter-spacing: -0.048em;
         }
 
+        .hero-copy h1.hero-title-serif {
+          font-size: clamp(42px, 12.4vw, 54px);
+          letter-spacing: -0.01em;
+        }
+
         .hero-parallax__title {
           max-width: 620px;
           font-size: clamp(34px, 10vw, 44px);
@@ -2110,14 +2191,14 @@ const structuredData = [
           transition-duration: 0.01ms !important;
         }
 
-        body[data-home-intro="pending"] {
+        html[data-home-intro-js] body[data-home-intro="pending"] {
           overflow: auto;
         }
 
-        body[data-home-intro="pending"] main > :not(.hero-section),
-        body[data-home-intro="pending"] .site-legal-nav,
-        body[data-home-intro="pending"] .top-nav,
-        body[data-home-intro="pending"] .hero-copy > * {
+        html[data-home-intro-js] body[data-home-intro="pending"] main > :not(.hero-section),
+        html[data-home-intro-js] body[data-home-intro="pending"] .site-legal-nav,
+        html[data-home-intro-js] body[data-home-intro="pending"] .top-nav,
+        html[data-home-intro-js] body[data-home-intro="pending"] .hero-copy > * {
           visibility: visible;
           opacity: 1;
           translate: 0 0;

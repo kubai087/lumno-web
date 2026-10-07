@@ -14,7 +14,7 @@ test("simplified Chinese hero title wraps only at its comma", () => {
   assert.match(source, /uiLocale === "zh-CN" \? content\.heroTitle\.indexOf\("，"\) : -1/);
   assert.match(source, /const heroTitleSeparator = heroTitleCommaIndex >= 0/);
   assert.match(source, /content\.heroTitle\.slice\(0, heroTitleCommaIndex\)/);
-  assert.match(source, /class:list=\{\{ "hero-title-has-break": heroTitleSegments\.length > 1 \}\}/);
+  assert.match(source, /"hero-title-has-break": heroTitleSegments\.length > 1,/);
   assert.match(source, /<span class="hero-title-separator">\{heroTitleSeparator\}<\/span>/);
   assert.match(
     source,
@@ -68,4 +68,12 @@ test("simplified Chinese hero description is one sentence and localized copy reb
     source,
     /@media \(max-width:\s*760px\)[\s\S]*?\.hero-copy > p\s*\{[\s\S]*?max-width:\s*330px;[\s\S]*?line-height:\s*1\.7;[\s\S]*?\.hero-description-line\s*\{[\s\S]*?text-wrap:\s*balance;[\s\S]*?\.hero-description-line \+ \.hero-description-line\s*\{[\s\S]*?margin-top:\s*8px;/,
   );
+});
+
+test("English hero uses the editorial serif slogan", () => {
+  assert.match(contentSource, /heroTitle: "Your browser, at command\.",/);
+  assert.match(contentSource, /heroTitleSerif: \{ lead: "Your browser,", accent: "at command\." \}/);
+  assert.match(source, /import "@fontsource\/eb-garamond\/600\.css";/);
+  assert.match(source, /import "@fontsource\/eb-garamond\/500-italic\.css";/);
+  assert.match(source, /\.hero-title-serif-accent\s*\{[\s\S]*?font-style:\s*italic;/);
 });

@@ -71,7 +71,7 @@ const pageKeywords = buildKeywords([
 const initialUi = {
   "zh-CN": {
     joinDiscord: "反馈 & 提需",
-    bannerTitle: "已更新至新版本！",
+    bannerTitle: "Lumno 更新日志",
     brandHomeAria: "回到 Lumno 首页",
     brandLogoAlt: "Lumno",
     githubRepoAria: "访问 Lumno GitHub 仓库",
@@ -89,7 +89,7 @@ const initialUi = {
   },
   "zh-TW": {
     joinDiscord: "反饋 & 提需",
-    bannerTitle: "已更新至新版本！",
+    bannerTitle: "Lumno 更新日誌",
     brandHomeAria: "回到 Lumno 首頁",
     brandLogoAlt: "Lumno",
     githubRepoAria: "造訪 Lumno GitHub 倉庫",
@@ -107,7 +107,7 @@ const initialUi = {
   },
   en: {
     joinDiscord: "Feedback & Requests",
-    bannerTitle: "You're up to date!",
+    bannerTitle: "Lumno Release Notes",
     brandHomeAria: "Back to the Lumno homepage",
     brandLogoAlt: "Lumno",
     githubRepoAria: "Open the Lumno GitHub repository",
@@ -558,7 +558,10 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
       }
 
       .lang-option {
+        display: block;
+        box-sizing: border-box;
         width: 100%;
+        text-decoration: none;
         border: 0;
         background: transparent;
         border-radius: var(--language-option-radius, 8px);
@@ -677,15 +680,26 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
       .banner-overlay {
         position: absolute;
         inset: 0;
-        display: none;
+        display: flex;
         align-items: center;
         justify-content: center;
         padding: 12px;
         pointer-events: none;
       }
 
-      body[data-release-entry="ext"] .banner-overlay {
-        display: flex;
+      body:not([data-release-entry="ext"]) .banner-overlay {
+        inset: auto;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+      }
+
+      body:not([data-release-entry="ext"]) .banner-title-emoji {
+        display: none;
       }
 
       .banner-title {
@@ -1257,7 +1271,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
     <header class="header">
       <div class="container">
         <div class="header-inner">
-          <a class="brand" href="/" data-i18n-aria-label="brand_home_aria" aria-label={initialUi.brandHomeAria} data-analytics-event="select_home_brand" data-analytics-category="navigation" data-analytics-label="release_brand">
+          <a class="brand" href={homeHref} data-i18n-aria-label="brand_home_aria" aria-label={initialUi.brandHomeAria} data-analytics-event="select_home_brand" data-analytics-category="navigation" data-analytics-label="release_brand">
             <img class="brand-logo" src="/resource_commited/logo.png" alt={initialUi.brandLogoAlt} draggable="false" />
           </a>
           <div class="header-controls">
@@ -1508,15 +1522,15 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         </span>
       </button>
       <div id="language-menu" class="lang-menu" role="menu" data-open="false">
-        <button class="lang-option" type="button" role="menuitemradio" data-lang-value="zh-CN" data-i18n="language_zh_cn">
+        <a class="lang-option" href={routeLanguageMap["zh-CN"]} hreflang="zh-CN" lang="zh-CN" role="menuitemradio" data-lang-value="zh-CN" data-i18n="language_zh_cn">
           简体中文
-        </button>
-        <button class="lang-option" type="button" role="menuitemradio" data-lang-value="zh-TW" data-i18n="language_zh_tw">
+        </a>
+        <a class="lang-option" href={routeLanguageMap["zh-TW"]} hreflang="zh-TW" lang="zh-TW" role="menuitemradio" data-lang-value="zh-TW" data-i18n="language_zh_tw">
           繁體中文
-        </button>
-        <button class="lang-option" type="button" role="menuitemradio" data-lang-value="en" data-i18n="language_en">
+        </a>
+        <a class="lang-option" href={routeLanguageMap.en} hreflang="en" lang="en" role="menuitemradio" data-lang-value="en" data-i18n="language_en">
           English
-        </button>
+        </a>
       </div>
     </div>
     <div id="community-qrcode-modal" class="qrcode-modal" hidden>
@@ -1549,6 +1563,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
           page_title_ext: "Lumno 已更新至 {version}",
           banner_title: "已更新至新版本！",
           banner_title_ext: "您已更新至 {version}",
+          banner_title_web: "Lumno 更新日志",
           brand_home_aria: "回到 Lumno 首页",
           join_discord: "反馈 & 提需",
           discord_aria: "反馈与提需",
@@ -1578,6 +1593,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
           page_title_ext: "Lumno 已更新至 {version}",
           banner_title: "已更新至新版本！",
           banner_title_ext: "您已更新至 {version}",
+          banner_title_web: "Lumno 更新日誌",
           brand_home_aria: "回到 Lumno 首頁",
           join_discord: "反饋 & 提需",
           discord_aria: "反饋與提需",
@@ -1607,6 +1623,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
           page_title_ext: "Lumno Updated to {version}",
           banner_title: "You're up to date!",
           banner_title_ext: "Updated to {version}",
+          banner_title_web: "Lumno Release Notes",
           brand_home_aria: "Back to Lumno home",
           join_discord: "Feedback & Requests",
           discord_aria: "Feedback and requests",
@@ -1722,8 +1739,10 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
             value = withVersion(getMessage(resolvedLocale, "page_title_ui_ext"), entryContext.version);
           }
           if (key === "banner_title") {
-            value =
-              entryContext.isExtensionEntry && entryContext.version
+            // Web visitors (and crawlers) get a descriptive heading; the celebratory copy is only for update entries.
+            value = !entryContext.isExtensionEntry
+              ? getMessage(resolvedLocale, "banner_title_web")
+              : entryContext.version
                 ? withVersion(getMessage(resolvedLocale, "banner_title_ext"), entryContext.version)
                 : getMessage(resolvedLocale, "banner_title");
           }

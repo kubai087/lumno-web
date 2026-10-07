@@ -5,7 +5,9 @@ on:
     branches: [main]
   workflow_dispatch:
   schedule:
-    - cron: "*/10 * * * *"
+    # Best-effort fallback; offset from the busy start of each hour.
+    # Extension releases also dispatch this workflow directly.
+    - cron: "7,17,27,37,47,57 * * * *"
 
 permissions:
   contents: read

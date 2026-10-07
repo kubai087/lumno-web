@@ -530,8 +530,12 @@ const structuredData = [
 
       function setupHomeLanguageRuntime() {
         if (!window.__lumnoLanguagePreference || !window.__lumnoLanguageRuntime) return false;
+        const storedMode = window.__lumnoLanguagePreference.getStoredLanguageMode(LANGUAGE_STORAGE_KEY);
+        // Keep the default canonical page stable for first visits, regardless of
+        // browser language. Explicit routes and saved user choices still win.
+        const initialForcedLocale = FORCED_LOCALE || (!storedMode ? "zh-CN" : null);
         const languageRuntime = window.__lumnoLanguageRuntime.setupLanguageRuntime({
-          forcedLocale: FORCED_LOCALE,
+          forcedLocale: initialForcedLocale,
           getSystemLocale,
           normalizeLanguageMode,
           routeLanguageMap: ROUTE_LANGUAGE_MAP,

@@ -11,7 +11,7 @@ const contentSource = fs.readFileSync(
 );
 
 test("simplified Chinese hero title wraps only at its comma", () => {
-  assert.match(source, /uiLocale === "zh-CN" \? content\.heroTitle\.indexOf\("，"\) : -1/);
+  assert.match(source, /uiLocale\.startsWith\("zh"\) \? content\.heroTitle\.indexOf\("，"\) : -1/);
   assert.match(source, /const heroTitleSeparator = heroTitleCommaIndex >= 0/);
   assert.match(source, /content\.heroTitle\.slice\(0, heroTitleCommaIndex\)/);
   assert.match(source, /"hero-title-has-break": heroTitleSegments\.length > 1,/);
@@ -19,10 +19,6 @@ test("simplified Chinese hero title wraps only at its comma", () => {
   assert.match(
     source,
     /\.hero-title-has-break \.hero-title-segment\s*\{[\s\S]*?display:\s*inline-block;[\s\S]*?white-space:\s*nowrap;/,
-  );
-  assert.match(
-    source,
-    /@media \(max-width:\s*760px\)[\s\S]*?\.hero-title-has-break \.hero-title-line\s*\{[\s\S]*?flex-direction:\s*column;[\s\S]*?align-items:\s*center;/,
   );
   assert.match(
     source,
@@ -44,30 +40,14 @@ test("mobile hero copy preserves curved-screen safe spacing", () => {
   assert.match(source, /font-size:\s*clamp\(34px,\s*10vw,\s*44px\);/);
 });
 
-test("simplified Chinese hero description is one sentence and localized copy rebalances on mobile", () => {
-  const descriptionsWithLineBreak = contentSource.match(
-    /heroDescription:\s*\n\s*"[^"\n]*\\n[^"\n]*"/g,
-  );
+test("hero description is two short lines that break at punctuation in Chinese", () => {
+  const descriptionsWithLineBreak = contentSource.match(/heroDescription:\s*\n\s*"[^"\n]*\\n[^"\n]*"/g);
 
-  assert.equal(descriptionsWithLineBreak?.length, 2);
-  assert.match(
-    contentSource,
-    /"Lumno ，开源网页聚焦搜索命令栏与新标签页插件"/,
-  );
-  assert.match(source, /const heroDescriptionNoWrapPhrases = uiLocale === "zh-CN"/);
-  assert.match(source, /"Lumno ，"/);
-  assert.match(source, /"开源网页聚焦搜索命令栏"/);
-  assert.match(source, /"与新标签页插件"/);
-  assert.match(
-    source,
-    /<p class="hero-description">[\s\S]*?heroDescriptionLineChunks\.map\([\s\S]*?class="hero-description-line"[\s\S]*?class:list=\{\{ "hero-description-phrase": noWrap \}\}/,
-  );
-  assert.match(source, /\.hero-description-line\s*\{[\s\S]*?display:\s*block;/);
-  assert.match(source, /\.hero-description-phrase\s*\{[\s\S]*?white-space:\s*nowrap;/);
-  assert.match(
-    source,
-    /@media \(max-width:\s*760px\)[\s\S]*?\.hero-copy > p\s*\{[\s\S]*?max-width:\s*330px;[\s\S]*?line-height:\s*1\.7;[\s\S]*?\.hero-description-line\s*\{[\s\S]*?text-wrap:\s*balance;[\s\S]*?\.hero-description-line \+ \.hero-description-line\s*\{[\s\S]*?margin-top:\s*8px;/,
-  );
+  assert.equal(descriptionsWithLineBreak?.length, 3);
+  assert.match(contentSource, /"Lumno 是开源的浏览器命令栏与新标签页。\\n一个快捷键，搜遍标签页、书签、历史记录和常用网站。"/);
+  assert.match(source, /heroDescriptionLines\.map\(\(line\) => <span class="hero-description-line">\{line\}<\/span>\)/);
+  assert.match(source, /body\[data-locale\^="zh"\] \.hero-description-line\s*\{[\s\S]*?word-break:\s*keep-all;/);
+  assert.match(source, /\.hero-description-line \+ \.hero-description-line\s*\{[\s\S]*?margin-top:\s*8px;/);
 });
 
 test("English hero uses the editorial serif slogan", () => {

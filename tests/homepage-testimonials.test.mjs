@@ -82,16 +82,20 @@ test("testimonial marquee fills two continuous lanes with hover-intent pause and
   assert.match(source, /animation: none/);
   assert.match(source, /aria-hidden=\{duplicate \? "true" : undefined\}/);
   assert.doesNotMatch(source, /chrome-review-marquee__proof/);
-  assert.doesNotMatch(source, /open_chrome_web_store_reviews/);
+  // A single store link sits in the header; cards themselves stay link-free.
+  assert.match(source, /data-analytics-event="open_chrome_web_store_reviews"/);
   assert.match(source, /src="\/assets\/lumno-newtab-monet-coastal-white\.webp"/);
   assert.match(source, /gridSize=\{2\}[\s\S]*?ditherMode="bayer"[\s\S]*?client:visible/);
   assert.match(source, /chrome-review-marquee__header[\s\S]*?chrome-review-marquee__frame[\s\S]*?<DitherShader[\s\S]*?chrome-review-marquee__rows/);
-  assert.match(source, /\.chrome-review-marquee__frame \{[\s\S]*?width: min\(calc\(100% - 48px\), var\(--content-width, 1360px\)\)/);
+  assert.match(source, /\.chrome-review-marquee__frame \{[\s\S]*?width: min\(calc\(100% - 48px\), var\(--home-section-width, 1180px\)\)/);
   assert.match(source, /overflow: hidden;[\s\S]*?border-radius: 16px;[\s\S]*?background: #f7f8ef;/);
   assert.match(source, /@media \(max-width: 760px\)[\s\S]*?\.chrome-review-marquee__frame \{[\s\S]*?width: calc\(100% - 32px\)/);
   assert.match(source, /font-size: 16px;[\s\S]*?font-weight: 400/);
   assert.match(source, /grid-template-columns: 32px minmax\(0, 1fr\)/);
-  assert.match(source, /\.chrome-review-card__meta img \{[\s\S]*?width: 32px;[\s\S]*?height: 32px/);
+  assert.match(source, /\.chrome-review-card__avatar \{[\s\S]*?width: 32px;[\s\S]*?height: 32px/);
+  // Google-hosted avatars can be blocked; the reviewer's initial stays visible underneath.
+  assert.match(source, /data-initial=\{Array\.from\(review\.reviewerId\)\[0\]\?\.toUpperCase\(\)\}/);
+  assert.match(source, /onerror="this\.remove\(\)"/);
   assert.match(source, /\.chrome-review-card__identity strong \{[\s\S]*?font-size: 12px/);
   assert.doesNotMatch(source, /<time\b|chrome-review-card__rating|ratingLabel|dateFormatter/);
   assert.doesNotMatch(source, /reviewRatingLabel:/);
@@ -121,60 +125,63 @@ test("homepage places the new-tab showcase and AI intent page before the review 
   const source = readSource("src/pages/index.astro");
 
   const heroIndex = source.indexOf('<section class="hero-section"');
-  const featuresIndex = source.indexOf('<section id="features"');
   const aiIntentIndex = source.indexOf('<section id="ai-intent"');
+  const newTabIndex = source.indexOf('<section id="new-tab"');
   const reviewsIndex = source.indexOf("<ChromeReviewMarquee");
 
   assert.ok(heroIndex >= 0, "homepage hero section should exist");
-  assert.ok(featuresIndex >= 0, "homepage new-tab showcase should exist");
   assert.ok(aiIntentIndex >= 0, "homepage AI intent page should exist");
+  assert.ok(newTabIndex >= 0, "homepage new-tab showcase should exist");
   assert.ok(reviewsIndex >= 0, "homepage review section should exist");
-  assert.ok(heroIndex < featuresIndex && featuresIndex < aiIntentIndex && aiIntentIndex < reviewsIndex);
+  assert.ok(heroIndex < aiIntentIndex && aiIntentIndex < newTabIndex && newTabIndex < reviewsIndex);
 
-  assert.match(
-    source,
-    /<section class="hero-section"[\s\S]*?<div class="hero-demo-slot">\s*<HeroSafariDemo[\s\S]*?client:load[\s\S]*?\/>\s*<\/div>\s*<\/section>[\s\S]*?<section id="features" class="section feature-intro"[\s\S]*?<HeroParallax[\s\S]*?client:visible[\s\S]*?\/>\s*<\/section>[\s\S]*?<section id="ai-intent" class="section ai-intent-section"[\s\S]*?<div class="ai-intent-placeholder"[\s\S]*?<\/section>\s*<ChromeReviewMarquee[\s\S]*?reviews=\{chromeStoreReviews\.reviews\}/,
-  );
-  assert.match(source, /<h2 id="ai-intent-title" class="hero-parallax__title">/);
-  assert.match(source, /<span class="hero-title-segment">\{content\.aiIntentTitle\}<\/span>/);
-  assert.match(source, /<p class="hero-parallax__description">\{content\.aiIntentDescription\}<\/p>/);
-  assert.match(source, /\.ai-intent-section\s*\{[\s\S]*?grid-template-columns: minmax\(0, 0\.82fr\) minmax\(0, 1\.18fr\)/);
-  assert.match(source, /\.ai-intent-section\s*\{[\s\S]*?border-top: 0;/);
-  assert.match(source, /\.ai-intent-placeholder\s*\{[\s\S]*?aspect-ratio: 1203 \/ 753;[\s\S]*?border-radius: 16px/);
-  assert.match(source, /@media \(max-width: 1080px\)[\s\S]*?\.ai-intent-section\s*\{[\s\S]*?grid-template-columns: 1fr/);
-  assert.match(source, /@media \(max-width: 760px\)[\s\S]*?\.ai-intent-copy \.hero-parallax__title\s*\{[\s\S]*?font-size: clamp\(34px, 10vw, 44px\)/);
-  assert.match(source, /@media \(max-width: 760px\)[\s\S]*?\.feature-intro\s*\{[\s\S]*?padding: 0;/);
-  const copySource = readSource("src/lib/home-content.ts");
-  assert.match(copySource, /aiIntentTitle: "划词提问，即刻跳转至常用网页 AI"/);
-  assert.match(copySource, /aiIntentDescription: "本地意图识别，只在你需要时才出现"/);
+  assert.match(source, /<h2 id="ai-intent-title" class="home-h2"><span>\{content\.aiIntent\.title\}<\/span><\/h2>/);
+  assert.match(source, /<AiIntentDemo locale=\{uiLocale\} client:visible \/>/);
+  assert.match(source, /\.ai-intent-demo-slot\s*\{[\s\S]*?aspect-ratio: 1203 \/ 753;/);
+  assert.match(source, /@media \(max-width: 1080px\)[\s\S]*?\.ai-intent-section\s*\{[\s\S]*?grid-template-columns: minmax\(0, 1fr\)/);
+  assert.match(source, /reviews=\{showcaseReviews\}/);
   assert.match(source, /padding: 120px 0 80px/);
-  assert.match(source, /height: max\(300px, calc\(100svh - 470px\)\)/);
-  assert.match(source, /margin-top: clamp\(52px, 4\.5vw, 72px\)/);
-  assert.match(source, /@media \(max-width: 760px\)[\s\S]*?padding: 120px 0 52px/);
+  assert.match(source, /height: max\(300px, calc\(100svh - 500px\)\)/);
   assert.match(source, /@media \(max-width: 760px\)[\s\S]*?height: max\(220px, calc\(100svh - 500px\)\)/);
-  assert.match(source, /@media \(max-width: 760px\)[\s\S]*?margin-top: 36px/);
   assert.match(source, /@media \(min-width: 761px\) and \(max-height: 740px\)/);
 });
 
 test("review marquee copy is localized for every homepage locale", () => {
   const source = readSource("src/lib/home-content.ts");
 
-  assert.match(source, /reviewsTitle: "专注用户体验，与用户共创"/);
-  assert.match(source, /reviewsTitle: "深受使用者信賴，與使用者共創。"/);
-  assert.match(source, /reviewsTitle: "Trusted by users, built with users\."/);
-  assert.equal((source.match(/reviewsAriaLabel:/g) || []).length, 4);
-  assert.doesNotMatch(source, /reviewsSummary:|reviewsSourceLabel:/);
+  assert.match(source, /title: "被认真使用，也被认真回应"/);
+  assert.match(source, /title: "被認真使用，也被認真回應"/);
+  assert.match(source, /title: "Loved by the people who use it"/);
+  // Rating and count come from the live Chrome Web Store snapshot, never hard-coded copy.
+  assert.equal((source.match(/summary: "[^"]*\{rating\}[^"]*\{count\}[^"]*"/g) || []).length, 3);
+  assert.equal((source.match(/storeLinkLabel:/g) || []).length, 4);
 });
 
-test("Chinese review heading uses the homepage hero title scale", () => {
+test("review heading shares the homepage section heading system", () => {
   const source = readSource("src/components/home/ChromeReviewMarquee.astro");
 
-  assert.match(
-    source,
-    /\.chrome-review-marquee__header h2 \{[\s\S]*?font-size: clamp\(36px, 3\.6vw, 48px\)/,
-  );
-  assert.match(
-    source,
-    /@media \(max-width: 760px\)[\s\S]*?\.chrome-review-marquee__header h2 \{[\s\S]*?font-size: clamp\(34px, 10vw, 44px\)/,
-  );
+  assert.match(source, /<h2 id="reviews-title" class="home-h2"><span>\{title\}<\/span><\/h2>/);
+  assert.match(source, /<header class="home-section__head chrome-review-marquee__header">/);
+});
+
+test("showcase reviews leave out feature requests and questions", async () => {
+  const { selectShowcaseReviews } = await import("../src/lib/chrome-store-reviews.ts");
+  const review = (id, text, rating = 5) => ({
+    reviewId: id,
+    reviewerId: id,
+    avatarUrl: "",
+    rating,
+    review: text,
+    publishedAt: "2026-10-01",
+  });
+
+  const picked = selectShowcaseReviews([
+    review("praise", "用了 Lumno 之后就回不去了，站内搜索太顺手。"),
+    review("request", "希望在 group 中新打开的标签页也在同一组"),
+    review("question", "可不可以再像 Arc 一点"),
+    review("english-question", "Could you add a dark theme?"),
+    review("low", "还行吧，界面不错但有点慢", 3),
+  ]).map((item) => item.reviewId);
+
+  assert.deepEqual(picked, ["praise"]);
 });

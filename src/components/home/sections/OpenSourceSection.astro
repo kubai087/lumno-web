@@ -1,0 +1,193 @@
+---
+import type { HOME_CONTENT, HomeTrustId } from "../../../lib/home-content";
+
+type Content = (typeof HOME_CONTENT)["en"]["openSource"];
+
+interface Props {
+  content: Content;
+  githubUrl: string;
+  privacyHref: string;
+}
+
+const { content, githubUrl, privacyHref } = Astro.props;
+
+const POINTS: Array<{ id: HomeTrustId; icon: string }> = [
+  { id: "local", icon: "ri-shield-check-line" },
+  { id: "source", icon: "ri-github-line" },
+  { id: "optional", icon: "ri-toggle-line" },
+];
+---
+
+<section id="open-source" class="home-section open-source" aria-labelledby="open-source-title">
+  <div class="open-source__layout">
+    <header class="home-section__head home-section__head--start open-source__head">
+      <p class="home-eyebrow">{content.eyebrow}</p>
+      <h2 id="open-source-title" class="home-h2"><span>{content.title}</span></h2>
+      <p class="home-lead">{content.description}</p>
+      <div class="open-source__links">
+        <a
+          class="home-link"
+          href={githubUrl}
+          target="_blank"
+          rel="noreferrer noopener"
+          data-analytics-event="open_github_repo"
+          data-analytics-category="cta"
+          data-analytics-label="home_open_source_github"
+        >
+          {content.githubLabel}
+          <i class="ri-arrow-right-up-line" aria-hidden="true"></i>
+        </a>
+        <a
+          class="home-link"
+          href={privacyHref}
+          data-analytics-event="open_privacy_page"
+          data-analytics-category="navigation"
+          data-analytics-label="home_open_source_privacy"
+        >
+          {content.privacyLabel}
+          <i class="ri-arrow-right-line" aria-hidden="true"></i>
+        </a>
+      </div>
+    </header>
+
+    <ul class="open-source__points">
+      {POINTS.map(({ id, icon }) => (
+        <li>
+          <span class="open-source__icon" aria-hidden="true"><i class={icon}></i></span>
+          <div>
+            <h3>{content.points[id].title}</h3>
+            <p>{content.points[id].description}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  <div class="open-source__browsers">
+    <p>{content.browsersLabel}</p>
+    <ul>
+      {content.browserNames.map((name) => <li>{name}</li>)}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .open-source__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(40px, 7vw, 112px);
+    align-items: start;
+  }
+
+  .open-source__head {
+    position: sticky;
+    top: 120px;
+    margin-bottom: 0;
+  }
+
+  .open-source__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 28px;
+    margin-top: 28px;
+  }
+
+  .open-source__points {
+    display: grid;
+    gap: 12px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .open-source__points li {
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr);
+    gap: 18px;
+    padding: 28px;
+    border: 1px solid var(--home-card-border);
+    border-radius: var(--home-radius-lg);
+    background: var(--home-card);
+    box-shadow: var(--home-card-shadow);
+  }
+
+  .open-source__icon {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 14px;
+    background: var(--home-olive-soft);
+    color: var(--home-olive);
+    font-size: 21px;
+  }
+
+  h3 {
+    margin: 0;
+    color: var(--home-ink);
+    font-size: 18px;
+    font-weight: 650;
+    line-height: 1.4;
+  }
+
+  .open-source__points p {
+    margin: 6px 0 0;
+    color: var(--text-sub, #626870);
+    font-size: 15px;
+    line-height: 1.68;
+  }
+
+  .open-source__browsers {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px 32px;
+    margin-top: clamp(48px, 6vw, 80px);
+    padding-top: 28px;
+    border-top: 1px solid var(--home-card-border);
+  }
+
+  .open-source__browsers p {
+    margin: 0;
+    color: var(--text-sub, #626870);
+    font-size: 15px;
+  }
+
+  .open-source__browsers ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .open-source__browsers li {
+    padding: 6px 14px;
+    border: 1px solid var(--home-card-border);
+    border-radius: 999px;
+    background: var(--home-card);
+    color: var(--home-ink-soft);
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  @media (max-width: 900px) {
+    .open-source__layout {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .open-source__head {
+      position: static;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .open-source__points li {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 14px;
+      padding: 22px;
+    }
+  }
+</style>

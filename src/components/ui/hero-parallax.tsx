@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useRef, type Ref } from "react";
 import {
   motion,
+  useInView,
   useReducedMotion,
-  useMotionValueEvent,
   useScroll,
   useSpring,
   useTransform,
@@ -18,13 +18,13 @@ export interface HeroParallaxProduct {
 
 interface HeroParallaxProps {
   products: readonly HeroParallaxProduct[];
+  eyebrow?: string;
   title: string;
   description: string;
   headingId: string;
 }
 
 const SPRING_CONFIG = { stiffness: 300, damping: 30, bounce: 100 };
-const HEADER_REVEAL_PROGRESS = 0.12;
 const HERO_COPY_HIDDEN = { opacity: 0, y: 22, filter: "blur(10px)" };
 const HERO_COPY_VISIBLE = { opacity: 1, y: 0, filter: "blur(0px)" };
 const HERO_COPY_EASE = [0.22, 1, 0.36, 1] as const;
@@ -42,15 +42,18 @@ const LOOP_COPY_COUNT = 3;
 
 export function HeroParallax({
   products,
+  eyebrow,
   title,
   description,
   headingId,
 }: HeroParallaxProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
-  const [isHeaderRevealed, setIsHeaderRevealed] = useState(false);
-  const headerRevealRef = useRef(false);
-  const isHeaderVisible = isHeaderRevealed || Boolean(shouldReduceMotion);
+  // Reveal on visibility rather than scroll progress, so the heading never stays hidden on
+  // viewports that can't scroll far enough (or for renderers that don't scroll at all).
+  const isHeaderInView = useInView(headerRef, { once: true, amount: 0.4 });
+  const isHeaderVisible = isHeaderInView || Boolean(shouldReduceMotion);
   const firstRow = products.slice(0, 5);
   const secondRow = products.slice(5, 10);
   const thirdRow = products.slice(10, 15);
@@ -79,36 +82,15 @@ export function HeroParallax({
     useTransform(scrollYProgress, [0, 0.18], [-700, -300]),
     SPRING_CONFIG,
   );
-  const revealHeader = useCallback(() => {
-    if (headerRevealRef.current) {
-      return;
-    }
-
-    if (shouldReduceMotion || scrollYProgress.get() >= HEADER_REVEAL_PROGRESS) {
-      headerRevealRef.current = true;
-      setIsHeaderRevealed(true);
-    }
-  }, [scrollYProgress, shouldReduceMotion]);
-
-  useMotionValueEvent(scrollYProgress, "change", revealHeader);
-
-  useEffect(() => {
-    const frame = window.requestAnimationFrame(revealHeader);
-    window.addEventListener("resize", revealHeader);
-
-    return () => {
-      window.cancelAnimationFrame(frame);
-      window.removeEventListener("resize", revealHeader);
-    };
-  }, [revealHeader]);
-
   return (
     <div
       ref={containerRef}
-      className="hero-parallax relative flex h-auto flex-col self-auto overflow-hidden py-24 antialiased [perspective:1000px] [transform-style:preserve-3d] md:h-auto md:py-40"
+      className="hero-parallax relative flex h-auto flex-col self-auto overflow-hidden py-24 antialiased [perspective:1000px] md:h-auto md:py-40"
       data-hero-parallax
     >
       <HeroParallaxHeader
+        ref={headerRef}
+        eyebrow={eyebrow}
         title={title}
         description={description}
         headingId={headingId}
@@ -150,6 +132,8 @@ export function HeroParallax({
 }
 
 interface HeroParallaxHeaderProps {
+  ref: Ref<HTMLDivElement>;
+  eyebrow?: string;
   title: string;
   description: string;
   headingId: string;
@@ -157,6 +141,8 @@ interface HeroParallaxHeaderProps {
 }
 
 function HeroParallaxHeader({
+  ref,
+  eyebrow,
   title,
   description,
   headingId,
@@ -168,12 +154,23 @@ function HeroParallaxHeader({
 
   return (
     <div
+      ref={ref}
       className="hero-parallax__header relative -top-20 left-0 z-10 mx-auto w-full max-w-5xl px-4 py-20 text-center md:px-8 md:py-40"
       data-hero-parallax-copy
     >
+      {eyebrow ? (
+        <motion.p
+          className="home-eyebrow"
+          initial={HERO_COPY_HIDDEN}
+          animate={isRevealed ? HERO_COPY_VISIBLE : HERO_COPY_HIDDEN}
+          transition={HERO_COPY_TRANSITION}
+        >
+          {eyebrow}
+        </motion.p>
+      ) : null}
       <motion.h2
         id={headingId}
-        className={cn("hero-parallax__title", titleRest && "hero-title-has-break")}
+        className={cn("hero-parallax__title home-h2", titleRest && "hero-title-has-break")}
         initial={HERO_COPY_HIDDEN}
         animate={isRevealed ? HERO_COPY_VISIBLE : HERO_COPY_HIDDEN}
         transition={HERO_COPY_TRANSITION}

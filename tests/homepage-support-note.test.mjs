@@ -73,12 +73,25 @@ test("store versions fall back to the live Chrome and Edge stores", () => {
 test("homepage is a product narrative while onboarding remains a separate route", () => {
   const source = readSource("src/pages/index.astro");
 
-  assert.match(source, /id="features"/);
-  assert.match(source, /id="workflow"/);
-  assert.match(source, /id="trust"/);
-  assert.match(source, /class="section faq-section"/);
+  // Landing-page story: capabilities → AI → new tab → extras → proof → trust → FAQ → CTA.
+  const order = [
+    "<CommandBarSection",
+    '<section id="ai-intent"',
+    '<section id="new-tab"',
+    "<UtilitiesSection",
+    "<ChromeReviewMarquee",
+    "<OpenSourceSection",
+    "<FaqSection",
+    "<FinalCta",
+    "<SiteFooter",
+  ].map((marker) => source.indexOf(marker));
+  assert.ok(order.every((index) => index > 0), "every homepage section should render");
+  assert.deepEqual([...order].sort((a, b) => a - b), order, "sections should keep the narrative order");
+
+  assert.match(readSource("src/components/home/sections/CommandBarSection.astro"), /id="features"/);
   assert.match(source, /const onboardingHref = buildLocalizedPath\(uiLocale, "\/onboarding\/"\);/);
-  assert.match(source, /href=\{onboardingHref\}/);
+  assert.match(source, /href: onboardingHref/);
+  // Onboarding owns the shortcut-setup walkthrough; the homepage only mentions the URL in FAQ copy.
   assert.doesNotMatch(source, /chrome:\/\/extensions\/shortcuts/);
 });
 

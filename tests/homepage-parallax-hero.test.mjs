@@ -14,8 +14,9 @@ test("homepage second section uses the Aceternity Hero Parallax composition", ()
 
   assert.match(pageSource, /const FEATURE_PARALLAX_THUMBNAILS = \[[\s\S]*?\] as const/);
   assert.equal((pageSource.match(/\/assets\/feature-newtab\/newtab-\d+\.webp/g) || []).length, 15);
-  assert.match(pageSource, /<section id="features" class="section feature-intro"[\s\S]*?<HeroParallax/);
-  assert.match(pageSource, /products=\{featureParallaxProducts\}/);
+  assert.match(pageSource, /<section id="new-tab" class="feature-intro"[\s\S]*?<HeroParallax/);
+  assert.match(pageSource, /products=\{newTabParallaxProducts\}/);
+  assert.match(pageSource, /title: content\.newTab\.screenshotAlt/);
   assert.match(pageSource, /client:visible/);
   assert.match(componentSource, /products\.slice\(0, 5\)/);
   assert.match(componentSource, /products\.slice\(5, 10\)/);
@@ -30,11 +31,11 @@ test("homepage second section uses the Aceternity Hero Parallax composition", ()
   assert.match(componentSource, /useTransform\(scrollYProgress, \[0, 0\.72\], \[0, 820\]\)/);
   assert.match(componentSource, /useTransform\(scrollYProgress, \[0, 0\.72\], \[0, -820\]\)/);
   assert.match(componentSource, /useTransform\(scrollYProgress, \[0, 0\.18\], \[-700, -300\]\)/);
-  assert.match(componentSource, /const HEADER_REVEAL_PROGRESS = 0\.12/);
-  assert.match(componentSource, /const revealHeader = useCallback\(\(\)/);
-  assert.match(componentSource, /shouldReduceMotion \|\| scrollYProgress\.get\(\) >= HEADER_REVEAL_PROGRESS/);
-  assert.match(componentSource, /useMotionValueEvent\(scrollYProgress, "change", revealHeader\)/);
-  assert.match(componentSource, /const isHeaderVisible = isHeaderRevealed \|\| Boolean\(shouldReduceMotion\)/);
+  // The copy reveals once it is in view, so it can never stay hidden on short pages.
+  assert.match(componentSource, /const isHeaderInView = useInView\(headerRef, \{ once: true, amount: 0\.4 \}\)/);
+  assert.match(componentSource, /const isHeaderVisible = isHeaderInView \|\| Boolean\(shouldReduceMotion\)/);
+  // A flat container lets the copy's z-index sit above the rotated card stage.
+  assert.doesNotMatch(componentSource, /\[transform-style:preserve-3d\]/);
   assert.match(componentSource, /rotateX: shouldReduceMotion \? 0 : rotateX/);
   assert.match(componentSource, /rotateZ: shouldReduceMotion \? 0 : rotateZ/);
   assert.match(componentSource, /translateY: shouldReduceMotion \? -300 : translateY/);
@@ -58,7 +59,7 @@ test("homepage second section uses the Aceternity Hero Parallax composition", ()
   assert.match(componentSource, /hero-parallax__header relative -top-20/);
   assert.match(componentSource, /hero-title-line/);
   assert.match(componentSource, /hero-title-segment/);
-  assert.equal(fullBleedFeatureRules.length, 2);
+  assert.equal(fullBleedFeatureRules.length, 1);
   assert.match(componentSource, /aspect-\[1\.585\]/);
   assert.match(componentSource, /object-contain object-center/);
   assert.doesNotMatch(componentSource, /object-cover/);
@@ -80,6 +81,7 @@ test("homepage second section uses the Aceternity Hero Parallax composition", ()
     pageSource,
     /@media \(max-width: 760px\)[\s\S]*?--hero-parallax-row-loop-offset: -102\.5rem/,
   );
-  assert.match(copySource, /featureSectionTitle: "你的满分新标签页"/);
-  assert.match(copySource, /featureSectionDescription:\s*"不论是追求“极简”还是“功能性”，均可自由定制"/);
+  assert.match(copySource, /title: "新标签页，也可以是一幅画"/);
+  assert.match(pageSource, /eyebrow=\{content\.newTab\.eyebrow\}/);
+  assert.match(pageSource, /<ul class="new-tab-highlights">/);
 });

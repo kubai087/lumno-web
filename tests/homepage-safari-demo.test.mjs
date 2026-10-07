@@ -14,7 +14,7 @@ test("homepage places the onboarding browser skeleton directly below the hero co
 
   assert.match(
     source,
-    /<div class="hero-copy">[\s\S]*?<p class="hero-description">[\s\S]*?heroDescriptionLineChunks\.map[\s\S]*?<div class="hero-actions">[\s\S]*?<\/div>\s*<\/div>\s*<div class="hero-demo-slot">\s*<HeroSafariDemo/,
+    /<div class="hero-copy">[\s\S]*?<p class="hero-description">[\s\S]*?heroDescriptionLines\.map[\s\S]*?<div class="hero-actions">[\s\S]*?<p class="hero-meta">[\s\S]*?<\/p>\s*<\/div>\s*<div class="hero-demo-slot">\s*<HeroSafariDemo/,
   );
   assert.match(source, /ariaLabel=\{content\.heroDemoAria\}/);
   assert.match(source, /locale=\{uiLocale\}/);
@@ -74,7 +74,7 @@ test("homepage opens with a full-screen Search All demo and can settle early on 
   assert.match(component, /className="hero-safari-dither--continuous"/);
   assert.match(component, /--hero-intro-source-width/);
   assert.match(component, /--hero-intro-source-height/);
-  assert.match(source, /\.hero-demo-slot \{[\s\S]*?height: max\(300px, calc\(100svh - 470px\)\);/);
+  assert.match(source, /\.hero-demo-slot \{[\s\S]*?height: max\(300px, calc\(100svh - 500px\)\);/);
   assert.match(component, /const HOME_INTRO_DESKTOP_SCALE_MAX = 1\.32/);
   assert.match(component, /const HOME_INTRO_MOBILE_SCALE_MIN = 0\.94/);
   assert.match(component, /const HOME_INTRO_MOBILE_SCALE_MAX = 1\.02/);
@@ -117,7 +117,7 @@ test("homepage hero exposes install and community actions below the subtitle", (
 
   assert.match(
     source,
-    /<p class="hero-description">[\s\S]*?heroDescriptionLineChunks\.map[\s\S]*?<div class="hero-actions">[\s\S]*?content\.heroInstallLabel[\s\S]*?content\.heroCommunityLabel/,
+    /<p class="hero-description">[\s\S]*?heroDescriptionLines\.map[\s\S]*?<div class="hero-actions">[\s\S]*?content\.heroInstallLabel[\s\S]*?content\.heroCommunityLabel/,
   );
   assert.match(source, /<HeroInstallTooltip[\s\S]*?href=\{CHROME_STORE_URL\}[\s\S]*?client:load/);
   assert.match(installTooltip, /<TooltipTrigger asChild>[\s\S]*?<SettingsButton[\s\S]*?variant="primary"/);
@@ -137,7 +137,7 @@ test("homepage hero exposes install and community actions below the subtitle", (
   assert.match(communityDialog, /hero-community-button/);
   assert.match(source, /\.hero-actions-button \{[\s\S]*?padding: 8px 16px;[\s\S]*?font-size: 14px;/);
   assert.match(source, /\.hero-actions-button \{[\s\S]*?padding: 7px 14px;[\s\S]*?font-size: 13px;/);
-  assert.match(content, /heroInstallLabel: "通过 Chrome 商店安装"/);
+  assert.match(content, /heroInstallLabel: "免费添加到 Chrome"/);
   assert.match(content, /heroCommunityLabel: "反馈 & 功能许愿"/);
   assert.match(content, /heroCommunityAria: "打开 Lumno 反馈与功能许愿二维码"/);
   assert.doesNotMatch(content, /heroReviewLabel|heroReviewAria/);
@@ -167,8 +167,12 @@ test("homepage community CTA opens an accessible QR-code dialog", () => {
 test("homepage footer reuses the shared community dialog", () => {
   const source = readSource("src/pages/index.astro");
 
-  assert.match(source, /<CommunityQrDialog[\s\S]*?triggerLabel=\{content\.footerFeedback\}[\s\S]*?triggerVariant="footer"/);
-  assert.match(source, /externalHref=\{uiLocale === "zh-CN" \? undefined : COMMUNITY_LINKS\.discordUrl\}/);
+  assert.match(source, /<SiteFooter[\s\S]*?feedback=\{\{[\s\S]*?label: content\.footerFeedback/);
+  assert.match(
+    readSource("src/components/home/sections/SiteFooter.astro"),
+    /<CommunityQrDialog[\s\S]*?triggerLabel=\{feedback\.label\}[\s\S]*?triggerVariant="footer"/,
+  );
+  assert.match(source, /externalHref: uiLocale === "zh-CN" \? undefined : COMMUNITY_LINKS\.discordUrl/);
 });
 
 test("homepage install tooltip communicates broad Chromium browser support", () => {
@@ -217,8 +221,8 @@ test("homepage install tooltip communicates broad Chromium browser support", () 
   assert.match(sharedTooltipStyles, /0 16px 36px rgba\(17, 24, 39, 0\.08\)/);
   assert.doesNotMatch(installTooltip, /function (Chrome|Edge|Comet|Brave|Opera|Helium)Logo/);
   assert.match(content, /基于 GPL-3\.0 开源，支持大部分 Chromium 内核浏览器/);
-  assert.match(content, /基於 GPL-3\.0 開源，支援大部分 Chromium 核心瀏覽器/);
-  assert.match(content, /Open source under GPL-3\.0, with support for most Chromium-based browsers/);
+  assert.match(content, /以 GPL-3\.0 授權開源，支援大部分 Chromium 核心瀏覽器/);
+  assert.match(content, /Open source under GPL-3\.0\. Works in most Chromium-based browsers\./);
 });
 
 test("homepage moves the open-source note into the install tooltip", () => {
@@ -479,7 +483,7 @@ test("hero demo exposes three replayable plugin-consistent search scenes", () =>
   assert.match(styles, /0 1px 4px color-mix\(in srgb, #3a342b 6%, transparent\)/);
   assert.doesNotMatch(switcherStyles, /backdrop-filter/);
   assert.match(styles, /hero-demo-page-button:focus-visible/);
-  assert.match(homepage, /height: max\(300px, calc\(100svh - 470px\)\);/);
+  assert.match(homepage, /height: max\(300px, calc\(100svh - 500px\)\);/);
   assert.match(homepage, /height: max\(220px, calc\(100svh - 500px\)\);/);
   assert.match(
     styles,

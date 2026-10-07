@@ -1,6 +1,12 @@
 ---
 import SeoHead from "../components/SeoHead.astro";
 import ChromeReviewMarquee from "../components/home/ChromeReviewMarquee.astro";
+import CommandBarSection from "../components/home/sections/CommandBarSection.astro";
+import FaqSection from "../components/home/sections/FaqSection.astro";
+import FinalCta from "../components/home/sections/FinalCta.astro";
+import OpenSourceSection from "../components/home/sections/OpenSourceSection.astro";
+import SiteFooter from "../components/home/sections/SiteFooter.astro";
+import UtilitiesSection from "../components/home/sections/UtilitiesSection.astro";
 import { CommunityQrDialog } from "../components/home/CommunityQrDialog";
 import { HeroInstallTooltip } from "../components/home/HeroInstallTooltip";
 import { AiIntentDemo } from "../components/home/AiIntentDemo";
@@ -15,7 +21,8 @@ import "@fontsource/eb-garamond/500-italic.css";
 import ebGaramondLatin600 from "@fontsource/eb-garamond/files/eb-garamond-latin-600-normal.woff2?url";
 import ebGaramondLatin500Italic from "@fontsource/eb-garamond/files/eb-garamond-latin-500-italic.woff2?url";
 import "../styles/globals.css";
-import { getChromeStoreReviews } from "../lib/chrome-store-reviews";
+import "../styles/home.css";
+import { getChromeStoreReviews, selectShowcaseReviews } from "../lib/chrome-store-reviews";
 import { COMMUNITY_LINKS } from "../lib/community";
 import { getHomeContent } from "../lib/home-content";
 import { getLumnoBuiltinSiteSearchProviders } from "../lib/lumno-search-providers";
@@ -75,7 +82,8 @@ const seoPath = Astro.props.seoPath || "/";
 const routeLanguageMap = Astro.props.routeLanguageMap || buildRouteLanguageMap("/");
 const uiLocale = forcedLocale || DEFAULT_LOCALE;
 const content = getHomeContent(uiLocale);
-const heroTitleCommaIndex = uiLocale === "zh-CN" ? content.heroTitle.indexOf("，") : -1;
+// CJK titles break after the full-width comma on narrow screens.
+const heroTitleCommaIndex = uiLocale.startsWith("zh") ? content.heroTitle.indexOf("，") : -1;
 const heroTitleSeparator = heroTitleCommaIndex >= 0 ? content.heroTitle[heroTitleCommaIndex] : "";
 const heroTitleSegments = heroTitleCommaIndex >= 0
   ? [
@@ -84,37 +92,25 @@ const heroTitleSegments = heroTitleCommaIndex >= 0
     ]
   : [content.heroTitle];
 const heroDescriptionLines = content.heroDescription.split("\n");
-const heroDescriptionNoWrapPhrases = uiLocale === "zh-CN"
-  ? [
-      "Lumno ，",
-      "开源网页聚焦搜索命令栏",
-      "与新标签页插件",
-    ]
-  : [];
-const heroDescriptionPhrasePattern = heroDescriptionNoWrapPhrases.length
-  ? new RegExp(`(${heroDescriptionNoWrapPhrases.join("|")})`, "g")
-  : null;
-const heroDescriptionLineChunks = heroDescriptionLines.map((line) =>
-  (heroDescriptionPhrasePattern ? line.split(heroDescriptionPhrasePattern) : [line])
-    .filter(Boolean)
-    .map((text) => ({ text, noWrap: heroDescriptionNoWrapPhrases.includes(text) })),
-);
 const homeHref = buildLocalizedPath(uiLocale, "/");
 const featuresHref = buildLocalizedPath(uiLocale, "/features/");
 const onboardingHref = buildLocalizedPath(uiLocale, "/onboarding/");
 const releaseHref = buildLocalizedPath(uiLocale, "/release/");
 const privacyHref = buildLocalizedPath(uiLocale, "/privacy/");
-const featureParallaxTitles = [
-  content.featureMessages.searchTitle,
-  content.featureMessages.siteSearchTitle,
-  content.featureMessages.newTabTitle,
-  `${content.featureMessages.labsTitle} ${content.featureMessages.labsTitleStrong}`,
-] as const;
-const featureParallaxProducts = FEATURE_PARALLAX_THUMBNAILS.map((thumbnail, index) => ({
-  title: featureParallaxTitles[index % featureParallaxTitles.length],
+const newTabParallaxProducts = FEATURE_PARALLAX_THUMBNAILS.map((thumbnail) => ({
+  title: content.newTab.screenshotAlt,
   link: featuresHref,
   thumbnail,
 }));
+const showcaseReviews = selectShowcaseReviews(chromeStoreReviews.reviews);
+const reviewSummary = content.reviews.summary
+  .replace("{rating}", chromeStoreReviews.averageRating.toFixed(1))
+  .replace("{count}", String(chromeStoreReviews.ratingCount));
+const FOOTER_LANGUAGES = [
+  { code: "zh-CN", label: "简体中文" },
+  { code: "zh-TW", label: "繁體中文" },
+  { code: "en", label: "English" },
+] as const;
 const alternateLinks = buildAlternateLinks(routeLanguageMap, "/");
 const ogLocale = getOpenGraphLocale(uiLocale);
 const pageTitleByLocale = {
@@ -296,13 +292,7 @@ const structuredData = [
             )}
           </h1>
           <p class="hero-description">
-            {heroDescriptionLineChunks.map((chunks) => (
-              <span class="hero-description-line">
-                {chunks.map(({ text, noWrap }) => (
-                  <span class:list={{ "hero-description-phrase": noWrap }}>{text}</span>
-                ))}
-              </span>
-            ))}
+            {heroDescriptionLines.map((line) => <span class="hero-description-line">{line}</span>)}
           </p>
           <div class="hero-actions">
             <HeroInstallTooltip
@@ -323,6 +313,19 @@ const structuredData = [
               client:load
             />
           </div>
+          <p class="hero-meta">
+            <span class="hero-meta__shortcut">
+              {content.heroShortcutPrefix}
+              <span class="hero-meta__keys" data-shortcut-keys>
+                <kbd class="home-kbd" data-mac-key="⌘" data-other-key="Ctrl">⌘</kbd>
+                <kbd class="home-kbd">⇧</kbd>
+                <kbd class="home-kbd">K</kbd>
+              </span>
+              {content.heroShortcutSuffix}
+            </span>
+            <span class="hero-meta__dot" aria-hidden="true">·</span>
+            <span>{content.heroMetaFree}</span>
+          </p>
         </div>
         <div class="hero-demo-slot">
           <HeroSafariDemo
@@ -334,209 +337,108 @@ const structuredData = [
         </div>
       </section>
 
-      <section id="features" class="section feature-intro" aria-labelledby="features-title">
-        <HeroParallax
-          products={featureParallaxProducts}
-          title={content.featureSectionTitle}
-          description={content.featureSectionDescription}
-          headingId="features-title"
-          client:visible
-        />
-      </section>
+      <CommandBarSection content={content.commandBar} locale={uiLocale} />
 
-      <section id="ai-intent" class="section ai-intent-section" aria-labelledby="ai-intent-title">
-        <div class="ai-intent-copy">
-          <h2 id="ai-intent-title" class="hero-parallax__title">
-            <span class="hero-title-line">
-              <span class="hero-title-segment">{content.aiIntentTitle}</span>
-            </span>
-          </h2>
-          <p class="hero-parallax__description">{content.aiIntentDescription}</p>
-        </div>
-        <div class="ai-intent-placeholder">
+      <section id="ai-intent" class="home-section ai-intent-section" aria-labelledby="ai-intent-title">
+        <header class="home-section__head home-section__head--start ai-intent-copy">
+          <p class="home-eyebrow">{content.aiIntent.eyebrow}</p>
+          <h2 id="ai-intent-title" class="home-h2"><span>{content.aiIntent.title}</span></h2>
+          <p class="home-lead">{content.aiIntent.description}</p>
+        </header>
+        <div class="ai-intent-demo-slot">
           <AiIntentDemo locale={uiLocale} client:visible />
         </div>
       </section>
 
-      <ChromeReviewMarquee
-        title={content.reviewsTitle}
-        ariaLabel={content.reviewsAriaLabel}
-        avatarLabel={content.reviewAvatarLabel}
-        reviews={chromeStoreReviews.reviews}
-      />
-
-      <section id="workflow" class="section workflow-section" aria-labelledby="workflow-title">
-        <div class="section-heading">
-          <h2 id="workflow-title">{content.workflowTitle}</h2>
-          <p>{content.workflowDescription}</p>
-        </div>
-        <ol class="workflow-list">
-          {content.workflowSteps.map((step, index) => (
-            <li>
-              <span class="step-number">0{index + 1}</span>
-              <span class="step-icon" aria-hidden="true">
-                <i class={index === 0 ? "ri-command-line" : index === 1 ? "ri-search-line" : "ri-arrow-right-up-line"}></i>
-              </span>
-              <h3>{step.title}</h3>
-              <p>{step.description}</p>
-            </li>
-          ))}
-        </ol>
-      </section>
-
-      <section class="section audience-section" aria-labelledby="audience-title">
-        <div class="section-heading section-heading-wide">
-          <h2 id="audience-title">{content.audienceTitle}</h2>
-          <p>{content.audienceDescription}</p>
-        </div>
-        <div class="audience-list">
-          {content.audiences.map((audience, index) => (
-            <article>
-              <span class="audience-mark" aria-hidden="true">
-                <i class={index === 0 ? "ri-book-open-line" : index === 1 ? "ri-code-s-slash-line" : "ri-compass-3-line"}></i>
-              </span>
-              <h3>{audience.title}</h3>
-              <p>{audience.description}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section id="trust" class="section trust-section" aria-labelledby="trust-title">
-        <div class="trust-copy">
-          <h2 id="trust-title">{content.trustTitle}</h2>
-          <p>{content.trustDescription}</p>
-          <a
-            class="text-link"
-            href={privacyHref}
-            data-analytics-event="open_privacy_page"
-            data-analytics-category="navigation"
-            data-analytics-label="home_trust_privacy"
-          >
-            {content.footerPrivacy}
-            <i class="ri-arrow-right-line" aria-hidden="true"></i>
-          </a>
-        </div>
-        <div class="trust-list">
-          {content.trustPoints.map((point, index) => (
-            <article>
-              <span class="trust-icon" aria-hidden="true">
-                <i class={index === 0 ? "ri-computer-line" : index === 1 ? "ri-github-line" : "ri-toggle-line"}></i>
-              </span>
-              <div>
-                <h3>{point.title}</h3>
-                <p>{point.description}</p>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section class="section browser-section" aria-labelledby="browsers-title">
-        <div>
-          <h2 id="browsers-title">{content.browsersTitle}</h2>
-          <p>{content.browsersDescription}</p>
-        </div>
-        <ul class="browser-list" aria-label={content.browsersTitle}>
-          {content.browserNames.map((browser) => <li>{browser}</li>)}
+      <section id="new-tab" class="feature-intro" aria-labelledby="new-tab-title">
+        <HeroParallax
+          products={newTabParallaxProducts}
+          eyebrow={content.newTab.eyebrow}
+          title={content.newTab.title}
+          description={content.newTab.description}
+          headingId="new-tab-title"
+          client:visible
+        />
+        <ul class="new-tab-highlights">
+          {content.newTab.highlights.map((highlight) => <li>{highlight}</li>)}
         </ul>
       </section>
 
-      <section class="section faq-section" aria-labelledby="faq-title">
-        <div class="section-heading">
-          <h2 id="faq-title">{content.faqTitle}</h2>
-        </div>
-        <div class="faq-list">
-          {content.faqItems.map((item) => (
-            <details>
-              <summary>
-                <span>{item.question}</span>
-                <i class="ri-add-line" aria-hidden="true"></i>
-              </summary>
-              <p>{item.answer}</p>
-            </details>
-          ))}
-        </div>
-      </section>
+      <UtilitiesSection content={content.utilities} />
 
-      <section class="section final-cta" aria-labelledby="final-title">
-        <div class="final-cta-copy">
-          <span class="final-logo" set:html={logoIconSvg} aria-hidden="true"></span>
-          <h2 id="final-title">{content.finalTitle}</h2>
-          <p>{content.finalDescription}</p>
-        </div>
-        <div class="final-cta-actions">
-          <a
-            class="button button-primary"
-            href={CHROME_STORE_URL}
-            target="_blank"
-            rel="noreferrer noopener"
-            data-analytics-event="open_chrome_web_store"
-            data-analytics-category="conversion"
-            data-analytics-label="home_final_install"
-          >
-            {content.installLabel}
-            <i class="ri-arrow-right-up-line" aria-hidden="true"></i>
-          </a>
-          <a
-            class="button button-secondary"
-            href={GITHUB_URL}
-            target="_blank"
-            rel="noreferrer noopener"
-            aria-label={content.viewSourceAria}
-            data-analytics-event="open_github_repo"
-            data-analytics-category="cta"
-            data-analytics-label="home_final_github"
-          >
-            <i class="ri-github-fill" aria-hidden="true"></i>
-            {content.viewSourceLabel}
-          </a>
-        </div>
-      </section>
+      <ChromeReviewMarquee
+        eyebrow={content.reviews.eyebrow}
+        title={content.reviews.title}
+        summary={reviewSummary}
+        storeUrl={chromeStoreReviews.sourceUrl}
+        storeLinkLabel={content.reviews.storeLinkLabel}
+        ariaLabel={content.reviews.ariaLabel}
+        avatarLabel={content.reviews.avatarLabel}
+        reviews={showcaseReviews}
+      />
+
+      <OpenSourceSection content={content.openSource} githubUrl={GITHUB_URL} privacyHref={privacyHref} />
+
+      <FaqSection title={content.faqTitle} items={content.faqItems} />
+
+      <FinalCta
+        title={content.finalTitle}
+        description={content.finalDescription}
+        chromeLabel={content.heroInstallLabel}
+        chromeUrl={CHROME_STORE_URL}
+        edgeLabel={content.installEdgeStoreLabel}
+        edgeUrl={EDGE_STORE_URL}
+        sourceLabel={content.viewSourceLabel}
+        sourceAria={content.viewSourceAria}
+        githubUrl={GITHUB_URL}
+      />
     </main>
 
-    <footer class="site-legal-nav">
-      <div class="footer-main">
-        <div class="footer-brand">
-          <a class="brand" href={homeHref} aria-label="Lumno">
-            <span class="brand-icon" set:html={logoIconSvg}></span>
-            <img class="brand-wordmark" src="/assets/textlogo.svg" width="165" height="43" alt="Lumno" loading="lazy" />
-          </a>
-          <p>{content.footerTagline}</p>
-        </div>
-        <div class="footer-links">
-          <div>
-            <h2>{content.footerProduct}</h2>
-            <a href={featuresHref}>{content.footerFeatures}</a>
-            <a href={onboardingHref}>{content.footerQuickStart}</a>
-          </div>
-          <div>
-            <h2>{content.footerResources}</h2>
-            <a href={releaseHref}>{content.footerRelease}</a>
-            <a href={privacyHref}>{content.footerPrivacy}</a>
-          </div>
-          <div>
-            <h2>{content.footerCommunity}</h2>
-            <a href={GITHUB_URL} target="_blank" rel="noreferrer noopener">{content.footerGithub}</a>
-            <CommunityQrDialog
-              triggerLabel={content.footerFeedback}
-              triggerAriaLabel={content.heroCommunityAria}
-              title={content.qrcodeTitle}
-              qrImageSrc={COMMUNITY_LINKS.wechatQrImagePath}
-              qrImageAlt={content.qrcodeImageAlt}
-              closeLabel={content.qrcodeCloseAria}
-              triggerVariant="footer"
-              externalHref={uiLocale === "zh-CN" ? undefined : COMMUNITY_LINKS.discordUrl}
-              client:load
-            />
-          </div>
-        </div>
-      </div>
-      <div class="footer-meta">
-        <p>© {new Date().getFullYear()} {content.footerCopyright}</p>
-        <a href={privacyHref}>{content.footerPrivacy}</a>
-      </div>
-    </footer>
+    <SiteFooter
+      homeHref={homeHref}
+      tagline={content.footerTagline}
+      columns={[
+        {
+          title: content.footerProduct,
+          links: [
+            { label: content.footerFeatures, href: featuresHref },
+            { label: content.footerQuickStart, href: onboardingHref },
+            { label: content.installChromeStoreLabel, href: CHROME_STORE_URL, external: true },
+            { label: content.installEdgeStoreLabel, href: EDGE_STORE_URL, external: true },
+          ],
+        },
+        {
+          title: content.footerResources,
+          links: [
+            { label: content.footerRelease, href: releaseHref },
+            { label: content.footerPrivacy, href: privacyHref },
+            { label: content.footerGithub, href: GITHUB_URL, external: true },
+          ],
+        },
+        {
+          title: content.footerCommunity,
+          links: [
+            { label: content.navContactX, href: COMMUNITY_LINKS.xUrl, external: true },
+            { label: content.navContactXiaohongshu, href: COMMUNITY_LINKS.xiaohongshuUrl, external: true },
+          ],
+        },
+      ]}
+      feedback={{
+        label: content.footerFeedback,
+        ariaLabel: content.heroCommunityAria,
+        qrTitle: content.qrcodeTitle,
+        qrImageSrc: COMMUNITY_LINKS.wechatQrImagePath,
+        qrImageAlt: content.qrcodeImageAlt,
+        closeLabel: content.qrcodeCloseAria,
+        externalHref: uiLocale === "zh-CN" ? undefined : COMMUNITY_LINKS.discordUrl,
+      }}
+      copyright={content.footerCopyright}
+      languages={FOOTER_LANGUAGES.map((language) => ({
+        ...language,
+        href: routeLanguageMap[language.code],
+        current: language.code === uiLocale,
+      }))}
+    />
 
     <script>
       import "../scripts/language-preference";
@@ -596,6 +498,14 @@ const structuredData = [
         };
         window.addEventListener("lumno:language-runtime-ready", retry);
         window.addEventListener("lumno:language-preference-ready", retry);
+      }
+
+      // Show the shortcut the visitor will actually press.
+      const platform = navigator.userAgentData?.platform || navigator.platform || "";
+      if (!/mac|iphone|ipad/i.test(platform)) {
+        document.querySelectorAll("[data-other-key]").forEach((key) => {
+          key.textContent = key.getAttribute("data-other-key");
+        });
       }
 
       const topNav = document.querySelector(".top-nav");
@@ -947,96 +857,6 @@ const structuredData = [
         clip-path: none;
       }
 
-      .brand {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        width: max-content;
-        text-decoration: none;
-      }
-
-      .brand-icon {
-        width: 34px;
-        height: 34px;
-        display: block;
-        overflow: hidden;
-      }
-
-      .brand-icon svg {
-        width: 44px;
-        height: 48px;
-        display: block;
-        transform: translate(-8px, -1px);
-        shape-rendering: geometricPrecision;
-      }
-
-      .brand-wordmark {
-        width: 82px;
-        height: auto;
-        display: block;
-      }
-
-      .footer-links a,
-      .footer-links .community-footer-trigger,
-      .footer-meta a {
-        color: var(--text-sub);
-        text-decoration: none;
-        transition: color 160ms ease;
-      }
-
-      .footer-links a:hover,
-      .footer-links .community-footer-trigger:hover,
-      .footer-meta a:hover {
-        color: var(--text-main);
-      }
-
-      .footer-links .community-footer-trigger {
-        all: unset;
-        color: var(--text-sub);
-        cursor: pointer;
-        transition: color 160ms ease;
-      }
-
-      .button {
-        min-height: 42px;
-        border: 1px solid var(--line);
-        background: var(--surface);
-        color: var(--text-main);
-      }
-
-      .button {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-        padding: 0 17px;
-        border-radius: 10px;
-        text-decoration: none;
-        font-size: 14px;
-        font-weight: 650;
-        box-shadow: 0 4px 12px var(--shadow-soft);
-        transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
-      }
-
-      .button:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 7px 18px var(--shadow-card);
-      }
-
-      .button-primary {
-        background: #1d2024;
-        border-color: #1d2024;
-        color: #fff;
-      }
-
-      .button-primary:hover {
-        background: #30343a;
-      }
-
-      .button-secondary {
-        background: rgba(255, 255, 255, 0.86);
-      }
-
       .lang-control {
         position: relative;
         z-index: 1;
@@ -1047,13 +867,11 @@ const structuredData = [
       }
 
       main {
-        overflow: hidden;
+        /* clip (not hidden) keeps position: sticky working inside sections. */
+        overflow-x: clip;
       }
 
-      .hero-section,
-      .section,
-      .footer-main,
-      .footer-meta {
+      .hero-section {
         width: min(calc(100% - 48px), var(--content-width));
         margin-left: auto;
         margin-right: auto;
@@ -1192,8 +1010,18 @@ const structuredData = [
         display: block;
       }
 
-      .hero-description-phrase {
-        white-space: nowrap;
+      /* Break Chinese copy at punctuation rather than inside a word. */
+      body[data-locale^="zh"] .hero-description-line {
+        word-break: keep-all;
+        overflow-wrap: anywhere;
+      }
+
+      /* Keyboard shortcuts mean nothing on touch-only devices. */
+      @media (hover: none) and (pointer: coarse) {
+        .hero-meta__shortcut,
+        .hero-meta__dot {
+          display: none !important;
+        }
       }
 
       .hero-actions {
@@ -1209,8 +1037,8 @@ const structuredData = [
         position: relative;
         z-index: 2;
         width: 100%;
-        height: max(300px, calc(100svh - 470px));
-        margin-top: clamp(52px, 4.5vw, 72px);
+        height: max(300px, calc(100svh - 500px));
+        margin-top: clamp(44px, 4vw, 64px);
       }
 
       .hero-demo-slot .hero-safari-demo {
@@ -1227,8 +1055,8 @@ const structuredData = [
 
       html[data-home-intro-js] body[data-home-intro="pending"] main > :not(.hero-section),
       html[data-home-intro-js] body[data-home-intro="revealing"] main > :not(.hero-section),
-      html[data-home-intro-js] body[data-home-intro="pending"] .site-legal-nav,
-      html[data-home-intro-js] body[data-home-intro="revealing"] .site-legal-nav {
+      html[data-home-intro-js] body[data-home-intro="pending"] .site-footer,
+      html[data-home-intro-js] body[data-home-intro="revealing"] .site-footer {
         visibility: hidden;
         opacity: 0;
       }
@@ -1262,6 +1090,10 @@ const structuredData = [
         transition-delay: 540ms;
       }
 
+      html[data-home-intro-js] body[data-home-intro="revealing"] .hero-meta {
+        transition-delay: 640ms;
+      }
+
       html[data-home-intro-js] body[data-home-intro="pending"] .hero-demo-page-switcher,
       html[data-home-intro-js] body[data-home-intro="revealing"] .hero-demo-page-switcher {
         pointer-events: none;
@@ -1276,48 +1108,6 @@ const structuredData = [
         white-space: nowrap;
       }
 
-      .section {
-        padding: 112px 0;
-        border-top: 1px solid var(--line);
-      }
-
-      .section-heading {
-        max-width: 650px;
-      }
-
-      .section-heading-wide {
-        max-width: 820px;
-      }
-
-      .section-heading h2,
-      .trust-copy h2,
-      .browser-section h2,
-      .final-cta h2 {
-        margin: 0;
-        font-size: clamp(34px, 4vw, 52px);
-        line-height: 1.14;
-        letter-spacing: -0.035em;
-        font-weight: 620;
-      }
-
-      .section-heading p,
-      .trust-copy > p,
-      .browser-section > div > p,
-      .final-cta-copy > p {
-        margin: 20px 0 0;
-        color: var(--text-sub);
-        font-size: 17px;
-        line-height: 1.75;
-      }
-
-      .feature-intro {
-        position: relative;
-        width: 100%;
-        padding: 0;
-        overflow: clip;
-        border-top: 0;
-      }
-
       .hero-parallax {
         --hero-parallax-row-loop-offset: -175rem;
       }
@@ -1326,21 +1116,22 @@ const structuredData = [
         isolation: isolate;
       }
 
+      /* Veil behind the copy so cards sliding up never sit under the text. */
       .hero-parallax__header::before {
         position: absolute;
-        top: 88px;
-        right: 0;
-        left: 0;
+        /* Also cover the section's top padding, where rotated cards first fly in. */
+        top: -240px;
+        right: -50vw;
+        bottom: -96px;
+        left: -50vw;
         z-index: -1;
-        height: clamp(260px, 24vw, 320px);
         pointer-events: none;
         content: "";
         background: linear-gradient(
           to bottom,
           var(--bg) 0%,
-          var(--bg) 28%,
-          rgba(250, 250, 250, 0.92) 58%,
-          rgba(250, 250, 250, 0.56) 78%,
+          var(--bg) 78%,
+          rgba(250, 250, 250, 0.7) 90%,
           transparent 100%
         );
       }
@@ -1351,399 +1142,95 @@ const structuredData = [
 
       .ai-intent-section {
         display: grid;
-        grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
-        gap: clamp(48px, 8vw, 132px);
-        min-height: min(100svh, 820px);
+        grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+        gap: clamp(40px, 6vw, 96px);
         align-items: center;
-        border-top: 0;
       }
 
       .ai-intent-copy {
-        width: 100%;
-        max-width: 560px;
+        margin-bottom: 0;
       }
 
-      .ai-intent-copy .hero-parallax__title {
-        max-width: 560px;
-        margin: 0;
-        text-align: left;
-        text-wrap: balance;
-      }
-
-      .ai-intent-copy .hero-parallax__description {
-        max-width: 500px;
-        margin: 22px 0 0;
-        text-align: left;
-      }
-
-      .ai-intent-placeholder {
+      .ai-intent-demo-slot {
         width: 100%;
         aspect-ratio: 1203 / 753;
         min-height: 320px;
       }
 
+      .feature-intro {
+        position: relative;
+        width: 100%;
+        overflow: clip;
+      }
+
       .hero-parallax__title {
         max-width: 760px;
         margin: 0 auto;
-        font-size: clamp(36px, 3.6vw, 48px);
-        line-height: 1.2;
-        letter-spacing: -0.045em;
-        font-weight: 620;
       }
 
       .hero-parallax__description {
-        max-width: 660px;
+        max-width: 620px;
         margin: 18px auto 0;
         color: var(--text-sub);
-        font-size: clamp(16px, 1.35vw, 18px);
+        font-size: clamp(16px, 1.3vw, 18px);
         line-height: 1.72;
       }
 
-      .text-link {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        width: max-content;
-        color: var(--blue-dark);
-        font-size: 15px;
-        font-weight: 650;
-        text-decoration: none;
-      }
-
-      .text-link i {
-        transition: transform 160ms ease;
-      }
-
-      .text-link:hover i {
-        transform: translateX(3px);
-      }
-
-      .workflow-section {
-        display: grid;
-        grid-template-columns: 0.76fr 1.24fr;
-        gap: clamp(56px, 9vw, 130px);
-      }
-
-      .workflow-list {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-        border-top: 1px solid var(--line-strong);
-      }
-
-      .workflow-list li {
-        display: grid;
-        grid-template-columns: 44px 42px 170px 1fr;
-        gap: 18px;
-        align-items: start;
-        padding: 28px 0;
-        border-bottom: 1px solid var(--line-strong);
-      }
-
-      .step-number {
-        padding-top: 9px;
-        color: var(--text-soft);
-        font-size: 12px;
-        font-variant-numeric: tabular-nums;
-      }
-
-      .step-icon,
-      .audience-mark,
-      .trust-icon {
-        display: grid;
-        place-items: center;
-        color: var(--blue-dark);
-        background: var(--surface-blue);
-      }
-
-      .step-icon {
-        width: 42px;
-        height: 42px;
-        border-radius: 12px;
-        font-size: 19px;
-      }
-
-      .workflow-list h3,
-      .audience-list h3,
-      .trust-list h3 {
-        margin: 8px 0 0;
-        font-size: 17px;
-        line-height: 1.45;
-        font-weight: 650;
-      }
-
-      .workflow-list p,
-      .audience-list p,
-      .trust-list p {
-        margin: 7px 0 0;
-        color: var(--text-sub);
-        font-size: 14px;
-        line-height: 1.7;
-      }
-
-      .audience-section {
-        display: grid;
-        gap: 66px;
-      }
-
-      .audience-list {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 0;
-        border-top: 1px solid var(--line-strong);
-        border-bottom: 1px solid var(--line-strong);
-      }
-
-      .audience-list article {
-        min-height: 250px;
-        padding: 34px 38px 38px;
-        border-right: 1px solid var(--line-strong);
-      }
-
-      .audience-list article:first-child {
-        padding-left: 0;
-      }
-
-      .audience-list article:last-child {
-        padding-right: 0;
-        border-right: 0;
-      }
-
-      .audience-mark {
-        width: 48px;
-        height: 48px;
-        border-radius: 14px;
-        margin-bottom: 34px;
-        font-size: 21px;
-      }
-
-      .audience-list h3 {
-        font-size: 20px;
-      }
-
-      .trust-section {
-        display: grid;
-        grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
-        gap: clamp(64px, 10vw, 146px);
-        align-items: start;
-        padding-top: 124px;
-        padding-bottom: 124px;
-      }
-
-      .trust-copy .text-link {
-        margin-top: 30px;
-      }
-
-      .trust-list {
-        display: grid;
-      }
-
-      .trust-list article {
-        display: grid;
-        grid-template-columns: 50px 1fr;
-        gap: 20px;
-        padding: 26px 0;
-        border-bottom: 1px solid var(--line);
-      }
-
-      .trust-list article:first-child {
-        padding-top: 0;
-      }
-
-      .trust-icon {
-        width: 46px;
-        height: 46px;
-        border-radius: 13px;
-        color: var(--green-ink);
-        background: var(--green-soft);
-        font-size: 20px;
-      }
-
-      .trust-list h3 {
-        margin-top: 1px;
-      }
-
-      .browser-section {
-        padding-top: 72px;
-        padding-bottom: 72px;
-        display: grid;
-        grid-template-columns: 0.9fr 1.1fr;
-        gap: 60px;
-        align-items: center;
-      }
-
-      .browser-section h2 {
-        font-size: clamp(30px, 3.1vw, 42px);
-      }
-
-      .browser-section > div > p {
-        margin-top: 12px;
-        font-size: 15px;
-      }
-
-      .browser-list {
-        margin: 0;
-        padding: 0;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        list-style: none;
-        border-top: 1px solid var(--line-strong);
-        border-left: 1px solid var(--line-strong);
-      }
-
-      .browser-list li {
-        min-height: 62px;
-        display: grid;
-        place-items: center;
-        border-right: 1px solid var(--line-strong);
-        border-bottom: 1px solid var(--line-strong);
-        color: var(--text-sub);
-        font-size: 14px;
-        font-weight: 650;
-      }
-
-      .faq-section {
-        display: grid;
-        grid-template-columns: 0.65fr 1.35fr;
-        gap: clamp(56px, 10vw, 156px);
-      }
-
-      .faq-list {
-        border-top: 1px solid var(--line-strong);
-      }
-
-      .faq-list details {
-        border-bottom: 1px solid var(--line-strong);
-      }
-
-      .faq-list summary {
-        min-height: 76px;
-        display: grid;
-        grid-template-columns: 1fr 24px;
-        gap: 18px;
-        align-items: center;
-        cursor: pointer;
-        list-style: none;
-        font-size: 16px;
-        font-weight: 620;
-      }
-
-      .faq-list summary::-webkit-details-marker {
-        display: none;
-      }
-
-      .faq-list summary i {
-        color: var(--text-soft);
-        font-size: 20px;
-        transition: transform 180ms ease;
-      }
-
-      .faq-list details[open] summary i {
-        transform: rotate(45deg);
-      }
-
-      .faq-list details > p {
-        max-width: 700px;
-        margin: -4px 46px 24px 0;
-        color: var(--text-sub);
-        font-size: 14px;
-        line-height: 1.75;
-      }
-
-      .final-cta {
-        margin-bottom: 112px;
-        padding: 78px 82px;
-        display: grid;
-        grid-template-columns: 1fr auto;
-        gap: 56px;
-        align-items: end;
-        background: rgba(239, 247, 251, 0.78);
-        border: 1px solid #d7e6ee;
-        border-radius: 22px;
-      }
-
-      .final-logo {
-        width: 52px;
-        height: 52px;
-        display: block;
-        overflow: hidden;
-        margin-bottom: 28px;
-      }
-
-      .final-logo svg {
-        width: 68px;
-        height: 74px;
-        transform: translate(-12px, -2px);
-      }
-
-      .final-cta-copy {
-        max-width: 760px;
-      }
-
-      .final-cta-actions {
+      .new-tab-highlights {
+        position: relative;
+        z-index: 2;
         display: flex;
-        gap: 10px;
         flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
+        width: min(calc(100% - 48px), 860px);
+        /* The card stage settles 300px above its layout box (plus the md:py-40 padding);
+           pull the chips up into that empty space. */
+        margin: -380px auto 0;
+        padding: 0;
+        list-style: none;
       }
 
-      .site-legal-nav {
-        border-top: 1px solid var(--line);
-        background: rgba(255, 255, 255, 0.54);
-      }
-
-      .footer-main {
-        padding: 72px 0 60px;
-        display: grid;
-        grid-template-columns: 1.2fr 1fr;
-        gap: 80px;
-      }
-
-      .footer-brand > p {
-        max-width: 360px;
-        margin: 18px 0 0;
-        color: var(--text-sub);
+      .new-tab-highlights li {
+        padding: 7px 14px;
+        border: 1px solid var(--home-card-border);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.86);
+        color: var(--home-ink-soft);
         font-size: 14px;
-        line-height: 1.7;
+        font-weight: 600;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
       }
 
-      .footer-links {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 30px;
-      }
-
-      .footer-links > div {
+      .hero-meta {
         display: flex;
-        flex-direction: column;
-        gap: 12px;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        gap: 6px 10px;
+        margin: 20px auto 0;
+        color: var(--text-soft);
+        font-size: 13px;
+        line-height: 1.6;
       }
 
-      .footer-links h2 {
-        margin: 0 0 6px;
-        font-size: 12px;
-        font-weight: 700;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-      }
-
-      .footer-links a,
-      .footer-links .community-footer-trigger {
+      .hero-copy > p.hero-meta {
+        margin-top: 20px;
+        color: var(--text-soft);
         font-size: 13px;
       }
 
-      .footer-meta {
-        min-height: 74px;
-        display: flex;
+      .hero-meta__shortcut {
+        display: inline-flex;
         align-items: center;
-        justify-content: space-between;
-        gap: 20px;
-        border-top: 1px solid var(--line);
-        color: var(--text-soft);
-        font-size: 12px;
+        gap: 6px;
       }
 
-      .footer-meta p {
-        margin: 0;
+      .hero-meta__keys {
+        display: inline-flex;
+        gap: 3px;
+        font-size: 12px;
       }
 
       :focus-visible {
@@ -1763,28 +1250,8 @@ const structuredData = [
         }
 
         .ai-intent-section {
-          grid-template-columns: 1fr;
-          min-height: auto;
-          gap: 52px;
-        }
-
-        .ai-intent-placeholder {
-          max-width: 760px;
-        }
-
-        .workflow-section,
-        .trust-section,
-        .faq-section {
-          grid-template-columns: 1fr;
-          gap: 60px;
-        }
-
-        .workflow-list li {
-          grid-template-columns: 44px 42px 190px 1fr;
-        }
-
-        .footer-main {
-          grid-template-columns: 0.8fr 1.2fr;
+          grid-template-columns: minmax(0, 1fr);
+          gap: 40px;
         }
       }
 
@@ -1881,25 +1348,7 @@ const structuredData = [
           padding-right: 14px;
         }
 
-        .brand-icon {
-          width: 30px;
-          height: 30px;
-        }
-
-        .brand-icon svg {
-          width: 39px;
-          height: 43px;
-          transform: translate(-7px, -1px);
-        }
-
-        .brand-wordmark {
-          width: 67px;
-        }
-
-        .hero-section,
-        .section,
-        .footer-main,
-        .footer-meta {
+        .hero-section {
           width: min(calc(100% - 32px), var(--content-width));
         }
 
@@ -1924,11 +1373,6 @@ const structuredData = [
           letter-spacing: -0.01em;
         }
 
-        .hero-parallax__title {
-          max-width: 620px;
-          font-size: clamp(34px, 10vw, 44px);
-          letter-spacing: -0.048em;
-        }
 
         .hero-copy {
           padding-left: max(8px, env(safe-area-inset-left));
@@ -1978,124 +1422,21 @@ const structuredData = [
           font-size: 13px;
         }
 
-        .section {
-          padding: 80px 0;
-        }
-
-        .feature-intro {
-          width: 100%;
-          padding: 0;
-        }
-
         .ai-intent-section {
-          gap: 36px;
+          gap: 32px;
         }
 
-        .ai-intent-copy .hero-parallax__title {
-          font-size: clamp(34px, 10vw, 44px);
-          letter-spacing: -0.048em;
+        .ai-intent-demo-slot {
+          min-height: 240px;
         }
 
-        .ai-intent-copy .hero-parallax__description {
-          max-width: 330px;
-          margin-top: 22px;
-          font-size: 15px;
-          line-height: 1.7;
+        .new-tab-highlights {
+          width: calc(100% - 32px);
+          margin-top: -320px;
         }
 
-        .ai-intent-placeholder {
-          min-height: 0;
-          border-radius: 16px;
-        }
-
-        .section-heading h2,
-        .trust-copy h2,
-        .browser-section h2,
-        .final-cta h2 {
-          font-size: 34px;
-        }
-
-        .workflow-section,
-        .trust-section,
-        .faq-section {
-          gap: 46px;
-        }
-
-        .workflow-list li {
-          grid-template-columns: 34px 42px 1fr;
-          gap: 12px;
-        }
-
-        .workflow-list li > p {
-          grid-column: 3;
-          margin-top: -4px;
-        }
-
-        .audience-section {
-          gap: 46px;
-        }
-
-        .audience-list {
-          grid-template-columns: 1fr;
-        }
-
-        .audience-list article,
-        .audience-list article:first-child,
-        .audience-list article:last-child {
-          min-height: 0;
-          padding: 28px 0;
-          border-right: 0;
-          border-bottom: 1px solid var(--line-strong);
-        }
-
-        .audience-list article:last-child {
-          border-bottom: 0;
-        }
-
-        .audience-mark {
-          margin-bottom: 20px;
-        }
-
-        .browser-section {
-          grid-template-columns: 1fr;
-          gap: 34px;
-        }
-
-        .browser-list {
-          grid-template-columns: repeat(2, 1fr);
-        }
-
-        .final-cta {
-          width: calc(100% - 24px);
-          margin-bottom: 70px;
-          padding: 46px 30px;
-          grid-template-columns: 1fr;
-          gap: 34px;
-          border-radius: 18px;
-        }
-
-        .final-cta-actions {
-          align-items: stretch;
-        }
-
-        .final-cta-actions .button {
-          flex: 1 1 180px;
-        }
-
-        .footer-main {
-          padding-top: 54px;
-          grid-template-columns: 1fr;
-          gap: 48px;
-        }
-
-        .footer-links {
-          gap: 20px;
-        }
-
-        .footer-meta {
-          padding: 20px 0;
-          align-items: flex-start;
-          flex-direction: column;
+        .new-tab-highlights li {
+          font-size: 13px;
         }
       }
 
@@ -2152,24 +1493,6 @@ const structuredData = [
         }
       }
 
-      @media (max-width: 420px) {
-        .workflow-list li {
-          grid-template-columns: 34px 1fr;
-        }
-
-        .workflow-list li .step-icon {
-          display: none;
-        }
-
-        .workflow-list li > p {
-          grid-column: 2;
-        }
-
-        .footer-links {
-          grid-template-columns: 1fr 1fr;
-        }
-      }
-
       @media (prefers-reduced-motion: reduce) {
         body.has-nav-install .top-nav {
           animation: none;
@@ -2196,7 +1519,7 @@ const structuredData = [
         }
 
         html[data-home-intro-js] body[data-home-intro="pending"] main > :not(.hero-section),
-        html[data-home-intro-js] body[data-home-intro="pending"] .site-legal-nav,
+        html[data-home-intro-js] body[data-home-intro="pending"] .site-footer,
         html[data-home-intro-js] body[data-home-intro="pending"] .top-nav,
         html[data-home-intro-js] body[data-home-intro="pending"] .hero-copy > * {
           visibility: visible;

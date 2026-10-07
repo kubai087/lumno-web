@@ -13,8 +13,9 @@ interface LumnoSiteSearchPayload {
 const LUMNO_REPOSITORY_RAW_ROOT =
   "https://raw.githubusercontent.com/kubai087/lumno-extension/main";
 
-export const LUMNO_SITE_SEARCH_ICON_ROOT =
-  `${LUMNO_REPOSITORY_RAW_ROOT}/assets/images/site-search`;
+// Served from this site: raw.githubusercontent.com is unreliable for visitors in mainland China.
+// Copied from lumno-extension/assets/images/site-search; refresh when providers change.
+export const LUMNO_SITE_SEARCH_ICON_ROOT = "/assets/site-search";
 
 const LUMNO_SITE_SEARCH_DATA_URL =
   `${LUMNO_REPOSITORY_RAW_ROOT}/assets/data/site-search.json`;

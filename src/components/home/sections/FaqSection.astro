@@ -1,0 +1,104 @@
+---
+import type { HomeFaqItem } from "../../../lib/home-content";
+
+interface Props {
+  title: string;
+  items: HomeFaqItem[];
+}
+
+const { title, items } = Astro.props;
+---
+
+<section id="faq" class="home-section faq" aria-labelledby="faq-title">
+  <div class="faq__layout">
+    <h2 id="faq-title" class="home-h2"><span>{title}</span></h2>
+    <div class="faq__list">
+      {items.map((item, index) => (
+        <details open={index === 0}>
+          <summary>
+            <span>{item.question}</span>
+            <i class="ri-add-line" aria-hidden="true"></i>
+          </summary>
+          <p>{item.answer}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+    gap: clamp(32px, 6vw, 96px);
+    align-items: start;
+  }
+
+  .faq__list {
+    border-top: 1px solid var(--home-card-border);
+  }
+
+  details {
+    border-bottom: 1px solid var(--home-card-border);
+  }
+
+  summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 22px 0;
+    color: var(--home-ink);
+    font-size: 17px;
+    font-weight: 620;
+    line-height: 1.5;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  summary:focus-visible {
+    outline: 2px solid var(--blue, #4ba7dd);
+    outline-offset: 4px;
+    border-radius: 6px;
+  }
+
+  summary i {
+    flex: none;
+    color: var(--text-soft, #89919a);
+    font-size: 20px;
+    transition: transform 200ms ease;
+  }
+
+  details[open] summary i {
+    transform: rotate(45deg);
+  }
+
+  details p {
+    max-width: 680px;
+    margin: -6px 0 0;
+    padding: 0 40px 24px 0;
+    color: var(--text-sub, #626870);
+    font-size: 15px;
+    line-height: 1.75;
+  }
+
+  @media (max-width: 900px) {
+    .faq__layout {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  @media (max-width: 620px) {
+    summary {
+      font-size: 16px;
+    }
+
+    details p {
+      padding-right: 0;
+    }
+  }
+</style>

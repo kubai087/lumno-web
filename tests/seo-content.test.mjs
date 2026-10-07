@@ -39,8 +39,9 @@ test("homepage keeps a crawlable entry to the full feature SEO page", () => {
   assert.doesNotMatch(source, /data-seo-content/);
   assert.doesNotMatch(source, /buildFAQPageSchema\(/);
   assert.doesNotMatch(source, /buildItemListSchema\(/);
-  assert.match(source, /featuresHref/);
-  assert.match(source, /href=\{featuresHref\}/);
+  assert.match(source, /const featuresHref = buildLocalizedPath\(uiLocale, "\/features\/"\);/);
+  assert.match(source, /\{ label: content\.footerFeatures, href: featuresHref \}/);
+  assert.match(source, /link: featuresHref/);
 });
 
 test("homepage keeps a localized crawlable entry to the privacy policy", () => {
@@ -48,8 +49,9 @@ test("homepage keeps a localized crawlable entry to the privacy policy", () => {
   const contentSource = readSource("src/lib/home-content.ts");
 
   assert.match(source, /const privacyHref = buildLocalizedPath\(uiLocale, "\/privacy\/"\);/);
-  assert.match(source, /<footer class="site-legal-nav">/);
-  assert.match(source, /href=\{privacyHref\}/);
+  assert.match(source, /\{ label: content\.footerPrivacy, href: privacyHref \}/);
+  assert.match(source, /<OpenSourceSection content=\{content\.openSource\} githubUrl=\{GITHUB_URL\} privacyHref=\{privacyHref\} \/>/);
+  assert.match(readSource("src/components/home/sections/SiteFooter.astro"), /<footer class="site-footer">/);
   assert.match(contentSource, /footerPrivacy: "隐私政策"/);
   assert.match(contentSource, /footerPrivacy: "隱私權政策"/);
   assert.match(contentSource, /footerPrivacy: "Privacy"/);
@@ -213,4 +215,22 @@ test("homepage intro never hides content without JavaScript", () => {
 test("deploy checkout keeps history for accurate sitemap lastmod", () => {
   assert.match(readSource(".github/workflows/deploy-pages.yml"), /fetch-depth: 0/);
   assert.match(readSource("src/pages/sitemap.xml.ts"), /execFileSync\("git", \["log"/);
+});
+
+test("homepage footer links every language version of the page", () => {
+  const source = readSource("src/pages/index.astro");
+  const footer = readSource("src/components/home/sections/SiteFooter.astro");
+
+  assert.match(source, /href: routeLanguageMap\[language\.code\]/);
+  assert.match(footer, /hreflang=\{language\.code\}/);
+  assert.match(footer, /aria-current=\{language\.current \? "page" : undefined\}/);
+});
+
+test("site-search icons are self-hosted for visitors who cannot reach GitHub raw files", () => {
+  const providers = readSource("src/lib/lumno-search-providers.ts");
+
+  assert.match(providers, /export const LUMNO_SITE_SEARCH_ICON_ROOT = "\/assets\/site-search";/);
+  for (const key of ["gh", "gpt", "ds", "kimi", "yt", "tb", "jd", "xhs"]) {
+    assert.ok(fs.existsSync(path.join(workspaceRoot, `public/assets/site-search/tile-${key}.png`)), key);
+  }
 });

@@ -1,0 +1,233 @@
+---
+import logoIconSvg from "../../../assets/onboarding/logo.svg?raw";
+import { CommunityQrDialog } from "../CommunityQrDialog";
+
+type Link = { label: string; href: string; external?: boolean };
+
+interface Props {
+  homeHref: string;
+  tagline: string;
+  columns: Array<{ title: string; links: Link[] }>;
+  feedback: {
+    label: string;
+    ariaLabel: string;
+    qrTitle: string;
+    qrImageSrc: string;
+    qrImageAlt: string;
+    closeLabel: string;
+    externalHref?: string;
+  };
+  copyright: string;
+  languages: Array<{ code: string; label: string; href: string; current: boolean }>;
+}
+
+const { homeHref, tagline, columns, feedback, copyright, languages } = Astro.props;
+---
+
+<footer class="site-footer">
+  <div class="site-footer__main">
+    <div class="site-footer__brand">
+      <a class="site-footer__logo" href={homeHref} aria-label="Lumno">
+        <span class="site-footer__icon" aria-hidden="true" set:html={logoIconSvg}></span>
+        <img src="/assets/textlogo.svg" width="165" height="43" alt="Lumno" loading="lazy" />
+      </a>
+      <p>{tagline}</p>
+    </div>
+    <nav class="site-footer__columns">
+      {columns.map((column, columnIndex) => (
+        <div>
+          <h2>{column.title}</h2>
+          <ul>
+            {column.links.map((link) => (
+              <li>
+                <a
+                  href={link.href}
+                  target={link.external ? "_blank" : undefined}
+                  rel={link.external ? "noreferrer noopener" : undefined}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+            {columnIndex === columns.length - 1 && (
+              <li>
+                <CommunityQrDialog
+                  triggerLabel={feedback.label}
+                  triggerAriaLabel={feedback.ariaLabel}
+                  title={feedback.qrTitle}
+                  qrImageSrc={feedback.qrImageSrc}
+                  qrImageAlt={feedback.qrImageAlt}
+                  closeLabel={feedback.closeLabel}
+                  triggerVariant="footer"
+                  externalHref={feedback.externalHref}
+                  client:visible
+                />
+              </li>
+            )}
+          </ul>
+        </div>
+      ))}
+    </nav>
+  </div>
+  <div class="site-footer__meta">
+    <p>© {new Date().getFullYear()} {copyright}</p>
+    <ul class="site-footer__languages">
+      {languages.map((language) => (
+        <li>
+          <a
+            href={language.href}
+            hreflang={language.code}
+            lang={language.code}
+            aria-current={language.current ? "page" : undefined}
+          >
+            {language.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--home-card-border);
+    background: rgba(255, 255, 255, 0.6);
+  }
+
+  .site-footer__main,
+  .site-footer__meta {
+    width: min(calc(100% - 48px), var(--home-section-width, 1180px));
+    margin-inline: auto;
+  }
+
+  .site-footer__main {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+    gap: 64px;
+    padding: 64px 0 56px;
+  }
+
+  .site-footer__logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .site-footer__icon {
+    display: block;
+    width: 34px;
+    height: 34px;
+    overflow: visible;
+  }
+
+  .site-footer__icon :global(svg) {
+    width: 44px;
+    height: 48px;
+    display: block;
+    transform: translate(-8px, -1px);
+    shape-rendering: geometricPrecision;
+  }
+
+  .site-footer__logo img {
+    width: 82px;
+    height: auto;
+    display: block;
+  }
+
+  .site-footer__brand p {
+    max-width: 340px;
+    margin: 16px 0 0;
+    color: var(--text-sub, #626870);
+    font-size: 14px;
+    line-height: 1.7;
+  }
+
+  .site-footer__columns {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 32px;
+  }
+
+  h2 {
+    margin: 0 0 14px;
+    color: var(--home-ink, #2f2a22);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  ul {
+    display: grid;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .site-footer a,
+  .site-footer :global(.community-footer-trigger) {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--text-sub, #626870);
+    font: inherit;
+    font-size: 14px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 160ms ease;
+  }
+
+  .site-footer a:hover,
+  .site-footer :global(.community-footer-trigger:hover) {
+    color: var(--home-ink, #2f2a22);
+  }
+
+  .site-footer__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 24px;
+    padding: 22px 0 28px;
+    border-top: 1px solid var(--home-card-border);
+    color: var(--text-soft, #89919a);
+    font-size: 13px;
+  }
+
+  .site-footer__meta p {
+    margin: 0;
+  }
+
+  .site-footer__languages {
+    display: flex;
+    gap: 16px;
+  }
+
+  .site-footer__languages a {
+    font-size: 13px;
+  }
+
+  .site-footer__languages a[aria-current="page"] {
+    color: var(--home-ink, #2f2a22);
+    font-weight: 650;
+  }
+
+  @media (max-width: 860px) {
+    .site-footer__main {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 40px;
+    }
+  }
+
+  @media (max-width: 520px) {
+    .site-footer__main,
+    .site-footer__meta {
+      width: calc(100% - 32px);
+    }
+
+    .site-footer__columns {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

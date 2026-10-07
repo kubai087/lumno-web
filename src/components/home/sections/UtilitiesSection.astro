@@ -1,0 +1,118 @@
+---
+import type { HOME_CONTENT, HomeUtilityId } from "../../../lib/home-content";
+
+type Content = (typeof HOME_CONTENT)["en"]["utilities"];
+
+interface Props {
+  content: Content;
+}
+
+const { content } = Astro.props;
+
+const UTILITY_ORDER: Array<{ id: HomeUtilityId; icon: string }> = [
+  { id: "clip", icon: "ri-screenshot-2-line" },
+  { id: "autoPip", icon: "ri-picture-in-picture-2-line" },
+  { id: "progress", icon: "ri-play-list-2-line" },
+  { id: "sync", icon: "ri-cloud-line" },
+  { id: "pinned", icon: "ri-pushpin-line" },
+  { id: "languages", icon: "ri-translate-2" },
+];
+---
+
+<section class="home-section utilities" aria-labelledby="utilities-title">
+  <header class="home-section__head">
+    <p class="home-eyebrow">{content.eyebrow}</p>
+    <h2 id="utilities-title" class="home-h2"><span>{content.title}</span></h2>
+    <p class="home-lead">{content.description}</p>
+  </header>
+
+  <ul class="utilities__grid">
+    {UTILITY_ORDER.map(({ id, icon }) => (
+      <li class="utilities__item">
+        <span class="utilities__icon" aria-hidden="true"><i class={icon}></i></span>
+        <div>
+          <h3>{content.items[id].title}</h3>
+          <p>{content.items[id].description}</p>
+        </div>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<style>
+  .utilities__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--home-card-border);
+  }
+
+  .utilities__item {
+    display: grid;
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: 16px;
+    padding: 32px 28px 32px 0;
+    border-bottom: 1px solid var(--home-card-border);
+  }
+
+  .utilities__item:not(:nth-child(3n + 1)) {
+    padding-left: 28px;
+    border-left: 1px solid var(--home-card-border);
+  }
+
+  .utilities__icon {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: var(--home-olive-soft);
+    color: var(--home-olive);
+    font-size: 20px;
+  }
+
+  h3 {
+    margin: 0;
+    color: var(--home-ink);
+    font-size: 17px;
+    font-weight: 650;
+    line-height: 1.4;
+  }
+
+  p {
+    margin: 6px 0 0;
+    color: var(--text-sub, #626870);
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  @media (max-width: 980px) {
+    .utilities__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .utilities__item:not(:nth-child(3n + 1)) {
+      padding-left: 0;
+      border-left: 0;
+    }
+
+    .utilities__item:nth-child(2n) {
+      padding-left: 28px;
+      border-left: 1px solid var(--home-card-border);
+    }
+  }
+
+  @media (max-width: 620px) {
+    .utilities__grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .utilities__item,
+    .utilities__item:nth-child(2n) {
+      padding: 24px 0;
+      border-left: 0;
+    }
+  }
+</style>

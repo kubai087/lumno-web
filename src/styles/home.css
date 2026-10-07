@@ -1,0 +1,181 @@
+/*
+ * Shared primitives for the homepage sections below the hero.
+ * Section-specific layout lives in each component's scoped <style>.
+ */
+
+:root {
+  --home-section-width: 1180px;
+  --home-ink: #2f2a22;
+  --home-ink-soft: #5a5247;
+  --home-olive: #6d7f63;
+  --home-olive-soft: #eef2ea;
+  --home-card: #ffffff;
+  --home-card-border: rgba(32, 38, 46, 0.08);
+  --home-card-shadow: 0 1px 2px rgba(32, 38, 46, 0.04), 0 12px 32px -18px rgba(32, 38, 46, 0.18);
+  --home-radius-lg: 24px;
+  --home-radius-md: 16px;
+  --home-select: #eaf2fe;
+  --home-select-ink: #1f5fbf;
+  --home-heading-gradient: linear-gradient(180deg, #2f2a22 0%, #5a5247 100%);
+}
+
+.home-section {
+  width: min(calc(100% - 48px), var(--home-section-width));
+  margin-inline: auto;
+  padding-block: clamp(88px, 10vw, 136px);
+}
+
+.home-section__head {
+  max-width: 720px;
+  margin: 0 auto clamp(40px, 5vw, 64px);
+  text-align: center;
+}
+
+.home-section__head--start {
+  margin-inline: 0;
+  text-align: left;
+}
+
+.home-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 14px;
+  color: var(--home-olive);
+  font-size: 13px;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+}
+
+.home-h2 {
+  margin: 0;
+  color: var(--home-ink);
+  font-size: clamp(32px, 3.6vw, 48px);
+  font-weight: 620;
+  line-height: 1.18;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+/* CJK headings break at punctuation (after the comma), not in the middle of a word. */
+[data-locale^="zh"] .home-h2 {
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+.home-h2 > span {
+  background: var(--home-heading-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+.home-lead {
+  margin: 18px auto 0;
+  max-width: 620px;
+  color: var(--text-sub, #626870);
+  font-size: clamp(16px, 1.3vw, 18px);
+  line-height: 1.72;
+  text-wrap: pretty;
+}
+
+.home-section__head:not(.home-section__head--start) .home-lead {
+  text-wrap: balance;
+}
+
+.home-section__head--start .home-lead {
+  margin-inline: 0;
+}
+
+.home-card {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--home-card-border);
+  border-radius: var(--home-radius-lg);
+  background: var(--home-card);
+  box-shadow: var(--home-card-shadow);
+}
+
+.home-card h3 {
+  margin: 0;
+  color: var(--home-ink);
+  font-size: 19px;
+  font-weight: 650;
+  line-height: 1.35;
+  letter-spacing: -0.015em;
+}
+
+.home-card p {
+  margin: 8px 0 0;
+  color: var(--text-sub, #626870);
+  font-size: 15px;
+  line-height: 1.68;
+}
+
+.home-kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.9em;
+  height: 1.9em;
+  padding: 0 0.45em;
+  border: 1px solid rgba(32, 38, 46, 0.12);
+  border-bottom-width: 2px;
+  border-radius: 7px;
+  background: #fff;
+  color: var(--home-ink);
+  font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 0.82em;
+  font-weight: 650;
+  line-height: 1;
+}
+
+.home-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--blue-dark, #1e729f);
+  font-size: 15px;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.home-link i {
+  transition: transform 160ms ease;
+}
+
+.home-link:hover i {
+  transform: translateX(3px);
+}
+
+/* English uses the editorial serif from the hero for section titles. */
+[data-locale="en"] .home-h2 {
+  font-family: "EB Garamond", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  font-size: clamp(38px, 4.2vw, 56px);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.012em;
+}
+
+[data-locale="en"] .home-eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 12px;
+}
+
+@media (max-width: 760px) {
+  .home-section {
+    width: calc(100% - 32px);
+    padding-block: 72px;
+  }
+
+  .home-section__head {
+    margin-bottom: 32px;
+  }
+
+  .home-card h3 {
+    font-size: 18px;
+  }
+}

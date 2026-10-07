@@ -3,14 +3,22 @@ import { DitherShader } from "./DitherShader";
 import type { ChromeStoreReview } from "../../lib/chrome-store-reviews";
 
 interface Props {
+  eyebrow: string;
   title: string;
+  summary: string;
+  storeUrl: string;
+  storeLinkLabel: string;
   ariaLabel: string;
   avatarLabel: string;
   reviews: readonly ChromeStoreReview[];
 }
 
 const {
+  eyebrow,
   title,
+  summary,
+  storeUrl,
+  storeLinkLabel,
   ariaLabel,
   avatarLabel,
   reviews,
@@ -20,12 +28,32 @@ const midpoint = Math.ceil(reviews.length / 2);
 const rows = [reviews.slice(0, midpoint), reviews.slice(midpoint)];
 ---
 
-<section class="chrome-review-marquee" aria-label={ariaLabel} data-chrome-review-marquee>
-  <div class="chrome-review-marquee__header">
-    <div class="chrome-review-marquee__heading">
-      <h2>{title}</h2>
-    </div>
-  </div>
+<section
+  id="reviews"
+  class="chrome-review-marquee"
+  aria-labelledby="reviews-title"
+  data-chrome-review-marquee
+>
+  <header class="home-section__head chrome-review-marquee__header">
+    <p class="home-eyebrow">{eyebrow}</p>
+    <h2 id="reviews-title" class="home-h2"><span>{title}</span></h2>
+    <p class="home-lead">
+      <span class="chrome-review-marquee__stars" aria-hidden="true">★★★★★</span>
+      {summary}
+    </p>
+    <a
+      class="home-link chrome-review-marquee__store"
+      href={storeUrl}
+      target="_blank"
+      rel="noreferrer noopener"
+      data-analytics-event="open_chrome_web_store_reviews"
+      data-analytics-category="navigation"
+      data-analytics-label="home_reviews_store"
+    >
+      {storeLinkLabel}
+      <i class="ri-arrow-right-up-line" aria-hidden="true"></i>
+    </a>
+  </header>
 
   <div class="chrome-review-marquee__frame">
     <DitherShader
@@ -40,7 +68,7 @@ const rows = [reviews.slice(0, midpoint), reviews.slice(midpoint)];
       client:visible
     />
 
-    <div class="chrome-review-marquee__rows">
+    <div class="chrome-review-marquee__rows" aria-label={ariaLabel}>
       {rows.map((row, rowIndex) => (
         <div class="chrome-review-marquee__lane" data-direction={rowIndex === 0 ? "left" : "right"}>
           <div class="chrome-review-marquee__track" data-review-track={rowIndex + 1}>
@@ -54,15 +82,19 @@ const rows = [reviews.slice(0, midpoint), reviews.slice(midpoint)];
                   <article class="chrome-review-card" role={duplicate ? undefined : "listitem"}>
                     <p class="chrome-review-card__quote">“{review.review}”</p>
                     <div class="chrome-review-card__meta">
-                      <img
-                        src={review.avatarUrl}
-                        width="32"
-                        height="32"
-                        alt={`${review.reviewerId} ${avatarLabel}`}
-                        loading="lazy"
-                        decoding="async"
-                        referrerpolicy="no-referrer"
-                      />
+                      <span class="chrome-review-card__avatar" data-initial={Array.from(review.reviewerId)[0]?.toUpperCase()}>
+                        {/* Google avatars are unreachable in some regions; fall back to the initial. */}
+                        <img
+                          src={review.avatarUrl}
+                          width="32"
+                          height="32"
+                          alt={`${review.reviewerId} ${avatarLabel}`}
+                          loading="lazy"
+                          decoding="async"
+                          referrerpolicy="no-referrer"
+                          onerror="this.remove()"
+                        />
+                      </span>
                       <div class="chrome-review-card__identity">
                         <strong>{review.reviewerId}</strong>
                       </div>
@@ -182,13 +214,13 @@ const rows = [reviews.slice(0, midpoint), reviews.slice(midpoint)];
     z-index: 3;
     width: 100%;
     margin-top: 0;
-    padding: clamp(80px, 7vw, 104px) 0 clamp(72px, 6vw, 92px);
+    padding: clamp(88px, 10vw, 136px) 0;
   }
 
   .chrome-review-marquee__frame {
     position: relative;
     isolation: isolate;
-    width: min(calc(100% - 48px), var(--content-width, 1360px));
+    width: min(calc(100% - 48px), var(--home-section-width, 1180px));
     margin: 0 auto;
     padding: clamp(24px, 2.5vw, 36px) 0;
     overflow: hidden;
@@ -216,25 +248,17 @@ const rows = [reviews.slice(0, midpoint), reviews.slice(midpoint)];
   }
 
   .chrome-review-marquee__header {
-    width: min(calc(100% - 24px), 1180px);
-    margin: 0 auto 20px;
-    display: grid;
-    place-items: center;
-    text-align: center;
+    width: min(calc(100% - 48px), 720px);
   }
 
-  .chrome-review-marquee__heading {
-    display: grid;
-    justify-items: center;
+  .chrome-review-marquee__stars {
+    margin-right: 6px;
+    color: #e0a526;
+    letter-spacing: 0.08em;
   }
 
-  .chrome-review-marquee__header h2 {
-    margin: 0;
-    color: var(--text-main, #15171a);
-    font-size: clamp(36px, 3.6vw, 48px);
-    line-height: 1.2;
-    letter-spacing: -0.035em;
-    font-weight: 570;
+  .chrome-review-marquee__store {
+    margin-top: 18px;
   }
 
   .chrome-review-marquee__rows {
@@ -313,14 +337,32 @@ const rows = [reviews.slice(0, midpoint), reviews.slice(midpoint)];
     gap: 9px;
   }
 
-  .chrome-review-card__meta img {
+  .chrome-review-card__avatar {
+    position: relative;
+    display: grid;
+    place-items: center;
     width: 32px;
     height: 32px;
-    display: block;
+    overflow: hidden;
     border-radius: 50%;
-    object-fit: cover;
-    background: var(--surface-soft, #f4f6f8);
+    background: var(--home-olive-soft, #eef2ea);
     box-shadow: inset 0 0 0 1px rgba(17, 24, 39, 0.08);
+  }
+
+  .chrome-review-card__avatar::before {
+    content: attr(data-initial);
+    color: var(--home-olive, #6d7f63);
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .chrome-review-card__avatar img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
   }
 
   .chrome-review-card__identity {
@@ -330,15 +372,12 @@ const rows = [reviews.slice(0, midpoint), reviews.slice(midpoint)];
   .chrome-review-card__identity strong {
     display: block;
     overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .chrome-review-card__identity strong {
     color: var(--text-main, #15171a);
     font-size: 12px;
     line-height: 1.35;
     font-weight: 500;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   @keyframes chrome-review-scroll-left {
@@ -361,14 +400,7 @@ const rows = [reviews.slice(0, midpoint), reviews.slice(midpoint)];
     }
 
     .chrome-review-marquee__header {
-      width: calc(100% - 16px);
-      min-height: 0;
-      margin-bottom: 16px;
-    }
-
-    .chrome-review-marquee__header h2 {
-      max-width: 320px;
-      font-size: clamp(34px, 10vw, 44px);
+      width: calc(100% - 32px);
     }
 
     .chrome-review-marquee__lane {

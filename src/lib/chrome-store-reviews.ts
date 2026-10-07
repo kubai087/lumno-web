@@ -281,3 +281,14 @@ export function getChromeStoreReviews(options: ChromeStoreReviewOptions = {}) {
   if (shouldCache) liveReviewRequest = request;
   return request;
 }
+
+// Reviews phrased as requests or questions read as open issues, not testimonials.
+const REQUEST_PATTERN = /希望|可不可以|可以不可以|能不能|能否|建议|请问|麻烦|[?？]|\b(?:please|could you|can you|wish|would be nice)\b/i;
+
+/** Picks the praise-style reviews that belong in a homepage testimonial wall. */
+export function selectShowcaseReviews(reviews: readonly ChromeStoreReview[], limit = 12) {
+  return reviews
+    .filter((review) => review.rating >= 4 && review.review.length >= 8 && !REQUEST_PATTERN.test(review.review))
+    .slice(0, limit);
+}
+

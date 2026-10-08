@@ -1,6 +1,9 @@
 ---
 import SeoHead from "../../components/SeoHead.astro";
-import { fetchReleases, formatDate, parseReleaseBody, type ParsedReleaseBody, type ReleaseLocaleContent } from "../../lib/releases";
+import SiteHeader from "../../components/site/SiteHeader.astro";
+import "../../styles/globals.css";
+import "../../styles/home.css";
+import { fetchReleases, formatDate, parseReleaseBody } from "../../lib/releases";
 import { getStoreVersions } from "../../lib/store-versions";
 import { marked } from "marked";
 import {
@@ -15,7 +18,7 @@ import {
 } from "../../lib/seo";
 import { buildEntryContextConfig } from "../../lib/entry-context";
 import { DEFAULT_LOCALE, buildLocalizedPath, buildRouteLanguageMap, type SupportedLocale } from "../../lib/locales";
-import { COMMUNITY_LINKS } from "../../lib/community";
+import { CHROME_STORE_URL, GITHUB_URL } from "../../lib/site-links";
 
 interface Props {
   forcedLocale?: SupportedLocale | null;
@@ -71,58 +74,37 @@ const pageKeywords = buildKeywords([
 ]);
 const initialUi = {
   "zh-CN": {
-    joinDiscord: "反馈 & 提需",
     bannerTitle: "Lumno 更新日志",
-    brandHomeAria: "回到 Lumno 首页",
-    brandLogoAlt: "Lumno",
-    githubRepoAria: "访问 Lumno GitHub 仓库",
-    xAria: "访问 Lumno X 主页",
-    discordAria: "反馈与提需",
-    bannerAlt: "Lumno 横幅",
-    languageSelectAria: "语言",
     readOnGithub: "在 GitHub 查看",
-    languageLabel: "简体中文",
     noReleasesTitle: "暂无发布记录",
     noReleasesDesc: "创建 GitHub Release 后，将在下一次部署时自动显示。",
-    qrcodeTitle: "微信群二维码",
-    qrcodeImageAlt: "Lumno 微信群二维码",
-    qrcodeCloseAria: "关闭二维码弹窗",
+    featuresLabel: "新功能",
+    bugFixesLabel: "问题修复",
+    githubPublished: "已发布",
+    chromePublished: "已发布",
+    chromeReviewing: "商店待更新",
   },
   "zh-TW": {
-    joinDiscord: "反饋 & 提需",
     bannerTitle: "Lumno 更新日誌",
-    brandHomeAria: "回到 Lumno 首頁",
-    brandLogoAlt: "Lumno",
-    githubRepoAria: "造訪 Lumno GitHub 倉庫",
-    xAria: "造訪 Lumno X 主頁",
-    discordAria: "反饋與提需",
-    bannerAlt: "Lumno 橫幅",
-    languageSelectAria: "語言",
     readOnGithub: "在 GitHub 查看",
-    languageLabel: "繁體中文",
     noReleasesTitle: "暫無發布記錄",
     noReleasesDesc: "建立 GitHub Release 後，將在下一次部署時自動顯示。",
-    qrcodeTitle: "微信群二維碼",
-    qrcodeImageAlt: "Lumno 微信群二維碼",
-    qrcodeCloseAria: "關閉二維碼彈窗",
+    featuresLabel: "新功能",
+    bugFixesLabel: "問題修復",
+    githubPublished: "已發布",
+    chromePublished: "已發布",
+    chromeReviewing: "商店待更新",
   },
   en: {
-    joinDiscord: "Feedback & Requests",
     bannerTitle: "Lumno Release Notes",
-    brandHomeAria: "Back to the Lumno homepage",
-    brandLogoAlt: "Lumno",
-    githubRepoAria: "Open the Lumno GitHub repository",
-    xAria: "Visit Lumno on X",
-    discordAria: "Feedback and requests",
-    bannerAlt: "Lumno banner",
-    languageSelectAria: "Language",
     readOnGithub: "View on GitHub",
-    languageLabel: "English",
     noReleasesTitle: "No releases yet",
     noReleasesDesc: "Publish a GitHub Release and it will appear here after the next deploy.",
-    qrcodeTitle: "WeChat group QR code",
-    qrcodeImageAlt: "Lumno WeChat group QR code",
-    qrcodeCloseAria: "Close QR code dialog",
+    featuresLabel: "Features",
+    bugFixesLabel: "Bug Fixes",
+    githubPublished: "Published",
+    chromePublished: "Published",
+    chromeReviewing: "Awaiting store update",
   },
 }[uiLocale];
 const releaseItemListSchema = releases.length
@@ -165,7 +147,7 @@ const structuredData = [
   buildBreadcrumbListSchema({
     items: [
       { name: SITE_NAME, path: homeHref },
-      { name: pageTitle, path: seoPath },
+      { name: initialUi.bannerTitle, path: seoPath },
     ],
   }),
 ];
@@ -181,10 +163,6 @@ function renderMdInline(markdown: string): string {
 
 function renderMdBlock(markdown: string): string {
   return marked.parse(markdown || "", { async: false });
-}
-
-function hasLocaleContent(content: ReleaseLocaleContent): boolean {
-  return Boolean(content.summary || content.features.length > 0 || content.bugFixes.length > 0);
 }
 
 function normalizeVersion(raw: string): number[] {
@@ -219,6 +197,44 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    {
+      !forcedLocale && (
+        <script is:inline define:vars={{ routeLanguageMap, entryKeys: entryContextConfig.extensionEntryKeys }}>
+          (() => {
+            // Each route renders only its own language. The default route stays on zh-CN for
+            // first-time web visitors and crawlers; a saved choice, or the browser language when
+            // the extension opens this page after an update, moves to the localized route before paint.
+            const normalizeLocale = (locale) => {
+              const raw = String(locale || "").trim().toLowerCase();
+              if (raw.startsWith("zh")) {
+                return raw.includes("tw") || raw.includes("hk") || raw.includes("mo") || raw.includes("hant")
+                  ? "zh-TW"
+                  : "zh-CN";
+              }
+              return "en";
+            };
+
+            let storedMode = "";
+            try {
+              storedMode = String(window.localStorage.getItem("_x_extension_language_2024_unique_") || "").trim();
+            } catch (_error) {
+              // Private browsing or blocked storage keeps the default route.
+            }
+
+            const params = new URLSearchParams(window.location.search);
+            const isExtensionEntry = entryKeys.some((key) => params.has(key));
+            if (!storedMode && !isExtensionEntry) return;
+
+            const browserLanguage = (Array.isArray(navigator.languages) && navigator.languages[0]) || navigator.language || "en";
+            const mode = storedMode && storedMode.toLowerCase() !== "system" ? storedMode : browserLanguage;
+            const targetPath = routeLanguageMap[normalizeLocale(mode)];
+            if (targetPath && window.location.pathname !== targetPath) {
+              window.location.replace(`${targetPath}${window.location.search}${window.location.hash}`);
+            }
+          })();
+        </script>
+      )
+    }
     <SeoHead
       title={pageTitle}
       description={pageDescription}
@@ -232,9 +248,16 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="stylesheet" href="/onboarding/assets/remixicon.css" />
-    <link rel="stylesheet" href="/onboarding/assets/fonts/open-sans/open-sans.css" />
+    <link rel="stylesheet" href="/assets/remixicon.css" />
     <style>
+      @font-face {
+        font-family: "Open Sans";
+        src: url("/assets/OpenSans-VariableFont-wdth-wght.ttf") format("truetype");
+        font-style: normal;
+        font-weight: 300 800;
+        font-display: swap;
+      }
+
       :root {
         --bg: #ffffff;
         --text: #101828;
@@ -244,7 +267,9 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         --card: #ffffff;
         --chip-bg: #f9fafb;
         --chip-text: #475467;
-        --release-header-offset: 88px;
+        /* The shared top bar: a 58px pill, 6px from the top. */
+        --release-header-offset: 64px;
+        --text-main: #15171a;
         --safe-area-bottom: 0px;
         --safe-area-bottom: env(safe-area-inset-bottom, 0px);
       }
@@ -278,381 +303,20 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         font-family: "Open Sans", "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif;
       }
 
-      .header {
-        position: sticky;
-        top: 0;
-        z-index: 30;
-        background: rgba(255, 255, 255, 0.86);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border-bottom: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
-      }
-
       .container {
         max-width: 1024px;
         margin: 0 auto;
       }
 
-      .header-inner {
-        padding: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 12px;
-      }
-
-      .brand {
-        display: inline-flex;
-        align-items: center;
-        text-decoration: none;
-      }
-
-      .brand-logo {
-        width: 136px;
-        height: auto;
-        display: block;
-      }
-
-      .header-controls {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-      }
-
-      .header-actions {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-      }
-
-      .social-btn {
-        min-height: 36px;
-        border-radius: 999px;
-        border: 1px solid var(--border-soft);
-        background: linear-gradient(180deg, #ffffff 0%, #ecedef 100%);
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02), inset 0 -4px 3px rgba(255, 255, 255, 0.59);
-        color: #4b545f;
-        text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        transition:
-          transform 0.18s ease,
-          box-shadow 0.18s ease,
-          border-color 0.18s ease,
-          background 0.18s ease;
-      }
-
-      .social-btn:focus-visible {
-        outline: 2px solid rgba(75, 84, 95, 0.35);
-        outline-offset: 2px;
-      }
-
-      @media (hover: hover) and (pointer: fine) {
-        .social-btn:hover {
-          transform: translateY(-1px);
-          border-color: #d2d8df;
-          background: linear-gradient(180deg, #ffffff 0%, #e8ebef 100%);
-          box-shadow:
-            0 14px 18px rgba(0, 0, 0, 0.04),
-            0 2px 3px rgba(0, 0, 0, 0.04),
-            inset 0 -4px 3px rgba(255, 255, 255, 0.65);
-        }
-
-        .social-btn-discord:hover {
-          border-color: transparent;
-          background: linear-gradient(180deg, #4a5467 0%, #2f3a4f 100%);
-          box-shadow:
-            0 12px 4px rgba(0, 0, 0, 0),
-            0 7px 3px rgba(0, 0, 0, 0.015),
-            0 4px 3px rgba(0, 0, 0, 0.045),
-            0 2px 2px rgba(0, 0, 0, 0.075),
-            0 0 1px rgba(0, 0, 0, 0.09);
-        }
-      }
-
-      .social-btn:active {
-        transform: translateY(1px);
-        background: linear-gradient(180deg, #ffffff 0%, #ecedef 100%);
-        box-shadow:
-          0 2px 5px rgba(0, 0, 0, 0.06),
-          inset 0 -4px 3px rgba(255, 255, 255, 0.59);
-      }
-
-      .social-btn-discord:active {
-        background: linear-gradient(180deg, #3a4353 0%, #232b3b 100%);
-        box-shadow:
-          0 10px 3px rgba(0, 0, 0, 0),
-          0 6px 2px rgba(0, 0, 0, 0.008),
-          0 3px 2px rgba(0, 0, 0, 0.035),
-          0 2px 2px rgba(0, 0, 0, 0.065),
-          0 0 1px rgba(0, 0, 0, 0.075);
-      }
-
-      .social-btn-icon {
-        width: 36px;
-        min-width: 36px;
-        padding: 0;
-        font-size: 18px;
-      }
-
-      .social-btn-discord {
-        position: relative;
-        padding: 0 14px;
-        gap: 8px;
-        font-size: 14px;
-        line-height: 1;
-        font-weight: 500;
-        border: none;
-        color: #ffffff;
-        background: linear-gradient(180deg, #404859 0%, #273042 100%);
-        box-shadow:
-          0 10px 3px rgba(0, 0, 0, 0),
-          0 6px 2px rgba(0, 0, 0, 0.008),
-          0 3px 2px rgba(0, 0, 0, 0.035),
-          0 2px 2px rgba(0, 0, 0, 0.065),
-          0 0 1px rgba(0, 0, 0, 0.075);
-      }
-
-      .social-btn-discord i {
-        font-size: 18px;
-      }
-
-      .social-btn-discord::before {
-        content: "";
-        position: absolute;
-        inset: 0;
-        border-radius: inherit;
-        pointer-events: none;
-        box-shadow:
-          inset 0 0 0 1px #040404,
-          inset 0 1px 0 rgba(255, 255, 255, 0.52),
-          inset 0 1px 2.4px rgba(255, 255, 255, 0.36);
-      }
-
-      .lang-control {
-        position: fixed;
-        right: 24px;
-        bottom: calc(24px + var(--safe-area-bottom));
-        z-index: 22;
-        width: 38px;
-      }
-
-      .lang-toggle {
-        width: 38px;
-        min-width: 38px;
-        height: 38px;
-        border-radius: 999px;
-        border: 1px solid transparent;
-        appearance: none;
-        -webkit-appearance: none;
-        background: transparent;
-        box-shadow: none;
-        color: #4b545f;
-        -webkit-text-fill-color: currentColor;
-        cursor: pointer;
-        font-size: 16px;
-        padding: 0;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0;
-        transition: border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease;
-      }
-
-      .lang-toggle,
-      .lang-toggle i,
-      .lang-select-prefix,
-      .lang-select-arrow {
-        color: inherit;
-        -webkit-text-fill-color: currentColor;
-      }
-
-      .lang-toggle i {
-        font-size: 16px;
-        line-height: 1;
-      }
-
-      .lang-select-prefix {
-        width: 18px;
-        height: 18px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .lang-current-label {
-        display: none;
-        flex: 1 1 auto;
-        min-width: 0;
-        font-size: 14px;
-        color: #4b545f;
-        text-align: left;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
-      .lang-select-arrow {
-        display: none;
-        width: 16px;
-        height: 16px;
-        align-items: center;
-        justify-content: center;
-        color: #768095;
-      }
-
-      @media (hover: hover) and (pointer: fine) {
-        .lang-toggle:hover {
-          border-color: #d2d8df;
-          background: rgba(255, 255, 255, 0.72);
-          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-        }
-      }
-
-      .lang-toggle:active {
-        border-color: #ccd3db;
-        background: rgba(255, 255, 255, 0.78);
-        box-shadow: none;
-      }
-
-      .lang-menu {
-        --language-menu-radius: 12px;
-        --language-menu-border-width: 1px;
-        --language-menu-padding: 6px;
-        --language-option-radius: max(
-          0px,
-          calc(
-            var(--language-menu-radius) -
-            var(--language-menu-border-width) -
-            var(--language-menu-padding)
-          )
-        );
-        position: absolute;
-        right: 0;
-        bottom: calc(100% + 8px);
-        top: auto;
-        z-index: 36;
-        min-width: 180px;
-        background: #fff;
-        border: var(--language-menu-border-width) solid #e2e2e2;
-        border-radius: var(--language-menu-radius);
-        padding: var(--language-menu-padding);
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-        box-shadow: 0 14px 28px rgba(0, 0, 0, 0.12);
-        opacity: 0;
-        visibility: hidden;
-        transform: translateY(6px) scale(0.97);
-        transform-origin: bottom right;
-        pointer-events: none;
-        transition: opacity 180ms ease, transform 180ms ease;
-      }
-
-      .lang-menu[data-open="true"] {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-        pointer-events: auto;
-        visibility: visible;
-      }
-
-      .lang-option {
-        display: block;
-        box-sizing: border-box;
-        width: 100%;
-        text-decoration: none;
-        border: 0;
-        background: transparent;
-        border-radius: var(--language-option-radius, 8px);
-        text-align: left;
-        padding: 7px 9px;
-        color: #3f4650;
-        font-family: inherit;
-        font-size: 13px;
-        cursor: pointer;
-      }
-
-      .lang-option:hover {
-        background: #f3f5f7;
-      }
-
-      .lang-option.is-active {
-        background: #eaf3ff;
-        color: #2a5da7;
-        font-weight: 600;
-      }
-
-      .qrcode-modal {
-        position: fixed;
-        inset: 0;
-        z-index: 40;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-      }
-
-      .qrcode-modal[hidden] {
-        display: none;
-      }
-
-      .qrcode-modal-backdrop {
-        position: absolute;
-        inset: 0;
-        background: rgba(8, 12, 20, 0.6);
-      }
-
-      .qrcode-modal-panel {
-        --qrcode-panel-radius: 16px;
-        --qrcode-panel-border-width: 0px;
-        --qrcode-panel-padding: 20px;
-        --qrcode-panel-content-radius: max(
-          0px,
-          calc(
-            var(--qrcode-panel-radius) -
-            var(--qrcode-panel-border-width) -
-            var(--qrcode-panel-padding)
-          )
-        );
-        position: relative;
-        width: min(92vw, 380px);
-        border-radius: var(--qrcode-panel-radius);
-        background: #ffffff;
-        box-shadow: 0 24px 42px rgba(16, 23, 38, 0.26);
-        padding: var(--qrcode-panel-padding);
-      }
-
-      .qrcode-modal-close {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        width: 32px;
-        height: 32px;
-        border: none;
-        border-radius: 999px;
-        background: #f2f4f8;
-        color: #212733;
-        cursor: pointer;
-      }
-
-      .qrcode-modal-title {
-        margin: 0 34px 12px 0;
-        font-size: 16px;
-        line-height: 1.35;
-        font-weight: 600;
-        color: #0f1725;
-      }
-
-      .qrcode-modal-image {
-        display: block;
-        width: 100%;
-        border-radius: var(--qrcode-panel-content-radius);
-      }
-
+      /*
+       * Clear the fixed top bar, then the original 30px breathing room. The bar
+       * brings Tailwind's preflight (line-height 1.5); the notes keep the browser
+       * default they were designed with, without touching the bar itself.
+       */
       main {
-        padding: 30px 24px 60px;
-        padding: 30px 24px max(60px, var(--safe-area-bottom));
+        line-height: normal;
+        padding: calc(var(--release-header-offset) + 30px) 24px 60px;
+        padding: calc(var(--release-header-offset) + 30px) 24px max(60px, var(--safe-area-bottom));
       }
 
       .top-banner {
@@ -891,31 +555,19 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         cursor: default;
       }
 
-      .entry-localized {
-        display: none;
-      }
-
-      body[data-release-content-locale="zh-CN"] .entry-localized[data-release-locale="zh-CN"] {
-        display: block;
-      }
-
-      body[data-release-content-locale="zh-TW"] .entry-localized[data-release-locale="zh-TW"] {
-        display: block;
-      }
-
-      body[data-release-content-locale="en"] .entry-localized[data-release-locale="en"] {
-        display: block;
-      }
-
-      body:not([data-release-content-locale]) .entry-localized[data-release-locale="zh-CN"] {
-        display: block;
-      }
-
       .entry-summary {
         margin-top: 16px;
         color: #344054;
         line-height: 1.7;
         font-size: 15px;
+      }
+
+      :global(.entry-summary ul) {
+        list-style: disc;
+      }
+
+      :global(.entry-summary ol) {
+        list-style: decimal;
       }
 
       :global(.entry-summary p) {
@@ -1012,6 +664,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         color: #344054;
         font-size: 14px;
         line-height: 1.65;
+        list-style: disc;
       }
 
       .accordion-list li + li {
@@ -1121,127 +774,9 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
       }
 
       @media (max-width: 767px) {
-        :root {
-          --release-header-offset: 76px;
-        }
-
-        .header-inner {
-          padding: 14px 16px;
-          align-items: center;
-          justify-content: space-between;
-          flex-direction: row;
-          gap: 10px;
-        }
-
-        .brand {
-          flex: 0 1 auto;
-          min-width: 0;
-        }
-
-        .brand-logo {
-          width: clamp(90px, 28vw, 136px);
-        }
-
-        .header-controls {
-          width: auto;
-          margin-left: auto;
-          align-items: center;
-          justify-content: flex-end;
-          gap: 6px;
-          flex-wrap: nowrap;
-        }
-
-        .lang-control {
-          position: fixed;
-          left: 16px;
-          right: 16px;
-          bottom: calc(16px + var(--safe-area-bottom));
-          width: auto;
-        }
-
-        .lang-toggle {
-          width: 100%;
-          min-width: 0;
-          min-height: 40px;
-          border-radius: 10px;
-          border: 1px solid #dbe1e8;
-          background: #ffffff;
-          box-shadow: 0 6px 18px rgba(14, 24, 38, 0.08);
-          padding: 0 12px;
-          display: grid;
-          grid-template-columns: 1fr auto 1fr;
-          align-items: center;
-          gap: 10px;
-        }
-
-        .lang-current-label,
-        .lang-select-arrow {
-          display: inline-flex;
-        }
-
-        .lang-current-label {
-          display: block;
-          flex: none;
-          justify-self: center;
-          text-align: center;
-          padding: 0 6px;
-          max-width: 100%;
-        }
-
-        .lang-select-prefix {
-          justify-self: start;
-          width: 18px;
-        }
-
-        .lang-select-arrow {
-          justify-self: end;
-          width: 18px;
-        }
-
-        .lang-menu {
-          width: 100%;
-          min-width: 0;
-          left: 0;
-          right: auto;
-          transform: translateY(6px) scale(0.97);
-          transform-origin: bottom center;
-        }
-
-        .lang-menu[data-open="true"] {
-          transform: translateY(0) scale(1);
-        }
-
-        .header-actions {
-          margin-left: 0;
-          gap: 6px;
-          min-width: 0;
-        }
-
-        .social-btn-icon {
-          width: 36px;
-          min-width: 36px;
-          padding: 0;
-        }
-
-        .social-btn-discord {
-          width: 36px;
-          min-width: 36px;
-          max-width: 36px;
-          padding: 0;
-          gap: 0;
-        }
-
-        .social-btn-discord i {
-          flex: 0 0 auto;
-        }
-
-        .social-btn-discord span {
-          display: none;
-        }
-
         main {
-          padding: 22px 16px 96px;
-          padding: 22px 16px max(96px, var(--safe-area-bottom));
+          padding: calc(var(--release-header-offset) + 22px) 16px 60px;
+          padding: calc(var(--release-header-offset) + 22px) 16px max(60px, var(--safe-area-bottom));
         }
 
         .top-banner {
@@ -1267,49 +802,16 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
       }
     </style>
   </head>
-  <body data-release-locale={uiLocale} data-release-content-locale={releaseContentLocale}>
-    <header class="header">
-      <div class="container">
-        <div class="header-inner">
-          <a class="brand" href={homeHref} data-i18n-aria-label="brand_home_aria" aria-label={initialUi.brandHomeAria} data-analytics-event="select_home_brand" data-analytics-category="navigation" data-analytics-label="release_brand">
-            <img class="brand-logo" src="/resource_commited/logo.png" alt={initialUi.brandLogoAlt} draggable="false" />
-          </a>
-          <div class="header-controls">
-            <nav class="header-actions">
-              <a class="social-btn social-btn-icon" href="https://github.com/kubai087/lumno-extension" target="_blank" rel="noreferrer noopener" aria-label={initialUi.githubRepoAria} data-i18n-aria-label="github_repo_aria" data-analytics-event="open_github_repo" data-analytics-category="cta" data-analytics-label="release_header_github">
-                <i class="ri-github-fill" aria-hidden="true"></i>
-              </a>
-              <a class="social-btn social-btn-icon" href={COMMUNITY_LINKS.xUrl} target="_blank" rel="noreferrer noopener" aria-label={initialUi.xAria} data-i18n-aria-label="x_aria" data-analytics-event="open_x_profile" data-analytics-category="cta" data-analytics-label="release_header_x">
-                <i class="ri-twitter-x-fill" aria-hidden="true"></i>
-              </a>
-              <a
-                class="social-btn social-btn-discord"
-                href={COMMUNITY_LINKS.discordUrl}
-                target="_blank"
-                rel="noreferrer noopener"
-                aria-label={initialUi.discordAria}
-                data-i18n-aria-label="discord_aria"
-                data-community-entry
-                data-discord-href={COMMUNITY_LINKS.discordUrl}
-                data-analytics-event="join_community"
-                data-analytics-category="cta"
-                data-analytics-label="release_header_discord"
-              >
-                <i class="ri-discord-fill" aria-hidden="true" data-community-icon></i>
-                <span data-i18n="join_discord">{initialUi.joinDiscord}</span>
-              </a>
-            </nav>
-          </div>
-        </div>
-      </div>
-    </header>
+  <body class="has-nav-install is-nav-install-settled" data-locale={uiLocale} data-release-locale={uiLocale} data-release-content-locale={releaseContentLocale}>
+    <SiteHeader locale={uiLocale} routeLanguageMap={routeLanguageMap} analyticsScope="release" />
 
     <main class="container">
       <div class="top-banner">
         <img
           src="/resource_commited/banner.jpg"
-          alt={initialUi.bannerAlt}
+          alt=""
           loading="eager"
+          fetchpriority="high"
           decoding="async"
           width="2200"
           height="586"
@@ -1325,17 +827,16 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         {
           releases.length > 0 ? (
             releases.map((item) => {
-              const zhContent = item.parsed.locales["zh-CN"];
-              const zhTwContent = item.parsed.locales["zh-TW"];
-              const enContent = item.parsed.locales.en;
+              const localeContent = item.parsed.locales[releaseContentLocale];
               const chromeStatusKey = getChromeStatusI18nKey(item.tag);
+              const anchor = item.tag.startsWith("v") ? item.tag : `v${item.tag}`;
 
               return (
-                <article class="entry">
+                <article class="entry" id={anchor}>
                   <div class="entry-wrap">
                     <aside class="entry-side">
                       <div class="entry-side-sticky">
-                        <time class="entry-date">{formatDate(item.date)}</time>
+                        <time class="entry-date" datetime={item.date || undefined}>{formatDate(item.date, uiLocale)}</time>
                         <div class="entry-version">{item.tag}</div>
                       </div>
                     </aside>
@@ -1351,12 +852,12 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
                           ))}
                           <span class="chip chip-status chip-github">
                             <i class="ri-github-fill" aria-hidden="true"></i>
-                            <span data-i18n="github_published">Published</span>
+                            <span data-i18n="github_published">{initialUi.githubPublished}</span>
                           </span>
                           {chromeStatusKey === "chrome_published" ? (
                             <a
                               class="chip chip-status chip-chrome is-published chip-link"
-                              href="https://chromewebstore.google.com/detail/nggfkkbmogmadfoikakkfegkoilfcfao"
+                              href={CHROME_STORE_URL}
                               target="_blank"
                               rel="noreferrer"
                               data-analytics-event="open_chrome_web_store"
@@ -1364,27 +865,27 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
                               data-analytics-label={`release_chrome_status_${item.tag}`}
                             >
                               <i class="ri-chrome-fill" aria-hidden="true"></i>
-                              <span data-i18n={chromeStatusKey}>Published</span>
+                              <span data-i18n={chromeStatusKey}>{initialUi.chromePublished}</span>
                             </a>
                           ) : chromeStatusKey ? (
                             <span class="chip chip-status chip-chrome is-reviewing">
                               <i class="ri-chrome-fill" aria-hidden="true"></i>
-                              <span data-i18n={chromeStatusKey}>{uiLocale === "en" ? "Awaiting store update" : "商店待更新"}</span>
+                              <span data-i18n={chromeStatusKey}>{initialUi.chromeReviewing}</span>
                             </span>
                           ) : null}
                         </div>
 
-                        <div class="entry-localized" data-release-locale="zh-CN">
-                          {zhContent.summary && <div class="entry-summary" set:html={renderMdBlock(zhContent.summary)}></div>}
+                        <div class="entry-localized" data-release-locale={releaseContentLocale}>
+                          {localeContent.summary && <div class="entry-summary" set:html={renderMdBlock(localeContent.summary)}></div>}
 
-                          {(zhContent.features.length > 0 || zhContent.bugFixes.length > 0) && (
+                          {(localeContent.features.length > 0 || localeContent.bugFixes.length > 0) && (
                             <div class="accordion-group">
-                              {zhContent.features.length > 0 && (
+                              {localeContent.features.length > 0 && (
                                 <details class="accordion" open>
-                                  <summary data-i18n="features_label" data-count={zhContent.features.length}>Features ({zhContent.features.length})</summary>
+                                  <summary data-i18n="features_label" data-count={localeContent.features.length}>{initialUi.featuresLabel} ({localeContent.features.length})</summary>
                                   <div class="accordion-panel">
                                     <ul class="accordion-list">
-                                      {zhContent.features.map((feature) => (
+                                      {localeContent.features.map((feature) => (
                                         <li set:html={renderMdInline(feature)}></li>
                                       ))}
                                     </ul>
@@ -1392,80 +893,12 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
                                 </details>
                               )}
 
-                              {zhContent.bugFixes.length > 0 && (
+                              {localeContent.bugFixes.length > 0 && (
                                 <details class="accordion" open>
-                                  <summary data-i18n="bug_fixes_label" data-count={zhContent.bugFixes.length}>Bug Fixes ({zhContent.bugFixes.length})</summary>
+                                  <summary data-i18n="bug_fixes_label" data-count={localeContent.bugFixes.length}>{initialUi.bugFixesLabel} ({localeContent.bugFixes.length})</summary>
                                   <div class="accordion-panel">
                                     <ul class="accordion-list">
-                                      {zhContent.bugFixes.map((fix) => (
-                                        <li set:html={renderMdInline(fix)}></li>
-                                      ))}
-                                    </ul>
-                                  </div>
-                                </details>
-                              )}
-                            </div>
-                          )}
-                        </div>
-
-                        <div class="entry-localized" data-release-locale="zh-TW">
-                          {zhTwContent.summary && <div class="entry-summary" set:html={renderMdBlock(zhTwContent.summary)}></div>}
-
-                          {(zhTwContent.features.length > 0 || zhTwContent.bugFixes.length > 0) && (
-                            <div class="accordion-group">
-                              {zhTwContent.features.length > 0 && (
-                                <details class="accordion" open>
-                                  <summary data-i18n="features_label" data-count={zhTwContent.features.length}>Features ({zhTwContent.features.length})</summary>
-                                  <div class="accordion-panel">
-                                    <ul class="accordion-list">
-                                      {zhTwContent.features.map((feature) => (
-                                        <li set:html={renderMdInline(feature)}></li>
-                                      ))}
-                                    </ul>
-                                  </div>
-                                </details>
-                              )}
-
-                              {zhTwContent.bugFixes.length > 0 && (
-                                <details class="accordion" open>
-                                  <summary data-i18n="bug_fixes_label" data-count={zhTwContent.bugFixes.length}>Bug Fixes ({zhTwContent.bugFixes.length})</summary>
-                                  <div class="accordion-panel">
-                                    <ul class="accordion-list">
-                                      {zhTwContent.bugFixes.map((fix) => (
-                                        <li set:html={renderMdInline(fix)}></li>
-                                      ))}
-                                    </ul>
-                                  </div>
-                                </details>
-                              )}
-                            </div>
-                          )}
-                        </div>
-
-                        <div class="entry-localized" data-release-locale="en">
-                          {enContent.summary && <div class="entry-summary" set:html={renderMdBlock(enContent.summary)}></div>}
-
-                          {(enContent.features.length > 0 || enContent.bugFixes.length > 0) && (
-                            <div class="accordion-group">
-                              {enContent.features.length > 0 && (
-                                <details class="accordion" open>
-                                  <summary data-i18n="features_label" data-count={enContent.features.length}>Features ({enContent.features.length})</summary>
-                                  <div class="accordion-panel">
-                                    <ul class="accordion-list">
-                                      {enContent.features.map((feature) => (
-                                        <li set:html={renderMdInline(feature)}></li>
-                                      ))}
-                                    </ul>
-                                  </div>
-                                </details>
-                              )}
-
-                              {enContent.bugFixes.length > 0 && (
-                                <details class="accordion" open>
-                                  <summary data-i18n="bug_fixes_label" data-count={enContent.bugFixes.length}>Bug Fixes ({enContent.bugFixes.length})</summary>
-                                  <div class="accordion-panel">
-                                    <ul class="accordion-list">
-                                      {enContent.bugFixes.map((fix) => (
+                                      {localeContent.bugFixes.map((fix) => (
                                         <li set:html={renderMdInline(fix)}></li>
                                       ))}
                                     </ul>
@@ -1503,58 +936,16 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         }
       </section>
     </main>
-    <div class="lang-control">
-      <button
-        id="language-toggle"
-        class="lang-toggle"
-        type="button"
-        data-i18n-aria-label="language_select_aria"
-        aria-label={initialUi.languageSelectAria}
-        aria-haspopup="menu"
-        aria-expanded="false"
-      >
-        <span class="lang-select-prefix">
-          <i class="ri-global-line" aria-hidden="true"></i>
-        </span>
-        <span id="language-current-label" class="lang-current-label">{initialUi.languageLabel}</span>
-        <span class="lang-select-arrow" aria-hidden="true">
-          <i class="ri-arrow-down-s-line"></i>
-        </span>
-      </button>
-      <div id="language-menu" class="lang-menu" role="menu" data-open="false">
-        <a class="lang-option" href={routeLanguageMap["zh-CN"]} hreflang="zh-CN" lang="zh-CN" role="menuitemradio" data-lang-value="zh-CN" data-i18n="language_zh_cn">
-          简体中文
-        </a>
-        <a class="lang-option" href={routeLanguageMap["zh-TW"]} hreflang="zh-TW" lang="zh-TW" role="menuitemradio" data-lang-value="zh-TW" data-i18n="language_zh_tw">
-          繁體中文
-        </a>
-        <a class="lang-option" href={routeLanguageMap.en} hreflang="en" lang="en" role="menuitemradio" data-lang-value="en" data-i18n="language_en">
-          English
-        </a>
-      </div>
-    </div>
-    <div id="community-qrcode-modal" class="qrcode-modal" hidden>
-      <div class="qrcode-modal-backdrop" data-close-qrcode-modal></div>
-      <div class="qrcode-modal-panel" role="dialog" aria-modal="true" aria-labelledby="community-qrcode-title">
-        <button class="qrcode-modal-close" type="button" aria-label={initialUi.qrcodeCloseAria} data-i18n-aria-label="qrcode_close_aria" data-close-qrcode-modal>
-          <i class="ri-close-line" aria-hidden="true"></i>
-        </button>
-        <h2 id="community-qrcode-title" class="qrcode-modal-title" data-i18n="qrcode_title">{initialUi.qrcodeTitle}</h2>
-        <img class="qrcode-modal-image" src={COMMUNITY_LINKS.wechatQrImagePath} alt={initialUi.qrcodeImageAlt} data-i18n-alt="qrcode_image_alt" loading="lazy" />
-      </div>
-    </div>
     <script>
       import "../../scripts/language-preference";
       import "../../scripts/language-runtime";
     </script>
-    <script define:vars={{ forcedLocale, routeLanguageMap, pageTitleByLocale, entryContextConfig, communityLinks: COMMUNITY_LINKS }}>
+    <script is:inline define:vars={{ forcedLocale, routeLanguageMap, pageTitleByLocale, entryContextConfig }}>
       const LANGUAGE_STORAGE_KEY = "_x_extension_language_2024_unique_";
       const FORCED_LOCALE = forcedLocale;
       const ROUTE_LANGUAGE_MAP = routeLanguageMap;
       const ENTRY_CONTEXT_CONFIG = entryContextConfig;
-      const COMMUNITY_LINKS = communityLinks;
       const FALLBACK_LOCALE = "zh-CN";
-      const ZH_CN_LOCALE = "zh-CN";
       const I18N_MESSAGES = {
         "zh-CN": {
           page_title_ui: "更新日志｜Lumno 聚焦搜索&新标签页",
@@ -1564,14 +955,6 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
           banner_title: "已更新至新版本！",
           banner_title_ext: "您已更新至 {version}",
           banner_title_web: "Lumno 更新日志",
-          brand_home_aria: "回到 Lumno 首页",
-          join_discord: "反馈 & 提需",
-          discord_aria: "反馈与提需",
-          qrcode_title: "微信群二维码",
-          qrcode_image_alt: "Lumno 微信群二维码",
-          qrcode_close_aria: "关闭二维码弹窗",
-          github_repo_aria: "访问 Lumno GitHub 仓库",
-          x_aria: "访问 Lumno X 主页",
           language_select_aria: "语言",
           language_zh_cn: "简体中文",
           language_zh_tw: "繁體中文",
@@ -1594,14 +977,6 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
           banner_title: "已更新至新版本！",
           banner_title_ext: "您已更新至 {version}",
           banner_title_web: "Lumno 更新日誌",
-          brand_home_aria: "回到 Lumno 首頁",
-          join_discord: "反饋 & 提需",
-          discord_aria: "反饋與提需",
-          qrcode_title: "微信群二維碼",
-          qrcode_image_alt: "Lumno 微信群二維碼",
-          qrcode_close_aria: "關閉二維碼彈窗",
-          github_repo_aria: "造訪 Lumno GitHub 倉庫",
-          x_aria: "造訪 Lumno X 主頁",
           language_select_aria: "語言",
           language_zh_cn: "簡體中文",
           language_zh_tw: "繁體中文",
@@ -1624,14 +999,6 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
           banner_title: "You're up to date!",
           banner_title_ext: "Updated to {version}",
           banner_title_web: "Lumno Release Notes",
-          brand_home_aria: "Back to Lumno home",
-          join_discord: "Feedback & Requests",
-          discord_aria: "Feedback and requests",
-          qrcode_title: "WeChat Group QR Code",
-          qrcode_image_alt: "Lumno WeChat group QR code",
-          qrcode_close_aria: "Close QR code dialog",
-          github_repo_aria: "Open the Lumno GitHub repository",
-          x_aria: "Visit Lumno on X",
           language_select_aria: "Language",
           language_zh_cn: "简体中文",
           language_zh_tw: "繁體中文",
@@ -1773,46 +1140,23 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         });
       }
 
-      function syncCommunityAction(locale) {
-        const entry = document.querySelector("[data-community-entry]");
-        if (!(entry instanceof HTMLAnchorElement)) return;
-        const icon = entry.querySelector("[data-community-icon]");
-        const discordHref = entry.dataset.discordHref || COMMUNITY_LINKS.discordUrl || "#";
-        const isZhCn = locale === ZH_CN_LOCALE;
-
-        entry.href = isZhCn ? "#" : discordHref;
-        if (isZhCn) {
-          entry.removeAttribute("target");
-          entry.removeAttribute("rel");
-        } else {
-          entry.setAttribute("target", "_blank");
-          entry.setAttribute("rel", "noreferrer noopener");
-        }
-
-        if (icon instanceof HTMLElement) {
-          icon.classList.toggle("ri-wechat-fill", isZhCn);
-          icon.classList.toggle("ri-discord-fill", !isZhCn);
-        }
-      }
-
       function applyResolvedLanguage(normalizedMode) {
         if (!I18N_MESSAGES[normalizedMode]) {
           document.documentElement.lang = normalizedMode;
           document.body.setAttribute("data-release-locale", normalizedMode);
           document.body.setAttribute("data-release-content-locale", normalizedMode === "zh-TW" ? "zh-TW" : normalizedMode === "zh-CN" ? "zh-CN" : "en");
-          syncCommunityAction(normalizedMode);
           updateLanguageOptionState(normalizedMode);
           return;
         }
         applyI18n(normalizedMode);
-        syncCommunityAction(normalizedMode);
         updateLanguageOptionState(normalizedMode);
       }
 
       function initLanguageRuntime() {
         if (!window.__lumnoLanguagePreference || !window.__lumnoLanguageRuntime) return null;
         const storedMode = window.__lumnoLanguagePreference.getStoredLanguageMode(LANGUAGE_STORAGE_KEY);
-        // Public canonical routes stay stable; extension entries still use browser language.
+        // Public canonical routes stay stable; extension entries follow the browser language (the head
+        // script has already moved them to that route, since each route renders a single language).
         const initialForcedLocale = FORCED_LOCALE ||
           (!INITIAL_ENTRY_CONTEXT.isExtensionEntry && !storedMode ? FALLBACK_LOCALE : null);
         return window.__lumnoLanguageRuntime.setupLanguageRuntime({
@@ -1821,40 +1165,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
           normalizeLanguageMode,
           routeLanguageMap: ROUTE_LANGUAGE_MAP,
           languageStorageKey: LANGUAGE_STORAGE_KEY,
-          shouldRedirect: () => !INITIAL_ENTRY_CONTEXT.isExtensionEntry,
           applyResolvedLanguage,
-        });
-      }
-
-      function setupQrcodeModal() {
-        const entry = document.querySelector("[data-community-entry]");
-        const modal = document.getElementById("community-qrcode-modal");
-        if (!(entry instanceof HTMLAnchorElement) || !(modal instanceof HTMLDivElement)) return;
-
-        const close = () => {
-          modal.hidden = true;
-          document.body.style.removeProperty("overflow");
-        };
-
-        const open = () => {
-          modal.hidden = false;
-          document.body.style.overflow = "hidden";
-        };
-
-        entry.addEventListener("click", (event) => {
-          const currentLocale = document.body.getAttribute("data-release-locale") || FALLBACK_LOCALE;
-          if (currentLocale !== ZH_CN_LOCALE) return;
-          event.preventDefault();
-          open();
-        });
-
-        modal.addEventListener("click", (event) => {
-          const target = event.target instanceof HTMLElement ? event.target.closest("[data-close-qrcode-modal]") : null;
-          if (target) close();
-        });
-
-        document.addEventListener("keydown", (event) => {
-          if (event.key === "Escape" && !modal.hidden) close();
         });
       }
 
@@ -1878,8 +1189,6 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         window.addEventListener("lumno:language-runtime-ready", retryBootLanguageRuntime);
         window.addEventListener("lumno:language-preference-ready", retryBootLanguageRuntime);
       }
-
-      setupQrcodeModal();
 
       function setupAccordionAnimations() {
         const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;

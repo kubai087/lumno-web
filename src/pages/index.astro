@@ -5,31 +5,29 @@ import CommandBarSection from "../components/home/sections/CommandBarSection.ast
 import FaqSection from "../components/home/sections/FaqSection.astro";
 import FinalCta from "../components/home/sections/FinalCta.astro";
 import OpenSourceSection from "../components/home/sections/OpenSourceSection.astro";
-import SiteFooter from "../components/home/sections/SiteFooter.astro";
 import NewTabSection from "../components/home/sections/NewTabSection.astro";
 import UtilitiesSection from "../components/home/sections/UtilitiesSection.astro";
+import PageFooter from "../components/site/PageFooter.astro";
+import SiteHeader from "../components/site/SiteHeader.astro";
 import { CommunityQrDialog } from "../components/home/CommunityQrDialog";
 import { HeroInstallTooltip } from "../components/home/HeroInstallTooltip";
 import { AiIntentDemo } from "../components/home/AiIntentDemo";
 import { HeroSafariDemo } from "../components/home/HeroSafariDemo";
-import LanguageMenu from "../components/onboarding/LanguageMenu";
-import HomeNavGhostLinks from "../components/navigation/HomeNavGhostLinks";
-import InstallMenu from "../components/navigation/InstallMenu";
 import { HeroParallax } from "../components/ui/hero-parallax";
 import logoIconSvg from "../assets/onboarding/logo.svg?raw";
-import xiaohongshuIconSvg from "../assets/home-icons/xiaohongshu-line.svg?raw";
 import "@fontsource/eb-garamond/600.css";
 import "@fontsource/eb-garamond/500-italic.css";
 import ebGaramondLatin600 from "@fontsource/eb-garamond/files/eb-garamond-latin-600-normal.woff2?url";
 import ebGaramondLatin500Italic from "@fontsource/eb-garamond/files/eb-garamond-latin-500-italic.woff2?url";
 import "../styles/globals.css";
 import "../styles/home.css";
+import "../styles/site.css";
 import { getChromeStoreReviews, selectShowcaseReviews } from "../lib/chrome-store-reviews";
 import { COMMUNITY_LINKS } from "../lib/community";
 import { getHomeContent } from "../lib/home-content";
 import { getLumnoBuiltinSiteSearchProviders } from "../lib/lumno-search-providers";
 import { DEFAULT_LOCALE, buildLocalizedPath, buildRouteLanguageMap, type SupportedLocale } from "../lib/locales";
-import { getStoreVersions } from "../lib/store-versions";
+import { GITHUB_ISSUE_URL, GITHUB_URL } from "../lib/site-links";
 import {
   CHROME_STORE_URL,
   buildAlternateLinks,
@@ -48,20 +46,8 @@ interface Props {
   routeLanguageMap?: Record<string, string>;
 }
 
-const EDGE_STORE_URL = "https://microsoftedge.microsoft.com/addons/detail/pfbklkaefmfamjpibfiapaiihlddhchc";
-const GITHUB_URL = "https://github.com/kubai087/lumno-extension";
-const GITHUB_ISSUE_URL = `${GITHUB_URL}/issues/new/choose`;
-const GITHUB_PULL_REQUEST_URL = `${GITHUB_URL}/compare`;
 // Real renders of the extension's new tab per locale (see NewTabSection.astro).
 const FEATURE_PARALLAX_COUNT = 15;
-const { chrome: chromeStoreVersion, edge: edgeStoreVersion } = await getStoreVersions({
-  chrome:
-    import.meta.env.PUBLIC_CHROME_STORE_VERSION ||
-    import.meta.env.CHROME_STORE_VERSION,
-  edge:
-    import.meta.env.PUBLIC_EDGE_STORE_VERSION ||
-    import.meta.env.EDGE_STORE_VERSION,
-});
 const chromeStoreReviews = await getChromeStoreReviews();
 const builtinSiteSearchProviders = await getLumnoBuiltinSiteSearchProviders();
 const forcedLocale = Astro.props.forcedLocale ?? null;
@@ -79,21 +65,13 @@ const heroTitleSegments = heroTitleCommaIndex >= 0
     ]
   : [content.heroTitle];
 const heroDescriptionLines = content.heroDescription.split("\n");
-const homeHref = buildLocalizedPath(uiLocale, "/");
 const featuresHref = buildLocalizedPath(uiLocale, "/features/");
-const releaseHref = buildLocalizedPath(uiLocale, "/release/");
-const privacyHref = buildLocalizedPath(uiLocale, "/privacy/");
 const newTabParallaxProducts = Array.from({ length: FEATURE_PARALLAX_COUNT }, (_, index) => ({
   title: content.newTab.screenshotAlt,
   link: featuresHref,
   thumbnail: `/assets/feature-newtab/${uiLocale}/parallax-${String(index + 1).padStart(2, "0")}.webp`,
 }));
 const showcaseReviews = selectShowcaseReviews(chromeStoreReviews.reviews);
-const FOOTER_LANGUAGES = [
-  { code: "zh-CN", label: "简体中文" },
-  { code: "zh-TW", label: "繁體中文" },
-  { code: "en", label: "English" },
-] as const;
 const alternateLinks = buildAlternateLinks(routeLanguageMap, "/");
 const ogLocale = getOpenGraphLocale(uiLocale);
 const pageTitleByLocale = {
@@ -179,67 +157,7 @@ const structuredData = [
     )}
   </head>
   <body data-home-intro="pending" data-locale={uiLocale}>
-    <header class="top-nav">
-      <a
-        class="top-nav-brand"
-        href={homeHref}
-        aria-label="Lumno"
-        data-analytics-event="select_home_brand"
-        data-analytics-category="navigation"
-        data-analytics-label="home_header_brand"
-      >
-        <img src="/assets/lumno-title-figma.svg" width="70" height="17" alt="Lumno" />
-      </a>
-      <nav class="top-nav-actions" aria-label={content.navigationAria}>
-        <HomeNavGhostLinks
-          releaseHref={releaseHref}
-          repositoryHref={GITHUB_URL}
-          repositoryIssueHref={GITHUB_ISSUE_URL}
-          repositoryPullRequestHref={GITHUB_PULL_REQUEST_URL}
-          contactXHref={COMMUNITY_LINKS.xUrl}
-          contactXiaohongshuHref={COMMUNITY_LINKS.xiaohongshuUrl}
-          releaseLabel={content.navRelease}
-          repositoryLabel={content.navRepository}
-          repositoryMenuLabel={content.navRepositoryMenuAria}
-          repositoryHomeLabel={content.navRepositoryHome}
-          repositoryIssueLabel={content.navRepositoryIssue}
-          repositoryPullRequestLabel={content.navRepositoryPullRequest}
-          communityLabel={content.navCommunity}
-          contactLabel={content.navContact}
-          contactMenuLabel={content.navContactMenuAria}
-          contactXLabel={content.navContactX}
-          contactXiaohongshuLabel={content.navContactXiaohongshu}
-          menuLabel={content.navMoreMenuAria}
-          panelTitle={content.qrcodeTitle}
-          qrImageSrc={COMMUNITY_LINKS.wechatQrImagePath}
-          qrImageAlt={content.qrcodeImageAlt}
-          qrCloseLabel={content.qrcodeCloseAria}
-          client:load
-        />
-        <LanguageMenu
-          currentLabel={content.languageLabel}
-          toggleAriaLabel={content.languageSelectAria}
-          hrefs={routeLanguageMap}
-          iconOnly
-          client:load
-        />
-        <div class="top-nav-install-slot">
-          <InstallMenu
-            label={content.installLabel}
-            ariaLabel={content.installAria}
-            chromeUrl={CHROME_STORE_URL}
-            edgeUrl={EDGE_STORE_URL}
-            chromeLabel={content.installChromeStoreLabel}
-            edgeLabel={content.installEdgeStoreLabel}
-            chromeVersion={chromeStoreVersion}
-            edgeVersion={edgeStoreVersion}
-            chromeRecommendation={content.installChromeRecommendation}
-            chromeRecommendationNote={content.installChromeRecommendationNote}
-            client:load
-          />
-        </div>
-      </nav>
-    </header>
+    <SiteHeader locale={uiLocale} routeLanguageMap={routeLanguageMap} />
 
     <main>
       <section class="hero-section" aria-labelledby="hero-title">
@@ -382,83 +300,7 @@ const structuredData = [
       </FinalCta>
     </main>
 
-    <SiteFooter
-      homeHref={homeHref}
-      tagline={content.footerTagline}
-      storesLabel={content.installLabel}
-      stores={[
-        {
-          label: content.installChromeStoreLabel,
-          href: CHROME_STORE_URL,
-          logoSrc: "/assets/browser-logos/chrome.webp",
-          analyticsEvent: "open_chrome_web_store",
-          analyticsLabel: "home_footer_chrome_install",
-        },
-        {
-          label: content.installEdgeStoreLabel,
-          href: EDGE_STORE_URL,
-          logoSrc: "/assets/browser-logos/edge.webp",
-          analyticsEvent: "open_edge_addons",
-          analyticsLabel: "home_footer_edge_install",
-        },
-      ]}
-      socialAria={content.footerSocialAria}
-      socials={[
-        {
-          label: content.footerGithub,
-          href: GITHUB_URL,
-          iconClass: "ri-github-line",
-          analyticsEvent: "open_github_repo",
-          analyticsLabel: "home_footer_github",
-        },
-        {
-          label: content.navContactX,
-          href: COMMUNITY_LINKS.xUrl,
-          iconClass: "ri-twitter-x-line",
-          analyticsEvent: "open_author_x",
-          analyticsLabel: "home_footer_author_x",
-        },
-        {
-          label: content.navContactXiaohongshu,
-          href: COMMUNITY_LINKS.xiaohongshuUrl,
-          iconSvg: xiaohongshuIconSvg,
-          analyticsEvent: "open_author_xiaohongshu",
-          analyticsLabel: "home_footer_author_xiaohongshu",
-        },
-      ]}
-      columns={[
-        {
-          title: content.footerProduct,
-          links: [
-            { label: content.footerFeatures, href: featuresHref },
-            { label: content.footerRelease, href: releaseHref },
-          ],
-        },
-        {
-          title: content.footerSupport,
-          links: [
-            { label: content.footerReportIssue, href: GITHUB_ISSUE_URL, external: true },
-            { label: content.footerPrivacy, href: privacyHref },
-          ],
-        },
-      ]}
-      feedback={{
-        label: content.footerFeedback,
-        ariaLabel: content.heroCommunityAria,
-        qrTitle: content.qrcodeTitle,
-        qrImageSrc: COMMUNITY_LINKS.wechatQrImagePath,
-        qrImageAlt: content.qrcodeImageAlt,
-        closeLabel: content.qrcodeCloseAria,
-        externalHref: uiLocale === "zh-CN" ? undefined : COMMUNITY_LINKS.discordUrl,
-      }}
-      copyright={content.footerCopyright}
-      licenseHref={`${GITHUB_URL}/blob/main/LICENSE`}
-      languages={FOOTER_LANGUAGES.map((language) => ({
-        ...language,
-        href: routeLanguageMap[language.code],
-        current: language.code === uiLocale,
-      }))}
-    />
+    <PageFooter locale={uiLocale} routeLanguageMap={routeLanguageMap} />
 
     <script>
       import "../scripts/language-preference";
@@ -604,286 +446,6 @@ const structuredData = [
     </script>
 
     <style is:global>
-      @font-face {
-        font-family: "Open Sans";
-        src: url("/assets/OpenSans-VariableFont-wdth-wght.ttf") format("truetype");
-        font-style: normal;
-        font-weight: 300 800;
-        font-display: swap;
-      }
-
-      :root {
-        --bg: #fafafa;
-        --surface: #ffffff;
-        --surface-soft: #f4f6f8;
-        --surface-blue: #eef6fb;
-        --text-main: #15171a;
-        --text-sub: #626870;
-        --text-soft: #89919a;
-        --line: #e2e6e9;
-        --line-strong: #d4dade;
-        --blue: #4ba7dd;
-        --blue-dark: #1e729f;
-        --green-soft: #e9f2e8;
-        --green-ink: #4d6653;
-        --shadow-soft: rgba(45, 54, 62, 0.08);
-        --shadow-card: rgba(45, 54, 62, 0.12);
-      }
-
-      * {
-        box-sizing: border-box;
-      }
-
-      html {
-        position: relative;
-        scroll-behavior: smooth;
-        scroll-padding-top: 88px;
-        overscroll-behavior-y: none;
-        background: var(--bg);
-        scrollbar-gutter: stable;
-        scrollbar-width: thin;
-        scrollbar-color: color-mix(in srgb, var(--text-main) 18%, transparent) transparent;
-      }
-
-      body {
-        margin: 0;
-        min-width: 320px;
-        color: var(--text-main);
-        background-color: var(--bg);
-        font-family: "Open Sans", "PingFang SC", "Microsoft JhengHei", "Microsoft YaHei", sans-serif;
-        -webkit-font-smoothing: antialiased;
-      }
-
-      body[data-scroll-locked] {
-        --removed-body-scroll-bar-size: 0px !important;
-        margin-right: 0 !important;
-      }
-
-      button,
-      a {
-        font: inherit;
-      }
-
-      a {
-        color: inherit;
-      }
-
-      .top-nav {
-        position: absolute;
-        top: 18px;
-        left: 0;
-        right: var(--removed-body-scroll-bar-size, 0px);
-        z-index: var(--home-z-nav);
-        /* The page column, less the scrollbar a modal hides while it is open. */
-        width: min(
-          calc(100% - var(--home-gutter) * 2 - var(--removed-body-scroll-bar-size, 0px)),
-          var(--home-section-width)
-        );
-        margin-inline: auto;
-        min-height: 58px;
-        padding: 6px 8px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 18px;
-        border: 1px solid transparent;
-        border-radius: var(--home-radius-pill);
-        overflow: clip;
-        background: transparent;
-        box-shadow: none;
-        backdrop-filter: blur(0);
-        -webkit-backdrop-filter: blur(0);
-        opacity: 1;
-        translate: 0 0;
-        transform: translateY(0);
-        contain: layout;
-        transition:
-          opacity 480ms ease,
-          translate 620ms cubic-bezier(0.22, 1, 0.36, 1),
-          background-color 180ms ease,
-          border-color 180ms ease,
-          box-shadow 180ms ease,
-          backdrop-filter 180ms ease;
-      }
-
-      .top-nav:has(.lumno-settings-select[data-open="true"]) {
-        overflow: visible;
-      }
-
-      body.has-nav-install .top-nav {
-        position: fixed;
-        top: 6px;
-        border-color: rgba(211, 217, 226, 0.78);
-        background: rgba(255, 255, 255, 0.84);
-        box-shadow: 0 10px 32px rgba(35, 43, 52, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
-        backdrop-filter: blur(18px);
-        -webkit-backdrop-filter: blur(18px);
-      }
-
-      .top-nav[data-nav-surface="hero"] {
-        position: absolute;
-        top: 18px;
-        border-color: transparent;
-        background: transparent;
-        box-shadow: none;
-        backdrop-filter: none;
-        -webkit-backdrop-filter: none;
-        opacity: 1;
-        translate: 0 0;
-        transform: translateY(0);
-        filter: none;
-        transition: none;
-      }
-
-      body.has-nav-install:not(.is-nav-install-settled) .top-nav {
-        animation: top-nav-surface-enter 320ms ease-out both;
-      }
-
-      body.has-nav-install.is-nav-install-exiting .top-nav {
-        animation: top-nav-surface-exit 120ms cubic-bezier(0.4, 0, 1, 1) both;
-      }
-
-      @keyframes top-nav-surface-enter {
-        from {
-          opacity: 0;
-          transform: translateY(-24px);
-          filter: blur(8px);
-        }
-
-        to {
-          opacity: 1;
-          transform: translateY(0);
-          filter: blur(0);
-        }
-      }
-
-      @keyframes top-nav-surface-exit {
-        from {
-          opacity: 1;
-          transform: translateY(0);
-          filter: blur(0);
-        }
-
-        to {
-          opacity: 0;
-          transform: translateY(-28px);
-          filter: blur(8px);
-        }
-      }
-
-      .top-nav-brand {
-        display: inline-flex;
-        align-items: center;
-        flex: 0 0 auto;
-        padding: 5px 10px 5px 22px;
-        text-decoration: none;
-      }
-
-      .top-nav-brand img {
-        width: 70px;
-        height: 17px;
-        display: block;
-        object-fit: contain;
-      }
-
-      .top-nav-actions {
-        --top-nav-action-gap: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        gap: 8px;
-        margin-right: 2.5px;
-      }
-
-      body:not(.has-nav-install) .top-nav-actions {
-        margin-right: 1px;
-      }
-
-      .top-nav-ghost-links {
-        --lumno-panel-text: var(--text-main);
-        --lumno-panel-subtext: #68717c;
-        --lumno-control-hover-bg: rgba(29, 32, 36, 0.06);
-        display: flex;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        align-items: center;
-        gap: 2px;
-        transform: translate(-50%, -50%);
-      }
-
-      .top-nav-ghost-button {
-        min-height: 34px;
-        padding: 0 12px;
-        color: var(--lumno-panel-subtext);
-        font-size: 14px;
-        white-space: nowrap;
-      }
-
-      .top-nav .lumno-settings-select-option,
-      .top-nav-install {
-        font-size: 14px;
-      }
-
-      .top-nav-more-menu {
-        display: none;
-      }
-
-      .top-nav-more-dropdown {
-        min-width: 168px;
-      }
-
-      .top-nav-more-option {
-        white-space: nowrap;
-      }
-
-      .install-menu {
-        z-index: 1;
-      }
-
-      .top-nav-install-slot {
-        display: grid;
-        grid-template-columns: 0fr;
-        min-width: 0;
-        margin-left: calc(var(--top-nav-action-gap) * -1);
-        overflow: clip;
-        border-radius: var(--home-radius-pill);
-        clip-path: inset(0 round var(--home-radius-pill));
-        opacity: 0;
-        visibility: hidden;
-        pointer-events: none;
-      }
-
-      .top-nav-install-slot .install-menu {
-        min-width: 0;
-      }
-
-      .top-nav-install-slot .top-nav-install {
-        white-space: nowrap;
-      }
-
-      body.has-nav-install .top-nav-install-slot {
-        grid-template-columns: 1fr;
-        margin-left: 0;
-        opacity: 1;
-        visibility: visible;
-        pointer-events: auto;
-      }
-
-      .top-nav-install-slot:has(.install-menu[data-open="true"]) {
-        overflow: visible;
-        clip-path: none;
-      }
-
-      .lang-control {
-        position: relative;
-        z-index: 1;
-      }
-
-      .lang-control .lumno-settings-select-menu {
-        min-width: 180px;
-      }
-
       main {
         /* clip (not hidden) keeps position: sticky working inside sections. */
         overflow-x: clip;
@@ -1185,12 +747,6 @@ const structuredData = [
         text-wrap: balance;
       }
 
-
-      :focus-visible {
-        outline: 3px solid rgba(75, 167, 221, 0.38);
-        outline-offset: 3px;
-      }
-
       @media (max-width: 1080px) {
         .hero-section {
           grid-template-columns: 1fr;
@@ -1212,97 +768,10 @@ const structuredData = [
         }
       }
 
-      @media (min-width: 761px) and (max-width: 840px) {
-        body.has-nav-install .top-nav-ghost-links {
-          display: none;
-        }
-
-        body.has-nav-install .top-nav-more-shell {
-          display: block;
-          position: relative;
-        }
-
-        body.has-nav-install .top-nav-more-menu {
-          display: block;
-          position: static;
-        }
-      }
-
       @media (max-width: 760px) {
         .hero-parallax {
           /* One copy of a row: 5 cards of 14rem plus 1.5rem gaps (hero-parallax.tsx). */
           --hero-parallax-row-loop-offset: -77.5rem;
-        }
-
-        .top-nav {
-          top: max(10px, env(safe-area-inset-top));
-          min-height: 58px;
-          padding: 5px;
-          gap: 10px;
-        }
-
-        .top-nav-brand img {
-          width: 64px;
-          height: 15px;
-        }
-
-        .top-nav-actions {
-          --top-nav-action-gap: 6px;
-          gap: 6px;
-          margin-right: 3px;
-        }
-
-        .top-nav-ghost-links {
-          display: none;
-        }
-
-        .top-nav-more-menu {
-          display: block;
-          position: static;
-        }
-
-        .top-nav-more-dropdown {
-          top: calc(100% + 8px);
-          left: 0;
-          right: 0;
-          width: auto;
-          min-width: 0;
-          --top-nav-more-radius: 17px;
-          --top-nav-more-border-width: 1px;
-          --top-nav-more-padding: 10px;
-          --top-nav-more-option-radius: max(
-            0px,
-            calc(
-              var(--top-nav-more-radius) -
-              var(--top-nav-more-border-width) -
-              var(--top-nav-more-padding)
-            )
-          );
-          padding: var(--top-nav-more-padding);
-          gap: 2px;
-          border-color: rgba(0, 0, 0, 0.14);
-          border-radius: var(--top-nav-more-radius);
-          background: var(--lumno-menu-bg, #fff);
-          box-shadow:
-            0 18px 48px rgba(35, 43, 52, 0.16),
-            0 3px 12px rgba(35, 43, 52, 0.08),
-            inset 0 1px 0 rgba(255, 255, 255, 0.92);
-          transform-origin: top center;
-        }
-
-        .top-nav-more-option {
-          min-height: 50px;
-          padding: 13px 15px;
-          border-radius: var(--top-nav-more-option-radius);
-          font-size: 14px;
-          line-height: 1.4;
-          touch-action: manipulation;
-        }
-
-        .top-nav-install {
-          min-height: 40px;
-          padding-left: 14px;
-          padding-right: 14px;
         }
 
         .hero-section {
@@ -1328,7 +797,6 @@ const structuredData = [
           font-size: clamp(42px, 12.4vw, 54px);
           letter-spacing: -0.01em;
         }
-
 
         .hero-copy {
           padding-left: max(8px, env(safe-area-inset-left));
@@ -1380,7 +848,6 @@ const structuredData = [
           padding: 7px 14px;
           font-size: 13px;
         }
-
       }
 
       @media (min-width: 761px) and (max-height: 740px) {
@@ -1408,53 +875,9 @@ const structuredData = [
         }
       }
 
-      @media (max-width: 360px) {
-        .top-nav {
-          gap: 4px;
-        }
-
-        .top-nav-brand {
-          padding-left: 8px;
-          padding-right: 4px;
-        }
-
-        .top-nav-brand img {
-          width: 52px;
-          height: auto;
-        }
-
-        .top-nav-actions {
-          --top-nav-action-gap: 4px;
-          gap: 4px;
-          margin-right: 0;
-        }
-
-        .top-nav-install {
-          min-height: 36px;
-          padding-left: 10px;
-          padding-right: 10px;
-        }
-      }
-
       @media (prefers-reduced-motion: reduce) {
-        body.has-nav-install .top-nav {
-          animation: none;
-        }
-
         .hero-parallax {
           height: auto;
-        }
-
-        html {
-          scroll-behavior: auto;
-        }
-
-        *,
-        *::before,
-        *::after {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
         }
 
         html[data-home-intro-js] body[data-home-intro="pending"] {
@@ -1471,7 +894,6 @@ const structuredData = [
           filter: none;
           pointer-events: auto;
         }
-
       }
     </style>
   </body>

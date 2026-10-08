@@ -47,8 +47,8 @@
   border-radius: calc(26 * var(--u));
   background: rgba(255, 255, 255, 0.9);
   box-shadow: 0 calc(8 * var(--u)) calc(20 * var(--u)) rgba(0, 0, 0, 0.01);
-  backdrop-filter: blur(18px) saturate(1.65);
   -webkit-backdrop-filter: blur(18px) saturate(1.65);
+  backdrop-filter: blur(18px) saturate(1.65);
 }
 
 .nt-mock__search-icon,

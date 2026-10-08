@@ -1,0 +1,88 @@
+/*
+ * Site shell shared by every page built on the homepage design: the type,
+ * colours and page background the homepage sections assume, plus focus and
+ * reduced-motion defaults. Section primitives live in home.css.
+ */
+
+@font-face {
+  font-family: "Open Sans";
+  src: url("/assets/OpenSans-VariableFont-wdth-wght.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 300 800;
+  font-display: swap;
+}
+
+:root {
+  --bg: #fafafa;
+  --surface: #ffffff;
+  --surface-soft: #f4f6f8;
+  --surface-blue: #eef6fb;
+  --text-main: #15171a;
+  --text-sub: #626870;
+  --text-soft: #89919a;
+  --line: #e2e6e9;
+  --line-strong: #d4dade;
+  --blue: #4ba7dd;
+  --blue-dark: #1e729f;
+  --green-soft: #e9f2e8;
+  --green-ink: #4d6653;
+  --shadow-soft: rgba(45, 54, 62, 0.08);
+  --shadow-card: rgba(45, 54, 62, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  position: relative;
+  scroll-behavior: smooth;
+  scroll-padding-top: 88px;
+  overscroll-behavior-y: none;
+  background: var(--bg);
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--text-main) 18%, transparent) transparent;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  color: var(--text-main);
+  background-color: var(--bg);
+  font-family: "Open Sans", "PingFang SC", "Microsoft JhengHei", "Microsoft YaHei", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+body[data-scroll-locked] {
+  --removed-body-scroll-bar-size: 0px !important;
+  margin-right: 0 !important;
+}
+
+button,
+a {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid rgba(75, 167, 221, 0.38);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

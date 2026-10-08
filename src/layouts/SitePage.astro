@@ -1,0 +1,174 @@
+---
+import SeoHead from "../components/SeoHead.astro";
+import SiteHeader from "../components/site/SiteHeader.astro";
+import "../styles/globals.css";
+import "../styles/home.css";
+import "../styles/site.css";
+import { buildAlternateLinks, getOpenGraphLocale } from "../lib/seo";
+import type { SupportedLocale } from "../lib/locales";
+
+type StructuredData = Record<string, unknown>;
+
+interface Props {
+  locale: SupportedLocale;
+  /** Set on explicit locale routes (/en/…, /zh-tw/…); null on the default route. */
+  forcedLocale: SupportedLocale | null;
+  /** The page's unlocalized path, e.g. "/privacy/". */
+  basePath: string;
+  seoPath: string;
+  routeLanguageMap: Record<string, string>;
+  title: string;
+  description: string;
+  keywords?: string[];
+  type?: string;
+  structuredData?: StructuredData[];
+  /** Prefix for analytics labels in the shared header. */
+  analyticsScope: string;
+}
+
+const {
+  locale,
+  forcedLocale,
+  basePath,
+  seoPath,
+  routeLanguageMap,
+  title,
+  description,
+  keywords = [],
+  type = "website",
+  structuredData = [],
+  analyticsScope,
+} = Astro.props;
+const alternateLinks = buildAlternateLinks(routeLanguageMap, basePath);
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    {
+      !forcedLocale && (
+        <script is:inline define:vars={{ routeLanguageMap }}>
+          (() => {
+            // The default route stays stable for first-time visitors and crawlers; a saved
+            // language choice moves the visitor to their localized route before anything paints.
+            const normalizeLocale = (locale) => {
+              const raw = String(locale || "").trim().toLowerCase();
+              if (raw.startsWith("zh")) {
+                return raw.includes("tw") || raw.includes("hk") || raw.includes("mo") || raw.includes("hant")
+                  ? "zh-TW"
+                  : "zh-CN";
+              }
+              return "en";
+            };
+
+            let storedMode = "";
+            try {
+              storedMode = String(window.localStorage.getItem("_x_extension_language_2024_unique_") || "").trim();
+            } catch (_error) {
+              // Private browsing or blocked storage keeps the default route.
+            }
+
+            if (!storedMode) return;
+
+            const browserLanguage = (Array.isArray(navigator.languages) && navigator.languages[0]) || navigator.language || "en";
+            const mode = storedMode.toLowerCase() !== "system" ? storedMode : browserLanguage;
+            const targetPath = routeLanguageMap[normalizeLocale(mode)];
+            if (targetPath && window.location.pathname !== targetPath) {
+              window.location.replace(`${targetPath}${window.location.search}${window.location.hash}`);
+            }
+          })();
+        </script>
+      )
+    }
+    <script is:inline>
+      // Shortcut keycaps render both spellings; show Ctrl/Shift instead of ⌘/⇧ off Apple platforms.
+      const platformHint = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || "";
+      document.documentElement.setAttribute("data-platform", /mac|iphone|ipad|ios/i.test(platformHint) ? "mac" : "other");
+    </script>
+    <SeoHead
+      title={title}
+      description={description}
+      path={seoPath}
+      keywords={keywords}
+      alternates={alternateLinks}
+      locale={getOpenGraphLocale(locale)}
+      type={type}
+      structuredData={structuredData}
+    />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="stylesheet" href="/assets/remixicon.css" />
+    <slot name="head" />
+  </head>
+  <!-- The header opens as the fixed glass pill the homepage reaches after its hero. -->
+  <body class="has-nav-install is-nav-install-settled" data-locale={locale}>
+    <SiteHeader locale={locale} routeLanguageMap={routeLanguageMap} analyticsScope={analyticsScope} />
+
+    <main class="site-page">
+      <slot />
+    </main>
+
+    <script>
+      import "../scripts/language-preference";
+      import "../scripts/language-runtime";
+    </script>
+    <script is:inline define:vars={{ pageLocale: locale, routeLanguageMap }}>
+      // The head script has already settled the route, so the page's own locale is the
+      // language; the runtime only drives the language menu (persist, then navigate).
+      function normalizeLanguageMode(mode) {
+        const raw = String(mode || "").trim().toLowerCase().replaceAll("_", "-");
+        if (raw.startsWith("zh")) {
+          return raw.includes("tw") || raw.includes("hk") || raw.includes("mo") || raw.includes("hant")
+            ? "zh-TW"
+            : "zh-CN";
+        }
+        return raw.startsWith("en") ? "en" : pageLocale;
+      }
+
+      function getSystemLocale() {
+        return normalizeLanguageMode((navigator.languages && navigator.languages[0]) || navigator.language);
+      }
+
+      function applyResolvedLanguage(locale) {
+        document.querySelectorAll("[data-lang-value]").forEach((node) => {
+          const active = node.getAttribute("data-lang-value") === locale;
+          node.setAttribute("aria-checked", active ? "true" : "false");
+          node.classList.toggle("is-active", active);
+        });
+      }
+
+      function setupPageLanguageRuntime() {
+        if (!window.__lumnoLanguagePreference || !window.__lumnoLanguageRuntime) return false;
+        const languageRuntime = window.__lumnoLanguageRuntime.setupLanguageRuntime({
+          forcedLocale: pageLocale,
+          getSystemLocale,
+          normalizeLanguageMode,
+          routeLanguageMap,
+          languageStorageKey: "_x_extension_language_2024_unique_",
+          applyResolvedLanguage,
+        });
+        languageRuntime.applyLanguageMode(languageRuntime.getInitialLanguageMode());
+        return true;
+      }
+
+      if (!setupPageLanguageRuntime()) {
+        const retry = () => {
+          if (!setupPageLanguageRuntime()) return;
+          window.removeEventListener("lumno:language-runtime-ready", retry);
+          window.removeEventListener("lumno:language-preference-ready", retry);
+        };
+        window.addEventListener("lumno:language-runtime-ready", retry);
+        window.addEventListener("lumno:language-preference-ready", retry);
+      }
+    </script>
+
+    <style is:global>
+      main.site-page {
+        overflow-x: clip;
+      }
+    </style>
+  </body>
+</html>

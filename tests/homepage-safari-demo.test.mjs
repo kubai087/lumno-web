@@ -110,7 +110,7 @@ test("homepage opens with a full-screen Search All demo and can settle early on 
   assert.match(dither, /introState === "pending" \|\| introState === "revealing"/);
   assert.match(dither, /introState === "complete" && introSourceDimensionsRef\.current/);
   assert.doesNotMatch(dither, /MAX_DITHER_WIDTH|qualityScale/);
-  assert.match(source, /html \{[\s\S]*?scrollbar-gutter: stable;/);
+  assert.match(readSource("src/styles/site.css"), /html \{[\s\S]*?scrollbar-gutter: stable;/);
   assert.doesNotMatch(styles, /hero-safari-enter/);
   assert.doesNotMatch(source, /hero-copy-in/);
 });
@@ -166,21 +166,22 @@ test("homepage community CTA opens an accessible QR-code dialog", () => {
   assert.match(dialog, /data-closed:animate-out[\s\S]*?data-closed:zoom-out-95/);
   assert.match(dialog, /motion-reduce:animate-none/);
   assert.match(
-    source,
+    readSource("src/styles/site.css"),
     /body\[data-scroll-locked\] \{[\s\S]*?--removed-body-scroll-bar-size: 0px !important;[\s\S]*?margin-right: 0 !important;/,
   );
   assert.doesNotMatch(source, /id="community-qrcode-modal"|const openModal|qrcode-modal-panel/);
 });
 
 test("homepage footer reuses the shared community dialog", () => {
-  const source = readSource("src/pages/index.astro");
+  const source = readSource("src/components/site/PageFooter.astro");
 
+  assert.match(readSource("src/pages/index.astro"), /<PageFooter locale=\{uiLocale\} routeLanguageMap=\{routeLanguageMap\} \/>/);
   assert.match(source, /<SiteFooter[\s\S]*?feedback=\{\{[\s\S]*?label: content\.footerFeedback/);
   assert.match(
     readSource("src/components/home/sections/SiteFooter.astro"),
     /<CommunityQrDialog[\s\S]*?triggerLabel=\{feedback\.label\}[\s\S]*?triggerVariant="footer"/,
   );
-  assert.match(source, /externalHref: uiLocale === "zh-CN" \? undefined : COMMUNITY_LINKS\.discordUrl/);
+  assert.match(source, /externalHref: locale === "zh-CN" \? undefined : COMMUNITY_LINKS\.discordUrl/);
 });
 
 test("homepage install tooltip communicates broad Chromium browser support", () => {

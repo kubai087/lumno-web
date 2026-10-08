@@ -141,8 +141,8 @@
   border-radius: calc(26px * var(--k));
   background: rgba(255, 255, 255, 0.9);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.01);
-  backdrop-filter: blur(18px) saturate(1.65);
   -webkit-backdrop-filter: blur(18px) saturate(1.65);
+  backdrop-filter: blur(18px) saturate(1.65);
   color: #111827;
   font-size: calc(16px * var(--k));
   transition:
@@ -320,8 +320,8 @@
   border-radius: 16px;
   background: rgba(255, 255, 255, 0.72);
   box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
-  backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
   transition:
     transform 170ms var(--nts-ease),
     background-color 170ms ease,
@@ -409,8 +409,8 @@
     0 18px 34px rgba(15, 23, 42, 0.12),
     0 2px 4px rgba(15, 23, 42, 0.05),
     inset 0 1px 0 rgba(255, 255, 255, 0.74);
-  backdrop-filter: blur(18px) saturate(135%);
   -webkit-backdrop-filter: blur(18px) saturate(135%);
+  backdrop-filter: blur(18px) saturate(135%);
   opacity: 0;
   transform: scale(0.96, 0.86);
   transform-origin: top left;
@@ -535,8 +535,8 @@
   border-color: rgba(0, 0, 0, 0.08);
   background: rgba(255, 255, 255, 0.86);
   box-shadow: 0 10px 24px -12px rgba(15, 23, 42, 0.3);
-  backdrop-filter: blur(16px) saturate(140%);
   -webkit-backdrop-filter: blur(16px) saturate(140%);
+  backdrop-filter: blur(16px) saturate(140%);
 }
 
 .nts-tabs--float .nts-tabs__indicator {

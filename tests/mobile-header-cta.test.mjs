@@ -5,42 +5,19 @@ import path from "node:path";
 
 const workspaceRoot = path.resolve(import.meta.dirname, "..");
 
-const headerPages = [["onboarding", "src/pages/onboarding/index.astro", 36]];
-
-test("mobile header feedback CTA matches the icon-only buttons", () => {
-  for (const [label, file, size] of headerPages) {
-    const source = fs.readFileSync(path.join(workspaceRoot, file), "utf8");
-
-    assert.match(
-      source,
-      new RegExp(
-        String.raw`\.actions \.pill-btn\s*\{[\s\S]*?width:\s*${size}px;[\s\S]*?min-width:\s*${size}px;[\s\S]*?max-width:\s*${size}px;[\s\S]*?height:\s*${size}px;[\s\S]*?flex:\s*0 0 ${size}px;[\s\S]*?padding:\s*0;[\s\S]*?gap:\s*0;`,
-      ),
-      `${label} mobile header buttons should share fixed icon-only sizing`,
-    );
-
-    assert.match(
-      source,
-      /\.actions \.pill-btn span\s*\{[\s\S]*?display:\s*none;/,
-      `${label} mobile header button labels should be hidden`,
-    );
-
-    assert.doesNotMatch(
-      source,
-      /\.actions \.pill-btn\.pill-btn-dark\s*\{[\s\S]*?(width:\s*auto|aspect-ratio:\s*auto|padding:\s*0 12px)/,
-      `${label} mobile feedback CTA should not override the icon-only sizing`,
-    );
-
-    assert.doesNotMatch(
-      source,
-      /\.actions \.pill-btn\.pill-btn-dark span\s*\{[\s\S]*?display:\s*inline-block;/,
-      `${label} mobile feedback CTA should not restore its text label`,
-    );
-  }
-});
+// The homepage composes the shared site header (markup and nav styles) and the site base styles.
+function readHomeShell() {
+  return [
+    "src/pages/index.astro",
+    "src/components/site/SiteHeader.astro",
+    "src/styles/site.css",
+  ]
+    .map((file) => fs.readFileSync(path.join(workspaceRoot, file), "utf8"))
+    .join("\n");
+}
 
 test("homepage top bar uses a secondary language icon and install menu", () => {
-  const source = fs.readFileSync(path.join(workspaceRoot, "src/pages/index.astro"), "utf8");
+  const source = readHomeShell();
   const languageMenu = fs.readFileSync(
     path.join(workspaceRoot, "src/components/onboarding/LanguageMenu.tsx"),
     "utf8",
@@ -80,7 +57,7 @@ test("homepage install menu keeps the primary trigger and ordered store links", 
 });
 
 test("homepage glass navigation enters after the hero primary CTA has scrolled away", () => {
-  const source = fs.readFileSync(path.join(workspaceRoot, "src/pages/index.astro"), "utf8");
+  const source = readHomeShell();
   const heroInstall = fs.readFileSync(
     path.join(workspaceRoot, "src/components/home/HeroInstallTooltip.tsx"),
     "utf8",
@@ -122,7 +99,7 @@ test("homepage glass navigation enters after the hero primary CTA has scrolled a
 });
 
 test("homepage navbar text never drops below fourteen pixels", () => {
-  const source = fs.readFileSync(path.join(workspaceRoot, "src/pages/index.astro"), "utf8");
+  const source = readHomeShell();
   const installMenuStyles = fs.readFileSync(
     path.join(workspaceRoot, "src/components/navigation/install-menu.css"),
     "utf8",
@@ -146,7 +123,7 @@ test("homepage navbar text never drops below fourteen pixels", () => {
 });
 
 test("language menu keeps the shared runtime hooks when hydrated", () => {
-  const source = fs.readFileSync(path.join(workspaceRoot, "src/pages/index.astro"), "utf8");
+  const source = readHomeShell();
   const languageMenu = fs.readFileSync(
     path.join(workspaceRoot, "src/components/onboarding/LanguageMenu.tsx"),
     "utf8",
@@ -172,7 +149,7 @@ test("language menu keeps the shared runtime hooks when hydrated", () => {
 });
 
 test("homepage navbar matches the content width and reveals after the hero intro", () => {
-  const source = fs.readFileSync(path.join(workspaceRoot, "src/pages/index.astro"), "utf8");
+  const source = readHomeShell();
 
   const homeStyles = fs.readFileSync(path.join(workspaceRoot, "src/styles/home.css"), "utf8");
   assert.match(homeStyles, /--home-section-width:\s*1360px;/, "the homepage should define one shared content width");
@@ -195,7 +172,7 @@ test("homepage navbar matches the content width and reveals after the hero intro
   );
   assert.match(
     source,
-    /\.top-nav-actions\s*\{[\s\S]*?--top-nav-action-gap:\s*8px;[\s\S]*?margin-right:\s*2\.5px;/,
+    /\.top-nav-actions\s*\{[\s\S]*?--top-nav-action-gap:\s*8px;[\s\S]*?margin-right:\s*-1px;/,
     "the desktop install control should keep a right outer gap equal to its vertical gap",
   );
   assert.match(
@@ -231,7 +208,7 @@ test("homepage navbar matches the content width and reveals after the hero intro
 });
 
 test("homepage navbar animates in the community action and reuses the CTA dialog", () => {
-  const source = fs.readFileSync(path.join(workspaceRoot, "src/pages/index.astro"), "utf8");
+  const source = readHomeShell();
   const ghostLinks = fs.readFileSync(
     path.join(workspaceRoot, "src/components/navigation/HomeNavGhostLinks.tsx"),
     "utf8",
@@ -372,26 +349,17 @@ test("homepage navbar animates in the community action and reuses the CTA dialog
   assert.doesNotMatch(source, /has-nav-overlap/);
 });
 
-test("mobile release feedback CTA matches the icon-only social buttons", () => {
+test("release page uses the shared site top bar", () => {
   const source = fs.readFileSync(path.join(workspaceRoot, "src/pages/release/index.astro"), "utf8");
 
-  assert.match(
-    source,
-    /\.social-btn-icon\s*\{[\s\S]*?width:\s*36px;[\s\S]*?min-width:\s*36px;[\s\S]*?padding:\s*0;/,
-    "release mobile icon buttons should keep fixed sizing",
-  );
-
-  assert.match(
-    source,
-    /\.social-btn-discord\s*\{[\s\S]*?width:\s*36px;[\s\S]*?min-width:\s*36px;[\s\S]*?max-width:\s*36px;[\s\S]*?padding:\s*0;[\s\S]*?gap:\s*0;/,
-    "release mobile feedback CTA should use the same icon-only sizing",
-  );
-
-  assert.match(
-    source,
-    /\.social-btn-discord span\s*\{[\s\S]*?display:\s*none;/,
-    "release mobile feedback CTA should hide its text label",
-  );
+  assert.match(source, /<SiteHeader locale=\{uiLocale\} routeLanguageMap=\{routeLanguageMap\} analyticsScope="release" \/>/);
+  assert.match(source, /<body class="has-nav-install is-nav-install-settled"/);
+  // The old header, floating language control and QR modal are replaced by the shared bar.
+  assert.doesNotMatch(source, /class="header"|class="social-btn|class="lang-control"|id="community-qrcode-modal"/);
+  // Content clears the fixed bar.
+  assert.match(source, /main \{\s*line-height: normal;\s*padding: calc\(var\(--release-header-offset\) \+ 30px\) 24px 60px;/);
+  // Tailwind's preflight arrives with the bar; the notes keep their own bullets and line height.
+  assert.match(source, /\.accordion-list \{[\s\S]*?list-style: disc;/);
 });
 
 test("mobile release banner cannot expand wider than the viewport", () => {

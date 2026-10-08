@@ -6,9 +6,7 @@ const stylesheetPath = new URL("../public/continuous-corners.css", import.meta.u
 const seoHeadPath = new URL("../src/components/SeoHead.astro", import.meta.url);
 const authLayoutPath = new URL("../src/layouts/AuthLayout.astro", import.meta.url);
 const settingsStylesPath = new URL("../src/components/extension-settings/settings-kit.css", import.meta.url);
-const homepagePath = new URL("../src/pages/index.astro", import.meta.url);
-const onboardingPath = new URL("../src/pages/onboarding/index.astro", import.meta.url);
-const releasePath = new URL("../src/pages/release/index.astro", import.meta.url);
+const siteHeaderPath = new URL("../src/components/site/SiteHeader.astro", import.meta.url);
 
 test("all website surfaces load the continuous corner enhancement", async () => {
   const stylesheet = await readFile(stylesheetPath, "utf8");
@@ -24,6 +22,11 @@ test("all website surfaces load the continuous corner enhancement", async () => 
   );
   assert.match(
     stylesheet,
+    /\.chip,\s*\.entry-link-btn,\s*\.entry-dot\s*\)\s*\{\s*corner-shape:\s*round\s*!important/,
+    "release chips, buttons and timeline dots are capsules too",
+  );
+  assert.match(
+    stylesheet,
     /\.lumno-settings-icon-button[\s\S]*?corner-shape:\s*round\s*!important/,
     "icon buttons should retain their circular silhouette",
   );
@@ -33,12 +36,8 @@ test("all website surfaces load the continuous corner enhancement", async () => 
 
 test("nested surfaces derive their inner radius from the outer surface", async () => {
   const settingsStyles = await readFile(settingsStylesPath, "utf8");
-  const homepage = await readFile(homepagePath, "utf8");
-  const onboarding = await readFile(onboardingPath, "utf8");
-  const release = await readFile(releasePath, "utf8");
+  const siteHeader = await readFile(siteHeaderPath, "utf8");
 
   assert.match(settingsStyles, /--lumno-settings-option-radius:\s*max\(/);
-  assert.match(homepage, /--top-nav-more-option-radius:\s*max\(/);
-  assert.match(onboarding, /--qrcode-panel-content-radius:\s*max\(/);
-  assert.match(release, /--language-option-radius:\s*max\(/);
+  assert.match(siteHeader, /--top-nav-more-option-radius:\s*max\(/);
 });

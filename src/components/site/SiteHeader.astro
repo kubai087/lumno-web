@@ -1,0 +1,444 @@
+---
+import HomeNavGhostLinks from "../navigation/HomeNavGhostLinks";
+import InstallMenu from "../navigation/InstallMenu";
+import LanguageMenu from "../onboarding/LanguageMenu";
+import { COMMUNITY_LINKS } from "../../lib/community";
+import { getHomeContent } from "../../lib/home-content";
+import { buildLocalizedPath, type SupportedLocale } from "../../lib/locales";
+import {
+  CHROME_STORE_URL,
+  EDGE_STORE_URL,
+  GITHUB_ISSUE_URL,
+  GITHUB_PULL_REQUEST_URL,
+  GITHUB_URL,
+  getSiteStoreVersions,
+} from "../../lib/site-links";
+
+interface Props {
+  locale: SupportedLocale;
+  /** Localized URL of the current page for each language. */
+  routeLanguageMap: Record<string, string>;
+  /** Prefix for the brand link's analytics label, e.g. "release" → release_header_brand. */
+  analyticsScope?: string;
+}
+
+/*
+ * The site's top bar. On the homepage it sits over the hero and only turns
+ * into the fixed glass pill once the hero's install button scrolls away (the
+ * page script toggles body.has-nav-install). Other pages open with the pill
+ * already in place: their <body> carries has-nav-install from the start.
+ */
+const { locale, routeLanguageMap, analyticsScope = "home" } = Astro.props;
+const content = getHomeContent(locale);
+const homeHref = buildLocalizedPath(locale, "/");
+const releaseHref = buildLocalizedPath(locale, "/release/");
+const { chrome: chromeStoreVersion, edge: edgeStoreVersion } = await getSiteStoreVersions();
+---
+
+<header class="top-nav">
+  <a
+    class="top-nav-brand"
+    href={homeHref}
+    aria-label="Lumno"
+    data-analytics-event="select_home_brand"
+    data-analytics-category="navigation"
+    data-analytics-label={`${analyticsScope}_header_brand`}
+  >
+    <img src="/assets/lumno-title-figma.svg" width="70" height="17" alt="Lumno" />
+  </a>
+  <nav class="top-nav-actions" aria-label={content.navigationAria}>
+    <HomeNavGhostLinks
+      releaseHref={releaseHref}
+      repositoryHref={GITHUB_URL}
+      repositoryIssueHref={GITHUB_ISSUE_URL}
+      repositoryPullRequestHref={GITHUB_PULL_REQUEST_URL}
+      contactXHref={COMMUNITY_LINKS.xUrl}
+      contactXiaohongshuHref={COMMUNITY_LINKS.xiaohongshuUrl}
+      releaseLabel={content.navRelease}
+      repositoryLabel={content.navRepository}
+      repositoryMenuLabel={content.navRepositoryMenuAria}
+      repositoryHomeLabel={content.navRepositoryHome}
+      repositoryIssueLabel={content.navRepositoryIssue}
+      repositoryPullRequestLabel={content.navRepositoryPullRequest}
+      communityLabel={content.navCommunity}
+      contactLabel={content.navContact}
+      contactMenuLabel={content.navContactMenuAria}
+      contactXLabel={content.navContactX}
+      contactXiaohongshuLabel={content.navContactXiaohongshu}
+      menuLabel={content.navMoreMenuAria}
+      panelTitle={content.qrcodeTitle}
+      qrImageSrc={COMMUNITY_LINKS.wechatQrImagePath}
+      qrImageAlt={content.qrcodeImageAlt}
+      qrCloseLabel={content.qrcodeCloseAria}
+      client:load
+    />
+    <LanguageMenu
+      currentLabel={content.languageLabel}
+      toggleAriaLabel={content.languageSelectAria}
+      hrefs={routeLanguageMap}
+      iconOnly
+      client:load
+    />
+    <div class="top-nav-install-slot">
+      <InstallMenu
+        label={content.installLabel}
+        ariaLabel={content.installAria}
+        chromeUrl={CHROME_STORE_URL}
+        edgeUrl={EDGE_STORE_URL}
+        chromeLabel={content.installChromeStoreLabel}
+        edgeLabel={content.installEdgeStoreLabel}
+        chromeVersion={chromeStoreVersion}
+        edgeVersion={edgeStoreVersion}
+        chromeRecommendation={content.installChromeRecommendation}
+        chromeRecommendationNote={content.installChromeRecommendationNote}
+        client:load
+      />
+    </div>
+  </nav>
+</header>
+
+<style is:global>
+  .top-nav {
+    position: absolute;
+    top: 18px;
+    left: 0;
+    right: var(--removed-body-scroll-bar-size, 0px);
+    z-index: var(--home-z-nav);
+    /* The page column, less the scrollbar a modal hides while it is open. */
+    width: min(
+      calc(100% - var(--home-gutter) * 2 - var(--removed-body-scroll-bar-size, 0px)),
+      var(--home-section-width)
+    );
+    margin-inline: auto;
+    min-height: 58px;
+    padding: 6px 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    border: 1px solid transparent;
+    border-radius: var(--home-radius-pill);
+    overflow: clip;
+    background: transparent;
+    box-shadow: none;
+    -webkit-backdrop-filter: blur(0);
+    backdrop-filter: blur(0);
+    opacity: 1;
+    translate: 0 0;
+    transform: translateY(0);
+    contain: layout;
+    transition:
+      opacity 480ms ease,
+      translate 620ms cubic-bezier(0.22, 1, 0.36, 1),
+      background-color 180ms ease,
+      border-color 180ms ease,
+      box-shadow 180ms ease,
+      backdrop-filter 180ms ease;
+  }
+
+  .top-nav:has(.lumno-settings-select[data-open="true"]) {
+    overflow: visible;
+  }
+
+  body.has-nav-install .top-nav {
+    position: fixed;
+    top: 6px;
+    border-color: rgba(211, 217, 226, 0.78);
+    background: rgba(255, 255, 255, 0.84);
+    box-shadow: 0 10px 32px rgba(35, 43, 52, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+  }
+
+  .top-nav[data-nav-surface="hero"] {
+    position: absolute;
+    top: 18px;
+    border-color: transparent;
+    background: transparent;
+    box-shadow: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    opacity: 1;
+    translate: 0 0;
+    transform: translateY(0);
+    filter: none;
+    transition: none;
+  }
+
+  body.has-nav-install:not(.is-nav-install-settled) .top-nav {
+    animation: top-nav-surface-enter 320ms ease-out both;
+  }
+
+  body.has-nav-install.is-nav-install-exiting .top-nav {
+    animation: top-nav-surface-exit 120ms cubic-bezier(0.4, 0, 1, 1) both;
+  }
+
+  @keyframes top-nav-surface-enter {
+    from {
+      opacity: 0;
+      transform: translateY(-24px);
+      filter: blur(8px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+  }
+
+  @keyframes top-nav-surface-exit {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+
+    to {
+      opacity: 0;
+      transform: translateY(-28px);
+      filter: blur(8px);
+    }
+  }
+
+  .top-nav-brand {
+    display: inline-flex;
+    align-items: center;
+    flex: 0 0 auto;
+    padding: 5px 10px 5px 22px;
+    text-decoration: none;
+  }
+
+  .top-nav-brand img {
+    width: 70px;
+    height: 17px;
+    display: block;
+    object-fit: contain;
+  }
+
+  .top-nav-actions {
+    --top-nav-action-gap: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    /*
+     * The 42px install button sits 8px below the bar's top edge (1px border,
+     * 6px padding, 1px centring). The bar's side padding is 8px, so pull the
+     * actions 1px right to leave the same 8px on that side.
+     */
+    margin-right: -1px;
+  }
+
+  body:not(.has-nav-install) .top-nav-actions {
+    margin-right: 1px;
+  }
+
+  .top-nav-ghost-links {
+    --lumno-panel-text: var(--text-main);
+    --lumno-panel-subtext: #68717c;
+    --lumno-control-hover-bg: rgba(29, 32, 36, 0.06);
+    display: flex;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    align-items: center;
+    gap: 2px;
+    transform: translate(-50%, -50%);
+  }
+
+  .top-nav-ghost-button {
+    min-height: 34px;
+    padding: 0 12px;
+    color: var(--lumno-panel-subtext);
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+  .top-nav .lumno-settings-select-option,
+  .top-nav-install {
+    font-size: 14px;
+  }
+
+  .top-nav-more-menu {
+    display: none;
+  }
+
+  .top-nav-more-dropdown {
+    min-width: 168px;
+  }
+
+  .top-nav-more-option {
+    white-space: nowrap;
+  }
+
+  .install-menu {
+    z-index: 1;
+  }
+
+  .top-nav-install-slot {
+    display: grid;
+    grid-template-columns: 0fr;
+    min-width: 0;
+    margin-left: calc(var(--top-nav-action-gap) * -1);
+    overflow: clip;
+    border-radius: var(--home-radius-pill);
+    clip-path: inset(0 round var(--home-radius-pill));
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+  }
+
+  .top-nav-install-slot .install-menu {
+    min-width: 0;
+  }
+
+  .top-nav-install-slot .top-nav-install {
+    white-space: nowrap;
+  }
+
+  body.has-nav-install .top-nav-install-slot {
+    grid-template-columns: 1fr;
+    margin-left: 0;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  .top-nav-install-slot:has(.install-menu[data-open="true"]) {
+    overflow: visible;
+    clip-path: none;
+  }
+
+  .lang-control {
+    position: relative;
+    z-index: 1;
+  }
+
+  .lang-control .lumno-settings-select-menu {
+    min-width: 180px;
+  }
+
+  @media (min-width: 761px) and (max-width: 840px) {
+    body.has-nav-install .top-nav-ghost-links {
+      display: none;
+    }
+
+    body.has-nav-install .top-nav-more-shell {
+      display: block;
+      position: relative;
+    }
+
+    body.has-nav-install .top-nav-more-menu {
+      display: block;
+      position: static;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .top-nav {
+      top: max(10px, env(safe-area-inset-top));
+      min-height: 58px;
+      padding: 5px;
+      gap: 10px;
+    }
+
+    .top-nav-brand img {
+      width: 64px;
+      height: 15px;
+    }
+
+    .top-nav-actions {
+      --top-nav-action-gap: 6px;
+      gap: 6px;
+      margin-right: 3px;
+    }
+
+    .top-nav-ghost-links {
+      display: none;
+    }
+
+    .top-nav-more-menu {
+      display: block;
+      position: static;
+    }
+
+    .top-nav-more-dropdown {
+      top: calc(100% + 8px);
+      left: 0;
+      right: 0;
+      width: auto;
+      min-width: 0;
+      --top-nav-more-radius: 17px;
+      --top-nav-more-border-width: 1px;
+      --top-nav-more-padding: 10px;
+      --top-nav-more-option-radius: max(
+        0px,
+        calc(
+          var(--top-nav-more-radius) -
+          var(--top-nav-more-border-width) -
+          var(--top-nav-more-padding)
+        )
+      );
+      padding: var(--top-nav-more-padding);
+      gap: 2px;
+      border-color: rgba(0, 0, 0, 0.14);
+      border-radius: var(--top-nav-more-radius);
+      background: var(--lumno-menu-bg, #fff);
+      box-shadow:
+        0 18px 48px rgba(35, 43, 52, 0.16),
+        0 3px 12px rgba(35, 43, 52, 0.08),
+        inset 0 1px 0 rgba(255, 255, 255, 0.92);
+      transform-origin: top center;
+    }
+
+    .top-nav-more-option {
+      min-height: 50px;
+      padding: 13px 15px;
+      border-radius: var(--top-nav-more-option-radius);
+      font-size: 14px;
+      line-height: 1.4;
+      touch-action: manipulation;
+    }
+
+    .top-nav-install {
+      min-height: 40px;
+      padding-left: 14px;
+      padding-right: 14px;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .top-nav {
+      gap: 4px;
+    }
+
+    .top-nav-brand {
+      padding-left: 8px;
+      padding-right: 4px;
+    }
+
+    .top-nav-brand img {
+      width: 52px;
+      height: auto;
+    }
+
+    .top-nav-actions {
+      --top-nav-action-gap: 4px;
+      gap: 4px;
+      margin-right: 0;
+    }
+
+    .top-nav-install {
+      min-height: 36px;
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    body.has-nav-install .top-nav {
+      animation: none;
+    }
+  }
+</style>

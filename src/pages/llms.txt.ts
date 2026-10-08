@@ -24,8 +24,8 @@ Lumno is an open-source browser command bar and focus search extension for Chrom
 - Features: ${SITE_URL}/features/
 - English features: ${SITE_URL}/en/features/
 - Traditional Chinese features: ${SITE_URL}/zh-tw/features/
-- Onboarding: ${SITE_URL}/onboarding/
 - Release notes: ${SITE_URL}/release/
+- Privacy policy: ${SITE_URL}/privacy/
 - Chrome Web Store: ${CHROME_STORE_URL}
 - GitHub: https://github.com/kubai087/lumno-extension
 

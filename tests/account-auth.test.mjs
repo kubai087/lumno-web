@@ -136,12 +136,12 @@ test("privacy policy documents the no-backend sync model", () => {
   ].join("\n");
 
   // Accounts, cloud sync, and usage metrics were removed in 0.9.40; sync is the browser's or the user's own WebDAV.
-  assert.match(source, /0\.9\.40 起不再提供 Lumno 账号、云端同步或产品使用统计/);
-  assert.match(source, /Since version 0\.9\.40, Lumno has offered no Lumno account, cloud sync, or product usage metrics/);
+  assert.match(source, /自 0\.9\.40 版本起，扩展已移除账号登录、云端同步和产品使用统计/);
+  assert.match(source, /Account sign-in, cloud sync, and product usage analytics were removed from the extension in version 0\.9\.40/);
   assert.match(source, /应用密码只保存在当前设备/);
-  assert.match(source, /the app password stays on the current device/);
+  assert.match(source, /app passwords stay in the extension's own storage on the current device/);
   assert.match(source, /WebDAV 不提供端到端加密/);
-  assert.match(source, /WebDAV is not end-to-end encrypted/);
+  assert.match(source, /WebDAV offers no end-to-end encryption/);
   assert.match(source, /暂停同步、删除连接或卸载 Lumno 都不会删除服务器文件/);
   assert.doesNotMatch(source, /随机设备 ID|random device ID|默认关闭\*\*|off by default\*\*/);
   assert.doesNotMatch(source, /中国大陆单独告知|mainland-china-notice/);

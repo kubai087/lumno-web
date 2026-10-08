@@ -40,22 +40,30 @@ test("system locale is the fallback when nothing else is set", () => {
   );
 });
 
-test("onboarding uses the shared language preference helper", () => {
-  const source = fs.readFileSync(path.join(workspaceRoot, "src/pages/onboarding/index.astro"), "utf8");
-  assert.match(source, /import "\.\.\/\.\.\/scripts\/language-preference"/);
-  assert.match(source, /import "\.\.\/\.\.\/scripts\/language-runtime"/);
-  assert.match(source, /window\.__lumnoLanguageRuntime\.setupLanguageRuntime\(/);
-  assert.doesNotMatch(source, /function applyLanguageMode\(mode, options\)/);
-});
-
 test("release uses the shared language preference helper", () => {
   const source = fs.readFileSync(path.join(workspaceRoot, "src/pages/release/index.astro"), "utf8");
   assert.match(source, /import "\.\.\/\.\.\/scripts\/language-preference"/);
   assert.match(source, /import "\.\.\/\.\.\/scripts\/language-runtime"/);
   assert.match(source, /window\.__lumnoLanguageRuntime\.setupLanguageRuntime\(/);
-  assert.match(source, /shouldRedirect:\s*\(\)\s*=>\s*!INITIAL_ENTRY_CONTEXT\.isExtensionEntry/);
   assert.match(source, /window\.history\.replaceState\(\{\},\s*"",\s*window\.location\.pathname\)/);
   assert.doesNotMatch(source, /function applyLanguageMode\(mode, options\)/);
+});
+
+test("release renders one language per route and sends extension entries to the browser language route", () => {
+  const source = fs.readFileSync(path.join(workspaceRoot, "src/pages/release/index.astro"), "utf8");
+  const headSource = source.slice(0, source.indexOf("</head>"));
+
+  // Every route ships only its own locale's notes, so extension entries move to their route before paint.
+  assert.match(source, /const localeContent = item\.parsed\.locales\[releaseContentLocale\];/);
+  assert.doesNotMatch(source, /item\.parsed\.locales\["zh-CN"\]|item\.parsed\.locales\.en/);
+  assert.match(headSource, /!forcedLocale && \(/);
+  assert.match(headSource, /entryKeys: entryContextConfig\.extensionEntryKeys/);
+  assert.match(headSource, /if \(!storedMode && !isExtensionEntry\) return;/);
+  assert.ok(
+    headSource.indexOf("if (!storedMode && !isExtensionEntry) return;") < headSource.indexOf("window.location.replace(`"),
+    "first-time web visitors should stay on the default route",
+  );
+  assert.match(source, /!INITIAL_ENTRY_CONTEXT\.isExtensionEntry && !storedMode \? FALLBACK_LOCALE : null/);
 });
 
 test("entry context config keeps extension entry key coverage", () => {
@@ -73,22 +81,18 @@ test("homepage uses the shared language preference helper too", () => {
 });
 
 test("privacy keeps x-default stable until a user has saved a language choice", () => {
-  const source = fs.readFileSync(path.join(workspaceRoot, "src/pages/privacy/index.astro"), "utf8");
+  const source = fs.readFileSync(path.join(workspaceRoot, "src/layouts/SitePage.astro"), "utf8");
   const headSource = source.slice(0, source.indexOf("</head>"));
-  assert.match(source, /import "\.\.\/\.\.\/scripts\/language-preference"/);
-  assert.match(source, /import "\.\.\/\.\.\/scripts\/language-runtime"/);
+
+  assert.match(fs.readFileSync(path.join(workspaceRoot, "src/pages/privacy/index.astro"), "utf8"), /<SitePage[\s\S]*?forcedLocale=\{forcedLocale\}/);
+  assert.match(source, /import "\.\.\/scripts\/language-preference"/);
+  assert.match(source, /import "\.\.\/scripts\/language-runtime"/);
   assert.match(source, /window\.__lumnoLanguageRuntime\.setupLanguageRuntime\(/);
-  assert.match(source, /routeLanguageMap:\s*ROUTE_LANGUAGE_MAP/);
+  assert.match(source, /forcedLocale: pageLocale/);
   assert.match(headSource, /!forcedLocale && \(/);
   assert.match(headSource, /if \(!storedMode\) return;/);
-  assert.match(headSource, /window\.location\.replace\(`/);
-  assert.match(headSource, /routeMap\[resolvedLocale\]/);
   assert.ok(
     headSource.indexOf("if (!storedMode) return;") < headSource.indexOf("window.location.replace(`"),
     "privacy should only redirect before paint when a preference already exists",
   );
-  assert.match(source, /const DEFAULT_PRIVACY_LOCALE = "zh-CN";/);
-  assert.match(source, /const initialForcedLocale = FORCED_LOCALE \|\| \(!storedMode \? DEFAULT_PRIVACY_LOCALE : null\);/);
-  assert.match(source, /forcedLocale: initialForcedLocale/);
-  assert.doesNotMatch(source, /function applyLanguageMode\(mode, options\)/);
 });

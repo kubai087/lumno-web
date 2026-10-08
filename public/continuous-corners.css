@@ -35,7 +35,10 @@
     .lumno-settings-icon-button,
     .pill-btn,
     .pill-btn::before,
-    .pill-btn::after
+    .pill-btn::after,
+    .chip,
+    .entry-link-btn,
+    .entry-dot
   ) {
     corner-shape: round !important;
   }

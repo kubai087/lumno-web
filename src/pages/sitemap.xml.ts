@@ -40,7 +40,6 @@ export const GET: APIRoute = async () => {
     ["src/pages/features/index.astro", "src/pages/[locale]/features/index.astro", "src/lib/features-content.ts"],
     now,
   );
-  const onboardingLastmod = readLastCommitIso(["src/pages/onboarding/index.astro"], now);
   const privacyLastmod = readLastCommitIso(
     [
       "src/pages/privacy/index.astro",
@@ -58,13 +57,6 @@ export const GET: APIRoute = async () => {
     lastmod: homeLastmod,
     changefreq: "weekly",
     priority: "0.9",
-  }));
-  const localizedOnboardingUrls = getNonDefaultLocales().map((locale) => ({
-    locale,
-    loc: `${SITE_URL}${buildLocalizedPath(locale, "/onboarding/")}`,
-    lastmod: onboardingLastmod,
-    changefreq: "monthly",
-    priority: "0.7",
   }));
   const localizedFeaturesUrls = getNonDefaultLocales().map((locale) => ({
     locale,
@@ -99,14 +91,6 @@ export const GET: APIRoute = async () => {
       priority: "0.85",
     },
     ...localizedFeaturesUrls,
-    {
-      locale: "zh-CN",
-      loc: `${SITE_URL}/onboarding/`,
-      lastmod: onboardingLastmod,
-      changefreq: "monthly",
-      priority: "0.7",
-    },
-    ...localizedOnboardingUrls,
     {
       locale: "zh-CN",
       loc: `${SITE_URL}/release/`,

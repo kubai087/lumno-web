@@ -267,46 +267,6 @@ export function buildFAQPageSchema({
   };
 }
 
-export function buildHowToSchema({
-  name,
-  description,
-  path,
-  language,
-  steps,
-}: {
-  name: string;
-  description: string;
-  path: string;
-  language?: string;
-  steps: Array<{
-    name: string;
-    text: string;
-    anchor?: string;
-  }>;
-}) {
-  return {
-    "@context": "https://schema.org",
-    "@type": "HowTo",
-    name,
-    description,
-    inLanguage: language,
-    url: buildAbsoluteUrl(path),
-    tool: [
-      {
-        "@type": "HowToTool",
-        name: "Chromium extension shortcut settings",
-      },
-    ],
-    step: steps.map((step, index) => ({
-      "@type": "HowToStep",
-      position: index + 1,
-      name: step.name,
-      text: step.text,
-      url: step.anchor ? buildAbsoluteUrl(`${path}${step.anchor}`) : undefined,
-    })),
-  };
-}
-
 export function buildItemListSchema({
   name,
   description,

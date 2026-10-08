@@ -5,8 +5,10 @@ Lumno 官方网站仓库，采用 **Astro + React**，部署到 GitHub Pages。
 ## 页面规划
 
 - `/`：主页（功能介绍）
-- `/onboarding/`：安装后引导页
-- `/release/`：版本更新说明（构建时从 GitHub Releases 拉取）
+- `/release/`：版本更新说明（构建时从 GitHub Releases 拉取；扩展更新后会带 `?entry=ext` 打开）
+- `/privacy/`：隐私政策（正文在 `src/content/privacy-policy*.md`）
+
+安装后引导由扩展内置页面负责；旧的 `/onboarding/` 地址会重定向到首页。
 
 ## 本地开发
 

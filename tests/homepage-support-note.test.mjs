@@ -10,7 +10,7 @@ function readSource(file) {
 }
 
 test("homepage toolbar exposes Chrome and Edge install options", () => {
-  const source = readSource("src/pages/index.astro");
+  const source = readSource("src/components/site/SiteHeader.astro");
   const menuSource = readSource("src/components/navigation/InstallMenu.tsx");
 
   assert.match(source, /<InstallMenu[\s\S]*chromeUrl=\{CHROME_STORE_URL\}[\s\S]*edgeUrl=\{EDGE_STORE_URL\}/);
@@ -18,7 +18,8 @@ test("homepage toolbar exposes Chrome and Edge install options", () => {
   assert.match(source, /edgeVersion=\{edgeStoreVersion\}/);
   assert.match(source, /chromeLabel=\{content\.installChromeStoreLabel\}/);
   assert.match(source, /edgeLabel=\{content\.installEdgeStoreLabel\}/);
-  assert.match(source, /await getStoreVersions\(/);
+  assert.match(source, /await getSiteStoreVersions\(\)/);
+  assert.match(readSource("src/lib/site-links.ts"), /return getStoreVersions\(\{/);
   assert.match(source, /chromeRecommendation=\{content\.installChromeRecommendation\}/);
   assert.match(menuSource, /menuRole="menu"/);
   assert.match(menuSource, /optionRole="menuitem"/);
@@ -70,7 +71,7 @@ test("store versions fall back to the live Chrome and Edge stores", () => {
   assert.match(source, /local development and ordinary static builds fall back to the live stores/);
 });
 
-test("homepage is a product narrative while onboarding remains a separate route", () => {
+test("homepage is a product narrative that leaves shortcut setup to the extension", () => {
   const source = readSource("src/pages/index.astro");
 
   // Landing-page story: capabilities → AI → new tab → extras → proof → trust → FAQ → CTA.
@@ -83,13 +84,13 @@ test("homepage is a product narrative while onboarding remains a separate route"
     "<OpenSourceSection",
     "<FaqSection",
     "<FinalCta",
-    "<SiteFooter",
+    "<PageFooter",
   ].map((marker) => source.indexOf(marker));
   assert.ok(order.every((index) => index > 0), "every homepage section should render");
   assert.deepEqual([...order].sort((a, b) => a - b), order, "sections should keep the narrative order");
 
   assert.match(readSource("src/components/home/sections/CommandBarSection.astro"), /id="features"/);
-  // Onboarding owns the shortcut-setup walkthrough; the homepage only mentions the URL in FAQ copy.
+  // The extension's own onboarding owns the shortcut-setup walkthrough; the homepage only mentions the URL in FAQ copy.
   assert.doesNotMatch(source, /chrome:\/\/extensions\/shortcuts/);
 });
 

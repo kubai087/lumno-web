@@ -1,6 +1,6 @@
 # Lumno Web Agent Notes
 
-Last updated: 2026-03-06
+Last updated: 2026-10-08
 
 ## Confirmed Tech Direction
 
@@ -22,16 +22,17 @@ Last updated: 2026-03-06
 - No Node.js server is required in production for the current static-site plan.
 - Keep route structure stable:
   - `/` for product homepage and feature intro
-  - `/onboarding` for post-install onboarding
   - `/release` for changelog/release notes
+  - `/privacy` for the privacy policy
+  - `/onboarding` is retired (the extension ships its own onboarding); it redirects to `/`
 
 ## Multilingual SEO Workflow
 
 - Keep multilingual SEO routes static and indexable:
-  - default routes stay on `/`, `/onboarding`, `/release`
+  - default routes stay on `/`, `/release`, `/privacy`
   - localized routes use explicit paths such as `/en/...` and `/zh-tw/...`
 - Do not let extension entry pages depend on stored language for first render:
-  - onboarding / release entry behavior should still resolve from browser language by default
+  - release entry behavior (opened by the extension with `?entry=ext`) should still resolve from browser language by default
   - explicit localized routes should stay pinned to their locale
 - Separate UI copy from SEO metadata:
   - page body copy, runtime i18n titles, and SEO `<title>/<meta>` must not share the same key when their wording differs
@@ -48,10 +49,10 @@ Last updated: 2026-03-06
   - Traditional Chinese should be idiomatic, not mechanically converted
   - English should read like product copy, not literal translation or keyword stuffing
   - When adding new locales or pages, prefer concise, benefit-led phrasing similar to Apple / Google product pages, but never mimic branded wording
-- Multilingual expansion should stay within the existing three page types unless Kevin explicitly asks for new page types:
+- Multilingual expansion should stay within the existing page types unless Kevin explicitly asks for new page types:
   - `/`
-  - `/onboarding`
   - `/release`
+  - `/privacy`
   - add language variants and localized metadata, but do not introduce extra landing-page categories by default
 - When extending language coverage, keep the existing search intents consistent across locales:
   - browser command bar
@@ -67,7 +68,7 @@ Last updated: 2026-03-06
 
 - Astro + React scaffold has been introduced in repository root.
 - GitHub Pages workflow now builds with Node and deploys `dist/`.
-- Onboarding page is currently preserved as static content under `public/onboarding`.
+- Pages below the homepage (`/release`, `/privacy`) use `src/layouts/SitePage.astro`, which shares the homepage header (`src/components/site/SiteHeader.astro`), footer (`src/components/site/PageFooter.astro`) and design tokens (`src/styles/home.css`, `src/styles/site.css`).
 
 ## SVG Rendering Notes (Safari)
 
@@ -82,4 +83,4 @@ Last updated: 2026-03-06
 ## Collaboration Preference
 
 - When introducing new SVG assets or refactoring existing SVG rendering, ask Kevin first:
-  - "Do you want to apply the inline-SVG Safari-clarity strategy used in onboarding?"
+  - "Do you want to apply the inline-SVG Safari-clarity strategy used on the homepage?"

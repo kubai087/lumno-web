@@ -1,148 +1,190 @@
-## 1. Scope and Controller
+## 1. Scope and Who We Are
 
-This policy applies to the Lumno browser extension and the Lumno website. It describes the current implementation of Lumno **version 0.9.57 and later**. Since version 0.9.40, Lumno has offered no Lumno account, cloud sync, or product usage metrics, and it runs no servers that store user data.
+This Privacy Policy ("this Policy") explains how the Lumno browser extension ("the extension") and the public pages of the Lumno website (`lumno.kubai.design`, "the website") handle information about you. It is written against the actual implementation of extension version **0.9.58** and applies to that version and later versions until this Policy is updated.
 
-- **Data controller:** Lumno; the developer is identified as “Kubai087” outside Chinese-language contexts and as “枯白啃设计” in Chinese.
-- **Privacy and security contact:** [i@kubai.design](mailto:i@kubai.design).
-- **Effective and last updated:** October 8, 2026.
+- **Developer and controller:** Lumno is developed and maintained by an independent developer, Kubai087 (枯白啃设计), who is the controller of the processing described in this Policy.
+- **Contact:** [i@kubai.design](mailto:i@kubai.design). See Section 15.
+- **Effective date:** October 8, 2026.
 
-This policy explains Lumno's actual data practices and does not limit rights granted by applicable law. Just-in-time notices and controls inside the product supplement this policy; they do not silently expand the processing described here.
+Lumno offers no accounts or cloud storage and runs no servers that store user data. Account sign-in, cloud sync, and product usage analytics were removed from the extension in version 0.9.40.
 
-## 2. The Short Version
+In this Policy, "personal information" means any information recorded electronically that relates to an identified or identifiable natural person. Nothing in this Policy limits rights you have under applicable law.
 
-- **Your browser data stays on your device.** Tabs, browsing history, bookmarks, top sites, and website content are read and processed only in your browser and are never sent to Lumno.
-- **No account, no usage metrics.** Lumno has no account system or data servers of its own, and the extension does not report usage counts, behavior, or device information.
-- **Sync goes where you choose.** Settings are saved through your browser's built-in sync by default. You can also connect your own WebDAV server to sync full settings, shortcut icons, and custom wallpapers, or export a settings file and keep it yourself.
-- **Actions you direct may contact other services.** Search suggestions, web search, AI or site search, selected-text actions, site icons, online wallpapers, and the daily quote send the data needed for that action directly to the third party you selected or requested.
-- **Lumno does not sell user data.** Lumno does not use browsing activity for personalized or cross-context behavioral advertising, credit assessment, or lending.
+## 2. How We Process Information
 
-## 3. On-Device Data, Storage, and Browser Permissions
+Lumno's core features run inside your browser. To provide the features you see and use in its interface, the extension reads or stores the following information on your device. **Except as described in Section 4, this information never leaves your device and is never sent to Lumno or its developer.**
 
-### Data processed on your device
+### 2.1 Browser data
 
-To provide features shown in the interface, Lumno may read or store on your device:
+- **Tabs:** URLs, titles, groups, and icons, to search, switch, sort, restore, and manage tabs. When you use the tab switcher, the extension captures the current tab as a thumbnail; it keeps at most 12, each for no longer than 2 hours, on your device only.
+- **History:** URLs, titles, and visit times, to search and rank history locally and to delete entries when you ask.
+- **Bookmarks:** folder structure, names, and URLs, to search, display, and manage bookmarks at your request.
+- **Top sites:** URLs and titles, to show on the new tab page. Site cards you pin or hide are saved as settings.
 
-- URLs, titles, groups, and icons of open tabs, to search, rank, switch, restore, and manage tabs;
-- URLs, titles, and visit times from browsing history, for local search, ranking, and deleting entries you choose;
-- Bookmark folder structure, names, and URLs, for search, display, and bookmark management you start;
-- URLs and titles of top sites, for display on the new tab page;
-- Content on the current page related to shortcuts, the command overlay, text you select, and the optional picture-in-picture feature;
-- Search input and the local results you chose, with their URLs and titles, to improve ranking on your device;
-- Settings such as theme, language, layout, shortcuts, search providers, block rules, and feature toggles, plus custom wallpapers, shortcut icons, thumbnails, and lightweight caches.
+### 2.2 Page content
 
-Lumno does not send the browsing history, bookmark tree, tab list, website content, or local ranking records above to Lumno or its developer. The network actions listed in Section 4 send only the data each action needs to the corresponding service.
+- **Shortcuts and the command bar:** listens for Lumno's keyboard shortcuts on web pages and shows the command bar overlay.
+- **Selection actions:** off by default. When turned on, the extension reads the text you select (up to 2,400 characters) and uses it only when you choose an action.
+- **Auto picture-in-picture:** finds the video element on supported video sites to open picture-in-picture.
+- **Progress tracking (Labs):** works only for site cards you mark for tracking. It reads the page's previous/next links, structured data, and media information to update that card's URL and title.
 
-### Where local data is stored
+### 2.3 Search and settings
 
-Lumno uses `chrome.storage.local`, `chrome.storage.sync`, session extension storage where available, and IndexedDB scoped to the extension's origin. Custom wallpapers, shortcut icons, and the local settings and restore backups used by WebDAV sync live in IndexedDB; WebDAV app passwords are stored there too and never enter browser sync. `chrome.storage.sync` is provided by the browser vendor; Section 4 explains how it syncs.
+- **Search history:** what you type and the URLs and titles of results you pick, to improve ranking on your device.
+- **Settings and media:** theme, language, layout, shortcuts, search providers, blocklists, feature toggles, plus shortcut icons you upload, custom wallpapers, and the caches these features need.
 
-### Why each permission is needed
+### 2.4 What we do not collect
+
+Lumno requires no sign-up or sign-in. It does not collect your name, email address, phone number, or postal address; does not report usage counts, clicks, device identifiers, or crash data; and never sends your history, bookmarks, tab list, or page content to the developer.
+
+## 3. Why the Extension Needs Each Permission
+
+The extension requests only the permissions these features need, and no optional permissions:
 
 | Permission | Purpose |
 | --- | --- |
-| `tabs`, `tabGroups` | Query, switch, create, update, group, and restore tabs. |
-| `history` | Search and rank history locally, and delete entries when you ask. |
-| `bookmarks`, `topSites` | Search and manage bookmarks, and show top sites. |
-| `storage`, `unlimitedStorage` | Store settings, caches, custom images, and the local settings and restore backups used by WebDAV sync, without the browser sync quota as a ceiling. |
-| `alarms` | Check the settings on your WebDAV server periodically and resume sync after the background worker stops. |
-| `search` | Hand a submitted query to the browser's default search. |
-| `favicon` | Show site icons through the browser. |
-| `scripting`, `<all_urls>` | Provide the command overlay, shortcuts, selected-text actions, and optional picture-in-picture on web pages; fetch site icons; import wallpapers from image links you paste; and reach the HTTPS WebDAV address you configure. Broad site access does not mean Lumno collects or uploads website content in bulk. |
+| `tabs`, `tabGroups` | Query, switch, create, update, group, and restore tabs, and capture tab switcher thumbnails. |
+| `history` | Search and rank history locally, and delete entries at your request. |
+| `bookmarks` | Search, display, and manage bookmarks. |
+| `topSites` | Show your most visited sites on the new tab page. |
+| `storage`, `unlimitedStorage` | Store settings, caches, custom images, and the local configuration WebDAV sync needs, beyond the browser's default storage quota. |
+| `alarms` | Check WebDAV sync status periodically in the background. |
+| `search` | Hand the queries you submit to your browser's default search engine. |
+| `favicon` | Show website icons through the browser. |
+| `scripting` and `<all_urls>` site access | Provide the command bar, shortcuts, selection actions, picture-in-picture, and progress tracking on web pages; fill your query into the AI or search service you choose; fetch website icons and wallpaper images; and reach the WebDAV address you configure. |
+
+Broad site access is used only for the features above. It does not mean Lumno reads, collects, or uploads page content in bulk.
 
 ## 4. Data That Leaves Your Device
 
-### Search, AI, and icon requests you initiate
+The requests below are sent by the extension directly to the third-party service involved and **never pass through a Lumno server**. The recipient also sees the IP address and browser information that any network request carries, and handles it under its own privacy policy.
 
-- **Online search suggestions:** What you type is sent directly to the current search engine's suggestion endpoint, such as Google, Bing, Baidu, Sogou, 360, DuckDuckGo, Yandex, Quark, Shenma, or Yahoo.
-- **Web search and site search:** Queries you submit go to the browser's default search engine, the engine you chose, or the site search service.
-- **AI search and selected-text actions:** Only after you choose such an action are your query, the text you selected, and the prompt Lumno adds for that action filled into or sent to the AI or search service you chose, such as ChatGPT, Gemini, DeepSeek, or another service you configured. That service handles the content under its own privacy policy.
-- **Site icons:** When fetching a third-party icon, the Google / gstatic icon service receives the target page URL; if you choose Favicon.is, it receives only the target domain. These requests carry no cookies or referring-page Referer, and the images are stored on your device.
+### 4.1 Online search suggestions
 
-### Online wallpapers and the daily quote
+As you type in Lumno's search box (on the new tab page or in the command bar), your input is sent in real time to the suggestion endpoint of your current search engine to show suggestions. Supported services are Google, Bing, Baidu, Sogou (served by Tencent at `sor.html5.qq.com`), DuckDuckGo, Yandex, Quark and Shenma (`sugs.m.sm.cn`), and Yahoo. You can change who receives these requests by switching search engines in settings.
 
-- **Daily quote:** Off by default. When on, Lumno fetches public quotes in your chosen category from Hitokoto (`v1.hitokoto.cn`) and caches them on your device for the day.
-- **Bing wallpapers:** When you choose the Bing source or a daily wallpaper, Lumno fetches wallpaper details and images from `www.bing.com`; the request contains only the language market and image identifiers.
-- **Curated and art wallpapers:** For the curated source, Lumno fetches images from `picsum.photos` (Lorem Picsum, with images from Unsplash); the art category fetches images from the Cleveland Museum of Art open access library (`openaccess-cdn.clevelandart.org`). Requests contain only image numbers and sizes.
-- **Image links:** If you paste an image link as a wallpaper, the link syncs with your settings and each device requests the image once, then uses a compressed local copy.
+### 4.2 Web search, site search, and AI
 
-These requests carry no cookies, referring-page Referer, browsing history, bookmarks, or search terms; the receiving service sees the IP address of an ordinary network request.
+- **Web and site search:** queries you submit go to your browser's default search engine, or open the search service or website you choose in a new tab.
+- **AI search and selection actions:** only after you choose an action does the extension open the AI service you picked (such as ChatGPT, Gemini, DeepSeek, Doubao, or Kimi) and fill in your query or selected text, along with the prompt Lumno writes for that action.
 
-All of the search, AI, icon, and wallpaper requests above go straight from the extension to the third party, never through Lumno. You can reduce them by not using a feature, switching providers, or using the request block list in the extension.
+These are the same as visiting those sites yourself: the site receives what you submit and may associate it with your signed-in session there.
 
-### Settings sync
+### 4.3 Website icons
 
-Lumno offers no cloud sync. Settings move between devices only in the ways you choose:
+To fetch a site's icon, Google's favicon service (`www.google.com` / `gstatic`) receives the page URL; if you choose Favicon.is, only the domain is sent. These requests carry no cookies or referrer, and icons are cached on your device. Custom icon addresses you set for shortcuts are loaded by the browser directly from that address.
 
-- **Browser built-in sync:** Settings such as theme, search providers, shortcuts, block rules, and new tab layout are stored in `chrome.storage.sync` and synced across devices by your browser vendor according to your browser account and sync settings, under the vendor's privacy policy. Custom wallpapers and uploaded icons do not enter browser sync.
-- **WebDAV sync (optional):** Off by default; it starts only after you add a server yourself, and you can connect several servers. Once on, your full settings (including shortcut titles and URLs, search templates, and block rules you entered), uploaded shortcut icons, custom wallpapers, and settings snapshots taken before overwrites are saved over HTTPS to the server and folder you specify. The server address, folder, and username sync to your other devices through browser built-in sync so they are easy to reconnect; the app password stays on the current device. Browsing history, the bookmark database, current tabs, and the site icon cache are never uploaded.
-- **Export and import:** You can export your settings as a JSON file to keep yourself or import on another device. Exported files do not include images.
+### 4.4 Online wallpapers and daily quotes
 
-WebDAV data goes only to the server you chose, never through Lumno. WebDAV is not end-to-end encrypted, so that server's administrator can read the settings and images; storage, backup, and deletion of the files are governed by that service and its policies.
+- **Daily quotes:** off by default. When on, the extension fetches quotes in your chosen category from Hitokoto (`v1.hitokoto.cn`) and caches them for the day.
+- **Bing wallpapers:** fetched from `www.bing.com`; the request includes only the market and image identifier.
+- **Curated and art wallpapers:** photos come from Lorem Picsum (`picsum.photos`, sourced from Unsplash) and artworks from the Cleveland Museum of Art Open Access collection (`openaccess-cdn.clevelandart.org`); requests include only the image ID and size.
+- **Image link wallpapers:** links you paste sync with your settings; each device requests the image once from that address, then compresses and caches it locally.
 
-### Website analytics
+Wallpaper and quote downloads carry no cookies or referrer. Preview thumbnails in the wallpaper picker load like ordinary web images.
 
-Public pages on the Lumno website load the VibeLoft analytics script and may enable Google Analytics when deployed. These services may process page URLs and titles, visit times, referring pages, click events, browser language, device and browser type, approximate location, IP addresses and request logs, and cookies or other pseudonymous identifiers. Lumno uses this data to understand traffic, performance, and entry points for public pages and does not link it with any data in the extension; the extension itself does not load these scripts.
+### 4.5 Release notes and website resources
 
-You can block website analytics with your browser's cookie, script, or tracking protection features; this does not affect any feature of the extension.
+- **Update notices:** after an update, the extension requests that version's release title from GitHub (`api.github.com`, or `github.com` as a fallback) to show an update notice. You can turn off "Update notice" in settings.
+- **Changelog page:** after an update, the extension may open the website's changelog. Its URL includes the entry source, the update reason, and the extension version, and Section 6 applies to that page.
+- **Feedback links:** when you open a feedback or community link, the extension fetches the community link configuration (`community-links.json`) and the community QR code image from the website.
 
-## 5. Purposes, Legal Bases, and Recipients
+The website is hosted on GitHub Pages, and GitHub, as the host, may log requests including IP addresses.
 
-Lumno processes data only as needed to: provide the browser features you use on your device; carry out the search, AI, icon, and wallpaper requests you start; sync settings the way you choose; understand website traffic; and meet legal obligations. Depending on where you live, the legal bases may include necessity for the service you requested, consent you can withdraw at any time, legitimate interests in understanding website traffic, and legal obligations.
+## 5. Settings Sync
 
-| Recipient | Data it may process | Purpose |
+Lumno does not provide cloud sync. Your settings move between devices only in the ways you choose:
+
+- **Built-in browser sync:** theme, search providers, shortcuts (titles and URLs), pinned or hidden site cards (URLs and titles), blocklist rules, wallpaper choices and image links, daily quote preferences, and your WebDAV server address, folder, and username are stored in `chrome.storage.sync` and synced across devices by your browser vendor under your browser account and sync settings. Uploaded icons, custom wallpapers, and WebDAV app passwords are never part of browser sync.
+- **WebDAV sync (optional):** off by default, and on only after you add a server yourself. Once on, your full configuration, uploaded shortcut icons, custom wallpapers, and configuration snapshots taken before overwrites are stored over HTTPS on the server and folder you specify. History, bookmarks, open tabs, and icon caches are never uploaded. WebDAV offers no end-to-end encryption, so that server's administrators can read these files.
+- **Export and import:** you can export your settings as a JSON file to keep or import on another device. Exports do not include images.
+
+## 6. Website Analytics and Cookies
+
+The website's public pages load the VibeLoft analytics script and may enable Google Analytics (with IP anonymization) at deploy time. These services may process page URLs (including query parameters) and titles, visit times, referring pages, click events, browser language, device and browser type, approximate location, IP addresses, and cookies or similar pseudonymous identifiers.
+
+We use this data only to understand traffic, sources, and performance of the website, and never link it with any data in the extension. The extension itself does not load these scripts. You can block website analytics with your browser's cookie, script-blocking, or tracking-protection features without affecting any extension feature.
+
+## 7. Sharing, Transfer, and Disclosure
+
+Lumno does not sell, rent, or trade your personal information, does not use it for personalized or cross-context behavioral advertising, and does not provide it to data brokers or ad platforms. Beyond completing actions you start, we do not share, transfer, or publicly disclose your personal information.
+
+Third parties that may receive data:
+
+| Recipient | Data it may receive | Purpose |
 | --- | --- | --- |
-| Browser vendor | Settings in `chrome.storage.sync`, the WebDAV server address, folder, and username, and browser account metadata | Provide the browser's built-in extension settings sync. |
-| The WebDAV service you configure (such as Nutstore, a NAS, or your own server) | Full settings, shortcut icons, custom wallpapers, settings snapshots, and the username and app password used to authenticate | Sync settings and images across your devices and browsers as you set up. |
-| Search, AI, website, or favicon services you choose | Queries, selected text, prompts, requested URLs or domains, and network metadata | Complete the search, AI, page visit, or icon request you started. |
-| Hitokoto, Bing, Lorem Picsum, Cleveland Museum of Art | Chosen category, language market, image numbers and sizes, and IP address | Provide the daily quote and online wallpapers you turned on. |
-| [VibeLoft](https://vibeloft.ai/privacy), Google Analytics (if enabled) | Website visit and technical information | Traffic, referral, and performance analysis for public pages. |
+| Browser vendors (such as Google and Microsoft) | Settings in `chrome.storage.sync` and browser account metadata | Built-in sync of extension settings. |
+| Your WebDAV service (such as Jianguoyun, a NAS, or a self-hosted server) | Full configuration, icons, wallpapers, snapshots, and the username and app password used to sign in | Syncing settings and images as you configure. |
+| Search suggestion services (Section 4.1) | What you type and request metadata | Showing search suggestions. |
+| Search, AI, and website services you choose | Queries, selected text, and prompts you submit | Completing searches and AI actions you start. |
+| Google favicon service, Favicon.is | Page URL or domain | Showing website icons. |
+| Hitokoto, Bing, Lorem Picsum, Cleveland Museum of Art | Category, market, image ID, and size | Daily quotes and online wallpapers you turn on. |
+| GitHub | Extension version, and access logs for website and release requests | Update notices and website hosting. |
+| [VibeLoft](https://vibeloft.ai/privacy), Google Analytics (if enabled) | Website visit and technical information | Website traffic, source, and performance analysis. |
 
-These providers may process data outside your country or region. Lumno does not sell or provide user data to data brokers or advertising platforms, and does not collect or transfer browsing activity for purposes unrelated to the extension's single purpose.
+If Lumno is merged, transferred, or handed over to a new maintainer, we will require the recipient to remain bound by this Policy, or ask for your consent again before the way your information is handled changes. We may disclose information where required by law or by a lawful request from a competent authority; because we hold no personal information about you, this would generally involve only website analytics data.
 
-## 6. Retention and the Effect of Deletion
+## 8. Storage and Retention
 
-| Data | Retention period or criteria |
+The extension stores data in the browser's `chrome.storage.local`, `chrome.storage.sync`, and session storage, and in IndexedDB scoped to the extension: uploaded shortcut icons live in `chrome.storage.local`; custom wallpapers, WebDAV configuration, app passwords, and recovery backups live in IndexedDB.
+
+| Data | Retention |
 | --- | --- |
-| Local settings, images, caches, and ranking records | Kept until you delete them in the extension, clear extension data in your browser, or uninstall Lumno. |
-| Settings in browser sync | Kept and deleted by your browser vendor according to your browser account and sync settings. |
-| Settings, images, and pre-overwrite snapshots on your WebDAV server | Stored on your server. Pausing sync, removing a connection, or uninstalling Lumno does not delete server files; old snapshots and unused images must be cleaned up on the server. |
+| Local settings, images, caches, and search ranking data | Until you delete them in the extension, clear the extension's data in your browser, or uninstall Lumno. |
+| Tab switcher thumbnails | Up to 2 hours each. |
+| Settings in browser sync | Kept and deleted by your browser vendor under your browser account and sync settings. |
+| Files on your WebDAV server | Kept on your server until you delete them. Pausing sync, removing a connection, or uninstalling Lumno does not delete them. |
 | Exported settings files | Kept and deleted by you. |
-| Third-party service and website analytics data | Kept by each service under its own policy. |
+| Third-party and website analytics data | Kept by each service under its own policy. |
 
-Lumno has no accounts or cloud database and keeps none of your personal data on any system it controls. Uninstalling the extension clears local data; copies in browser sync and files on your WebDAV server must be deleted in your browser settings and on the server.
+Lumno keeps no personal information about you in any system it controls.
 
-## 7. Your Choices and Rights
+## 9. Your Rights and Choices
 
 You can:
 
-- Use every feature without signing up or signing in;
-- Choose whether to turn on WebDAV sync, and pause or remove connections at any time;
-- Turn off extension sync in your browser and keep settings on this device only;
-- Clear local data or browser sync data in your browser settings, or uninstall the extension;
-- Skip online suggestions, AI, selected-text actions, the daily quote, or online wallpapers, or switch the provider.
+- Use every Lumno feature without signing up or signing in.
+- Change search engines, AI services, and icon sources in settings, or turn off selection actions, daily quotes, online wallpapers, update notices, and similar features.
+- Choose whether to turn on WebDAV sync, and pause or remove a connection at any time.
+- Turn off extension sync in your browser to keep settings on one device.
+- Delete data in the extension, clear the extension's data in your browser, or uninstall the extension to remove all local data.
 
-Because Lumno does not keep your personal information, there is usually no Lumno-side data to access, export, or delete. If you have questions about website analytics or this policy, or want to exercise rights to access, correct, delete, restrict, or object to processing within the scope of applicable law, email [i@kubai.design](mailto:i@kubai.design); Lumno will respond within the time required by applicable law. You may also complain to a competent privacy regulator, and exercising your privacy rights will not lead to discriminatory treatment.
+Because Lumno holds no personal information about you, there is usually no Lumno-side data to access, copy, or delete. To exercise rights you may have under applicable law, such as access, portability, correction, deletion, withdrawal of consent, restriction, or objection, or if you have questions about website analytics, contact us as described in Section 15. We will respond within 15 business days of verifying your request, or within any period required by applicable law. You may also lodge a complaint with your local data protection authority. Exercising these rights will never lead to discriminatory treatment.
 
-Lumno does not use personal information for automated decisions that produce legal or similarly significant effects, and does not profile you for such decisions.
+Lumno does not profile you or make automated decisions that produce legal or similarly significant effects on you.
 
-## 8. Security Measures and Limits
+## 10. Security
 
-The extension processes data inside your browser and does not hand browsing data to Lumno. WebDAV accepts only HTTPS addresses, keeps certificate validation, and refuses authentication redirects; app passwords are stored in IndexedDB scoped to the extension's origin, never enter browser sync, and are not exposed to ordinary web pages or content scripts. We recommend generating a separate app password for Lumno rather than using the service's sign-in password.
+We protect your data with the following measures:
 
-These measures reduce the risk of unauthorized access, tampering, or leaks, but no network transfer, device, or storage system can be guaranteed to be completely secure. Please protect your browser account, devices, and WebDAV account; to report a security issue, contact [i@kubai.design](mailto:i@kubai.design).
+- Browsing data is processed only in your browser and is never sent to the developer.
+- WebDAV accepts HTTPS addresses only, keeps certificate validation, and refuses authentication redirects.
+- WebDAV app passwords stay in the extension's own storage on the current device. They never enter browser sync and are never exposed to web pages or content scripts.
+- Website icon and wallpaper downloads carry no cookies or referrer.
 
-When you hand queries, selected text, or settings to a search, AI, WebDAV, or other third-party service, its processing is governed by that party's privacy policy and security measures. Third-party availability and policies may change; this notice does not exclude any statutory rights that cannot be waived.
+We recommend generating a separate WebDAV app password for Lumno and keeping your device, browser account, and WebDAV account secure. No method of transmission or storage is completely secure. If you find a security issue, please tell us at [i@kubai.design](mailto:i@kubai.design).
 
-## 9. International Processing and Children
+## 11. Children
 
-Lumno runs no servers that store user data, so it does not transfer your data to any system it controls. Browser vendors, the WebDAV, search, AI, and image services you choose, and VibeLoft and Google Analytics may process data in other countries or regions under their own policies and transfer mechanisms.
+Lumno is intended for a general audience, is not designed for children, and does not knowingly collect personal information from children. Children under 14 should use Lumno only with the consent and guidance of a parent or guardian. If you believe we have processed a child's information by mistake, please contact us so we can look into it.
 
-Lumno is intended for a general audience, is not designed for children, and does not knowingly collect children's personal information. If you have concerns about this, please contact us so we can look into it.
+## 12. International Processing
 
-## 10. Transfer Restrictions, Chrome Limited Use, and Policy Changes
+Lumno runs no servers that store user data, so your data is never transferred to systems Lumno controls. Browser vendors, the search, AI, WebDAV, and image services you choose, and GitHub, VibeLoft, and Google Analytics may process data outside your country or region under their own privacy policies and transfer mechanisms.
 
-Lumno does not sell or rent user data, or use it for personalized or cross-context behavioral advertising, credit assessment, lending, or other purposes unrelated to the extension's core functions. The extension sends only the data needed to complete an action you started, directly to the services listed in Section 4.
+## 13. Chrome Web Store User Data Policy
 
-Lumno's use of information received from browser APIs and Google APIs adheres to the [Chrome Web Store User Data Policy](https://developer.chrome.com/docs/webstore/program-policies/policies), including the **Limited Use** requirements. This data is never sent to the developer, and the developer cannot access your browsing data or settings.
+Lumno's use of information received from browser APIs adheres to the [Chrome Web Store User Data Policy](https://developer.chrome.com/docs/webstore/program-policies/policies), including the **Limited Use** requirements:
 
-If Lumno adds data categories, purposes, or recipients, for example by bringing back accounts or cloud features, it will first update this policy and the store disclosures, explain the change prominently in the product as Chrome Web Store rules require, and ask for consent again where applicable law requires. Editorial cleanups, link updates, or clarifications that do not reduce your rights may only update the page date. Please review this page after upgrading; material changes do not retroactively authorize processing that was not previously disclosed.
+- The data is used only to provide or improve the extension's single, user-facing purpose.
+- Data is sent to the services listed in Section 4 only as needed to complete actions you start.
+- The data is never sold or transferred to third parties, used for personalized advertising, or used to determine creditworthiness or for lending.
+- The developer cannot access your browsing data or settings.
+
+## 14. Changes to This Policy
+
+If Lumno adds new categories of data, purposes, or recipients, such as bringing back accounts or cloud features, we will update this Policy and the store's data disclosures before the change takes effect and give prominent notice in the extension; where the law requires consent, we will ask for it again. For wording changes, link updates, or clarifications that do not reduce your rights, we may only update the date on this page. We will not reduce your rights under this Policy without your consent.
+
+## 15. Contact Us
+
+If you have any questions, comments, or requests about this Policy or your personal information, email [i@kubai.design](mailto:i@kubai.design). You can also open a public issue on [GitHub](https://github.com/kubai087/lumno-extension/issues), but please don't share personal information in public channels.

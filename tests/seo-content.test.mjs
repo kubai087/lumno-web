@@ -15,20 +15,13 @@ test("public pages retain page-specific SEO titles after language initialization
   // The homepage renders every locale statically, so it must not rewrite the SEO title at runtime.
   assert.doesNotMatch(homeSource, /document\.title\s*=/);
 
-  for (const file of ["src/pages/onboarding/index.astro", "src/pages/release/index.astro"]) {
-    const source = readSource(file);
-    assert.doesNotMatch(source, /i18nTitleKey="page_title_ui"/, file);
-    assert.match(source, /define:vars=\{\{[^\n]*pageTitleByLocale/, file);
-    assert.match(source, /document\.title = pageTitleByLocale\[resolvedLocale\]/, file);
-  }
-});
-
-test("public entry pages stay stable without overriding extension browser-language entry", () => {
-  for (const file of ["src/pages/onboarding/index.astro", "src/pages/release/index.astro"]) {
-    const source = readSource(file);
-    assert.match(source, /!INITIAL_ENTRY_CONTEXT\.isExtensionEntry && !storedMode \? FALLBACK_LOCALE : null/, file);
-    assert.match(source, /forcedLocale: initialForcedLocale/, file);
-    assert.match(source, /shouldRedirect: \(\) => !INITIAL_ENTRY_CONTEXT\.isExtensionEntry/, file);
+  const release = readSource("src/pages/release/index.astro");
+  assert.doesNotMatch(release, /i18nTitleKey="page_title_ui"/);
+  assert.match(release, /define:vars=\{\{[^\n]*pageTitleByLocale/);
+  assert.match(release, /document\.title = pageTitleByLocale\[resolvedLocale\]/);
+  // The privacy policy is rendered per locale route, so its SEO title is final.
+  for (const file of ["src/pages/privacy/index.astro", "src/layouts/SitePage.astro"]) {
+    assert.doesNotMatch(readSource(file), /i18nTitleKey=|document\.title\s*=/, file);
   }
 });
 
@@ -40,15 +33,15 @@ test("homepage keeps a crawlable entry to the full feature SEO page", () => {
   assert.doesNotMatch(source, /buildFAQPageSchema\(/);
   assert.doesNotMatch(source, /buildItemListSchema\(/);
   assert.match(source, /const featuresHref = buildLocalizedPath\(uiLocale, "\/features\/"\);/);
-  assert.match(source, /\{ label: content\.footerFeatures, href: featuresHref \}/);
+  assert.match(readSource("src/components/site/PageFooter.astro"), /\{ label: content\.footerFeatures, href: buildLocalizedPath\(locale, "\/features\/"\) \}/);
   assert.match(source, /link: featuresHref/);
 });
 
 test("homepage keeps a localized crawlable entry to the privacy policy", () => {
-  const source = readSource("src/pages/index.astro");
+  const footer = readSource("src/components/site/PageFooter.astro");
 
-  assert.match(source, /const privacyHref = buildLocalizedPath\(uiLocale, "\/privacy\/"\);/);
-  assert.match(source, /\{ label: content\.footerPrivacy, href: privacyHref \}/);
+  assert.match(footer, /\{ label: content\.footerPrivacy, href: buildLocalizedPath\(locale, "\/privacy\/"\) \}/);
+  assert.match(readSource("src/pages/index.astro"), /<PageFooter locale=\{uiLocale\}/);
 });
 
 test("features page contains product-led searchable content and FAQ schema hooks", () => {
@@ -89,23 +82,23 @@ test("shared SEO schema helpers support localized FAQ pages", () => {
   assert.match(source, /"@type": "FAQPage"/);
   assert.match(source, /acceptedAnswer/);
   assert.match(source, /inLanguage: language/);
-  assert.match(source, /buildHowToSchema/);
-  assert.match(source, /"@type": "HowTo"/);
+  assert.doesNotMatch(source, /buildHowToSchema/);
   assert.match(source, /buildItemListSchema/);
   assert.match(source, /"@type": "ItemList"/);
 });
 
-test("onboarding page exposes shortcut setup as HowTo schema", () => {
-  const source = readSource("src/pages/onboarding/index.astro");
-
-  assert.match(source, /buildHowToSchema\(/);
-  assert.match(source, /shortcutHowToName/);
-  assert.match(source, /shortcutStepName1/);
-  assert.match(source, /mainEntity: shortcutHowToSchema/);
-});
-
 test("release page exposes GitHub releases as an ItemList schema", () => {
   const source = readSource("src/pages/release/index.astro");
+
+  assert.match(source, /\{ name: initialUi\.bannerTitle, path: seoPath \}/);
+  assert.match(source, /<time class="entry-date" datetime=\{item\.date \|\| undefined\}>\{formatDate\(item\.date, uiLocale\)\}<\/time>/);
+  assert.match(source, /<article class="entry" id=\{anchor\}>/);
+  // Crawlers read localized labels without running the i18n script.
+  assert.match(source, /\{initialUi\.featuresLabel\} \(\{localeContent\.features\.length\}\)/);
+  assert.match(source, /\{initialUi\.githubPublished\}/);
+  // The retired onboarding bundle no longer ships the shared icon font.
+  assert.doesNotMatch(source, /\/onboarding\/assets\//);
+  assert.match(source, /href="\/assets\/remixicon\.css"/);
 
   assert.match(source, /releaseItemListSchema/);
   assert.match(source, /buildItemListSchema\(/);
@@ -173,23 +166,21 @@ test("sitemap exposes localized privacy pages", () => {
 test("language menus expose every locale as a crawlable link", () => {
   const menuSource = readSource("src/components/onboarding/LanguageMenu.tsx");
   assert.match(menuSource, /href: hrefs\[option\.value\]/);
-  for (const file of ["src/pages/index.astro", "src/pages/onboarding/index.astro"]) {
-    assert.match(readSource(file), /hrefs=\{routeLanguageMap\}/, file);
-  }
-  for (const file of ["src/pages/release/index.astro", "src/pages/privacy/index.astro"]) {
-    const source = readSource(file);
-    assert.doesNotMatch(source, /<button class="lang-option"/, file);
-    assert.match(source, /<a class="lang-option" href=\{routeLanguageMap\.en\}/, file);
-  }
+  // Every page renders the shared header, whose language menu links each locale's version of the page.
+  assert.match(readSource("src/components/site/SiteHeader.astro"), /<LanguageMenu[\s\S]*?hrefs=\{routeLanguageMap\}/);
+  assert.match(readSource("src/pages/index.astro"), /<SiteHeader locale=\{uiLocale\} routeLanguageMap=\{routeLanguageMap\} \/>/);
+  assert.match(readSource("src/layouts/SitePage.astro"), /<SiteHeader locale=\{locale\} routeLanguageMap=\{routeLanguageMap\}/);
+  assert.match(readSource("src/pages/release/index.astro"), /<SiteHeader locale=\{uiLocale\} routeLanguageMap=\{routeLanguageMap\}/);
   // Links stay links for crawlers; the runtime still handles persistence and navigation.
   assert.match(readSource("src/scripts/language-runtime.ts"), /event\.preventDefault\(\);\s*const next/);
 });
 
-test("localized entry pages link to same-locale routes", () => {
-  const onboarding = readSource("src/pages/onboarding/index.astro");
-  assert.match(onboarding, /class="top-nav-brand" href=\{homeHref\}/);
-  assert.match(onboarding, /href=\{releaseHref\} aria-label=\{initialUi\.releaseAria\}/);
-  assert.match(readSource("src/pages/release/index.astro"), /<a class="brand" href=\{homeHref\}/);
+test("localized pages link to same-locale routes", () => {
+  const header = readSource("src/components/site/SiteHeader.astro");
+  assert.match(header, /const homeHref = buildLocalizedPath\(locale, "\/"\);/);
+  assert.match(header, /const releaseHref = buildLocalizedPath\(locale, "\/release\/"\);/);
+  assert.match(header, /class="top-nav-brand"\s*href=\{homeHref\}/);
+  assert.match(header, /releaseHref=\{releaseHref\}/);
 });
 
 test("release page keeps a descriptive h1 for web visitors", () => {
@@ -212,7 +203,7 @@ test("deploy checkout keeps history for accurate sitemap lastmod", () => {
 });
 
 test("homepage footer links every language version of the page", () => {
-  const source = readSource("src/pages/index.astro");
+  const source = readSource("src/components/site/PageFooter.astro");
   const footer = readSource("src/components/home/sections/SiteFooter.astro");
 
   assert.match(source, /href: routeLanguageMap\[language\.code\]/);

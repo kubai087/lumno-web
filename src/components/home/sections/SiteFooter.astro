@@ -5,10 +5,14 @@ import { CommunityQrDialog } from "../CommunityQrDialog";
 type Link = { label: string; href: string; external?: boolean };
 /** A Remix icon class, or raw inline SVG for brands Remix doesn't cover. */
 type Social = { label: string; href: string; iconClass?: string; iconSvg?: string; analyticsEvent: string; analyticsLabel: string };
+type Store = { label: string; href: string; logoSrc: string; analyticsEvent: string; analyticsLabel: string };
 
 interface Props {
   homeHref: string;
   tagline: string;
+  /** Store buttons under the tagline; the final CTA above already carries the big Chrome button. */
+  storesLabel: string;
+  stores: Store[];
   socialAria: string;
   socials: Social[];
   /** The feedback entry leads the last column, ahead of that column's links. */
@@ -27,7 +31,9 @@ interface Props {
   languages: Array<{ code: string; label: string; href: string; current: boolean }>;
 }
 
-const { homeHref, tagline, socialAria, socials, columns, feedback, copyright, licenseHref, languages } = Astro.props;
+const { homeHref, tagline, storesLabel, stores, socialAria, socials, columns, feedback, copyright, licenseHref, languages } = Astro.props;
+// A narrow (centred) tagline may only wrap between Chinese phrases, never inside a word.
+const taglinePhrases = tagline.split(/(?<=、)/);
 ---
 
 <footer class="site-footer">
@@ -37,7 +43,24 @@ const { homeHref, tagline, socialAria, socials, columns, feedback, copyright, li
         <span class="site-footer__icon" aria-hidden="true" set:html={logoIconSvg}></span>
         <img src="/assets/textlogo.svg" width="165" height="43" alt="Lumno" loading="lazy" />
       </a>
-      <p>{tagline}</p>
+      <p>{taglinePhrases.map((phrase) => <span class="site-footer__phrase">{phrase}</span>)}</p>
+      <ul class="site-footer__stores" aria-label={storesLabel}>
+        {stores.map((store) => (
+          <li>
+            <a
+              href={store.href}
+              target="_blank"
+              rel="noreferrer noopener"
+              data-analytics-event={store.analyticsEvent}
+              data-analytics-category="conversion"
+              data-analytics-label={store.analyticsLabel}
+            >
+              <img src={store.logoSrc} width="18" height="18" alt="" loading="lazy" decoding="async" />
+              {store.label}
+            </a>
+          </li>
+        ))}
+      </ul>
       <ul class="site-footer__socials" aria-label={socialAria}>
         {socials.map((social) => (
           <li>
@@ -174,6 +197,47 @@ const { homeHref, tagline, socialAria, socials, columns, feedback, copyright, li
     line-height: 1.7;
   }
 
+  .site-footer__phrase {
+    display: inline-block;
+  }
+
+  /* White store pills, a quieter echo of the final CTA's install button. */
+  .site-footer__stores {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: var(--home-space-5);
+  }
+
+  .site-footer .site-footer__stores a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 0 16px 0 12px;
+    border: 1px solid var(--home-hairline-control);
+    border-radius: var(--home-radius-pill);
+    background: var(--home-card);
+    box-shadow: var(--home-shadow-chip);
+    color: var(--home-ink, #2f2a22);
+    font-size: 13.5px;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: background-color 160ms ease, border-color 160ms ease;
+  }
+
+  .site-footer .site-footer__stores a:hover {
+    border-color: rgba(var(--home-edge), 0.16);
+    background: #f8fafc;
+    color: var(--home-ink, #2f2a22);
+  }
+
+  .site-footer__stores img {
+    flex: none;
+    width: 18px;
+    height: 18px;
+  }
+
   /* Icon buttons sit flush with the tagline: the first glyph lines up with the text edge. */
   .site-footer__socials {
     display: flex;
@@ -292,11 +356,114 @@ const { homeHref, tagline, socialAria, socials, columns, feedback, copyright, li
     }
   }
 
-  @media (max-width: 520px) {
-    .site-footer__columns {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      column-gap: var(--home-space-8);
+  /*
+   * Phones: with five links, two short headed columns left a lopsided gap and
+   * crowded the copyright and languages onto one row. Like product footers
+   * with few links (Zen, The Browser Company), everything centres in a single
+   * column: brand, socials, the links as one wrapping block (headings kept for
+   * screen readers only), then languages and copyright on their own lines.
+   */
+  @media (max-width: 600px) {
+    .site-footer__main {
+      justify-items: center;
+      gap: var(--home-space-8);
+      padding: var(--home-space-12) 0 var(--home-space-8);
+      text-align: center;
     }
 
+    .site-footer__brand {
+      display: grid;
+      justify-items: center;
+    }
+
+    .site-footer__brand p {
+      max-width: 300px;
+      margin-top: var(--home-space-3);
+      text-wrap: balance;
+    }
+
+
+    /* Stacked at one shared width rather than wrapping into two odd lengths. */
+    .site-footer__stores {
+      display: grid;
+      width: min(100%, 260px);
+    }
+
+    .site-footer .site-footer__stores a {
+      justify-content: center;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .site-footer__socials {
+      gap: 8px;
+      margin: var(--home-space-5) 0 0;
+    }
+
+    .site-footer .site-footer__socials a {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--home-radius-pill);
+      background: rgba(47, 42, 34, 0.04);
+    }
+
+    /* One wrapping block of links; the width breaks five links into 3 + 2. */
+    .site-footer__columns {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px 24px;
+      max-width: 290px;
+    }
+
+    .site-footer__columns > div,
+    .site-footer__columns ul {
+      display: contents;
+    }
+
+    .site-footer__columns h2 {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+
+    .site-footer__columns a,
+    .site-footer__columns :global(.community-footer-trigger) {
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .site-footer__meta {
+      flex-direction: column;
+      gap: var(--home-space-4);
+      padding: var(--home-space-6) 0 calc(var(--home-space-10) + env(safe-area-inset-bottom, 0px));
+    }
+
+    .site-footer__meta p {
+      justify-content: center;
+    }
+
+    /* The languages read as one small switch rather than three loose links. */
+    .site-footer__languages {
+      order: -1;
+      gap: 2px;
+      padding: 3px;
+      border: 1px solid var(--home-card-border);
+      border-radius: var(--home-radius-pill);
+      background: var(--home-card);
+    }
+
+    .site-footer__languages a {
+      display: block;
+      padding: 6px 12px;
+      border-radius: var(--home-radius-pill);
+    }
+
+    .site-footer__languages a[aria-current="page"] {
+      background: rgba(47, 42, 34, 0.06);
+    }
   }
 </style>

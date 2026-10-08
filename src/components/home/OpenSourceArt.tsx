@@ -2,13 +2,16 @@ import { useEffect, useRef, useState, type CSSProperties, type RefObject } from 
 import { useInView, useReducedMotion } from "motion/react";
 
 import { AnimatedSpan, Terminal, TypingAnimation } from "@/components/ui/terminal";
+import { isPhone } from "@/scripts/home-phone";
 
 import "./open-source-art.css";
 
 /**
  * Illustrations for the open source cards. Like the other homepage demos they
  * play once when first seen, and hovering the card replays them: the replay
- * remounts the animated part, so each one starts from scratch.
+ * remounts the animated part, so each one starts from scratch. Phones
+ * (home-phone) have no hover, so there coming back into view or a tap
+ * replays instead.
  */
 function useReplay(anchor: RefObject<HTMLElement | null>) {
   const [run, setRun] = useState(0);
@@ -16,8 +19,9 @@ function useReplay(anchor: RefObject<HTMLElement | null>) {
   const reduceMotion = useReducedMotion();
 
   useEffect(() => {
-    const card = anchor.current?.closest("[data-os-card]");
-    if (!card || reduceMotion) return;
+    const target = anchor.current;
+    const card = target?.closest<HTMLElement>("[data-os-card]");
+    if (!target || !card || reduceMotion) return;
     // Only replay once the first run has had time to finish.
     let lastStart = performance.now();
     const replay = () => {
@@ -25,8 +29,32 @@ function useReplay(anchor: RefObject<HTMLElement | null>) {
       lastStart = performance.now();
       setRun((value) => value + 1);
     };
-    card.addEventListener("pointerenter", replay);
-    return () => card.removeEventListener("pointerenter", replay);
+
+    // Only a mouse: a finger that starts a scroll on the card enters it too.
+    const onEnter = (event: PointerEvent) => {
+      if (event.pointerType === "mouse") replay();
+    };
+    const onTap = () => {
+      if (isPhone()) replay();
+    };
+    // The first entry is the first run (useInView above); later ones replay.
+    let seen = false;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        if (seen && isPhone()) replay();
+        seen = true;
+      },
+      { threshold: 0.4 },
+    );
+    observer.observe(target);
+    card.addEventListener("pointerenter", onEnter);
+    card.addEventListener("click", onTap);
+    return () => {
+      observer.disconnect();
+      card.removeEventListener("pointerenter", onEnter);
+      card.removeEventListener("click", onTap);
+    };
   }, [anchor, reduceMotion]);
 
   return { run, inView, reduceMotion: Boolean(reduceMotion) };

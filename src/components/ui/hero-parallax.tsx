@@ -62,6 +62,8 @@ export function HeroParallax({
   const firstRow = products.slice(0, 5);
   const secondRow = products.slice(5, 10);
   const thirdRow = products.slice(10, 15);
+  // Phones show smaller cards, so a fourth row (a reshuffle of the same renders) fills the stage.
+  const fourthRow = products.filter((_, index) => index % 3 === 0);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start 55%", "end 18%"],
@@ -130,6 +132,13 @@ export function HeroParallax({
           translate={translateX}
           reverse
           shouldReduceMotion={Boolean(shouldReduceMotion)}
+          className="md:mb-0"
+        />
+        <ProductRow
+          products={fourthRow}
+          translate={translateXReverse}
+          shouldReduceMotion={Boolean(shouldReduceMotion)}
+          className="md:hidden"
           isLast
         />
       </motion.div>
@@ -213,6 +222,7 @@ interface ProductRowProps {
   reverse?: boolean;
   isLast?: boolean;
   shouldReduceMotion: boolean;
+  className?: string;
 }
 
 function ProductRow({
@@ -221,6 +231,7 @@ function ProductRow({
   reverse = false,
   isLast = false,
   shouldReduceMotion,
+  className,
 }: ProductRowProps) {
   const accessibleCopyIndex = reverse ? 1 : 0;
   const loopedProducts = Array.from({ length: LOOP_COPY_COUNT }, (_, copyIndex) =>
@@ -230,10 +241,11 @@ function ProductRow({
   return (
     <motion.div
       className={cn(
-        "hero-parallax__row flex w-max gap-10 md:gap-20",
+        "hero-parallax__row flex w-max gap-6 md:gap-20",
         reverse ? "flex-row-reverse" : "flex-row",
         reverse && "hero-parallax__row--reverse",
-        isLast ? undefined : "mb-10 md:mb-20",
+        isLast ? undefined : "mb-6 md:mb-20",
+        className,
       )}
     >
       {loopedProducts.map(({ product, copyIndex }, index) => (
@@ -264,7 +276,7 @@ export function ProductCard({
 }: ProductCardProps) {
   return (
     <motion.article
-      className="relative aspect-[1.585] w-[18rem] shrink-0 overflow-hidden rounded-[var(--home-radius-md,12px)] bg-card md:w-[30rem]"
+      className="relative aspect-[1.585] w-[14rem] shrink-0 overflow-hidden rounded-[var(--home-radius-md,12px)] bg-card md:w-[30rem]"
       style={{ x: shouldReduceMotion ? 0 : translate }}
       aria-hidden={isLoopCopy || undefined}
       data-hero-parallax-card
@@ -281,7 +293,7 @@ export function ProductCard({
           alt={product.title}
           loading="lazy"
           decoding="async"
-          sizes="(min-width: 768px) 480px, 288px"
+          sizes="(min-width: 768px) 480px, 224px"
         />
       </a>
     </motion.article>

@@ -990,22 +990,16 @@ const pickedProvider = ai.providers[ai.pick] || ai.providers[0];
     }
   }
 
-  /* Phone width: titles keep the room; the action shrinks to its Enter key. */
-  @container (max-width: 360px) {
-    .ov-row__source,
-    .ov-input__tool--second,
-    .ov-tabhint,
-    .ov-row:not([data-active="true"]) .ov-visit {
-      display: none;
-    }
-
-    .ov-action {
-      padding-left: 4px;
-      font-size: 0;
-    }
-
-    .ov-input {
-      padding-right: 48px;
+  /*
+   * Phone width: rather than squeezing the titles, the panel keeps a fixed
+   * design width and scales down as a whole (--ov-fit, set by fitPanels).
+   */
+  @container (max-width: 440px) {
+    .ov,
+    .bento-cell--wide .ov {
+      width: 400px;
+      transform: translateX(-50%) scale(var(--ov-fit, 1));
+      transform-origin: top center;
     }
   }
 
@@ -1016,8 +1010,10 @@ const pickedProvider = ai.providers[ai.pick] || ai.providers[0];
   }
 
   @media (max-width: 620px) {
+    /* The scaled panel (and the AI scope menu) needs proportionally less room. */
+    .stage,
     .bento-cell--wide .stage {
-      height: 300px;
+      height: calc(300px * var(--ov-fit, 1));
     }
 
     .bento-cell--wide .ov {
@@ -1040,9 +1036,12 @@ const pickedProvider = ai.providers[ai.pick] || ai.providers[0];
    * Each stage plays its short scripted demo once, the first time it is mostly
    * on screen, and then rests on the finished frame so the copy below can be
    * read without motion pulling the eye back. Hovering a card with a mouse
-   * replays it. The server markup is the finished state, so reduced-motion and
-   * no-JS visitors still see a complete illustration.
+   * replays it; on phones (home-phone) coming back into view or a tap does.
+   * The server markup is the finished state, so reduced-motion and no-JS
+   * visitors still see a complete illustration.
    */
+  import { isPhone } from "../../../scripts/home-phone";
+
   type Stage = HTMLElement;
 
   class Timeline {
@@ -1193,8 +1192,26 @@ const pickedProvider = ai.providers[ai.pick] || ai.providers[0];
     },
   };
 
+  /*
+   * On phones the panel keeps a fixed design width (see "Phone width" in the
+   * styles) and is scaled down as a whole to fit its stage, so titles and tags
+   * keep their proportions instead of being squeezed. --ov-fit carries the scale.
+   */
+  function fitPanels(stages: Stage[]) {
+    const fit = (stage: Stage) => {
+      const panel = stage.querySelector<HTMLElement>(".ov");
+      if (!panel) return;
+      // offsetWidth is the layout width, untouched by the scale itself.
+      const scale = Math.min(1, (stage.clientWidth - 16) / panel.offsetWidth);
+      stage.style.setProperty("--ov-fit", scale.toFixed(4));
+    };
+    const observer = new ResizeObserver((entries) => entries.forEach((entry) => fit(entry.target as Stage)));
+    stages.forEach((stage) => observer.observe(stage));
+  }
+
   function start() {
     const stages = all(document.documentElement, "[data-bento-demo]");
+    fitPanels(stages);
     if (!stages.length || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const playing = new Map<Stage, Timeline>();
@@ -1232,7 +1249,8 @@ const pickedProvider = ai.providers[ai.pick] || ai.providers[0];
         ordered.forEach((entry) => {
           const stage = entry.target as Stage;
           if (entry.isIntersecting) {
-            if (!playing.has(stage) && !finished.has(stage)) run(stage, true);
+            // Phones have no hover: a finished card replays when it comes back into view.
+            if (!playing.has(stage) && (!finished.has(stage) || isPhone())) run(stage, true);
           } else if (playing.has(stage)) {
             playing.get(stage)?.stop();
             playing.delete(stage);
@@ -1245,8 +1263,13 @@ const pickedProvider = ai.providers[ai.pick] || ai.providers[0];
     stages.forEach((stage) => {
       DEMOS[stage.dataset.bentoDemo || ""]?.reset(stage);
       observer.observe(stage);
-      stage.closest(".bento-cell")?.addEventListener("pointerenter", (event) => {
+      const cell = stage.closest(".bento-cell");
+      cell?.addEventListener("pointerenter", (event) => {
         if ((event as PointerEvent).pointerType === "mouse" && finished.has(stage)) run(stage);
+      });
+      // On phones a tap stands in for hover.
+      cell?.addEventListener("click", (event) => {
+        if (finished.has(stage) && isPhone() && !(event.target as Element).closest("a, button")) run(stage);
       });
     });
   }

@@ -385,6 +385,23 @@ const structuredData = [
     <SiteFooter
       homeHref={homeHref}
       tagline={content.footerTagline}
+      storesLabel={content.installLabel}
+      stores={[
+        {
+          label: content.installChromeStoreLabel,
+          href: CHROME_STORE_URL,
+          logoSrc: "/assets/browser-logos/chrome.webp",
+          analyticsEvent: "open_chrome_web_store",
+          analyticsLabel: "home_footer_chrome_install",
+        },
+        {
+          label: content.installEdgeStoreLabel,
+          href: EDGE_STORE_URL,
+          logoSrc: "/assets/browser-logos/edge.webp",
+          analyticsEvent: "open_edge_addons",
+          analyticsLabel: "home_footer_edge_install",
+        },
+      ]}
       socialAria={content.footerSocialAria}
       socials={[
         {
@@ -624,6 +641,8 @@ const structuredData = [
         overscroll-behavior-y: none;
         background: var(--bg);
         scrollbar-gutter: stable;
+        scrollbar-width: thin;
+        scrollbar-color: color-mix(in srgb, var(--text-main) 18%, transparent) transparent;
       }
 
       body {
@@ -1211,7 +1230,8 @@ const structuredData = [
 
       @media (max-width: 760px) {
         .hero-parallax {
-          --hero-parallax-row-loop-offset: -102.5rem;
+          /* One copy of a row: 5 cards of 14rem plus 1.5rem gaps (hero-parallax.tsx). */
+          --hero-parallax-row-loop-offset: -77.5rem;
         }
 
         .top-nav {
@@ -1294,6 +1314,8 @@ const structuredData = [
           height: max(220px, calc(100svh - 500px));
           max-height: calc(100cqw * 7 / 6);
           margin-top: 36px;
+          /* The scene switcher hangs below the card here: 16px gap + 40px bar. */
+          margin-bottom: 56px;
         }
 
         .hero-copy h1 {
@@ -1320,6 +1342,16 @@ const structuredData = [
 
         .hero-title-separator {
           display: none;
+        }
+
+        /* The new tab heading is short enough to hold one line on a phone. */
+        .hero-parallax__title.hero-title-has-break {
+          font-size: min(32px, 8.5vw);
+        }
+
+        .hero-parallax__title.hero-title-has-break .hero-title-line {
+          flex-direction: row;
+          flex-wrap: nowrap;
         }
 
         .hero-copy > p {

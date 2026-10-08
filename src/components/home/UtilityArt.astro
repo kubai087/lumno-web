@@ -6,8 +6,9 @@ import SceneFavicon from "./newtab/SceneFavicon.astro";
  * Hover art for a utilities cell: a small patterned tile in the cell's empty
  * right side, showing the feature in one short scene. Hidden at rest; on
  * hover it fades in and the scene plays once (and replays on the next
- * hover), like the cell icon beside it. Touch screens have no hover, so there
- * it plays once when the cell scrolls into view ([data-played]) and stays.
+ * hover), like the cell icon beside it. Phones have no hover, so there
+ * (UtilitiesSection marks the grid [data-phone]) it plays once when the cell
+ * scrolls into view ([data-played]) and stays; a tap replays it.
  *
  * Every element's resting style is the scene's final frame, so reduced
  * motion simply shows the result, and leaving mid-play never snaps.
@@ -185,7 +186,7 @@ const BARS = [42, 64, 50, 78, 36];
     }
   }
 
-  :global(.utilities__grid > li:is(:hover, [data-played])) > .util-art {
+  :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) > .util-art {
     opacity: 1;
     transform: none;
   }
@@ -709,90 +710,90 @@ const BARS = [42, 64, 50, 78, 36];
     font-size: 12px;
   }
 
-  /* ---------- Motion (on hover, or once in view on touch screens; every resting style above is the last frame) ---------- */
+  /* ---------- Motion (on hover, or once in view on phones; every resting style above is the last frame) ---------- */
 
   @media (prefers-reduced-motion: no-preference) {
-    :global(.utilities__grid > li:is(:hover, [data-played])) .ua-clip__marquee {
+    :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) .ua-clip__marquee {
       animation: ua-marquee 420ms var(--ua-ease) 220ms both;
     }
 
-    :global(.utilities__grid > li:is(:hover, [data-played])) .ua-clip__float {
+    :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) .ua-clip__float {
       animation: ua-float-out 560ms var(--ua-spring) 700ms both;
     }
 
-    :global(.utilities__grid > li:is(:hover, [data-played])) .ua-chart .ua-clip__live {
+    :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) .ua-chart .ua-clip__live {
       animation: ua-live 520ms var(--ua-spring) 1350ms both;
     }
 
-    :global(.utilities__grid > li:is(:hover, [data-played])) .ua-pip__tab--video {
+    :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) .ua-pip__tab--video {
       animation: ua-tab-leave 1ms linear 520ms both;
     }
 
-    :global(.utilities__grid > li:is(:hover, [data-played])) .ua-pip__tab--next {
+    :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) .ua-pip__tab--next {
       animation: ua-tab-enter 1ms linear 520ms both;
     }
 
-    :global(.utilities__grid > li:is(:hover, [data-played])) .ua-pip__page {
+    :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) .ua-pip__page {
       animation: ua-fade-in 260ms ease 560ms both;
     }
 
-    :global(.utilities__grid > li:is(:hover, [data-played])) .ua-pip__video {
+    :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) .ua-pip__video {
       animation: ua-pip-shrink 620ms var(--ua-spring) 620ms both;
     }
 
-    :global(.utilities__grid > li:is(:hover, [data-played])) .ua-pip__played {
+    :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) .ua-pip__played {
       animation: ua-played 2400ms linear 200ms both;
     }
 
-    :global(.utilities__grid > li:is(:hover, [data-played])) .ua-card__watched {
+    :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) .ua-card__watched {
       animation: ua-watched 1500ms var(--ua-ease) 250ms both;
     }
 
-    :global(.utilities__grid > li:is(:hover, [data-played])) .ua-ep__reel {
+    :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) .ua-ep__reel {
       animation: ua-roll 480ms var(--ua-spring) 1150ms both;
     }
 
-    :global(.utilities__grid > li:is(:hover, [data-played])) .ua-radar::after {
+    :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) .ua-radar::after {
       animation: ua-ping 900ms var(--ua-ease) 1050ms 2 both;
     }
 
-    :global(.utilities__grid > li:is(:hover, [data-played])) .ua-sync__from .ua-nt__wall--new {
+    :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) .ua-sync__from .ua-nt__wall--new {
       animation: ua-fade-in 420ms ease 300ms both;
     }
 
-    :global(.utilities__grid > li:is(:hover, [data-played])) .ua-sync__from .ua-nt__added {
+    :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) .ua-sync__from .ua-nt__added {
       animation: ua-pop 420ms var(--ua-spring) 520ms both;
     }
 
-    :global(.utilities__grid > li:is(:hover, [data-played])) .ua-sync__spin {
+    :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) .ua-sync__spin {
       animation: ua-spin 640ms var(--ua-ease) 760ms both;
     }
 
-    :global(.utilities__grid > li:is(:hover, [data-played])) .ua-sync__done {
+    :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) .ua-sync__done {
       animation: ua-pop 360ms var(--ua-spring) 1360ms both;
     }
 
-    :global(.utilities__grid > li:is(:hover, [data-played])) .ua-sync__to .ua-nt__wall--new {
+    :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) .ua-sync__to .ua-nt__wall--new {
       animation: ua-fade-in 420ms ease 1400ms both;
     }
 
-    :global(.utilities__grid > li:is(:hover, [data-played])) .ua-sync__to .ua-nt__added {
+    :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) .ua-sync__to .ua-nt__added {
       animation: ua-pop 420ms var(--ua-spring) 1560ms both;
     }
 
-    :global(.utilities__grid > li:is(:hover, [data-played])) .ua-pin__restart {
+    :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) .ua-pin__restart {
       animation: ua-restart 760ms var(--ua-ease) 160ms both;
     }
 
-    :global(.utilities__grid > li:is(:hover, [data-played])) .ua-pin__lines {
+    :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) .ua-pin__lines {
       animation: ua-fade-in 300ms ease 900ms both;
     }
 
-    :global(.utilities__grid > li:is(:hover, [data-played])) .ua-pin__tab {
+    :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) .ua-pin__tab {
       animation: ua-pop 440ms var(--ua-spring) calc(860ms + var(--i) * 120ms) both;
     }
 
-    :global(.utilities__grid > li:is(:hover, [data-played])) .ua-menu__mark {
+    :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) .ua-menu__mark {
       animation: ua-menu-walk 2000ms var(--ua-ease) 300ms both;
     }
   }

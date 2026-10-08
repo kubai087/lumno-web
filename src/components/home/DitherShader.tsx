@@ -244,6 +244,19 @@ export function DitherShader({
       scheduleRender(RESIZE_RENDER_DELAY_MS);
     });
 
+    // The kept intro buffer only covers the handoff itself. If the intro ends
+    // without a resize, disarm it a couple of frames later so a real resize
+    // afterwards (a rotated phone, a resized window) still repaints.
+    let handoffFrame = 0;
+    const releaseIntroSourceBuffer = () => {
+      handoffFrame = window.requestAnimationFrame(() => {
+        handoffFrame = window.requestAnimationFrame(() => {
+          introSourceDimensionsRef.current = null;
+        });
+      });
+    };
+    document.addEventListener("lumno:home-intro-complete", releaseIntroSourceBuffer);
+
     image.onload = () => scheduleRender(0);
     image.src = src;
     if (image.complete && image.naturalWidth > 0) scheduleRender(0);
@@ -251,6 +264,8 @@ export function DitherShader({
 
     return () => {
       cancelled = true;
+      document.removeEventListener("lumno:home-intro-complete", releaseIntroSourceBuffer);
+      window.cancelAnimationFrame(handoffFrame);
       resizeObserver.disconnect();
       if (resizeTimerRef.current !== null) {
         window.clearTimeout(resizeTimerRef.current);

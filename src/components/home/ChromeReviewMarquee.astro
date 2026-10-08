@@ -435,21 +435,68 @@ const rows = [reviews.slice(0, midpoint), reviews.slice(midpoint)];
     to { transform: translateX(0); }
   }
 
+  /*
+   * Phones: two moving lanes over the dithered painting read as noise at this
+   * width, with every card cut by the edge. Instead the reviews sit in one
+   * row of plain white cards on the page, swiped by hand, the next card
+   * peeking in from the edge. The lanes, tracks and groups step aside
+   * (display: contents) so the cards line up in the row; the marquee's
+   * duplicate groups are dropped.
+   */
   @media (max-width: 760px) {
-    .chrome-review-marquee__lane {
-      -webkit-mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
-      mask-image: linear-gradient(to right, transparent, #000 4%, #000 96%, transparent);
+    .chrome-review-marquee__frame {
+      width: 100%;
+      padding: 0;
+      border-radius: 0;
+      background: none;
+    }
+
+    :global(.chrome-review-marquee__dither) {
+      display: none;
+    }
+
+    .chrome-review-marquee__rows {
+      display: flex;
+      gap: 12px;
+      padding: 4px var(--home-gutter) 24px;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-padding-inline: var(--home-gutter);
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+    }
+
+    .chrome-review-marquee__rows::-webkit-scrollbar {
+      display: none;
+    }
+
+    .chrome-review-marquee__lane,
+    .chrome-review-marquee__track,
+    .chrome-review-marquee__group {
+      display: contents;
+    }
+
+    .chrome-review-marquee__group[aria-hidden="true"] {
+      display: none;
     }
 
     .chrome-review-card {
-      width: min(86vw, 330px);
-      min-height: 150px;
+      flex: none;
+      width: min(80vw, 320px);
+      min-height: 0;
       padding: var(--home-space-5);
       gap: var(--home-space-4);
+      border: 1px solid var(--home-card-border);
+      background: var(--home-card);
+      box-shadow: var(--home-shadow-card);
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      scroll-snap-align: start;
     }
 
     .chrome-review-card__quote {
-      font-size: 16px;
+      font-size: 15px;
+      -webkit-line-clamp: 4;
     }
   }
 

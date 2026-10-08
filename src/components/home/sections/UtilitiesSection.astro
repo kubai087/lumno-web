@@ -47,53 +47,89 @@ const UTILITY_ORDER: Array<{ id: HomeUtilityId; icon: HomeCellIconName }> = [
 
 <script>
   /*
-   * Touch screens have no hover to play a cell's icon and art with, so each
-   * cell plays once, a moment after it is mostly on screen, and then rests on
-   * the finished frame like the other homepage demos. Cells that arrive
-   * together go a beat apart, in reading order.
+   * Phones (home-phone) have no hover to play a cell's icon and art with, so
+   * there the grid is marked [data-phone] and each cell plays once, a moment
+   * after it is mostly on screen, then rests on the finished frame like the
+   * other homepage demos; a tap replays it. Cells that arrive together go a
+   * beat apart, in reading order. Desktop keeps the hover. Resizing the
+   * window across the phone width switches between the two live.
    */
+  import { isPhone, onPhoneChange } from "../../../scripts/home-phone";
+
+  const grid = document.querySelector<HTMLElement>(".utilities__grid");
   const cells = Array.from(document.querySelectorAll<HTMLElement>(".utilities__grid > li"));
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  if (cells.length && !window.matchMedia("(hover: hover)").matches) {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  if (grid && cells.length) {
+    const DELAY = 300;
+    const STAGGER = 500;
+    const timers = new Map<HTMLElement, number>();
+    let nextStart = 0;
+
+    // Dropping the mark for one style pass restarts every animation it drives.
+    const play = (cell: HTMLElement) => {
+      delete cell.dataset.played;
+      void cell.offsetWidth;
+      cell.dataset.played = "";
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        [...entries]
+          .sort((a, b) => cells.indexOf(a.target as HTMLElement) - cells.indexOf(b.target as HTMLElement))
+          .forEach((entry) => {
+            const cell = entry.target as HTMLElement;
+            if (!entry.isIntersecting) {
+              // Scrolled past before it started: wait until it comes back.
+              window.clearTimeout(timers.get(cell));
+              timers.delete(cell);
+              return;
+            }
+            if (timers.has(cell)) return;
+            const now = performance.now();
+            const at = Math.max(now + DELAY, nextStart);
+            nextStart = at + STAGGER;
+            timers.set(
+              cell,
+              window.setTimeout(() => {
+                play(cell);
+                observer.unobserve(cell);
+              }, at - now),
+            );
+          });
+      },
+      { threshold: 0.7 },
+    );
+
+    const setMode = (phone: boolean) => {
+      observer.disconnect();
+      timers.forEach((timer) => window.clearTimeout(timer));
+      timers.clear();
+      if (!phone) {
+        // Back to hover: tiles hide until the pointer comes.
+        delete grid.dataset.phone;
+        cells.forEach((cell) => delete cell.dataset.played);
+        return;
+      }
+      grid.dataset.phone = "";
       // No motion: show every art tile on its finished frame.
-      cells.forEach((cell) => (cell.dataset.played = ""));
-    } else {
-      const DELAY = 300;
-      const STAGGER = 500;
-      const timers = new Map<HTMLElement, number>();
-      let nextStart = 0;
+      if (reduceMotion) cells.forEach((cell) => (cell.dataset.played = ""));
+      else cells.filter((cell) => !("played" in cell.dataset)).forEach((cell) => observer.observe(cell));
+    };
 
-      const observer = new IntersectionObserver(
-        (entries) => {
-          [...entries]
-            .sort((a, b) => cells.indexOf(a.target as HTMLElement) - cells.indexOf(b.target as HTMLElement))
-            .forEach((entry) => {
-              const cell = entry.target as HTMLElement;
-              if (!entry.isIntersecting) {
-                // Scrolled past before it started: wait until it comes back.
-                window.clearTimeout(timers.get(cell));
-                timers.delete(cell);
-                return;
-              }
-              if (timers.has(cell)) return;
-              const now = performance.now();
-              const at = Math.max(now + DELAY, nextStart);
-              nextStart = at + STAGGER;
-              timers.set(
-                cell,
-                window.setTimeout(() => {
-                  cell.dataset.played = "";
-                  observer.unobserve(cell);
-                }, at - now),
-              );
-            });
-        },
-        { threshold: 0.7 },
-      );
+    cells.forEach((cell) => {
+      cell.addEventListener("click", () => {
+        if (!isPhone() || reduceMotion) return;
+        // A tap before its turn takes the place of the first play.
+        window.clearTimeout(timers.get(cell));
+        timers.delete(cell);
+        observer.unobserve(cell);
+        play(cell);
+      });
+    });
 
-      cells.forEach((cell) => observer.observe(cell));
-    }
+    setMode(isPhone());
+    onPhoneChange(setMode);
   }
 </script>
 

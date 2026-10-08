@@ -1233,6 +1233,8 @@
   .lumno-overlay-panel {
     --onboarding-overlay-scale: 0.88;
     --onboarding-overlay-enter-scale: 0.866;
+    /* A phone frame is too narrow for the desktop's off-centre placement. */
+    left: 50%;
     top: 7%;
   }
 
@@ -1256,21 +1258,23 @@
     --site-search-cursor-top: 12.5%;
   }
 
+  /*
+   * Phones: below the card instead of across its foot, the same quiet tab bar
+   * as the AI intent demo's scenario switcher (ai-intent-demo.css). The hero
+   * slot leaves room for it (index.astro).
+   */
   .lumno-settings-tabs.hero-demo-page-switcher {
-    left: max(12px, env(safe-area-inset-left));
-    right: max(12px, env(safe-area-inset-right));
-    bottom: max(12px, env(safe-area-inset-bottom));
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    width: auto;
-    transform: none;
+    top: calc(100% + 16px);
+    bottom: auto;
+    /* Absolutely placed from the centre, it would otherwise shrink to half the card. */
+    width: max-content;
+    background: rgba(var(--home-edge, 32, 38, 46), 0.04);
+    box-shadow: none;
   }
 
   .hero-demo-page-switcher .hero-demo-page-button {
-    width: 100%;
-    min-height: 44px;
-    padding: 0 10px;
-    font-size: 12px;
+    min-width: 76px;
+    padding: 0 16px;
   }
 }
 

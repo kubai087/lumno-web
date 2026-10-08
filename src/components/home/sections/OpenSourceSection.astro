@@ -87,6 +87,28 @@ const browsersWithLogo = content.browserNames.filter((name) => BROWSER_LOGOS[nam
 
 </section>
 
+<script>
+  /*
+   * Phones (home-phone) have no hover to show a logo's name with, so a tap
+   * shows it for a moment instead; tapping another logo moves it there.
+   */
+  import { isPhone } from "../../../scripts/home-phone";
+
+  const logos = Array.from(document.querySelectorAll<HTMLElement>(".os-logos li"));
+  let timer: number | undefined;
+  const hide = () => logos.forEach((logo) => delete logo.dataset.tip);
+
+  logos.forEach((logo) => {
+    logo.addEventListener("click", () => {
+      if (!isPhone()) return;
+      hide();
+      logo.dataset.tip = "";
+      window.clearTimeout(timer);
+      timer = window.setTimeout(hide, 1800);
+    });
+  });
+</script>
+
 <style>
   .open-source__head {
     display: flex;
@@ -229,7 +251,7 @@ const browsersWithLogo = content.browserNames.filter((name) => BROWSER_LOGOS[nam
     object-fit: contain;
   }
 
-  /* Name tag above each logo on hover. */
+  /* Name tag above each logo on hover, or for a moment after a tap on touch screens. */
   .os-logos li::after {
     content: attr(data-name);
     position: absolute;
@@ -259,6 +281,28 @@ const browsersWithLogo = content.browserNames.filter((name) => BROWSER_LOGOS[nam
     .os-logos li:hover::after {
       opacity: 1;
       translate: -50% 0;
+    }
+  }
+
+  .os-logos li[data-tip] {
+    z-index: 1;
+    transform: translateY(-3px);
+  }
+
+  .os-logos li[data-tip]::after {
+    opacity: 1;
+    translate: -50% 0;
+  }
+
+  /* On a phone the first tag hangs right from its logo, so it never runs past the page edge. */
+  @media (max-width: 760px) {
+    .os-logos li:first-child::after {
+      left: 0;
+      translate: 0 4px;
+    }
+
+    .os-logos li:first-child:is(:hover, [data-tip])::after {
+      translate: 0 0;
     }
   }
 

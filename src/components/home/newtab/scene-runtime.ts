@@ -4,6 +4,8 @@
  * visitors still get the whole picture; scripts only add motion on top.
  */
 
+import { isPhone } from "../../../scripts/home-phone";
+
 export const prefersReducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 export class Timeline {
@@ -36,16 +38,31 @@ let nextStart = 0;
  * the finished frame so the copy can be read without motion pulling the eye
  * away (the command bar cards behave the same). Hovering the card replays it;
  * a pass cut short by scrolling away starts over when the card comes back.
+ *
+ * Phones have no hover (see home-phone), so there a finished card replays
+ * when it comes back into view (swiping the carousel back to it, say) or is
+ * tapped, and `loopOnPhone` keeps a scene whose last frame says little on its
+ * own (Zen's lone search box) going: it rests that many ms on the frame, then
+ * replays, for as long as it stays on screen.
+ *
+ * Scenes place their pointer and highlights in pixels, so when the card
+ * changes size (the window is resized) the frame on screen is replayed at
+ * the new size; a card out of view replays when it comes back instead.
  */
 export function playOnView(
   root: HTMLElement,
   scene: Scene,
-  { threshold = 0.5, replayOnHover = true }: { threshold?: number; replayOnHover?: boolean } = {},
+  {
+    threshold = 0.5,
+    replayOnHover = true,
+    loopOnPhone = 0,
+  }: { threshold?: number; replayOnHover?: boolean; loopOnPhone?: number } = {},
 ) {
   // `replay` lets a control (the bookmark layout tabs) start a pass on demand.
   if (prefersReducedMotion()) return { replay() {} };
   let timeline: Timeline | null = null;
   let finished = false;
+  let inView = false;
 
   const run = (delay: number) => {
     timeline?.stop();
@@ -58,6 +75,11 @@ export function playOnView(
       requestAnimationFrame(() => {
         if (timeline !== current) return;
         current.at(scene.play(current), () => {
+          // Still counts as playing while it rests, so scrolling away cancels the next pass.
+          if (loopOnPhone && inView && isPhone()) {
+            current.at(loopOnPhone, () => run(0));
+            return;
+          }
           timeline = null;
           finished = true;
         });
@@ -67,8 +89,9 @@ export function playOnView(
 
   new IntersectionObserver(
     ([entry]) => {
+      inView = entry.isIntersecting;
       if (entry.isIntersecting) {
-        if (timeline || finished) return;
+        if (timeline || (finished && !isPhone())) return;
         const now = performance.now();
         const delay = Math.max(0, nextStart - now);
         nextStart = now + delay + STAGGER;
@@ -81,9 +104,34 @@ export function playOnView(
     { threshold },
   ).observe(root);
 
+  // Replays once the size has settled, not on every step of a window drag.
+  let width = 0;
+  let settle: number | undefined;
+  new ResizeObserver(([entry]) => {
+    const next = Math.round(entry.contentRect.width);
+    const changed = width && next !== width;
+    width = next;
+    if (!changed || (!timeline && !finished)) return;
+    window.clearTimeout(settle);
+    settle = window.setTimeout(() => {
+      if (inView) {
+        run(0);
+      } else {
+        timeline?.stop();
+        timeline = null;
+        finished = false;
+      }
+    }, 200);
+  }).observe(root);
+
   if (replayOnHover) {
-    (root.closest("article") || root).addEventListener("pointerenter", (event) => {
+    const card = root.closest("article") || root;
+    card.addEventListener("pointerenter", (event) => {
       if ((event as PointerEvent).pointerType === "mouse" && finished) run(0);
+    });
+    // On phones a tap stands in for hover; the card's own controls keep their clicks.
+    card.addEventListener("click", (event) => {
+      if (finished && isPhone() && !(event.target as Element).closest("a, button")) run(0);
     });
   }
 

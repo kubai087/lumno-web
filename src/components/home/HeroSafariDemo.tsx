@@ -1122,6 +1122,46 @@ export function HeroSafariDemo({
     showScene(nextSceneIndex);
   };
 
+  useEffect(() => {
+    if (introState !== "complete") {
+      return undefined;
+    }
+
+    const demo = demoRef.current;
+    const visual = visualRef.current;
+    if (!demo || !visual) {
+      return undefined;
+    }
+
+    // The settled frame keeps the geometry the intro measured. When the layout
+    // changes afterwards (a resized window, a rotated phone, devtools' device
+    // toolbar) the screen would keep its old size inside the new frame and
+    // push the panels out of view, so refit the crop to the frame itself.
+    const observer = new ResizeObserver(() => {
+      if (!visual.style.getPropertyValue("--hero-intro-target-width")) {
+        return; // Never measured: the CSS already falls back to the frame.
+      }
+      const { width, height } = demo.getBoundingClientRect();
+      const target = introTargetRectRef.current;
+      if (!width || !height || (target && Math.abs(target.width - width) < 1 && Math.abs(target.height - height) < 1)) {
+        return;
+      }
+      introTargetRectRef.current = { bottom: height, height, left: 0, right: width, top: 0, width };
+      const size = (value: number) => `${value.toFixed(2)}px`;
+      visual.style.setProperty("--hero-intro-target-top", "0px");
+      visual.style.setProperty("--hero-intro-target-left", "0px");
+      visual.style.setProperty("--hero-intro-target-right", "0px");
+      visual.style.setProperty("--hero-intro-target-bottom", "0px");
+      visual.style.setProperty("--hero-intro-target-width", size(width));
+      visual.style.setProperty("--hero-intro-target-height", size(height));
+      visual.style.setProperty("--hero-intro-source-width", size(width));
+      visual.style.setProperty("--hero-intro-source-height", size(height));
+    });
+    observer.observe(demo);
+
+    return () => observer.disconnect();
+  }, [introState]);
+
   useLayoutEffect(() => {
     const previousIntroState = document.body.dataset.homeIntro;
     document.body.dataset.homeIntro = introState;
@@ -1734,16 +1774,17 @@ export function HeroSafariDemo({
             </button>
           ) : null}
         </div>
-        <SettingsTabs
-          ariaLabel={`${copy.scenePickerLabel} · ${ariaLabel}`}
-          className="lumno-settings-kit hero-demo-page-switcher"
-          data-auto-playing={isAutoPlaying ? "true" : "false"}
-          itemClassName="hero-demo-page-button"
-          items={copy.scenes.map((item) => ({ value: item.id, label: item.label }))}
-          onValueChange={(id) => handleSceneSelect(copy.scenes.findIndex((item) => item.id === id))}
-          value={copy.scenes[sceneIndex].id}
-        />
       </div>
+      {/* Outside the clipped visual: on phones it sits below the card (hero-safari-demo.css). */}
+      <SettingsTabs
+        ariaLabel={`${copy.scenePickerLabel} · ${ariaLabel}`}
+        className="lumno-settings-kit hero-demo-page-switcher"
+        data-auto-playing={isAutoPlaying ? "true" : "false"}
+        itemClassName="hero-demo-page-button"
+        items={copy.scenes.map((item) => ({ value: item.id, label: item.label }))}
+        onValueChange={(id) => handleSceneSelect(copy.scenes.findIndex((item) => item.id === id))}
+        value={copy.scenes[sceneIndex].id}
+      />
     </div>
   );
 }

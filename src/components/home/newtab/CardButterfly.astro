@@ -3,8 +3,8 @@
  * The Lumno butterfly (the logo's wing, as on the install buttons), for the
  * tool cards' hover: a quiet accent, not a show. It drifts down a short way
  * onto the top of the browser window, opens its wings once and rests; leaving
- * the card lifts it off and it fades. On touch screens it lands once the card
- * has been in view a moment, and stays. The flight is Web Animations so a
+ * the card lifts it off and it fades. On phones it lands once the card has
+ * been in view a moment, and stays. The flight is Web Animations so a
  * take-off mid-flight starts from wherever it is; wing beats are SMIL morphs
  * between the logo's two shapes.
  */
@@ -83,6 +83,7 @@ const SPLINES = "0.42 0 0.58 1;0.42 0 0.58 1";
 </style>
 
 <script>
+  import { isPhone, onPhoneChange } from "../../../scripts/home-phone";
   import { prefersReducedMotion } from "./scene-runtime";
 
   // Offsets from the perch, in px: a short glide down from above right, and a
@@ -94,10 +95,11 @@ const SPLINES = "0.42 0 0.58 1;0.42 0 0.58 1";
   ];
   const FLY_OUT_TO: Keyframe[] = [{ transform: "translate(-8px, -24px) rotate(-6deg)", opacity: 0 }];
 
-  // Touch screens have no hover: there it lands once, a little after the card
-  // is mostly on screen, and stays perched.
+  // Phones (home-phone) have no hover: there it lands once, a little after the
+  // card is mostly on screen, and stays perched. Resizing the window across
+  // the phone width switches live: to desktop, it lifts off and waits for hover.
   const LAND_DELAY = 1200;
-  const canHover = window.matchMedia("(hover: hover)").matches;
+  const reduceMotion = prefersReducedMotion();
 
   document.querySelectorAll<HTMLElement>("[data-ntf-fly]").forEach((fly) => {
     const card = fly.closest("article");
@@ -110,8 +112,15 @@ const SPLINES = "0.42 0 0.58 1;0.42 0 0.58 1";
     const begin = (list: SVGAnimateElement[]) => list.forEach((beat, index) => beat.beginElementAt(index * 0.04));
     const end = (list: SVGAnimateElement[]) => list.forEach((beat) => beat.endElement());
     let flight: Animation | null = null;
+    let perched = false;
 
+    // No flight with reduced motion: it simply appears on its perch and goes.
     const land = () => {
+      perched = true;
+      if (reduceMotion) {
+        fly.dataset.perched = "";
+        return;
+      }
       flight?.cancel();
       end(slow);
       begin(fast);
@@ -122,36 +131,14 @@ const SPLINES = "0.42 0 0.58 1;0.42 0 0.58 1";
       };
     };
 
-    if (!canHover) {
-      let timer: number | undefined;
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          window.clearTimeout(timer);
-          if (!entry.isIntersecting) return;
-          timer = window.setTimeout(() => {
-            observer.disconnect();
-            if (prefersReducedMotion()) fly.dataset.perched = "";
-            else land();
-          }, LAND_DELAY);
-        },
-        { threshold: 0.6 },
-      );
-      observer.observe(card);
-      return;
-    }
-
-    if (prefersReducedMotion()) {
-      card.addEventListener("pointerenter", () => (fly.dataset.perched = ""));
-      card.addEventListener("pointerleave", () => delete fly.dataset.perched);
-      return;
-    }
-
-    card.addEventListener("pointerenter", (event) => {
-      if (event.pointerType === "mouse") land();
-    });
-
-    card.addEventListener("pointerleave", (event) => {
-      if (event.pointerType !== "mouse" || !flight) return;
+    const takeOff = () => {
+      if (!perched) return;
+      perched = false;
+      if (reduceMotion) {
+        delete fly.dataset.perched;
+        return;
+      }
+      if (!flight) return;
       // Take off from wherever it is, perched or still on its way in.
       const { transform } = getComputedStyle(fly);
       flight.cancel();
@@ -163,6 +150,33 @@ const SPLINES = "0.42 0 0.58 1;0.42 0 0.58 1";
         fill: "forwards",
       });
       flight.onfinish = () => end(fast);
+    };
+
+    let inView = false;
+    let timer: number | undefined;
+    const landSoon = () => {
+      window.clearTimeout(timer);
+      if (!inView || perched || !isPhone()) return;
+      timer = window.setTimeout(() => {
+        if (inView && isPhone()) land();
+      }, LAND_DELAY);
+    };
+
+    new IntersectionObserver(
+      ([entry]) => {
+        inView = entry.isIntersecting;
+        landSoon();
+      },
+      { threshold: 0.6 },
+    ).observe(card);
+    onPhoneChange((phone) => (phone ? landSoon() : takeOff()));
+
+    card.addEventListener("pointerenter", (event) => {
+      if (event.pointerType === "mouse" && !isPhone()) land();
+    });
+
+    card.addEventListener("pointerleave", (event) => {
+      if (event.pointerType === "mouse" && !isPhone()) takeOff();
     });
   });
 </script>

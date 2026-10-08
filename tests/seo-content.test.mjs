@@ -158,7 +158,8 @@ test("release page keeps a descriptive h1 for web visitors", () => {
 
 test("homepage intro never hides content without JavaScript", () => {
   const source = readSource("src/pages/index.astro");
-  assert.match(source, /document\.documentElement\.setAttribute\("data-home-intro-js", ""\)/);
+  // Only script sets the gate (now just for the once-a-day intro); every hiding rule sits behind it.
+  assert.match(source, /document\.documentElement\.setAttribute\(playHomeIntro \? "data-home-intro-js" : "data-home-intro-skip", ""\)/);
   assert.doesNotMatch(source, /^\s*body\[data-home-intro=/m);
 });
 

@@ -1,0 +1,9 @@
+---
+interface Props {
+  text: string;
+}
+
+const lines = Astro.props.text.split("\n");
+---
+
+{lines.map((line) => <span class="home-copy-line">{line}</span>)}

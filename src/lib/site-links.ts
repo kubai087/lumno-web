@@ -1,8 +1,6 @@
 import { getStoreVersions } from "./store-versions";
 
-export { CHROME_STORE_URL } from "./seo";
-
-export const EDGE_STORE_URL = "https://microsoftedge.microsoft.com/addons/detail/pfbklkaefmfamjpibfiapaiihlddhchc";
+export { CHROME_STORE_URL, EDGE_STORE_URL } from "./seo";
 export const GITHUB_URL = "https://github.com/kubai087/lumno-extension";
 export const GITHUB_ISSUE_URL = `${GITHUB_URL}/issues/new/choose`;
 export const GITHUB_PULL_REQUEST_URL = `${GITHUB_URL}/compare`;

@@ -2,9 +2,9 @@
 import HomeNavGhostLinks from "../navigation/HomeNavGhostLinks";
 import InstallMenu from "../navigation/InstallMenu";
 import LanguageMenu from "../onboarding/LanguageMenu";
-import { COMMUNITY_LINKS } from "../../lib/community";
+import { COMMUNITY_LINKS, getCommunityExternalHref } from "../../lib/community";
 import { getHomeContent } from "../../lib/home-content";
-import { buildLocalizedPath, type SupportedLocale } from "../../lib/locales";
+import { buildLocalizedPath, getLocaleLabel, type SupportedLocale } from "../../lib/locales";
 import {
   CHROME_STORE_URL,
   EDGE_STORE_URL,
@@ -82,6 +82,7 @@ const { chrome: chromeStoreVersion, edge: edgeStoreVersion } = await getSiteStor
       repositoryIssueLabel={content.navRepositoryIssue}
       repositoryPullRequestLabel={content.navRepositoryPullRequest}
       communityLabel={content.navCommunity}
+      communityHref={getCommunityExternalHref(locale)}
       contactLabel={content.navContact}
       contactMenuLabel={content.navContactMenuAria}
       contactXLabel={content.navContactX}
@@ -94,7 +95,7 @@ const { chrome: chromeStoreVersion, edge: edgeStoreVersion } = await getSiteStor
       client:load
     />
     <LanguageMenu
-      currentLabel={content.languageLabel}
+      currentLabel={getLocaleLabel(locale)}
       toggleAriaLabel={content.languageSelectAria}
       hrefs={routeLanguageMap}
       iconOnly

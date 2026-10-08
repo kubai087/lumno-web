@@ -1,4 +1,5 @@
-import { COMMUNITY_LINKS, COMMUNITY_LINKS_PAYLOAD_VERSION } from "../lib/community";
+import { COMMUNITY_LINKS, COMMUNITY_LINKS_PAYLOAD_VERSION, getCommunityChannel } from "../lib/community";
+import { SUPPORTED_UI_LANGUAGES } from "../lib/locales";
 
 export function GET() {
   return new Response(
@@ -10,11 +11,9 @@ export function GET() {
         discord: COMMUNITY_LINKS.discordUrl,
         wechatQr: COMMUNITY_LINKS.wechatQrImageUrl,
       },
-      communityByLocale: {
-        "zh-CN": "wechat",
-        "zh-TW": "discord",
-        en: "discord",
-      },
+      communityByLocale: Object.fromEntries(
+        SUPPORTED_UI_LANGUAGES.map((locale) => [locale, getCommunityChannel(locale)]),
+      ),
     }),
     {
       headers: {

@@ -1,0 +1,18 @@
+---
+import { splitTitlePair } from "../../lib/title-pair";
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+const pair = splitTitlePair(title);
+---
+
+{pair ? (
+  <>
+    <span class="home-title-lead">{pair.lead}</span>{" "}<span class="home-title-accent">{pair.accent}</span>
+  </>
+) : (
+  <span>{title}</span>
+)}

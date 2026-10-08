@@ -44,6 +44,8 @@ interface Props {
   repositoryIssueLabel: string;
   repositoryPullRequestLabel: string;
   communityLabel: string;
+  /** Set outside Chinese locales: the community entry links here (Discord) instead of opening the QR dialog. */
+  communityHref?: string;
   contactLabel: string;
   contactMenuLabel: string;
   contactXLabel: string;
@@ -69,6 +71,7 @@ export default function HomeNavGhostLinks({
   repositoryIssueLabel,
   repositoryPullRequestLabel,
   communityLabel,
+  communityHref,
   contactLabel,
   contactMenuLabel,
   contactXLabel,
@@ -88,10 +91,12 @@ export default function HomeNavGhostLinks({
     {
       value: "community",
       label: communityLabel,
-      analyticsEvent: "open_feedback_qrcode",
+      href: communityHref,
+      external: Boolean(communityHref),
+      analyticsEvent: communityHref ? "open_discord" : "open_feedback_qrcode",
       analyticsCategory: "cta",
       analyticsLabel: "home_header_community",
-      communityAction: "community",
+      communityAction: communityHref ? undefined : "community",
       requiresPrimary: true,
     },
     {
@@ -331,7 +336,7 @@ export default function HomeNavGhostLinks({
             );
           }
 
-          if (!link.communityAction) {
+          if (link.value !== "community") {
             return (
               <SettingsButton
                 as="a"
@@ -360,6 +365,24 @@ export default function HomeNavGhostLinks({
               key={link.analyticsLabel}
             >
               <div className="top-nav-community-item">
+                {link.href ? (
+                  <SettingsButton
+                    as="a"
+                    variant="ghost"
+                    className="top-nav-ghost-button"
+                    href={link.href}
+                    aria-label={link.label}
+                    title={link.label}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    tabIndex={showPrimaryNavigation ? undefined : -1}
+                    data-analytics-event={link.analyticsEvent}
+                    data-analytics-category={link.analyticsCategory}
+                    data-analytics-label={link.analyticsLabel}
+                  >
+                    {link.label}
+                  </SettingsButton>
+                ) : (
                 <DialogTrigger asChild>
                   <SettingsButton
                     variant="ghost"
@@ -377,6 +400,7 @@ export default function HomeNavGhostLinks({
                     {link.label}
                   </SettingsButton>
                 </DialogTrigger>
+                )}
               </div>
             </div>
           );

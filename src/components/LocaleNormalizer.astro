@@ -1,0 +1,14 @@
+---
+import { SUPPORTED_UI_LANGUAGES, normalizeLocaleTag } from "../lib/locales";
+
+/*
+ * Puts the site's one locale normalizer on window before any other script runs,
+ * so redirects in <head> and the language runtimes agree on every language tag.
+ * Place it first in <head>.
+ */
+const source = `window.__lumnoNormalizeLocale = function (value, fallback) {
+  return (${normalizeLocaleTag.toString()})(value, ${JSON.stringify(SUPPORTED_UI_LANGUAGES)}, fallback || "en");
+};`;
+---
+
+<script is:inline set:html={source} />

@@ -69,6 +69,36 @@
     );
 }
 
+/* A skipped intro (returning visitor, reload) paints the settled frame from the
+   server HTML instead of waiting for hydration to leave the pending state. */
+html[data-home-intro-skip] .hero-safari-demo[data-home-intro="pending"] .hero-safari-visual {
+  position: absolute;
+  inset: 0;
+  width: auto;
+  height: auto;
+  border-radius: var(--home-radius-xl, 28px);
+  transform: none;
+  visibility: visible;
+  will-change: auto;
+}
+
+html[data-home-intro-skip] .hero-safari-demo[data-home-intro="pending"] .hero-safari-visual::after {
+  opacity: 1;
+}
+
+html[data-home-intro-skip] .hero-safari-demo[data-home-intro="pending"] .hero-safari-mask-content {
+  transform: none;
+  will-change: auto;
+}
+
+html[data-home-intro-skip] .hero-safari-demo[data-home-intro="pending"] .hero-safari-screen {
+  overflow: hidden;
+}
+
+html[data-home-intro-skip] .hero-safari-demo[data-home-intro="pending"] .hero-safari-stage {
+  transform: none !important;
+}
+
 .hero-safari-mask-content {
   position: absolute;
   top: 0;
@@ -218,6 +248,19 @@
   font-size: 12.5px;
 }
 
+/*
+ * Touch screens: the compact 30px tabs get an invisible 44px-tall hit area. The
+ * switcher doesn't clip (overflow: visible), so it reaches past the bar; the
+ * 2px sides stop at the middle of the 4px gap between tabs.
+ */
+@media (pointer: coarse) {
+  .hero-demo-page-switcher .hero-demo-page-button::after {
+    content: "";
+    position: absolute;
+    inset: -7px -2px;
+  }
+}
+
 .hero-demo-page-button:active {
   transform: scale(0.97);
 }
@@ -240,6 +283,13 @@
       }
 
       .lumno-overlay-panel {
+        --x-ov-panel-radius: 26px;
+        --x-ov-panel-border-width: 1px;
+        --x-ov-content-radius: calc(var(--x-ov-panel-radius) - var(--x-ov-panel-border-width));
+        --x-ov-results-inset: 12px;
+        --x-ov-result-radius: calc(var(--x-ov-content-radius) - var(--x-ov-results-inset));
+        --x-ext-search-input-corners:
+          var(--x-ov-content-radius) var(--x-ov-content-radius) 0 0;
         --onboarding-overlay-scale: 0.96;
         --onboarding-overlay-enter-scale: 0.945;
         --x-ov-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.97) 0%, rgba(255, 255, 255, 0.95) 100%);
@@ -276,7 +326,7 @@
         -webkit-backdrop-filter: blur(var(--x-ov-blur, 24px)) saturate(var(--x-ov-saturate, 165%));
         backdrop-filter: blur(var(--x-ov-blur, 24px)) saturate(var(--x-ov-saturate, 165%));
         border: 1px solid var(--x-ov-border, rgba(0, 0, 0, 0.08));
-        border-radius: 28px;
+        border-radius: var(--x-ov-panel-radius, 26px);
         box-shadow: var(--x-ov-shadow, 0 17px 120px 0 rgba(0, 0, 0, 0.05), 0 32px 44.5px 0 rgba(0, 0, 0, 0.10), 0 80px 120px 0 rgba(0, 0, 0, 0.15));
         z-index: 2;
         display: flex;
@@ -295,7 +345,7 @@
 
       .lumno-overlay-panel .x-lumno-search-input__container {
         --x-ext-input-right-icon-inset: 13px;
-        border-radius: 28px;
+        border-radius: var(--x-ov-content-radius, 25px);
         animation: onboarding-overlay-input-shell-expand 980ms cubic-bezier(0.22, 1, 0.36, 1) 1380ms both;
       }
 
@@ -307,7 +357,7 @@
       }
 
       .lumno-overlay-panel[data-presentation="complete"] .x-lumno-search-input__container {
-        border-radius: 28px 28px 0 0;
+        border-radius: var(--x-ov-content-radius, 25px) var(--x-ov-content-radius, 25px) 0 0;
         animation: none;
       }
 
@@ -460,10 +510,10 @@
       @keyframes onboarding-overlay-input-shell-expand {
         0%,
         24% {
-          border-radius: 28px;
+          border-radius: var(--x-ov-content-radius, 25px);
         }
         100% {
-          border-radius: 28px 28px 0 0;
+          border-radius: var(--x-ov-content-radius, 25px) var(--x-ov-content-radius, 25px) 0 0;
         }
       }
 
@@ -552,6 +602,13 @@
       }
 
       .site-search-demo-surface {
+        --x-ov-panel-radius: 26px;
+        --x-ov-panel-border-width: 1px;
+        --x-ov-content-radius: calc(var(--x-ov-panel-radius) - var(--x-ov-panel-border-width));
+        --x-ov-results-inset: 12px;
+        --x-ov-result-radius: calc(var(--x-ov-content-radius) - var(--x-ov-results-inset));
+        --x-ext-search-input-corners:
+          var(--x-ov-content-radius) var(--x-ov-content-radius) 0 0;
         --x-ov-bg: linear-gradient(135deg, rgba(255, 255, 255, 0.97) 0%, rgba(255, 255, 255, 0.95) 100%);
         --x-ov-blur: 14px;
         --x-ov-saturate: 175%;
@@ -602,8 +659,8 @@
         position: relative;
         min-width: 0;
         min-height: 0;
-        border: 1px solid var(--x-ov-border);
-        border-radius: 28px;
+        border: var(--x-ov-panel-border-width, 1px) solid var(--x-ov-border);
+        border-radius: var(--x-ov-panel-radius, 26px);
         display: flex;
         flex-direction: column;
         align-items: stretch;
@@ -619,7 +676,7 @@
 
       .site-search-demo-card .x-lumno-search-input__container {
         --x-ext-input-right-icon-inset: 13px;
-        border-radius: 28px 28px 0 0;
+        border-radius: var(--x-ov-content-radius, 25px) var(--x-ov-content-radius, 25px) 0 0;
         background: transparent;
         box-shadow: none;
         z-index: 3;
@@ -797,9 +854,10 @@
         background: var(--x-ov-tag-bg);
         color: var(--x-ov-tag-text);
         box-sizing: border-box;
-        font-size: 12px;
+        font-size: 11px;
         font-weight: 700;
-        line-height: 14px;
+        line-height: 1;
+        box-shadow: 0 1px 0 rgba(15, 23, 42, 0.08);
       }
 
       .site-search-demo-tab-hint__label {
@@ -838,7 +896,7 @@
         max-height: min(220px, 36vh);
         padding: 0;
         border: 1px solid var(--x-ov-border);
-        border-radius: var(--x-ov-panel-radius, 28px);
+        border-radius: var(--x-ov-panel-radius, 26px);
         background: var(--x-ov-mode-menu-bg, #fff);
         box-shadow: var(--x-ov-shadow);
         box-sizing: border-box;
@@ -1348,6 +1406,27 @@
   .site-search-demo-scope-menu {
     height: min(170px, 30vh);
     max-height: min(170px, 30vh);
+  }
+}
+
+/*
+ * Phones and small tablets: both panels draw at the shared extension scale
+ * (--home-ui-scale, styles/home.css) and widen their design width to fill the
+ * card 16px in from each side (up to --home-ui-panel-max on tablets), so the
+ * input matches the command bar and new tab illustrations.
+ */
+@media (max-width: 760px) {
+  .lumno-overlay-panel {
+    --onboarding-overlay-scale: var(--home-ui-scale);
+    --onboarding-overlay-enter-scale: calc(var(--home-ui-scale) * 0.985);
+    width: calc(min(100% - 32px, var(--home-ui-panel-max)) / var(--home-ui-scale));
+    max-height: calc((100% - 62px) / var(--home-ui-scale));
+  }
+
+  .site-search-demo-stack {
+    width: calc(min(100% - 32px, var(--home-ui-panel-max)) / var(--home-ui-scale));
+    transform: translateX(-50%) scale(var(--home-ui-scale));
+    transform-origin: top center;
   }
 }
 

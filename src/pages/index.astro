@@ -1,4 +1,5 @@
 ---
+import LocaleNormalizer from "../components/LocaleNormalizer.astro";
 import SeoHead from "../components/SeoHead.astro";
 import ChromeReviewMarquee from "../components/home/ChromeReviewMarquee.astro";
 import CommandBarSection from "../components/home/sections/CommandBarSection.astro";
@@ -14,24 +15,37 @@ import { HeroInstallTooltip } from "../components/home/HeroInstallTooltip";
 import { AiIntentDemo } from "../components/home/AiIntentDemo";
 import { HeroSafariDemo } from "../components/home/HeroSafariDemo";
 import { HeroParallax } from "../components/ui/hero-parallax";
+import TitlePair from "../components/home/TitlePair.astro";
+import CopyLines from "../components/home/CopyLines.astro";
 import logoIconSvg from "../assets/onboarding/logo.svg?raw";
 import "@fontsource/eb-garamond/600.css";
-import "@fontsource/eb-garamond/500-italic.css";
 import ebGaramondLatin600 from "@fontsource/eb-garamond/files/eb-garamond-latin-600-normal.woff2?url";
-import ebGaramondLatin500Italic from "@fontsource/eb-garamond/files/eb-garamond-latin-500-italic.woff2?url";
+import "@fontsource/cormorant-garamond/600-italic.css";
+import cormorantGaramondLatin600Italic from "@fontsource/cormorant-garamond/files/cormorant-garamond-latin-600-italic.woff2?url";
 import "../styles/globals.css";
 import "../styles/home.css";
 import "../styles/site.css";
+import "../styles/locale-fonts.css";
+import { localizeShowcaseReviews } from "../lib/chrome-store-review-translations";
 import { getChromeStoreReviews, selectShowcaseReviews } from "../lib/chrome-store-reviews";
-import { COMMUNITY_LINKS } from "../lib/community";
+import { COMMUNITY_LINKS, getCommunityChannel, getCommunityExternalHref } from "../lib/community";
+import discordIcon from "../assets/home-icons/discord-fill.svg?raw";
 import { getHomeContent } from "../lib/home-content";
 import { getLumnoBuiltinSiteSearchProviders } from "../lib/lumno-search-providers";
-import { DEFAULT_LOCALE, buildLocalizedPath, buildRouteLanguageMap, type SupportedLocale } from "../lib/locales";
+import {
+  DEFAULT_LOCALE,
+  buildLocalizedPath,
+  buildRouteLanguageMap,
+  getLocaleScript,
+  getScreenshotLocale,
+  type SupportedLocale,
+} from "../lib/locales";
 import { GITHUB_ISSUE_URL, GITHUB_URL } from "../lib/site-links";
 import {
   CHROME_STORE_URL,
   buildAlternateLinks,
   buildBreadcrumbListSchema,
+  buildFAQPageSchema,
   buildKeywords,
   buildOrganizationSchema,
   buildSoftwareApplicationSchema,
@@ -55,8 +69,11 @@ const seoPath = Astro.props.seoPath || "/";
 const routeLanguageMap = Astro.props.routeLanguageMap || buildRouteLanguageMap("/");
 const uiLocale = forcedLocale || DEFAULT_LOCALE;
 const content = getHomeContent(uiLocale);
-// CJK titles break after the full-width comma on narrow screens.
-const heroTitleCommaIndex = uiLocale.startsWith("zh") ? content.heroTitle.indexOf("，") : -1;
+const localeScript = getLocaleScript(uiLocale);
+// Chinese pages open the WeChat group QR; every other locale links to the Discord server.
+const communityExternalHref = getCommunityExternalHref(uiLocale);
+// CJK titles break after their first comma (，、 or Korean ,) on narrow screens.
+const heroTitleCommaIndex = localeScript === "cjk" ? content.heroTitle.search(/[，、,]/) : -1;
 const heroTitleSeparator = heroTitleCommaIndex >= 0 ? content.heroTitle[heroTitleCommaIndex] : "";
 const heroTitleSegments = heroTitleCommaIndex >= 0
   ? [
@@ -64,44 +81,63 @@ const heroTitleSegments = heroTitleCommaIndex >= 0
       content.heroTitle.slice(heroTitleCommaIndex + 1).trimStart(),
     ]
   : [content.heroTitle];
-const heroDescriptionLines = content.heroDescription.split("\n");
-const featuresHref = buildLocalizedPath(uiLocale, "/features/");
+// Accents over the italic line (ó, à, й) climb into the lead's descenders, so those locales get more leading.
+const heroSerifAccentHasMarks = Boolean(content.heroTitleSerif && /\p{M}/u.test(content.heroTitleSerif.accent.normalize("NFD")));
 const newTabParallaxProducts = Array.from({ length: FEATURE_PARALLAX_COUNT }, (_, index) => ({
   title: content.newTab.screenshotAlt,
-  link: featuresHref,
-  thumbnail: `/assets/feature-newtab/${uiLocale}/parallax-${String(index + 1).padStart(2, "0")}.webp`,
+  thumbnail: `/assets/feature-newtab/${getScreenshotLocale(uiLocale)}/parallax-${String(index + 1).padStart(2, "0")}.webp`,
 }));
-const showcaseReviews = selectShowcaseReviews(chromeStoreReviews.reviews);
+const showcaseReviews = localizeShowcaseReviews(selectShowcaseReviews(chromeStoreReviews.reviews), uiLocale);
 const alternateLinks = buildAlternateLinks(routeLanguageMap, "/");
 const ogLocale = getOpenGraphLocale(uiLocale);
-const pageTitleByLocale = {
+// SEO copy stays separate from the hero copy (AGENTS.md): it targets search intents.
+const pageTitleByLocale: Record<SupportedLocale, string> = {
   "zh-CN": "Lumno｜浏览器命令栏、聚焦搜索与极简新标签页",
-  "zh-TW": "Lumno｜瀏覽器命令欄、聚焦搜尋與極簡新分頁",
+  "zh-TW": "Lumno｜瀏覽器命令列、聚焦搜尋與極簡新分頁",
   en: "Lumno | Focus Search, Browser Command Bar & Minimal New Tab",
+  ja: "Lumno｜ブラウザのコマンドバー・タブ検索・シンプルな新しいタブ",
+  ko: "Lumno | 브라우저 커맨드 바, 탭 검색, 미니멀 새 탭",
+  de: "Lumno | Befehlsleiste & minimalistischer neuer Tab für Chrome",
+  fr: "Lumno | Barre de commande et nouvel onglet minimaliste pour Chrome",
+  es: "Lumno | Barra de comandos y nueva pestaña minimalista para Chrome",
+  "pt-BR": "Lumno | Barra de comandos e nova aba minimalista para o Chrome",
+  ru: "Lumno — командная панель и минималистичная новая вкладка для Chrome",
 };
-const pageDescriptionByLocale = {
+const pageDescriptionByLocale: Record<SupportedLocale, string> = {
   "zh-CN":
-    "Lumno 是一款开源浏览器命令栏与快捷命令浮层，支持搜索标签页、书签、历史记录和站内内容，并提供极简新标签页，适用于 Chrome、Edge、Dia 等 Chromium 浏览器。",
+    "Lumno 是一款开源浏览器命令栏，一个快捷键即可搜索标签页、书签、历史记录和站内内容，并提供极简新标签页，适用于 Chrome、Edge、Dia 等 Chromium 浏览器。",
   "zh-TW":
-    "Lumno 是一款開源瀏覽器命令欄與快捷命令浮層，支援搜尋分頁、書籤、瀏覽紀錄與站內內容，並提供極簡新分頁，適用於 Chrome、Edge、Dia 等 Chromium 瀏覽器。",
+    "Lumno 是開源的瀏覽器命令列，一個快捷鍵就能搜尋分頁、書籤、瀏覽紀錄與站內內容，還有極簡新分頁，適用於 Chrome、Edge、Dia 等 Chromium 瀏覽器。",
   en:
     "Lumno is an open-source browser command bar for tabs, bookmarks, history, and site search, plus a minimalist new tab for Chrome, Edge, Dia, and other Chromium browsers.",
+  ja:
+    "Lumno はオープンソースのブラウザ拡張機能。どのページからでもコマンドバーを開き、タブ・ブックマーク・履歴・サイト内をまとめて検索できます。シンプルな新しいタブ付きで、Chrome、Edge、Dia などに対応。",
+  ko:
+    "Lumno는 오픈 소스 브라우저 커맨드 바입니다. 단축키 하나로 탭, 북마크, 방문 기록, 사이트 내 검색을 한곳에서 하고, 미니멀한 새 탭도 함께 씁니다. Chrome, Edge, Dia 등 Chromium 브라우저 지원.",
+  de:
+    "Lumno ist eine Open-Source-Befehlsleiste für den Browser: Tabs, Lesezeichen, Verlauf und Websites mit einem Kürzel durchsuchen – dazu ein minimalistischer neuer Tab für Chrome, Edge und Dia.",
+  fr:
+    "Lumno est une barre de commande open source pour votre navigateur\u00A0: onglets, favoris, historique et sites en un seul raccourci, avec un nouvel onglet minimaliste pour Chrome, Edge et Dia.",
+  es:
+    "Lumno es una barra de comandos de código abierto para tu navegador: busca pestañas, marcadores, historial y sitios con un solo atajo, y estrena una nueva pestaña minimalista en Chrome, Edge y Dia.",
+  "pt-BR":
+    "Lumno é uma barra de comandos de código aberto para o seu navegador: pesquise abas, favoritos, histórico e sites com um só atalho, além de uma nova aba minimalista para Chrome, Edge e Dia.",
+  ru:
+    "Lumno — командная панель с открытым исходным кодом: ищите по вкладкам, закладкам, истории и сайтам одним сочетанием клавиш. А ещё — минималистичная новая вкладка для Chrome, Edge и Dia.",
 };
 const pageTitle = pageTitleByLocale[uiLocale];
 const pageDescription = pageDescriptionByLocale[uiLocale];
-const pageKeywords = buildKeywords([
-  "浏览器快捷启动器",
-  "Arc 浏览器迁移",
-  "Arc 替代",
-  "command palette",
-  "tab search",
-  "bookmark search",
-  "history search",
-]);
+const pageKeywords = buildKeywords(
+  ["浏览器快捷启动器", "Arc 浏览器迁移", "Arc 替代", "command palette", "tab search", "bookmark search", "history search"],
+  uiLocale,
+);
 const structuredData = [
   buildOrganizationSchema(),
   buildWebSiteSchema(),
-  buildSoftwareApplicationSchema({ description: pageDescription }),
+  buildSoftwareApplicationSchema({
+    description: pageDescription,
+    rating: { value: chromeStoreReviews.averageRating, count: chromeStoreReviews.ratingCount },
+  }),
   buildWebPageSchema({
     name: pageTitle,
     description: pageDescription,
@@ -109,6 +145,11 @@ const structuredData = [
     language: uiLocale,
   }),
   buildBreadcrumbListSchema({ items: [{ name: "Lumno", path: seoPath }] }),
+  // Mirrors the visible FAQ section; inline code marks are dropped from the plain-text answers.
+  buildFAQPageSchema({
+    items: content.faqItems.map((item) => ({ question: item.question, answer: item.answer.replaceAll("`", "") })),
+    language: uiLocale,
+  }),
 ];
 ---
 
@@ -117,6 +158,7 @@ const structuredData = [
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <LocaleNormalizer />
     <SeoHead
       title={pageTitle}
       description={pageDescription}
@@ -133,7 +175,20 @@ const structuredData = [
     <script is:inline>
       // The hero intro hides the page until the demo hydrates. Gate that on JS so crawlers and
       // no-JS visitors always get visible content, and lift it if hydration never finishes.
-      document.documentElement.setAttribute("data-home-intro-js", "");
+      // The intro is a first impression: play it at most once a day, never on a reload, and
+      // render returning visitors straight into the settled page (?intro forces a replay).
+      const HOME_INTRO_PLAYED_KEY = "lumno:home-intro-played-at";
+      const HOME_INTRO_REPLAY_MS = 24 * 60 * 60 * 1000;
+      let playHomeIntro = true;
+      try {
+        const navigation = performance.getEntriesByType("navigation")[0];
+        const playedAt = Number(localStorage.getItem(HOME_INTRO_PLAYED_KEY)) || 0;
+        const forced = new URLSearchParams(location.search).has("intro");
+        playHomeIntro = forced
+          || (!(navigation && navigation.type === "reload") && Date.now() - playedAt > HOME_INTRO_REPLAY_MS);
+        if (playHomeIntro) localStorage.setItem(HOME_INTRO_PLAYED_KEY, String(Date.now()));
+      } catch {}
+      document.documentElement.setAttribute(playHomeIntro ? "data-home-intro-js" : "data-home-intro-skip", "");
       // Shortcut keycaps render both spellings; show Ctrl/Shift instead of ⌘/⇧ off Apple platforms.
       const platformHint = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || "";
       document.documentElement.setAttribute("data-platform", /mac|iphone|ipad|ios/i.test(platformHint) ? "mac" : "other");
@@ -152,21 +207,25 @@ const structuredData = [
     {content.heroTitleSerif && (
       <>
         <link rel="preload" as="font" type="font/woff2" href={ebGaramondLatin600} crossorigin />
-        <link rel="preload" as="font" type="font/woff2" href={ebGaramondLatin500Italic} crossorigin />
+        <link rel="preload" as="font" type="font/woff2" href={cormorantGaramondLatin600Italic} crossorigin />
       </>
     )}
   </head>
-  <body data-home-intro="pending" data-locale={uiLocale}>
+  <body data-home-intro="pending" data-locale={uiLocale} data-script={localeScript}>
     <SiteHeader locale={uiLocale} routeLanguageMap={routeLanguageMap} handoff="#hero-install-primary" />
 
     <main>
       <section class="hero-section" aria-labelledby="hero-title">
         <div class="hero-copy">
+          {content.heroTitleSerif && (
+            <span class="hero-title-app-icon hero-serif-mark" aria-hidden="true" set:html={logoIconSvg}></span>
+          )}
           <h1
             id="hero-title"
             class:list={{
               "hero-title-has-break": heroTitleSegments.length > 1,
               "hero-title-serif": Boolean(content.heroTitleSerif),
+              "hero-title-serif-marked": heroSerifAccentHasMarks,
             }}
             aria-label={content.heroTitle}
           >
@@ -174,7 +233,6 @@ const structuredData = [
               <>
                 <span class="hero-title-line hero-title-serif-lead">
                   <span class="hero-title-segment">{content.heroTitleSerif.lead}</span>
-                  <span class="hero-title-app-icon" aria-hidden="true" set:html={logoIconSvg}></span>
                 </span>
                 <span class="hero-title-line hero-title-serif-accent">
                   <span class="hero-title-segment">{content.heroTitleSerif.accent}</span>
@@ -197,7 +255,7 @@ const structuredData = [
             )}
           </h1>
           <p class="hero-description">
-            {heroDescriptionLines.map((line) => <span class="hero-description-line">{line}</span>)}
+            <CopyLines text={content.heroDescription} />
           </p>
           <div class="hero-actions">
             <HeroInstallTooltip
@@ -215,6 +273,7 @@ const structuredData = [
               qrImageAlt={content.qrcodeImageAlt}
               closeLabel={content.qrcodeCloseAria}
               triggerVariant="hero"
+              externalHref={communityExternalHref}
               client:load
             />
           </div>
@@ -233,9 +292,8 @@ const structuredData = [
 
       <section id="ai-intent" class="home-section ai-intent-section" aria-labelledby="ai-intent-title">
         <header class="home-section__head home-section__head--start ai-intent-copy">
-          <p class="home-eyebrow" data-reveal="text"><mark class="home-eyebrow__selection">{content.aiIntent.eyebrow}</mark></p>
-          <h2 id="ai-intent-title" class="home-h2" data-reveal="text"><span>{content.aiIntent.title}</span></h2>
-          <p class="home-lead home-lead--lines" data-reveal="text">{content.aiIntent.description}</p>
+          <h2 id="ai-intent-title" class="home-h2" data-reveal="text"><TitlePair title={content.aiIntent.title} /></h2>
+          <p class="home-lead" data-reveal="text"><CopyLines text={content.aiIntent.description} /></p>
         </header>
         <div class="ai-intent-demo-slot" data-reveal>
           <AiIntentDemo locale={uiLocale} client:visible />
@@ -264,6 +322,7 @@ const structuredData = [
         storeLinkLabel={content.reviews.storeLinkLabel}
         ariaLabel={content.reviews.ariaLabel}
         avatarLabel={content.reviews.avatarLabel}
+        quotes={content.reviews.quotes}
         reviews={showcaseReviews}
       />
 
@@ -273,10 +332,26 @@ const structuredData = [
         title={content.faqTitle}
         askLabel={content.faqAskLabel}
         askHref={GITHUB_ISSUE_URL}
+        author={{
+          label: content.faqAuthorLabel,
+          ariaLabel: content.faqAuthorAria,
+          href: COMMUNITY_LINKS.discordUrl,
+          iconSvg: discordIcon,
+          qr: getCommunityChannel(uiLocale) === "wechat"
+            ? {
+                title: content.qrcodeTitle,
+                imageSrc: COMMUNITY_LINKS.wechatQrImagePath,
+                imageAlt: content.qrcodeImageAlt,
+                closeLabel: content.qrcodeCloseAria,
+              }
+            : undefined,
+        }}
         items={content.faqItems}
       />
 
-      <FinalCta title={content.heroTitle} description={content.finalDescription}>
+      <FinalCta
+        title={content.heroTitleSerif ? `${content.heroTitleSerif.lead}\n${content.heroTitleSerif.accent}` : content.heroTitle}
+        description={content.finalDescription}>
         <HeroInstallTooltip
           id="final-install-primary"
           analyticsLabel="home_final_install"
@@ -295,6 +370,7 @@ const structuredData = [
           qrImageAlt={content.qrcodeImageAlt}
           closeLabel={content.qrcodeCloseAria}
           triggerVariant="hero"
+          externalHref={communityExternalHref}
           client:visible
         />
       </FinalCta>
@@ -312,17 +388,14 @@ const structuredData = [
       const ROUTE_LANGUAGE_MAP = routeLanguageMap;
       const LANGUAGE_STORAGE_KEY = "_x_extension_language_2024_unique_";
 
-      function normalizeLanguageMode(mode) {
-        const normalized = String(mode || "").trim().toLowerCase().replaceAll("_", "-");
-        if (normalized === "zh-tw" || normalized === "zh-hk" || normalized === "zh-hant") return "zh-TW";
-        if (normalized === "zh" || normalized === "zh-cn" || normalized === "zh-sg" || normalized === "zh-hans") return "zh-CN";
-        if (normalized === "en" || normalized.startsWith("en-")) return "en";
-        return "zh-CN";
+      function getSystemLocale() {
+        return window.__lumnoNormalizeLocale(navigator.languages?.[0] || navigator.language, "en");
       }
 
-      function getSystemLocale() {
-        const browserLanguage = navigator.languages?.[0] || navigator.language || "zh-CN";
-        return normalizeLanguageMode(browserLanguage);
+      function normalizeLanguageMode(mode) {
+        const raw = String(mode || "").trim();
+        if (!raw || raw.toLowerCase() === "system") return getSystemLocale();
+        return window.__lumnoNormalizeLocale(raw, "en");
       }
 
       function applyResolvedLanguage(normalizedMode) {
@@ -451,38 +524,68 @@ const structuredData = [
         transform-origin: 24% 77%;
       }
 
-      /* English editorial slogan (Figma P1): EB Garamond roman lead + italic gradient accent. */
+      /* English editorial slogan (Figma P1): EB Garamond roman lead + Cormorant Garamond italic gradient accent. */
       .hero-copy h1.hero-title-serif {
         max-width: none;
         font-family: "EB Garamond", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
         font-size: clamp(48px, 5vw, 72px);
         line-height: 1.02;
-        letter-spacing: -0.012em;
+        letter-spacing: -0.05em;
       }
 
       .hero-title-serif .hero-title-line {
-        padding-block: 0.04em;
+        padding-block: 0;
       }
 
       .hero-title-serif-lead {
         font-weight: 600;
       }
 
+      /*
+       * The -5% tracking pulls the clipped gradient box in past the last glyph
+       * (the comma); pad the box out and cancel it with negative margins.
+       */
+      .hero-title-serif .hero-title-segment {
+        padding: 0.1em 0.12em 0.2em 0.04em;
+        margin-inline: -0.04em -0.12em;
+      }
+
+      /*
+       * Cormorant's small x-height needs a larger size to balance the roman lead.
+       * The slight pull-up still leaves the italic ascenders ("d") clear of the
+       * lead's comma tail and descenders ("y", "g").
+       */
       .hero-title-serif-accent {
+        margin-top: -0.02em;
+        font-family: "Cormorant Garamond", "EB Garamond", "Iowan Old Style", Georgia, serif;
+        font-size: 1.24em;
         font-style: italic;
-        font-weight: 500;
+        font-weight: 600;
+        line-height: 1;
+        letter-spacing: -0.02em;
+      }
+
+      .hero-title-serif-marked .hero-title-serif-accent {
+        margin-top: 0.1em;
       }
 
       .hero-title-serif-accent .hero-title-segment {
-        /* Italic overhang: keep the final glyph inside the clipped gradient box. */
-        padding-inline: 0.04em 0.12em;
+        /*
+         * Italic overhang and tall ascenders: grow the clipped gradient box so
+         * the leaning "d" isn't cut; the negative margin keeps the line centred.
+         */
+        padding: 0.2em 0.2em 0.1em 0.04em;
+        margin-right: -0.08em;
         background-image: linear-gradient(180deg, #4f4839 0%, #8a7f68 60%, #b2a68d 100%);
       }
 
-      .hero-title-serif .hero-title-app-icon {
-        --hero-icon-box: clamp(40px, 3.9vw, 56px);
-        margin-left: clamp(10px, 1.1vw, 16px);
-        vertical-align: -0.04em;
+      /* English title: the app icon sits above the headline instead of trailing it. */
+      .hero-serif-mark {
+        --hero-icon-box: clamp(40px, 3.4vw, 48px);
+        display: block;
+        margin: 0 auto clamp(14px, 1.4vw, 20px);
+        /* Centred above a centred headline, a tilt reads as misalignment. */
+        transform: none;
       }
 
       .hero-title-app-icon svg {
@@ -501,16 +604,7 @@ const structuredData = [
         color: var(--text-sub);
         font-size: clamp(16px, 1.35vw, 18px);
         line-height: 1.72;
-      }
-
-      .hero-description-line {
-        display: block;
-      }
-
-      /* Break Chinese copy at punctuation rather than inside a word. */
-      body[data-locale^="zh"] .hero-description-line {
-        word-break: keep-all;
-        overflow-wrap: anywhere;
+        text-wrap: balance;
       }
 
       .hero-actions {
@@ -598,6 +692,11 @@ const structuredData = [
         font-weight: 650;
         line-height: 1.4;
         white-space: nowrap;
+      }
+
+      .lumno-settings-button.hero-actions-button .lumno-settings-button-icon {
+        width: 18px;
+        height: 18px;
       }
 
       .hero-parallax {
@@ -719,7 +818,6 @@ const structuredData = [
 
         .hero-copy h1.hero-title-serif {
           font-size: clamp(42px, 12.4vw, 54px);
-          letter-spacing: -0.01em;
         }
 
         .hero-copy {
@@ -759,11 +857,7 @@ const structuredData = [
           text-wrap: balance;
         }
 
-        .hero-description-line {
-          text-wrap: balance;
-        }
-
-        .hero-description-line + .hero-description-line {
+        .hero-description .home-copy-line + .home-copy-line {
           margin-top: 8px;
         }
 

@@ -1,20 +1,22 @@
 import { SettingsSelect } from "../extension-settings/SettingsKit";
+import { LOCALE_CONFIG, type SupportedLocale } from "../../lib/locales";
 
 interface Props {
   currentLabel?: string;
   toggleAriaLabel?: string;
-  locales?: Array<"zh-CN" | "zh-TW" | "en">;
+  locales?: SupportedLocale[];
   iconOnly?: boolean;
   placement?: "above" | "below";
   // Localized URLs per locale; rendering options as links keeps every language version crawlable.
   hrefs?: Record<string, string>;
 }
 
-const LANGUAGE_OPTIONS = [
-  { value: "zh-CN", label: "简体中文", i18n: "language_zh_cn" },
-  { value: "zh-TW", label: "繁體中文", i18n: "language_zh_tw" },
-  { value: "en", label: "English", i18n: "language_en" },
-] as const;
+// Each language is listed under its own name; `i18n` doubles as the hook the runtime uses to find options.
+const LANGUAGE_OPTIONS = LOCALE_CONFIG.map((item) => ({
+  value: item.code,
+  label: item.label,
+  i18n: `language_${item.code.toLowerCase().replace("-", "_")}`,
+}));
 
 export default function LanguageMenu({
   currentLabel = "简体中文",

@@ -3,7 +3,8 @@ import Page from "../../account/index.astro";
 import { buildLocalizedPath, getNonDefaultLocales, resolveLocaleFromSegment } from "../../../lib/locales";
 
 export function getStaticPaths() {
-  return getNonDefaultLocales().map((locale) => ({
+  // The account portal (noindex) is only written in the original three languages.
+  return getNonDefaultLocales().filter((locale) => locale === "zh-TW" || locale === "en").map((locale) => ({
     params: {
       locale: buildLocalizedPath(locale, "/").replaceAll("/", "") || locale.toLowerCase(),
     },
@@ -14,4 +15,4 @@ const locale = resolveLocaleFromSegment(Astro.params.locale || "");
 if (!locale) throw new Error(`Unsupported locale: ${Astro.params.locale}`);
 ---
 
-<Page forcedLocale={locale} />
+<Page forcedLocale={locale as "zh-TW" | "en"} />

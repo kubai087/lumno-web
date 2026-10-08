@@ -11,7 +11,8 @@ const contentSource = fs.readFileSync(
 );
 
 test("simplified Chinese hero title wraps only at its comma", () => {
-  assert.match(source, /uiLocale\.startsWith\("zh"\) \? content\.heroTitle\.indexOf\("，"\) : -1/);
+  // CJK titles (zh, ja, ko) break after their first comma: ，、 or Korean ",".
+  assert.match(source, /localeScript === "cjk" \? content\.heroTitle\.search\(\/\[，、,\]\/\) : -1/);
   assert.match(source, /const heroTitleSeparator = heroTitleCommaIndex >= 0/);
   assert.match(source, /content\.heroTitle\.slice\(0, heroTitleCommaIndex\)/);
   assert.match(source, /"hero-title-has-break": heroTitleSegments\.length > 1,/);
@@ -43,17 +44,27 @@ test("mobile hero copy preserves curved-screen safe spacing", () => {
 test("hero description is two short lines that break at punctuation in Chinese", () => {
   const descriptionsWithLineBreak = contentSource.match(/heroDescription:\s*\n\s*"[^"\n]*\\n[^"\n]*"/g);
 
-  assert.equal(descriptionsWithLineBreak?.length, 3);
+  // One per locale.
+  assert.equal(descriptionsWithLineBreak?.length, 10);
   assert.match(contentSource, /"Lumno 是开源的浏览器命令栏与新标签页。\\n一个快捷键，搜遍标签页、书签、历史记录和常用网站。"/);
-  assert.match(source, /heroDescriptionLines\.map\(\(line\) => <span class="hero-description-line">\{line\}<\/span>\)/);
-  assert.match(source, /body\[data-locale\^="zh"\] \.hero-description-line\s*\{[\s\S]*?word-break:\s*keep-all;/);
-  assert.match(source, /\.hero-description-line \+ \.hero-description-line\s*\{[\s\S]*?margin-top:\s*8px;/);
+  assert.match(source, /<CopyLines text=\{content\.heroDescription\} \/>/);
+  assert.match(source, /\.hero-copy > p\s*\{[\s\S]*?text-wrap:\s*balance;/);
+  assert.match(source, /\.hero-description \.home-copy-line \+ \.home-copy-line\s*\{[\s\S]*?margin-top:\s*8px;/);
 });
 
 test("English hero uses the editorial serif slogan", () => {
   assert.match(contentSource, /heroTitle: "Your browser, at command\.",/);
   assert.match(contentSource, /heroTitleSerif: \{ lead: "Your browser,", accent: "at command\." \}/);
   assert.match(source, /import "@fontsource\/eb-garamond\/600\.css";/);
-  assert.match(source, /import "@fontsource\/eb-garamond\/500-italic\.css";/);
+  assert.match(source, /import "@fontsource\/cormorant-garamond\/600-italic\.css";/);
   assert.match(source, /\.hero-title-serif-accent\s*\{[\s\S]*?font-style:\s*italic;/);
+});
+
+test("serif hero gives accented italic lines room to clear the lead's descenders", () => {
+  // es/fr/pt-BR/ru accents (ó, à, й) would otherwise collide with g/p/y above.
+  // English: the lead's comma tail would otherwise touch the italic "d" below.
+  assert.match(source, /\.hero-title-serif-accent\s*\{[\s\S]*?margin-top:\s*-0\.02em;/);
+  assert.match(source, /\/\\p\{M\}\/u\.test\(content\.heroTitleSerif\.accent\.normalize\("NFD"\)\)/);
+  assert.match(source, /"hero-title-serif-marked": heroSerifAccentHasMarks,/);
+  assert.match(source, /\.hero-title-serif-marked \.hero-title-serif-accent\s*\{[\s\S]*?margin-top:\s*0\.1em;/);
 });

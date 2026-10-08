@@ -10,3 +10,18 @@ export const COMMUNITY_LINKS = {
 } as const;
 
 export const COMMUNITY_LINKS_PAYLOAD_VERSION = 1;
+
+export type CommunityChannel = "wechat" | "discord";
+
+/**
+ * One rule for every feedback entry (hero, top bar, FAQ, footer, the extension's
+ * community-links.json): Chinese readers join the WeChat group, everyone else Discord.
+ */
+export function getCommunityChannel(locale: string): CommunityChannel {
+  return locale.startsWith("zh") ? "wechat" : "discord";
+}
+
+/** The Discord invite for non-Chinese locales; undefined where the WeChat QR dialog opens instead. */
+export function getCommunityExternalHref(locale: string): string | undefined {
+  return getCommunityChannel(locale) === "discord" ? COMMUNITY_LINKS.discordUrl : undefined;
+}

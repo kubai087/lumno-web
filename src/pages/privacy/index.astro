@@ -86,7 +86,7 @@ const policyHtml = marked
   routeLanguageMap={routeLanguageMap}
   title={content.pageTitle}
   description={content.pageDescription}
-  keywords={buildKeywords(content.pageKeywords)}
+  keywords={buildKeywords(content.pageKeywords, uiLocale)}
   type="article"
   structuredData={structuredData}
   analyticsScope="privacy"
@@ -106,6 +106,12 @@ const policyHtml = marked
           {appliesTo}
         </li>
       </ul>
+      {content.translationNote && (
+        <p class="doc__note">
+          {content.translationNote.text}{" "}
+          <a href={buildLocalizedPath("zh-CN", "/privacy/")} hreflang="zh-CN">{content.translationNote.linkLabel}</a>
+        </p>
+      )}
     </header>
 
     <nav class="doc__toc" aria-label={content.tocLabel}>
@@ -166,16 +172,25 @@ const policyHtml = marked
     -webkit-text-fill-color: transparent;
   }
 
-  [data-locale^="zh"] .doc__head h1 {
+  /* CJK titles break between words (Korean spaces, the Lumno/title gap), never inside one. */
+  [data-script="cjk"] .doc__head h1 {
     letter-spacing: -0.01em;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
   }
 
-  [data-locale="en"] .doc__head h1 {
+  @supports (word-break: auto-phrase) {
+    :lang(ja) .doc__head h1 {
+      word-break: auto-phrase;
+    }
+  }
+
+  [data-script="alphabetic"] .doc__head h1 {
     font-family: "EB Garamond", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
     font-size: clamp(38px, 4vw, 48px);
     font-weight: 600;
     line-height: 1.08;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.05em;
   }
 
   .doc__meta {
@@ -201,6 +216,20 @@ const policyHtml = marked
     color: var(--home-ink-soft);
     font-size: 13px;
     font-weight: 550;
+  }
+
+  .doc__note {
+    margin: var(--home-space-4) 0 0;
+    color: var(--text-sub);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+
+  .doc__note a {
+    color: var(--home-ink);
+    text-decoration: underline;
+    text-decoration-color: rgba(var(--home-edge), 0.28);
+    text-underline-offset: 3px;
   }
 
   .doc__meta i {
@@ -277,7 +306,7 @@ const policyHtml = marked
     line-height: 1.8;
   }
 
-  [data-locale^="zh"] .doc__body {
+  [data-script="cjk"] .doc__body {
     letter-spacing: 0.01em;
     line-break: strict;
   }
@@ -302,14 +331,14 @@ const policyHtml = marked
     font-weight: 600;
   }
 
-  [data-locale="en"] .doc__body h2 {
+  [data-script="alphabetic"] .doc__body h2 {
     font-family: "EB Garamond", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
     font-size: 27px;
     font-weight: 600;
     letter-spacing: 0;
   }
 
-  [data-locale="en"] .doc__body h2 .doc__num {
+  [data-script="alphabetic"] .doc__body h2 .doc__num {
     font-family: "Open Sans", sans-serif;
   }
 

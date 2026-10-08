@@ -1,6 +1,7 @@
 ---
 import type { HOME_CONTENT, HomeTrustId } from "../../../lib/home-content";
 import { SettingsButton } from "../../extension-settings/SettingsKit";
+import TitlePair from "../TitlePair.astro";
 import { PrivacyListArt, SourceTerminalArt, SyncFileArt } from "../OpenSourceArt";
 
 type Content = (typeof HOME_CONTENT)["en"]["openSource"];
@@ -29,7 +30,7 @@ const browsersWithLogo = content.browserNames.filter((name) => BROWSER_LOGOS[nam
 <section id="open-source" class="home-section open-source" aria-labelledby="open-source-title">
   <header class="open-source__head">
     <div class="open-source__intro">
-      <h2 id="open-source-title" class="home-h2" data-reveal="text"><span>{content.title}</span></h2>
+      <h2 id="open-source-title" class="home-h2" data-reveal="text"><TitlePair title={content.title} /></h2>
       <!-- Under the heading: which browsers it runs in, logos then caption. -->
       <div class="open-source__browsers" data-reveal="text">
         <p>{content.browsersLabel}</p>
@@ -182,8 +183,8 @@ const browsersWithLogo = content.browserNames.filter((name) => BROWSER_LOGOS[nam
   }
 
   /* CJK copy breaks at punctuation, never inside a word (same rule as home.css). */
-  :global([data-locale^="zh"]) .os-card h3 {
-    word-break: keep-all;
+  :global([data-script="cjk"]) .os-card h3 {
+    word-break: var(--cjk-word-break);
     overflow-wrap: anywhere;
     letter-spacing: 0;
   }

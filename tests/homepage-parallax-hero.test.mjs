@@ -14,7 +14,7 @@ test("homepage second section uses the Aceternity Hero Parallax composition", ()
 
   // Fifteen real new tab renders per locale, one per card.
   assert.match(pageSource, /const FEATURE_PARALLAX_COUNT = 15;/);
-  assert.match(pageSource, /\/assets\/feature-newtab\/\$\{uiLocale\}\/parallax-\$\{String\(index \+ 1\)\.padStart\(2, "0"\)\}\.webp/);
+  assert.match(pageSource, /\/assets\/feature-newtab\/\$\{getScreenshotLocale\(uiLocale\)\}\/parallax-\$\{String\(index \+ 1\)\.padStart\(2, "0"\)\}\.webp/);
   for (const locale of ["zh-CN", "zh-TW", "en"]) {
     for (let index = 1; index <= 15; index += 1) {
       const file = `public/assets/feature-newtab/${locale}/parallax-${String(index).padStart(2, "0")}.webp`;
@@ -32,7 +32,7 @@ test("homepage second section uses the Aceternity Hero Parallax composition", ()
   assert.match(componentSource, /Array\.from\(\{ length: LOOP_COPY_COUNT \}/);
   assert.match(componentSource, /hero-parallax__row--reverse/);
   assert.match(componentSource, /aria-hidden=\{isLoopCopy \|\| undefined\}/);
-  assert.match(componentSource, /tabIndex=\{isLoopCopy \? -1 : undefined\}/);
+  assert.doesNotMatch(componentSource, /<a\b/);
   assert.match(componentSource, /useScroll\(\{[\s\S]*?target: containerRef/);
   assert.match(componentSource, /offset: \["start 55%", "end 18%"\]/);
   assert.match(componentSource, /useTransform\(scrollYProgress, \[0, 0\.72\], \[0, 820\]\)/);
@@ -86,7 +86,7 @@ test("homepage second section uses the Aceternity Hero Parallax composition", ()
   assert.match(pageSource, /\.hero-parallax__row--reverse\s*\{[\s\S]*?margin-left: var\(--hero-parallax-row-loop-offset\)/);
   assert.match(
     pageSource,
-    /@media \(max-width: 760px\)[\s\S]*?--hero-parallax-row-loop-offset: -102\.5rem/,
+    /@media \(max-width: 760px\)[\s\S]*?--hero-parallax-row-loop-offset: -77\.5rem/,
   );
   assert.match(copySource, /title: "每次打开，都是一幅画"/);
   assert.match(pageSource, /eyebrow=\{content\.newTab\.eyebrow\}/);

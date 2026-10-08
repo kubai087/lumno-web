@@ -115,6 +115,18 @@
   --home-shadow-chip: 0 1px 2px rgba(var(--home-edge), 0.05);
 
   /*
+   * Extension UI scale. Illustrations draw the extension at its real sizes
+   * (56px search input, 28px panel radius) and scale the drawing, never the
+   * numbers. Up to 760px every one of them (hero, command bar cards, new tab
+   * scenes) uses this one factor and widens its design width to fill the
+   * card, so the search inputs all read at the same size. On tablets the
+   * card outgrows that, so panels stop at --home-ui-panel-max (as drawn,
+   * after the scale) and centre instead of stretching into long thin bars.
+   */
+  --home-ui-scale: 1;
+  --home-ui-panel-max: 440px;
+
+  /*
    * Type ladder. Three heading levels, one body size:
    *   section  eyebrow + .home-h2 + .home-lead (a page-level claim)
    *   part     .home-part-head: claim in ink, the explanation in grey at the
@@ -138,7 +150,6 @@
     0 1px 2px rgba(var(--home-edge), 0.05),
     0 4px 12px -4px rgba(var(--home-edge), 0.06),
     0 24px 48px -22px rgba(var(--home-edge), 0.22);
-  --home-select: #eaf2fe;
   --home-select-ink: #1f5fbf;
   --home-heading-gradient: linear-gradient(180deg, #2f2a22 0%, #5a5247 100%);
 }
@@ -171,10 +182,7 @@
   line-height: 1.4;
 }
 
-/*
- * Feature eyebrows show how the feature is triggered: keycaps for shortcuts,
- * a text-selection highlight for selection AI.
- */
+/* Feature eyebrows show how the feature is triggered: keycaps for shortcuts. */
 .home-eyebrow__keys {
   display: inline-flex;
   gap: 3px;
@@ -196,14 +204,6 @@ html[data-platform="other"] [data-key-mac] {
   display: none;
 }
 
-.home-eyebrow__selection {
-  margin-inline: -3px;
-  padding: 1px 3px;
-  border-radius: 3px;
-  background: var(--home-select);
-  color: var(--home-select-ink);
-}
-
 .home-h2 {
   margin: 0;
   color: var(--home-ink);
@@ -215,33 +215,72 @@ html[data-platform="other"] [data-key-mac] {
 }
 
 /*
+ * How CJK copy may break. Chinese clauses end in punctuation and Korean uses spaces, so
+ * keep-all keeps words whole. Japanese runs kana for a whole clause without a break, so
+ * keep-all makes the clause unbreakable and overflow-wrap then splits it at any character,
+ * even before 。. Japanese breaks normally instead (kinsoku keeps 。、」 off a line start),
+ * or between phrases (文節) where supported.
+ */
+[data-script="cjk"] {
+  --cjk-word-break: keep-all;
+}
+
+[data-script="cjk"]:lang(ja) {
+  --cjk-word-break: normal;
+}
+
+@supports (word-break: auto-phrase) {
+  [data-script="cjk"]:lang(ja) {
+    --cjk-word-break: auto-phrase;
+  }
+}
+
+/*
  * CJK display copy breaks between phrases (at punctuation and spaces), never inside a word,
  * so copy should be written in short clauses. Negative tracking that suits Latin glyphs
  * crowds Han characters.
  */
-[data-locale^="zh"] .home-h2 {
-  word-break: keep-all;
+[data-script="cjk"] .home-h2 {
+  word-break: var(--cjk-word-break);
   overflow-wrap: anywhere;
   line-height: 1.26;
   letter-spacing: -0.01em;
 }
 
-/* A "\n" in lead copy marks a sentence that should start on its own line. */
-.home-lead--lines,
-.hero-parallax__description {
-  white-space: pre-line;
+/*
+ * A "\n" in lead copy marks a sentence that should start on its own line. Each sentence
+ * renders as its own block so text-wrap (balance/pretty, inherited from the paragraph)
+ * evens out that sentence alone; a forced break inside one block defeats balancing in
+ * some browsers and strands the last word on a line by itself.
+ */
+.home-copy-line {
+  display: block;
 }
 
-[data-locale^="zh"] .home-lead,
-[data-locale^="zh"] .hero-parallax__description,
-[data-locale^="zh"] .home-cell__title,
-[data-locale^="zh"] .home-cell__text,
-[data-locale^="zh"] .command-bar .bento h3,
-[data-locale^="zh"] .command-bar .bento p {
-  word-break: keep-all;
+/* Break Chinese copy at punctuation rather than inside a word. */
+[data-script="cjk"] .home-copy-line {
+  word-break: var(--cjk-word-break);
+  overflow-wrap: anywhere;
+}
+
+[data-script="cjk"] .home-lead,
+[data-script="cjk"] .hero-parallax__description,
+[data-script="cjk"] .home-cell__title,
+[data-script="cjk"] .home-cell__text,
+[data-script="cjk"] .command-bar .bento h3,
+[data-script="cjk"] .command-bar .bento p {
+  word-break: var(--cjk-word-break);
   overflow-wrap: anywhere;
   line-break: strict;
   letter-spacing: 0.01em;
+}
+
+@supports (word-break: auto-phrase) {
+  :lang(ja) .hero-title-segment,
+  :lang(ja) .hero-description-line,
+  :lang(ja) .home-lead {
+    word-break: auto-phrase;
+  }
 }
 
 .home-h2 > span {
@@ -287,21 +326,57 @@ html[data-platform="other"] [data-key-mac] {
   line-height: 1;
 }
 
-/* English uses the editorial serif from the hero for section titles. */
-[data-locale="en"] .home-h2 {
+/*
+ * Title pairs (TitlePair.astro): a "\n" in alphabetic copy splits a section
+ * title into a roman lead line and an italic Cormorant accent line, like the
+ * hero slogan. Smaller titles (cards) keep the pair inline in the UI face.
+ */
+.home-h2 > .home-title-lead,
+.home-h2 > .home-title-accent {
+  display: block;
+}
+
+/*
+ * Tight tracking pulls the clipped gradient box in past the last glyph (a
+ * trailing comma); pad it out and cancel the padding with negative margins.
+ */
+.home-h2 > .home-title-lead {
+  margin: -0.1em -0.12em -0.2em -0.04em;
+  padding: 0.1em 0.12em 0.2em 0.04em;
+}
+
+.home-h2 > .home-title-accent {
+  /*
+   * Italic overhang and tall ascenders: grow the clipped gradient box so the
+   * leaning glyphs aren't cut; the negative margins keep the layout (and pull
+   * the accent up under the lead).
+   */
+  margin: -0.3em -0.2em -0.2em -0.04em;
+  padding: 0.2em 0.2em 0.2em 0.04em;
+  background: linear-gradient(180deg, #4f4839 0%, #8a7f68 60%, #b2a68d 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  font-family: "Cormorant Garamond", "EB Garamond", "Iowan Old Style", Georgia, serif;
+  /* Cormorant's small x-height needs a larger size to balance the roman lead. */
+  font-size: 1.24em;
+  font-style: italic;
+  font-weight: 600;
+  line-height: 1;
+  /* The italic's narrow forms crowd at the roman's -5%. */
+  letter-spacing: -0.02em;
+}
+
+/* Alphabetic languages (Latin, Cyrillic) use the hero's editorial serif for section titles. */
+[data-script="alphabetic"] .home-h2 {
   font-family: "EB Garamond", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
   font-size: clamp(38px, 4.2vw, 56px);
   font-weight: 600;
   line-height: 1.08;
-  letter-spacing: -0.012em;
+  letter-spacing: -0.05em;
 }
 
-[data-locale="en"] .home-eyebrow {
-  font-family: "EB Garamond", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
-  font-size: 19px;
-  font-style: italic;
-  font-weight: 500;
-}
 
 /*
  * Two steps down. At 760px the page tightens its rhythm (gutter, section
@@ -317,6 +392,8 @@ html[data-platform="other"] [data-key-mac] {
     --home-grid-gap: var(--home-space-3);
     --home-actions-gap: var(--home-space-6);
     --home-control-gap: 10px;
+    /* The new tab cards' 3/4 search size: a 42px input, 12px text. */
+    --home-ui-scale: 0.75;
   }
 }
 
@@ -365,9 +442,9 @@ html[data-platform="other"] [data-key-mac] {
   font-weight: 550;
 }
 
-[data-locale^="zh"] .home-part-head__title,
-[data-locale^="zh"] .home-part-head__lead {
-  word-break: keep-all;
+[data-script="cjk"] .home-part-head__title,
+[data-script="cjk"] .home-part-head__lead {
+  word-break: var(--cjk-word-break);
   overflow-wrap: anywhere;
   letter-spacing: 0;
 }

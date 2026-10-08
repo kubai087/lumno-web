@@ -1,17 +1,20 @@
 ---
+import LocaleNormalizer from "../components/LocaleNormalizer.astro";
 import SeoHead from "../components/SeoHead.astro";
+import PageFooter from "../components/site/PageFooter.astro";
 import SiteHeader from "../components/site/SiteHeader.astro";
 import "../styles/globals.css";
 import "../styles/home.css";
 import "../styles/site.css";
+import "../styles/locale-fonts.css";
 import { buildAlternateLinks, getOpenGraphLocale } from "../lib/seo";
-import type { SupportedLocale } from "../lib/locales";
+import { getLocaleScript, type SupportedLocale } from "../lib/locales";
 
 type StructuredData = Record<string, unknown>;
 
 interface Props {
   locale: SupportedLocale;
-  /** Set on explicit locale routes (/en/…, /zh-tw/…); null on the default route. */
+  /** Set on explicit locale routes (/en/…, /ja/…); null on the default route. */
   forcedLocale: SupportedLocale | null;
   /** The page's unlocalized path, e.g. "/privacy/". */
   basePath: string;
@@ -50,22 +53,13 @@ const alternateLinks = buildAlternateLinks(routeLanguageMap, basePath);
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <LocaleNormalizer />
     {
       !forcedLocale && (
         <script is:inline define:vars={{ routeLanguageMap }}>
           (() => {
             // The default route stays stable for first-time visitors and crawlers; a saved
             // language choice moves the visitor to their localized route before anything paints.
-            const normalizeLocale = (locale) => {
-              const raw = String(locale || "").trim().toLowerCase();
-              if (raw.startsWith("zh")) {
-                return raw.includes("tw") || raw.includes("hk") || raw.includes("mo") || raw.includes("hant")
-                  ? "zh-TW"
-                  : "zh-CN";
-              }
-              return "en";
-            };
-
             let storedMode = "";
             try {
               storedMode = String(window.localStorage.getItem("_x_extension_language_2024_unique_") || "").trim();
@@ -77,7 +71,7 @@ const alternateLinks = buildAlternateLinks(routeLanguageMap, basePath);
 
             const browserLanguage = (Array.isArray(navigator.languages) && navigator.languages[0]) || navigator.language || "en";
             const mode = storedMode.toLowerCase() !== "system" ? storedMode : browserLanguage;
-            const targetPath = routeLanguageMap[normalizeLocale(mode)];
+            const targetPath = routeLanguageMap[window.__lumnoNormalizeLocale(mode, "en")];
             if (targetPath && window.location.pathname !== targetPath) {
               window.location.replace(`${targetPath}${window.location.search}${window.location.hash}`);
             }
@@ -107,7 +101,7 @@ const alternateLinks = buildAlternateLinks(routeLanguageMap, basePath);
     <slot name="head" />
   </head>
   <!-- No hero install button here, so the bar keeps its own from the start (keepInstall). -->
-  <body class="has-nav-install is-nav-install-settled" data-locale={locale}>
+  <body class="has-nav-install is-nav-install-settled" data-locale={locale} data-script={getLocaleScript(locale)}>
     <SiteHeader
       locale={locale}
       routeLanguageMap={routeLanguageMap}
@@ -120,6 +114,9 @@ const alternateLinks = buildAlternateLinks(routeLanguageMap, basePath);
       <slot />
     </main>
 
+    <!-- The homepage footer: crawlable links to every page and language. -->
+    <PageFooter locale={locale} routeLanguageMap={routeLanguageMap} analyticsScope={analyticsScope} />
+
     <script>
       import "../scripts/language-preference";
       import "../scripts/language-runtime";
@@ -127,18 +124,14 @@ const alternateLinks = buildAlternateLinks(routeLanguageMap, basePath);
     <script is:inline define:vars={{ pageLocale: locale, routeLanguageMap }}>
       // The head script has already settled the route, so the page's own locale is the
       // language; the runtime only drives the language menu (persist, then navigate).
-      function normalizeLanguageMode(mode) {
-        const raw = String(mode || "").trim().toLowerCase().replaceAll("_", "-");
-        if (raw.startsWith("zh")) {
-          return raw.includes("tw") || raw.includes("hk") || raw.includes("mo") || raw.includes("hant")
-            ? "zh-TW"
-            : "zh-CN";
-        }
-        return raw.startsWith("en") ? "en" : pageLocale;
+      function getSystemLocale() {
+        return window.__lumnoNormalizeLocale((navigator.languages && navigator.languages[0]) || navigator.language, pageLocale);
       }
 
-      function getSystemLocale() {
-        return normalizeLanguageMode((navigator.languages && navigator.languages[0]) || navigator.language);
+      function normalizeLanguageMode(mode) {
+        const raw = String(mode || "").trim();
+        if (!raw || raw.toLowerCase() === "system") return getSystemLocale();
+        return window.__lumnoNormalizeLocale(raw, pageLocale);
       }
 
       function applyResolvedLanguage(locale) {

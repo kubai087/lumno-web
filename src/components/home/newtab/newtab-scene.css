@@ -14,7 +14,7 @@
   isolation: isolate;
   overflow: hidden;
   color: #111827;
-  font-family: "Open Sans", "PingFang SC", -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+  font-family: "Open Sans", var(--font-cjk, "PingFang SC", "Microsoft YaHei"), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   line-height: 1;
   -webkit-font-smoothing: antialiased;
   user-select: none;
@@ -128,6 +128,21 @@
 
 .nts-scene--page {
   --nts-search-scale: 1;
+}
+
+/*
+ * Phones and small tablets: every illustrated input shares one size
+ * (--home-ui-scale, styles/home.css). Card scenes draw it directly; page
+ * scenes sit inside the page's own scale, so they divide it back out.
+ */
+@media (max-width: 760px) {
+  .nts-scene {
+    --nts-search-scale: var(--home-ui-scale);
+  }
+
+  .nts-scene--page {
+    --nts-search-scale: calc(var(--home-ui-scale) / var(--nts-scale));
+  }
 }
 
 .nts-search {

@@ -25,16 +25,19 @@ test("public pages retain page-specific SEO titles after language initialization
   }
 });
 
-test("homepage keeps a crawlable entry to the full feature SEO page", () => {
+test("homepage carries the FAQ schema now that the features page is retired", () => {
   const source = readSource("src/pages/index.astro");
 
-  assert.doesNotMatch(source, /data-seo-summary/);
-  assert.doesNotMatch(source, /data-seo-content/);
-  assert.doesNotMatch(source, /buildFAQPageSchema\(/);
-  assert.doesNotMatch(source, /buildItemListSchema\(/);
-  assert.match(source, /const featuresHref = buildLocalizedPath\(uiLocale, "\/features\/"\);/);
-  assert.match(readSource("src/components/site/PageFooter.astro"), /\{ label: content\.footerFeatures, href: buildLocalizedPath\(locale, "\/features\/"\) \}/);
-  assert.match(source, /link: featuresHref/);
+  assert.doesNotMatch(source, /\/features\//);
+  assert.doesNotMatch(readSource("src/components/site/PageFooter.astro"), /\/features\//);
+  assert.match(source, /buildFAQPageSchema\(\{\s*items: content\.faqItems/);
+});
+
+test("retired features routes redirect to the localized homepage", () => {
+  const config = readSource("astro.config.mjs");
+
+  assert.match(config, /"\/features": "\/"/);
+  assert.match(config, /`\/\$\{segment\}\/features`, `\/\$\{segment\}\/`/);
 });
 
 test("homepage keeps a localized crawlable entry to the privacy policy", () => {
@@ -42,37 +45,6 @@ test("homepage keeps a localized crawlable entry to the privacy policy", () => {
 
   assert.match(footer, /\{ label: content\.footerPrivacy, href: buildLocalizedPath\(locale, "\/privacy\/"\) \}/);
   assert.match(readSource("src/pages/index.astro"), /<PageFooter locale=\{uiLocale\}/);
-});
-
-test("features page contains product-led searchable content and FAQ schema hooks", () => {
-  const source = readSource("src/pages/features/index.astro");
-  const contentSource = readSource("src/lib/features-content.ts");
-
-  assert.match(source, /FEATURES_SEO_CONTENT/);
-  assert.match(source, /buildFAQPageSchema\(/);
-  assert.doesNotMatch(source, /mainEntity: faqSchema/);
-  assert.match(source, /data-seo-content/);
-  assert.match(contentSource, /标签页搜索/);
-  assert.match(contentSource, /bookmark search/);
-  assert.match(contentSource, /Arc migration/);
-  assert.match(contentSource, /适合哪些用户/);
-  assert.match(contentSource, /Developers and designers/);
-  assert.match(contentSource, /Lumno 是 Arc 浏览器替代品吗/);
-});
-
-test("features hero install CTA is included in the conversion event funnel", () => {
-  const source = readSource("src/pages/features/index.astro");
-
-  assert.match(source, /data-analytics-event="open_chrome_web_store"/);
-  assert.match(source, /data-analytics-category="conversion"/);
-  assert.match(source, /data-analytics-label="features_hero_install"/);
-});
-
-test("localized features route reuses the canonical features page", () => {
-  const source = readSource("src/pages/[locale]/features/index.astro");
-
-  assert.match(source, /buildLocalizedPath\(locale, "\/features\/"\)/);
-  assert.match(source, /buildRouteLanguageMap\("\/features\/"\)/);
 });
 
 test("shared SEO schema helpers support localized FAQ pages", () => {
@@ -146,21 +118,13 @@ test("llms.txt endpoint summarizes Lumno for answer engines", () => {
   assert.match(source, /Arc browser alternative/);
 });
 
-test("sitemap exposes localized features pages", () => {
-  const source = readSource("src/pages/sitemap.xml.ts");
-
-  assert.match(source, /featuresLastmod/);
-  assert.match(source, /buildLocalizedPath\(locale, "\/features\/"\)/);
-  assert.match(source, /priority: "0.85"/);
-});
-
 test("sitemap exposes localized privacy pages", () => {
   const source = readSource("src/pages/sitemap.xml.ts");
 
   assert.match(source, /localizedPrivacyUrls/);
   assert.match(source, /buildLocalizedPath\(locale, "\/privacy\/"\)/);
-  assert.match(source, /src\/content\/privacy-policy\.zh-TW\.md/);
-  assert.match(source, /src\/content\/privacy-policy\.en\.md/);
+  // Every locale's policy lives in src/content/, so the whole folder dates the pages.
+  assert.match(source, /"src\/content\/"/);
 });
 
 test("language menus expose every locale as a crawlable link", () => {
@@ -185,7 +149,8 @@ test("localized pages link to same-locale routes", () => {
 
 test("release page keeps a descriptive h1 for web visitors", () => {
   const source = readSource("src/pages/release/index.astro");
-  assert.match(source, /bannerTitle: "Lumno 更新日志"/);
+  assert.match(source, /banner_title_web: "Lumno 更新日志"/);
+  assert.match(source, /bannerTitle: uiMessages\.banner_title_web/);
   assert.match(source, /banner_title_web: "Lumno Release Notes"/);
   assert.match(source, /!entryContext\.isExtensionEntry\s*\? getMessage\(resolvedLocale, "banner_title_web"\)/);
   assert.doesNotMatch(source, /\.banner-overlay \{[^}]*display: none;/);

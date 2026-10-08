@@ -301,6 +301,20 @@
   transition: transform 120ms ease, background 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
 }
 
+.lumno-settings-button-icon {
+  display: inline-flex;
+  flex: none;
+  width: 16px;
+  height: 16px;
+}
+
+.lumno-settings-button-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  shape-rendering: geometricPrecision;
+}
+
 .lumno-settings-button:active:not(:disabled) {
   transform: translateY(1px) scale(0.985);
 }

@@ -1,7 +1,7 @@
 import type { APIRoute } from "astro";
 import { execFileSync } from "node:child_process";
-import { buildLocalizedPath, getNonDefaultLocales } from "../lib/locales";
-import { fetchReleases } from "../lib/releases";
+import { buildLocalizedPath, getNonDefaultLocales, stripLocaleSegment } from "../lib/locales";
+import { fetchReleases, isReleaseNoteLocale } from "../lib/releases";
 import { SITE_URL } from "../lib/seo";
 
 function escapeXml(value: string): string {
@@ -36,18 +36,12 @@ export const GET: APIRoute = async () => {
     ["src/pages/index.astro", "src/pages/[locale]/index.astro", "src/lib/home-content.ts", "src/lib/seo.ts"],
     now,
   );
-  const featuresLastmod = readLastCommitIso(
-    ["src/pages/features/index.astro", "src/pages/[locale]/features/index.astro", "src/lib/features-content.ts"],
-    now,
-  );
   const privacyLastmod = readLastCommitIso(
     [
       "src/pages/privacy/index.astro",
       "src/pages/[locale]/privacy/index.astro",
       "src/lib/privacy-content.ts",
-      "src/content/privacy-policy.md",
-      "src/content/privacy-policy.zh-TW.md",
-      "src/content/privacy-policy.en.md",
+      "src/content/",
     ],
     now,
   );
@@ -58,14 +52,8 @@ export const GET: APIRoute = async () => {
     changefreq: "weekly",
     priority: "0.9",
   }));
-  const localizedFeaturesUrls = getNonDefaultLocales().map((locale) => ({
-    locale,
-    loc: `${SITE_URL}${buildLocalizedPath(locale, "/features/")}`,
-    lastmod: featuresLastmod,
-    changefreq: "weekly",
-    priority: "0.85",
-  }));
-  const localizedReleaseUrls = getNonDefaultLocales().map((locale) => ({
+  // Only languages with their own notes; the rest are noindex (see release/index.astro).
+  const localizedReleaseUrls = getNonDefaultLocales().filter(isReleaseNoteLocale).map((locale) => ({
     locale,
     loc: `${SITE_URL}${buildLocalizedPath(locale, "/release/")}`,
     lastmod: releaseLastmod,
@@ -83,14 +71,6 @@ export const GET: APIRoute = async () => {
   const urls = [
     { locale: "zh-CN", loc: `${SITE_URL}/`, lastmod: homeLastmod, changefreq: "weekly", priority: "1.0" },
     ...localizedHomeUrls,
-    {
-      locale: "zh-CN",
-      loc: `${SITE_URL}/features/`,
-      lastmod: featuresLastmod,
-      changefreq: "weekly",
-      priority: "0.85",
-    },
-    ...localizedFeaturesUrls,
     {
       locale: "zh-CN",
       loc: `${SITE_URL}/release/`,
@@ -112,7 +92,7 @@ export const GET: APIRoute = async () => {
   const alternateByPath = new Map<string, Array<{ hreflang: string; href: string }>>();
   for (const item of urls) {
     const path = new URL(item.loc).pathname;
-    const normalized = path.replace(/^\/(?:en|zh-tw)(?=\/)/i, "");
+    const normalized = stripLocaleSegment(path);
     const alternates = alternateByPath.get(normalized) || [];
     alternates.push({ hreflang: item.locale, href: item.loc });
     alternateByPath.set(normalized, alternates);
@@ -124,7 +104,7 @@ export const GET: APIRoute = async () => {
 ${urls
   .map((item) => {
     const path = new URL(item.loc).pathname;
-    const normalized = path.replace(/^\/(?:en|zh-tw)(?=\/)/i, "");
+    const normalized = stripLocaleSegment(path);
     const alternates = alternateByPath.get(normalized) || [];
     return `  <url>
     <loc>${escapeXml(item.loc)}</loc>

@@ -336,13 +336,22 @@ const taglinePhrases = tagline.split(/(?<=、)/);
     font-size: 13px;
   }
 
+  /*
+   * The languages share the copyright's row and only wrap (from the right
+   * edge) once that row is genuinely too narrow, never at a fixed width.
+   * When they drop below the copyright, the auto margin keeps them right-aligned.
+   */
   .site-footer__languages {
     display: flex;
-    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 6px 16px;
+    margin-left: auto;
   }
 
   .site-footer__languages a {
     font-size: 13px;
+    white-space: nowrap;
   }
 
   .site-footer__languages a[aria-current="page"] {
@@ -448,20 +457,18 @@ const taglinePhrases = tagline.split(/(?<=、)/);
       justify-content: center;
     }
 
-    /* The languages read as one small switch rather than three loose links. */
+    /* The languages wrap as one centred block of small pills, the current one filled. */
     .site-footer__languages {
       order: -1;
-      gap: 2px;
-      padding: 3px;
-      border: 1px solid var(--home-card-border);
-      border-radius: var(--home-radius-pill);
-      --lumno-corner-shape: round;
-      background: var(--home-card);
+      justify-content: center;
+      margin-left: 0;
+      gap: 4px;
+      max-width: 340px;
     }
 
     .site-footer__languages a {
       display: block;
-      padding: 6px 12px;
+      padding: 5px 10px;
       border-radius: var(--home-radius-pill);
       --lumno-corner-shape: round;
     }

@@ -8,7 +8,6 @@ import { HighlightedText } from './site-search-demo';
 const BROWSER_INTERNAL_URL_PATTERN = /^(?:chrome|edge|brave|vivaldi|opera):\/\/|^about:/i;
 
 export interface BookmarkFocusResult {
-  actionTagKey?: string;
   actionTagLabel?: string;
   browserPageIconClass?: string;
   commandText?: string;
@@ -192,12 +191,20 @@ function SourceTag({
   if (!result.sourceTag) {
     return null;
   }
+  // Like the extension: on the active row the open-tab tag takes the site's tag
+  // palette, while history / bookmark / site tags turn into accent-coloured text.
   const themeStyle = active && result.theme
-    ? {
-        '--x-ov-suggestion-source-tag-bg': result.theme.tagBg,
-        '--x-ov-suggestion-source-tag-text': result.theme.tagText,
-        '--x-ov-suggestion-source-tag-border': result.theme.tagBorder
-      } as CSSProperties
+    ? result.sourceTagKind === 'open-tab'
+      ? {
+          '--x-ov-suggestion-source-tag-bg': result.theme.tagBg,
+          '--x-ov-suggestion-source-tag-text': result.theme.tagText,
+          '--x-ov-suggestion-source-tag-border': result.theme.tagBorder
+        } as CSSProperties
+      : {
+          '--x-ov-suggestion-source-tag-bg': 'transparent',
+          '--x-ov-suggestion-source-tag-text': result.theme.buttonText,
+          '--x-ov-suggestion-source-tag-border': 'transparent'
+        } as CSSProperties
     : undefined;
   const bookmarkStyle = !themeStyle && result.sourceTagKind === 'bookmark'
     ? {
@@ -343,9 +350,6 @@ function OverlayResult({
             <span className="x-ov-action-tag">
               <span className="x-ov-action-tag__label">
                 {String(result.actionTagLabel || model.openLabel)}
-              </span>
-              <span className="x-ov-action-tag__key">
-                {String(result.actionTagKey || 'Enter')}
               </span>
             </span>
           ) : null}

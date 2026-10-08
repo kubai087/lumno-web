@@ -10,7 +10,7 @@ import {
 } from "react";
 import { AnimatePresence, motion, type Variants } from "motion/react";
 
-import type { SupportedLocale } from "@/lib/locales";
+import { getExtensionLocale, type ExtensionLocale, type SupportedLocale } from "@/lib/locales";
 import {
   LUMNO_SITE_SEARCH_ICON_ROOT,
   type LumnoBuiltinSiteSearchProvider,
@@ -243,12 +243,10 @@ interface LocaleDemoCopy {
   closeOtherTabsLabel: string;
   openLabel: string;
   removeHistoryLabel: string;
-  scenePickerLabel: string;
   scenes: DemoScene[];
   siteSearchDemo: SiteSearchDemoModel;
   scopeMenuCopy: ScopeMenuCopy;
   settingsLabel: string;
-  skipIntroLabel: string;
 }
 
 const GITHUB_SITE_SEARCH_THEME = {
@@ -337,7 +335,8 @@ function createScopeMenu(
   };
 }
 
-const SCENES_BY_LOCALE: Record<SupportedLocale, DemoScene[]> = {
+// The demo draws the extension's own UI, so it follows the extension's languages (getExtensionLocale).
+const SCENES_BY_LOCALE: Record<ExtensionLocale, DemoScene[]> = {
   "zh-CN": [
     {
       id: "browser-search",
@@ -352,7 +351,7 @@ const SCENES_BY_LOCALE: Record<SupportedLocale, DemoScene[]> = {
           sourceTagKind: "open-tab",
           favicon: GITHUB_FAVICON,
           actionTagLabel: "切换",
-          actionTagKey: "Enter",
+         
           visitButtonLabel: "切换",
           theme: GITHUB_THEME,
         },
@@ -398,7 +397,7 @@ const SCENES_BY_LOCALE: Record<SupportedLocale, DemoScene[]> = {
           title: "在 GitHub 中搜索",
           favicon: GITHUB_FAVICON,
           actionTagLabel: "在 GitHub 中搜索",
-          actionTagKey: "Enter",
+         
           visitButtonLabel: "搜索",
           theme: GITHUB_THEME,
         },
@@ -429,7 +428,7 @@ const SCENES_BY_LOCALE: Record<SupportedLocale, DemoScene[]> = {
           query: "扩展",
           results: [
             {
-              actionTagKey: "Enter",
+             
               actionTagLabel: "新开",
               browserPageIconClass: "ri-puzzle-fill",
               type: "browserPage",
@@ -445,7 +444,7 @@ const SCENES_BY_LOCALE: Record<SupportedLocale, DemoScene[]> = {
           query: "历史记录",
           results: [
             {
-              actionTagKey: "Enter",
+             
               actionTagLabel: "新开",
               browserPageIconClass: "ri-history-fill",
               type: "browserPage",
@@ -461,7 +460,7 @@ const SCENES_BY_LOCALE: Record<SupportedLocale, DemoScene[]> = {
           query: "下载记录",
           results: [
             {
-              actionTagKey: "Enter",
+             
               actionTagLabel: "新开",
               browserPageIconClass: "ri-download-fill",
               type: "browserPage",
@@ -488,7 +487,7 @@ const SCENES_BY_LOCALE: Record<SupportedLocale, DemoScene[]> = {
       label: "搜全部",
       query: "lumno",
       results: [
-        { type: "topSite", title: "lumno-extension · 瀏覽器聚焦搜尋", detail: "https://github.com/kubai087/lumno-extension", sourceTag: "已開啟", sourceTagKind: "open-tab", favicon: GITHUB_FAVICON, actionTagLabel: "切換", actionTagKey: "Enter", visitButtonLabel: "切換", theme: GITHUB_THEME },
+        { type: "topSite", title: "lumno-extension · 瀏覽器聚焦搜尋", detail: "https://github.com/kubai087/lumno-extension", sourceTag: "已開啟", sourceTagKind: "open-tab", favicon: GITHUB_FAVICON, actionTagLabel: "切換", visitButtonLabel: "切換", theme: GITHUB_THEME },
         { type: "bookmark", title: "Lumno 功能與快速鍵", detail: "書籤 / 效率工具 / 瀏覽器", sourceTag: "書籤", sourceTagKind: "bookmark", favicon: LUMNO_FAVICON, visitButtonLabel: "開啟", theme: LUMNO_THEME },
         { type: "history", title: "Lumno 更新日誌", detail: "https://lumno.kubai.design/release/", sourceTag: "歷史", favicon: LUMNO_FAVICON, visitButtonLabel: "開啟", historyDeletable: true, theme: LUMNO_THEME },
         { type: "topSite", title: "Lumno - Chrome 線上應用程式商店", detail: "https://chromewebstore.google.com/detail/lumno", sourceTag: "常用", favicon: CHROME_STORE_FAVICON, visitButtonLabel: "開啟", theme: CHROME_THEME },
@@ -500,7 +499,7 @@ const SCENES_BY_LOCALE: Record<SupportedLocale, DemoScene[]> = {
       label: "搜站內",
       query: "gh lumno extension",
       results: [
-        { type: "inlineSiteSearch", title: "在 GitHub 中搜尋", favicon: GITHUB_FAVICON, actionTagLabel: "在 GitHub 中搜尋", actionTagKey: "Enter", visitButtonLabel: "搜尋", theme: GITHUB_THEME },
+        { type: "inlineSiteSearch", title: "在 GitHub 中搜尋", favicon: GITHUB_FAVICON, actionTagLabel: "在 GitHub 中搜尋", visitButtonLabel: "搜尋", theme: GITHUB_THEME },
         { type: "newtab", title: '搜尋 "gh lumno extension"', visitButtonLabel: "搜尋" },
         { type: "googleSuggest", title: "lumno extension github", visitButtonLabel: "搜尋" },
         { type: "googleSuggest", title: "lumno browser command bar", visitButtonLabel: "搜尋" },
@@ -516,7 +515,7 @@ const SCENES_BY_LOCALE: Record<SupportedLocale, DemoScene[]> = {
           query: "擴充功能",
           results: [
             {
-              actionTagKey: "Enter",
+             
               actionTagLabel: "新開",
               browserPageIconClass: "ri-puzzle-fill",
               type: "browserPage",
@@ -532,7 +531,7 @@ const SCENES_BY_LOCALE: Record<SupportedLocale, DemoScene[]> = {
           query: "歷史紀錄",
           results: [
             {
-              actionTagKey: "Enter",
+             
               actionTagLabel: "新開",
               browserPageIconClass: "ri-history-fill",
               type: "browserPage",
@@ -548,7 +547,7 @@ const SCENES_BY_LOCALE: Record<SupportedLocale, DemoScene[]> = {
           query: "下載紀錄",
           results: [
             {
-              actionTagKey: "Enter",
+             
               actionTagLabel: "新開",
               browserPageIconClass: "ri-download-fill",
               type: "browserPage",
@@ -575,7 +574,7 @@ const SCENES_BY_LOCALE: Record<SupportedLocale, DemoScene[]> = {
       label: "Search All",
       query: "lumno",
       results: [
-        { type: "topSite", title: "lumno-extension · Browser focus search", detail: "https://github.com/kubai087/lumno-extension", sourceTag: "Opened", sourceTagKind: "open-tab", favicon: GITHUB_FAVICON, actionTagLabel: "Switch", actionTagKey: "Enter", visitButtonLabel: "Switch", theme: GITHUB_THEME },
+        { type: "topSite", title: "lumno-extension · Browser focus search", detail: "https://github.com/kubai087/lumno-extension", sourceTag: "Opened", sourceTagKind: "open-tab", favicon: GITHUB_FAVICON, actionTagLabel: "Switch", visitButtonLabel: "Switch", theme: GITHUB_THEME },
         { type: "bookmark", title: "Lumno features and shortcuts", detail: "Bookmarks / Productivity / Browser", sourceTag: "Bookmark", sourceTagKind: "bookmark", favicon: LUMNO_FAVICON, visitButtonLabel: "New Tab", theme: LUMNO_THEME },
         { type: "history", title: "Lumno release notes", detail: "https://lumno.kubai.design/release/", sourceTag: "History", favicon: LUMNO_FAVICON, visitButtonLabel: "New Tab", historyDeletable: true, theme: LUMNO_THEME },
         { type: "topSite", title: "Lumno - Chrome Web Store", detail: "https://chromewebstore.google.com/detail/lumno", sourceTag: "Frequent", favicon: CHROME_STORE_FAVICON, visitButtonLabel: "New Tab", theme: CHROME_THEME },
@@ -587,7 +586,7 @@ const SCENES_BY_LOCALE: Record<SupportedLocale, DemoScene[]> = {
       label: "Search Sites",
       query: "gh lumno extension",
       results: [
-        { type: "inlineSiteSearch", title: "Search in GitHub", favicon: GITHUB_FAVICON, actionTagLabel: "Search in GitHub", actionTagKey: "Enter", visitButtonLabel: "Search", theme: GITHUB_THEME },
+        { type: "inlineSiteSearch", title: "Search in GitHub", favicon: GITHUB_FAVICON, actionTagLabel: "Search in GitHub", visitButtonLabel: "Search", theme: GITHUB_THEME },
         { type: "newtab", title: 'Search "gh lumno extension"', visitButtonLabel: "Search" },
         { type: "googleSuggest", title: "lumno extension github", visitButtonLabel: "Search" },
         { type: "googleSuggest", title: "lumno browser command bar", visitButtonLabel: "Search" },
@@ -603,7 +602,7 @@ const SCENES_BY_LOCALE: Record<SupportedLocale, DemoScene[]> = {
           query: "extensions",
           results: [
             {
-              actionTagKey: "Enter",
+             
               actionTagLabel: "New Tab",
               browserPageIconClass: "ri-puzzle-fill",
               type: "browserPage",
@@ -619,7 +618,7 @@ const SCENES_BY_LOCALE: Record<SupportedLocale, DemoScene[]> = {
           query: "history",
           results: [
             {
-              actionTagKey: "Enter",
+             
               actionTagLabel: "New Tab",
               browserPageIconClass: "ri-history-fill",
               type: "browserPage",
@@ -635,7 +634,7 @@ const SCENES_BY_LOCALE: Record<SupportedLocale, DemoScene[]> = {
           query: "downloads",
           results: [
             {
-              actionTagKey: "Enter",
+             
               actionTagLabel: "New Tab",
               browserPageIconClass: "ri-download-fill",
               type: "browserPage",
@@ -656,15 +655,100 @@ const SCENES_BY_LOCALE: Record<SupportedLocale, DemoScene[]> = {
       ],
     },
   ],
+  ja: [
+    {
+      id: "browser-search",
+      label: "まとめて検索",
+      query: "lumno",
+      results: [
+        { type: "topSite", title: "lumno-extension · ブラウザのコマンドバー", detail: "https://github.com/kubai087/lumno-extension", sourceTag: "開いている", sourceTagKind: "open-tab", favicon: GITHUB_FAVICON, actionTagLabel: "切り替え", visitButtonLabel: "切り替え", theme: GITHUB_THEME },
+        { type: "bookmark", title: "Lumno の機能とショートカット", detail: "ブックマーク / 効率化 / ブラウザ", sourceTag: "ブックマーク", sourceTagKind: "bookmark", favicon: LUMNO_FAVICON, visitButtonLabel: "新規", theme: LUMNO_THEME },
+        { type: "history", title: "Lumno 更新履歴", detail: "https://lumno.kubai.design/ja/release/", sourceTag: "履歴", favicon: LUMNO_FAVICON, visitButtonLabel: "新規", historyDeletable: true, theme: LUMNO_THEME },
+        { type: "topSite", title: "Lumno - Chrome ウェブストア", detail: "https://chromewebstore.google.com/detail/lumno", sourceTag: "よく使う", favicon: CHROME_STORE_FAVICON, visitButtonLabel: "新規", theme: CHROME_THEME },
+        { type: "newtab", title: "「lumno」を検索", visitButtonLabel: "検索" },
+      ],
+    },
+    {
+      id: "site-search",
+      label: "サイト内検索",
+      query: "gh lumno extension",
+      results: [
+        { type: "inlineSiteSearch", title: "GitHub で検索", favicon: GITHUB_FAVICON, actionTagLabel: "GitHub で検索", visitButtonLabel: "検索", theme: GITHUB_THEME },
+        { type: "newtab", title: "「gh lumno extension」を検索", visitButtonLabel: "検索" },
+        { type: "googleSuggest", title: "lumno extension github", visitButtonLabel: "検索" },
+        { type: "googleSuggest", title: "lumno browser command bar", visitButtonLabel: "検索" },
+      ],
+    },
+    {
+      id: "commands",
+      label: "コマンド",
+      query: "/",
+      followups: [
+        {
+          id: "browser-page-extensions",
+          query: "拡張機能",
+          results: [
+            {
+             
+              actionTagLabel: "新規",
+              browserPageIconClass: "ri-puzzle-fill",
+              type: "browserPage",
+              title: "Google Chrome：chrome://extensions/ を開く",
+              url: "chrome://extensions/",
+              visitButtonLabel: "新規",
+              theme: DEFAULT_THEME,
+            },
+          ],
+        },
+        {
+          id: "browser-page-history",
+          query: "履歴",
+          results: [
+            {
+             
+              actionTagLabel: "新規",
+              browserPageIconClass: "ri-history-fill",
+              type: "browserPage",
+              title: "Google Chrome：chrome://history を開く",
+              url: "chrome://history",
+              visitButtonLabel: "新規",
+              theme: DEFAULT_THEME,
+            },
+          ],
+        },
+        {
+          id: "browser-page-downloads",
+          query: "ダウンロード",
+          results: [
+            {
+             
+              actionTagLabel: "新規",
+              browserPageIconClass: "ri-download-fill",
+              type: "browserPage",
+              title: "Google Chrome：chrome://downloads を開く",
+              url: "chrome://downloads",
+              visitButtonLabel: "新規",
+              theme: DEFAULT_THEME,
+            },
+          ],
+        },
+      ],
+      results: [
+        { type: "commandNewTab", commandText: "/new", title: "新しいタブを開く", visitButtonHidden: true, theme: DEFAULT_THEME },
+        { type: "commandSettings", commandText: "/settings", title: "設定を開く", visitButtonHidden: true },
+        { type: "commandOpenTabs", commandText: "/tabs", title: "開いているタブのみを検索", iconClass: "ri-search-line", visitButtonHidden: true },
+        { type: "commandCopyUrl", commandText: "/copy", title: "現在のページのリンクをコピー", iconClass: "ri-search-line", visitButtonHidden: true },
+        { type: "commandDocumentPip", commandText: "/clip", title: "Webクリップを開始", visitButtonHidden: true },
+      ],
+    },
+  ],
 };
 
-const COPY_BY_LOCALE: Record<SupportedLocale, LocaleDemoCopy> = {
+const COPY_BY_LOCALE: Record<ExtensionLocale, LocaleDemoCopy> = {
   "zh-CN": {
     closeOtherTabsLabel: "关闭其他标签页",
     openLabel: "新开",
     removeHistoryLabel: "移除该历史",
-    scenePickerLabel: "搜索演示场景",
-    skipIntroLabel: "点击任意处跳过",
     scenes: SCENES_BY_LOCALE["zh-CN"],
     siteSearchDemo: {
       cases: [{
@@ -706,8 +790,6 @@ const COPY_BY_LOCALE: Record<SupportedLocale, LocaleDemoCopy> = {
     closeOtherTabsLabel: "關閉其他分頁",
     openLabel: "開啟",
     removeHistoryLabel: "移除此歷史紀錄",
-    scenePickerLabel: "搜尋示範場景",
-    skipIntroLabel: "點按任意處略過",
     scenes: SCENES_BY_LOCALE["zh-TW"],
     siteSearchDemo: {
       cases: [{
@@ -749,8 +831,6 @@ const COPY_BY_LOCALE: Record<SupportedLocale, LocaleDemoCopy> = {
     closeOtherTabsLabel: "Close other tabs",
     openLabel: "Open",
     removeHistoryLabel: "Remove from history",
-    scenePickerLabel: "Search demo scenes",
-    skipIntroLabel: "Click anywhere to skip",
     scenes: SCENES_BY_LOCALE.en,
     siteSearchDemo: {
       cases: [{
@@ -788,6 +868,62 @@ const COPY_BY_LOCALE: Record<SupportedLocale, LocaleDemoCopy> = {
     },
     settingsLabel: "Settings",
   },
+  ja: {
+    closeOtherTabsLabel: "他のタブを閉じる",
+    openLabel: "開く",
+    removeHistoryLabel: "履歴から削除",
+    scenes: SCENES_BY_LOCALE.ja,
+    siteSearchDemo: {
+      cases: [{
+        actionLabel: "GitHub で検索",
+        brandAccentRgb: [36, 41, 46],
+        favicon: GITHUB_FAVICON,
+        iconClass: "ri-github-fill",
+        kind: "site",
+        label: "サイト内検索",
+        modeLabel: "GitHub",
+        prefixLabel: "GitHub",
+        promptQuery: "lumno extension",
+        promptWidth: "15ch",
+        resultTitle: "GitHub で「lumno extension」を検索",
+        theme: GITHUB_SITE_SEARCH_THEME,
+        triggerQuery: "github",
+      }],
+      openLabel: "開く",
+      settingsLabel: "設定",
+      tabHintTemplate: "{provider} で検索",
+    },
+    scopeMenuCopy: {
+      aiGroup: "AI検索",
+      ariaLabel: "検索範囲",
+      bookmark: "ブックマーク",
+      browserGroup: "ブラウザ内検索",
+      filterLabel: "入力して検索範囲を絞り込み",
+      history: "履歴",
+      navigationLabel: "移動",
+      openTabs: "開いているタブを検索",
+      searchGroup: "検索エンジン",
+      selectLabel: "切替",
+      siteGroup: "サイト内検索",
+      topSites: "よくアクセスするサイト",
+    },
+    settingsLabel: "設定",
+  },
+};
+
+/** The page's own controls around the drawing (scene tabs, skip hint) follow the page language. */
+type SceneId = (typeof HERO_INTRO_SEQUENCE)[number]["id"];
+const SITE_COPY: Record<SupportedLocale, { scenePickerLabel: string; skipIntroLabel: string; scenes: Record<SceneId, string> }> = {
+  "zh-CN": { scenePickerLabel: "搜索演示场景", skipIntroLabel: "点击任意处跳过", scenes: { "browser-search": "搜全部", "site-search": "搜站内", commands: "打指令" } },
+  "zh-TW": { scenePickerLabel: "搜尋示範場景", skipIntroLabel: "點按任意處略過", scenes: { "browser-search": "搜全部", "site-search": "搜站內", commands: "下指令" } },
+  en: { scenePickerLabel: "Search demo scenes", skipIntroLabel: "Click anywhere to skip", scenes: { "browser-search": "Search All", "site-search": "Search Sites", commands: "Run Commands" } },
+  ja: { scenePickerLabel: "検索デモの場面", skipIntroLabel: "クリックでスキップ", scenes: { "browser-search": "まとめて検索", "site-search": "サイト内検索", commands: "コマンド" } },
+  ko: { scenePickerLabel: "검색 데모 장면", skipIntroLabel: "클릭해서 건너뛰기", scenes: { "browser-search": "전체 검색", "site-search": "사이트 검색", commands: "명령어" } },
+  de: { scenePickerLabel: "Such-Demos", skipIntroLabel: "Zum Überspringen klicken", scenes: { "browser-search": "Alles suchen", "site-search": "Seitensuche", commands: "Befehle" } },
+  fr: { scenePickerLabel: "Scènes de la démo", skipIntroLabel: "Cliquez pour passer", scenes: { "browser-search": "Tout chercher", "site-search": "Sur un site", commands: "Commandes" } },
+  es: { scenePickerLabel: "Escenas de la demo", skipIntroLabel: "Haz clic para saltar", scenes: { "browser-search": "Buscar todo", "site-search": "En sitios", commands: "Comandos" } },
+  "pt-BR": { scenePickerLabel: "Cenas da demonstração", skipIntroLabel: "Clique para pular", scenes: { "browser-search": "Buscar tudo", "site-search": "Em sites", commands: "Comandos" } },
+  ru: { scenePickerLabel: "Сцены демонстрации", skipIntroLabel: "Нажмите, чтобы пропустить", scenes: { "browser-search": "Везде", "site-search": "По сайтам", commands: "Команды" } },
 };
 
 interface HeroSafariDemoProps {
@@ -998,7 +1134,8 @@ export function HeroSafariDemo({
   locale,
 }: HeroSafariDemoProps) {
   const reducedMotion = usePrefersReducedMotion();
-  const copy = COPY_BY_LOCALE[locale];
+  const copy = COPY_BY_LOCALE[getExtensionLocale(locale)];
+  const siteCopy = SITE_COPY[locale];
   const [introState, setIntroState] = useState<"pending" | "revealing" | "complete">(
     "pending",
   );
@@ -1488,7 +1625,11 @@ export function HeroSafariDemo({
       return undefined;
     }
 
-    if (reducedMotion || Boolean(window.location.hash)) {
+    if (
+      reducedMotion
+      || Boolean(window.location.hash)
+      || document.documentElement.hasAttribute("data-home-intro-skip")
+    ) {
       completeHomeIntro();
       return undefined;
     }
@@ -1770,18 +1911,18 @@ export function HeroSafariDemo({
               onClick={handleHomeIntroSkip}
               type="button"
             >
-              {copy.skipIntroLabel}
+              {siteCopy.skipIntroLabel}
             </button>
           ) : null}
         </div>
       </div>
       {/* Outside the clipped visual: on phones it sits below the card (hero-safari-demo.css). */}
       <SettingsTabs
-        ariaLabel={`${copy.scenePickerLabel} · ${ariaLabel}`}
+        ariaLabel={`${siteCopy.scenePickerLabel} · ${ariaLabel}`}
         className="lumno-settings-kit hero-demo-page-switcher"
         data-auto-playing={isAutoPlaying ? "true" : "false"}
         itemClassName="hero-demo-page-button"
-        items={copy.scenes.map((item) => ({ value: item.id, label: item.label }))}
+        items={copy.scenes.map((item) => ({ value: item.id, label: siteCopy.scenes[item.id as SceneId] || item.label }))}
         onValueChange={(id) => handleSceneSelect(copy.scenes.findIndex((item) => item.id === id))}
         value={copy.scenes[sceneIndex].id}
       />

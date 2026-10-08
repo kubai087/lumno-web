@@ -1,5 +1,6 @@
 ---
 import { DitherShader } from "../DitherShader";
+import TitlePair from "../TitlePair.astro";
 
 interface Props {
   /** The hero's title, so the page closes on the pitch it opened with, and a one-line description. */
@@ -31,7 +32,7 @@ const { title, description } = Astro.props;
       client:visible
     />
     <div class="final-cta__copy">
-      <h2 id="final-title" class="home-h2"><span>{title}</span></h2>
+      <h2 id="final-title" class="home-h2"><TitlePair title={title} /></h2>
       <p class="home-lead">{description}</p>
       <div class="final-cta__actions">
         <slot />

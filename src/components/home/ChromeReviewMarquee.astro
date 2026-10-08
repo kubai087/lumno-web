@@ -1,5 +1,6 @@
 ---
 import { DitherShader } from "./DitherShader";
+import TitlePair from "./TitlePair.astro";
 import type { ChromeStoreReview } from "../../lib/chrome-store-reviews";
 
 interface Props {
@@ -11,6 +12,7 @@ interface Props {
   storeLinkLabel: string;
   ariaLabel: string;
   avatarLabel: string;
+  quotes: readonly [string, string];
   reviews: readonly ChromeStoreReview[];
 }
 
@@ -22,6 +24,7 @@ const {
   storeLinkLabel,
   ariaLabel,
   avatarLabel,
+  quotes: [quoteOpen, quoteClose],
   reviews,
 } = Astro.props;
 
@@ -55,7 +58,7 @@ const rows = [reviews.slice(0, midpoint), reviews.slice(midpoint)];
       </span>
       <i class="ri-arrow-right-up-line chrome-review-marquee__arrow" aria-hidden="true"></i>
     </a>
-    <h2 id="reviews-title" class="home-h2" data-reveal="text"><span>{title}</span></h2>
+    <h2 id="reviews-title" class="home-h2" data-reveal="text"><TitlePair title={title} /></h2>
   </header>
 
   <div class="chrome-review-marquee__frame home-media" data-reveal>
@@ -83,7 +86,7 @@ const rows = [reviews.slice(0, midpoint), reviews.slice(midpoint)];
               >
                 {row.map((review) => (
                   <article class="chrome-review-card" role={duplicate ? undefined : "listitem"}>
-                    <p class="chrome-review-card__quote">“{review.review}”</p>
+                    <p class="chrome-review-card__quote">{quoteOpen}{review.review}{quoteClose}</p>
                     <div class="chrome-review-card__meta">
                       <span class="chrome-review-card__avatar" data-initial={Array.from(review.reviewerId)[0]?.toUpperCase()}>
                         {/* Google avatars are unreachable in some regions; fall back to the initial. */}
@@ -91,7 +94,7 @@ const rows = [reviews.slice(0, midpoint), reviews.slice(midpoint)];
                           src={review.avatarUrl}
                           width="32"
                           height="32"
-                          alt={`${review.reviewerId} ${avatarLabel}`}
+                          alt={avatarLabel.replace("{name}", review.reviewerId)}
                           loading="lazy"
                           decoding="async"
                           referrerpolicy="no-referrer"

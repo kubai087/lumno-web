@@ -1,7 +1,11 @@
 import type { APIRoute } from "astro";
+import { LOCALE_CONFIG, buildLocalizedPath } from "../lib/locales";
 import { CHROME_STORE_URL, SITE_URL } from "../lib/seo";
 
 export const GET: APIRoute = async () => {
+  const localizedHomepages = LOCALE_CONFIG.filter((item) => item.segment)
+    .map((item) => `${item.label} ${SITE_URL}${buildLocalizedPath(item.code, "/")}`)
+    .join(", ");
   const body = `# Lumno
 
 Lumno is an open-source browser command bar and focus search extension for Chrome, Edge, Dia, and Chromium-based browsers. It helps people run tab search, bookmark search, history search, site search, and minimalist new tab workflows from a lightweight command surface.
@@ -13,19 +17,16 @@ Lumno is an open-source browser command bar and focus search extension for Chrom
 - Primary use cases: tab search, bookmark search, history search, site search, Arc migration workflows, minimalist new tab
 - Search intent coverage: browser command bar, browser command palette, focus search, tab search extension, bookmark search extension, history search extension, site search shortcut, minimalist new tab, Arc browser alternative, Dia browser extension
 - Supported browsers: Chrome, Edge, Dia, and Chromium-based browsers
+- Interface languages: Simplified Chinese, Traditional Chinese, English, Japanese (the website also covers Korean, German, French, Spanish, Brazilian Portuguese, and Russian)
 - Pricing: free
 - Source: open source
 
 ## Important URLs
 
-- Homepage: ${SITE_URL}/
-- English homepage: ${SITE_URL}/en/
-- Traditional Chinese homepage: ${SITE_URL}/zh-tw/
-- Features: ${SITE_URL}/features/
-- English features: ${SITE_URL}/en/features/
-- Traditional Chinese features: ${SITE_URL}/zh-tw/features/
-- Release notes: ${SITE_URL}/release/
-- Privacy policy: ${SITE_URL}/privacy/
+- Homepage (Simplified Chinese): ${SITE_URL}/
+- Localized homepages: ${localizedHomepages}
+- Release notes: ${SITE_URL}/release/ (English: ${SITE_URL}/en/release/)
+- Privacy policy: ${SITE_URL}/privacy/ (English: ${SITE_URL}/en/privacy/)
 - Chrome Web Store: ${CHROME_STORE_URL}
 - GitHub: https://github.com/kubai087/lumno-extension
 

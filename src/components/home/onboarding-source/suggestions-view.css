@@ -1,5 +1,14 @@
 /* Onboarding reuses these suggestion row styles for its right-side overlay demo.
    When changing shared overlay styling, verify src/onboarding/onboarding.html?slide=1. */
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) {
+  --x-ov-panel-border-width: 1px;
+  --x-ov-content-radius: calc(var(--x-ov-panel-radius, 26px) - var(--x-ov-panel-border-width));
+  --x-ov-results-inset: 12px;
+  --x-ov-result-radius: calc(var(--x-ov-content-radius) - var(--x-ov-results-inset));
+  --x-ext-search-input-corners:
+    var(--x-ov-content-radius) var(--x-ov-content-radius) 0 0;
+}
+
 :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestions-container {
   all: unset;
   --x-ov-suggestion-row-height: 52px;
@@ -18,8 +27,8 @@
   scrollbar-width: none;
   -ms-overflow-style: none;
   background: transparent;
-  border-radius: 0 0 var(--x-ov-panel-radius, 28px) var(--x-ov-panel-radius, 28px);
-  padding: 12px;
+  border-radius: 0 0 var(--x-ov-content-radius, 25px) var(--x-ov-content-radius, 25px);
+  padding: var(--x-ov-results-inset, 12px);
   box-sizing: border-box;
   display: block;
   line-height: 1;
@@ -36,6 +45,55 @@
   overflow-y: hidden;
 }
 
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestions-container[data-open-tabs-visible-row-limit] {
+  --x-ov-open-tabs-scrollbar-gutter: 10px;
+  /* The stable gutter keeps the native scrollbar out of the row geometry.
+     Its measured width is then taken from this container's right inset. */
+  scrollbar-gutter: stable;
+  padding-inline-end: max(
+    0px,
+    calc(
+      var(--x-ov-results-inset, 12px) -
+      var(--x-ov-open-tabs-scrollbar-gutter, 10px)
+    )
+  );
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.68) transparent;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestions-container[data-open-tabs-visible-row-limit]::-webkit-scrollbar {
+  width: 10px;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestions-container[data-open-tabs-visible-row-limit]::-webkit-scrollbar-track {
+  margin-block: 12px;
+  background: transparent;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestions-container[data-open-tabs-visible-row-limit]::-webkit-scrollbar-thumb {
+  min-height: 40px;
+  border: 3px solid transparent;
+  border-radius: var(--lumno-radius-pill, 999px);
+  background-color: rgba(148, 163, 184, 0.68);
+  background-clip: padding-box;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestions-container[data-open-tabs-visible-row-limit]::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(100, 116, 139, 0.82);
+}
+
+:is(#_x_extension_overlay_2024_unique_[data-theme="dark"], #_x_extension_onboarding_overlay_demo_2026_unique_[data-theme="dark"]) .x-ov-suggestions-container[data-open-tabs-visible-row-limit] {
+  scrollbar-color: rgba(148, 163, 184, 0.58) transparent;
+}
+
+:is(#_x_extension_overlay_2024_unique_[data-theme="dark"], #_x_extension_onboarding_overlay_demo_2026_unique_[data-theme="dark"]) .x-ov-suggestions-container[data-open-tabs-visible-row-limit]::-webkit-scrollbar-thumb {
+  background-color: rgba(148, 163, 184, 0.58);
+}
+
+:is(#_x_extension_overlay_2024_unique_[data-theme="dark"], #_x_extension_onboarding_overlay_demo_2026_unique_[data-theme="dark"]) .x-ov-suggestions-container[data-open-tabs-visible-row-limit]::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(203, 213, 225, 0.7);
+}
+
 :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-close-other-tabs {
   all: unset;
   position: absolute;
@@ -44,7 +102,7 @@
   transform: none;
   width: 30px;
   height: 30px;
-  border-radius: var(--x-ext-input-right-icon-radius, 16px);
+  border-radius: var(--x-ext-input-right-icon-radius, 10px);
   z-index: 2;
   box-sizing: border-box;
   margin: 0;
@@ -60,7 +118,7 @@
   font-size: 0;
   color: var(--x-ext-input-icon, #9CA3AF);
   cursor: pointer;
-  transition: background-color 140ms ease, color 140ms ease;
+  transition: background-color var(--lumno-duration-xs, 140ms) ease, color var(--lumno-duration-xs, 140ms) ease;
 }
 
 #_x_extension_overlay_2024_unique_[data-lumno-site-fix-reveal] .x-ov-close-other-tabs {
@@ -71,17 +129,6 @@
   background: var(--x-ext-input-icon-hover-bg, rgba(148, 163, 184, 0.16));
   color: var(--x-ext-input-icon-hover, #4B5563);
   transform: none;
-}
-
-@supports (corner-shape: superellipse(1.25)) {
-  :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestions-container,
-  :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-empty-state,
-  :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-item,
-  :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-visit-button,
-  :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-close-other-tabs,
-  :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-number-shortcut {
-    corner-shape: superellipse(1.25);
-  }
 }
 
 :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .ri-icon {
@@ -97,7 +144,7 @@
   font-size: 16px;
   line-height: 1;
   transform: none;
-  transition: transform 160ms ease;
+  transition: transform var(--lumno-duration-sm, 160ms) ease;
   pointer-events: none;
   cursor: inherit;
 }
@@ -184,13 +231,11 @@
 
 :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-favicon[data-favicon-load-state="priming"] {
   transition: none;
-  filter: blur(4px);
-  opacity: 0.72;
+  opacity: 0.68;
 }
 
 :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-favicon[data-favicon-load-state="loaded"] {
-  transition: filter 240ms cubic-bezier(0.22, 1, 0.36, 1), opacity 240ms cubic-bezier(0.22, 1, 0.36, 1);
-  filter: blur(0);
+  transition: opacity var(--lumno-duration-sm, 160ms) cubic-bezier(0.22, 1, 0.36, 1);
   opacity: 1;
 }
 
@@ -203,7 +248,7 @@
   padding: 16px 14px;
   margin: 0;
   border: none;
-  border-radius: 14px;
+  border-radius: var(--lumno-radius-2xl, 14px);
   background: color-mix(in srgb, var(--x-ov-bg, #FFFFFF) 90%, var(--x-ov-hover-bg, #F3F4F6) 10%);
   color: var(--x-ov-subtext, #6B7280);
   box-sizing: border-box;
@@ -211,7 +256,7 @@
   text-decoration: none;
   list-style: none;
   outline: none;
-  font-size: 13px;
+  font-size: var(--lumno-font-size-md, 13px);
   font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   vertical-align: baseline;
 }
@@ -248,9 +293,9 @@
   min-height: var(--x-ov-suggestion-row-height, 52px);
   background: var(--x-ov-suggestion-row-bg, transparent);
   border: 1px solid transparent;
-  border-radius: 16px;
+  border-radius: var(--x-ov-result-radius, 13px);
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: background-color var(--lumno-duration-lg, 0.2s) ease;
   box-sizing: border-box;
   margin: 0 0 var(--x-ov-suggestion-row-gap, 4px) 0;
   line-height: 1.5;
@@ -261,6 +306,8 @@
   font-size: 100%;
   font: inherit;
   vertical-align: baseline;
+  content-visibility: auto;
+  contain-intrinsic-block-size: var(--x-ov-suggestion-row-height, 52px);
 }
 
 :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-item[data-last="true"] {
@@ -268,7 +315,7 @@
 }
 
 :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestions-container[data-scope-result-enter="run"] .x-ov-suggestion-item {
-  animation: _x_ov_scope_result_enter_2026_unique_ 180ms ease-in-out both;
+  animation: _x_ov_scope_result_enter_2026_unique_ var(--lumno-duration-md, 180ms) ease-in-out both;
   will-change: transform;
 }
 
@@ -311,7 +358,7 @@
 }
 
 :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-left[data-motion="true"] {
-  transition: gap 160ms ease, transform 160ms ease;
+  transition: gap var(--lumno-duration-sm, 160ms) ease, transform var(--lumno-duration-sm, 160ms) ease;
 }
 
 :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-icon-slot {
@@ -320,7 +367,7 @@
   height: 24px;
   flex: 0 0 24px;
   flex-shrink: 0;
-  border-radius: 8px;
+  border-radius: var(--lumno-radius-md, 8px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -332,7 +379,7 @@
   list-style: none;
   outline: none;
   background: transparent;
-  transition: background-color 0.2s ease;
+  transition: background-color var(--lumno-duration-lg, 0.2s) ease;
   color: var(--x-ov-subtext, #9CA3AF);
   font-size: 100%;
   font: inherit;
@@ -398,7 +445,7 @@
 :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-title {
   all: unset;
   color: var(--x-ov-text, #111827);
-  font-size: 14px;
+  font-size: var(--lumno-font-size-lg, 14px);
   font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-weight: var(--x-ov-suggestion-title-weight, 400);
   white-space: nowrap;
@@ -415,6 +462,11 @@
   background: transparent;
   display: inline-block;
   vertical-align: baseline;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-item[data-simple-mode="true"] .x-ov-suggestion-title {
+  flex: 0 1 auto;
+  min-width: 0;
 }
 
 :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-mark {
@@ -448,7 +500,7 @@
   overflow: hidden;
   color: var(--x-ov-text, #111827);
   font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  font-size: 14px;
+  font-size: var(--lumno-font-size-lg, 14px);
   font-weight: 500;
   line-height: 18px;
   text-overflow: ellipsis;
@@ -462,7 +514,7 @@
 
 :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-command-description {
   color: var(--x-ov-subtext, #6B7280);
-  font-size: 12px;
+  font-size: var(--lumno-font-size-xs, 11px);
   font-weight: 400;
   line-height: 15px;
 }
@@ -470,7 +522,7 @@
 :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-reason {
   all: unset;
   color: var(--x-ov-subtext, #6B7280);
-  font-size: 12px;
+  font-size: var(--lumno-font-size-xs, 11px);
   font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   line-height: 1.2;
   white-space: nowrap;
@@ -484,7 +536,7 @@
 :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-bookmark-path {
   all: unset;
   color: var(--x-ov-link, #2563EB);
-  font-size: 12px;
+  font-size: var(--lumno-font-size-sm, 12px);
   font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   text-decoration: none;
   white-space: nowrap;
@@ -502,7 +554,7 @@
 :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-url-line {
   all: unset;
   color: var(--x-ov-link, #2563EB);
-  font-size: 12px;
+  font-size: var(--lumno-font-size-sm, 12px);
   font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   text-decoration: none;
   display: inline-block;
@@ -516,18 +568,23 @@
   padding: 0;
 }
 
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-item[data-simple-mode="true"] .x-ov-suggestion-url-line {
+  max-width: none;
+  flex: 1 4 auto;
+  min-width: 0;
+}
+
 :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-tab-rank-debug {
   all: unset;
   display: inline-flex;
   align-items: center;
   margin-left: 8px;
   padding: 1px 6px;
-  border-radius: 999px;
-  --lumno-corner-shape: round;
+  border-radius: var(--lumno-radius-pill, 999px);
   color: var(--x-ov-subtext, #6B7280);
   background: color-mix(in srgb, var(--x-ov-bg, #FFFFFF) 70%, #94A3B8 30%);
   border: 1px solid color-mix(in srgb, var(--x-ov-border, rgba(0, 0, 0, 0.08)) 75%, #94A3B8 25%);
-  font-size: 12px;
+  font-size: var(--lumno-font-size-2xs, 10px);
   font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   line-height: 1.2;
   white-space: nowrap;
@@ -538,11 +595,11 @@
 :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-source-tag {
   all: unset;
   background: var(--x-ov-suggestion-source-tag-bg, var(--x-ov-tag-bg, #F3F4F6));
-  color: var(--x-ov-suggestion-source-tag-text, var(--x-ov-tag-text, #6B7280));
-  font-size: 12px;
+  color: var(--x-ov-suggestion-source-tag-text, var(--x-ov-tag-text, #667085));
+  font-size: var(--lumno-font-size-2xs, 10px);
   font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   padding: 4px 6px;
-  border-radius: 8px;
+  border-radius: var(--lumno-radius-md, 8px);
   box-sizing: border-box;
   line-height: 1.2;
   text-decoration: none;
@@ -564,7 +621,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 6px;
+  gap: 0;
   flex-shrink: 0;
   min-height: var(--x-ov-suggestion-action-height, 26px);
   box-sizing: border-box;
@@ -621,12 +678,11 @@
   gap: 6px;
   background: var(--x-ext-tag-bg, #EEF6FF);
   color: var(--x-ext-tag-text, #1E3A8A);
-  border: 1px solid var(--x-ext-tag-border, #BFDBFE);
-  height: var(--x-ov-suggestion-action-height, 26px);
-  padding: 0 4px 0 8px;
-  border-radius: 999px;
-  --lumno-corner-shape: round;
-  font-size: 12px;
+  border: 0;
+  height: auto;
+  padding: 4px 8px;
+  border-radius: var(--lumno-radius-md, 8px);
+  font-size: var(--lumno-font-size-xs, 11px);
   font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   line-height: 1;
   text-decoration: none;
@@ -635,6 +691,21 @@
   box-sizing: border-box;
   vertical-align: middle;
   white-space: nowrap;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-action-tag[data-action="search"] {
+  justify-content: center;
+  gap: 0;
+  padding: 4px 8px;
+}
+
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-item[data-simple-mode="true"] .x-ov-action-tag {
+  height: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--x-ov-subtext, #6B7280);
 }
 
 :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-right[data-action-column="true"] .x-ov-suggestion-action-tags[data-visible="true"],
@@ -666,33 +737,14 @@
   white-space: nowrap;
 }
 
-:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-action-tag__key {
-  all: unset;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  flex: 0 0 auto;
-  height: var(--x-ov-suggestion-key-height, 18px);
-  padding: 0 7px;
-  border-radius: 6px;
-  background: var(--x-ext-key-bg, #FFFFFF);
-  color: var(--x-ext-key-text, #1E3A8A);
-  border: 1px solid var(--x-ext-key-border, #BFDBFE);
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.12);
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 1;
-  box-sizing: border-box;
-}
-
 :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-action-button {
   all: unset;
   background: var(--x-ov-suggestion-action-button-bg, transparent);
   color: var(--x-ov-suggestion-action-button-text, var(--x-ov-subtext, #9CA3AF));
-  font-size: 12px;
+  font-size: var(--lumno-font-size-sm, 12px);
   font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   cursor: pointer;
-  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 160ms ease;
+  transition: background-color var(--lumno-duration-lg, 0.2s) ease, border-color var(--lumno-duration-lg, 0.2s) ease, color var(--lumno-duration-lg, 0.2s) ease, transform var(--lumno-duration-sm, 160ms) ease;
   box-sizing: border-box;
   margin: 0;
   line-height: 1;
@@ -732,9 +784,18 @@
   padding: 0 var(--x-ov-suggestion-action-icon-end, 7px) 0 var(--x-ov-suggestion-action-button-start, 10px);
 }
 
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-item[data-simple-mode="false"] .x-ov-suggestion-visit-button {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  justify-content: flex-end;
+  text-align: right;
+}
+
 :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-switch-button {
   border: none;
-  border-radius: 6px;
+  border-radius: var(--lumno-radius-sm, 6px);
   height: var(--x-ov-suggestion-action-height, 26px);
   padding: 0 var(--x-ov-suggestion-action-icon-end, 7px) 0 var(--x-ov-suggestion-action-button-start, 10px);
 }
@@ -759,22 +820,26 @@
   vertical-align: baseline;
   opacity: 0;
   pointer-events: none;
-  transition: width 180ms ease, margin-left 180ms ease, opacity 160ms ease;
+  transition: width var(--lumno-duration-md, 180ms) ease, margin-left var(--lumno-duration-md, 180ms) ease, opacity var(--lumno-duration-sm, 160ms) ease;
 }
 
 :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-utility-slot[data-visible="true"] {
-  width: var(--x-ov-suggestion-action-height, 26px);
-  margin-left: 0;
+  width: 22px;
+  margin-left: 3px;
   opacity: 1;
   pointer-events: auto;
 }
 
+:is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-utility-slot[data-visible="true"][data-leading="true"] {
+  margin-left: 10px;
+}
+
 :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-utility-button {
   all: unset;
-  width: 24px;
-  height: 24px;
-  flex: 0 0 24px;
-  border-radius: 8px;
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+  border-radius: 7px;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -794,7 +859,7 @@
   font-size: 0;
   cursor: pointer;
   transform: translateX(4px);
-  transition: background-color 140ms ease, border-color 140ms ease, color 140ms ease, transform 160ms ease, opacity 160ms ease, visibility 160ms ease;
+  transition: background-color var(--lumno-duration-xs, 140ms) ease, border-color var(--lumno-duration-xs, 140ms) ease, color var(--lumno-duration-xs, 140ms) ease, transform var(--lumno-duration-sm, 160ms) ease, opacity var(--lumno-duration-sm, 160ms) ease, visibility var(--lumno-duration-sm, 160ms) ease;
 }
 
 :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-utility-button[data-visible="true"] {
@@ -817,7 +882,7 @@
   justify-content: center;
   line-height: 1;
   transform: none;
-  transition: transform 160ms ease;
+  transition: transform var(--lumno-duration-sm, 160ms) ease;
   pointer-events: none;
   cursor: inherit;
 }
@@ -830,4 +895,25 @@
 :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-utility-button:focus-visible {
   outline: 2px solid currentColor;
   outline-offset: 2px;
+}
+
+/* Keep this after the component resets above: `all: unset` also resets corner-shape.
+   The capsule visit button keeps round ends. */
+@supports (corner-shape: superellipse(1.25)) {
+  :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestions-container,
+  :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-empty-state,
+  :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-item,
+  :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-icon-slot,
+  :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-source-tag,
+  :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-action-tag,
+  :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-action-button,
+  :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-number-shortcut,
+  :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-utility-button,
+  :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-close-other-tabs {
+    corner-shape: superellipse(1.25);
+  }
+
+  :is(#_x_extension_overlay_2024_unique_, #_x_extension_onboarding_overlay_demo_2026_unique_) .x-ov-suggestion-visit-button {
+    corner-shape: round;
+  }
 }

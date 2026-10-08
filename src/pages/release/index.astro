@@ -1,9 +1,11 @@
 ---
 import SeoHead from "../../components/SeoHead.astro";
+import PageFooter from "../../components/site/PageFooter.astro";
 import SiteHeader from "../../components/site/SiteHeader.astro";
 import "../../styles/globals.css";
 import "../../styles/home.css";
-import { fetchReleases, formatDate, parseReleaseBody } from "../../lib/releases";
+import "../../styles/locale-fonts.css";
+import { fetchReleases, formatDate, isReleaseNoteLocale, parseReleaseBody } from "../../lib/releases";
 import { getStoreVersions } from "../../lib/store-versions";
 import { marked } from "marked";
 import {
@@ -17,7 +19,16 @@ import {
   getOpenGraphLocale,
 } from "../../lib/seo";
 import { buildEntryContextConfig } from "../../lib/entry-context";
-import { DEFAULT_LOCALE, buildLocalizedPath, buildRouteLanguageMap, type SupportedLocale } from "../../lib/locales";
+import LocaleNormalizer from "../../components/LocaleNormalizer.astro";
+import {
+  DEFAULT_LOCALE,
+  LOCALE_CONFIG,
+  SUPPORTED_UI_LANGUAGES,
+  buildLocalizedPath,
+  buildRouteLanguageMap,
+  getLocaleScript,
+  type SupportedLocale,
+} from "../../lib/locales";
 import { CHROME_STORE_URL, GITHUB_URL } from "../../lib/site-links";
 
 interface Props {
@@ -37,76 +48,228 @@ const routeLanguageMap = Astro.props.routeLanguageMap || buildRouteLanguageMap("
 const entryContextConfig = buildEntryContextConfig(latestReleaseVersion);
 const uiLocale = forcedLocale || DEFAULT_LOCALE;
 const homeHref = buildLocalizedPath(uiLocale, "/");
-const releaseContentLocale = uiLocale === "zh-TW" ? "zh-TW" : uiLocale === "zh-CN" ? "zh-CN" : "en";
-const alternateLinks = buildAlternateLinks(routeLanguageMap, "/release/");
+// GitHub Releases carry notes in Simplified Chinese and English (Traditional is converted);
+// other languages read the English notes under their own interface.
+const releaseContentLocale = isReleaseNoteLocale(uiLocale) ? uiLocale : "en";
+// A page whose notes are another language's would only duplicate that page in search,
+// so those routes stay out of the index and out of every page's hreflang list.
+const indexedReleaseLanguageMap = Object.fromEntries(
+  Object.entries(routeLanguageMap).filter(([locale]) => isReleaseNoteLocale(locale)),
+);
+const alternateLinks = buildAlternateLinks(indexedReleaseLanguageMap, "/release/");
 const ogLocale = getOpenGraphLocale(uiLocale);
-const pageTitleByLocale = {
-  "zh-CN": latestReleaseVersion
-    ? `Lumno 更新日志｜v${latestReleaseVersion} 与浏览器命令栏发布记录`
-    : "Lumno 更新日志｜浏览器命令栏与新标签页发布记录",
-  "zh-TW": latestReleaseVersion
-    ? `Lumno 更新日誌｜v${latestReleaseVersion} 與瀏覽器命令欄發布記錄`
-    : "Lumno 更新日誌｜瀏覽器命令欄與新分頁發布記錄",
-  en: latestReleaseVersion
-    ? `Lumno Changelog | v${latestReleaseVersion} Browser Command Bar Release Notes`
-    : "Lumno Changelog | Browser Command Bar Release Notes",
+const v = latestReleaseVersion ? `v${latestReleaseVersion}` : "";
+const pageTitleByLocale: Record<SupportedLocale, string> = {
+  "zh-CN": v ? `Lumno 更新日志｜${v} 与浏览器命令栏发布记录` : "Lumno 更新日志｜浏览器命令栏与新标签页发布记录",
+  "zh-TW": v ? `Lumno 更新日誌｜${v} 與瀏覽器命令列發布紀錄` : "Lumno 更新日誌｜瀏覽器命令列與新分頁發布紀錄",
+  en: v ? `Lumno Changelog | ${v} Browser Command Bar Release Notes` : "Lumno Changelog | Browser Command Bar Release Notes",
+  ja: v ? `Lumno 更新履歴｜${v} とこれまでのリリースノート` : "Lumno 更新履歴｜コマンドバーと新しいタブのリリースノート",
+  ko: v ? `Lumno 업데이트 내역 | ${v} 릴리스 노트` : "Lumno 업데이트 내역 | 커맨드 바와 새 탭 릴리스 노트",
+  de: v ? `Lumno-Versionshinweise | ${v} und alle Updates` : "Lumno-Versionshinweise | Befehlsleiste und neuer Tab",
+  fr: v ? `Notes de version de Lumno | ${v} et mises à jour` : "Notes de version de Lumno | Barre de commande et nouvel onglet",
+  es: v ? `Notas de la versión de Lumno | ${v} y novedades` : "Notas de la versión de Lumno | Barra de comandos y nueva pestaña",
+  "pt-BR": v ? `Notas de versão do Lumno | ${v} e novidades` : "Notas de versão do Lumno | Barra de comandos e nova aba",
+  ru: v ? `История изменений Lumno — ${v} и все обновления` : "История изменений Lumno — командная панель и новая вкладка",
 };
-const pageDescriptionByLocale = {
-  "zh-CN": latestReleaseVersion
-    ? `查看 Lumno 浏览器命令栏、聚焦搜索与极简新标签页的版本更新、功能发布与问题修复。当前最新版本为 v${latestReleaseVersion}。`
-    : "查看 Lumno 浏览器命令栏、聚焦搜索与极简新标签页的版本更新、功能发布与问题修复。",
-  "zh-TW": latestReleaseVersion
-    ? `查看 Lumno 瀏覽器命令欄、聚焦搜尋與極簡新分頁的版本更新、功能發布與問題修復。目前最新版本為 v${latestReleaseVersion}。`
-    : "查看 Lumno 瀏覽器命令欄、聚焦搜尋與極簡新分頁的版本更新、功能發布與問題修復。",
-  en: latestReleaseVersion
-    ? `Follow Lumno release notes for focus search, browser command bar, and minimalist new tab updates. The latest version is v${latestReleaseVersion}.`
-    : "Follow Lumno release notes for focus search, browser command bar, and minimalist new tab updates.",
+const pageDescriptionByLocale: Record<SupportedLocale, string> = {
+  "zh-CN": `查看 Lumno 浏览器命令栏、聚焦搜索与极简新标签页的版本更新、新功能与问题修复。${v ? `当前最新版本为 ${v}。` : ""}`,
+  "zh-TW": `查看 Lumno 瀏覽器命令列、聚焦搜尋與極簡新分頁的版本更新、新功能與錯誤修正。${v ? `目前最新版本為 ${v}。` : ""}`,
+  en: `Follow Lumno release notes for focus search, browser command bar, and minimalist new tab updates.${v ? ` The latest version is ${v}.` : ""}`,
+  ja: `Lumno のコマンドバー、タブ検索、新しいタブの新機能と不具合の修正をまとめています。${v ? `最新バージョンは ${v} です。` : ""}`,
+  ko: `Lumno 커맨드 바, 탭 검색, 새 탭의 새 기능과 버그 수정 내역입니다.${v ? ` 최신 버전은 ${v}입니다.` : ""}`,
+  de: `Neue Funktionen und Fehlerbehebungen für Lumnos Befehlsleiste, Tab-Suche und neuen Tab.${v ? ` Aktuelle Version: ${v}.` : ""}`,
+  fr: `Nouveautés et corrections de la barre de commande, de la recherche d’onglets et du nouvel onglet de Lumno.${v ? ` Dernière version : ${v}.` : ""}`,
+  es: `Novedades y correcciones de la barra de comandos, la búsqueda de pestañas y la nueva pestaña de Lumno.${v ? ` Última versión: ${v}.` : ""}`,
+  "pt-BR": `Novidades e correções da barra de comandos, da pesquisa de abas e da nova aba do Lumno.${v ? ` Versão mais recente: ${v}.` : ""}`,
+  ru: `Новые функции и исправления командной панели, поиска по вкладкам и новой вкладки Lumno.${v ? ` Последняя версия — ${v}.` : ""}`,
 };
-const pageTitle = pageTitleByLocale[uiLocale] || pageTitleByLocale[DEFAULT_LOCALE];
-const pageDescription = pageDescriptionByLocale[uiLocale] || pageDescriptionByLocale[DEFAULT_LOCALE];
-const pageKeywords = buildKeywords([
-  "Lumno 更新日志",
-  "Lumno changelog",
-  "浏览器命令栏更新",
-  "新标签页更新",
-  "Dia 支持",
-  "Arc 浏览器迁移",
-]);
-const initialUi = {
+const pageTitle = pageTitleByLocale[uiLocale];
+const pageDescription = pageDescriptionByLocale[uiLocale];
+const pageKeywords = buildKeywords(
+  ["Lumno 更新日志", "Lumno changelog", "浏览器命令栏更新", "新标签页更新", "Dia 支持", "Arc 浏览器迁移"],
+  uiLocale,
+);
+
+/*
+ * Interface strings for the notes. The extension can open this page in any
+ * language, so the inline runtime below receives the whole table.
+ * {version} is the version the extension just updated to.
+ */
+type ReleaseMessages = {
+  banner_title: string;
+  banner_title_ext: string;
+  banner_title_web: string;
+  language_select_aria: string;
+  features_label: string;
+  bug_fixes_label: string;
+  github_published: string;
+  chrome_published: string;
+  chrome_reviewing: string;
+  read_on_github: string;
+  no_releases_title: string;
+  no_releases_desc: string;
+};
+const RELEASE_MESSAGES: Record<SupportedLocale, ReleaseMessages> = {
   "zh-CN": {
-    bannerTitle: "Lumno 更新日志",
-    readOnGithub: "在 GitHub 查看",
-    noReleasesTitle: "暂无发布记录",
-    noReleasesDesc: "创建 GitHub Release 后，将在下一次部署时自动显示。",
-    featuresLabel: "新功能",
-    bugFixesLabel: "问题修复",
-    githubPublished: "已发布",
-    chromePublished: "已发布",
-    chromeReviewing: "商店待更新",
+    banner_title: "已更新到最新版本！",
+    banner_title_ext: "已更新到 {version}",
+    banner_title_web: "Lumno 更新日志",
+    language_select_aria: "选择语言",
+    features_label: "新功能",
+    bug_fixes_label: "问题修复",
+    github_published: "已发布",
+    chrome_published: "已上架",
+    chrome_reviewing: "商店待更新",
+    read_on_github: "在 GitHub 查看",
+    no_releases_title: "暂无发布记录",
+    no_releases_desc: "发布 GitHub Release 后，下一次部署时会自动显示在这里。",
   },
   "zh-TW": {
-    bannerTitle: "Lumno 更新日誌",
-    readOnGithub: "在 GitHub 查看",
-    noReleasesTitle: "暫無發布記錄",
-    noReleasesDesc: "建立 GitHub Release 後，將在下一次部署時自動顯示。",
-    featuresLabel: "新功能",
-    bugFixesLabel: "問題修復",
-    githubPublished: "已發布",
-    chromePublished: "已發布",
-    chromeReviewing: "商店待更新",
+    banner_title: "已更新到最新版本！",
+    banner_title_ext: "已更新到 {version}",
+    banner_title_web: "Lumno 更新日誌",
+    language_select_aria: "選擇語言",
+    features_label: "新功能",
+    bug_fixes_label: "錯誤修正",
+    github_published: "已發布",
+    chrome_published: "已上架",
+    chrome_reviewing: "商店尚未更新",
+    read_on_github: "在 GitHub 查看",
+    no_releases_title: "目前還沒有發布紀錄",
+    no_releases_desc: "發布 GitHub Release 後，下次部署時就會顯示在這裡。",
   },
   en: {
-    bannerTitle: "Lumno Release Notes",
-    readOnGithub: "View on GitHub",
-    noReleasesTitle: "No releases yet",
-    noReleasesDesc: "Publish a GitHub Release and it will appear here after the next deploy.",
-    featuresLabel: "Features",
-    bugFixesLabel: "Bug Fixes",
-    githubPublished: "Published",
-    chromePublished: "Published",
-    chromeReviewing: "Awaiting store update",
+    banner_title: "You’re up to date!",
+    banner_title_ext: "You’re on {version}",
+    banner_title_web: "Lumno Release Notes",
+    language_select_aria: "Choose language",
+    features_label: "New features",
+    bug_fixes_label: "Bug fixes",
+    github_published: "Published",
+    chrome_published: "Live in store",
+    chrome_reviewing: "Store update pending",
+    read_on_github: "View on GitHub",
+    no_releases_title: "No releases yet",
+    no_releases_desc: "Publish a GitHub Release and it will appear here after the next deploy.",
   },
-}[uiLocale];
+  ja: {
+    banner_title: "最新バージョンになりました！",
+    banner_title_ext: "{version} にアップデートしました",
+    banner_title_web: "Lumno 更新履歴",
+    language_select_aria: "言語を選択",
+    features_label: "新機能",
+    bug_fixes_label: "不具合の修正",
+    github_published: "公開済み",
+    chrome_published: "ストア公開中",
+    chrome_reviewing: "ストア反映待ち",
+    read_on_github: "GitHub で見る",
+    no_releases_title: "リリースはまだありません",
+    no_releases_desc: "GitHub Release を公開すると、次回のデプロイ後にここに表示されます。",
+  },
+  ko: {
+    banner_title: "최신 버전으로 업데이트되었습니다!",
+    banner_title_ext: "{version} 업데이트 완료",
+    banner_title_web: "Lumno 업데이트 내역",
+    language_select_aria: "언어 선택",
+    features_label: "새 기능",
+    bug_fixes_label: "버그 수정",
+    github_published: "출시됨",
+    chrome_published: "스토어 반영됨",
+    chrome_reviewing: "스토어 반영 대기",
+    read_on_github: "GitHub에서 보기",
+    no_releases_title: "아직 출시된 버전이 없습니다",
+    no_releases_desc: "GitHub Release를 게시하면 다음 배포 후 여기에 표시됩니다.",
+  },
+  de: {
+    banner_title: "Du bist auf dem neuesten Stand!",
+    banner_title_ext: "Aktualisiert auf {version}",
+    banner_title_web: "Lumno-Versionshinweise",
+    language_select_aria: "Sprache wählen",
+    features_label: "Neue Funktionen",
+    bug_fixes_label: "Fehlerbehebungen",
+    github_published: "Veröffentlicht",
+    chrome_published: "Im Store",
+    chrome_reviewing: "Store-Update ausstehend",
+    read_on_github: "Auf GitHub ansehen",
+    no_releases_title: "Noch keine Versionen",
+    no_releases_desc: "Veröffentliche ein GitHub-Release – nach dem nächsten Deploy erscheint es hier.",
+  },
+  fr: {
+    banner_title: "Vous êtes à jour !",
+    banner_title_ext: "Vous utilisez désormais la {version}",
+    banner_title_web: "Notes de version de Lumno",
+    language_select_aria: "Choisir la langue",
+    features_label: "Nouveautés",
+    bug_fixes_label: "Corrections de bugs",
+    github_published: "Publiée",
+    chrome_published: "Disponible sur le Store",
+    chrome_reviewing: "En attente sur le Store",
+    read_on_github: "Voir sur GitHub",
+    no_releases_title: "Aucune version pour l’instant",
+    no_releases_desc: "Publiez une release GitHub : elle apparaîtra ici après le prochain déploiement.",
+  },
+  es: {
+    banner_title: "¡Ya tienes la última versión!",
+    banner_title_ext: "Actualizado a la {version}",
+    banner_title_web: "Notas de la versión de Lumno",
+    language_select_aria: "Elegir idioma",
+    features_label: "Novedades",
+    bug_fixes_label: "Correcciones",
+    github_published: "Publicada",
+    chrome_published: "En la tienda",
+    chrome_reviewing: "Pendiente en la tienda",
+    read_on_github: "Ver en GitHub",
+    no_releases_title: "Aún no hay versiones",
+    no_releases_desc: "Publica una release en GitHub y aparecerá aquí tras el próximo despliegue.",
+  },
+  "pt-BR": {
+    banner_title: "Você está na versão mais recente!",
+    banner_title_ext: "Atualizado para a {version}",
+    banner_title_web: "Notas de versão do Lumno",
+    language_select_aria: "Escolher idioma",
+    features_label: "Novidades",
+    bug_fixes_label: "Correções",
+    github_published: "Publicada",
+    chrome_published: "Na loja",
+    chrome_reviewing: "Aguardando a loja",
+    read_on_github: "Ver no GitHub",
+    no_releases_title: "Nenhuma versão ainda",
+    no_releases_desc: "Publique uma release no GitHub e ela aparecerá aqui depois do próximo deploy.",
+  },
+  ru: {
+    banner_title: "У вас последняя версия!",
+    banner_title_ext: "Обновлено до {version}",
+    banner_title_web: "История изменений Lumno",
+    language_select_aria: "Выбрать язык",
+    features_label: "Новые функции",
+    bug_fixes_label: "Исправления",
+    github_published: "Опубликовано",
+    chrome_published: "В магазине",
+    chrome_reviewing: "Ждёт обновления в магазине",
+    read_on_github: "Открыть на GitHub",
+    no_releases_title: "Пока нет выпусков",
+    no_releases_desc: "Опубликуйте релиз на GitHub — он появится здесь после следующего деплоя.",
+  },
+};
+// Language names are the same everywhere (each in its own language), so every locale shares them.
+const languageMessages = Object.fromEntries(
+  LOCALE_CONFIG.map((item) => [`language_${item.code.toLowerCase().replace("-", "_")}`, item.label]),
+);
+const i18nMessages = Object.fromEntries(
+  SUPPORTED_UI_LANGUAGES.map((locale) => [locale, { ...languageMessages, ...RELEASE_MESSAGES[locale] }]),
+);
+const uiMessages = RELEASE_MESSAGES[uiLocale];
+const initialUi = {
+  bannerTitle: uiMessages.banner_title_web,
+  readOnGithub: uiMessages.read_on_github,
+  noReleasesTitle: uiMessages.no_releases_title,
+  noReleasesDesc: uiMessages.no_releases_desc,
+  featuresLabel: uiMessages.features_label,
+  bugFixesLabel: uiMessages.bug_fixes_label,
+  githubPublished: uiMessages.github_published,
+  chromePublished: uiMessages.chrome_published,
+  chromeReviewing: uiMessages.chrome_reviewing,
+};
 const releaseItemListSchema = releases.length
   ? buildItemListSchema({
       name: pageTitle,
@@ -197,6 +360,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <LocaleNormalizer />
     {
       !forcedLocale && (
         <script is:inline define:vars={{ routeLanguageMap, entryKeys: entryContextConfig.extensionEntryKeys }}>
@@ -204,16 +368,6 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
             // Each route renders only its own language. The default route stays on zh-CN for
             // first-time web visitors and crawlers; a saved choice, or the browser language when
             // the extension opens this page after an update, moves to the localized route before paint.
-            const normalizeLocale = (locale) => {
-              const raw = String(locale || "").trim().toLowerCase();
-              if (raw.startsWith("zh")) {
-                return raw.includes("tw") || raw.includes("hk") || raw.includes("mo") || raw.includes("hant")
-                  ? "zh-TW"
-                  : "zh-CN";
-              }
-              return "en";
-            };
-
             let storedMode = "";
             try {
               storedMode = String(window.localStorage.getItem("_x_extension_language_2024_unique_") || "").trim();
@@ -227,7 +381,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
 
             const browserLanguage = (Array.isArray(navigator.languages) && navigator.languages[0]) || navigator.language || "en";
             const mode = storedMode && storedMode.toLowerCase() !== "system" ? storedMode : browserLanguage;
-            const targetPath = routeLanguageMap[normalizeLocale(mode)];
+            const targetPath = routeLanguageMap[window.__lumnoNormalizeLocale(mode, "en")];
             if (targetPath && window.location.pathname !== targetPath) {
               window.location.replace(`${targetPath}${window.location.search}${window.location.hash}`);
             }
@@ -242,6 +396,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
       keywords={pageKeywords}
       alternates={alternateLinks}
       locale={ogLocale}
+      noindex={!isReleaseNoteLocale(uiLocale)}
       type="article"
       structuredData={structuredData}
     />
@@ -301,13 +456,8 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         font: inherit;
       }
 
-      body[data-release-locale="en"] {
-        font-family: "Open Sans", "Segoe UI", system-ui, sans-serif;
-      }
-
-      body[data-release-locale="zh-CN"],
-      body[data-release-locale="zh-TW"] {
-        font-family: "Open Sans", "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif;
+      body[data-release-locale] {
+        font-family: "Open Sans", var(--font-cjk, "PingFang SC", "Microsoft YaHei"), "Segoe UI", system-ui, sans-serif;
       }
 
       .container {
@@ -375,7 +525,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
 
       .banner-title {
         margin: 0;
-        font-family: "Open Sans", "PingFang SC", "Hiragino Sans GB", "Noto Sans CJK SC", "Microsoft YaHei", sans-serif;
+        font-family: "Open Sans", var(--font-cjk, "PingFang SC", "Microsoft YaHei"), sans-serif;
         font-size: clamp(32px, 5.2vw, 40px);
         font-weight: 500;
         line-height: 1;
@@ -812,7 +962,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
       }
     </style>
   </head>
-  <body class="has-nav-install is-nav-install-settled" data-locale={uiLocale} data-release-locale={uiLocale} data-release-content-locale={releaseContentLocale}>
+  <body class="has-nav-install is-nav-install-settled" data-locale={uiLocale} data-script={getLocaleScript(uiLocale)} data-release-locale={uiLocale} data-release-content-locale={releaseContentLocale}>
     <SiteHeader locale={uiLocale} routeLanguageMap={routeLanguageMap} analyticsScope="release" handoff=".top-banner" keepInstall />
 
     <main class="container">
@@ -946,107 +1096,34 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         }
       </section>
     </main>
+    <!-- The homepage footer: crawlable links to every page and language. -->
+    <PageFooter locale={uiLocale} routeLanguageMap={routeLanguageMap} analyticsScope="release" />
     <script>
       import "../../scripts/language-preference";
       import "../../scripts/language-runtime";
     </script>
-    <script is:inline define:vars={{ forcedLocale, routeLanguageMap, pageTitleByLocale, entryContextConfig }}>
+    <script is:inline define:vars={{ forcedLocale, routeLanguageMap, pageTitleByLocale, entryContextConfig, i18nMessages }}>
       const LANGUAGE_STORAGE_KEY = "_x_extension_language_2024_unique_";
       const FORCED_LOCALE = forcedLocale;
       const ROUTE_LANGUAGE_MAP = routeLanguageMap;
       const ENTRY_CONTEXT_CONFIG = entryContextConfig;
       const FALLBACK_LOCALE = "zh-CN";
-      const I18N_MESSAGES = {
-        "zh-CN": {
-          page_title_ui: "更新日志｜Lumno 聚焦搜索&新标签页",
-          page_title_ui_ext: "Lumno 已更新至 {version}",
-          page_title: "Lumno 更新日志｜浏览器命令栏与新标签页发布记录",
-          page_title_ext: "Lumno 已更新至 {version}",
-          banner_title: "已更新至新版本！",
-          banner_title_ext: "您已更新至 {version}",
-          banner_title_web: "Lumno 更新日志",
-          language_select_aria: "语言",
-          language_zh_cn: "简体中文",
-          language_zh_tw: "繁體中文",
-          language_en: "English",
-          features_label: "新功能",
-          bug_fixes_label: "问题修复",
-          github_published: "已发布",
-          github_unpublished: "未发布",
-          chrome_published: "已发布",
-          chrome_reviewing: "商店待更新",
-          read_on_github: "在 GitHub 查看",
-          no_releases_title: "暂无发布记录",
-          no_releases_desc: "创建 GitHub Release 后，将在下一次部署时自动显示。"
-        },
-        "zh-TW": {
-          page_title_ui: "更新日誌｜Lumno 聚焦搜尋&新分頁",
-          page_title_ui_ext: "Lumno 已更新至 {version}",
-          page_title: "Lumno 更新日誌｜瀏覽器命令欄與新分頁發布記錄",
-          page_title_ext: "Lumno 已更新至 {version}",
-          banner_title: "已更新至新版本！",
-          banner_title_ext: "您已更新至 {version}",
-          banner_title_web: "Lumno 更新日誌",
-          language_select_aria: "語言",
-          language_zh_cn: "簡體中文",
-          language_zh_tw: "繁體中文",
-          language_en: "English",
-          features_label: "新功能",
-          bug_fixes_label: "問題修復",
-          github_published: "已發布",
-          github_unpublished: "未發布",
-          chrome_published: "已發布",
-          chrome_reviewing: "商店待更新",
-          read_on_github: "在 GitHub 查看",
-          no_releases_title: "暫無發布記錄",
-          no_releases_desc: "建立 GitHub Release 後，將在下一次部署時自動顯示。"
-        },
-        en: {
-          page_title_ui: "Changelog｜Lumno - The Ultimate Browser Command Bar",
-          page_title_ui_ext: "Lumno Updated to {version}",
-          page_title: "Lumno Changelog | Browser Command Bar Release Notes",
-          page_title_ext: "Lumno Updated to {version}",
-          banner_title: "You're up to date!",
-          banner_title_ext: "Updated to {version}",
-          banner_title_web: "Lumno Release Notes",
-          language_select_aria: "Language",
-          language_zh_cn: "简体中文",
-          language_zh_tw: "繁體中文",
-          language_en: "English",
-          features_label: "Features",
-          bug_fixes_label: "Bug Fixes",
-          github_published: "Published",
-          github_unpublished: "Not published",
-          chrome_published: "Published",
-          chrome_reviewing: "Awaiting store update",
-          read_on_github: "View on GitHub",
-          no_releases_title: "No releases yet",
-          no_releases_desc: "Publish a GitHub Release and it will appear here after the next deploy."
-        }
-      };
-
-      function normalizeLocale(locale) {
-        const raw = String(locale || "").trim().toLowerCase();
-        if (!raw) return "en";
-        if (raw.startsWith("zh")) {
-          if (raw.includes("tw") || raw.includes("hk") || raw.includes("mo") || raw.includes("hant")) {
-            return "zh-TW";
-          }
-          return "zh-CN";
-        }
-        return "en";
-      }
+      const I18N_MESSAGES = i18nMessages;
 
       function getSystemLocale() {
         const firstPreferred = Array.isArray(navigator.languages) && navigator.languages.length ? navigator.languages[0] : navigator.language;
-        return normalizeLocale(firstPreferred || "en");
+        return window.__lumnoNormalizeLocale(firstPreferred, "en");
       }
 
       function normalizeLanguageMode(mode) {
         const raw = String(mode || "").trim();
         if (!raw) return getSystemLocale();
         if (raw.toLowerCase() === "system") return getSystemLocale();
-        return normalizeLocale(raw);
+        return window.__lumnoNormalizeLocale(raw, "en");
+      }
+
+      function getReleaseContentLocale(locale) {
+        return locale === "zh-CN" || locale === "zh-TW" ? locale : "en";
       }
 
       function getMessage(locale, key) {
@@ -1104,7 +1181,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         document.title = pageTitleByLocale[resolvedLocale] || pageTitleByLocale[FALLBACK_LOCALE];
         document.documentElement.lang = resolvedLocale;
         document.body.setAttribute("data-release-locale", resolvedLocale);
-        document.body.setAttribute("data-release-content-locale", resolvedLocale === "zh-TW" ? "zh-TW" : resolvedLocale === "zh-CN" ? "zh-CN" : "en");
+        document.body.setAttribute("data-release-content-locale", getReleaseContentLocale(resolvedLocale));
         const entryContext = INITIAL_ENTRY_CONTEXT;
         document.body.setAttribute("data-release-entry", entryContext.isExtensionEntry ? "ext" : "web");
 
@@ -1112,9 +1189,6 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
           const key = node.getAttribute("data-i18n");
           if (!key) return;
           let value = getMessage(resolvedLocale, key);
-          if (key === "page_title_ui" && entryContext.isExtensionEntry) {
-            value = withVersion(getMessage(resolvedLocale, "page_title_ui_ext"), entryContext.version);
-          }
           if (key === "banner_title") {
             // Web visitors (and crawlers) get a descriptive heading; the celebratory copy is only for update entries.
             value = !entryContext.isExtensionEntry
@@ -1154,7 +1228,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         if (!I18N_MESSAGES[normalizedMode]) {
           document.documentElement.lang = normalizedMode;
           document.body.setAttribute("data-release-locale", normalizedMode);
-          document.body.setAttribute("data-release-content-locale", normalizedMode === "zh-TW" ? "zh-TW" : normalizedMode === "zh-CN" ? "zh-CN" : "en");
+          document.body.setAttribute("data-release-content-locale", getReleaseContentLocale(normalizedMode));
           updateLanguageOptionState(normalizedMode);
           return;
         }

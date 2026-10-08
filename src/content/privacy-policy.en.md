@@ -5,6 +5,7 @@ This Privacy Policy ("this Policy") explains how the Lumno browser extension ("t
 - **Developer and controller:** Lumno is developed and maintained by an independent developer, Kubai087 (枯白啃设计), who is the controller of the processing described in this Policy.
 - **Contact:** [i@kubai.design](mailto:i@kubai.design). See Section 15.
 - **Effective date:** October 8, 2026.
+- **Governing language:** The Simplified Chinese version of this Policy governs. Other language versions are translations provided for convenience; if they differ, the Simplified Chinese version prevails.
 
 Lumno offers no accounts or cloud storage and runs no servers that store user data. Account sign-in, cloud sync, and product usage analytics were removed from the extension in version 0.9.40.
 
@@ -85,7 +86,7 @@ Wallpaper and quote downloads carry no cookies or referrer. Preview thumbnails i
 
 ### 4.5 Release notes and website resources
 
-- **Update notices:** after an update, the extension requests that version's release title from GitHub (`api.github.com`, or `github.com` as a fallback) to show an update notice. You can turn off "Update notice" in settings.
+- **Update notices:** after an update, the extension requests that version's release title from GitHub (`api.github.com`, or `github.com` as a fallback) to show an update notice. You can turn off "Update Prompts" in settings.
 - **Changelog page:** after an update, the extension may open the website's changelog. Its URL includes the entry source, the update reason, and the extension version, and Section 6 applies to that page.
 - **Feedback links:** when you open a feedback or community link, the extension fetches the community link configuration (`community-links.json`) and the community QR code image from the website.
 

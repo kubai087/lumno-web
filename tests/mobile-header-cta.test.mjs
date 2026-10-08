@@ -228,7 +228,7 @@ test("homepage navbar animates in the community action and reuses the CTA dialog
 
   assert.match(source, /<HomeNavGhostLinks[\s\S]*releaseHref=\{releaseHref\}[\s\S]*repositoryHref=\{GITHUB_URL\}[\s\S]*repositoryIssueHref=\{GITHUB_ISSUE_URL\}[\s\S]*repositoryPullRequestHref=\{GITHUB_PULL_REQUEST_URL\}[\s\S]*contactXHref=\{COMMUNITY_LINKS\.xUrl\}[\s\S]*contactXiaohongshuHref=\{COMMUNITY_LINKS\.xiaohongshuUrl\}[\s\S]*repositoryHomeLabel=\{content\.navRepositoryHome\}[\s\S]*communityLabel=\{content\.navCommunity\}[\s\S]*contactLabel=\{content\.navContact\}[\s\S]*contactMenuLabel=\{content\.navContactMenuAria\}[\s\S]*contactXLabel=\{content\.navContactX\}[\s\S]*contactXiaohongshuLabel=\{content\.navContactXiaohongshu\}[\s\S]*panelTitle=\{content\.qrcodeTitle\}[\s\S]*qrImageSrc=\{COMMUNITY_LINKS\.wechatQrImagePath\}/);
   assert.match(source, /<nav class="top-nav-actions"[\s\S]*?<HomeNavGhostLinks[\s\S]*?client:load[\s\S]*?<LanguageMenu/);
-  assert.match(content, /navCommunity: "反馈&功能许愿"/);
+  assert.match(content, /navCommunity: "反馈 & 功能许愿"/);
   assert.match(content, /navContact: "联系作者"/);
   assert.match(content, /navContactMenuAria: "打开作者主页"/);
   assert.match(content, /navContactX: "X"/);
@@ -240,11 +240,11 @@ test("homepage navbar animates in the community action and reuses the CTA dialog
   assert.match(content, /heroCommunityLabel: "反馈 & 功能许愿"/);
   assert.doesNotMatch(content, /heroCommunityLabel: "[^"]*\band\b/);
   assert.doesNotMatch(content, /navSupportOpenSource/);
-  assert.equal((ghostLinks.match(/<SettingsButton\b/g) || []).length, 3, "repository, links, and community actions should keep their dedicated button branches");
+  assert.equal((ghostLinks.match(/<SettingsButton\b/g) || []).length, 4, "repository, links, and the community action (QR dialog or Discord link) keep their dedicated button branches");
   assert.match(ghostLinks, /variant="ghost"/);
   assert.match(ghostLinks, /className="top-nav-ghost-button"/);
   assert.match(ghostLinks, /\{link\.label\}\s*<\/SettingsButton>/);
-  assert.match(ghostLinks, /value: "community"[\s\S]*communityAction: "community"[\s\S]*requiresPrimary: true,[\s\S]*value: "release"[\s\S]*value: "repository"[\s\S]*value: "contact"/);
+  assert.match(ghostLinks, /value: "community"[\s\S]*communityAction: communityHref \? undefined : "community"[\s\S]*requiresPrimary: true,[\s\S]*value: "release"[\s\S]*value: "repository"[\s\S]*value: "contact"/);
   assert.match(ghostLinks, /className="top-nav-repository-group"[\s\S]*href=\{link\.href!\}[\s\S]*triggerMode="icon"[\s\S]*triggerIconClass="ri-arrow-down-s-line"[\s\S]*items=\{repositoryActionItems\}/);
   assert.match(ghostLinks, /value: "repository-issue"[\s\S]*href: repositoryIssueHref[\s\S]*value: "repository-pull-request"[\s\S]*href: repositoryPullRequestHref/);
   assert.match(ghostLinks, /if \(link\.value === "repository"\) \{[\s\S]*children: mobileRepositoryActionItems,[\s\S]*if \(link\.value === "contact"\) \{[\s\S]*children: contactActionItems,/);
@@ -379,4 +379,15 @@ test("mobile release banner cannot expand wider than the viewport", () => {
     /@media \(max-width:\s*767px\)\s*\{[\s\S]*?\.top-banner\s*\{[^}]*min-height:\s*0;/,
     "release mobile banner should not let min-height and aspect-ratio force a wider box",
   );
+});
+
+test("community entries open the WeChat group in Chinese and Discord everywhere else", () => {
+  const community = fs.readFileSync(path.join(workspaceRoot, "src/lib/community.ts"), "utf8");
+  assert.match(community, /return locale\.startsWith\("zh"\) \? "wechat" : "discord";/);
+  const header = fs.readFileSync(path.join(workspaceRoot, "src/components/site/SiteHeader.astro"), "utf8");
+  assert.match(header, /communityHref=\{getCommunityExternalHref\(locale\)\}/);
+  const home = fs.readFileSync(path.join(workspaceRoot, "src/pages/index.astro"), "utf8");
+  assert.equal((home.match(/externalHref=\{communityExternalHref\}/g) || []).length, 2);
+  const payload = fs.readFileSync(path.join(workspaceRoot, "src/pages/community-links.json.ts"), "utf8");
+  assert.match(payload, /SUPPORTED_UI_LANGUAGES\.map\(\(locale\) => \[locale, getCommunityChannel\(locale\)\]\)/);
 });

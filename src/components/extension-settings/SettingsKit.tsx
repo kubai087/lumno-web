@@ -210,6 +210,8 @@ type SettingsButtonCommonProps = {
   children?: ReactNode;
   variant?: SettingsButtonVariant;
   iconClass?: string;
+  /** Raw SVG markup, inlined so it stays crisp in Safari; wins over iconClass. */
+  iconSvg?: string;
   iconPosition?: "start" | "end";
   className?: string;
 };
@@ -230,17 +232,23 @@ export function SettingsButton({
   children,
   variant = "secondary",
   iconClass,
+  iconSvg,
   iconPosition = "start",
   as = "button",
   href,
   className,
   ...buttonProps
 }: SettingsButtonProps) {
+  const icon = iconSvg ? (
+    <span className="lumno-settings-button-icon" aria-hidden="true" dangerouslySetInnerHTML={{ __html: iconSvg }} />
+  ) : iconClass ? (
+    <i className={iconClass} aria-hidden="true" />
+  ) : null;
   const content = (
     <>
-      {iconClass && iconPosition === "start" ? <i className={iconClass} aria-hidden="true" /> : null}
+      {iconPosition === "start" ? icon : null}
       {children}
-      {iconClass && iconPosition === "end" ? <i className={iconClass} aria-hidden="true" /> : null}
+      {iconPosition === "end" ? icon : null}
     </>
   );
   const classNames = joinClassNames(

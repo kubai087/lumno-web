@@ -1,15 +1,27 @@
 ---
 import type { HomeFaqItem } from "../../../lib/home-content";
+import TitlePair from "../TitlePair.astro";
+import { CommunityQrDialog } from "../CommunityQrDialog";
 import { SettingsButton } from "../../extension-settings/SettingsKit";
+import githubIcon from "../../../assets/home-icons/github-line.svg?raw";
+import wechatIcon from "../../../assets/home-icons/wechat-line.svg?raw";
 
 interface Props {
   title: string;
   askLabel: string;
   askHref: string;
+  /** With `qr` the button opens the WeChat QR dialog; otherwise it links to `href` (Discord). */
+  author: {
+    label: string;
+    ariaLabel: string;
+    href: string;
+    iconSvg: string;
+    qr?: { title: string; imageSrc: string; imageAlt: string; closeLabel: string };
+  };
   items: HomeFaqItem[];
 }
 
-const { title, askLabel, askHref, items } = Astro.props;
+const { title, askLabel, askHref, author, items } = Astro.props;
 
 /*
  * Answers are plain strings with two bits of inline markup: `code` for URLs and
@@ -35,22 +47,53 @@ function parseAnswer(answer: string): AnswerPart[] {
 <section id="faq" class="home-section faq" aria-labelledby="faq-title">
   <div class="faq__layout">
     <header class="faq__head">
-      <h2 id="faq-title" class="home-h2" data-reveal="text"><span>{title}</span></h2>
-      <SettingsButton
-        as="a"
-        variant="secondary"
-        className="hero-actions-button"
-        iconClass="ri-github-fill"
-        href={askHref}
-        target="_blank"
-        rel="noreferrer noopener"
-        data-analytics-event="open_github_repo"
-        data-analytics-category="cta"
-        data-analytics-label="home_faq_ask"
-      data-reveal
-      >
-        {askLabel}
-      </SettingsButton>
+      <h2 id="faq-title" class="home-h2" data-reveal="text"><TitlePair title={title} /></h2>
+      <div class="faq__actions" data-reveal>
+        <SettingsButton
+          as="a"
+          variant="secondary"
+          className="hero-actions-button"
+          iconSvg={githubIcon}
+          href={askHref}
+          target="_blank"
+          rel="noreferrer noopener"
+          data-analytics-event="open_github_repo"
+          data-analytics-category="cta"
+          data-analytics-label="home_faq_ask"
+        >
+          {askLabel}
+        </SettingsButton>
+        {author.qr ? (
+          <CommunityQrDialog
+            analyticsLabel="home_faq_author"
+            triggerLabel={author.label}
+            triggerAriaLabel={author.ariaLabel}
+            triggerIconSvg={wechatIcon}
+            title={author.qr.title}
+            qrImageSrc={author.qr.imageSrc}
+            qrImageAlt={author.qr.imageAlt}
+            closeLabel={author.qr.closeLabel}
+            triggerVariant="hero"
+            client:visible
+          />
+        ) : (
+          <SettingsButton
+            as="a"
+            variant="secondary"
+            className="hero-actions-button"
+            iconSvg={author.iconSvg}
+            href={author.href}
+            target="_blank"
+            rel="noreferrer noopener"
+            aria-label={author.ariaLabel}
+            data-analytics-event="open_discord"
+            data-analytics-category="cta"
+            data-analytics-label="home_faq_author"
+          >
+            {author.label}
+          </SettingsButton>
+        )}
+      </div>
     </header>
 
     <div class="faq__list" data-faq>
@@ -97,6 +140,12 @@ function parseAnswer(answer: string): AnswerPart[] {
 
   .faq__head .home-h2 {
     margin-bottom: var(--home-space-6);
+  }
+
+  .faq__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--home-space-3);
   }
 
   /*
@@ -161,8 +210,14 @@ function parseAnswer(answer: string): AnswerPart[] {
     border-radius: var(--home-radius-lg);
   }
 
-  [data-locale^="zh"] .faq__question {
-    word-break: keep-all;
+  /* A question that runs to two lines splits evenly instead of leaving its last word alone. */
+  .faq__question {
+    text-wrap: balance;
+  }
+
+  /* data-script lives on <body>, outside this component, so it must be :global to match. */
+  :global([data-script="cjk"]) .faq__question {
+    word-break: var(--cjk-word-break);
     overflow-wrap: anywhere;
     letter-spacing: 0.01em;
   }
@@ -231,7 +286,6 @@ function parseAnswer(answer: string): AnswerPart[] {
   }
 
   .faq__answer p {
-    max-width: 680px;
     margin: 0;
     padding: 0 calc(var(--faq-pad) + 54px) 26px var(--faq-pad);
     color: var(--text-sub, #626870);
@@ -240,7 +294,7 @@ function parseAnswer(answer: string): AnswerPart[] {
     text-wrap: pretty;
   }
 
-  [data-locale^="zh"] .faq__answer p {
+  :global([data-script="cjk"]) .faq__answer p {
     letter-spacing: 0.01em;
     line-break: strict;
   }

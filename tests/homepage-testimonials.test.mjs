@@ -99,9 +99,10 @@ test("testimonial marquee fills two continuous lanes with hover-intent pause and
   assert.doesNotMatch(source, /<time\b|chrome-review-card__rating|ratingLabel|dateFormatter/);
   assert.doesNotMatch(source, /reviewRatingLabel:/);
   assert.match(source, /\.chrome-review-card \{[\s\S]*?min-height: 172px/);
+  // Phones swap the marquee for a swipeable row of cards sized to their text.
   assert.match(
     source,
-    /@media \(max-width: 760px\)[\s\S]*?\.chrome-review-card \{[\s\S]*?min-height: 150px/,
+    /@media \(max-width: 760px\)[\s\S]*?\.chrome-review-card \{[\s\S]*?width: min\(80vw, 320px\);[\s\S]*?min-height: 0;[\s\S]*?scroll-snap-align: start;/,
   );
 });
 
@@ -115,8 +116,20 @@ test("homepage visible typography never defines text below twelve pixels", () =>
     "src/components/extension-settings/settings-kit.css",
   ];
 
+  // Extension mockups copy the extension's own CSS (lumno-extension src/shared/search-input.css
+  // and the site-search Tab hint in search-input-mode.js), which uses 11px for these two.
+  const extensionMirroredSelectors = new Set([
+    ".site-search-demo-tab-hint__key",
+    ".x-lumno-search-input-mode__menu-item",
+  ]);
+
   for (const file of files) {
-    assert.doesNotMatch(readSource(file), /font-size:\s*(?:10|11)(?:\.\d+)?px/);
+    const source = readSource(file);
+    for (const match of source.matchAll(/font-size:\s*(?:10|11)(?:\.\d+)?px/g)) {
+      const ruleStart = source.lastIndexOf("{", match.index);
+      const selector = source.slice(source.lastIndexOf("}", ruleStart) + 1, ruleStart).trim();
+      assert.ok(extensionMirroredSelectors.has(selector), `${file}: "${selector}" sets text below 12px`);
+    }
   }
 });
 
@@ -134,7 +147,7 @@ test("homepage places the new-tab showcase and AI intent page before the review 
   assert.ok(reviewsIndex >= 0, "homepage review section should exist");
   assert.ok(heroIndex < aiIntentIndex && aiIntentIndex < newTabIndex && newTabIndex < reviewsIndex);
 
-  assert.match(source, /<h2 id="ai-intent-title" class="home-h2"[^>]*><span>\{content\.aiIntent\.title\}<\/span><\/h2>/);
+  assert.match(source, /<h2 id="ai-intent-title" class="home-h2"[^>]*><TitlePair title=\{content\.aiIntent\.title\} \/><\/h2>/);
   assert.match(source, /<AiIntentDemo locale=\{uiLocale\} client:visible \/>/);
   assert.match(source, /\.ai-intent-demo-slot\s*\{[\s\S]*?min-width: 0;/);
   assert.match(source, /@media \(max-width: 1080px\)[\s\S]*?\.ai-intent-section\s*\{[\s\S]*?grid-template-columns: minmax\(0, 1fr\)/);
@@ -149,18 +162,19 @@ test("review marquee copy is localized for every homepage locale", () => {
   const source = readSource("src/lib/home-content.ts");
 
   assert.match(source, /title: "与用户共创，打磨每一处体验"/);
-  assert.match(source, /title: "與使用者共創，打磨每一處體驗"/);
-  assert.match(source, /title: "Built with our users, polished in every detail"/);
+  assert.match(source, /title: "和使用者一起，把每個細節做好"/);
+  assert.match(source, /title: "Built with our users,\\npolished in every detail\."/);
   assert.match(source, /eyebrow: "Chrome 应用商店"/);
   assert.match(source, /eyebrow: "Chrome 線上應用程式商店"/);
   assert.match(source, /eyebrow: "Chrome Web Store"/);
-  assert.equal((source.match(/storeLinkLabel:/g) || []).length, 4);
+  // One per locale.
+  assert.equal((source.match(/storeLinkLabel: "/g) || []).length, 10);
 });
 
 test("review heading shares the homepage section heading system", () => {
   const source = readSource("src/components/home/ChromeReviewMarquee.astro");
 
-  assert.match(source, /<h2 id="reviews-title" class="home-h2"[^>]*><span>\{title\}<\/span><\/h2>/);
+  assert.match(source, /<h2 id="reviews-title" class="home-h2"[^>]*><TitlePair title=\{title\} \/><\/h2>/);
   assert.match(source, /<header class="home-section__head chrome-review-marquee__header">/);
 });
 
@@ -184,4 +198,20 @@ test("showcase reviews leave out feature requests and questions", async () => {
   ]).map((item) => item.reviewId);
 
   assert.deepEqual(picked, ["praise"]);
+});
+
+test("showcase reviews are translated for every locale but the zh-CN original", async () => {
+  const { localizeShowcaseReviews } = await import("../src/lib/chrome-store-review-translations.ts");
+  const { LOCALE_CONFIG } = await import("../src/lib/locales.ts");
+  const { CHROME_STORE_REVIEW_SNAPSHOT, selectShowcaseReviews } = await import("../src/lib/chrome-store-reviews.ts");
+  const showcase = selectShowcaseReviews(CHROME_STORE_REVIEW_SNAPSHOT.reviews);
+  const unknown = { ...showcase[0], reviewId: "new", review: "一条还没翻译的新评价" };
+
+  assert.deepEqual(localizeShowcaseReviews(showcase, "zh-CN"), showcase);
+
+  for (const { code } of LOCALE_CONFIG.filter((item) => item.code !== "zh-CN")) {
+    const localized = localizeShowcaseReviews([...showcase, unknown], code);
+    assert.equal(localized.length, showcase.length, `${code} drops only the untranslated review`);
+    assert.ok(localized.every((review) => review.review !== showcase.find((item) => item.reviewId === review.reviewId).review));
+  }
 });

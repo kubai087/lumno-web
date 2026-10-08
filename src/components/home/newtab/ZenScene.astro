@@ -58,12 +58,14 @@ const { scene, alt } = Astro.props;
     left: 50%;
     width: min(352px, calc(100% - 40px));
     translate: -50% 0;
-    transition: top 760ms cubic-bezier(0.65, 0, 0.35, 1) 160ms;
+    /* Leaving Zen: the box rises first, the page fills back in under it. */
+    transition: top 620ms cubic-bezier(0.65, 0, 0.35, 1);
   }
 
   /* Once everything else has gone, the search box settles in the middle. */
   .zen[data-zen="on"] .zen-search {
     top: calc(50% - 21px);
+    transition: top 760ms cubic-bezier(0.65, 0, 0.35, 1) 160ms;
   }
 
   .zen-search :global(.nts-search) {
@@ -203,17 +205,23 @@ const { scene, alt } = Astro.props;
     font-size: 13px;
   }
 
-  /* Tuck away: bookmarks first, then the shortcut row, each sinking and blurring out. */
+  /* Coming back: once the box has made room, the shortcut row, then bookmarks. */
   .zen-tuck {
+    --back: calc(260ms + (1 - var(--order)) * 110ms);
+    transition:
+      opacity 420ms ease var(--back),
+      transform 620ms cubic-bezier(0.22, 1, 0.36, 1) var(--back),
+      filter 420ms ease var(--back);
+  }
+
+  /* Tuck away: bookmarks first, then the shortcut row, each sinking and blurring out. */
+  .zen[data-zen="on"] .zen-tuck {
+    opacity: 0;
+    filter: blur(4px);
     transition:
       opacity 420ms ease calc(var(--order) * 90ms),
       transform 620ms cubic-bezier(0.22, 1, 0.36, 1) calc(var(--order) * 90ms),
       filter 420ms ease calc(var(--order) * 90ms);
-  }
-
-  .zen[data-zen="on"] .zen-tuck {
-    opacity: 0;
-    filter: blur(4px);
   }
 
   .zen[data-zen="on"] .zen-tiles {
@@ -224,7 +232,7 @@ const { scene, alt } = Astro.props;
     transform: translateY(18px) scale(0.97);
   }
 
-  /* Reset jumps straight back to the busy page instead of animating to it. */
+  /* A pass cut short jumps straight back to the busy page instead of animating to it. */
   .zen[data-instant] :global(*) {
     transition: none !important;
   }
@@ -248,9 +256,19 @@ const { scene, alt } = Astro.props;
     const badge = holder.querySelector<HTMLElement>("[data-search-badge]")!;
     const row = holder.querySelector<HTMLElement>("[data-suggest-row]")!;
     badge.textContent = holder.dataset.badgeOff || "";
+    // Replaying from the resting Zen frame (hover, first view) animates the page
+    // back in, so the pass waits for it before focusing the box.
+    const RETURN = 700;
+    let lead = 0;
 
     playOnView(root, {
       reset() {
+        lead = 0;
+        if (root.dataset.zen === "on") {
+          root.dataset.zen = "off";
+          lead = RETURN;
+          return;
+        }
         root.dataset.instant = "";
         root.dataset.zen = "off";
         delete holder.dataset.open;
@@ -262,11 +280,11 @@ const { scene, alt } = Astro.props;
         delete root.dataset.instant;
       },
       play(timeline) {
-        timeline.at(500, () => (search.dataset.focus = "true"));
-        const typed = typeText(timeline, text, "/zen", 700, 140);
+        timeline.at(lead + 500, () => (search.dataset.focus = "true"));
+        const typed = typeText(timeline, text, "/zen", lead + 700, 140);
         // "/z" already matches only /zen (mode-commands.js): the badge names the
         // current state and the one suggestion row offers to switch.
-        timeline.at(700 + 2 * 140 + 60, () => {
+        timeline.at(lead + 700 + 2 * 140 + 60, () => {
           badge.hidden = false;
           holder.dataset.open = "";
         });

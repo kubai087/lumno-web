@@ -1,0 +1,20 @@
+/*
+ * System CJK faces per page language, so Han characters take each region's glyph
+ * forms (PingFang TC for Traditional Chinese) and Japanese and Korean get their
+ * own fonts. Stacks elsewhere read this through var(--font-cjk, …).
+ */
+:root {
+  --font-cjk: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei";
+}
+
+:root:lang(zh-TW) {
+  --font-cjk: "PingFang TC", "Microsoft JhengHei";
+}
+
+:root:lang(ja) {
+  --font-cjk: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", "Meiryo";
+}
+
+:root:lang(ko) {
+  --font-cjk: "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR";
+}

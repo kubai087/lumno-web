@@ -17,6 +17,7 @@ interface Props {
   triggerVariant: "hero" | "footer";
   externalHref?: string;
   analyticsLabel?: string;
+  triggerIconSvg?: string;
 }
 
 interface CommunityQrDialogPanelProps {
@@ -63,9 +64,27 @@ export function CommunityQrDialog({
   triggerVariant,
   externalHref,
   analyticsLabel = "home_hero_community",
+  triggerIconSvg,
 }: Props) {
+  // Outside Chinese locales the same trigger opens the Discord invite instead of the QR dialog.
   if (externalHref) {
-    return (
+    return triggerVariant === "hero" ? (
+      <SettingsButton
+        as="a"
+        variant="secondary"
+        className="hero-actions-button hero-community-button"
+        iconSvg={triggerIconSvg}
+        href={externalHref}
+        target="_blank"
+        rel="noreferrer noopener"
+        aria-label={triggerAriaLabel}
+        data-analytics-event="open_discord"
+        data-analytics-category="cta"
+        data-analytics-label={analyticsLabel}
+      >
+        {triggerLabel}
+      </SettingsButton>
+    ) : (
       <a className="community-footer-trigger" href={externalHref} target="_blank" rel="noreferrer noopener">
         {triggerLabel}
       </a>
@@ -77,6 +96,7 @@ export function CommunityQrDialog({
       type="button"
       variant="secondary"
       className="hero-actions-button hero-community-button"
+      iconSvg={triggerIconSvg}
       aria-label={triggerAriaLabel}
       data-analytics-event="open_community_qrcode"
       data-analytics-category="cta"

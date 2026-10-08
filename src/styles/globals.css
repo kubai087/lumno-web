@@ -6,7 +6,7 @@
 
 @theme inline {
   --font-heading: var(--font-sans);
-  --font-sans: "Open Sans", "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+  --font-sans: "Open Sans", var(--font-cjk, "PingFang SC", "Microsoft YaHei"), "Helvetica Neue", sans-serif;
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);

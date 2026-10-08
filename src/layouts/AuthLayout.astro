@@ -1,5 +1,6 @@
 ---
 import "../styles/globals.css";
+import logoIconSvg from "../assets/onboarding/logo.svg?raw";
 
 interface Props {
   title: string;
@@ -60,7 +61,7 @@ const story = {
       {!compact ? (
         <section class="auth-story" aria-labelledby="auth-story-heading">
           <a class="auth-brand" href="/" aria-label={story.back}>
-            <img class="auth-brand-mark" src="/assets/logo.svg" alt="" />
+            <span class="auth-brand-mark" aria-hidden="true" set:html={logoIconSvg}></span>
             <img class="auth-brand-wordmark" src="/assets/textlogo.svg" alt="Lumno" />
           </a>
           <div class="auth-story-copy">
@@ -74,7 +75,7 @@ const story = {
         </section>
       ) : (
         <a class="auth-brand auth-brand-compact" href="/" aria-label={story.back}>
-          <img class="auth-brand-mark" src="/assets/logo.svg" alt="" />
+          <span class="auth-brand-mark" aria-hidden="true" set:html={logoIconSvg}></span>
           <img class="auth-brand-wordmark" src="/assets/textlogo.svg" alt="Lumno" />
         </a>
       )}
@@ -147,7 +148,9 @@ const story = {
     color: var(--auth-ink);
   }
 
-  .auth-brand-mark { width: 50px; height: 55px; object-fit: contain; }
+  /* Inline, not <img>: Safari draws a filtered SVG image at 1x and scales it up. */
+  .auth-brand-mark { width: 50px; height: 55px; display: block; flex: 0 0 auto; }
+  .auth-brand-mark svg { width: 100%; height: 100%; display: block; shape-rendering: geometricPrecision; }
   .auth-brand-wordmark { width: 132px; height: auto; }
 
   .auth-story-copy { max-width: 560px; }

@@ -2,6 +2,7 @@
 import type { HOME_CONTENT, HomeUtilityId } from "../../../lib/home-content";
 import HomeCellIcon, { type HomeCellIconName } from "../HomeCellIcon.astro";
 import UtilityArt from "../UtilityArt.astro";
+import TitlePair from "../TitlePair.astro";
 
 type Content = (typeof HOME_CONTENT)["en"]["utilities"];
 
@@ -29,7 +30,7 @@ const UTILITY_ORDER: Array<{ id: HomeUtilityId; icon: HomeCellIconName }> = [
 -->
 <section class="home-section utilities" aria-labelledby="utilities-title">
   <header class="home-section__head">
-    <h2 id="utilities-title" class="home-h2" data-reveal="text"><span>{content.title}</span></h2>
+    <h2 id="utilities-title" class="home-h2" data-reveal="text"><TitlePair title={content.title} /></h2>
     <p class="home-lead" data-reveal="text">{content.description}</p>
   </header>
 

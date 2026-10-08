@@ -16,13 +16,17 @@ export type ReleaseLocaleContent = {
   bugFixes: string[];
 };
 
+/** Languages GitHub Releases carry notes in (Traditional Chinese is converted from Simplified). */
+export const RELEASE_NOTE_LOCALES = ["zh-CN", "zh-TW", "en"] as const;
+export type ReleaseNoteLocale = (typeof RELEASE_NOTE_LOCALES)[number];
+
+export function isReleaseNoteLocale(locale: string): locale is ReleaseNoteLocale {
+  return (RELEASE_NOTE_LOCALES as readonly string[]).includes(locale);
+}
+
 export type ParsedReleaseBody = {
   tags: string[];
-  locales: {
-    "zh-CN": ReleaseLocaleContent;
-    "zh-TW": ReleaseLocaleContent;
-    en: ReleaseLocaleContent;
-  };
+  locales: Record<ReleaseNoteLocale, ReleaseLocaleContent>;
 };
 
 type GitHubRelease = {

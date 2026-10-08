@@ -50,11 +50,15 @@ body {
   min-width: 320px;
   color: var(--text-main);
   background-color: var(--bg);
-  font-family: "Open Sans", "PingFang SC", "Microsoft JhengHei", "Microsoft YaHei", sans-serif;
+  font-family: "Open Sans", var(--font-cjk, "PingFang SC", "Microsoft YaHei"), sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
-body[data-scroll-locked] {
+/* html already reserves the gutter (scrollbar-gutter: stable), so cancel the
+ * scrollbar compensation react-remove-scroll-bar adds when a dialog opens.
+ * Its style tag is injected at runtime after this sheet with the same
+ * `body[data-scroll-locked]` selector, so the extra `html` is needed to win. */
+html body[data-scroll-locked] {
   --removed-body-scroll-bar-size: 0px !important;
   margin-right: 0 !important;
 }

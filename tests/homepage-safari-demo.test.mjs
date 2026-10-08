@@ -14,7 +14,7 @@ test("homepage places the onboarding browser skeleton directly below the hero co
 
   assert.match(
     source,
-    /<div class="hero-copy">[\s\S]*?<p class="hero-description">[\s\S]*?heroDescriptionLines\.map[\s\S]*?<div class="hero-actions">[\s\S]*?<\/div>\s*<\/div>\s*<div class="hero-demo-slot">\s*<HeroSafariDemo/,
+    /<div class="hero-copy">[\s\S]*?<p class="hero-description">[\s\S]*?<CopyLines text=\{content\.heroDescription\} \/>[\s\S]*?<div class="hero-actions">[\s\S]*?<\/div>\s*<\/div>\s*<div class="hero-demo-slot">\s*<HeroSafariDemo/,
   );
   assert.match(source, /ariaLabel=\{content\.heroDemoAria\}/);
   assert.match(source, /locale=\{uiLocale\}/);
@@ -27,7 +27,7 @@ test("homepage opens with a full-screen Search All demo and can settle early on 
   const styles = readSource("src/components/home/hero-safari-demo.css");
   const dither = readSource("src/components/home/DitherShader.tsx");
 
-  assert.match(source, /<body data-home-intro="pending" data-locale=\{uiLocale\}>/);
+  assert.match(source, /<body data-home-intro="pending" data-locale=\{uiLocale\} data-script=\{localeScript\}>/);
   assert.match(component, /const HERO_INTRO_SEQUENCE = \[\s*\{ id: "browser-search"/);
   assert.match(component, /copy\.scenes\.findIndex\(\(item\) => item\.id === "browser-search"\)/);
   assert.match(component, /target\.classList\.contains\("lumno-overlay-results"\)/);
@@ -52,7 +52,7 @@ test("homepage opens with a full-screen Search All demo and can settle early on 
   assert.match(component, /if \(!skipLoadWait && document\.readyState !== "complete"\)/);
   assert.match(component, /window\.addEventListener\("wheel", handleWheel, \{ passive: true \}\)/);
   assert.match(component, /window\.addEventListener\("keydown", handleKeyDown\)/);
-  assert.match(component, /className="hero-intro-skip-hint"[\s\S]*?onClick=\{handleHomeIntroSkip\}[\s\S]*?\{copy\.skipIntroLabel\}/);
+  assert.match(component, /className="hero-intro-skip-hint"[\s\S]*?onClick=\{handleHomeIntroSkip\}[\s\S]*?\{siteCopy\.skipIntroLabel\}/);
   assert.match(component, /skipIntroLabel: "点击任意处跳过"/);
   assert.match(component, /skipIntroLabel: "Click anywhere to skip"/);
   assert.match(component, /className="hero-safari-visual home-media"\s*onClick=\{handleHomeIntroSkip\}/);
@@ -123,7 +123,7 @@ test("homepage hero exposes install and community actions below the subtitle", (
 
   assert.match(
     source,
-    /<p class="hero-description">[\s\S]*?heroDescriptionLines\.map[\s\S]*?<div class="hero-actions">[\s\S]*?content\.heroInstallLabel[\s\S]*?content\.heroCommunityLabel/,
+    /<p class="hero-description">[\s\S]*?<CopyLines text=\{content\.heroDescription\} \/>[\s\S]*?<div class="hero-actions">[\s\S]*?content\.heroInstallLabel[\s\S]*?content\.heroCommunityLabel/,
   );
   assert.match(source, /<HeroInstallTooltip[\s\S]*?href=\{CHROME_STORE_URL\}[\s\S]*?client:load/);
   assert.match(installTooltip, /<TooltipTrigger asChild>[\s\S]*?<SettingsButton[\s\S]*?variant="primary"/);
@@ -181,7 +181,8 @@ test("homepage footer reuses the shared community dialog", () => {
     readSource("src/components/home/sections/SiteFooter.astro"),
     /<CommunityQrDialog[\s\S]*?triggerLabel=\{feedback\.label\}[\s\S]*?triggerVariant="footer"/,
   );
-  assert.match(source, /externalHref: locale === "zh-CN" \? undefined : COMMUNITY_LINKS\.discordUrl/);
+  // Chinese locales open the WeChat QR; every other locale links to Discord (lib/community.ts).
+  assert.match(source, /externalHref: getCommunityExternalHref\(locale\)/);
 });
 
 test("homepage install tooltip communicates broad Chromium browser support", () => {
@@ -229,8 +230,8 @@ test("homepage install tooltip communicates broad Chromium browser support", () 
   assert.match(sharedTooltipStyles, /border-radius:\s*10px/);
   assert.match(sharedTooltipStyles, /0 16px 36px rgba\(17, 24, 39, 0\.08\)/);
   assert.doesNotMatch(installTooltip, /function (Chrome|Edge|Comet|Brave|Opera|Helium)Logo/);
-  assert.match(content, /基于 GPL-3\.0 开源，支持大部分 Chromium 内核浏览器/);
-  assert.match(content, /以 GPL-3\.0 授權開源，支援大部分 Chromium 核心瀏覽器/);
+  assert.match(content, /基于 GPL-3\.0 开源，支持大多数 Chromium 内核浏览器/);
+  assert.match(content, /以 GPL-3\.0 授權開源，支援大多數 Chromium 核心瀏覽器/);
   assert.match(content, /Open source under GPL-3\.0\. Works in most Chromium-based browsers\./);
 });
 
@@ -243,7 +244,7 @@ test("homepage moves the open-source note into the install tooltip", () => {
   assert.doesNotMatch(content, /heroOpenSourceNote|heroLicenseLabel|heroLicenseAria/);
   assert.match(
     content,
-    /heroBrowserTooltipLabel: "基于 GPL-3\.0 开源，支持大部分 Chromium 内核浏览器"/,
+    /heroBrowserTooltipLabel: "基于 GPL-3\.0 开源，支持大多数 Chromium 内核浏览器"/,
   );
   assert.doesNotMatch(content, /隐私边界透明|隱私界線透明|transparent privacy boundaries/);
 });
@@ -327,7 +328,8 @@ test("hero demo exposes three replayable plugin-consistent search scenes", () =>
   assert.match(homepage, /await getLumnoBuiltinSiteSearchProviders\(\)/);
   assert.match(homepage, /builtinSiteSearchProviders=\{builtinSiteSearchProviders\}/);
   assert.match(component, /type: "commandOpenTabs"/);
-  assert.equal((component.match(/type: "browserPage"/g) || []).length, 9);
+  // Three browser-page followups per extension language (zh-CN, zh-TW, en, ja).
+  assert.equal((component.match(/type: "browserPage"/g) || []).length, 12);
   assert.match(component, /query: "扩展"/);
   assert.match(component, /query: "历史记录"/);
   assert.match(component, /query: "下载记录"/);
@@ -381,8 +383,8 @@ test("hero demo exposes three replayable plugin-consistent search scenes", () =>
   assert.match(component, /highlightBg: "rgb\(236, 236, 237\)"/);
   assert.match(component, /highlightBg: "rgb\(223, 238, 249\)"/);
   assert.match(component, /highlightBg: "rgb\(228, 237, 250\)"/);
-  assert.equal((component.match(/theme: LUMNO_THEME/g) || []).length, 6);
-  assert.equal((component.match(/theme: CHROME_THEME/g) || []).length, 3);
+  assert.equal((component.match(/theme: LUMNO_THEME/g) || []).length, 8);
+  assert.equal((component.match(/theme: CHROME_THEME/g) || []).length, 4);
   assert.match(styles, /--x-ov-hover-bg: rgba\(200, 208, 218, 0\.45\);/);
   assert.match(component, /brandAccentRgb: \[36, 41, 46\]/);
   assert.match(component, /accentRgb: \[156, 159, 161\]/);
@@ -431,7 +433,7 @@ test("hero demo exposes three replayable plugin-consistent search scenes", () =>
   assert.match(onboardingStyles, /\.x-ov-suggestion-favicon--browser-page-icon \{[\s\S]*?color: #1a73e8;/);
   assert.match(onboardingStyles, /\.x-ov-close-other-tabs \.ri-icon \{[\s\S]*?font-size: 16px;/);
   assert.match(onboardingComponent, /data-row-state=\{active \? 'active' : undefined\}/);
-  assert.match(onboardingComponent, /x-ov-action-tag__key/);
+  assert.match(onboardingComponent, /x-ov-action-tag__label/);
   assert.match(onboardingComponent, /if \(model\.hoverStepMs <= 0\)/);
   assert.match(onboardingComponent, /model\.sceneId/);
   assert.match(onboardingComponent, /theme\?\.highlightBg \|\| 'var\(--x-ov-hover-bg, #f3f4f6\)'/);
@@ -493,9 +495,19 @@ test("hero demo exposes three replayable plugin-consistent search scenes", () =>
   assert.match(homepage, /height: max\(220px, calc\(100svh - 500px\)\);/);
   assert.match(
     styles,
-    /@media \(max-width: 760px\)[\s\S]*?\.hero-demo-page-switcher \{[\s\S]*?grid-template-columns: repeat\(3, minmax\(0, 1fr\)\);[\s\S]*?transform: none;/,
+    /@media \(max-width: 760px\)[\s\S]*?\.lumno-settings-tabs\.hero-demo-page-switcher \{[\s\S]*?top: calc\(100% \+ 16px\);[\s\S]*?width: max-content;[\s\S]*?max-width: calc\(100vw - 32px\);/,
   );
-  assert.match(styles, /\.hero-demo-page-button \{[\s\S]*?min-height: 44px;/);
+  // Touch screens get an invisible 44px-tall hit area around the 30px tabs.
+  assert.match(
+    styles,
+    /@media \(pointer: coarse\)[\s\S]*?\.hero-demo-page-button::after \{[\s\S]*?inset: -7px -2px;/,
+  );
+  // Phones share the AI intent demo's compact tab bar; tabs keep a 76px minimum width.
+  assert.match(styles, /\.hero-demo-page-switcher \.hero-demo-page-button \{[\s\S]*?min-height: 30px;/);
+  assert.match(
+    styles,
+    /@media \(max-width: 760px\)[\s\S]*?\.hero-demo-page-switcher \.hero-demo-page-button \{[\s\S]*?min-width: 76px;/,
+  );
   assert.match(
     styles,
     /\.lumno-overlay-result\[data-active="true"\][\s\S]*?box-shadow: none;/,

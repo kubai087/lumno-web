@@ -9,12 +9,12 @@ import {
 } from "motion/react";
 import type { MotionValue, Transition } from "motion/react";
 import type { ShortcutKey } from "@/lib/shortcut-keys";
+import { splitTitlePair } from "@/lib/title-pair";
 import { cn } from "@/lib/utils";
 import { ShortcutKeys } from "./shortcut-keys";
 
 export interface HeroParallaxProduct {
   title: string;
-  link: string;
   thumbnail: string;
 }
 
@@ -165,6 +165,7 @@ function HeroParallaxHeader({
   headingId,
   isRevealed,
 }: HeroParallaxHeaderProps) {
+  const pair = splitTitlePair(title);
   const chineseCommaIndex = title.indexOf("，");
   const titleLead = chineseCommaIndex >= 0 ? title.slice(0, chineseCommaIndex + 1) : title;
   const titleRest = chineseCommaIndex >= 0 ? title.slice(chineseCommaIndex + 1).trimStart() : "";
@@ -193,16 +194,23 @@ function HeroParallaxHeader({
         animate={isRevealed ? HERO_COPY_VISIBLE : HERO_COPY_HIDDEN}
         transition={HERO_COPY_TRANSITION}
       >
-        <span className="hero-title-line">
-          {titleRest ? (
-            <>
-              <span className="hero-title-segment">{titleLead}</span>
-              <span className="hero-title-segment">{titleRest}</span>
-            </>
-          ) : (
-            <span className="hero-title-segment">{title}</span>
-          )}
-        </span>
+        {pair ? (
+          <>
+            <span className="home-title-lead">{pair.lead}</span>{" "}
+            <span className="home-title-accent">{pair.accent}</span>
+          </>
+        ) : (
+          <span className="hero-title-line">
+            {titleRest ? (
+              <>
+                <span className="hero-title-segment">{titleLead}</span>
+                <span className="hero-title-segment">{titleRest}</span>
+              </>
+            ) : (
+              <span className="hero-title-segment">{title}</span>
+            )}
+          </span>
+        )}
       </motion.h2>
       <motion.p
         className="hero-parallax__description"
@@ -210,7 +218,11 @@ function HeroParallaxHeader({
         animate={isRevealed ? HERO_COPY_VISIBLE : HERO_COPY_HIDDEN}
         transition={HERO_DESCRIPTION_TRANSITION}
       >
-        {description}
+        {description.split("\n").map((line, index) => (
+          <span key={index} className="home-copy-line">
+            {line}
+          </span>
+        ))}
       </motion.p>
     </div>
   );
@@ -281,21 +293,14 @@ export function ProductCard({
       aria-hidden={isLoopCopy || undefined}
       data-hero-parallax-card
     >
-      <a
-        href={product.link}
-        className="block size-full"
-        aria-label={product.title}
-        tabIndex={isLoopCopy ? -1 : undefined}
-      >
-        <img
-          src={product.thumbnail}
-          className="absolute inset-0 size-full object-contain object-center"
-          alt={product.title}
-          loading="lazy"
-          decoding="async"
-          sizes="(min-width: 768px) 480px, 224px"
-        />
-      </a>
+      <img
+        src={product.thumbnail}
+        className="absolute inset-0 size-full object-contain object-center"
+        alt={product.title}
+        loading="lazy"
+        decoding="async"
+        sizes="(min-width: 768px) 480px, 224px"
+      />
     </motion.article>
   );
 }

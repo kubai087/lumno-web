@@ -11,6 +11,11 @@ export default defineConfig({
     "/onboarding": "/",
     "/en/onboarding": "/en/",
     "/zh-tw/onboarding": "/zh-tw/",
+    // The standalone features page was folded back into the homepage.
+    "/features": "/",
+    ...Object.fromEntries(
+      ["zh-tw", "en", "ja", "ko", "de", "fr", "es", "pt-br", "ru"].map((segment) => [`/${segment}/features`, `/${segment}/`]),
+    ),
   },
   integrations: [react()],
   vite: {

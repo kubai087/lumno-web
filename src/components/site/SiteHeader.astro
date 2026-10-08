@@ -429,6 +429,16 @@ const { chrome: chromeStoreVersion, edge: edgeStoreVersion } = await getSiteStor
     clip-path: none;
   }
 
+  /*
+   * The clip only masks the button while it grows in. Once it has settled,
+   * let the primary button's drop shadow show, as it does on the hero.
+   */
+  body.has-nav-install.is-nav-install-settled:not(.is-nav-install-exiting) .top-nav,
+  body.has-nav-install.is-nav-install-settled:not(.is-nav-install-exiting) .top-nav-install-slot {
+    overflow: visible;
+    clip-path: none;
+  }
+
   .lang-control {
     position: relative;
     z-index: 1;

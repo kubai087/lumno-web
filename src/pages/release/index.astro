@@ -278,6 +278,13 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         box-sizing: border-box;
       }
 
+      /* The same scrollbar as the other pages, so the top bar lines up across them. */
+      html {
+        scrollbar-gutter: stable;
+        scrollbar-width: thin;
+        scrollbar-color: color-mix(in srgb, #15171a 18%, transparent) transparent;
+      }
+
       html,
       body {
         margin: 0;

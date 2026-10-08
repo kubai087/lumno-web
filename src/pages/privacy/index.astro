@@ -212,13 +212,14 @@ const policyHtml = marked
     color: var(--home-ink);
   }
 
+  /* Sticks where it starts (the page's top padding), so it never moves at all. */
   .doc__toc {
     grid-column: 1;
     grid-row: 1 / span 2;
     position: sticky;
-    top: 104px;
+    top: 136px;
     align-self: start;
-    max-height: calc(100vh - 128px);
+    max-height: calc(100vh - 160px);
     overflow-y: auto;
     padding: var(--home-space-4) var(--home-space-2);
     border: 1px solid transparent;

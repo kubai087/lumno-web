@@ -168,8 +168,8 @@ test("language menus expose every locale as a crawlable link", () => {
   assert.match(menuSource, /href: hrefs\[option\.value\]/);
   // Every page renders the shared header, whose language menu links each locale's version of the page.
   assert.match(readSource("src/components/site/SiteHeader.astro"), /<LanguageMenu[\s\S]*?hrefs=\{routeLanguageMap\}/);
-  assert.match(readSource("src/pages/index.astro"), /<SiteHeader locale=\{uiLocale\} routeLanguageMap=\{routeLanguageMap\} \/>/);
-  assert.match(readSource("src/layouts/SitePage.astro"), /<SiteHeader locale=\{locale\} routeLanguageMap=\{routeLanguageMap\}/);
+  assert.match(readSource("src/pages/index.astro"), /<SiteHeader locale=\{uiLocale\} routeLanguageMap=\{routeLanguageMap\} handoff=/);
+  assert.match(readSource("src/layouts/SitePage.astro"), /<SiteHeader\s+locale=\{locale\}\s+routeLanguageMap=\{routeLanguageMap\}/);
   assert.match(readSource("src/pages/release/index.astro"), /<SiteHeader locale=\{uiLocale\} routeLanguageMap=\{routeLanguageMap\}/);
   // Links stay links for crawlers; the runtime still handles persistence and navigation.
   assert.match(readSource("src/scripts/language-runtime.ts"), /event\.preventDefault\(\);\s*const next/);

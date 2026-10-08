@@ -1,6 +1,7 @@
 ---
 import { marked } from "marked";
 import SitePage from "../../layouts/SitePage.astro";
+import "@fontsource/eb-garamond/600.css";
 import { DEFAULT_LOCALE, buildLocalizedPath, buildRouteLanguageMap, type SupportedLocale } from "../../lib/locales";
 import {
   PRIVACY_LAST_UPDATED,
@@ -53,7 +54,11 @@ if (sectionTitles.length !== PRIVACY_SECTION_IDS.length) {
     `privacy-policy (${uiLocale}) has ${sectionTitles.length} sections but PRIVACY_SECTION_IDS lists ${PRIVACY_SECTION_IDS.length}.`,
   );
 }
-const sections = PRIVACY_SECTION_IDS.map((id, index) => ({ id, title: sectionTitles[index] }));
+const sections = PRIVACY_SECTION_IDS.map((id, index) => {
+  // "3. 浏览器权限的用途" → number "03" and title, so both lists can set the number apart.
+  const [, number = String(index + 1), title = sectionTitles[index]] = sectionTitles[index].match(/^(\d+)\.\s*(.+)$/) || [];
+  return { id, number: number.padStart(2, "0"), title };
+});
 
 // Only repository-owned static Markdown is rendered here. User-provided input
 // must never be passed to this renderer without an explicit sanitization step.
@@ -62,9 +67,9 @@ let sectionIndex = 0;
 renderer.heading = function ({ tokens, depth }) {
   const headingContent = this.parser.parseInline(tokens);
   if (depth !== 2) return `<h${depth}>${headingContent}</h${depth}>\n`;
-  const id = sections[sectionIndex].id;
+  const { id, number, title } = sections[sectionIndex];
   sectionIndex += 1;
-  return `<h2 id="${id}">${headingContent}</h2>\n`;
+  return `<h2 id="${id}"><span class="doc__num" aria-hidden="true">${number}</span><span>${title}</span></h2>\n`;
 };
 const policyHtml = marked
   .parse(content.policySource, { async: false, gfm: true, renderer })
@@ -85,20 +90,34 @@ const policyHtml = marked
   type="article"
   structuredData={structuredData}
   analyticsScope="privacy"
+  navHandoff=".doc__head"
 >
   <div class="doc">
     <header class="doc__head">
-      <h1>{content.title}</h1>
-      <p class="doc__meta">
-        {content.lastUpdatedLabel}: <time datetime={PRIVACY_LAST_UPDATED}>{displayLastUpdated}</time> · {appliesTo}
-      </p>
+      <h1><span>{content.title}</span></h1>
+      <ul class="doc__meta">
+        <li>
+          <i class="ri-calendar-line" aria-hidden="true"></i>
+          {content.lastUpdatedLabel}
+          <time datetime={PRIVACY_LAST_UPDATED}>{displayLastUpdated}</time>
+        </li>
+        <li>
+          <i class="ri-puzzle-2-line" aria-hidden="true"></i>
+          {appliesTo}
+        </li>
+      </ul>
     </header>
 
     <nav class="doc__toc" aria-label={content.tocLabel}>
       <p class="doc__toc-title">{content.tocLabel}</p>
       <ol>
         {sections.map((section) => (
-          <li><a href={`#${section.id}`}>{section.title}</a></li>
+          <li>
+            <a href={`#${section.id}`}>
+              <span class="doc__num" aria-hidden="true">{section.number}</span>
+              <span>{section.title}</span>
+            </a>
+          </li>
         ))}
       </ol>
     </nav>
@@ -110,20 +129,87 @@ const policyHtml = marked
 </SitePage>
 
 <style is:global>
-  /* Desktop: contents on the left, title and document on the right. Phones: title, contents, document. */
+  /*
+   * A plain document on the homepage's materials: heading ink, the paper card
+   * with its hairline ring for the contents and tables, white pills for facts.
+   */
   .doc {
     display: grid;
-    grid-template-columns: 220px minmax(0, 760px);
+    grid-template-columns: 240px minmax(0, 720px);
     justify-content: center;
-    gap: 0 56px;
+    gap: 0 64px;
     width: var(--home-column);
     margin-inline: auto;
-    padding: 128px 0 96px;
+    padding: 136px 0 112px;
   }
 
   .doc__head {
     grid-column: 2;
     grid-row: 1;
+    padding-bottom: 8px;
+  }
+
+  .doc__head h1 {
+    margin: 0;
+    font-size: clamp(32px, 3.4vw, 40px);
+    font-weight: 620;
+    line-height: 1.2;
+    letter-spacing: -0.03em;
+  }
+
+  /* The homepage's heading ink, a soft vertical gradient. */
+  .doc__head h1 span {
+    background: var(--home-heading-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+
+  [data-locale^="zh"] .doc__head h1 {
+    letter-spacing: -0.01em;
+  }
+
+  [data-locale="en"] .doc__head h1 {
+    font-family: "EB Garamond", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    font-size: clamp(38px, 4vw, 48px);
+    font-weight: 600;
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+  }
+
+  .doc__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--home-space-2);
+    margin: var(--home-space-5) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .doc__meta li {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 30px;
+    padding: 4px 12px;
+    border: 1px solid var(--home-hairline-control);
+    border-radius: var(--home-radius-pill);
+    --lumno-corner-shape: round;
+    background: #fff;
+    box-shadow: var(--home-shadow-chip);
+    color: var(--home-ink-soft);
+    font-size: 13px;
+    font-weight: 550;
+  }
+
+  .doc__meta i {
+    color: var(--text-soft);
+    font-size: 15px;
+  }
+
+  .doc__meta time {
+    color: var(--home-ink);
   }
 
   .doc__toc {
@@ -134,13 +220,22 @@ const policyHtml = marked
     align-self: start;
     max-height: calc(100vh - 128px);
     overflow-y: auto;
+    padding: var(--home-space-4) var(--home-space-2);
+    border: 1px solid transparent;
+    border-radius: var(--home-radius-lg);
+    background:
+      linear-gradient(var(--home-paper), var(--home-paper)) padding-box,
+      var(--home-ring) border-box;
     font-size: 14px;
-    line-height: 1.5;
+    line-height: 1.45;
+    scrollbar-width: none;
   }
 
   .doc__toc-title {
-    margin: 0 0 12px;
-    color: var(--text-main);
+    margin: 0 0 var(--home-space-2);
+    padding-inline: var(--home-space-3);
+    color: var(--home-ink);
+    font-size: 13px;
     font-weight: 650;
   }
 
@@ -150,74 +245,94 @@ const policyHtml = marked
     list-style: none;
   }
 
-  .doc__toc li + li {
-    margin-top: 8px;
-  }
-
   .doc__toc a {
+    display: flex;
+    gap: var(--home-space-3);
+    padding: 6px var(--home-space-3);
+    border-radius: var(--home-radius-xs);
     color: var(--text-sub);
     text-decoration: none;
+    transition: background-color 160ms ease, color 160ms ease;
   }
 
   .doc__toc a:hover {
-    color: var(--text-main);
+    background: #fff;
+    color: var(--home-ink);
+  }
+
+  .doc__num {
+    flex: none;
+    color: var(--text-soft);
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
   }
 
   .doc__body {
     grid-column: 2;
     grid-row: 2;
     min-width: 0;
-    color: #3d434a;
+    color: #4a5058;
     font-size: 16px;
-    line-height: 1.75;
+    line-height: 1.8;
   }
 
-  .doc__head h1 {
-    margin: 0;
-    color: var(--text-main);
-    font-size: 32px;
-    font-weight: 650;
-    line-height: 1.3;
+  [data-locale^="zh"] .doc__body {
+    letter-spacing: 0.01em;
+    line-break: strict;
   }
 
-  .doc__meta {
-    margin: 8px 0 8px;
-    padding-bottom: 24px;
-    border-bottom: 1px solid var(--line);
-    color: var(--text-soft);
-    font-size: 14px;
-  }
-
+  /* Each section opens on a hairline, the number set apart in grey. */
   .doc__body h2 {
-    margin: 48px 0 16px;
-    color: var(--text-main);
+    display: flex;
+    align-items: baseline;
+    gap: var(--home-space-3);
+    margin: var(--home-space-12) 0 var(--home-space-4);
+    padding-top: var(--home-space-12);
+    border-top: 1px solid var(--home-hairline);
+    color: var(--home-ink);
     font-size: 22px;
     font-weight: 650;
     line-height: 1.4;
-    scroll-margin-top: 104px;
+    letter-spacing: -0.01em;
+  }
+
+  .doc__body h2 .doc__num {
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  [data-locale="en"] .doc__body h2 {
+    font-family: "EB Garamond", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    font-size: 27px;
+    font-weight: 600;
+    letter-spacing: 0;
+  }
+
+  [data-locale="en"] .doc__body h2 .doc__num {
+    font-family: "Open Sans", sans-serif;
   }
 
   .doc__body h3 {
-    margin: 28px 0 12px;
-    color: var(--text-main);
-    font-size: 17px;
+    margin: var(--home-space-8) 0 var(--home-space-3);
+    color: var(--home-ink);
+    font-size: var(--home-title-sm);
     font-weight: 650;
   }
 
   .doc__body p,
   .doc__body ul,
   .doc__body ol {
-    margin: 0 0 16px;
+    margin: 0 0 var(--home-space-4);
   }
 
   /* Tailwind's preflight strips list markers; the document wants them back. */
   .doc__body ul {
-    padding-left: 1.4em;
+    padding-left: 1.3em;
     list-style: disc;
   }
 
   .doc__body ol {
-    padding-left: 1.4em;
+    padding-left: 1.3em;
     list-style: decimal;
   }
 
@@ -225,28 +340,47 @@ const policyHtml = marked
     margin-top: 6px;
   }
 
+  .doc__body li::marker {
+    color: rgba(var(--home-edge), 0.32);
+  }
+
   .doc__body strong {
-    color: var(--text-main);
+    color: var(--home-ink);
     font-weight: 650;
   }
 
   .doc__body a {
-    color: var(--blue-dark);
+    color: var(--home-ink);
     text-decoration: underline;
+    text-decoration-color: rgba(var(--home-edge), 0.28);
+    text-decoration-thickness: 1px;
     text-underline-offset: 3px;
+    transition: text-decoration-color 160ms ease;
+  }
+
+  .doc__body a:hover {
+    text-decoration-color: currentColor;
   }
 
   .doc__body code {
-    padding: 1px 5px;
-    border-radius: 4px;
-    background: #eef0f2;
+    padding: 1px 6px;
+    border-radius: var(--home-radius-xs);
+    background: rgba(var(--home-edge), 0.06);
+    color: var(--home-ink);
     font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    font-size: 0.86em;
+    font-size: 0.84em;
+    letter-spacing: 0;
   }
 
+  /* Tables sit on the paper card, hairlines between rows. */
   .doc__table {
-    margin: 0 0 16px;
+    margin: var(--home-space-5) 0 var(--home-space-6);
     overflow-x: auto;
+    border: 1px solid transparent;
+    border-radius: var(--home-radius-lg);
+    background:
+      linear-gradient(var(--home-paper), var(--home-paper)) padding-box,
+      var(--home-ring) border-box;
   }
 
   .doc__table table {
@@ -254,21 +388,29 @@ const policyHtml = marked
     min-width: 520px;
     border-collapse: collapse;
     font-size: 14px;
-    line-height: 1.6;
+    line-height: 1.65;
   }
 
   .doc__table th,
   .doc__table td {
-    padding: 10px 12px;
-    border: 1px solid var(--line);
+    padding: 12px 16px;
     text-align: left;
     vertical-align: top;
   }
 
   .doc__table th {
-    background: var(--surface-soft);
-    color: var(--text-main);
+    color: var(--home-ink);
     font-weight: 650;
+    white-space: nowrap;
+  }
+
+  .doc__table tbody tr {
+    border-top: 1px solid var(--home-hairline);
+  }
+
+  .doc__table td:first-child {
+    color: var(--home-ink);
+    font-weight: 550;
   }
 
   .doc__table code {
@@ -288,15 +430,21 @@ const policyHtml = marked
       grid-row: auto;
     }
 
+    /* On phones the contents card sits between the title and the document. */
     .doc__toc {
       position: static;
       max-height: none;
-      padding: 24px 0;
-      border-bottom: 1px solid var(--line);
+      margin-top: var(--home-space-6);
     }
 
-    .doc__head h1 {
-      font-size: 28px;
+    .doc__body {
+      font-size: 15px;
+      line-height: 1.75;
+    }
+
+    .doc__body h2 {
+      margin-top: var(--home-space-10);
+      padding-top: var(--home-space-10);
     }
   }
 </style>

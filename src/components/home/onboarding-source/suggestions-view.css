@@ -523,6 +523,7 @@
   margin-left: 8px;
   padding: 1px 6px;
   border-radius: 999px;
+  --lumno-corner-shape: round;
   color: var(--x-ov-subtext, #6B7280);
   background: color-mix(in srgb, var(--x-ov-bg, #FFFFFF) 70%, #94A3B8 30%);
   border: 1px solid color-mix(in srgb, var(--x-ov-border, rgba(0, 0, 0, 0.08)) 75%, #94A3B8 25%);
@@ -624,6 +625,7 @@
   height: var(--x-ov-suggestion-action-height, 26px);
   padding: 0 4px 0 8px;
   border-radius: 999px;
+  --lumno-corner-shape: round;
   font-size: 12px;
   font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   line-height: 1;

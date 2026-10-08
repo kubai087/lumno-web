@@ -293,6 +293,7 @@
   padding: 8px 14px;
   border: 1px solid transparent;
   border-radius: 999px;
+  --lumno-corner-shape: round;
   font-size: 12px;
   font-weight: 550;
   text-decoration: none;
@@ -375,6 +376,7 @@
   min-height: 38px;
   padding: 2px;
   border-radius: 50%;
+  --lumno-corner-shape: round;
   font-size: 16px;
 }
 
@@ -399,6 +401,7 @@
   inset: 0;
   border: 1px solid rgba(15, 23, 42, 0.1);
   border-radius: 999px;
+  --lumno-corner-shape: round;
   background: linear-gradient(180deg, #e7eaf0 0%, #d8dce5 100%);
   box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.12);
   transition: background 180ms ease, border-color 180ms ease;
@@ -411,6 +414,7 @@
   width: 18px;
   height: 18px;
   border-radius: 50%;
+  --lumno-corner-shape: round;
   background: #fff;
   box-shadow: 0 1px 3px rgba(15, 23, 42, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.95);
   transition: transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -754,6 +758,7 @@
   width: 18px;
   height: 18px;
   border-radius: 50%;
+  --lumno-corner-shape: round;
   background: #111827;
   color: #fff;
   font-size: 12px;
@@ -801,6 +806,7 @@
   min-height: 22px;
   padding: 3px 8px;
   border-radius: 999px;
+  --lumno-corner-shape: round;
   background: var(--lumno-control-bg);
   color: var(--lumno-panel-subtext);
   font-size: 12px;

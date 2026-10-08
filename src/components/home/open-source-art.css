@@ -35,6 +35,7 @@
   width: 9px;
   height: 9px;
   border-radius: 50%;
+  --lumno-corner-shape: round;
   background: rgba(var(--osa-edge), 0.16);
 }
 
@@ -272,6 +273,7 @@
   width: 9px;
   height: 9px;
   border-radius: 50%;
+  --lumno-corner-shape: round;
   background: rgba(var(--home-edge), 0.16);
 }
 

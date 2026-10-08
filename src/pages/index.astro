@@ -157,7 +157,7 @@ const structuredData = [
     )}
   </head>
   <body data-home-intro="pending" data-locale={uiLocale}>
-    <SiteHeader locale={uiLocale} routeLanguageMap={routeLanguageMap} />
+    <SiteHeader locale={uiLocale} routeLanguageMap={routeLanguageMap} handoff="#hero-install-primary" />
 
     <main>
       <section class="hero-section" aria-labelledby="hero-title">
@@ -362,87 +362,6 @@ const structuredData = [
         window.addEventListener("lumno:language-runtime-ready", retry);
         window.addEventListener("lumno:language-preference-ready", retry);
       }
-
-      const topNav = document.querySelector(".top-nav");
-      const heroInstallPrimary = document.getElementById("hero-install-primary");
-      if (topNav instanceof HTMLElement && heroInstallPrimary instanceof HTMLElement) {
-        let navInstallFrame = 0;
-        let navInstallEntryTimeout = 0;
-        let navInstallExitTimeout = 0;
-        const finishNavInstallExit = () => {
-          navInstallExitTimeout = 0;
-          topNav.dataset.navSurface = "hero";
-          document.body.classList.remove(
-            "has-nav-install",
-            "is-nav-install-exiting",
-            "is-nav-install-settled",
-          );
-        };
-        const settleNavInstall = () => {
-          navInstallEntryTimeout = 0;
-          document.body.classList.add("is-nav-install-settled");
-        };
-        const enterNavInstall = () => {
-          topNav.removeAttribute("data-nav-surface");
-          document.body.classList.remove("is-nav-install-exiting", "is-nav-install-settled");
-          document.body.classList.add("has-nav-install");
-          if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-            settleNavInstall();
-            return;
-          }
-          navInstallEntryTimeout = window.setTimeout(settleNavInstall, 320);
-        };
-        const exitNavInstall = () => {
-          if (navInstallEntryTimeout) {
-            window.clearTimeout(navInstallEntryTimeout);
-            navInstallEntryTimeout = 0;
-          }
-          document.body.classList.add("is-nav-install-exiting");
-          if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-            finishNavInstallExit();
-            return;
-          }
-          navInstallExitTimeout = window.setTimeout(finishNavInstallExit, 120);
-        };
-        const updateNavInstall = () => {
-          navInstallFrame = 0;
-          const heroInstallBottom = heroInstallPrimary.getBoundingClientRect().bottom;
-          const shouldShowNavInstall = window.scrollY > 0 && heroInstallBottom <= 0;
-
-          if (shouldShowNavInstall) {
-            if (navInstallExitTimeout) {
-              window.clearTimeout(navInstallExitTimeout);
-              navInstallExitTimeout = 0;
-              document.body.classList.remove("is-nav-install-exiting");
-              document.body.classList.add("is-nav-install-settled");
-              return;
-            }
-            if (!document.body.classList.contains("has-nav-install")) {
-              enterNavInstall();
-              return;
-            }
-            return;
-          }
-
-          if (
-            document.body.classList.contains("has-nav-install")
-            && !document.body.classList.contains("is-nav-install-exiting")
-          ) {
-            exitNavInstall();
-          }
-        };
-        const scheduleNavInstallUpdate = () => {
-          if (navInstallFrame) return;
-          navInstallFrame = window.requestAnimationFrame(updateNavInstall);
-        };
-        updateNavInstall();
-        window.addEventListener("scroll", scheduleNavInstallUpdate, { passive: true });
-        window.addEventListener("resize", scheduleNavInstallUpdate);
-        const navResizeObserver = new ResizeObserver(scheduleNavInstallUpdate);
-        navResizeObserver.observe(topNav);
-        navResizeObserver.observe(heroInstallPrimary);
-      }
-
     </script>
 
     <style is:global>
@@ -667,7 +586,12 @@ const structuredData = [
         pointer-events: none;
       }
 
-      .hero-actions-button {
+      /*
+       * Page rules that refine shared components carry the component's class
+       * too: in production the shared stylesheets load after this page's, so
+       * an equally specific rule here would lose.
+       */
+      .lumno-settings-button.hero-actions-button {
         min-height: 44px;
         padding: 8px 16px;
         font-size: 14px;
@@ -717,7 +641,7 @@ const structuredData = [
 
       /* Center the copy on the browser frame, not frame + scenario switcher:
          reserve the switcher's height (40px) and the demo's gap (16px) below it. */
-      .ai-intent-copy {
+      .home-section__head.ai-intent-copy {
         margin-bottom: 0;
         padding-bottom: 56px;
       }
@@ -733,7 +657,7 @@ const structuredData = [
         overflow: clip;
       }
 
-      .hero-parallax__title {
+      .home-h2.hero-parallax__title {
         max-width: 760px;
         margin: 0 auto;
       }
@@ -763,7 +687,7 @@ const structuredData = [
           gap: var(--home-head-gap);
         }
 
-        .ai-intent-copy {
+        .home-section__head.ai-intent-copy {
           padding-bottom: 0;
         }
       }
@@ -843,7 +767,7 @@ const structuredData = [
           margin-top: 8px;
         }
 
-        .hero-actions-button {
+        .lumno-settings-button.hero-actions-button {
           min-height: 42px;
           padding: 7px 14px;
           font-size: 13px;

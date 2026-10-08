@@ -8,8 +8,16 @@
  * The important flag is intentional: a few shared controls use `all: unset`,
  * which would otherwise reset corner-shape after this stylesheet is loaded.
  */
-:root {
-  --lumno-corner-shape: superellipse(1.25);
+/*
+ * Capsules and circles opt out where they are declared: next to a pill or 50%
+ * radius, set `--lumno-corner-shape: round`. A superellipse on a radius that is
+ * already half the box height flattens the ends. The property does not inherit,
+ * so whatever sits inside a capsule keeps the continuous corner.
+ */
+@property --lumno-corner-shape {
+  syntax: "*";
+  inherits: false;
+  initial-value: superellipse(1.25);
 }
 
 @supports (corner-shape: superellipse(1.25)) {
@@ -35,11 +43,13 @@
     .lumno-settings-icon-button,
     .pill-btn,
     .pill-btn::before,
-    .pill-btn::after,
-    .chip,
-    .entry-link-btn,
-    .entry-dot
+    .pill-btn::after
   ) {
     corner-shape: round !important;
+  }
+
+  /* Tailwind's fully rounded utility is a capsule or circle too. */
+  .rounded-full {
+    --lumno-corner-shape: round;
   }
 }

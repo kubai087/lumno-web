@@ -79,6 +79,7 @@
   width: 9px;
   height: 9px;
   border-radius: 50%;
+  --lumno-corner-shape: round;
   background: rgba(31, 38, 36, 0.16);
 }
 
@@ -227,6 +228,7 @@
   border: 1.6px solid rgba(26, 115, 232, 0.22);
   border-top-color: var(--demo-group);
   border-radius: 50%;
+  --lumno-corner-shape: round;
   animation: ai-intent-demo-spin 700ms linear infinite;
 }
 

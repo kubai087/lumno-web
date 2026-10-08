@@ -218,6 +218,7 @@
   margin-left: calc(10px * var(--k));
   padding: calc(5px * var(--k)) calc(9px * var(--k));
   border-radius: 999px;
+  --lumno-corner-shape: round;
   background: rgba(17, 24, 39, 0.06);
   color: #4b5563;
   font-size: max(10px, calc(12px * var(--k)));

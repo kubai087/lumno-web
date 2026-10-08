@@ -24,6 +24,8 @@ interface Props {
   structuredData?: StructuredData[];
   /** Prefix for analytics labels in the shared header. */
   analyticsScope: string;
+  /** Selector for the page's opening; the top bar turns to glass once it has scrolled away. */
+  navHandoff: string;
 }
 
 const {
@@ -38,6 +40,7 @@ const {
   type = "website",
   structuredData = [],
   analyticsScope,
+  navHandoff,
 } = Astro.props;
 const alternateLinks = buildAlternateLinks(routeLanguageMap, basePath);
 ---
@@ -103,9 +106,15 @@ const alternateLinks = buildAlternateLinks(routeLanguageMap, basePath);
     <link rel="stylesheet" href="/assets/remixicon.css" />
     <slot name="head" />
   </head>
-  <!-- The header opens as the fixed glass pill the homepage reaches after its hero. -->
+  <!-- No hero install button here, so the bar keeps its own from the start (keepInstall). -->
   <body class="has-nav-install is-nav-install-settled" data-locale={locale}>
-    <SiteHeader locale={locale} routeLanguageMap={routeLanguageMap} analyticsScope={analyticsScope} />
+    <SiteHeader
+      locale={locale}
+      routeLanguageMap={routeLanguageMap}
+      analyticsScope={analyticsScope}
+      handoff={navHandoff}
+      keepInstall
+    />
 
     <main class="site-page">
       <slot />

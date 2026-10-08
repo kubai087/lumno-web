@@ -22,8 +22,8 @@ test("all website surfaces load the continuous corner enhancement", async () => 
   );
   assert.match(
     stylesheet,
-    /\.chip,\s*\.entry-link-btn,\s*\.entry-dot\s*\)\s*\{\s*corner-shape:\s*round\s*!important/,
-    "release chips, buttons and timeline dots are capsules too",
+    /@property --lumno-corner-shape \{[\s\S]*?inherits: false;[\s\S]*?initial-value: superellipse\(1\.25\);/,
+    "capsules opt out locally without leaking the round shape to their contents",
   );
   assert.match(
     stylesheet,
@@ -31,6 +31,11 @@ test("all website surfaces load the continuous corner enhancement", async () => 
     "icon buttons should retain their circular silhouette",
   );
   assert.match(seoHead, /href="\/continuous-corners\.css"/);
+  // Every pill or circle radius declares the round shape next to it.
+  const footer = await readFile(new URL("../src/components/home/sections/SiteFooter.astro", import.meta.url), "utf8");
+  for (const match of footer.matchAll(/border-radius: (?:999px|var\(--home-radius-pill\)|50%);\s*\n\s*(\S+)/g)) {
+    assert.equal(match[1], "--lumno-corner-shape:", "footer capsules should keep round ends");
+  }
   assert.match(authLayout, /href="\/continuous-corners\.css"/);
 });
 

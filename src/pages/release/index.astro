@@ -485,6 +485,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         width: 10px;
         height: 10px;
         border-radius: 999px;
+        --lumno-corner-shape: round;
         background: #111827;
       }
 
@@ -515,6 +516,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         height: 24px;
         padding: 0 10px;
         border-radius: 999px;
+        --lumno-corner-shape: round;
         border: 1px solid var(--line);
         background: var(--chip-bg);
         color: var(--chip-text);
@@ -696,6 +698,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         min-height: 36px;
         padding: 9px 14px;
         border-radius: 999px;
+        --lumno-corner-shape: round;
         border: 1px solid #d0d5dd;
         background: linear-gradient(180deg, #ffffff 0%, #ecedef 100%);
         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02), inset 0 -4px 3px rgba(255, 255, 255, 0.59);
@@ -803,7 +806,7 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
     </style>
   </head>
   <body class="has-nav-install is-nav-install-settled" data-locale={uiLocale} data-release-locale={uiLocale} data-release-content-locale={releaseContentLocale}>
-    <SiteHeader locale={uiLocale} routeLanguageMap={routeLanguageMap} analyticsScope="release" />
+    <SiteHeader locale={uiLocale} routeLanguageMap={routeLanguageMap} analyticsScope="release" handoff=".top-banner" keepInstall />
 
     <main class="container">
       <div class="top-banner">

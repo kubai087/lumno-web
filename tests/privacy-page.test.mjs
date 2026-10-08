@@ -19,8 +19,8 @@ test("privacy page is built on the shared site shell", () => {
   const source = readSource("src/pages/privacy/index.astro");
 
   assert.match(source, /import SitePage from "\.\.\/\.\.\/layouts\/SitePage\.astro"/);
-  assert.match(source, /<SitePage[\s\S]*?basePath="\/privacy\/"[\s\S]*?analyticsScope="privacy"/);
-  assert.match(readSource("src/layouts/SitePage.astro"), /<SiteHeader locale=\{locale\}/);
+  assert.match(source, /<SitePage[\s\S]*?basePath="\/privacy\/"[\s\S]*?analyticsScope="privacy"\s*navHandoff="\.doc__head"/);
+  assert.match(readSource("src/layouts/SitePage.astro"), /<SiteHeader\s+locale=\{locale\}/);
   assert.doesNotMatch(source, /OptionsFeedbackSupportLink/);
 });
 
@@ -29,8 +29,8 @@ test("privacy is a plain document with a header, a contents list, and the policy
   const contentSource = readSource("src/lib/privacy-content.ts");
 
   assert.match(source, /<nav class="doc__toc" aria-label=\{content\.tocLabel\}>/);
-  assert.match(source, /<li><a href=\{`#\$\{section\.id\}`\}>\{section\.title\}<\/a><\/li>/);
-  assert.match(source, /<h1>\{content\.title\}<\/h1>/);
+  assert.match(source, /<a href=\{`#\$\{section\.id\}`\}>\s*<span class="doc__num" aria-hidden="true">\{section\.number\}<\/span>/);
+  assert.match(source, /<h1><span>\{content\.title\}<\/span><\/h1>/);
   assert.match(source, /<time datetime=\{PRIVACY_LAST_UPDATED\}>\{displayLastUpdated\}<\/time>/);
   assert.match(source, /<Fragment set:html=\{policyHtml\} \/>/);
   // No marketing chrome on a legal document.
@@ -39,10 +39,24 @@ test("privacy is a plain document with a header, a contents list, and the policy
   const sectionIds = contentSource.match(/export const PRIVACY_SECTION_IDS = \[([\s\S]*?)\] as const;/)?.[1];
   assert.equal((sectionIds.match(/"[a-z][a-z-]+"/g) || []).length, 15);
   assert.match(source, /sectionTitles\.length !== PRIVACY_SECTION_IDS\.length/);
-  assert.match(source, /return `<h2 id="\$\{id\}">/);
+  assert.match(source, /return `<h2 id="\$\{id\}"><span class="doc__num" aria-hidden="true">\$\{number\}<\/span>/);
   assert.match(contentSource, /tocLabel: "目录"/);
   assert.match(contentSource, /tocLabel: "目錄"/);
   assert.match(contentSource, /tocLabel: "On this page"/);
+});
+
+test("site pages hand the top bar over like the homepage", () => {
+  const header = readSource("src/components/site/SiteHeader.astro");
+  const layout = readSource("src/layouts/SitePage.astro");
+
+  // Clear at the top, scrolls away with the page's opening, returns as glass once it has left the screen.
+  assert.match(header, /data-nav-surface=\{keepInstall \? "hero" : undefined\}/);
+  assert.match(header, /const shouldSurface = window\.scrollY > 0 && handoff\.getBoundingClientRect\(\)\.bottom <= 0;/);
+  assert.match(layout, /<SiteHeader[\s\S]*?handoff=\{navHandoff\}[\s\S]*?keepInstall/);
+  // The clear state must win over the install-keeping pages' glass state.
+  assert.match(header, /\.top-nav\[data-nav-surface="hero"\],\s*body\.has-nav-install \.top-nav\[data-nav-surface="hero"\] \{\s*position: absolute;/);
+  // Phones: the restored clear bar rests where it first loaded.
+  assert.match(header, /@media \(max-width: 760px\) \{\s*\/\*[^*]*\*\/\s*\.top-nav\[data-nav-surface="hero"\],\s*body\.has-nav-install \.top-nav\[data-nav-surface="hero"\] \{\s*top: max\(10px, env\(safe-area-inset-top\)\);/);
 });
 
 test("privacy document stays readable on narrow screens", () => {

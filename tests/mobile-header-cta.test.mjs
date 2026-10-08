@@ -25,7 +25,7 @@ test("homepage top bar uses a secondary language icon and install menu", () => {
 
   assert.match(
     source,
-    /<header class="top-nav">[\s\S]*?<LanguageMenu[\s\S]*?iconOnly[\s\S]*?<InstallMenu[\s\S]*?client:load/,
+    /<header\s+class="top-nav"[\s\S]*?<LanguageMenu[\s\S]*?iconOnly[\s\S]*?<InstallMenu[\s\S]*?client:load/,
     "the homepage should compose the shared language control and hydrated install menu",
   );
   assert.match(
@@ -64,10 +64,13 @@ test("homepage glass navigation enters after the hero primary CTA has scrolled a
   );
 
   assert.match(heroInstall, /id = "hero-install-primary"[\s\S]*?id=\{id\}[\s\S]*?variant="primary"/);
+  // The homepage hands its hero install button over to the shared bar.
+  assert.match(source, /<SiteHeader locale=\{uiLocale\} routeLanguageMap=\{routeLanguageMap\} handoff="#hero-install-primary" \/>/);
+  assert.match(source, /keepInstall \? !topNav\.hasAttribute\("data-nav-surface"\) : body\.classList\.contains\("has-nav-install"\)/);
   assert.match(source, /<div class="top-nav-install-slot">[\s\S]*?<InstallMenu/);
   assert.match(
     source,
-    /const heroInstallBottom = heroInstallPrimary\.getBoundingClientRect\(\)\.bottom;[\s\S]*?const shouldShowNavInstall = window\.scrollY > 0 && heroInstallBottom <= 0;[\s\S]*?if \(!document\.body\.classList\.contains\("has-nav-install"\)\) \{[\s\S]*?enterNavInstall\(\);/,
+    /const shouldSurface = window\.scrollY > 0 && handoff\.getBoundingClientRect\(\)\.bottom <= 0;[\s\S]*?if \(!isSurfaced\(\)\) enterNav\(\);/,
   );
   assert.match(
     source,
@@ -321,18 +324,18 @@ test("homepage navbar animates in the community action and reuses the CTA dialog
   assert.doesNotMatch(source, /top-nav-surface-enter 320ms cubic-bezier/);
   assert.match(
     source,
-    /if \(navInstallExitTimeout\) \{[\s\S]*?window\.clearTimeout\(navInstallExitTimeout\);[\s\S]*?navInstallExitTimeout = 0;[\s\S]*?document\.body\.classList\.remove\("is-nav-install-exiting"\);[\s\S]*?document\.body\.classList\.add\("is-nav-install-settled"\);[\s\S]*?return;/,
+    /if \(navExitTimeout\) \{[\s\S]*?window\.clearTimeout\(navExitTimeout\);[\s\S]*?navExitTimeout = 0;[\s\S]*?body\.classList\.remove\("is-nav-install-exiting"\);[\s\S]*?body\.classList\.add\("is-nav-install-settled"\);[\s\S]*?return;/,
     "rapidly returning below the CTA should cancel the exit and preserve the settled floating navigation without replaying entry",
   );
-  assert.match(source, /document\.body\.classList\.add\("is-nav-install-exiting"\);[\s\S]*?window\.setTimeout\(finishNavInstallExit, 120\)/);
+  assert.match(source, /body\.classList\.add\("is-nav-install-exiting"\);[\s\S]*?window\.setTimeout\(finishNavExit, 120\)/);
   assert.match(
     source,
-    /const finishNavInstallExit = \(\) => \{[\s\S]*?topNav\.dataset\.navSurface = "hero";[\s\S]*?document\.body\.classList\.remove\([\s\S]*?"has-nav-install"/,
+    /const finishNavExit = \(\) => \{[\s\S]*?topNav\.dataset\.navSurface = "hero";[\s\S]*?body\.classList\.remove\("has-nav-install", "is-nav-install-settled"\)/,
     "returning to the hero header should clear the glass surface before removing the fixed-nav state",
   );
   assert.match(
     source,
-    /const enterNavInstall = \(\) => \{[\s\S]*?topNav\.removeAttribute\("data-nav-surface"\);[\s\S]*?document\.body\.classList\.add\("has-nav-install"\)/,
+    /const enterNav = \(\) => \{[\s\S]*?topNav\.removeAttribute\("data-nav-surface"\);[\s\S]*?body\.classList\.add\("has-nav-install"\)/,
     "entering the fixed navigation should restore the glass surface state",
   );
   assert.match(
@@ -352,7 +355,7 @@ test("homepage navbar animates in the community action and reuses the CTA dialog
 test("release page uses the shared site top bar", () => {
   const source = fs.readFileSync(path.join(workspaceRoot, "src/pages/release/index.astro"), "utf8");
 
-  assert.match(source, /<SiteHeader locale=\{uiLocale\} routeLanguageMap=\{routeLanguageMap\} analyticsScope="release" \/>/);
+  assert.match(source, /<SiteHeader locale=\{uiLocale\} routeLanguageMap=\{routeLanguageMap\} analyticsScope="release" handoff="\.top-banner" keepInstall \/>/);
   assert.match(source, /<body class="has-nav-install is-nav-install-settled"/);
   // The old header, floating language control and QR modal are replaced by the shared bar.
   assert.doesNotMatch(source, /class="header"|class="social-btn|class="lang-control"|id="community-qrcode-modal"/);

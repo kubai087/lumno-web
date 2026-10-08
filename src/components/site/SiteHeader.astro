@@ -20,22 +20,43 @@ interface Props {
   routeLanguageMap: Record<string, string>;
   /** Prefix for the brand link's analytics label, e.g. "release" → release_header_brand. */
   analyticsScope?: string;
+  /**
+   * Selector for the page's opening (the hero's install button, a page title).
+   * The bar rests clear at the top and scrolls away with it; once it has left
+   * the screen, the bar comes back as the fixed glass pill.
+   */
+  handoff: string;
+  /**
+   * Keep the install button in the bar all the time. Pages without a hero
+   * install button use this; the homepage hands its own button over instead.
+   */
+  keepInstall?: boolean;
 }
 
 /*
- * The site's top bar. On the homepage it sits over the hero and only turns
- * into the fixed glass pill once the hero's install button scrolls away (the
- * page script toggles body.has-nav-install). Other pages open with the pill
- * already in place: their <body> carries has-nav-install from the start.
+ * The site's top bar, the same on every page: it rests clear at the top and
+ * scrolls away with the page's opening, then drops back in as the fixed glass
+ * pill once that opening has left the screen (script below).
+ *
+ * State: body.has-nav-install shows the install button and the glass surface;
+ * .top-nav[data-nav-surface="hero"] overrides the surface back to the clear,
+ * in-flow bar. The homepage toggles has-nav-install, handing its hero button
+ * over to the bar; keepInstall pages hold has-nav-install and toggle the
+ * surface attribute only.
  */
-const { locale, routeLanguageMap, analyticsScope = "home" } = Astro.props;
+const { locale, routeLanguageMap, analyticsScope = "home", handoff, keepInstall = false } = Astro.props;
 const content = getHomeContent(locale);
 const homeHref = buildLocalizedPath(locale, "/");
 const releaseHref = buildLocalizedPath(locale, "/release/");
 const { chrome: chromeStoreVersion, edge: edgeStoreVersion } = await getSiteStoreVersions();
 ---
 
-<header class="top-nav">
+<header
+  class="top-nav"
+  data-nav-handoff={handoff}
+  data-nav-keep-install={keepInstall ? "" : undefined}
+  data-nav-surface={keepInstall ? "hero" : undefined}
+>
   <a
     class="top-nav-brand"
     href={homeHref}
@@ -97,6 +118,97 @@ const { chrome: chromeStoreVersion, edge: edgeStoreVersion } = await getSiteStor
   </nav>
 </header>
 
+<script>
+  /*
+   * The bar rests clear at the top and scrolls away with the page's opening
+   * (data-nav-handoff); once the opening has left the screen it drops back in
+   * as the fixed glass pill, and leaves again when the reader scrolls back.
+   */
+  const topNav = document.querySelector<HTMLElement>(".top-nav");
+  const handoffSelector = topNav?.dataset.navHandoff;
+  const handoff = handoffSelector ? document.querySelector<HTMLElement>(handoffSelector) : null;
+
+  if (topNav && handoff) {
+    const body = document.body;
+    const keepInstall = topNav.hasAttribute("data-nav-keep-install");
+    const reduceMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let navFrame = 0;
+    let navEntryTimeout = 0;
+    let navExitTimeout = 0;
+
+    // The homepage hands its install button over; other pages only swap the surface.
+    const isSurfaced = () =>
+      keepInstall ? !topNav.hasAttribute("data-nav-surface") : body.classList.contains("has-nav-install");
+    const settleNav = () => {
+      navEntryTimeout = 0;
+      body.classList.add("is-nav-install-settled");
+    };
+    const finishNavExit = () => {
+      navExitTimeout = 0;
+      topNav.dataset.navSurface = "hero";
+      body.classList.remove("is-nav-install-exiting");
+      if (keepInstall) {
+        body.classList.add("is-nav-install-settled");
+      } else {
+        body.classList.remove("has-nav-install", "is-nav-install-settled");
+      }
+    };
+    const enterNav = () => {
+      topNav.removeAttribute("data-nav-surface");
+      body.classList.remove("is-nav-install-exiting", "is-nav-install-settled");
+      body.classList.add("has-nav-install");
+      if (reduceMotion()) {
+        settleNav();
+        return;
+      }
+      navEntryTimeout = window.setTimeout(settleNav, 320);
+    };
+    const exitNav = () => {
+      if (navEntryTimeout) {
+        window.clearTimeout(navEntryTimeout);
+        navEntryTimeout = 0;
+      }
+      body.classList.add("is-nav-install-exiting");
+      if (reduceMotion()) {
+        finishNavExit();
+        return;
+      }
+      navExitTimeout = window.setTimeout(finishNavExit, 120);
+    };
+    const updateNav = () => {
+      navFrame = 0;
+      const shouldSurface = window.scrollY > 0 && handoff.getBoundingClientRect().bottom <= 0;
+
+      if (shouldSurface) {
+        // Coming straight back down: cancel the exit and keep the settled pill without replaying entry.
+        if (navExitTimeout) {
+          window.clearTimeout(navExitTimeout);
+          navExitTimeout = 0;
+          body.classList.remove("is-nav-install-exiting");
+          body.classList.add("is-nav-install-settled");
+          return;
+        }
+        if (!isSurfaced()) enterNav();
+        return;
+      }
+
+      if (isSurfaced() && !body.classList.contains("is-nav-install-exiting")) {
+        exitNav();
+      }
+    };
+    const scheduleNavUpdate = () => {
+      if (navFrame) return;
+      navFrame = window.requestAnimationFrame(updateNav);
+    };
+    updateNav();
+    window.addEventListener("scroll", scheduleNavUpdate, { passive: true });
+    window.addEventListener("resize", scheduleNavUpdate);
+    const navResizeObserver = new ResizeObserver(scheduleNavUpdate);
+    navResizeObserver.observe(topNav);
+    navResizeObserver.observe(handoff);
+  }
+</script>
+
 <style is:global>
   .top-nav {
     position: absolute;
@@ -118,6 +230,7 @@ const { chrome: chromeStoreVersion, edge: edgeStoreVersion } = await getSiteStor
     gap: 18px;
     border: 1px solid transparent;
     border-radius: var(--home-radius-pill);
+    --lumno-corner-shape: round;
     overflow: clip;
     background: transparent;
     box-shadow: none;
@@ -150,7 +263,9 @@ const { chrome: chromeStoreVersion, edge: edgeStoreVersion } = await getSiteStor
     backdrop-filter: blur(18px);
   }
 
-  .top-nav[data-nav-surface="hero"] {
+  /* Also beats body.has-nav-install .top-nav on pages that keep the install button. */
+  .top-nav[data-nav-surface="hero"],
+  body.has-nav-install .top-nav[data-nav-surface="hero"] {
     position: absolute;
     top: 18px;
     border-color: transparent;
@@ -164,6 +279,8 @@ const { chrome: chromeStoreVersion, edge: edgeStoreVersion } = await getSiteStor
     filter: none;
     transition: none;
   }
+
+
 
   body.has-nav-install:not(.is-nav-install-settled) .top-nav {
     animation: top-nav-surface-enter 320ms ease-out both;
@@ -205,7 +322,8 @@ const { chrome: chromeStoreVersion, edge: edgeStoreVersion } = await getSiteStor
     display: inline-flex;
     align-items: center;
     flex: 0 0 auto;
-    padding: 5px 10px 5px 22px;
+    /* The wordmark starts as far in as the install button's label ends on the right. */
+    padding: 5px 10px 5px 14px;
     text-decoration: none;
   }
 
@@ -283,6 +401,7 @@ const { chrome: chromeStoreVersion, edge: edgeStoreVersion } = await getSiteStor
     margin-left: calc(var(--top-nav-action-gap) * -1);
     overflow: clip;
     border-radius: var(--home-radius-pill);
+    --lumno-corner-shape: round;
     clip-path: inset(0 round var(--home-radius-pill));
     opacity: 0;
     visibility: hidden;
@@ -336,11 +455,21 @@ const { chrome: chromeStoreVersion, edge: edgeStoreVersion } = await getSiteStor
   }
 
   @media (max-width: 760px) {
+    /* Back at the top the bar rests where it first loaded. */
+    .top-nav[data-nav-surface="hero"],
+    body.has-nav-install .top-nav[data-nav-surface="hero"] {
+      top: max(10px, env(safe-area-inset-top));
+    }
+
     .top-nav {
       top: max(10px, env(safe-area-inset-top));
       min-height: 58px;
       padding: 5px;
       gap: 10px;
+    }
+
+    .top-nav-brand {
+      padding-left: 17px;
     }
 
     .top-nav-brand img {

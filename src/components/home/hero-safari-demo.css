@@ -1154,9 +1154,8 @@ html[data-home-intro-skip] .hero-safari-demo[data-home-intro="pending"] .hero-sa
         }
       }
 
+      /* Cursor points come from the drawn targets (DemoCursorLayer in HeroSafariDemo.tsx). */
       .cursor-layer {
-        --search-result-input-cursor-left: 29%;
-        --search-result-input-cursor-top: 22%;
         --search-result-input-cursor-travel: 48px;
         position: absolute;
         inset: 0;
@@ -1211,21 +1210,21 @@ html[data-home-intro-skip] .hero-safari-demo[data-home-intro="pending"] .hero-sa
       }
       @keyframes onboarding-cursor-type {
         0% {
-          left: var(--search-result-input-cursor-left);
-          top: var(--search-result-input-cursor-top);
+          left: var(--search-result-input-cursor-left, 29%);
+          top: var(--search-result-input-cursor-top, 22%);
           opacity: 0;
           transform: translate3d(-8px, 2px, 0) rotate(-6deg);
         }
         12% {
-          left: var(--search-result-input-cursor-left);
-          top: var(--search-result-input-cursor-top);
+          left: var(--search-result-input-cursor-left, 29%);
+          top: var(--search-result-input-cursor-top, 22%);
           opacity: 1;
           transform: translate3d(0, 0, 0) rotate(-6deg);
         }
         62%,
         72% {
-          left: var(--search-result-input-cursor-left);
-          top: var(--search-result-input-cursor-top);
+          left: var(--search-result-input-cursor-left, 29%);
+          top: var(--search-result-input-cursor-top, 22%);
           opacity: 1;
           transform: translate3d(
               var(--search-result-input-cursor-travel),
@@ -1292,32 +1291,23 @@ html[data-home-intro-skip] .hero-safari-demo[data-home-intro="pending"] .hero-sa
     aspect-ratio: 6 / 7;
   }
 
+  /*
+   * A phone frame is too narrow for the desktop's off-centre placement. The
+   * card has a fixed height here (index.astro), so the panels sit 16px from
+   * the top, matching their side inset.
+   */
   .lumno-overlay-panel {
-    --onboarding-overlay-scale: 0.88;
-    --onboarding-overlay-enter-scale: 0.866;
-    /* A phone frame is too narrow for the desktop's off-centre placement. */
     left: 50%;
-    top: 7%;
+    top: 16px;
   }
 
   .site-search-demo-stack {
     left: 50%;
-    top: 7%;
+    top: 16px;
   }
 
   .cursor-layer {
-    --search-result-input-cursor-left: 27%;
-    --search-result-input-cursor-top: 5%;
     --search-result-input-cursor-travel: 36px;
-    --cursor-row-1: 28.7%;
-    --cursor-row-2: 40.4%;
-    --cursor-row-3: 52.1%;
-    --cursor-row-4: 63.8%;
-    --cursor-row-5: 75.5%;
-    --cursor-wrap-bottom: 82%;
-    --cursor-wrap-top: 25%;
-    --site-search-cursor-left: 20%;
-    --site-search-cursor-top: 12.5%;
   }
 
   /*
@@ -1394,15 +1384,6 @@ html[data-home-intro-skip] .hero-safari-demo[data-home-intro="pending"] .hero-sa
 }
 
 @media (max-width: 760px) and (max-height: 740px) {
-  .lumno-overlay-panel {
-    --onboarding-overlay-scale: 0.8;
-    --onboarding-overlay-enter-scale: 0.788;
-  }
-
-  .site-search-demo-stack {
-    transform: translateX(-50%) scale(0.4);
-  }
-
   .site-search-demo-scope-menu {
     height: min(170px, 30vh);
     max-height: min(170px, 30vh);
@@ -1420,7 +1401,7 @@ html[data-home-intro-skip] .hero-safari-demo[data-home-intro="pending"] .hero-sa
     --onboarding-overlay-scale: var(--home-ui-scale);
     --onboarding-overlay-enter-scale: calc(var(--home-ui-scale) * 0.985);
     width: calc(min(100% - 32px, var(--home-ui-panel-max)) / var(--home-ui-scale));
-    max-height: calc((100% - 62px) / var(--home-ui-scale));
+    max-height: calc((100% - 32px) / var(--home-ui-scale));
   }
 
   .site-search-demo-stack {

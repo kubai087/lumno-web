@@ -1015,6 +1015,15 @@ function DemoCursorLayer({ mode }: { mode: CursorMode }) {
     };
     const syncCursorTargets = () => {
       if (mode === "search-result") {
+        // Rests on the field's leading edge while the query types, then
+        // moves to the first result. Measured, so it tracks the panel's
+        // placement at any card size.
+        setCursorPoint(
+          "search-result-input",
+          stage.querySelector(".lumno-overlay-query"),
+          0.01,
+          0.72,
+        );
         setCursorPoint(
           "search-result",
           stage.querySelector('.lumno-overlay-result[data-demo-index="0"]'),
@@ -1044,7 +1053,7 @@ function DemoCursorLayer({ mode }: { mode: CursorMode }) {
 
     scheduleCursorSync();
     const syncDelays = mode === "search-result"
-      ? [2_480, 3_780]
+      ? [600, 2_480, 3_780]
       : [2_800, 4_800, 6_350];
     const timeoutIds = syncDelays.map((delay) => window.setTimeout(
       scheduleCursorSync,

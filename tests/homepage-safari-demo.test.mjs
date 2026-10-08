@@ -453,11 +453,14 @@ test("hero demo exposes three replayable plugin-consistent search scenes", () =>
   assert.match(styles, /\[data-cursor-mode="search-result"\][\s\S]*?--search-result-cursor-delay/);
   assert.match(styles, /--search-result-cursor-left/);
   assert.match(styles, /--search-result-cursor-top/);
-  assert.match(styles, /--search-result-input-cursor-left: 29%;/);
-  assert.match(styles, /--search-result-input-cursor-top: 22%;/);
+  // The input point is measured from the drawn field, like the result point.
+  assert.match(component, /"search-result-input",\s*stage\.querySelector\("\.lumno-overlay-query"\)/);
+  assert.match(styles, /var\(--search-result-input-cursor-left, 29%\)/);
+  assert.match(styles, /var\(--search-result-input-cursor-top, 22%\)/);
+  assert.doesNotMatch(styles, /--search-result-input-cursor-(left|top):/);
   assert.match(styles, /--search-result-input-cursor-travel: 48px;/);
   assert.match(styles, /62%,\s*72%[\s\S]*?--search-result-input-cursor-travel/);
-  assert.match(styles, /@media \(max-width: 760px\)[\s\S]*?--search-result-input-cursor-left: 27%;[\s\S]*?--search-result-input-cursor-travel: 36px;/);
+  assert.match(styles, /@media \(max-width: 760px\)[\s\S]*?\.cursor-layer \{[\s\S]*?--search-result-input-cursor-travel: 36px;/);
   assert.doesNotMatch(styles, /onboarding-cursor-type-mobile/);
   assert.doesNotMatch(styles, /onboarding-cursor-hover-loop/);
   assert.doesNotMatch(styles, /onboarding-command-cursor-hide/);
@@ -484,7 +487,7 @@ test("hero demo exposes three replayable plugin-consistent search scenes", () =>
   assert.match(styles, /--site-search-menu-cursor-left/);
   assert.match(styles, /--site-search-menu-cursor-top/);
   assert.match(styles, /\.site-search-demo-stack \{[\s\S]*?top: 18%;/);
-  assert.match(styles, /@media \(max-width: 760px\)[\s\S]*?\.lumno-overlay-panel \{[\s\S]*?top: 7%;[\s\S]*?\.site-search-demo-stack \{[\s\S]*?top: 7%;/);
+  assert.match(styles, /@media \(max-width: 760px\)[\s\S]*?\.lumno-overlay-panel \{[\s\S]*?top: 16px;[\s\S]*?\.site-search-demo-stack \{[\s\S]*?top: 16px;/);
   assert.match(component, /data-scene-direction=\{sceneDirection\}/);
   assert.match(component, /x: direction === "forward" \? 42 : -42/);
   assert.doesNotMatch(component, /hero-demo-page-indicator/);
@@ -492,7 +495,7 @@ test("hero demo exposes three replayable plugin-consistent search scenes", () =>
   assert.doesNotMatch(switcherStyles, /backdrop-filter/);
   assert.match(styles, /hero-demo-page-button:focus-visible/);
   assert.match(homepage, /height: max\(300px, calc\(100svh - 500px\)\);/);
-  assert.match(homepage, /height: max\(220px, calc\(100svh - 500px\)\);/);
+  assert.match(homepage, /\.hero-demo-slot \{\s*height: 320px;\s*max-height: none;/);
   assert.match(
     styles,
     /@media \(max-width: 760px\)[\s\S]*?\.lumno-settings-tabs\.hero-demo-page-switcher \{[\s\S]*?top: calc\(100% \+ 16px\);[\s\S]*?width: max-content;[\s\S]*?max-width: calc\(100vw - 32px\);/,

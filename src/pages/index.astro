@@ -802,9 +802,16 @@ const structuredData = [
           gap: 0;
         }
 
+        /*
+         * Phones: a fixed height sized to the tallest scene (the 5-result
+         * panel at --home-ui-scale, 16px in from the top, with the meadow
+         * showing below), not to the viewport. A 100svh-based height swung
+         * from 220px to 380px across phones and toolbar states, clipping the
+         * panel on short screens and leaving empty canvas on tall ones.
+         */
         .hero-demo-slot {
-          height: max(220px, calc(100svh - 500px));
-          max-height: calc(100cqw * 7 / 6);
+          height: 320px;
+          max-height: none;
           margin-top: 36px;
           /* The scene switcher hangs below the card here: 16px gap + 40px bar. */
           margin-bottom: 56px;

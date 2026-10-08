@@ -765,13 +765,21 @@
   }
 }
 
+/*
+ * Phones: the stage hugs the window instead of holding a ratio. A 3/4 frame
+ * left a tall blank page under the article; here the window sits in normal
+ * flow 16px in from the wallpaper's edges (the hero's panel inset) and the
+ * page keeps just enough room under the last line for the selection toolbar.
+ */
 @media (max-width: 760px) {
   .ai-intent-demo__stage {
-    aspect-ratio: 3 / 4;
+    aspect-ratio: auto;
+    padding: 16px 16px 24px;
   }
 
   .ai-intent-demo__window {
-    inset: 5% 4%;
+    position: relative;
+    inset: auto;
     padding: 0 4px 4px;
   }
 
@@ -796,7 +804,8 @@
   }
 
   .ai-intent-demo__page {
-    padding: 20px 18px;
+    flex: none;
+    padding: 20px 18px 52px;
   }
 
   .ai-intent-demo__body {

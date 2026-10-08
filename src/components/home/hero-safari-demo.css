@@ -134,7 +134,11 @@ html[data-home-intro-skip] .hero-safari-demo[data-home-intro="pending"] .hero-sa
 
 .hero-safari-dither {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
+  /* At least the card's far edges (HeroSafariDemo syncHomeIntroTargetGeometry). */
+  width: var(--hero-intro-art-width, 100%);
+  height: var(--hero-intro-art-height, 100%);
   z-index: 1;
   overflow: hidden;
   border-radius: 0;

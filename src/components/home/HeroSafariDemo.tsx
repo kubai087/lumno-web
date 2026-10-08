@@ -1302,6 +1302,8 @@ export function HeroSafariDemo({
       visual.style.setProperty("--hero-intro-target-height", size(height));
       visual.style.setProperty("--hero-intro-source-width", size(width));
       visual.style.setProperty("--hero-intro-source-height", size(height));
+      visual.style.setProperty("--hero-intro-art-width", size(width));
+      visual.style.setProperty("--hero-intro-art-height", size(height));
     });
     observer.observe(demo);
 
@@ -1397,6 +1399,19 @@ export function HeroSafariDemo({
       visual.style.setProperty("--hero-intro-target-height", `${targetRect.height.toFixed(2)}px`);
       visual.style.setProperty("--hero-intro-source-width", `${sourceRect.width.toFixed(2)}px`);
       visual.style.setProperty("--hero-intro-source-height", `${sourceRect.height.toFixed(2)}px`);
+      // The settled card shows this crop of the viewport-sized artwork. A card
+      // that reaches below the fold (a taller hero headline, a short window)
+      // would run past a viewport-sized image and leave a bare strip, so the
+      // artwork always extends to the card's far edges. The extra part stays
+      // clipped during the intro, and the size never changes at the handoff.
+      visual.style.setProperty(
+        "--hero-intro-art-width",
+        `${Math.max(sourceRect.width, targetRect.right).toFixed(2)}px`,
+      );
+      visual.style.setProperty(
+        "--hero-intro-art-height",
+        `${Math.max(sourceRect.height, targetRect.bottom).toFixed(2)}px`,
+      );
       visual.style.setProperty(
         "--hero-intro-mask-scale-x",
         (sourceRect.width / targetRect.width).toFixed(6),

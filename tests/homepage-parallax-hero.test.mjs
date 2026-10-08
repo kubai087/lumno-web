@@ -67,7 +67,7 @@ test("homepage second section uses the Aceternity Hero Parallax composition", ()
   assert.match(componentSource, /hero-title-line/);
   assert.match(componentSource, /hero-title-segment/);
   assert.equal(fullBleedFeatureRules.length, 1);
-  assert.match(componentSource, /aspect-\[1\.585\]/);
+  assert.match(componentSource, /aspect-\[8\/5\]/);
   assert.match(componentSource, /object-contain object-center/);
   assert.doesNotMatch(componentSource, /object-cover/);
   assert.doesNotMatch(componentSource, /shadow-xl/);

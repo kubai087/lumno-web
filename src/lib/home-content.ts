@@ -112,6 +112,9 @@ type HomeContent = {
     title: string;
     description: string;
     screenshotAlt: string;
+    /** Phones: a tap on a parallax screenshot opens it full size. */
+    screenshotOpenLabel: string;
+    screenshotCloseLabel: string;
     /** The filter lab sits under the wallpaper part heading, so it has no title of its own. */
     filters: {
       alt: string;
@@ -290,6 +293,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
       title: "每次打开，都是一幅画",
       description: "名画与山水壁纸、多种滤镜，书签和常用网站一点即达。\n极简或丰富，由你决定。",
       screenshotAlt: "Lumno 新标签页截图：壁纸、搜索框与常用网站卡片",
+      screenshotOpenLabel: "查看大图",
+      screenshotCloseLabel: "关闭大图",
       filters: {
         alt: "Lumno 新标签页在同一张雪中村庄油画壁纸上应用不同滤镜的效果",
         tablistLabel: "切换壁纸滤镜预览",
@@ -580,6 +585,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
       title: "每次開啟，都是一幅畫",
       description: "名畫與山水桌布、多種濾鏡，書籤和常用網站一點就到。\n極簡或豐富，由你決定。",
       screenshotAlt: "Lumno 新分頁截圖：桌布、搜尋框與常用網站卡片",
+      screenshotOpenLabel: "查看大圖",
+      screenshotCloseLabel: "關閉大圖",
       filters: {
         alt: "Lumno 新分頁在同一張雪中村莊油畫桌布上套用不同濾鏡的效果",
         tablistLabel: "切換桌布濾鏡預覽",
@@ -872,6 +879,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
       description:
         "Painted wallpapers, film-like filters, and your bookmarks one click away. Minimal or full, your call.",
       screenshotAlt: "Lumno new tab with a wallpaper, search box, and site cards",
+      screenshotOpenLabel: "View full size",
+      screenshotCloseLabel: "Close full-size view",
       filters: {
         alt: "The Lumno new tab with different filters applied to the same snowy village painting",
         tablistLabel: "Preview wallpaper filters",
@@ -1161,6 +1170,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
       title: "開くたびに、一枚の絵。",
       description: "名画や風景の壁紙にフィルター、ブックマークもよく使うサイトもすぐそこに。\nミニマルにも、多機能にも。",
       screenshotAlt: "Lumno の新しいタブ：壁紙、検索ボックス、よく使うサイトのカード",
+      screenshotOpenLabel: "拡大して見る",
+      screenshotCloseLabel: "拡大表示を閉じる",
       filters: {
         alt: "雪の村を描いた同じ油絵の壁紙に、さまざまなフィルターをかけた Lumno の新しいタブ",
         tablistLabel: "壁紙フィルターのプレビューを切り替え",
@@ -1450,6 +1461,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
       title: "열 때마다, 한 폭의 그림",
       description: "명화와 풍경 배경화면, 다양한 필터, 북마크와 자주 가는 사이트까지 클릭 한 번이면 됩니다.\n미니멀하게도, 풍성하게도.",
       screenshotAlt: "Lumno 새 탭: 배경화면, 검색창, 사이트 카드",
+      screenshotOpenLabel: "크게 보기",
+      screenshotCloseLabel: "크게 보기 닫기",
       filters: {
         alt: "같은 눈 내린 마을 유화 배경화면에 여러 필터를 적용한 Lumno 새 탭",
         tablistLabel: "배경화면 필터 미리 보기",
@@ -1741,6 +1754,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
       description:
         "Gemälde als Hintergrund, Filter wie auf Film und deine Lesezeichen nur einen Klick entfernt. Minimalistisch oder voll ausgestattet – du entscheidest.",
       screenshotAlt: "Neuer Tab von Lumno mit Hintergrundbild, Suchfeld und Website-Karten",
+      screenshotOpenLabel: "In voller Größe ansehen",
+      screenshotCloseLabel: "Vollansicht schließen",
       filters: {
         alt: "Der neue Tab von Lumno mit verschiedenen Filtern auf demselben Gemälde eines verschneiten Dorfs",
         tablistLabel: "Hintergrundfilter in der Vorschau",
@@ -2032,6 +2047,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
       description:
         "Des tableaux en fond d’écran, des filtres façon pellicule et vos favoris à un clic. Minimaliste ou complet, à vous de voir.",
       screenshotAlt: "Nouvel onglet Lumno avec fond d’écran, champ de recherche et cartes de sites",
+      screenshotOpenLabel: "Voir en grand",
+      screenshotCloseLabel: "Fermer l’aperçu",
       filters: {
         alt: "Le nouvel onglet Lumno avec différents filtres appliqués au même tableau d’un village enneigé",
         tablistLabel: "Aperçu des filtres de fond d’écran",
@@ -2323,6 +2340,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
       description:
         "Fondos de grandes pintores, filtros con aire de película y tus marcadores a un clic. Minimalista o completa, tú decides.",
       screenshotAlt: "Nueva pestaña de Lumno con fondo de pantalla, buscador y tarjetas de sitios",
+      screenshotOpenLabel: "Ver a tamaño completo",
+      screenshotCloseLabel: "Cerrar la vista ampliada",
       filters: {
         alt: "La nueva pestaña de Lumno con distintos filtros sobre el mismo cuadro de un pueblo nevado",
         tablistLabel: "Vista previa de los filtros del fondo",
@@ -2614,6 +2633,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
       description:
         "Pinturas como papel de parede, filtros com cara de filme e seus favoritos a um clique. Minimalista ou completa, você escolhe.",
       screenshotAlt: "Nova aba do Lumno com papel de parede, caixa de pesquisa e cartões de sites",
+      screenshotOpenLabel: "Ver em tamanho real",
+      screenshotCloseLabel: "Fechar a visualização ampliada",
       filters: {
         alt: "A nova aba do Lumno com filtros diferentes sobre a mesma pintura de uma vila com neve",
         tablistLabel: "Prévia dos filtros do papel de parede",
@@ -2905,6 +2926,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
       description:
         "Шедевры живописи на фоне, плёночные фильтры и закладки в один клик. Минимализм или всё сразу — решать вам.",
       screenshotAlt: "Новая вкладка Lumno: фон, строка поиска и карточки сайтов",
+      screenshotOpenLabel: "Открыть крупно",
+      screenshotCloseLabel: "Закрыть крупный просмотр",
       filters: {
         alt: "Новая вкладка Lumno с разными фильтрами на одной и той же картине с заснеженной деревней",
         tablistLabel: "Предпросмотр фильтров фона",

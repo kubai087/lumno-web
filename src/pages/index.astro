@@ -307,6 +307,8 @@ const structuredData = [
           title={content.newTab.title}
           description={content.newTab.description}
           headingId="new-tab-title"
+          openLabel={content.newTab.screenshotOpenLabel}
+          closeLabel={content.newTab.screenshotCloseLabel}
           client:visible={{ rootMargin: "100% 0px" }}
         />
         <NewTabSection content={content.newTab} locale={uiLocale} />

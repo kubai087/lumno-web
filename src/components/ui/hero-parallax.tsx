@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type Ref } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore, type Ref } from "react";
 import {
   motion,
   useInView,
@@ -11,7 +11,9 @@ import type { MotionValue, Transition } from "motion/react";
 import type { ShortcutKey } from "@/lib/shortcut-keys";
 import { splitTitlePair } from "@/lib/title-pair";
 import { cn } from "@/lib/utils";
+import { Dialog, DialogClose, DialogContent, DialogTitle } from "./dialog";
 import { ShortcutKeys } from "./shortcut-keys";
+import { XIcon } from "lucide-react";
 
 export interface HeroParallaxProduct {
   title: string;
@@ -26,7 +28,20 @@ interface HeroParallaxProps {
   title: string;
   description: string;
   headingId: string;
+  /** Phones: name of the tap that opens a screenshot full size, and of its close button. */
+  openLabel: string;
+  closeLabel: string;
 }
+
+// Below Tailwind's md breakpoint the cards are 224px wide, too small to read, so a tap opens one.
+const PHONE_QUERY = "(max-width: 767px)";
+const subscribePhone = (onChange: () => void) => {
+  const query = window.matchMedia(PHONE_QUERY);
+  query.addEventListener("change", onChange);
+  return () => query.removeEventListener("change", onChange);
+};
+const getIsPhone = () => window.matchMedia(PHONE_QUERY).matches;
+const getIsPhoneOnServer = () => false;
 
 const SPRING_CONFIG = { stiffness: 300, damping: 30, bounce: 100 };
 const HERO_COPY_HIDDEN = { opacity: 0, y: 22, filter: "blur(10px)" };
@@ -51,7 +66,12 @@ export function HeroParallax({
   title,
   description,
   headingId,
+  openLabel,
+  closeLabel,
 }: HeroParallaxProps) {
+  const isPhone = useSyncExternalStore(subscribePhone, getIsPhone, getIsPhoneOnServer);
+  const [viewing, setViewing] = useState<HeroParallaxProduct | null>(null);
+  const onOpen = isPhone ? setViewing : undefined;
   const containerRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const shouldReduceMotion = useReducedMotion();
@@ -130,27 +150,60 @@ export function HeroParallax({
           translate={translateX}
           reverse
           shouldReduceMotion={Boolean(shouldReduceMotion)}
+          onOpen={onOpen}
+          openLabel={openLabel}
         />
         <ProductRow
           products={secondRow}
           translate={translateXReverse}
           shouldReduceMotion={Boolean(shouldReduceMotion)}
+          onOpen={onOpen}
+          openLabel={openLabel}
         />
         <ProductRow
           products={thirdRow}
           translate={translateX}
           reverse
           shouldReduceMotion={Boolean(shouldReduceMotion)}
+          onOpen={onOpen}
+          openLabel={openLabel}
           className="md:mb-0"
         />
         <ProductRow
           products={fourthRow}
           translate={translateXReverse}
           shouldReduceMotion={Boolean(shouldReduceMotion)}
+          onOpen={onOpen}
+          openLabel={openLabel}
           className="md:hidden"
           isLast
         />
       </motion.div>
+
+      <Dialog open={viewing !== null} onOpenChange={(open) => !open && setViewing(null)}>
+        <DialogContent
+          aria-describedby={undefined}
+          showCloseButton={false}
+          className="max-w-[calc(100%-2rem)] gap-0 overflow-hidden rounded-[14px] p-1.5 sm:max-w-[calc(100%-2rem)]"
+        >
+          <DialogTitle className="sr-only">{viewing?.title}</DialogTitle>
+          {viewing ? (
+            <img
+              src={viewing.thumbnail}
+              alt={viewing.title}
+              width="1280"
+              height="800"
+              className="block aspect-[8/5] h-auto w-full rounded-[8px]"
+            />
+          ) : null}
+          <DialogClose
+            className="absolute top-3 right-3 flex size-8 items-center justify-center rounded-full bg-white/90 text-[#1f2624] shadow-sm outline-none focus-visible:ring-2 focus-visible:ring-black/30"
+            aria-label={closeLabel}
+          >
+            <XIcon aria-hidden="true" className="size-4" />
+          </DialogClose>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
@@ -244,6 +297,8 @@ interface ProductRowProps {
   isLast?: boolean;
   shouldReduceMotion: boolean;
   className?: string;
+  onOpen?: (product: HeroParallaxProduct) => void;
+  openLabel: string;
 }
 
 function ProductRow({
@@ -253,6 +308,8 @@ function ProductRow({
   isLast = false,
   shouldReduceMotion,
   className,
+  onOpen,
+  openLabel,
 }: ProductRowProps) {
   const accessibleCopyIndex = reverse ? 1 : 0;
   const loopedProducts = Array.from({ length: LOOP_COPY_COUNT }, (_, copyIndex) =>
@@ -276,6 +333,8 @@ function ProductRow({
           translate={translate}
           shouldReduceMotion={shouldReduceMotion}
           isLoopCopy={copyIndex !== accessibleCopyIndex}
+          onOpen={onOpen}
+          openLabel={openLabel}
         />
       ))}
     </motion.div>
@@ -287,6 +346,8 @@ interface ProductCardProps {
   translate: MotionValue<number>;
   shouldReduceMotion: boolean;
   isLoopCopy: boolean;
+  onOpen?: (product: HeroParallaxProduct) => void;
+  openLabel: string;
 }
 
 export function ProductCard({
@@ -294,13 +355,32 @@ export function ProductCard({
   translate,
   shouldReduceMotion,
   isLoopCopy,
+  onOpen,
+  openLabel,
 }: ProductCardProps) {
+  // Every copy opens on a tap; only the accessible copy is a focusable button.
+  const isButton = Boolean(onOpen) && !isLoopCopy;
   return (
     <motion.article
-      className="relative aspect-[1.585] w-[14rem] shrink-0 overflow-hidden rounded-[var(--home-radius-md,12px)] bg-card md:w-[30rem]"
+      // The screenshots are 1280x800, so 8/5 fills the card edge to edge. Phones get a
+      // tighter radius: 12px on a 224px card cut into the bookmark bar along the top.
+      className={cn(
+        "relative aspect-[8/5] w-[14rem] shrink-0 overflow-hidden rounded-[8px] bg-card md:w-[30rem] md:rounded-[var(--home-radius-md,12px)]",
+        onOpen && "cursor-zoom-in",
+      )}
       style={{ x: shouldReduceMotion ? 0 : translate }}
       aria-hidden={isLoopCopy || undefined}
       data-hero-parallax-card
+      onClick={onOpen ? () => onOpen(product) : undefined}
+      role={isButton ? "button" : undefined}
+      tabIndex={isButton ? 0 : undefined}
+      aria-label={isButton ? `${openLabel}: ${product.title}` : undefined}
+      onKeyDown={isButton ? (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          onOpen?.(product);
+        }
+      } : undefined}
     >
       <img
         src={product.thumbnail}

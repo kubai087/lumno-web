@@ -40,7 +40,7 @@ test("homepage second section uses the Aceternity Hero Parallax composition", ()
   assert.match(componentSource, /useTransform\(scrollYProgress, \[0, 0\.18\], \[-700, -300\]\)/);
   // The copy reveals once it is in view, so it can never stay hidden on short pages.
   assert.match(componentSource, /const isHeaderInView = useInView\(headerRef, \{ once: true, amount: 0\.4 \}\)/);
-  assert.match(componentSource, /const isHeaderVisible = isHeaderInView \|\| Boolean\(shouldReduceMotion\)/);
+  assert.match(componentSource, /const isHeaderVisible = isHeaderInView \|\| isHeaderPassed \|\| Boolean\(shouldReduceMotion\)/);
   // A flat container lets the copy's z-index sit above the rotated card stage.
   assert.doesNotMatch(componentSource, /\[transform-style:preserve-3d\]/);
   assert.match(componentSource, /rotateX: shouldReduceMotion \? 0 : rotateX/);

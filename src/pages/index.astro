@@ -307,7 +307,7 @@ const structuredData = [
           title={content.newTab.title}
           description={content.newTab.description}
           headingId="new-tab-title"
-          client:visible
+          client:visible={{ rootMargin: "100% 0px" }}
         />
         <NewTabSection content={content.newTab} locale={uiLocale} />
       </section>
@@ -447,8 +447,13 @@ const structuredData = [
         position: relative;
         width: var(--home-column);
         margin-inline: auto;
+        /*
+         * svh, not dvh: on phones the hero is often shorter than the screen, so
+         * this sets its height, and dvh tracks Safari's toolbar as it collapses
+         * and expands mid-scroll. Everything below then shifted by the toolbar's
+         * height, and Safari has no scroll anchoring to hide the jump.
+         */
         min-height: 100svh;
-        min-height: 100dvh;
         padding: 120px 0 80px;
         display: grid;
         grid-template-columns: 1fr;

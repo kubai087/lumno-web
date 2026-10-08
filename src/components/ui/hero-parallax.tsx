@@ -1,4 +1,4 @@
-import { useRef, type Ref } from "react";
+import { useEffect, useRef, useState, type Ref } from "react";
 import {
   motion,
   useInView,
@@ -58,7 +58,16 @@ export function HeroParallax({
   // Reveal on visibility rather than scroll progress, so the heading never stays hidden on
   // viewports that can't scroll far enough (or for renderers that don't scroll at all).
   const isHeaderInView = useInView(headerRef, { once: true, amount: 0.4 });
-  const isHeaderVisible = isHeaderInView || Boolean(shouldReduceMotion);
+  // A late hydration (a fast fling past the section) would otherwise find the copy
+  // already scrolled by, never see it enter, and leave it hidden for good.
+  const [isHeaderPassed, setIsHeaderPassed] = useState(false);
+  useEffect(() => {
+    const header = headerRef.current;
+    if (header && header.getBoundingClientRect().top < window.innerHeight * 0.6) {
+      setIsHeaderPassed(true);
+    }
+  }, []);
+  const isHeaderVisible = isHeaderInView || isHeaderPassed || Boolean(shouldReduceMotion);
   const firstRow = products.slice(0, 5);
   const secondRow = products.slice(5, 10);
   const thirdRow = products.slice(10, 15);

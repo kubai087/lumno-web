@@ -700,7 +700,8 @@
 /* A Lumno tab bar (SettingsTabs); only its placement and size live here. */
 .lumno-settings-tabs.ai-intent-demo__scenarios {
   display: grid;
-  grid-auto-columns: minmax(0, 1fr);
+  /* Content-sized, so a short label ("Term") is not padded out to the longest one. */
+  grid-auto-columns: auto;
   grid-auto-flow: column;
   align-self: center;
   gap: 4px;

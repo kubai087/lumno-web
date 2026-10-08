@@ -165,7 +165,9 @@
   bottom: clamp(14px, 2.2%, 18px);
   z-index: 5;
   display: grid;
-  grid-auto-columns: minmax(0, 1fr);
+  /* Each tab hugs its label: equal columns would size every tab to the longest
+     one ("Run Commands"), padding the short ones and pushing past phone width. */
+  grid-auto-columns: auto;
   grid-auto-flow: column;
   gap: 4px;
   max-width: none;
@@ -1270,13 +1272,14 @@
     bottom: auto;
     /* Absolutely placed from the centre, it would otherwise shrink to half the card. */
     width: max-content;
+    max-width: calc(100vw - 32px);
     background: rgba(var(--home-edge, 32, 38, 46), 0.04);
     box-shadow: none;
   }
 
   .hero-demo-page-switcher .hero-demo-page-button {
     min-width: 76px;
-    padding: 0 16px;
+    padding: 0 14px;
   }
 }
 

@@ -1,6 +1,7 @@
-// Renders the square, full-bleed app icon used for "Add to Home Screen" and PWA installs.
-// The artwork has no rounded corners so iOS, Android (maskable) and desktop launchers can
-// apply their own mask. Rerun after editing src/assets/app-icon.svg:
+// Renders the square, full-bleed app icon used for iOS "Add to Home Screen" and the PWA
+// maskable icons (the manifest's "any" icons stay on the rounded favicon artwork).
+// No rounded corners, so iOS and Android launchers can apply their own mask.
+// Rerun after editing src/assets/app-icon.svg:
 //   node scripts/build-app-icons.mjs
 import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";

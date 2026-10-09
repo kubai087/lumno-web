@@ -364,7 +364,9 @@ export function buildSoftwareApplicationSchema({
       "Select text on any page and ask AI in a background tab",
       "New tab wallpapers: classic paintings, Bing's photo of the day, and landscapes",
       "Searches tabs, bookmarks, and history locally without collecting usage data",
-      "Works on Chrome, Edge, Dia, and other Chromium-based browsers",
+      firefoxListed
+        ? "Works on Chrome, Edge, Dia, other Chromium-based browsers, and Firefox"
+        : "Works on Chrome, Edge, Dia, and other Chromium-based browsers",
       "Preserve an Arc-style command bar workflow after moving to Dia, Chrome, or Edge",
     ],
     author: {

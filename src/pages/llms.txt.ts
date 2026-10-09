@@ -1,14 +1,20 @@
 import type { APIRoute } from "astro";
 import { LOCALE_CONFIG, buildLocalizedPath } from "../lib/locales";
-import { CHROME_STORE_URL, SITE_URL } from "../lib/seo";
+import { CHROME_STORE_URL, FIREFOX_STORE_URL, SITE_URL } from "../lib/seo";
+import { getSiteStoreVersions } from "../lib/site-links";
 
 export const GET: APIRoute = async () => {
+  // Firefox is named only once Firefox Add-ons lists Lumno.
+  const { firefox: firefoxStoreVersion } = await getSiteStoreVersions();
+  const browsers = firefoxStoreVersion
+    ? "Chrome, Edge, Dia, Chromium-based browsers, and Firefox"
+    : "Chrome, Edge, Dia, and Chromium-based browsers";
   const localizedHomepages = LOCALE_CONFIG.filter((item) => item.segment)
     .map((item) => `${item.label} ${SITE_URL}${buildLocalizedPath(item.code, "/")}`)
     .join(", ");
   const body = `# Lumno
 
-Lumno is an open-source browser command bar and focus search extension for Chrome, Edge, Dia, and Chromium-based browsers. It helps people run tab search, bookmark search, history search, site search, and minimalist new tab workflows from a lightweight command surface.
+Lumno is an open-source browser command bar and focus search extension for ${browsers}. It helps people run tab search, bookmark search, history search, site search, and minimalist new tab workflows from a lightweight command surface.
 
 ## Core Product
 
@@ -16,7 +22,7 @@ Lumno is an open-source browser command bar and focus search extension for Chrom
 - Category: browser command bar, focus search, new tab extension
 - Primary use cases: tab search, bookmark search, history search, site search, Arc migration workflows, minimalist new tab
 - Search intent coverage: browser command bar, browser command palette, focus search, tab search extension, bookmark search extension, history search extension, site search shortcut, minimalist new tab, Arc browser alternative, Dia browser extension
-- Supported browsers: Chrome, Edge, Dia, and Chromium-based browsers
+- Supported browsers: ${browsers}
 - Interface languages: Simplified Chinese, Traditional Chinese, English, Japanese (the website also covers Korean, German, French, Spanish, Brazilian Portuguese, and Russian)
 - Pricing: free
 - Source: open source
@@ -27,7 +33,7 @@ Lumno is an open-source browser command bar and focus search extension for Chrom
 - Localized homepages: ${localizedHomepages}
 - Release notes: ${SITE_URL}/release/ (English: ${SITE_URL}/en/release/)
 - Privacy policy: ${SITE_URL}/privacy/ (English: ${SITE_URL}/en/privacy/)
-- Chrome Web Store: ${CHROME_STORE_URL}
+- Chrome Web Store: ${CHROME_STORE_URL}${firefoxStoreVersion ? `\n- Firefox Add-ons: ${FIREFOX_STORE_URL}` : ""}
 - GitHub: https://github.com/kubai087/lumno-extension
 
 ## Short Description

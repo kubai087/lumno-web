@@ -70,13 +70,10 @@ const forcedLocale = Astro.props.forcedLocale ?? null;
 const seoPath = Astro.props.seoPath || "/";
 const routeLanguageMap = Astro.props.routeLanguageMap || buildRouteLanguageMap("/");
 const uiLocale = forcedLocale || DEFAULT_LOCALE;
-const content = getHomeContent(uiLocale);
-// Firefox-specific answers stay hidden until Firefox Add-ons lists Lumno.
+// Firefox wording stays hidden until Firefox Add-ons lists Lumno.
 const { firefox: firefoxStoreVersion } = await getSiteStoreVersions();
-const faqItems = content.faqItems.map((item) => ({
-  question: item.question,
-  answer: (firefoxStoreVersion && item.firefoxAnswer) || item.answer,
-}));
+const firefoxListed = Boolean(firefoxStoreVersion);
+const content = getHomeContent(uiLocale, { firefoxListed });
 const localeScript = getLocaleScript(uiLocale);
 // Chinese pages open the WeChat group QR; every other locale links to the Discord server.
 const communityExternalHref = getCommunityExternalHref(uiLocale);
@@ -133,8 +130,31 @@ const pageDescriptionByLocale: Record<SupportedLocale, string> = {
   ru:
     "Lumno — командная панель с открытым исходным кодом: ищите по вкладкам, закладкам, истории и сайтам одним сочетанием клавиш. А ещё — минималистичная новая вкладка для Chrome, Edge и Dia.",
 };
+// The same descriptions, naming Firefox once Firefox Add-ons lists Lumno.
+const pageDescriptionWithFirefoxByLocale: Record<SupportedLocale, string> = {
+  "zh-CN":
+    "Lumno 是一款开源浏览器命令栏，一个快捷键即可搜索标签页、书签、历史记录和站内内容，并提供极简新标签页，适用于 Chrome、Edge、Dia 等 Chromium 浏览器和 Firefox。",
+  "zh-TW":
+    "Lumno 是開源的瀏覽器命令列，一個快捷鍵就能搜尋分頁、書籤、瀏覽紀錄與站內內容，還有極簡新分頁，適用於 Chrome、Edge、Dia 等 Chromium 瀏覽器與 Firefox。",
+  en:
+    "Lumno is an open-source browser command bar for tabs, bookmarks, history, and site search, plus a minimalist new tab for Chrome, Edge, Dia, other Chromium browsers, and Firefox.",
+  ja:
+    "Lumno はオープンソースのブラウザ拡張機能。どのページからでもコマンドバーを開き、タブ・ブックマーク・履歴・サイト内をまとめて検索できます。シンプルな新しいタブ付きで、Chrome、Edge、Dia、Firefox などに対応。",
+  ko:
+    "Lumno는 오픈 소스 브라우저 커맨드 바입니다. 단축키 하나로 탭, 북마크, 방문 기록, 사이트 내 검색을 한곳에서 하고, 미니멀한 새 탭도 함께 씁니다. Chrome, Edge, Dia 등 Chromium 브라우저와 Firefox 지원.",
+  de:
+    "Lumno ist eine Open-Source-Befehlsleiste für den Browser: Tabs, Lesezeichen, Verlauf und Websites mit einem Kürzel durchsuchen – dazu ein minimalistischer neuer Tab für Chrome, Edge, Dia und Firefox.",
+  fr:
+    "Lumno est une barre de commande open source pour votre navigateur\u00A0: onglets, favoris, historique et sites en un seul raccourci, avec un nouvel onglet minimaliste pour Chrome, Edge, Dia et Firefox.",
+  es:
+    "Lumno es una barra de comandos de código abierto para tu navegador: busca pestañas, marcadores, historial y sitios con un solo atajo, y estrena una nueva pestaña minimalista en Chrome, Edge, Dia y Firefox.",
+  "pt-BR":
+    "Lumno é uma barra de comandos de código aberto para o seu navegador: pesquise abas, favoritos, histórico e sites com um só atalho, além de uma nova aba minimalista para Chrome, Edge, Dia e Firefox.",
+  ru:
+    "Lumno — командная панель с открытым исходным кодом: ищите по вкладкам, закладкам, истории и сайтам одним сочетанием клавиш. А ещё — минималистичная новая вкладка для Chrome, Edge, Dia и Firefox.",
+};
 const pageTitle = pageTitleByLocale[uiLocale];
-const pageDescription = pageDescriptionByLocale[uiLocale];
+const pageDescription = (firefoxListed ? pageDescriptionWithFirefoxByLocale : pageDescriptionByLocale)[uiLocale];
 const pageKeywords = buildKeywords(
   ["浏览器快捷启动器", "Arc 浏览器迁移", "Arc 替代", "command palette", "tab search", "bookmark search", "history search"],
   uiLocale,
@@ -145,7 +165,7 @@ const structuredData = [
   buildSoftwareApplicationSchema({
     description: pageDescription,
     rating: { value: chromeStoreReviews.averageRating, count: chromeStoreReviews.ratingCount },
-    firefoxListed: Boolean(firefoxStoreVersion),
+    firefoxListed,
   }),
   buildWebPageSchema({
     name: pageTitle,
@@ -156,7 +176,7 @@ const structuredData = [
   buildBreadcrumbListSchema({ items: [{ name: "Lumno", path: seoPath }] }),
   // Mirrors the visible FAQ section; inline code marks are dropped from the plain-text answers.
   buildFAQPageSchema({
-    items: faqItems.map((item) => ({ question: item.question, answer: item.answer.replaceAll("`", "") })),
+    items: content.faqItems.map((item) => ({ question: item.question, answer: item.answer.replaceAll("`", "") })),
     language: uiLocale,
   }),
 ];
@@ -284,6 +304,7 @@ const structuredData = [
               ariaLabel={content.heroInstallAria}
               href={CHROME_STORE_URL}
               tooltipLabel={content.heroBrowserTooltipLabel}
+              showFirefox={firefoxListed}
               client:idle
             />
             <CommunityQrDialog
@@ -390,7 +411,7 @@ const structuredData = [
               }
             : undefined,
         }}
-        items={faqItems}
+        items={content.faqItems}
       />
 
       <FinalCta
@@ -403,6 +424,7 @@ const structuredData = [
           ariaLabel={content.heroInstallAria}
           href={CHROME_STORE_URL}
           tooltipLabel={content.heroBrowserTooltipLabel}
+          showFirefox={firefoxListed}
           client:visible
         />
         <CommunityQrDialog

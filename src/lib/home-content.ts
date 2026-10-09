@@ -78,6 +78,8 @@ type HomeContent = {
   heroInstallLabel: string;
   heroInstallAria: string;
   heroBrowserTooltipLabel: string;
+  /** Replaces the Chromium-only browser wording once Firefox Add-ons lists Lumno. */
+  firefoxCopy: { heroBrowserTooltipLabel: string; browsersLabel: string };
   heroCommunityLabel: string;
   heroCommunityAria: string;
   heroDemoAria: string;
@@ -240,6 +242,10 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     heroInstallLabel: "免费安装 Lumno",
     heroInstallAria: "通过 Chrome 应用商店免费安装 Lumno",
     heroBrowserTooltipLabel: "基于 GPL-3.0 开源，支持大多数 Chromium 内核浏览器",
+    firefoxCopy: {
+      heroBrowserTooltipLabel: "基于 GPL-3.0 开源，支持大多数 Chromium 内核浏览器和 Firefox",
+      browsersLabel: "适用于 Chrome、Edge、Firefox 和大多数 Chromium 内核浏览器",
+    },
     heroCommunityLabel: "反馈 & 功能许愿",
     heroCommunityAria: "打开 Lumno 反馈与功能许愿二维码",
     heroDemoAria: "Lumno 命令栏演示：搜索浏览器内容、站内搜索与指令",
@@ -443,6 +449,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         question: "默认快捷键是什么？可以修改吗？",
         answer:
           "Mac 上默认是 ⌘ ⇧ K，Windows 上是 Ctrl + Shift + K，可以在 `chrome://extensions/shortcuts` 中修改。",
+        firefoxAnswer:
+          "Mac 上默认是 ⌘ ⇧ K，Windows 上是 Ctrl + Shift + K，可以在 `chrome://extensions/shortcuts` 中修改。Firefox 中默认是 Mac 上 ⌃ ⇧ K、Windows 和 Linux 上 Alt + K，可以在 `about:addons` 右上角的齿轮菜单里管理扩展快捷键。",
       },
       {
         question: "支持哪些浏览器？",
@@ -536,6 +544,10 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     heroInstallLabel: "免費安裝 Lumno",
     heroInstallAria: "透過 Chrome 線上應用程式商店免費安裝 Lumno",
     heroBrowserTooltipLabel: "以 GPL-3.0 授權開源，支援大多數 Chromium 核心瀏覽器",
+    firefoxCopy: {
+      heroBrowserTooltipLabel: "以 GPL-3.0 授權開源，支援大多數 Chromium 核心瀏覽器與 Firefox",
+      browsersLabel: "適用於 Chrome、Edge、Firefox 與大多數 Chromium 核心瀏覽器",
+    },
     heroCommunityLabel: "意見回饋 & 功能許願",
     heroCommunityAria: "開啟 Lumno 意見回饋與功能許願的 QR Code",
     heroDemoAria: "Lumno 命令列示範：搜尋瀏覽器內容、站內搜尋與指令",
@@ -739,6 +751,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         question: "預設快速鍵是什麼？可以修改嗎？",
         answer:
           "Mac 上預設是 ⌘ ⇧ K，Windows 上是 Ctrl + Shift + K，可以到 `chrome://extensions/shortcuts` 修改。",
+        firefoxAnswer:
+          "Mac 上預設是 ⌘ ⇧ K，Windows 上是 Ctrl + Shift + K，可以到 `chrome://extensions/shortcuts` 修改。在 Firefox 中，Mac 預設是 ⌃ ⇧ K，Windows 與 Linux 是 Alt + K，可以到 `about:addons` 右上角的齒輪選單管理擴充套件快速鍵。",
       },
       {
         question: "支援哪些瀏覽器？",
@@ -834,6 +848,10 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     heroInstallLabel: "Install Lumno — it’s free",
     heroInstallAria: "Install Lumno for free from the Chrome Web Store",
     heroBrowserTooltipLabel: "Open source under GPL-3.0. Works in most Chromium-based browsers.",
+    firefoxCopy: {
+      heroBrowserTooltipLabel: "Open source under GPL-3.0. Works in most Chromium-based browsers and Firefox.",
+      browsersLabel: "Works in Chrome, Edge, Firefox, and most Chromium-based browsers",
+    },
     heroCommunityLabel: "Feedback & requests",
     heroCommunityAria: "Share feedback and feature requests on the Lumno Discord",
     heroDemoAria: "Lumno command bar demo: browser search, site search, and commands",
@@ -1036,6 +1054,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         question: "What is the default shortcut? Can I change it?",
         answer:
           "⌘ ⇧ K on Mac and Ctrl + Shift + K on Windows by default. You can change it at `chrome://extensions/shortcuts`.",
+        firefoxAnswer:
+          "⌘ ⇧ K on Mac and Ctrl + Shift + K on Windows by default. You can change it at `chrome://extensions/shortcuts`. In Firefox, it’s ⌃ ⇧ K on Mac and Alt + K on Windows and Linux; change it from the gear menu in `about:addons` under Manage Extension Shortcuts.",
       },
       {
         question: "Which browsers are supported?",
@@ -1130,6 +1150,10 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     heroInstallLabel: "Lumno を無料でインストール",
     heroInstallAria: "Chrome ウェブストアから Lumno を無料でインストール",
     heroBrowserTooltipLabel: "GPL-3.0 のオープンソース。ほとんどの Chromium 系ブラウザで使えます",
+    firefoxCopy: {
+      heroBrowserTooltipLabel: "GPL-3.0 のオープンソース。ほとんどの Chromium 系ブラウザと Firefox で使えます",
+      browsersLabel: "Chrome、Edge、Firefox と、ほとんどの Chromium 系ブラウザで使えます",
+    },
     heroCommunityLabel: "フィードバック・要望",
     heroCommunityAria: "Lumno の Discord でフィードバックや機能リクエストを送る",
     heroDemoAria: "Lumno コマンドバーのデモ：ブラウザ内検索、サイト内検索、コマンド",
@@ -1330,6 +1354,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         question: "初期設定のショートカットは？ 変更できますか？",
         answer:
           "初期設定は Mac が ⌘ ⇧ K、Windows が Ctrl + Shift + K です。`chrome://extensions/shortcuts` で変更できます。",
+        firefoxAnswer:
+          "初期設定は Mac が ⌘ ⇧ K、Windows が Ctrl + Shift + K です。`chrome://extensions/shortcuts` で変更できます。Firefox では Mac が ⌃ ⇧ K、Windows と Linux が Alt + K で、`about:addons` の歯車メニューから変更できます。",
       },
       {
         question: "どのブラウザで使えますか？",
@@ -1424,6 +1450,10 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     heroInstallLabel: "Lumno 무료 설치",
     heroInstallAria: "Chrome 웹 스토어에서 Lumno 무료 설치",
     heroBrowserTooltipLabel: "GPL-3.0 오픈 소스. 대부분의 Chromium 기반 브라우저에서 작동합니다",
+    firefoxCopy: {
+      heroBrowserTooltipLabel: "GPL-3.0 오픈 소스. 대부분의 Chromium 기반 브라우저와 Firefox에서 작동합니다",
+      browsersLabel: "Chrome, Edge, Firefox와 대부분의 Chromium 기반 브라우저에서 작동합니다",
+    },
     heroCommunityLabel: "피드백 · 기능 제안",
     heroCommunityAria: "Lumno Discord에서 피드백과 기능 제안 남기기",
     heroDemoAria: "Lumno 커맨드 바 데모: 브라우저 검색, 사이트 내 검색, 명령어",
@@ -1624,6 +1654,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         question: "기본 단축키는 무엇인가요? 바꿀 수 있나요?",
         answer:
           "기본값은 Mac에서 ⌘ ⇧ K, Windows에서 Ctrl + Shift + K입니다. `chrome://extensions/shortcuts`에서 바꿀 수 있습니다.",
+        firefoxAnswer:
+          "기본값은 Mac에서 ⌘ ⇧ K, Windows에서 Ctrl + Shift + K입니다. `chrome://extensions/shortcuts`에서 바꿀 수 있습니다. Firefox에서는 Mac에서 ⌃ ⇧ K, Windows와 Linux에서 Alt + K이며, `about:addons`의 톱니바퀴 메뉴에서 바꿀 수 있습니다.",
       },
       {
         question: "어떤 브라우저를 지원하나요?",
@@ -1719,6 +1751,10 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     heroInstallLabel: "Lumno kostenlos installieren",
     heroInstallAria: "Lumno kostenlos im Chrome Web Store installieren",
     heroBrowserTooltipLabel: "Open Source unter GPL-3.0. Läuft in den meisten Chromium-Browsern.",
+    firefoxCopy: {
+      heroBrowserTooltipLabel: "Open Source unter GPL-3.0. Läuft in den meisten Chromium-Browsern und in Firefox.",
+      browsersLabel: "Läuft in Chrome, Edge, Firefox und den meisten Chromium-Browsern",
+    },
     heroCommunityLabel: "Feedback & Wünsche",
     heroCommunityAria: "Feedback und Funktionswünsche im Lumno-Discord teilen",
     heroDemoAria: "Demo der Lumno-Befehlsleiste: Browsersuche, Seitensuche und Befehle",
@@ -1920,6 +1956,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         question: "Wie lautet das Standardkürzel? Kann ich es ändern?",
         answer:
           "Standardmäßig ⌘ ⇧ K auf dem Mac und Strg + Umschalt + K unter Windows. Ändern kannst du es unter `chrome://extensions/shortcuts`.",
+        firefoxAnswer:
+          "Standardmäßig ⌘ ⇧ K auf dem Mac und Strg + Umschalt + K unter Windows. Ändern kannst du es unter `chrome://extensions/shortcuts`. In Firefox ist es ⌃ ⇧ K auf dem Mac und Alt + K unter Windows und Linux; ändern kannst du es über das Zahnradmenü unter `about:addons`.",
       },
       {
         question: "Welche Browser werden unterstützt?",
@@ -2015,6 +2053,10 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     heroInstallLabel: "Installer Lumno, c’est gratuit",
     heroInstallAria: "Installer gratuitement Lumno depuis le Chrome Web Store",
     heroBrowserTooltipLabel: "Open source sous licence GPL-3.0. Fonctionne dans la plupart des navigateurs Chromium.",
+    firefoxCopy: {
+      heroBrowserTooltipLabel: "Open source sous licence GPL-3.0. Fonctionne dans la plupart des navigateurs Chromium et dans Firefox.",
+      browsersLabel: "Fonctionne dans Chrome, Edge, Firefox et la plupart des navigateurs Chromium",
+    },
     heroCommunityLabel: "Avis et suggestions",
     heroCommunityAria: "Donner votre avis ou suggérer une fonctionnalité sur le Discord de Lumno",
     heroDemoAria: "Démo de la barre de commande Lumno : recherche dans le navigateur, sur les sites et commandes",
@@ -2216,6 +2258,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         question: "Quel est le raccourci par défaut ? Puis-je le modifier ?",
         answer:
           "Par défaut, ⌘ ⇧ K sur Mac et Ctrl + Maj + K sous Windows. Vous pouvez le modifier dans `chrome://extensions/shortcuts`.",
+        firefoxAnswer:
+          "Par défaut, ⌘ ⇧ K sur Mac et Ctrl + Maj + K sous Windows. Vous pouvez le modifier dans `chrome://extensions/shortcuts`. Dans Firefox, c’est ⌃ ⇧ K sur Mac et Alt + K sous Windows et Linux ; modifiez-le depuis le menu en forme d’engrenage de `about:addons`.",
       },
       {
         question: "Quels navigateurs sont pris en charge ?",
@@ -2311,6 +2355,10 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     heroInstallLabel: "Instalar Lumno, es gratis",
     heroInstallAria: "Instalar Lumno gratis desde Chrome Web Store",
     heroBrowserTooltipLabel: "Código abierto con licencia GPL-3.0. Funciona en la mayoría de navegadores Chromium.",
+    firefoxCopy: {
+      heroBrowserTooltipLabel: "Código abierto con licencia GPL-3.0. Funciona en la mayoría de navegadores Chromium y en Firefox.",
+      browsersLabel: "Funciona en Chrome, Edge, Firefox y la mayoría de navegadores Chromium",
+    },
     heroCommunityLabel: "Comentarios y sugerencias",
     heroCommunityAria: "Enviar comentarios o sugerir funciones en el Discord de Lumno",
     heroDemoAria: "Demostración de la barra de comandos de Lumno: búsqueda en el navegador, en sitios y comandos",
@@ -2512,6 +2560,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         question: "¿Cuál es el atajo predeterminado? ¿Puedo cambiarlo?",
         answer:
           "Por defecto es ⌘ ⇧ K en Mac y Ctrl + Mayús + K en Windows. Puedes cambiarlo en `chrome://extensions/shortcuts`.",
+        firefoxAnswer:
+          "Por defecto es ⌘ ⇧ K en Mac y Ctrl + Mayús + K en Windows. Puedes cambiarlo en `chrome://extensions/shortcuts`. En Firefox es ⌃ ⇧ K en Mac y Alt + K en Windows y Linux; cámbialo desde el menú del engranaje en `about:addons`.",
       },
       {
         question: "¿Qué navegadores son compatibles?",
@@ -2607,6 +2657,10 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     heroInstallLabel: "Instalar o Lumno, é grátis",
     heroInstallAria: "Instalar o Lumno grátis pela Chrome Web Store",
     heroBrowserTooltipLabel: "Código aberto sob a licença GPL-3.0. Funciona na maioria dos navegadores Chromium.",
+    firefoxCopy: {
+      heroBrowserTooltipLabel: "Código aberto sob a licença GPL-3.0. Funciona na maioria dos navegadores Chromium e no Firefox.",
+      browsersLabel: "Funciona no Chrome, no Edge, no Firefox e na maioria dos navegadores Chromium",
+    },
     heroCommunityLabel: "Feedback e sugestões",
     heroCommunityAria: "Enviar feedback ou sugerir recursos no Discord do Lumno",
     heroDemoAria: "Demonstração da barra de comandos do Lumno: pesquisa no navegador, em sites e comandos",
@@ -2808,6 +2862,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         question: "Qual é o atalho padrão? Dá para mudar?",
         answer:
           "O padrão é ⌘ ⇧ K no Mac e Ctrl + Shift + K no Windows. Você pode mudar em `chrome://extensions/shortcuts`.",
+        firefoxAnswer:
+          "O padrão é ⌘ ⇧ K no Mac e Ctrl + Shift + K no Windows. Você pode mudar em `chrome://extensions/shortcuts`. No Firefox, é ⌃ ⇧ K no Mac e Alt + K no Windows e no Linux; mude pelo menu de engrenagem em `about:addons`.",
       },
       {
         question: "Quais navegadores são compatíveis?",
@@ -2903,6 +2959,10 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     heroInstallLabel: "Установить Lumno — бесплатно",
     heroInstallAria: "Бесплатно установить Lumno из интернет-магазина Chrome",
     heroBrowserTooltipLabel: "Открытый код под лицензией GPL-3.0. Работает в большинстве браузеров на Chromium.",
+    firefoxCopy: {
+      heroBrowserTooltipLabel: "Открытый код под лицензией GPL-3.0. Работает в большинстве браузеров на Chromium и в Firefox.",
+      browsersLabel: "Работает в Chrome, Edge, Firefox и большинстве браузеров на Chromium",
+    },
     heroCommunityLabel: "Отзывы и пожелания",
     heroCommunityAria: "Оставить отзыв или предложить функцию в Discord Lumno",
     heroDemoAria: "Демонстрация командной панели Lumno: поиск по браузеру, по сайтам и команды",
@@ -3104,6 +3164,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         question: "Какое сочетание клавиш по умолчанию? Можно ли его изменить?",
         answer:
           "По умолчанию ⌘ ⇧ K на Mac и Ctrl + Shift + K в Windows. Изменить его можно на странице `chrome://extensions/shortcuts`.",
+        firefoxAnswer:
+          "По умолчанию ⌘ ⇧ K на Mac и Ctrl + Shift + K в Windows. Изменить его можно на странице `chrome://extensions/shortcuts`. В Firefox — ⌃ ⇧ K на Mac и Alt + K в Windows и Linux; изменить его можно через меню с шестерёнкой на странице `about:addons`.",
       },
       {
         question: "Какие браузеры поддерживаются?",
@@ -3171,6 +3233,24 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
   },
 };
 
-export function getHomeContent(locale: SupportedLocale): HomeContent {
-  return HOME_CONTENT[locale] || HOME_CONTENT["zh-CN"];
+/**
+ * `firefoxListed` swaps in the Firefox wording; leave it off until Firefox Add-ons
+ * serves a listed version, so the site never promises a store that isn't live.
+ */
+export function getHomeContent(
+  locale: SupportedLocale,
+  { firefoxListed = false }: { firefoxListed?: boolean } = {},
+): HomeContent {
+  const content = HOME_CONTENT[locale] || HOME_CONTENT["zh-CN"];
+  if (!firefoxListed) return content;
+  return {
+    ...content,
+    heroBrowserTooltipLabel: content.firefoxCopy.heroBrowserTooltipLabel,
+    openSource: {
+      ...content.openSource,
+      browsersLabel: content.firefoxCopy.browsersLabel,
+      browserNames: content.openSource.browserNames.flatMap((name) => (name === "Edge" ? [name, "Firefox"] : [name])),
+    },
+    faqItems: content.faqItems.map((item) => (item.firefoxAnswer ? { ...item, answer: item.firefoxAnswer } : item)),
+  };
 }

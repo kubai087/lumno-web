@@ -18,6 +18,7 @@ const BROWSER_LOGOS: ReadonlyArray<{
   { name: "Brave", src: "/assets/browser-logos/brave.webp" },
   { name: "Opera", src: "/assets/browser-logos/opera.webp" },
 ];
+const FIREFOX_LOGO = { name: "Firefox", src: "/assets/browser-logos/firefox.webp" };
 
 const BUTTERFLY_PATH_REST =
   "M4.3248 17.7823C1.22382 14.6398 -0.116749 10.2475 0.824858 6.7097C1.02033 5.97529 1.95363 5.98287 2.27212 6.67289L4.16024 10.7637C4.38415 11.2488 4.50011 11.7767 4.50011 12.311L4.50011 16L6.24277 16C7.66705 16 9.01155 16.6576 9.88596 17.7819L11.0831 19.3211C11.5044 19.8627 11.2076 20.6668 10.5235 20.7201C8.63849 20.8671 6.85452 20.3459 4.3248 17.7823Z";
@@ -79,6 +80,8 @@ interface Props {
   /** The hero's button keeps the default id: the nav install pill watches it scroll away. */
   id?: string;
   analyticsLabel?: string;
+  /** Adds Firefox after Edge once Firefox Add-ons lists Lumno. */
+  showFirefox?: boolean;
 }
 
 export function HeroInstallTooltip({
@@ -88,7 +91,11 @@ export function HeroInstallTooltip({
   tooltipLabel,
   id = "hero-install-primary",
   analyticsLabel = "home_hero_install",
+  showFirefox = false,
 }: Props) {
+  const browserLogos = showFirefox
+    ? BROWSER_LOGOS.flatMap((logo) => (logo.name === "Edge" ? [logo, FIREFOX_LOGO] : [logo]))
+    : BROWSER_LOGOS;
   return (
     <TooltipProvider delayDuration={180} skipDelayDuration={100}>
       <Tooltip>
@@ -119,7 +126,7 @@ export function HeroInstallTooltip({
           <div className="hero-browser-tooltip-content">
             <p className="hero-browser-tooltip-label">{tooltipLabel}</p>
             <ul className="hero-browser-tooltip-logos" aria-label={tooltipLabel}>
-              {BROWSER_LOGOS.map(({ name, src }) => (
+              {browserLogos.map(({ name, src }) => (
                 <li
                   className="hero-browser-tooltip-logo"
                   data-browser-logo={name}

@@ -289,11 +289,16 @@ test("homepage navbar animates in the community action and reuses the CTA dialog
   );
   assert.match(
     source,
-    /@media \(max-width:\s*760px\)[\s\S]*?\.top-nav-more-menu\s*\{[\s\S]*?position:\s*static;[\s\S]*?\.top-nav-more-dropdown\s*\{[\s\S]*?left:\s*0;[\s\S]*?right:\s*0;[\s\S]*?width:\s*auto;[\s\S]*?transform-origin:\s*top center;/,
+    /@media \(max-width:\s*760px\)[\s\S]*?\.top-nav-more-menu\s*\{[\s\S]*?position:\s*static;[\s\S]*?\.top-nav-more-dropdown[^{]*\{[\s\S]*?left:\s*0;[\s\S]*?right:\s*0;[\s\S]*?width:\s*auto;[\s\S]*?transform-origin:\s*top center;/,
     "the mobile menu should span the navbar and open directly underneath it",
   );
-  assert.match(source, /\.top-nav-more-dropdown\s*\{[^}]*background:\s*var\(--lumno-menu-bg,\s*#fff\);/);
-  assert.doesNotMatch(source, /\.top-nav-more-dropdown\s*\{[^}]*backdrop-filter:/);
+  assert.match(
+    source,
+    /@media \(max-width:\s*760px\)[\s\S]*?\.top-nav \.lang-control,\s*\.top-nav \.lang-select,\s*\.top-nav \.install-menu\s*\{\s*position:\s*static;[\s\S]*?\.top-nav-more-dropdown,\s*\.top-nav \.lang-control \.lumno-settings-select-menu,\s*\.top-nav \.install-menu \.lumno-settings-select-menu\s*\{/,
+    "the language and install menus should open as the same full-width sheet as the overflow menu",
+  );
+  assert.match(source, /\.top-nav-more-dropdown[^{]*\{[^}]*background:\s*var\(--lumno-menu-bg,\s*#fff\);/);
+  assert.doesNotMatch(source, /\.top-nav-more-dropdown[^{]*\{[^}]*backdrop-filter:/);
   assert.match(
     source,
     /@media \(min-width:\s*761px\) and \(max-width:\s*840px\)[\s\S]*?body\.has-nav-install \.top-nav-ghost-links\s*\{[\s\S]*?display:\s*none;[\s\S]*?body\.has-nav-install \.top-nav-more-menu\s*\{[\s\S]*?display:\s*block;/,

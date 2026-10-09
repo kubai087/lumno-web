@@ -44,5 +44,8 @@ test("nested surfaces derive their inner radius from the outer surface", async (
   const siteHeader = await readFile(siteHeaderPath, "utf8");
 
   assert.match(settingsStyles, /--lumno-settings-option-radius:\s*max\(/);
-  assert.match(siteHeader, /--top-nav-more-option-radius:\s*max\(/);
+  // The mobile header sheets are settings-kit menus: they only widen the padding and
+  // inherit the kit's derived option radius.
+  assert.match(siteHeader, /\.top-nav-more-dropdown,[^{]*\{\s*--lumno-settings-menu-padding:\s*10px;/);
+  assert.doesNotMatch(siteHeader, /lumno-settings-select-option\s*\{[^}]*border-radius:/);
 });

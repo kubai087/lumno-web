@@ -100,5 +100,6 @@ test("homepage uses the standard favicon set and a plain page background", () =>
   assert.match(source, /href="\/favicon\.ico" sizes="any"/);
   assert.match(source, /type="image\/png" href="\/favicon\.png"/);
   assert.match(source, /rel="apple-touch-icon" href="\/apple-touch-icon\.png"/);
+  assert.match(source, /rel="manifest" href="\/site\.webmanifest"/);
   assert.doesNotMatch(source, /background-image:\s*url\("\/assets\/settings-bg-light-monet-newtab\.webp"\)/);
 });

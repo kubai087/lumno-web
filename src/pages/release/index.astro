@@ -1,4 +1,5 @@
 ---
+import bannerPlaceholder from "../../assets/release-banner-placeholder.jpg?inline";
 import SeoHead from "../../components/SeoHead.astro";
 import PageFooter from "../../components/site/PageFooter.astro";
 import SiteHeader from "../../components/site/SiteHeader.astro";
@@ -514,7 +515,7 @@ const STORE_CHIPS = [
         min-width: 0;
         border-radius: 16px;
         overflow: hidden;
-        background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+        background: #f1f5f9 center / cover no-repeat;
         position: relative;
         aspect-ratio: 2200 / 586;
         min-height: 132px;
@@ -527,6 +528,11 @@ const STORE_CHIPS = [
         height: 100%;
         object-fit: cover;
         display: block;
+        transition: opacity 360ms ease;
+      }
+
+      .top-banner img[data-pending] {
+        opacity: 0;
       }
 
       .banner-overlay {
@@ -1006,9 +1012,15 @@ const STORE_CHIPS = [
     <SiteHeader locale={uiLocale} routeLanguageMap={routeLanguageMap} analyticsScope="release" handoff=".top-banner" keepInstall />
 
     <main class="container">
-      <div class="top-banner">
+      {/*
+        GitHub Pages lets the banner be cached for only 10 minutes, so after a language
+        switch or a return visit it often waits on a round trip. The box paints a 48px
+        copy of the picture from the HTML meanwhile, and the picture fades in over it
+        once decoded. A picture that is already there shows at once.
+      */}
+      <div class="top-banner" style={`background-image: url("${bannerPlaceholder}")`}>
         <img
-          src="/resource_commited/banner.jpg"
+          src="/assets/release-banner.webp"
           alt=""
           loading="eager"
           fetchpriority="high"
@@ -1016,6 +1028,16 @@ const STORE_CHIPS = [
           width="2200"
           height="586"
         />
+        <script is:inline>
+          (() => {
+            const image = document.currentScript.previousElementSibling;
+            if (image.complete) return;
+            image.dataset.pending = "";
+            const reveal = () => delete image.dataset.pending;
+            image.addEventListener("load", () => image.decode().catch(() => {}).then(reveal), { once: true });
+            image.addEventListener("error", reveal, { once: true });
+          })();
+        </script>
         <div class="banner-overlay">
           <h1 class="banner-title">
             <span class="banner-title-emoji" aria-hidden="true">🎉</span>

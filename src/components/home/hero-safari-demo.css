@@ -180,10 +180,13 @@ html[data-home-intro-skip] .hero-safari-demo[data-home-intro="pending"] .hero-sa
   transform-origin: top left;
 }
 
+/* No clip of its own: the screen (settled) or the full-screen visual (intro) clips it.
+   Clipping here cut the overlay panel's shadow along the stage's edge whenever the stage
+   sits inside the frame: offset and scaled during the intro, sliding during scene switches. */
 .hero-safari-stage {
   position: absolute;
   inset: 0;
-  overflow: hidden;
+  overflow: visible;
   color: #111827;
   font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;

@@ -230,7 +230,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     heroTitle: "让浏览器的一切，一搜即达",
     heroDescription:
       "Lumno 是开源的浏览器命令栏与新标签页。\n一个快捷键，搜遍标签页、书签、历史记录和常用网站。",
-    heroInstallLabel: "免费添加到 Chrome",
+    heroInstallLabel: "免费添加到浏览器",
     heroInstallAria: "通过 Chrome 应用商店免费安装 Lumno",
     heroBrowserTooltipLabel: "基于 GPL-3.0 开源，支持大多数 Chromium 内核浏览器",
     heroCommunityLabel: "反馈 & 功能许愿",
@@ -523,7 +523,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     heroTitle: "瀏覽器裡的一切，一搜就到",
     heroDescription:
       "Lumno 是開源的瀏覽器命令列與新分頁。\n一組快速鍵，就能搜遍分頁、書籤、瀏覽紀錄與常用網站。",
-    heroInstallLabel: "免費加到 Chrome",
+    heroInstallLabel: "免費加到瀏覽器",
     heroInstallAria: "透過 Chrome 線上應用程式商店免費安裝 Lumno",
     heroBrowserTooltipLabel: "以 GPL-3.0 授權開源，支援大多數 Chromium 核心瀏覽器",
     heroCommunityLabel: "意見回饋 & 功能許願",
@@ -818,7 +818,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     heroTitleSerif: { lead: "Your browser,", accent: "at command." },
     heroDescription:
       "Lumno is an open-source command bar and new tab for your browser.\nOne shortcut to search tabs, bookmarks, history, and the sites you love.",
-    heroInstallLabel: "Add to Chrome — it’s free",
+    heroInstallLabel: "Add to your browser — it’s free",
     heroInstallAria: "Install Lumno for free from the Chrome Web Store",
     heroBrowserTooltipLabel: "Open source under GPL-3.0. Works in most Chromium-based browsers.",
     heroCommunityLabel: "Feedback & requests",
@@ -1111,7 +1111,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     heroTitle: "ブラウザのすべてを、キーひとつで。",
     heroDescription:
       "Lumno は、オープンソースのコマンドバーと新しいタブ。\nショートカットひとつで、タブ・ブックマーク・履歴・よく使うサイトをまとめて検索。",
-    heroInstallLabel: "Chrome に無料で追加",
+    heroInstallLabel: "ブラウザに無料で追加",
     heroInstallAria: "Chrome ウェブストアから Lumno を無料でインストール",
     heroBrowserTooltipLabel: "GPL-3.0 のオープンソース。ほとんどの Chromium 系ブラウザで使えます",
     heroCommunityLabel: "フィードバック・要望",
@@ -1402,7 +1402,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     heroTitle: "브라우저의 모든 것, 검색 한 번으로",
     heroDescription:
       "Lumno는 오픈 소스 브라우저 커맨드 바이자 새 탭입니다.\n단축키 하나로 탭, 북마크, 방문 기록, 자주 가는 사이트를 한 번에 검색하세요.",
-    heroInstallLabel: "Chrome에 무료로 추가",
+    heroInstallLabel: "브라우저에 무료로 추가",
     heroInstallAria: "Chrome 웹 스토어에서 Lumno 무료 설치",
     heroBrowserTooltipLabel: "GPL-3.0 오픈 소스. 대부분의 Chromium 기반 브라우저에서 작동합니다",
     heroCommunityLabel: "피드백 · 기능 제안",
@@ -1694,7 +1694,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     heroTitleSerif: { lead: "Dein Browser,", accent: "auf Befehl." },
     heroDescription:
       "Lumno ist eine Open-Source-Befehlsleiste und ein neuer Tab für deinen Browser.\nEin Kürzel durchsucht Tabs, Lesezeichen, Verlauf und deine Lieblingsseiten.",
-    heroInstallLabel: "Kostenlos zu Chrome hinzufügen",
+    heroInstallLabel: "Kostenlos zum Browser hinzufügen",
     heroInstallAria: "Lumno kostenlos im Chrome Web Store installieren",
     heroBrowserTooltipLabel: "Open Source unter GPL-3.0. Läuft in den meisten Chromium-Browsern.",
     heroCommunityLabel: "Feedback & Wünsche",
@@ -1987,7 +1987,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     heroTitleSerif: { lead: "Votre navigateur,", accent: "à vos ordres." },
     heroDescription:
       "Lumno, c’est une barre de commande et un nouvel onglet open source.\nUn seul raccourci pour fouiller onglets, favoris, historique et sites préférés.",
-    heroInstallLabel: "Ajouter à Chrome, c’est gratuit",
+    heroInstallLabel: "Ajouter au navigateur, c’est gratuit",
     heroInstallAria: "Installer gratuitement Lumno depuis le Chrome Web Store",
     heroBrowserTooltipLabel: "Open source sous licence GPL-3.0. Fonctionne dans la plupart des navigateurs Chromium.",
     heroCommunityLabel: "Avis et suggestions",
@@ -2280,7 +2280,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     heroTitleSerif: { lead: "Tu navegador,", accent: "a tus órdenes." },
     heroDescription:
       "Lumno es una barra de comandos y una nueva pestaña de código abierto.\nCon un solo atajo, busca en pestañas, marcadores, historial y tus sitios favoritos.",
-    heroInstallLabel: "Añadir a Chrome, es gratis",
+    heroInstallLabel: "Añadir al navegador, es gratis",
     heroInstallAria: "Instalar Lumno gratis desde Chrome Web Store",
     heroBrowserTooltipLabel: "Código abierto con licencia GPL-3.0. Funciona en la mayoría de navegadores Chromium.",
     heroCommunityLabel: "Comentarios y sugerencias",
@@ -2573,7 +2573,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     heroTitleSerif: { lead: "Seu navegador,", accent: "às suas ordens." },
     heroDescription:
       "O Lumno é uma barra de comandos e uma nova aba de código aberto.\nCom um só atalho, pesquise abas, favoritos, histórico e os sites que você mais usa.",
-    heroInstallLabel: "Adicionar ao Chrome, é grátis",
+    heroInstallLabel: "Adicionar ao navegador, é grátis",
     heroInstallAria: "Instalar o Lumno grátis pela Chrome Web Store",
     heroBrowserTooltipLabel: "Código aberto sob a licença GPL-3.0. Funciona na maioria dos navegadores Chromium.",
     heroCommunityLabel: "Feedback e sugestões",
@@ -2866,7 +2866,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     heroTitleSerif: { lead: "Весь браузер —", accent: "под рукой." },
     heroDescription:
       "Lumno — командная панель и новая вкладка с открытым исходным кодом.\nОдно сочетание клавиш — и поиск по вкладкам, закладкам, истории и любимым сайтам.",
-    heroInstallLabel: "Добавить в Chrome — бесплатно",
+    heroInstallLabel: "Добавить в браузер — бесплатно",
     heroInstallAria: "Бесплатно установить Lumno из интернет-магазина Chrome",
     heroBrowserTooltipLabel: "Открытый код под лицензией GPL-3.0. Работает в большинстве браузеров на Chromium.",
     heroCommunityLabel: "Отзывы и пожелания",

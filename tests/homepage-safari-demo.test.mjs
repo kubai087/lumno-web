@@ -168,7 +168,7 @@ test("homepage hero exposes install and community actions below the subtitle", (
   assert.match(communityDialog, /hero-community-button/);
   assert.match(source, /\.hero-actions-button \{[\s\S]*?padding: 8px 16px;[\s\S]*?font-size: 14px;/);
   assert.match(source, /\.hero-actions-button \{[\s\S]*?padding: 7px 14px;[\s\S]*?font-size: 13px;/);
-  assert.match(content, /heroInstallLabel: "免费添加到 Chrome"/);
+  assert.match(content, /heroInstallLabel: "免费添加到浏览器"/);
   assert.match(content, /heroCommunityLabel: "反馈 & 功能许愿"/);
   assert.match(content, /heroCommunityAria: "打开 Lumno 反馈与功能许愿二维码"/);
   assert.doesNotMatch(content, /heroReviewLabel|heroReviewAria/);

@@ -70,6 +70,13 @@ Last updated: 2026-10-08
 - GitHub Pages workflow now builds with Node and deploys `dist/`.
 - Pages below the homepage (`/release`, `/privacy`) use `src/layouts/SitePage.astro`, which shares the homepage header (`src/components/site/SiteHeader.astro`), footer (`src/components/site/PageFooter.astro`) and design tokens (`src/styles/home.css`, `src/styles/site.css`).
 
+## Loading Performance Notes
+
+- The header menus are React components rendered to static HTML with no `client:*` directive; `src/scripts/settings-select-runtime.ts` drives them. Keep it that way so `/release` and `/privacy` ship no React.
+- Community QR dialogs open from static `[data-community-qr-trigger]` buttons; `src/scripts/community-qr.ts` lazy-loads the React dialog on first use.
+- `src/integrations/island-modulepreload.mjs` adds `modulepreload` links for every `client:load` island's import graph; prefer `client:idle` / `client:visible` for anything the first paint does not need.
+- Fonts are subset by `scripts/subset-fonts.py`; rerun it after using a new Remix Icon class (`tests/font-assets.test.mjs` enforces this).
+
 ## SVG Rendering Notes (Safari)
 
 - For visually critical SVGs (logo, hero cards, decorated UI), prefer inline SVG rendering over `<img src="*.svg">`:

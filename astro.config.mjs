@@ -1,6 +1,7 @@
 import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
+import islandModulePreload from "./src/integrations/island-modulepreload.mjs";
 
 export default defineConfig({
   site: "https://lumno.kubai.design",
@@ -17,7 +18,7 @@ export default defineConfig({
       ["zh-tw", "en", "ja", "ko", "de", "fr", "es", "pt-br", "ru"].map((segment) => [`/${segment}/features`, `/${segment}/`]),
     ),
   },
-  integrations: [react()],
+  integrations: [react(), islandModulePreload()],
   vite: {
     plugins: [tailwindcss()],
   },

@@ -1,15 +1,20 @@
-import { useEffect, useId, useRef, useState } from "react";
+import { useId } from "react";
 import {
   SettingsButton,
   SettingsSelect,
   type SettingsSelectItem,
 } from "../extension-settings/SettingsKit";
-import { CommunityQrDialogPanel } from "../home/CommunityQrDialog";
-import { Dialog, DialogTrigger } from "../ui/dialog";
+import { communityQrTriggerAttributes } from "../home/CommunityQrDialogPanel";
 import "./home-nav-ghost-links.css";
 
+/*
+ * Rendered to static HTML (no hydration): the menus run on
+ * src/scripts/settings-select-runtime.ts, the community entry opens the QR
+ * dialog through src/scripts/community-qr.ts, and SiteHeader's script shows the
+ * entries marked data-nav-primary-only once the bar becomes the glass pill.
+ */
+
 type NavGhostLinkValue = "community" | "release" | "repository" | "contact";
-type CommunityAction = Extract<NavGhostLinkValue, "community">;
 type RepositoryActionValue = "repository-issue" | "repository-pull-request";
 type ContactActionValue = "contact-x" | "contact-xiaohongshu";
 type MobileNavItemValue =
@@ -26,8 +31,6 @@ type NavGhostLink = {
   analyticsCategory: "navigation" | "cta";
   analyticsLabel: string;
   external?: boolean;
-  communityAction?: CommunityAction;
-  requiresPrimary?: boolean;
 };
 
 interface Props {
@@ -82,10 +85,13 @@ export default function HomeNavGhostLinks({
   qrImageAlt,
   qrCloseLabel,
 }: Props) {
-  const [activeCommunityAction, setActiveCommunityAction] = useState<CommunityAction | null>(null);
-  const [showPrimaryNavigation, setShowPrimaryNavigation] = useState(false);
-  const activeTriggerRef = useRef<HTMLElement | null>(null);
   const idPrefix = useId().replaceAll(":", "");
+  const communityDialogAttributes = communityQrTriggerAttributes({
+    title: panelTitle,
+    qrImageSrc,
+    qrImageAlt,
+    closeLabel: qrCloseLabel,
+  });
 
   const links: NavGhostLink[] = [
     {
@@ -96,8 +102,6 @@ export default function HomeNavGhostLinks({
       analyticsEvent: communityHref ? "open_discord" : "open_feedback_qrcode",
       analyticsCategory: "cta",
       analyticsLabel: "home_header_community",
-      communityAction: communityHref ? undefined : "community",
-      requiresPrimary: true,
     },
     {
       value: "release",
@@ -124,7 +128,6 @@ export default function HomeNavGhostLinks({
       analyticsLabel: "home_header_contact",
     },
   ];
-  const visibleLinks = links.filter((link) => !link.requiresPrimary || showPrimaryNavigation);
   const repositoryActionItems: ReadonlyArray<SettingsSelectItem<RepositoryActionValue>> = [
     {
       value: "repository-issue",
@@ -188,34 +191,7 @@ export default function HomeNavGhostLinks({
     ...repositoryActionItems,
   ];
 
-  const closeCommunityDialog = (restoreFocus = false) => {
-    setActiveCommunityAction(null);
-    if (restoreFocus) {
-      window.requestAnimationFrame(() => activeTriggerRef.current?.focus());
-    }
-  };
-
-  const openCommunityDialog = (action: CommunityAction, trigger: HTMLElement | null) => {
-    activeTriggerRef.current = trigger;
-    setActiveCommunityAction(action);
-  };
-
-  useEffect(() => {
-    const updatePrimaryNavigation = () => {
-      const hasPrimaryNavigation = document.body.classList.contains("has-nav-install");
-      setShowPrimaryNavigation(hasPrimaryNavigation);
-      if (!hasPrimaryNavigation) {
-        setActiveCommunityAction(null);
-      }
-    };
-    const observer = new MutationObserver(updatePrimaryNavigation);
-
-    updatePrimaryNavigation();
-    observer.observe(document.body, { attributes: true, attributeFilter: ["class"] });
-    return () => observer.disconnect();
-  }, []);
-
-  const menuItems: ReadonlyArray<SettingsSelectItem<MobileNavItemValue>> = visibleLinks.map((link) => {
+  const menuItems: ReadonlyArray<SettingsSelectItem<MobileNavItemValue>> = links.map((link) => {
     const navItem: SettingsSelectItem<MobileNavItemValue> = {
       value: link.value,
       label: link.label,
@@ -225,13 +201,17 @@ export default function HomeNavGhostLinks({
       analyticsEvent: link.analyticsEvent,
       analyticsCategory: link.analyticsCategory,
       analyticsLabel: link.analyticsLabel,
-      onSelect: link.communityAction
-        ? () => {
-            const menuTrigger = document.getElementById("top-nav-more-toggle");
-            openCommunityDialog(link.communityAction!, menuTrigger);
-          }
-        : () => closeCommunityDialog(),
     };
+
+    if (link.value === "community") {
+      return {
+        ...navItem,
+        dataAttributes: {
+          "nav-primary-only": "",
+          ...(link.href ? {} : { ...stripDataPrefix(communityDialogAttributes), "qr-return-focus": "#top-nav-more-toggle" }),
+        },
+      };
+    }
 
     if (link.value === "repository") {
       return {
@@ -240,14 +220,12 @@ export default function HomeNavGhostLinks({
         target: undefined,
         rel: undefined,
         analyticsEvent: "toggle_mobile_repository_menu",
-        onSelect: undefined,
         children: mobileRepositoryActionItems,
       };
     }
     if (link.value === "contact") {
       return {
         ...navItem,
-        onSelect: undefined,
         children: contactActionItems,
       };
     }
@@ -255,16 +233,7 @@ export default function HomeNavGhostLinks({
   });
 
   return (
-    <Dialog
-      open={activeCommunityAction === "community"}
-      onOpenChange={(open) => {
-        if (open) {
-          setActiveCommunityAction("community");
-          return;
-        }
-        closeCommunityDialog(true);
-      }}
-    >
+    <>
       <div className="top-nav-ghost-links">
         {links.map((link) => {
           if (link.value === "repository") {
@@ -272,7 +241,6 @@ export default function HomeNavGhostLinks({
               <div
                 className="top-nav-repository-group"
                 key={link.analyticsLabel}
-                onPointerDown={() => closeCommunityDialog()}
               >
                 <SettingsButton
                   as="a"
@@ -360,8 +328,9 @@ export default function HomeNavGhostLinks({
           return (
             <div
               className="top-nav-community-slot"
-              data-visible={showPrimaryNavigation ? "true" : "false"}
-              aria-hidden={!showPrimaryNavigation}
+              data-nav-primary-only=""
+              data-visible="false"
+              aria-hidden="true"
               key={link.analyticsLabel}
             >
               <div className="top-nav-community-item">
@@ -375,7 +344,7 @@ export default function HomeNavGhostLinks({
                     title={link.label}
                     target="_blank"
                     rel="noreferrer noopener"
-                    tabIndex={showPrimaryNavigation ? undefined : -1}
+                    tabIndex={-1}
                     data-analytics-event={link.analyticsEvent}
                     data-analytics-category={link.analyticsCategory}
                     data-analytics-label={link.analyticsLabel}
@@ -383,23 +352,20 @@ export default function HomeNavGhostLinks({
                     {link.label}
                   </SettingsButton>
                 ) : (
-                <DialogTrigger asChild>
                   <SettingsButton
                     variant="ghost"
                     className="top-nav-ghost-button"
                     aria-label={link.label}
                     title={link.label}
-                    disabled={!showPrimaryNavigation}
+                    aria-haspopup="dialog"
+                    disabled
                     data-analytics-event={link.analyticsEvent}
                     data-analytics-category={link.analyticsCategory}
                     data-analytics-label={link.analyticsLabel}
-                    onClick={(event) => {
-                      activeTriggerRef.current = event.currentTarget;
-                    }}
+                    {...communityDialogAttributes}
                   >
                     {link.label}
                   </SettingsButton>
-                </DialogTrigger>
                 )}
               </div>
             </div>
@@ -426,12 +392,10 @@ export default function HomeNavGhostLinks({
           items={menuItems}
         />
       </div>
-      <CommunityQrDialogPanel
-        title={panelTitle}
-        qrImageSrc={qrImageSrc}
-        qrImageAlt={qrImageAlt}
-        closeLabel={qrCloseLabel}
-      />
-    </Dialog>
+    </>
   );
+}
+
+function stripDataPrefix(attributes: Record<string, string>) {
+  return Object.fromEntries(Object.entries(attributes).map(([key, value]) => [key.replace(/^data-/, ""), value]));
 }

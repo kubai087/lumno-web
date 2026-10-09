@@ -408,6 +408,8 @@ export type SettingsSelectItem<T extends string = string> = {
   analyticsEvent?: string;
   analyticsCategory?: string;
   analyticsLabel?: string;
+  /** Extra data-* attributes for the option, keyed without the `data-` prefix. */
+  dataAttributes?: Record<string, string>;
   onSelect?: () => void;
 };
 
@@ -726,6 +728,7 @@ export function SettingsSelect<T extends string>({
       "data-analytics-event": item.analyticsEvent,
       "data-analytics-category": item.analyticsCategory,
       "data-analytics-label": item.analyticsLabel,
+      ...Object.fromEntries(Object.entries(item.dataAttributes ?? {}).map(([key, val]) => [`data-${key}`, val])),
       tabIndex: hidden ? -1 : undefined,
       onKeyDown: expandable
         ? (event: ReactKeyboardEvent<HTMLElement>) => {
@@ -786,6 +789,10 @@ export function SettingsSelect<T extends string>({
       data-trigger-mode={triggerMode}
       data-trigger-variant={triggerVariant}
       data-menu-placement={menuPlacement}
+      /* Read by settings-select-runtime.ts when the select is rendered without hydrating. */
+      data-focus-first={focusFirstItemOnOpen ? "" : undefined}
+      data-restore-focus={restoreFocusOnEscape ? "" : undefined}
+      data-open-state-event={openStateEvent}
     >
       {trigger}
       <div

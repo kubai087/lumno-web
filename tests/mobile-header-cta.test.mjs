@@ -25,8 +25,8 @@ test("homepage top bar uses a secondary language icon and install menu", () => {
 
   assert.match(
     source,
-    /<header\s+class="top-nav"[\s\S]*?<LanguageMenu[\s\S]*?iconOnly[\s\S]*?<InstallMenu[\s\S]*?client:load/,
-    "the homepage should compose the shared language control and hydrated install menu",
+    /<header\s+class="top-nav"[\s\S]*?<LanguageMenu[\s\S]*?iconOnly[\s\S]*?<InstallMenu/,
+    "the homepage should compose the shared language control and install menu",
   );
   assert.match(
     languageMenu,
@@ -137,7 +137,11 @@ test("language menu keeps the shared runtime hooks when hydrated", () => {
   );
   const runtime = fs.readFileSync(path.join(workspaceRoot, "src/scripts/language-runtime.ts"), "utf8");
 
-  assert.match(source, /<LanguageMenu[\s\S]*?iconOnly[\s\S]*?client:load/);
+  assert.match(source, /<LanguageMenu[\s\S]*?iconOnly/);
+  // The header renders without hydrating; the static select runtime takes the hydrated side of the handshake.
+  const selectRuntime = fs.readFileSync(path.join(workspaceRoot, "src/scripts/settings-select-runtime.ts"), "utf8");
+  assert.match(settingsKit, /data-open-state-event=\{openStateEvent\}/);
+  assert.match(selectRuntime, /root\.dataset\.hydrated = "true"/);
   assert.match(languageMenu, /id="language-toggle"/);
   assert.match(languageMenu, /menuId="language-menu"/);
   assert.match(languageMenu, /openStateEvent="lumno:language-menu-state"/);
@@ -227,7 +231,10 @@ test("homepage navbar animates in the community action and reuses the CTA dialog
   const content = fs.readFileSync(path.join(workspaceRoot, "src/lib/home-content.ts"), "utf8");
 
   assert.match(source, /<HomeNavGhostLinks[\s\S]*releaseHref=\{releaseHref\}[\s\S]*repositoryHref=\{GITHUB_URL\}[\s\S]*repositoryIssueHref=\{GITHUB_ISSUE_URL\}[\s\S]*repositoryPullRequestHref=\{GITHUB_PULL_REQUEST_URL\}[\s\S]*contactXHref=\{COMMUNITY_LINKS\.xUrl\}[\s\S]*contactXiaohongshuHref=\{COMMUNITY_LINKS\.xiaohongshuUrl\}[\s\S]*repositoryHomeLabel=\{content\.navRepositoryHome\}[\s\S]*communityLabel=\{content\.navCommunity\}[\s\S]*contactLabel=\{content\.navContact\}[\s\S]*contactMenuLabel=\{content\.navContactMenuAria\}[\s\S]*contactXLabel=\{content\.navContactX\}[\s\S]*contactXiaohongshuLabel=\{content\.navContactXiaohongshu\}[\s\S]*panelTitle=\{content\.qrcodeTitle\}[\s\S]*qrImageSrc=\{COMMUNITY_LINKS\.wechatQrImagePath\}/);
-  assert.match(source, /<nav class="top-nav-actions"[\s\S]*?<HomeNavGhostLinks[\s\S]*?client:load[\s\S]*?<LanguageMenu/);
+  assert.match(source, /<nav class="top-nav-actions"[\s\S]*?<HomeNavGhostLinks[\s\S]*?<LanguageMenu/);
+  // No header island hydrates: pages without other islands ship no React.
+  assert.doesNotMatch(source.slice(source.indexOf('<header'), source.indexOf('</header>')), /client:/);
+  assert.match(source, /enhanceSettingsSelect/);
   assert.match(content, /navCommunity: "反馈 & 功能许愿"/);
   assert.match(content, /navContact: "联系作者"/);
   assert.match(content, /navContactMenuAria: "打开作者主页"/);
@@ -244,7 +251,7 @@ test("homepage navbar animates in the community action and reuses the CTA dialog
   assert.match(ghostLinks, /variant="ghost"/);
   assert.match(ghostLinks, /className="top-nav-ghost-button"/);
   assert.match(ghostLinks, /\{link\.label\}\s*<\/SettingsButton>/);
-  assert.match(ghostLinks, /value: "community"[\s\S]*communityAction: communityHref \? undefined : "community"[\s\S]*requiresPrimary: true,[\s\S]*value: "release"[\s\S]*value: "repository"[\s\S]*value: "contact"/);
+  assert.match(ghostLinks, /value: "community"[\s\S]*analyticsLabel: "home_header_community"[\s\S]*value: "release"[\s\S]*value: "repository"[\s\S]*value: "contact"/);
   assert.match(ghostLinks, /className="top-nav-repository-group"[\s\S]*href=\{link\.href!\}[\s\S]*triggerMode="icon"[\s\S]*triggerIconClass="ri-arrow-down-s-line"[\s\S]*items=\{repositoryActionItems\}/);
   assert.match(ghostLinks, /value: "repository-issue"[\s\S]*href: repositoryIssueHref[\s\S]*value: "repository-pull-request"[\s\S]*href: repositoryPullRequestHref/);
   assert.match(ghostLinks, /if \(link\.value === "repository"\) \{[\s\S]*children: mobileRepositoryActionItems,[\s\S]*if \(link\.value === "contact"\) \{[\s\S]*children: contactActionItems,/);
@@ -261,16 +268,18 @@ test("homepage navbar animates in the community action and reuses the CTA dialog
     /\.top-nav-repository-group\s*\{[\s\S]*?gap:\s*2px;[\s\S]*?\.top-nav-repository-group > \.top-nav-ghost-button\s*\{[\s\S]*?border-radius:\s*17px 8px 8px 17px;[\s\S]*?\.top-nav-repository-toggle\s*\{[\s\S]*?height:\s*34px;[\s\S]*?border-radius:\s*8px 17px 17px 8px;/,
     "repository link and menu should align as one split control with a narrow seam",
   );
-  assert.match(ghostLinks, /const visibleLinks = links\.filter\(\(link\) => !link\.requiresPrimary \|\| showPrimaryNavigation\);/);
-  assert.match(ghostLinks, /document\.body\.classList\.contains\("has-nav-install"\)/);
-  assert.match(ghostLinks, /new MutationObserver\(updatePrimaryNavigation\)/);
-  assert.match(ghostLinks, /import \{ CommunityQrDialogPanel \} from "\.\.\/home\/CommunityQrDialog"/);
-  assert.match(ghostLinks, /<Dialog[\s\S]*?open=\{activeCommunityAction === "community"\}[\s\S]*?<DialogTrigger asChild>[\s\S]*?<CommunityQrDialogPanel/);
-  assert.match(communityDialog, /export function CommunityQrDialogPanel\([\s\S]*?<DialogContent[\s\S]*?<DialogTitle>\{title\}<\/DialogTitle>/);
+  // The community entry waits for the glass pill; SiteHeader's script reveals every data-nav-primary-only entry.
+  assert.match(ghostLinks, /"nav-primary-only": ""/);
+  assert.match(source, /document\.body\.classList\.contains\("has-nav-install"\)/);
+  assert.match(source, /new MutationObserver\(syncPrimaryNavigation\)/);
+  assert.match(source, /import "\.\.\/\.\.\/scripts\/community-qr"/);
+  assert.match(ghostLinks, /import \{ communityQrTriggerAttributes \} from "\.\.\/home\/CommunityQrDialogPanel"/);
+  assert.match(ghostLinks, /"qr-return-focus": "#top-nav-more-toggle"/);
+  assert.match(communityDialog, /import \{ communityQrTriggerAttributes \} from "\.\/CommunityQrDialogPanel"/);
   assert.match(ghostLinks, /<SettingsSelect[\s\S]*triggerMode="icon"[\s\S]*triggerIconClass="ri-menu-line"/);
   assert.match(ghostLinks, /menuRole="menu"[\s\S]*optionRole="menuitem"/);
   assert.match(ghostLinks, /showSelected=\{false\}/);
-  assert.match(ghostLinks, /className="top-nav-community-slot"[\s\S]*?data-visible=\{showPrimaryNavigation \? "true" : "false"\}/);
+  assert.match(ghostLinks, /className="top-nav-community-slot"[\s\S]*?data-nav-primary-only=""[\s\S]*?data-visible="false"/);
   assert.match(ghostLinkStyles, /\.top-nav-community-slot\s*\{[\s\S]*?grid-template-columns:\s*0fr;[\s\S]*?overflow:\s*clip;[\s\S]*?pointer-events:\s*none;/);
   assert.match(ghostLinkStyles, /\.top-nav-community-slot\[data-visible="true"\]\s*\{[\s\S]*?grid-template-columns:\s*1fr;[\s\S]*?opacity:\s*1;[\s\S]*?visibility:\s*visible;/);
   assert.doesNotMatch(ghostLinkStyles, /\.top-nav-community-slot\s*\{[^}]*transition:/);

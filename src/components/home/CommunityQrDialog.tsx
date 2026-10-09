@@ -1,11 +1,5 @@
 import { SettingsButton } from "../extension-settings/SettingsKit";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "../ui/dialog";
+import { communityQrTriggerAttributes } from "./CommunityQrDialogPanel";
 
 interface Props {
   triggerLabel: string;
@@ -18,40 +12,6 @@ interface Props {
   externalHref?: string;
   analyticsLabel?: string;
   triggerIconSvg?: string;
-}
-
-interface CommunityQrDialogPanelProps {
-  title: string;
-  qrImageSrc: string;
-  qrImageAlt: string;
-  closeLabel: string;
-}
-
-export function CommunityQrDialogPanel({
-  title,
-  qrImageSrc,
-  qrImageAlt,
-  closeLabel,
-}: CommunityQrDialogPanelProps) {
-  return (
-    <DialogContent
-      aria-describedby={undefined}
-      closeLabel={closeLabel}
-      className="max-h-[calc(100dvh-3rem)] max-w-[390px] gap-0 overflow-y-auto p-6"
-    >
-      <DialogHeader className="pr-10">
-        <DialogTitle>{title}</DialogTitle>
-      </DialogHeader>
-      <img
-        className="mt-4 block h-auto w-full rounded-lg bg-muted"
-        src={qrImageSrc}
-        alt={qrImageAlt}
-        width="866"
-        height="1280"
-        loading="lazy"
-      />
-    </DialogContent>
-  );
 }
 
 export function CommunityQrDialog({
@@ -91,34 +51,26 @@ export function CommunityQrDialog({
     );
   }
 
-  const trigger = triggerVariant === "hero" ? (
+  const dialogAttributes = communityQrTriggerAttributes({ title, qrImageSrc, qrImageAlt, closeLabel });
+
+  return triggerVariant === "hero" ? (
     <SettingsButton
       type="button"
       variant="secondary"
       className="hero-actions-button hero-community-button"
       iconSvg={triggerIconSvg}
       aria-label={triggerAriaLabel}
+      aria-haspopup="dialog"
       data-analytics-event="open_community_qrcode"
       data-analytics-category="cta"
       data-analytics-label={analyticsLabel}
+      {...dialogAttributes}
     >
       {triggerLabel}
     </SettingsButton>
   ) : (
-    <button className="community-footer-trigger" type="button" aria-label={triggerAriaLabel}>
+    <button className="community-footer-trigger" type="button" aria-label={triggerAriaLabel} aria-haspopup="dialog" {...dialogAttributes}>
       {triggerLabel}
     </button>
-  );
-
-  return (
-    <Dialog>
-      <DialogTrigger asChild>{trigger}</DialogTrigger>
-      <CommunityQrDialogPanel
-        title={title}
-        qrImageSrc={qrImageSrc}
-        qrImageAlt={qrImageAlt}
-        closeLabel={closeLabel}
-      />
-    </Dialog>
   );
 }

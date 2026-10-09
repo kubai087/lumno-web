@@ -263,7 +263,7 @@ const structuredData = [
               ariaLabel={content.heroInstallAria}
               href={CHROME_STORE_URL}
               tooltipLabel={content.heroBrowserTooltipLabel}
-              client:load
+              client:idle
             />
             <CommunityQrDialog
               triggerLabel={content.heroCommunityLabel}
@@ -274,7 +274,6 @@ const structuredData = [
               closeLabel={content.qrcodeCloseAria}
               triggerVariant="hero"
               externalHref={communityExternalHref}
-              client:load
             />
           </div>
         </div>
@@ -373,7 +372,6 @@ const structuredData = [
           closeLabel={content.qrcodeCloseAria}
           triggerVariant="hero"
           externalHref={communityExternalHref}
-          client:visible
         />
       </FinalCta>
     </main>

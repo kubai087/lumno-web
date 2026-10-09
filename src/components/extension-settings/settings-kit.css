@@ -683,6 +683,11 @@
   cursor: pointer;
 }
 
+/* Header options that only apply in some states (settings-select-runtime.ts toggles them). */
+.lumno-settings-select-option[hidden] {
+  display: none !important;
+}
+
 .lumno-settings-select-option:hover {
   background: var(--lumno-control-hover-bg, rgba(0, 0, 0, 0.05));
 }

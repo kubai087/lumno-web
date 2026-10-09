@@ -125,10 +125,13 @@ test("homepage hero exposes install and community actions below the subtitle", (
     source,
     /<p class="hero-description">[\s\S]*?<CopyLines text=\{content\.heroDescription\} \/>[\s\S]*?<div class="hero-actions">[\s\S]*?content\.heroInstallLabel[\s\S]*?content\.heroCommunityLabel/,
   );
-  assert.match(source, /<HeroInstallTooltip[\s\S]*?href=\{CHROME_STORE_URL\}[\s\S]*?client:load/);
+  // The tooltip only matters on hover, so it hydrates once the page is idle instead of competing with the demo.
+  assert.match(source, /<HeroInstallTooltip[^/]*?href=\{CHROME_STORE_URL\}[^/]*?client:idle/);
   assert.match(installTooltip, /<TooltipTrigger asChild>[\s\S]*?<SettingsButton[\s\S]*?variant="primary"/);
   assert.match(installTooltip, /<SettingsButton[\s\S]*?\{label\}[\s\S]*?\{HERO_BUTTERFLY_MARK\}/);
-  assert.match(source, /<CommunityQrDialog[\s\S]*?triggerLabel=\{content\.heroCommunityLabel\}[\s\S]*?triggerVariant="hero"[\s\S]*?client:load/);
+  assert.match(source, /<CommunityQrDialog[\s\S]*?triggerLabel=\{content\.heroCommunityLabel\}[\s\S]*?triggerVariant="hero"/);
+  // The QR triggers are static HTML; the dialog loads on first use (src/scripts/community-qr.ts).
+  assert.doesNotMatch(source, /<CommunityQrDialog\b[^>]*?client:/);
   assert.match(communityDialog, /<SettingsButton[\s\S]*?variant="secondary"/);
   assert.match(installTooltip, /const HERO_BUTTERFLY_MARK = \([\s\S]*?className="hero-install-butterfly"/);
   assert.match(installTooltip, /className="hero-install-butterfly-wing hero-install-butterfly-wing-back"/);
@@ -157,11 +160,19 @@ test("homepage community CTA opens an accessible QR-code dialog", () => {
   const dialog = readSource("src/components/ui/dialog.tsx");
 
   assert.match(source, /import "\.\.\/styles\/globals\.css"/);
-  assert.match(communityDialog, /export function CommunityQrDialogPanel\([\s\S]*?<DialogContent/);
-  assert.match(communityDialog, /<Dialog>[\s\S]*?<DialogTrigger asChild>[\s\S]*?<CommunityQrDialogPanel/);
-  assert.match(communityDialog, /<DialogTitle>\{title\}<\/DialogTitle>/);
-  assert.match(communityDialog, /closeLabel=\{closeLabel\}/);
-  assert.match(communityDialog, /width="866"[\s\S]*?height="1280"/);
+  const panel = readSource("src/components/home/CommunityQrDialogPanel.tsx");
+  const dialogRoot = readSource("src/components/home/community-qr-dialog-root.tsx");
+  const triggerScript = readSource("src/scripts/community-qr.ts");
+
+  assert.match(panel, /export function CommunityQrDialogPanel\([\s\S]*?<DialogContent/);
+  assert.match(panel, /<DialogTitle>\{title\}<\/DialogTitle>/);
+  assert.match(panel, /closeLabel=\{closeLabel\}/);
+  assert.match(panel, /width="866"[\s\S]*?height="1280"/);
+  assert.doesNotMatch(panel, /from "[^"]*SettingsKit"/, "the lazily loaded dialog must not pull the settings kit stylesheet onto every page");
+  assert.match(communityDialog, /aria-haspopup="dialog"[\s\S]*?\{\.\.\.dialogAttributes\}/);
+  assert.match(dialogRoot, /<Dialog open=\{open\} onOpenChange=\{setOpen\}>[\s\S]*?<CommunityQrDialogPanel/);
+  assert.match(triggerScript, /\[data-community-qr-trigger\]/);
+  assert.match(triggerScript, /import\("\.\.\/components\/home\/community-qr-dialog-root"\)/);
   assert.match(dialog, /data-open:animate-in[\s\S]*?data-open:zoom-in-95/);
   assert.match(dialog, /data-closed:animate-out[\s\S]*?data-closed:zoom-out-95/);
   assert.match(dialog, /motion-reduce:animate-none/);

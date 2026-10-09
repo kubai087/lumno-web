@@ -1250,6 +1250,7 @@ html[data-home-intro-js] .hero-safari-demo[data-home-intro="pending"]:not([data-
 
       /* Cursor points come from the drawn targets (DemoCursorLayer in HeroSafariDemo.tsx). */
       .cursor-layer {
+        /* Until measured: the typed query's width (DemoCursorLayer). */
         --search-result-input-cursor-travel: 48px;
         position: absolute;
         inset: 0;
@@ -1302,6 +1303,13 @@ html[data-home-intro-js] .hero-safari-demo[data-home-intro="pending"]:not([data-
       [data-cursor-mode="site-search"] .demo-cursor {
         animation: onboarding-cursor-site-search-open 6600ms linear 120ms both;
       }
+      /*
+       * The query types over 8%-40% of this animation on both clocks (its first
+       * character lands at 208ms of 2600ms, its last at 1040ms; the intro's brisk
+       * clock scales both alike), so the cursor sets off from the query's
+       * bottom-left corner with the first character and reaches its bottom-right
+       * corner with the last. DemoCursorLayer measures both corners.
+       */
       @keyframes onboarding-cursor-type {
         0% {
           left: var(--search-result-input-cursor-left, 29%);
@@ -1309,13 +1317,14 @@ html[data-home-intro-js] .hero-safari-demo[data-home-intro="pending"]:not([data-
           opacity: 0;
           transform: translate3d(-8px, 2px, 0) rotate(-6deg);
         }
-        12% {
+        8% {
           left: var(--search-result-input-cursor-left, 29%);
           top: var(--search-result-input-cursor-top, 22%);
           opacity: 1;
           transform: translate3d(0, 0, 0) rotate(-6deg);
+          animation-timing-function: linear;
         }
-        62%,
+        40%,
         72% {
           left: var(--search-result-input-cursor-left, 29%);
           top: var(--search-result-input-cursor-top, 22%);

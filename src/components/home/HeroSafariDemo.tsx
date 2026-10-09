@@ -989,7 +989,7 @@ function DemoCursorLayer({ mode, timing }: { mode: CursorMode; timing: SearchRes
   useEffect(() => {
     const layer = layerRef.current;
     const stage = layer?.parentElement;
-    if (!stage) {
+    if (!layer || !stage) {
       return undefined;
     }
 
@@ -1022,15 +1022,23 @@ function DemoCursorLayer({ mode, timing }: { mode: CursorMode; timing: SearchRes
     };
     const syncCursorTargets = () => {
       if (mode === "search-result") {
-        // Rests on the field's leading edge while the query types, then
-        // moves to the first result. Measured, so it tracks the panel's
-        // placement at any card size.
-        setCursorPoint(
-          "search-result-input",
-          stage.querySelector(".lumno-overlay-query"),
-          0.01,
-          0.72,
-        );
+        // Starts at the query's bottom-left corner, follows the typing to
+        // its bottom-right corner, then moves to the first result. Measured,
+        // so it tracks the panel's placement at any card size.
+        const queryText = stage.querySelector(".lumno-overlay-query-text");
+        setCursorPoint("search-result-input", queryText, 0, 1);
+        // The characters reveal by widening from zero, so the typed width is
+        // the sum of their natural (scroll) widths. Those are in the panel's
+        // own pixels; the panel is scaled inside the stage, so convert them to
+        // the cursor layer's (unscaled stage) pixels.
+        if (queryText instanceof HTMLElement && queryText.offsetHeight > 0) {
+          const typedWidth = [...queryText.querySelectorAll<HTMLElement>(".onboarding-typing-char")]
+            .reduce((width, char) => width + char.scrollWidth, 0);
+          const stageScale = stage.getBoundingClientRect().width / Math.max(stage.offsetWidth, 1);
+          const textScale = queryText.getBoundingClientRect().height / queryText.offsetHeight;
+          const travel = typedWidth * textScale / Math.max(stageScale, Number.EPSILON);
+          if (travel > 0) layer.style.setProperty("--search-result-input-cursor-travel", `${travel.toFixed(2)}px`);
+        }
         setCursorPoint(
           "search-result",
           stage.querySelector('.lumno-overlay-result[data-demo-index="0"]'),

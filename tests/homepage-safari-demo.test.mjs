@@ -437,7 +437,8 @@ test("hero demo exposes three replayable plugin-consistent search scenes", () =>
   assert.match(component, /CURSOR_TIP_OFFSET_Y = 5/);
   assert.match(component, /--\$\{name\}-cursor-left/);
   assert.match(component, /--\$\{name\}-cursor-top/);
-  assert.doesNotMatch(component, /lumno-overlay-query-text|lumno-overlay-query-caret|queryTrackingFrame|trackQueryCaret/);
+  // The cursor measures the query once per sync (its corners and width), never tracks the caret frame by frame.
+  assert.doesNotMatch(component, /lumno-overlay-query-caret|queryTrackingFrame|trackQueryCaret/);
   assert.match(component, /const stageScaleX = stageRect\.width \/ Math\.max\(stage\.offsetWidth, 1\)/);
   assert.match(component, /const stageScaleY = stageRect\.height \/ Math\.max\(stage\.offsetHeight, 1\)/);
   assert.match(component, /renderedLeft \/ Math\.max\(stageScaleX, Number\.EPSILON\)/);
@@ -489,12 +490,14 @@ test("hero demo exposes three replayable plugin-consistent search scenes", () =>
   assert.match(styles, /--search-result-cursor-left/);
   assert.match(styles, /--search-result-cursor-top/);
   // The input point is measured from the drawn field, like the result point.
-  assert.match(component, /"search-result-input",\s*stage\.querySelector\("\.lumno-overlay-query"\)/);
+  // It sets off from the typed query's bottom-left corner and travels its measured width to the bottom-right.
+  assert.match(component, /const queryText = stage\.querySelector\("\.lumno-overlay-query-text"\);\s*setCursorPoint\("search-result-input", queryText, 0, 1\);/);
+  assert.match(component, /layer\.style\.setProperty\("--search-result-input-cursor-travel"/);
   assert.match(styles, /var\(--search-result-input-cursor-left, 29%\)/);
   assert.match(styles, /var\(--search-result-input-cursor-top, 22%\)/);
   assert.doesNotMatch(styles, /--search-result-input-cursor-(left|top):/);
   assert.match(styles, /--search-result-input-cursor-travel: 48px;/);
-  assert.match(styles, /62%,\s*72%[\s\S]*?--search-result-input-cursor-travel/);
+  assert.match(styles, /8% \{[\s\S]*?animation-timing-function: linear;[\s\S]*?40%,\s*72% \{[\s\S]*?--search-result-input-cursor-travel/);
   assert.match(styles, /@media \(max-width: 760px\)[\s\S]*?\.cursor-layer \{[\s\S]*?--search-result-input-cursor-travel: 36px;/);
   assert.doesNotMatch(styles, /onboarding-cursor-type-mobile/);
   assert.doesNotMatch(styles, /onboarding-cursor-hover-loop/);

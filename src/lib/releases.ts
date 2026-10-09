@@ -41,7 +41,23 @@ type GitHubRelease = {
 
 const REPO_OWNER = "kubai087";
 const REPO_NAME = "lumno-extension";
-const cnToTw = OpenCC.Converter({ from: "cn", to: "tw" });
+// Taiwan phrases (连接→連結, 界面→介面, 设置→設定), not just characters.
+const cnToTwp = OpenCC.Converter({ from: "cn", to: "twp" });
+/**
+ * Where OpenCC's Taiwan phrasing still differs from the words the extension and this
+ * site use in zh-TW (lumno-extension _locales/zh_TW, home-content.ts). Longer phrases first.
+ */
+const LUMNO_TW_TERMS: ReadonlyArray<[string, string]> = [
+  ["標籤頁組", "分頁群組"],
+  ["標籤頁", "分頁"],
+  ["載入項", "附加元件"],
+  ["擴充套件", "擴充功能"],
+  ["聚合搜尋", "彙整搜尋"],
+  // OpenCC reads 天后 as "queen".
+  ["跨天后", "跨天後"],
+];
+const cnToTw = (text: string) =>
+  LUMNO_TW_TERMS.reduce((converted, [from, to]) => converted.replaceAll(from, to), cnToTwp(text));
 
 let releasesRequest: Promise<ReleaseItem[]> | null = null;
 
@@ -193,12 +209,46 @@ function createEmptyLocaleContent(): ReleaseLocaleContent {
   };
 }
 
-function convertLocaleContentToTraditional(content: ReleaseLocaleContent): ReleaseLocaleContent {
+/** Rewrites the prose of inline Markdown, leaving code spans and HTML tags exactly as typed. */
+function mapMarkdownProse(markdown: string, map: (prose: string) => string): string {
+  return markdown
+    .split(/(`[^`]*`|<[^>]+>)/)
+    .map((part, index) => (index % 2 ? part : map(part)))
+    .join("");
+}
+
+/**
+ * Chinese notes are typed with ASCII double quotes; Chinese text wants paired “”.
+ * Quotes pair up in order across the whole entry, so a code span between them is fine.
+ */
+function useChineseQuotes(markdown: string): string {
+  let opening = true;
+  return mapMarkdownProse(markdown, (prose) =>
+    prose.replace(/"/g, () => {
+      const quote = opening ? "“" : "”";
+      opening = !opening;
+      return quote;
+    }),
+  );
+}
+
+const TAIWAN_QUOTES: Record<string, string> = { "“": "「", "”": "」", "‘": "『", "’": "』" };
+
+/** Traditional Chinese (Taiwan) quotes with corner brackets: 「」, and 『』 inside them. */
+function useTaiwanQuotes(markdown: string): string {
+  return mapMarkdownProse(markdown, (prose) => prose.replace(/[“”‘’]/g, (quote) => TAIWAN_QUOTES[quote]));
+}
+
+function mapLocaleContent(content: ReleaseLocaleContent, map: (markdown: string) => string): ReleaseLocaleContent {
   return {
-    summary: content.summary ? cnToTw(content.summary) : "",
-    features: content.features.map((item) => cnToTw(item)),
-    bugFixes: content.bugFixes.map((item) => cnToTw(item)),
+    summary: content.summary ? map(content.summary) : "",
+    features: content.features.map(map),
+    bugFixes: content.bugFixes.map(map),
   };
+}
+
+function convertLocaleContentToTraditional(content: ReleaseLocaleContent): ReleaseLocaleContent {
+  return mapLocaleContent(content, (markdown) => useTaiwanQuotes(cnToTw(markdown)));
 }
 
 export function parseReleaseBody(body: string): ParsedReleaseBody {
@@ -334,6 +384,7 @@ export function parseReleaseBody(body: string): ParsedReleaseBody {
     }
   }
 
+  parsed.locales["zh-CN"] = mapLocaleContent(parsed.locales["zh-CN"], useChineseQuotes);
   parsed.locales["zh-TW"] = convertLocaleContentToTraditional(parsed.locales["zh-CN"]);
 
   return parsed;

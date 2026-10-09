@@ -189,7 +189,7 @@ const renderInline = (markdown: string) => marked.parseInline(markdown, { async:
           data-analytics-label="home_release_popover_changelog"
         >
           {messages.changelog}
-          <i class="ri-arrow-right-line" aria-hidden="true"></i>
+          <i class="ri-arrow-right-up-line release-popover-link-arrow" aria-hidden="true"></i>
         </a>
         <SettingsButton
           as="a"
@@ -512,6 +512,16 @@ const renderInline = (markdown: string) => marked.parseInline(markdown, { async:
 
   .release-popover-link:hover {
     color: var(--release-popover-strong);
+  }
+
+  /* The site's link arrow (the reviews section's store links): it nudges toward where the link goes. */
+  .release-popover-link-arrow {
+    font-size: 14px;
+    transition: transform 160ms ease;
+  }
+
+  .release-popover-link:hover .release-popover-link-arrow {
+    transform: translate(2px, -2px);
   }
 
   /* Carries SettingsButton's class so it wins over settings-kit.css, which production loads after this sheet. */

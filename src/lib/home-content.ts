@@ -57,6 +57,8 @@ type HomeContent = {
   navContactXiaohongshu: string;
   navMoreMenuAria: string;
   installLabel: string;
+  // A shorter header label for phones, where the full one would crowd the bar.
+  installLabelShort?: string;
   installAria: string;
   installChromeStoreLabel: string;
   installEdgeStoreLabel: string;
@@ -801,6 +803,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     navContactXiaohongshu: "Xiaohongshu",
     navMoreMenuAria: "Open more navigation",
     installLabel: "Install Lumno",
+    installLabelShort: "Install",
     installAria: "Open Lumno install options",
     installChromeStoreLabel: "Chrome Web Store",
     installEdgeStoreLabel: "Microsoft Edge Add-ons",

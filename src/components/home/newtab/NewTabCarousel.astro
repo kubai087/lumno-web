@@ -52,10 +52,12 @@ const CARDS: FeatureId[] = ["bookmarks", "dock", "clock", "zen"];
     margin-top: var(--home-part-space);
   }
 
+  /* The heading's side padding insets text optically; the buttons sit on the column's edge. */
   .ntc-nav {
     display: flex;
     flex: none;
     gap: var(--home-space-2);
+    margin-right: calc(var(--home-space-1) * -1);
   }
 
   .ntc[data-fits] .ntc-nav {

@@ -189,13 +189,13 @@ test("homepage navbar matches the content width and reveals after the hero intro
   );
   assert.match(
     source,
-    /@media \(max-width:\s*760px\)[\s\S]*?\.top-nav-actions\s*\{[\s\S]*?--top-nav-action-gap:\s*6px;[\s\S]*?margin-right:\s*3px;/,
-    "the mobile install control should keep the same balanced right outer gap",
+    /@media \(max-width:\s*760px\)[\s\S]*?\.top-nav-actions\s*\{[\s\S]*?--top-nav-action-gap:\s*6px;[\s\S]*?margin-right:\s*2px;[\s\S]*?body:not\(\.has-nav-install\) \.top-nav-actions\s*\{\s*margin-right:\s*4px;/,
+    "on mobile the last header button should keep the same right gap as above and below it, with or without the install button",
   );
   assert.match(
     source,
-    /@media \(max-width:\s*360px\)[\s\S]*?\.top-nav-actions\s*\{[\s\S]*?--top-nav-action-gap:\s*4px;[\s\S]*?margin-right:\s*0;/,
-    "the hidden primary slot should cancel the narrow-screen action gap too",
+    /@media \(max-width:\s*360px\)[\s\S]*?\.top-nav-actions\s*\{\s*--top-nav-action-gap:\s*4px;\s*gap:\s*4px;\s*\}/,
+    "the narrowest screens should tighten the action gap but keep the mobile right gap",
   );
   assert.match(
     source,

@@ -26,10 +26,18 @@ export function attachTabsIndicator(track: HTMLElement): () => void {
 
   const place = () => {
     const active = items().find((item) => item.dataset.active === "true");
-    if (!active || !active.offsetWidth) return;
-    indicator.style.transform = `translate3d(${active.offsetLeft}px, ${active.offsetTop}px, 0)`;
-    indicator.style.width = `${active.offsetWidth}px`;
-    indicator.style.height = `${active.offsetHeight}px`;
+    if (!active || !active.offsetWidth || !track.offsetWidth) return;
+    // offsetLeft/offsetWidth round to whole pixels, which leaves the block a
+    // pixel off a tab sitting on a half pixel; measure the real boxes instead,
+    // undoing any scale an ancestor (a reveal, a hover lift) applies.
+    const box = track.getBoundingClientRect();
+    const tab = active.getBoundingClientRect();
+    const scale = box.width / track.offsetWidth || 1;
+    const left = (tab.left - box.left) / scale - track.clientLeft;
+    const top = (tab.top - box.top) / scale - track.clientTop;
+    indicator.style.transform = `translate3d(${left}px, ${top}px, 0)`;
+    indicator.style.width = `${tab.width / scale}px`;
+    indicator.style.height = `${tab.height / scale}px`;
     // The first placement lands without sliding in from the corner.
     if (!track.dataset.indicator) {
       indicator.getBoundingClientRect();

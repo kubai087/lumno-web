@@ -108,3 +108,18 @@
     background: #eef4ff;
   }
 }
+
+/* Phones get the short label where a locale has one, so the bar keeps its right inset. */
+.install-menu-label-short {
+  display: none;
+}
+
+@media (max-width: 420px) {
+  .install-menu-label-full {
+    display: none;
+  }
+
+  .install-menu-label-short {
+    display: inline;
+  }
+}

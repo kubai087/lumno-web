@@ -43,7 +43,25 @@ def parse_ranges(css_ranges):
     return codepoints
 
 
-def write_woff2(source, unicodes, target, keep_all_features):
+def fix_side_bearings(font):
+    """
+    Remix Icon stores every left side bearing as 0 while its outlines start
+    further in. The source font's head flag "LSB at x=0" hid that, but the
+    subsetter clears the flag, and browsers then draw every icon shifted left
+    by its real bearing: icons sit off-centre and rotate about the wrong point.
+    Store the real bearing (each glyph's xMin) instead.
+    """
+    glyf, hmtx = font["glyf"], font["hmtx"]
+    for name in font.getGlyphOrder():
+        glyph = glyf[name]
+        if glyph.numberOfContours == 0:
+            continue
+        glyph.recalcBounds(glyf)
+        advance, _ = hmtx[name]
+        hmtx[name] = (advance, glyph.xMin)
+
+
+def write_woff2(source, unicodes, target, keep_all_features, fix_bearings=False):
     options = subset.Options()
     options.flavor = "woff2"
     options.layout_features = ["*"] if keep_all_features else []
@@ -53,6 +71,8 @@ def write_woff2(source, unicodes, target, keep_all_features):
     subsetter = subset.Subsetter(options)
     subsetter.populate(unicodes=unicodes)
     subsetter.subset(font)
+    if fix_bearings:
+        fix_side_bearings(font)
     target.parent.mkdir(parents=True, exist_ok=True)
     font.flavor = "woff2"
     font.save(target)
@@ -91,6 +111,7 @@ def subset_remixicon():
         [int(code, 16) for _, code in kept],
         PUBLIC_ASSETS / "remixicon.woff2",
         keep_all_features=False,
+        fix_bearings=True,
     )
     print(f"public/assets/remixicon.css: {len(kept)} icons")
 

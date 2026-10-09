@@ -106,6 +106,7 @@ const { chrome: chromeStoreVersion, edge: edgeStoreVersion } = await getSiteStor
     <div class="top-nav-install-slot">
       <InstallMenu
         label={content.installLabel}
+        shortLabel={content.installLabelShort}
         ariaLabel={content.installAria}
         chromeUrl={CHROME_STORE_URL}
         edgeUrl={EDGE_STORE_URL}
@@ -507,8 +508,10 @@ const { chrome: chromeStoreVersion, edge: edgeStoreVersion } = await getSiteStor
       gap: 10px;
     }
 
+    /* The bar's gap already separates the wordmark; its own right padding would only crowd the actions. */
     .top-nav-brand {
       padding-left: 17px;
+      padding-right: 0;
     }
 
     .top-nav-brand img {
@@ -516,10 +519,20 @@ const { chrome: chromeStoreVersion, edge: edgeStoreVersion } = await getSiteStor
       height: 15px;
     }
 
+    /*
+     * The last button keeps the inset it has above and below: 8px beside the
+     * install button (42px, its chevron sets the height) and 10px beside the
+     * 38px language button while the bar rests clear. The bar's side is 6px
+     * (1px border, 5px padding).
+     */
     .top-nav-actions {
       --top-nav-action-gap: 6px;
       gap: 6px;
-      margin-right: 3px;
+      margin-right: 2px;
+    }
+
+    body:not(.has-nav-install) .top-nav-actions {
+      margin-right: 4px;
     }
 
     .top-nav-ghost-links {
@@ -591,7 +604,6 @@ const { chrome: chromeStoreVersion, edge: edgeStoreVersion } = await getSiteStor
 
     .top-nav-brand {
       padding-left: 8px;
-      padding-right: 4px;
     }
 
     .top-nav-brand img {
@@ -602,13 +614,26 @@ const { chrome: chromeStoreVersion, edge: edgeStoreVersion } = await getSiteStor
     .top-nav-actions {
       --top-nav-action-gap: 4px;
       gap: 4px;
-      margin-right: 0;
     }
 
     .top-nav-install {
       min-height: 36px;
       padding-left: 10px;
       padding-right: 10px;
+    }
+  }
+
+  /*
+   * The smallest phones have no room for the chevron beside the longer install
+   * labels. The chevron set the button's 42px height, so hold that.
+   */
+  @media (max-width: 340px) {
+    .top-nav-install {
+      min-height: 42px;
+    }
+
+    .top-nav-install .lumno-settings-select-chevron {
+      display: none;
     }
   }
 

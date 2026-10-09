@@ -7,6 +7,8 @@ import "./install-menu.css";
 
 interface Props {
   label: string;
+  /** Shown instead of `label` on phones (install-menu.css). */
+  shortLabel?: string;
   ariaLabel: string;
   chromeUrl: string;
   edgeUrl: string;
@@ -30,6 +32,7 @@ function renderOptionDetail(...parts: Array<string | null>) {
 
 export default function InstallMenu({
   label,
+  shortLabel,
   ariaLabel,
   chromeUrl,
   edgeUrl,
@@ -79,7 +82,16 @@ export default function InstallMenu({
       optionRole="menuitem"
       triggerVariant="primary"
       triggerIconClass="ri-arrow-down-s-line"
-      triggerLabel={label}
+      triggerLabel={
+        shortLabel ? (
+          <>
+            <span className="install-menu-label-full">{label}</span>
+            <span className="install-menu-label-short">{shortLabel}</span>
+          </>
+        ) : (
+          label
+        )
+      }
       triggerClassName="top-nav-install"
       label={ariaLabel}
       defaultValue="chrome"

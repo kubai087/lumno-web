@@ -66,7 +66,12 @@ test("homepage opens with a full-screen Search All demo and can settle early on 
   assert.match(component, /skipIntroLabel: "点击任意处跳过"/);
   assert.match(component, /skipIntroLabel: "Click anywhere to skip"/);
   assert.match(component, /className="hero-safari-visual home-media"\s*onClick=\{handleHomeIntroSkip\}/);
-  assert.match(component, /const HOME_INTRO_MOVE_MS = 1_240/);
+  assert.match(component, /const HOME_INTRO_MOVE_MS = 960/);
+  // The intro's first Search All playthrough runs on a brisker clock that later scene visits don't share.
+  assert.match(component, /demo\.dataset\.introPace = "brisk";\s*demo\.dataset\.introReady = "true";/);
+  assert.match(component, /scene\.id !== pacedSceneIdRef\.current\) delete demoRef\.current\?\.dataset\.introPace/);
+  assert.match(styles, /\.hero-safari-demo\[data-intro-pace\] #_x_extension_onboarding_overlay_demo_2026_unique_ \.lumno-overlay-results \{\s*animation-duration: 760ms;\s*animation-delay: 760ms;/);
+  assert.match(styles, /animation: hero-demo-stage-settle 960ms/);
   assert.match(component, /HOME_INTRO_COMPLETION_FALLBACK_MS = HOME_INTRO_MOVE_MS \+ 240/);
   assert.match(component, /const visualRef = useRef<HTMLDivElement>\(null\)/);
   assert.match(component, /const sourceWidth = window\.innerWidth/);

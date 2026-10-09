@@ -129,6 +129,40 @@ html[data-home-intro-skip] .hero-safari-demo[data-home-intro="pending"] .hero-sa
   }
 }
 
+/*
+ * The intro's first Search All playthrough runs on a brisker clock than the
+ * scene does on later visits from the picker: the page stays hidden until it
+ * ends. HeroSafariDemo sets data-intro-pace with data-intro-ready and clears
+ * it on the first scene change. Search All, from demo-ready: panel 80-680ms,
+ * typing 560-1180ms, results 760-1520ms, then the 960ms reveal.
+ */
+.hero-safari-demo[data-intro-pace] .lumno-overlay-panel {
+  animation-duration: 600ms;
+  animation-delay: 80ms;
+}
+
+.hero-safari-demo[data-intro-pace] .lumno-overlay-panel .x-lumno-search-input__container {
+  animation-duration: 760ms;
+  animation-delay: 760ms;
+}
+
+.hero-safari-demo[data-intro-pace] .lumno-overlay-panel .x-lumno-search-input__divider {
+  animation-delay: 860ms;
+}
+
+.hero-safari-demo[data-intro-pace] .lumno-overlay-query-text .onboarding-typing-char {
+  animation-delay: calc(560ms + var(--typing-char-delay, 0ms) * 0.6);
+}
+
+.hero-safari-demo[data-intro-pace] #_x_extension_onboarding_overlay_demo_2026_unique_ .lumno-overlay-results {
+  animation-duration: 760ms;
+  animation-delay: 760ms;
+}
+
+.hero-safari-demo[data-intro-pace] #_x_extension_onboarding_overlay_demo_2026_unique_ .lumno-overlay-result {
+  animation-delay: calc(800ms + (var(--result-index, 0) * 120ms));
+}
+
 html[data-home-intro-js] .hero-safari-demo[data-home-intro="pending"]:not([data-intro-ready]) .hero-safari-screen *,
 html[data-home-intro-js] .hero-safari-demo[data-home-intro="pending"]:not([data-intro-ready]) .hero-intro-skip-hint {
   animation-play-state: paused !important;
@@ -229,7 +263,7 @@ html[data-home-intro-js] .hero-safari-demo[data-home-intro="pending"]:not([data-
 }
 
 .hero-safari-demo[data-home-intro="revealing"] .hero-safari-stage {
-  animation: hero-demo-stage-settle 1240ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: hero-demo-stage-settle 960ms cubic-bezier(0.22, 1, 0.36, 1) both;
   transform-origin: top left;
 }
 

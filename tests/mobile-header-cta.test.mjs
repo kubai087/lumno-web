@@ -199,7 +199,7 @@ test("homepage navbar matches the content width and reveals after the hero intro
   );
   assert.match(
     source,
-    /body\[data-home-intro="pending"\] \.top-nav,[\s\S]*?visibility: hidden;[\s\S]*?body\[data-home-intro="revealing"\] \.top-nav[\s\S]*?transition-delay: 120ms;/,
+    /body\[data-home-intro="pending"\] \.top-nav,[\s\S]*?visibility: hidden;[\s\S]*?body\[data-home-intro="revealing"\] \.top-nav[\s\S]*?transition-delay: 80ms;/,
     "the navbar should stay out of the immersive opening and reveal during the settle transition",
   );
   assert.match(

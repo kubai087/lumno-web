@@ -36,9 +36,9 @@ import "./hero-safari-demo.css";
 
 const PANEL_ID = "_x_extension_onboarding_overlay_demo_2026_unique_";
 const HOME_INTRO_RESULTS_EVENT = "lumno:hero-results-visible";
-const HOME_INTRO_MOVE_MS = 1_240;
+const HOME_INTRO_MOVE_MS = 960;
 const HOME_INTRO_COMPLETION_FALLBACK_MS = HOME_INTRO_MOVE_MS + 240;
-const HOME_INTRO_FALLBACK_MS = 5_200;
+const HOME_INTRO_FALLBACK_MS = 3_600;
 const HOME_INTRO_STABLE_FRAME_COUNT = 8;
 const HOME_INTRO_STABLE_FRAME_LIMIT = 120;
 const HOME_INTRO_RECT_EPSILON = 0.5;
@@ -1260,6 +1260,7 @@ export function HeroSafariDemo({
 
   const handleSceneSelect = (nextSceneIndex: number) => {
     userHasSelectedSceneRef.current = true;
+    delete demoRef.current?.dataset.introPace;
     if (autoPlayTimerRef.current !== null) {
       window.clearTimeout(autoPlayTimerRef.current);
       autoPlayTimerRef.current = null;
@@ -1720,6 +1721,8 @@ export function HeroSafariDemo({
       `translate3d(${stageTranslateX.toFixed(2)}px, ${stageTranslateY.toFixed(2)}px, 0) scale(${stageScale.toFixed(4)})`,
     );
 
+    // Brisk Search All timings for this first playthrough (hero-safari-demo.css).
+    demo.dataset.introPace = "brisk";
     demo.dataset.introReady = "true";
     introFallbackTimerRef.current = window.setTimeout(
       () => revealHomeIntro(),
@@ -1834,6 +1837,11 @@ export function HeroSafariDemo({
     };
   }, [handleHomeIntroSkip, introState]);
   const animationKey = `${locale}-${scene.id}-${replayKey}`;
+  const pacedSceneIdRef = useRef(scene.id);
+  useEffect(() => {
+    // The brisk intro clock only covers the first Search All playthrough; later scenes keep their own pace.
+    if (scene.id !== pacedSceneIdRef.current) delete demoRef.current?.dataset.introPace;
+  }, [scene.id]);
   const siteSearchDemoModel = useMemo(
     () => ({
       ...copy.siteSearchDemo,

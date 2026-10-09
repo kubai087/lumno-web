@@ -4,7 +4,15 @@ import xiaohongshuIconSvg from "../../assets/home-icons/xiaohongshu-line.svg?raw
 import { COMMUNITY_LINKS, getCommunityExternalHref } from "../../lib/community";
 import { getHomeContent } from "../../lib/home-content";
 import { LOCALE_CONFIG, buildLocalizedPath, type SupportedLocale } from "../../lib/locales";
-import { CHROME_STORE_URL, EDGE_STORE_URL, GITHUB_ISSUE_URL, GITHUB_URL, LICENSE_URL } from "../../lib/site-links";
+import {
+  CHROME_STORE_URL,
+  EDGE_STORE_URL,
+  FIREFOX_STORE_URL,
+  GITHUB_ISSUE_URL,
+  GITHUB_URL,
+  LICENSE_URL,
+  getSiteStoreVersions,
+} from "../../lib/site-links";
 
 interface Props {
   locale: SupportedLocale;
@@ -17,6 +25,8 @@ interface Props {
 /* The site footer with every page's shared links, copy and language switch. */
 const { locale, routeLanguageMap, analyticsScope = "home" } = Astro.props;
 const content = getHomeContent(locale);
+// Firefox joins the store list once AMO serves a listed version.
+const { firefox: firefoxStoreVersion } = await getSiteStoreVersions();
 ---
 
 <SiteFooter
@@ -38,6 +48,17 @@ const content = getHomeContent(locale);
       analyticsEvent: "open_edge_addons",
       analyticsLabel: `${analyticsScope}_footer_edge_install`,
     },
+    ...(firefoxStoreVersion
+      ? [
+          {
+            label: content.installFirefoxStoreLabel,
+            href: FIREFOX_STORE_URL,
+            logoSrc: "/assets/browser-logos/firefox.webp",
+            analyticsEvent: "open_firefox_addons",
+            analyticsLabel: `${analyticsScope}_footer_firefox_install`,
+          },
+        ]
+      : []),
   ]}
   socialAria={content.footerSocialAria}
   socials={[

@@ -31,7 +31,7 @@ import {
   type SupportedLocale,
 } from "../../lib/locales";
 import { getHomeContent } from "../../lib/home-content";
-import { CHROME_STORE_URL, EDGE_STORE_URL, GITHUB_URL } from "../../lib/site-links";
+import { CHROME_STORE_URL, EDGE_STORE_URL, FIREFOX_STORE_URL, GITHUB_URL } from "../../lib/site-links";
 
 interface Props {
   forcedLocale?: SupportedLocale | null;
@@ -265,9 +265,10 @@ const i18nMessages = Object.fromEntries(
       {
         ...languageMessages,
         ...RELEASE_MESSAGES[locale],
-        // Screen readers name the store, since both store chips share the same status text.
+        // Screen readers name the store, since every store chip shares the same status text.
         chrome_store_name: homeContent.installChromeStoreLabel,
         edge_store_name: homeContent.installEdgeStoreLabel,
+        firefox_store_name: homeContent.installFirefoxStoreLabel,
       },
     ];
   }),
@@ -285,6 +286,7 @@ const initialUi = {
   storeReviewing: uiMessages.store_reviewing,
   chromeStoreName: getHomeContent(uiLocale).installChromeStoreLabel,
   edgeStoreName: getHomeContent(uiLocale).installEdgeStoreLabel,
+  firefoxStoreName: getHomeContent(uiLocale).installFirefoxStoreLabel,
 };
 const releaseItemListSchema = releases.length
   ? buildItemListSchema({
@@ -310,10 +312,20 @@ const releaseItemListSchema = releases.length
       }),
     })
   : null;
+const {
+  chrome: chromeStoreVersion,
+  edge: edgeStoreVersion,
+  firefox: firefoxStoreVersion,
+} = await getStoreVersions({
+  chrome: import.meta.env.PUBLIC_CHROME_STORE_VERSION || import.meta.env.CHROME_STORE_VERSION,
+  edge: import.meta.env.PUBLIC_EDGE_STORE_VERSION || import.meta.env.EDGE_STORE_VERSION,
+  firefox: import.meta.env.PUBLIC_FIREFOX_STORE_VERSION || import.meta.env.FIREFOX_STORE_VERSION,
+});
 const structuredData = [
   buildSoftwareApplicationSchema({
     description: pageDescription,
     version: latestReleaseVersion || undefined,
+    firefoxListed: Boolean(firefoxStoreVersion),
   }),
   buildWebPageSchema({
     name: pageTitle,
@@ -330,11 +342,6 @@ const structuredData = [
     ],
   }),
 ];
-
-const { chrome: chromeStoreVersion, edge: edgeStoreVersion } = await getStoreVersions({
-  chrome: import.meta.env.PUBLIC_CHROME_STORE_VERSION || import.meta.env.CHROME_STORE_VERSION,
-  edge: import.meta.env.PUBLIC_EDGE_STORE_VERSION || import.meta.env.EDGE_STORE_VERSION,
-});
 
 function renderMdInline(markdown: string): string {
   return marked.parseInline(markdown || "", { async: false });
@@ -366,9 +373,13 @@ function compareVersion(a: string, b: string): number {
 
 type StoreStatus = "published" | "reviewing";
 
-/** An unknown store version hides that store's chip rather than guessing. */
-function getStoreStatus(storeVersion: string, tag: string): StoreStatus | null {
+/**
+ * An unknown store version hides that store's chip rather than guessing, and so
+ * does a release older than the store's first listed version.
+ */
+function getStoreStatus(storeVersion: string, tag: string, since = ""): StoreStatus | null {
   if (!storeVersion) return null;
+  if (since && compareVersion(tag, since) < 0) return null;
   return compareVersion(storeVersion, tag) >= 0 ? "published" : "reviewing";
 }
 
@@ -390,6 +401,17 @@ const STORE_CHIPS = [
     nameKey: "edge_store_name",
     name: initialUi.edgeStoreName,
     analyticsEvent: "open_edge_addons",
+  },
+  // No chip until AMO serves a listed version (getStoreStatus hides empty ones).
+  {
+    id: "firefox",
+    version: firefoxStoreVersion,
+    since: "0.9.61",
+    href: FIREFOX_STORE_URL,
+    iconClass: "ri-firefox-fill",
+    nameKey: "firefox_store_name",
+    name: initialUi.firefoxStoreName,
+    analyticsEvent: "open_firefox_addons",
   },
 ] as const;
 ---
@@ -1076,7 +1098,7 @@ const STORE_CHIPS = [
                             <span data-i18n="github_published">{initialUi.githubPublished}</span>
                           </span>
                           {STORE_CHIPS.map((store) => {
-                            const status = getStoreStatus(store.version, item.tag);
+                            const status = getStoreStatus(store.version, item.tag, "since" in store ? store.since : "");
                             if (!status) return null;
                             const chipContent = (
                               <>

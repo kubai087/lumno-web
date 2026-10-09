@@ -67,6 +67,7 @@
 .ri-error-warning-line:before { content: "\eca1"; }
 .ri-expand-left-right-line:before { content: "\f323"; }
 .ri-external-link-line:before { content: "\ecaf"; }
+.ri-firefox-fill:before { content: "\ed34"; }
 .ri-flask-line:before { content: "\ed3f"; }
 .ri-fullscreen-line:before { content: "\ed9c"; }
 .ri-git-pull-request-line:before { content: "\edc3"; }

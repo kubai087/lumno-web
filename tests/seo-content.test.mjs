@@ -30,7 +30,7 @@ test("homepage carries the FAQ schema now that the features page is retired", ()
 
   assert.doesNotMatch(source, /\/features\//);
   assert.doesNotMatch(readSource("src/components/site/PageFooter.astro"), /\/features\//);
-  assert.match(source, /buildFAQPageSchema\(\{\s*items: content\.faqItems/);
+  assert.match(source, /buildFAQPageSchema\(\{\s*items: (?:content\.)?faqItems/);
 });
 
 test("retired features routes redirect to the localized homepage", () => {

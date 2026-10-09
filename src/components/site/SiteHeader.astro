@@ -8,6 +8,7 @@ import { buildLocalizedPath, getLocaleLabel, type SupportedLocale } from "../../
 import {
   CHROME_STORE_URL,
   EDGE_STORE_URL,
+  FIREFOX_STORE_URL,
   GITHUB_ISSUE_URL,
   GITHUB_PULL_REQUEST_URL,
   GITHUB_URL,
@@ -52,7 +53,11 @@ const { locale, routeLanguageMap, analyticsScope = "home", handoff, keepInstall 
 const content = getHomeContent(locale);
 const homeHref = buildLocalizedPath(locale, "/");
 const releaseHref = buildLocalizedPath(locale, "/release/");
-const { chrome: chromeStoreVersion, edge: edgeStoreVersion } = await getSiteStoreVersions();
+const {
+  chrome: chromeStoreVersion,
+  edge: edgeStoreVersion,
+  firefox: firefoxStoreVersion,
+} = await getSiteStoreVersions();
 ---
 
 <header
@@ -110,10 +115,13 @@ const { chrome: chromeStoreVersion, edge: edgeStoreVersion } = await getSiteStor
         ariaLabel={content.installAria}
         chromeUrl={CHROME_STORE_URL}
         edgeUrl={EDGE_STORE_URL}
+        firefoxUrl={FIREFOX_STORE_URL}
         chromeLabel={content.installChromeStoreLabel}
         edgeLabel={content.installEdgeStoreLabel}
+        firefoxLabel={content.installFirefoxStoreLabel}
         chromeVersion={chromeStoreVersion}
         edgeVersion={edgeStoreVersion}
+        firefoxVersion={firefoxStoreVersion}
         chromeRecommendation={content.installChromeRecommendation}
         chromeRecommendationNote={content.installChromeRecommendationNote}
       />

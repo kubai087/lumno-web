@@ -10,6 +10,8 @@ export const DEFAULT_SOCIAL_SQUARE_IMAGE = `${SITE_URL}/assets/og-image-square-2
 export const CHROME_STORE_URL =
   "https://chromewebstore.google.com/detail/lumno-%E5%85%A8%E5%B1%80%E5%BF%AB%E6%8D%B7%E5%91%BD%E4%BB%A4%E6%B5%AE%E5%B1%82/nggfkkbmogmadfoikakkfegkoilfcfao";
 export const EDGE_STORE_URL = "https://microsoftedge.microsoft.com/addons/detail/pfbklkaefmfamjpibfiapaiihlddhchc";
+// AMO picks the visitor's language when the path has no locale.
+export const FIREFOX_STORE_URL = "https://addons.mozilla.org/firefox/addon/lumno-command-bar-new-tab/";
 export const ORGANIZATION_ID = `${SITE_URL}#organization`;
 export const WEBSITE_ID = `${SITE_URL}#website`;
 export const APP_ID = `${SITE_URL}#app`;
@@ -293,20 +295,29 @@ export function buildSoftwareApplicationSchema({
   description,
   version,
   rating,
+  firefoxListed = false,
 }: {
   description: string;
   version?: string;
   /** Chrome Web Store rating; only pass it where the page shows it. */
   rating?: { value: number; count: number };
+  /** Whether Firefox Add-ons lists Lumno yet. */
+  firefoxListed?: boolean;
 }) {
+  const browsers = firefoxListed
+    ? "Chrome, Edge, Dia, Chromium-based browsers, and Firefox"
+    : "Chrome, Edge, Dia, and Chromium-based browsers";
+  const storeUrls = firefoxListed
+    ? [CHROME_STORE_URL, EDGE_STORE_URL, FIREFOX_STORE_URL]
+    : [CHROME_STORE_URL, EDGE_STORE_URL];
   return {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
     "@id": APP_ID,
     name: SITE_NAME,
     applicationCategory: "BrowserApplication",
-    operatingSystem: "Chrome, Edge, Dia, and Chromium-based browsers",
-    browserRequirements: "Chrome, Edge, Dia, and Chromium-based browsers",
+    operatingSystem: browsers,
+    browserRequirements: browsers,
     isAccessibleForFree: true,
     alternateName: PRODUCT_ALTERNATE_NAMES,
     offers: {
@@ -318,9 +329,9 @@ export function buildSoftwareApplicationSchema({
     keywords: buildKeywords(),
     image: DEFAULT_OG_IMAGE,
     url: SITE_URL,
-    downloadUrl: [CHROME_STORE_URL, EDGE_STORE_URL],
+    downloadUrl: storeUrls,
     installUrl: CHROME_STORE_URL,
-    sameAs: [CHROME_STORE_URL, EDGE_STORE_URL, "https://github.com/kubai087/lumno-extension"],
+    sameAs: [...storeUrls, "https://github.com/kubai087/lumno-extension"],
     aggregateRating:
       rating && rating.count > 0
         ? {

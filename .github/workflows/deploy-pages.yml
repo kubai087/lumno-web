@@ -53,10 +53,12 @@ jobs:
         env:
           CHROME_EXTENSION_ID: nggfkkbmogmadfoikakkfegkoilfcfao
           EDGE_EXTENSION_ID: pfbklkaefmfamjpibfiapaiihlddhchc
+          FIREFOX_ADDON_ID: lumno@kubai087
         run: |
           set -u
           CHROME_VERSION="$(node scripts/get-chrome-store-version.mjs || true)"
           EDGE_VERSION="$(node scripts/get-edge-store-version.mjs || true)"
+          FIREFOX_VERSION="$(node scripts/get-firefox-store-version.mjs || true)"
           if [ -n "$CHROME_VERSION" ]; then
             echo "PUBLIC_CHROME_STORE_VERSION=$CHROME_VERSION" >> "$GITHUB_ENV"
             echo "Resolved Chrome Web Store version: $CHROME_VERSION"
@@ -68,6 +70,12 @@ jobs:
             echo "Resolved Microsoft Edge Add-ons version: $EDGE_VERSION"
           else
             echo "Could not resolve Microsoft Edge Add-ons version. Hide its version tag."
+          fi
+          if [ -n "$FIREFOX_VERSION" ]; then
+            echo "PUBLIC_FIREFOX_STORE_VERSION=$FIREFOX_VERSION" >> "$GITHUB_ENV"
+            echo "Resolved Firefox Add-ons version: $FIREFOX_VERSION"
+          else
+            echo "Firefox Add-ons has no public version yet. Leave Firefox off the site."
           fi
 
       - name: Validate OAuth protection configuration

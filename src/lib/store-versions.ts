@@ -1,12 +1,15 @@
 const CHROME_EXTENSION_ID = "nggfkkbmogmadfoikakkfegkoilfcfao";
 const CHROME_PRODUCT_VERSION = "131.0.0.0";
 const EDGE_EXTENSION_ID = "pfbklkaefmfamjpibfiapaiihlddhchc";
+const FIREFOX_ADDON_ID = "lumno@kubai087";
 const VERSION_PATTERN = /^[0-9]+(?:\.[0-9A-Za-z_-]+)+$/;
 const REQUEST_TIMEOUT_MS = 8_000;
 
 export interface StoreVersions {
   chrome: string;
   edge: string;
+  /** Empty until AMO approves a listed version, which keeps Firefox off the site. */
+  firefox: string;
 }
 
 type StoreVersionOverrides = Partial<StoreVersions>;
@@ -83,8 +86,32 @@ async function fetchEdgeStoreVersion() {
   return version;
 }
 
+// AMO only serves approved listed versions publicly; before that it answers 401.
+async function fetchFirefoxStoreVersion() {
+  const response = await fetch(
+    `https://addons.mozilla.org/api/v5/addons/addon/${encodeURIComponent(FIREFOX_ADDON_ID)}/`,
+    {
+      headers: { Accept: "application/json" },
+      signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error(`Firefox Add-ons returned ${response.status}`);
+  }
+
+  const addon = await response.json();
+  const version = normalizeVersion(addon?.current_version?.version);
+
+  if (!version) {
+    throw new Error("Firefox Add-ons response did not contain a version");
+  }
+
+  return version;
+}
+
 async function resolveVersion(
-  storeName: "Chrome" | "Edge",
+  storeName: "Chrome" | "Edge" | "Firefox",
   override: string,
   fetchVersion: () => Promise<string>,
 ) {
@@ -106,7 +133,8 @@ async function resolveVersion(
 export function getStoreVersions(overrides: StoreVersionOverrides = {}) {
   const chromeOverride = normalizeVersion(overrides.chrome);
   const edgeOverride = normalizeVersion(overrides.edge);
-  const cacheKey = `${chromeOverride}|${edgeOverride}`;
+  const firefoxOverride = normalizeVersion(overrides.firefox);
+  const cacheKey = `${chromeOverride}|${edgeOverride}|${firefoxOverride}`;
   const cachedRequest = versionRequests.get(cacheKey);
 
   if (cachedRequest) return cachedRequest;
@@ -114,9 +142,11 @@ export function getStoreVersions(overrides: StoreVersionOverrides = {}) {
   const request = Promise.all([
     resolveVersion("Chrome", chromeOverride, fetchChromeStoreVersion),
     resolveVersion("Edge", edgeOverride, fetchEdgeStoreVersion),
-  ]).then(([chrome, edge]) => {
+    resolveVersion("Firefox", firefoxOverride, fetchFirefoxStoreVersion),
+  ]).then(([chrome, edge, firefox]) => {
+    // Retry missing Chrome or Edge versions; Firefox stays empty until it is listed.
     if (!chrome || !edge) versionRequests.delete(cacheKey);
-    return { chrome, edge };
+    return { chrome, edge, firefox };
   });
 
   versionRequests.set(cacheKey, request);

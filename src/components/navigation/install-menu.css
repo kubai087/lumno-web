@@ -50,6 +50,10 @@
   color: #0a96d8;
 }
 
+.install-menu-store-icon-firefox {
+  color: #ff7139;
+}
+
 .install-menu-option-detail {
   grid-row: 2;
   grid-column: 2;

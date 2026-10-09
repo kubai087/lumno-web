@@ -42,7 +42,7 @@ import {
   getScreenshotLocale,
   type SupportedLocale,
 } from "../lib/locales";
-import { GITHUB_ISSUE_URL, GITHUB_URL } from "../lib/site-links";
+import { GITHUB_ISSUE_URL, GITHUB_URL, getSiteStoreVersions } from "../lib/site-links";
 import {
   CHROME_STORE_URL,
   buildAlternateLinks,
@@ -71,6 +71,12 @@ const seoPath = Astro.props.seoPath || "/";
 const routeLanguageMap = Astro.props.routeLanguageMap || buildRouteLanguageMap("/");
 const uiLocale = forcedLocale || DEFAULT_LOCALE;
 const content = getHomeContent(uiLocale);
+// Firefox-specific answers stay hidden until Firefox Add-ons lists Lumno.
+const { firefox: firefoxStoreVersion } = await getSiteStoreVersions();
+const faqItems = content.faqItems.map((item) => ({
+  question: item.question,
+  answer: (firefoxStoreVersion && item.firefoxAnswer) || item.answer,
+}));
 const localeScript = getLocaleScript(uiLocale);
 // Chinese pages open the WeChat group QR; every other locale links to the Discord server.
 const communityExternalHref = getCommunityExternalHref(uiLocale);
@@ -139,6 +145,7 @@ const structuredData = [
   buildSoftwareApplicationSchema({
     description: pageDescription,
     rating: { value: chromeStoreReviews.averageRating, count: chromeStoreReviews.ratingCount },
+    firefoxListed: Boolean(firefoxStoreVersion),
   }),
   buildWebPageSchema({
     name: pageTitle,
@@ -149,7 +156,7 @@ const structuredData = [
   buildBreadcrumbListSchema({ items: [{ name: "Lumno", path: seoPath }] }),
   // Mirrors the visible FAQ section; inline code marks are dropped from the plain-text answers.
   buildFAQPageSchema({
-    items: content.faqItems.map((item) => ({ question: item.question, answer: item.answer.replaceAll("`", "") })),
+    items: faqItems.map((item) => ({ question: item.question, answer: item.answer.replaceAll("`", "") })),
     language: uiLocale,
   }),
 ];
@@ -383,7 +390,7 @@ const structuredData = [
               }
             : undefined,
         }}
-        items={content.faqItems}
+        items={faqItems}
       />
 
       <FinalCta

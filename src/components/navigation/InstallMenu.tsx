@@ -12,10 +12,14 @@ interface Props {
   ariaLabel: string;
   chromeUrl: string;
   edgeUrl: string;
+  firefoxUrl: string;
   chromeLabel: string;
   edgeLabel: string;
+  firefoxLabel: string;
   chromeVersion?: string;
   edgeVersion?: string;
+  /** Firefox is offered only once AMO serves a listed version. */
+  firefoxVersion?: string;
   chromeRecommendation: string;
   chromeRecommendationNote: string;
 }
@@ -36,16 +40,20 @@ export default function InstallMenu({
   ariaLabel,
   chromeUrl,
   edgeUrl,
+  firefoxUrl,
   chromeLabel,
   edgeLabel,
+  firefoxLabel,
   chromeVersion,
   edgeVersion,
+  firefoxVersion,
   chromeRecommendation,
   chromeRecommendationNote,
 }: Props) {
   const chromeVersionTag = formatVersionTag(chromeVersion);
   const edgeVersionTag = formatVersionTag(edgeVersion);
-  const options: ReadonlyArray<SettingsSelectItem<"chrome" | "edge">> = [
+  const firefoxVersionTag = formatVersionTag(firefoxVersion);
+  const options: ReadonlyArray<SettingsSelectItem<"chrome" | "edge" | "firefox">> = [
     {
       value: "chrome",
       label: chromeLabel,
@@ -71,6 +79,22 @@ export default function InstallMenu({
       analyticsCategory: "conversion",
       analyticsLabel: "home_header_edge_install",
     },
+    ...(firefoxVersionTag
+      ? [
+          {
+            value: "firefox" as const,
+            label: firefoxLabel,
+            labelSuffix: renderOptionDetail(firefoxVersionTag),
+            iconClass: "ri-firefox-fill install-menu-store-icon install-menu-store-icon-firefox",
+            href: firefoxUrl,
+            target: "_blank",
+            rel: "noreferrer noopener",
+            analyticsEvent: "open_firefox_addons",
+            analyticsCategory: "conversion",
+            analyticsLabel: "home_header_firefox_install",
+          },
+        ]
+      : []),
   ];
 
   return (

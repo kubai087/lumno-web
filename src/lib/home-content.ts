@@ -2,7 +2,12 @@ import type { SupportedLocale } from "./locales";
 
 export type HomeCard = { title: string; description: string };
 export type HomeBentoCard = HomeCard & { label: string };
-export type HomeFaqItem = { question: string; answer: string };
+export type HomeFaqItem = {
+  question: string;
+  answer: string;
+  /** Replaces `answer` once Firefox Add-ons lists Lumno. */
+  firefoxAnswer?: string;
+};
 /** `icon` is a provider key from lumno-extension/assets/data/site-search.json. */
 export type HomeOverlayRow = {
   icon: string;
@@ -62,6 +67,7 @@ type HomeContent = {
   installAria: string;
   installChromeStoreLabel: string;
   installEdgeStoreLabel: string;
+  installFirefoxStoreLabel: string;
   installChromeRecommendation: string;
   installChromeRecommendationNote: string;
 
@@ -224,6 +230,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     installAria: "打开 Lumno 安装选项",
     installChromeStoreLabel: "Chrome 应用商店",
     installEdgeStoreLabel: "Microsoft Edge 加载项",
+    installFirefoxStoreLabel: "Firefox 附加组件",
     installChromeRecommendation: "推荐",
     installChromeRecommendationNote: "更新更快",
 
@@ -441,6 +448,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         question: "支持哪些浏览器？",
         answer:
           "支持 Chrome、Edge、Dia、Brave、Vivaldi 等 Chromium 内核浏览器，暂不支持 Safari 和 Firefox。在 Dia 中可使用命令栏，新标签页暂不可用。",
+        firefoxAnswer:
+          "支持 Chrome、Edge、Dia、Brave、Vivaldi 等 Chromium 内核浏览器，以及 Firefox 140 及以上版本和 Zen 等基于 Firefox 的浏览器，暂不支持 Safari。在 Dia 中可使用命令栏，新标签页暂不可用；Firefox 中无法使用网页剪裁和视频自动画中画。",
       },
       {
         question: "从 Arc 换过来，还能用上熟悉的命令栏吗？",
@@ -517,6 +526,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     installAria: "開啟 Lumno 安裝選項",
     installChromeStoreLabel: "Chrome 線上應用程式商店",
     installEdgeStoreLabel: "Microsoft Edge 附加元件",
+    installFirefoxStoreLabel: "Firefox 附加元件",
     installChromeRecommendation: "推薦",
     installChromeRecommendationNote: "更新更快",
 
@@ -734,6 +744,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         question: "支援哪些瀏覽器？",
         answer:
           "支援 Chrome、Edge、Dia、Brave、Vivaldi 等 Chromium 核心瀏覽器，目前不支援 Safari 與 Firefox。在 Dia 中可使用命令列，新分頁暫時無法使用。",
+        firefoxAnswer:
+          "支援 Chrome、Edge、Dia、Brave、Vivaldi 等 Chromium 核心瀏覽器，以及 Firefox 140 以上版本與 Zen 等以 Firefox 為基礎的瀏覽器，目前不支援 Safari。在 Dia 中可使用命令列，新分頁暫時無法使用；Firefox 無法使用網頁剪裁與影片自動子母畫面。",
       },
       {
         question: "從 Arc 換過來，還能用到熟悉的命令列嗎？",
@@ -811,6 +823,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     installAria: "Open Lumno install options",
     installChromeStoreLabel: "Chrome Web Store",
     installEdgeStoreLabel: "Microsoft Edge Add-ons",
+    installFirefoxStoreLabel: "Firefox Add-ons",
     installChromeRecommendation: "Recommended",
     installChromeRecommendationNote: "Faster updates",
 
@@ -1028,6 +1041,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         question: "Which browsers are supported?",
         answer:
           "Chromium browsers that install Chrome extensions, including Chrome, Edge, Dia, Brave, and Vivaldi. Safari and Firefox aren’t supported yet. In Dia, you get the command bar but not Lumno’s new tab.",
+        firefoxAnswer:
+          "Chromium browsers that install Chrome extensions, including Chrome, Edge, Dia, Brave, and Vivaldi, plus Firefox 140 or later and Firefox-based browsers like Zen. Safari isn’t supported yet. In Dia, you get the command bar but not Lumno’s new tab. Firefox doesn’t support Web Clip or Auto Picture-in-Picture.",
       },
       {
         question: "I’m moving from Arc. Will this feel familiar?",
@@ -1105,6 +1120,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     installAria: "Lumno のインストール先を選ぶ",
     installChromeStoreLabel: "Chrome ウェブストア",
     installEdgeStoreLabel: "Microsoft Edge アドオン",
+    installFirefoxStoreLabel: "Firefox アドオン",
     installChromeRecommendation: "おすすめ",
     installChromeRecommendationNote: "更新が早い",
 
@@ -1319,6 +1335,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         question: "どのブラウザで使えますか？",
         answer:
           "Chrome、Edge、Dia、Brave、Vivaldi など、Chrome 拡張機能を入れられる Chromium 系ブラウザで使えます。Safari と Firefox には未対応です。Dia ではコマンドバーは使えますが、Lumno の新しいタブは使えません。",
+        firefoxAnswer:
+          "Chrome、Edge、Dia、Brave、Vivaldi など、Chrome 拡張機能を入れられる Chromium 系ブラウザに加え、Firefox 140 以降と Zen などの Firefox 系ブラウザで使えます。Safari には未対応です。Dia ではコマンドバーは使えますが、Lumno の新しいタブは使えません。Firefox では Webクリップと自動ピクチャー・イン・ピクチャーは使えません。",
       },
       {
         question: "Arc から乗り換えても、いつものコマンドバーは使えますか？",
@@ -1396,6 +1414,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     installAria: "Lumno 설치 옵션 열기",
     installChromeStoreLabel: "Chrome 웹 스토어",
     installEdgeStoreLabel: "Microsoft Edge 추가 기능",
+    installFirefoxStoreLabel: "Firefox 부가 기능",
     installChromeRecommendation: "추천",
     installChromeRecommendationNote: "업데이트가 더 빨라요",
 
@@ -1610,6 +1629,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         question: "어떤 브라우저를 지원하나요?",
         answer:
           "Chrome, Edge, Dia, Brave, Vivaldi 등 Chrome 확장 프로그램을 설치할 수 있는 Chromium 기반 브라우저를 지원합니다. Safari와 Firefox는 아직 지원하지 않습니다. Dia에서는 커맨드 바만 쓸 수 있고 Lumno 새 탭은 쓸 수 없습니다.",
+        firefoxAnswer:
+          "Chrome, Edge, Dia, Brave, Vivaldi 등 Chrome 확장 프로그램을 설치할 수 있는 Chromium 기반 브라우저와 Firefox 140 이상, Zen 같은 Firefox 기반 브라우저를 지원합니다. Safari는 아직 지원하지 않습니다. Dia에서는 커맨드 바만 쓸 수 있고 Lumno 새 탭은 쓸 수 없습니다. Firefox에서는 웹 클립과 자동 PIP를 쓸 수 없습니다.",
       },
       {
         question: "Arc에서 넘어와도 익숙한 커맨드 바를 쓸 수 있나요?",
@@ -1687,6 +1708,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     installAria: "Installationsoptionen für Lumno öffnen",
     installChromeStoreLabel: "Chrome Web Store",
     installEdgeStoreLabel: "Microsoft Edge-Add-ons",
+    installFirefoxStoreLabel: "Firefox-Add-ons",
     installChromeRecommendation: "Empfohlen",
     installChromeRecommendationNote: "Schnellere Updates",
 
@@ -1903,6 +1925,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         question: "Welche Browser werden unterstützt?",
         answer:
           "Chromium-Browser, die Chrome-Erweiterungen installieren können, etwa Chrome, Edge, Dia, Brave und Vivaldi. Safari und Firefox werden noch nicht unterstützt. In Dia gibt es die Befehlsleiste, aber nicht den neuen Tab von Lumno.",
+        firefoxAnswer:
+          "Chromium-Browser, die Chrome-Erweiterungen installieren können, etwa Chrome, Edge, Dia, Brave und Vivaldi, dazu Firefox ab Version 140 und Firefox-basierte Browser wie Zen. Safari wird noch nicht unterstützt. In Dia gibt es die Befehlsleiste, aber nicht den neuen Tab von Lumno. In Firefox fehlen Web Clip und automatisches Bild-in-Bild.",
       },
       {
         question: "Ich komme von Arc. Fühlt sich das vertraut an?",
@@ -1980,6 +2004,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     installAria: "Voir les options d’installation de Lumno",
     installChromeStoreLabel: "Chrome Web Store",
     installEdgeStoreLabel: "Modules complémentaires Microsoft Edge",
+    installFirefoxStoreLabel: "Modules complémentaires Firefox",
     installChromeRecommendation: "Recommandé",
     installChromeRecommendationNote: "Mises à jour plus rapides",
 
@@ -2196,6 +2221,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         question: "Quels navigateurs sont pris en charge ?",
         answer:
           "Les navigateurs Chromium qui acceptent les extensions Chrome, dont Chrome, Edge, Dia, Brave et Vivaldi. Safari et Firefox ne sont pas encore pris en charge. Dans Dia, vous avez la barre de commande, mais pas le nouvel onglet de Lumno.",
+        firefoxAnswer:
+          "Les navigateurs Chromium qui acceptent les extensions Chrome, dont Chrome, Edge, Dia, Brave et Vivaldi, ainsi que Firefox 140 ou plus récent et les navigateurs basés sur Firefox comme Zen. Safari n’est pas encore pris en charge. Dans Dia, vous avez la barre de commande, mais pas le nouvel onglet de Lumno. Dans Firefox, Web Clip et le picture-in-picture automatique ne sont pas disponibles.",
       },
       {
         question: "Je viens d’Arc. Vais-je m’y retrouver ?",
@@ -2273,6 +2300,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     installAria: "Ver opciones para instalar Lumno",
     installChromeStoreLabel: "Chrome Web Store",
     installEdgeStoreLabel: "Complementos de Microsoft Edge",
+    installFirefoxStoreLabel: "Complementos de Firefox",
     installChromeRecommendation: "Recomendado",
     installChromeRecommendationNote: "Se actualiza antes",
 
@@ -2489,6 +2517,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         question: "¿Qué navegadores son compatibles?",
         answer:
           "Los navegadores Chromium que instalan extensiones de Chrome, como Chrome, Edge, Dia, Brave y Vivaldi. Safari y Firefox aún no son compatibles. En Dia tienes la barra de comandos, pero no la nueva pestaña de Lumno.",
+        firefoxAnswer:
+          "Los navegadores Chromium que instalan extensiones de Chrome, como Chrome, Edge, Dia, Brave y Vivaldi, además de Firefox 140 o posterior y navegadores basados en Firefox como Zen. Safari aún no es compatible. En Dia tienes la barra de comandos, pero no la nueva pestaña de Lumno. En Firefox no están disponibles Web Clip ni la imagen en imagen automática.",
       },
       {
         question: "Vengo de Arc. ¿Me resultará familiar?",
@@ -2566,6 +2596,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     installAria: "Ver opções para instalar o Lumno",
     installChromeStoreLabel: "Chrome Web Store",
     installEdgeStoreLabel: "Complementos do Microsoft Edge",
+    installFirefoxStoreLabel: "Complementos do Firefox",
     installChromeRecommendation: "Recomendado",
     installChromeRecommendationNote: "Atualiza primeiro",
 
@@ -2782,6 +2813,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         question: "Quais navegadores são compatíveis?",
         answer:
           "Navegadores Chromium que instalam extensões do Chrome, como Chrome, Edge, Dia, Brave e Vivaldi. Safari e Firefox ainda não são compatíveis. No Dia, você usa a barra de comandos, mas não a nova aba do Lumno.",
+        firefoxAnswer:
+          "Navegadores Chromium que instalam extensões do Chrome, como Chrome, Edge, Dia, Brave e Vivaldi, além do Firefox 140 ou mais recente e navegadores baseados no Firefox, como o Zen. Safari ainda não é compatível. No Dia, você usa a barra de comandos, mas não a nova aba do Lumno. No Firefox, Web Clip e o picture-in-picture automático não estão disponíveis.",
       },
       {
         question: "Estou vindo do Arc. Vou me sentir em casa?",
@@ -2859,6 +2892,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     installAria: "Варианты установки Lumno",
     installChromeStoreLabel: "Интернет-магазин Chrome",
     installEdgeStoreLabel: "Надстройки Microsoft Edge",
+    installFirefoxStoreLabel: "Дополнения Firefox",
     installChromeRecommendation: "Рекомендуем",
     installChromeRecommendationNote: "Обновления быстрее",
 
@@ -3075,6 +3109,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         question: "Какие браузеры поддерживаются?",
         answer:
           "Браузеры на Chromium, в которые можно ставить расширения Chrome: Chrome, Edge, Dia, Brave, Vivaldi и другие. Safari и Firefox пока не поддерживаются. В Dia доступна командная панель, но не новая вкладка Lumno.",
+        firefoxAnswer:
+          "Браузеры на Chromium, в которые можно ставить расширения Chrome: Chrome, Edge, Dia, Brave, Vivaldi и другие, а также Firefox 140 и новее и браузеры на основе Firefox, например Zen. Safari пока не поддерживается. В Dia доступна командная панель, но не новая вкладка Lumno. В Firefox недоступны Web Clip и авто «картинка в картинке».",
       },
       {
         question: "Я перехожу с Arc. Всё будет привычно?",

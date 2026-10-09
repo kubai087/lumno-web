@@ -1,22 +1,24 @@
 ---
-import { folderSvg } from "./folder-icon";
-import { nextSceneId } from "./scene-ids";
 ---
 
 <!--
   The extension's folder icon. Like the extension, it opens while its card or
   bar item is hovered, or while its menu row is active (the row's submenu is open).
+  Each copy of the SVG is ~17KB and the homepage shows over a dozen, so the markup
+  is built in the browser instead of shipped in the HTML; every placement sizes
+  the span itself, so nothing shifts when it fills in.
 -->
-<span class="nts-folder" data-folder-icon set:html={folderSvg(nextSceneId("folder"))} />
+<span class="nts-folder" data-folder-icon />
 
 <script>
-  import { playFolderOpen, setFolderOpen } from "./folder-icon";
+  import { folderSvg, playFolderOpen, setFolderOpen } from "./folder-icon";
   import { prefersReducedMotion } from "./scene-runtime";
 
   const OWNER = ".nts-card, .nts-menu__item, .bm-bar__item";
   const isOpen = (owner: HTMLElement) => owner.dataset.hover === "true" || owner.dataset.active === "true";
 
-  document.querySelectorAll<HTMLElement>("[data-folder-icon]").forEach((icon) => {
+  document.querySelectorAll<HTMLElement>("[data-folder-icon]").forEach((icon, index) => {
+    icon.innerHTML = folderSvg(`folder-${index + 1}`);
     const owner = icon.parentElement?.closest<HTMLElement>(OWNER);
     if (!owner) return;
     setFolderOpen(icon, isOpen(owner));

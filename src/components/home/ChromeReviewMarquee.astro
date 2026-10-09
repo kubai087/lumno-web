@@ -10,6 +10,7 @@ interface Props {
   title: string;
   storeUrl: string;
   storeLinkLabel: string;
+  press?: { label: string; href: string; icon: string };
   ariaLabel: string;
   avatarLabel: string;
   quotes: readonly [string, string];
@@ -22,6 +23,7 @@ const {
   title,
   storeUrl,
   storeLinkLabel,
+  press,
   ariaLabel,
   avatarLabel,
   quotes: [quoteOpen, quoteClose],
@@ -40,24 +42,44 @@ const rows = [reviews.slice(0, midpoint), reviews.slice(midpoint)];
 >
   <header class="home-section__head chrome-review-marquee__header">
     <!-- Eyebrow like the feature sections': where the reviews live, then the rating as a chip. -->
-    <a
-      class="home-eyebrow chrome-review-marquee__store"
-      href={storeUrl}
-      target="_blank"
-      rel="noreferrer noopener"
-      title={storeLinkLabel}
-      data-analytics-event="open_chrome_web_store_reviews"
-      data-analytics-category="navigation"
-      data-analytics-label="home_reviews_store"
-    >
-      <img src="/assets/browser-logos/chrome.webp" width="18" height="18" alt="" loading="lazy" decoding="async" />
-      {eyebrow}
-      <span class="chrome-review-marquee__rating">
-        <i class="ri-star-fill" aria-hidden="true"></i>
-        {rating}
-      </span>
-      <i class="ri-arrow-right-up-line chrome-review-marquee__arrow" aria-hidden="true"></i>
-    </a>
+    <div class="chrome-review-marquee__sources">
+      <a
+        class="home-eyebrow chrome-review-marquee__store"
+        href={storeUrl}
+        target="_blank"
+        rel="noreferrer noopener"
+        title={storeLinkLabel}
+        data-analytics-event="open_chrome_web_store_reviews"
+        data-analytics-category="navigation"
+        data-analytics-label="home_reviews_store"
+      >
+        <img src="/assets/browser-logos/chrome.webp" width="18" height="18" alt="" loading="lazy" decoding="async" />
+        {eyebrow}
+        <span class="chrome-review-marquee__rating">
+          <i class="ri-star-fill" aria-hidden="true"></i>
+          {rating}
+        </span>
+        <i class="ri-arrow-right-up-line chrome-review-marquee__arrow" aria-hidden="true"></i>
+      </a>
+      {press && (
+        <>
+          <span class="chrome-review-marquee__divider" aria-hidden="true"></span>
+          <a
+            class="home-eyebrow chrome-review-marquee__store"
+            href={press.href}
+            target="_blank"
+            rel="noreferrer noopener"
+            data-analytics-event="open_press_article"
+            data-analytics-category="navigation"
+            data-analytics-label="home_reviews_sspai"
+          >
+            <img src={press.icon} width="18" height="18" alt="" loading="lazy" decoding="async" />
+            {press.label}
+            <i class="ri-arrow-right-up-line chrome-review-marquee__arrow" aria-hidden="true"></i>
+          </a>
+        </>
+      )}
+    </div>
     <h2 id="reviews-title" class="home-h2" data-reveal="text"><TitlePair title={title} /></h2>
   </header>
 
@@ -260,6 +282,32 @@ const rows = [reviews.slice(0, midpoint), reviews.slice(midpoint)];
 
   .chrome-review-marquee__header {
     width: min(calc(100% - var(--home-gutter) * 2), 720px);
+  }
+
+  .chrome-review-marquee__sources {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 6px 16px;
+    margin-bottom: var(--home-eyebrow-gap);
+  }
+
+  .chrome-review-marquee__sources .home-eyebrow {
+    margin: 0;
+  }
+
+  .chrome-review-marquee__divider {
+    width: 1px;
+    height: 14px;
+    background: var(--home-card-border);
+  }
+
+  /* Phones fit only one link per line; a divider would dangle at the end of the first. */
+  @media (max-width: 480px) {
+    .chrome-review-marquee__divider {
+      display: none;
+    }
   }
 
   .chrome-review-marquee__store {

@@ -153,6 +153,8 @@ type HomeContent = {
     /** Alt text for a reviewer's photo; {name} is the reviewer. */
     avatarLabel: string;
     storeLinkLabel: string;
+    /** A write-up about Lumno, shown beside the store eyebrow; only where readers know the outlet. */
+    press?: { label: string; href: string; icon: string };
     /** Opening and closing quotation marks around each review, per the language's convention. */
     quotes: readonly [string, string];
   };
@@ -399,6 +401,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
       ariaLabel: "Chrome 应用商店的真实用户评价轮播",
       avatarLabel: "{name} 的头像",
       storeLinkLabel: "查看全部评价",
+      press: { label: "少数派推荐", href: "https://sspai.com/post/113495", icon: "/assets/press/sspai.webp" },
       quotes: ["“", "”"],
     },
     openSource: {
@@ -691,6 +694,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
       ariaLabel: "Chrome 線上應用程式商店的真實使用者評價輪播",
       avatarLabel: "{name} 的頭像",
       storeLinkLabel: "查看所有評價",
+      press: { label: "少數派推薦", href: "https://sspai.com/post/113495", icon: "/assets/press/sspai.webp" },
       quotes: ["「", "」"],
     },
     openSource: {

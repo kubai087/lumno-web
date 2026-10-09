@@ -53,13 +53,20 @@ const HERO_INTRO_SEQUENCE = [
 ] as const;
 const COMMAND_BROWSER_PAGE_START_MS = 4_680;
 const COMMAND_BROWSER_PAGE_HOLD_MS = 1_800;
-const SEARCH_RESULT_CURSOR_DELAY_MS = 1_120;
-const SEARCH_RESULT_CURSOR_DURATION_MS = 2_600;
+/*
+ * Search All's cursor: it appears as the query starts typing, follows it along
+ * the field, then moves onto the first result, which highlights once it lands.
+ * `syncMs` re-measures the targets after each layout change (the results
+ * expanding, the cursor landing). The brisk clock is the intro's first
+ * playthrough and must track the typing and results timings that
+ * hero-safari-demo.css gives [data-intro-pace].
+ */
+type SearchResultCursorTiming = { delayMs: number; durationMs: number; syncMs: readonly number[] };
+const SEARCH_RESULT_CURSOR_TIMING = {
+  default: { delayMs: 1_120, durationMs: 2_600, syncMs: [600, 2_480, 3_780] },
+  brisk: { delayMs: 560, durationMs: 1_560, syncMs: [300, 1_560, 2_240] },
+} as const satisfies Record<string, SearchResultCursorTiming>;
 const SEARCH_RESULT_HIGHLIGHT_LAG_MS = 120;
-const SEARCH_RESULT_HIGHLIGHT_START_MS =
-  SEARCH_RESULT_CURSOR_DELAY_MS
-  + SEARCH_RESULT_CURSOR_DURATION_MS
-  + SEARCH_RESULT_HIGHLIGHT_LAG_MS;
 const CURSOR_TIP_OFFSET_X = 5;
 const CURSOR_TIP_OFFSET_Y = 5;
 const CHROME_STORE_FAVICON =
@@ -976,7 +983,7 @@ function DemoCursor() {
   );
 }
 
-function DemoCursorLayer({ mode }: { mode: CursorMode }) {
+function DemoCursorLayer({ mode, timing }: { mode: CursorMode; timing: SearchResultCursorTiming }) {
   const layerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -1053,7 +1060,7 @@ function DemoCursorLayer({ mode }: { mode: CursorMode }) {
 
     scheduleCursorSync();
     const syncDelays = mode === "search-result"
-      ? [600, 2_480, 3_780]
+      ? timing.syncMs
       : [2_800, 4_800, 6_350];
     const timeoutIds = syncDelays.map((delay) => window.setTimeout(
       scheduleCursorSync,
@@ -1068,7 +1075,7 @@ function DemoCursorLayer({ mode }: { mode: CursorMode }) {
       document.removeEventListener("lumno:home-intro-complete", scheduleCursorSync);
       window.removeEventListener("resize", scheduleCursorSync);
     };
-  }, [mode]);
+  }, [mode, timing]);
 
   return (
     <div
@@ -1076,8 +1083,8 @@ function DemoCursorLayer({ mode }: { mode: CursorMode }) {
       data-cursor-mode={mode}
       ref={layerRef}
       style={{
-        "--search-result-cursor-delay": `${SEARCH_RESULT_CURSOR_DELAY_MS}ms`,
-        "--search-result-cursor-duration": `${SEARCH_RESULT_CURSOR_DURATION_MS}ms`,
+        "--search-result-cursor-delay": `${timing.delayMs}ms`,
+        "--search-result-cursor-duration": `${timing.durationMs}ms`,
       } as CSSProperties}
     >
       <DemoCursor />
@@ -1155,6 +1162,8 @@ export function HeroSafariDemo({
   const [sceneIndex, setSceneIndex] = useState(initialSceneIndex);
   const [sceneDirection, setSceneDirection] = useState<SceneDirection>("forward");
   const [replayKey, setReplayKey] = useState(0);
+  // The intro's first Search All playthrough runs on a brisker clock (data-intro-pace).
+  const [introPaced, setIntroPaced] = useState(false);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const autoPlayTimerRef = useRef<number | null>(null);
   const demoRef = useRef<HTMLDivElement>(null);
@@ -1260,7 +1269,7 @@ export function HeroSafariDemo({
 
   const handleSceneSelect = (nextSceneIndex: number) => {
     userHasSelectedSceneRef.current = true;
-    delete demoRef.current?.dataset.introPace;
+    setIntroPaced(false);
     if (autoPlayTimerRef.current !== null) {
       window.clearTimeout(autoPlayTimerRef.current);
       autoPlayTimerRef.current = null;
@@ -1721,8 +1730,8 @@ export function HeroSafariDemo({
       `translate3d(${stageTranslateX.toFixed(2)}px, ${stageTranslateY.toFixed(2)}px, 0) scale(${stageScale.toFixed(4)})`,
     );
 
-    // Brisk Search All timings for this first playthrough (hero-safari-demo.css).
-    demo.dataset.introPace = "brisk";
+    // Brisk Search All timings for this first playthrough; re-renders before paint.
+    setIntroPaced(true);
     demo.dataset.introReady = "true";
     introFallbackTimerRef.current = window.setTimeout(
       () => revealHomeIntro(),
@@ -1840,7 +1849,7 @@ export function HeroSafariDemo({
   const pacedSceneIdRef = useRef(scene.id);
   useEffect(() => {
     // The brisk intro clock only covers the first Search All playthrough; later scenes keep their own pace.
-    if (scene.id !== pacedSceneIdRef.current) delete demoRef.current?.dataset.introPace;
+    if (scene.id !== pacedSceneIdRef.current) setIntroPaced(false);
   }, [scene.id]);
   const siteSearchDemoModel = useMemo(
     () => ({
@@ -1853,10 +1862,11 @@ export function HeroSafariDemo({
     [builtinSiteSearchProviders, copy],
   );
 
+  const cursorTiming = SEARCH_RESULT_CURSOR_TIMING[introPaced ? "brisk" : "default"];
   const model: BookmarkFocusModel = {
     closeOtherTabsLabel: copy.closeOtherTabsLabel,
     hoverLeadMs: 0,
-    hoverStartMs: SEARCH_RESULT_HIGHLIGHT_START_MS,
+    hoverStartMs: cursorTiming.delayMs + cursorTiming.durationMs + SEARCH_RESULT_HIGHLIGHT_LAG_MS,
     hoverStepMs: 0,
     hoverWrapStepMs: 0,
     openLabel: copy.openLabel,
@@ -1876,6 +1886,7 @@ export function HeroSafariDemo({
       className="hero-safari-demo"
       data-active-demo-scene={scene.id}
       data-home-intro={introState}
+      data-intro-pace={introPaced ? "brisk" : undefined}
       onAnimationEndCapture={handleDemoAnimationEnd}
       ref={demoRef}
     >
@@ -1927,6 +1938,7 @@ export function HeroSafariDemo({
                   <DemoCursorLayer
                     key={`cursor-${animationKey}`}
                     mode={isBrowserSearch ? "search-result" : "site-search"}
+                    timing={cursorTiming}
                   />
                 ) : null}
               </motion.div>

@@ -72,8 +72,9 @@ test("homepage opens with a full-screen Search All demo and can settle early on 
   assert.match(component, /className="hero-safari-visual home-media"\s*onClick=\{handleHomeIntroSkip\}/);
   assert.match(component, /const HOME_INTRO_MOVE_MS = 960/);
   // The intro's first Search All playthrough runs on a brisker clock that later scene visits don't share.
-  assert.match(component, /demo\.dataset\.introPace = "brisk";\s*demo\.dataset\.introReady = "true";/);
-  assert.match(component, /scene\.id !== pacedSceneIdRef\.current\) delete demoRef\.current\?\.dataset\.introPace/);
+  assert.match(component, /setIntroPaced\(true\);\s*demo\.dataset\.introReady = "true";/);
+  assert.match(component, /data-intro-pace=\{introPaced \? "brisk" : undefined\}/);
+  assert.match(component, /scene\.id !== pacedSceneIdRef\.current\) setIntroPaced\(false\)/);
   assert.match(styles, /\.hero-safari-demo\[data-intro-pace\] #_x_extension_onboarding_overlay_demo_2026_unique_ \.lumno-overlay-results \{\s*animation-duration: 760ms;\s*animation-delay: 760ms;/);
   assert.match(styles, /animation: hero-demo-stage-settle 960ms/);
   assert.match(component, /HOME_INTRO_COMPLETION_FALLBACK_MS = HOME_INTRO_MOVE_MS \+ 240/);
@@ -421,10 +422,12 @@ test("hero demo exposes three replayable plugin-consistent search scenes", () =>
   assert.match(component, /brandAccentRgb: \[36, 41, 46\]/);
   assert.match(component, /accentRgb: \[156, 159, 161\]/);
   assert.match(component, /hoverLeadMs: 0/);
-  assert.match(component, /const SEARCH_RESULT_CURSOR_DELAY_MS = 1_120/);
-  assert.match(component, /const SEARCH_RESULT_CURSOR_DURATION_MS = 2_600/);
+  assert.match(component, /default: \{ delayMs: 1_120, durationMs: 2_600, syncMs: \[600, 2_480, 3_780\] \}/);
+  // The intro's brisk clock moves the cursor with its faster typing and results (hero-safari-demo.css).
+  assert.match(component, /brisk: \{ delayMs: 560, durationMs: 1_560, syncMs: \[300, 1_560, 2_240\] \}/);
   assert.match(component, /const SEARCH_RESULT_HIGHLIGHT_LAG_MS = 120/);
-  assert.match(component, /hoverStartMs: SEARCH_RESULT_HIGHLIGHT_START_MS/);
+  assert.match(component, /hoverStartMs: cursorTiming\.delayMs \+ cursorTiming\.durationMs \+ SEARCH_RESULT_HIGHLIGHT_LAG_MS/);
+  assert.match(component, /timing=\{cursorTiming\}/);
   assert.match(component, /hoverStepMs: 0/);
   assert.match(component, /hoverWrapStepMs: 0/);
   assert.match(component, /scene\.id !== "commands" \? \(/);

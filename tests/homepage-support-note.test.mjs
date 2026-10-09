@@ -97,9 +97,10 @@ test("homepage is a product narrative that leaves shortcut setup to the extensio
 test("homepage uses the standard favicon set and a plain page background", () => {
   const source = readSource("src/pages/index.astro");
 
-  assert.match(source, /href="\/favicon\.ico" sizes="any"/);
+  // sizes="any" is for SVG; on an ICO it can make browsers pick it over the touch icon.
+  assert.match(source, /href="\/favicon\.ico" sizes="16x16 32x32 48x48 64x64"/);
   assert.match(source, /type="image\/png" href="\/favicon\.png"/);
-  assert.match(source, /rel="apple-touch-icon" href="\/apple-touch-icon\.png"/);
+  assert.match(source, /rel="apple-touch-icon" href="\/apple-touch-icon\.png(?:\?v=\d+)?"/);
   assert.match(source, /rel="manifest" href="\/site\.webmanifest"/);
   assert.doesNotMatch(source, /background-image:\s*url\("\/assets\/settings-bg-light-monet-newtab\.webp"\)/);
 });

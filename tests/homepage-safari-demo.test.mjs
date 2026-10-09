@@ -55,7 +55,11 @@ test("homepage opens with a full-screen Search All demo and can settle early on 
   assert.match(styles, /html\[data-home-intro-js\] \.hero-safari-demo\[data-home-intro="pending"\]:not\(\[data-intro-ready\]\) \.hero-safari-visual \{[\s\S]*?visibility: visible;/);
   assert.match(styles, /:not\(\[data-intro-ready\]\) \.hero-safari-screen \*,[\s\S]*?animation-play-state: paused !important;/);
   assert.match(source, /--hero-intro-art-height/);
-  assert.match(source, /<link rel="preload" as="image" href="\/assets\/settings-bg-light-monet-newtab\.webp"/);
+  assert.match(source, /<link rel="preload" as="image" href="\/assets\/settings-bg-light-monet-newtab\.webp" type="image\/webp" fetchpriority="high" \/>/);
+  // Paintings further down wait for the intro instead of competing with the hero's.
+  assert.match(source, /body:not\(\[data-home-intro="complete"\]\) \.chrome-review-marquee__dither \{\s*background-image: none;/);
+  // A hidden Russian label must not pull the Cyrillic Open Sans cut onto other locales.
+  assert.match(readSource("src/styles/locale-fonts.css"), /:root:not\(:lang\(ru\)\) :is\(\.lang-select \[data-lang-value="ru"\], \.site-footer__languages a\[lang="ru"\]\)/);
   // The intro replays only after the homepage has gone unseen for a while; refreshes inside that window skip it.
   assert.match(source, /const HOME_INTRO_QUIET_MS = 30 \* 60 \* 1000;/);
   assert.match(source, /playHomeIntro = forced \|\| Date\.now\(\) - seenAt > HOME_INTRO_QUIET_MS;\s*localStorage\.setItem\(HOME_INTRO_SEEN_KEY, String\(Date\.now\(\)\)\);/);

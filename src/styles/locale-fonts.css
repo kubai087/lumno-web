@@ -18,3 +18,12 @@
 :root:lang(ko) {
   --font-cjk: "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR";
 }
+
+/*
+ * The language menu and the footer name Русский in Cyrillic. On every other page that
+ * one label would pull the 45KB Cyrillic cut of Open Sans at top priority, competing
+ * with the hero, so it uses the system face there.
+ */
+:root:not(:lang(ru)) :is(.lang-select [data-lang-value="ru"], .site-footer__languages a[lang="ru"]) {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}

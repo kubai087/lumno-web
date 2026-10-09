@@ -1,0 +1,594 @@
+---
+import { marked } from "marked";
+import { SettingsButton } from "../extension-settings/SettingsKit";
+import { getHomeContent } from "../../lib/home-content";
+import { buildLocalizedPath, type SupportedLocale } from "../../lib/locales";
+import { fetchReleases, formatDate, isReleaseNoteLocale, parseReleaseBody } from "../../lib/releases";
+import { CHROME_STORE_URL } from "../../lib/site-links";
+
+interface Props {
+  locale: SupportedLocale;
+}
+
+/*
+ * The latest release, pinned to the page's bottom-right corner. The pill is the
+ * extension's own update notice (lumno-extension src/shared/feature-hints.css,
+ * .x-lumno-feature-hint--update-notice): the same material, the 🦋 and version,
+ * and its light sweep. It opens the release's notes in a panel of the same
+ * material; phones get it as a sheet along the bottom. Static HTML with no
+ * React; release-popover.ts drives it.
+ */
+type PopoverMessages = {
+  /** The pill's one line. The version is its subject, so the line reads as a sentence, not a label beside a number. */
+  cta: string;
+  dialog_label: string;
+  features_label: string;
+  bug_fixes_label: string;
+  /** The changelog's name, as the extension's notice and /release call it. */
+  changelog: string;
+  close: string;
+};
+
+const MESSAGES: Record<SupportedLocale, PopoverMessages> = {
+  "zh-CN": {
+    cta: "{version} 更新了什么",
+    dialog_label: "Lumno {version} 更新内容",
+    features_label: "新功能",
+    bug_fixes_label: "问题修复",
+    changelog: "更新日志",
+    close: "关闭",
+  },
+  "zh-TW": {
+    cta: "{version} 更新了什麼",
+    dialog_label: "Lumno {version} 更新內容",
+    features_label: "新功能",
+    bug_fixes_label: "錯誤修正",
+    changelog: "更新日誌",
+    close: "關閉",
+  },
+  en: {
+    cta: "What’s new in {version}",
+    dialog_label: "What’s new in Lumno {version}",
+    features_label: "New features",
+    bug_fixes_label: "Bug fixes",
+    changelog: "Changelog",
+    close: "Close",
+  },
+  ja: {
+    cta: "{version} で変わったこと",
+    dialog_label: "Lumno {version} の更新内容",
+    features_label: "新機能",
+    bug_fixes_label: "不具合の修正",
+    changelog: "更新履歴",
+    close: "閉じる",
+  },
+  ko: {
+    cta: "{version}에서 달라진 점",
+    dialog_label: "Lumno {version} 업데이트 내용",
+    features_label: "새 기능",
+    bug_fixes_label: "버그 수정",
+    changelog: "업데이트 내역",
+    close: "닫기",
+  },
+  de: {
+    cta: "Neu in {version}",
+    dialog_label: "Neu in Lumno {version}",
+    features_label: "Neue Funktionen",
+    bug_fixes_label: "Fehlerbehebungen",
+    changelog: "Versionshinweise",
+    close: "Schließen",
+  },
+  fr: {
+    cta: "Nouveautés de la {version}",
+    dialog_label: "Nouveautés de Lumno {version}",
+    features_label: "Nouveautés",
+    bug_fixes_label: "Corrections de bugs",
+    changelog: "Notes de version",
+    close: "Fermer",
+  },
+  es: {
+    cta: "Novedades de la {version}",
+    dialog_label: "Novedades de Lumno {version}",
+    features_label: "Novedades",
+    bug_fixes_label: "Correcciones",
+    changelog: "Notas de la versión",
+    close: "Cerrar",
+  },
+  "pt-BR": {
+    cta: "Novidades da {version}",
+    dialog_label: "Novidades do Lumno {version}",
+    features_label: "Novidades",
+    bug_fixes_label: "Correções",
+    changelog: "Notas de versão",
+    close: "Fechar",
+  },
+  ru: {
+    cta: "Что нового в {version}",
+    dialog_label: "Что нового в Lumno {version}",
+    features_label: "Новые функции",
+    bug_fixes_label: "Исправления",
+    changelog: "История изменений",
+    close: "Закрыть",
+  },
+};
+
+const { locale } = Astro.props;
+const [latest] = (await fetchReleases()).filter((item) => !item.prerelease);
+const messages = MESSAGES[locale];
+const homeContent = getHomeContent(locale);
+// GitHub Releases carry zh-CN, zh-TW and en notes; other languages read the English ones (as /release does).
+const notes = latest ? parseReleaseBody(latest.body).locales[isReleaseNoteLocale(locale) ? locale : "en"] : null;
+const version = latest ? (/^v/i.test(latest.tag) ? latest.tag : `v${latest.tag}`) : "";
+const date = latest ? formatDate(latest.date, locale, { year: "numeric", month: "long", day: "numeric" }) : "";
+const sections = notes
+  ? [
+      { label: messages.features_label, items: notes.features },
+      { label: messages.bug_fixes_label, items: notes.bugFixes },
+    ].filter((section) => section.items.length > 0)
+  : [];
+const [ctaBefore, ctaAfter = ""] = messages.cta.split("{version}");
+const renderInline = (markdown: string) => marked.parseInline(markdown, { async: false });
+---
+
+{latest && notes && (
+  <div class="release-popover" data-release-popover data-version={latest.tag} data-open="false">
+    <button
+      type="button"
+      class="release-popover-trigger"
+      aria-haspopup="dialog"
+      aria-expanded="false"
+      aria-controls="release-popover-panel"
+      data-analytics-event="open_release_popover"
+      data-analytics-label={`home_release_popover_${latest.tag}`}
+    >
+      <span class="release-popover-version-icon" aria-hidden="true">🦋</span>
+      <span class="release-popover-cta">
+        {ctaBefore}<strong>{version}</strong>{ctaAfter}
+      </span>
+    </button>
+
+    <div class="release-popover-backdrop" data-release-popover-dismiss aria-hidden="true"></div>
+
+    <section
+      id="release-popover-panel"
+      class="release-popover-panel"
+      role="dialog"
+      aria-label={messages.dialog_label.replace("{version}", version)}
+      aria-hidden="true"
+      tabindex="-1"
+      inert
+    >
+      <header class="release-popover-head">
+        <span class="release-popover-version">
+          <span class="release-popover-version-icon" aria-hidden="true">🦋</span>
+          {version}
+        </span>
+        <time datetime={latest.date}>{date}</time>
+        <button type="button" class="release-popover-close" data-release-popover-dismiss aria-label={messages.close}>
+          <i class="ri-close-line" aria-hidden="true"></i>
+        </button>
+      </header>
+
+      <div class="release-popover-body">
+        {notes.summary && <p class="release-popover-summary" set:html={renderInline(notes.summary)} />}
+        {sections.map((section) => (
+          <section class="release-popover-section">
+            <h3>{section.label}</h3>
+            <ul>
+              {section.items.map((item) => <li set:html={renderInline(item)} />)}
+            </ul>
+          </section>
+        ))}
+      </div>
+
+      <footer class="release-popover-foot">
+        <a
+          class="release-popover-link"
+          href={buildLocalizedPath(locale, "/release/")}
+          data-analytics-event="open_release_page"
+          data-analytics-label="home_release_popover_changelog"
+        >
+          {messages.changelog}
+          <i class="ri-arrow-right-line" aria-hidden="true"></i>
+        </a>
+        <SettingsButton
+          as="a"
+          variant="primary"
+          className="release-popover-install"
+          href={CHROME_STORE_URL}
+          target="_blank"
+          rel="noreferrer noopener"
+          aria-label={homeContent.heroInstallAria}
+          data-analytics-event="open_chrome_web_store"
+          data-analytics-category="conversion"
+          data-analytics-label="home_release_popover_install"
+        >
+          {homeContent.heroInstallLabel}
+        </SettingsButton>
+      </footer>
+    </section>
+  </div>
+)}
+
+<script>
+  import "../../scripts/release-popover";
+</script>
+
+<style is:global>
+  /* The extension's feature-hint material (feature-hints.css), shared by the pill and the panel. */
+  .release-popover {
+    --release-popover-inset: 24px;
+    --release-popover-ease: cubic-bezier(0.2, 1, 0.36, 1);
+    --release-popover-bg: linear-gradient(180deg, #ffffff 0%, #f7f9fc 100%);
+    --release-popover-border: rgba(214, 219, 227, 0.95);
+    --release-popover-shadow: 0 16px 36px rgba(17, 24, 39, 0.08), 0 3px 10px rgba(17, 24, 39, 0.05);
+    /* The pill has no border of its own: a faint ring in the shadow keeps its edge on white. */
+    --release-popover-pill-shadow: 0 0 0 1px rgba(17, 24, 39, 0.05), var(--release-popover-shadow);
+    --release-popover-text: #556070;
+    --release-popover-strong: #3c4455;
+    --release-popover-chip: rgba(75, 84, 95, 0.045);
+    --release-popover-hairline: rgba(75, 84, 95, 0.09);
+  }
+
+  .release-popover-trigger {
+    all: unset;
+    position: fixed;
+    right: max(var(--release-popover-inset), env(safe-area-inset-right));
+    bottom: max(var(--release-popover-inset), env(safe-area-inset-bottom));
+    z-index: calc(var(--home-z-nav) - 1);
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    box-sizing: border-box;
+    min-height: 40px;
+    padding: 8px 16px 8px 14px;
+    overflow: hidden;
+    isolation: isolate;
+    border-radius: 999px;
+    --lumno-corner-shape: round;
+    background: var(--release-popover-bg);
+    box-shadow: var(--release-popover-pill-shadow);
+    color: var(--release-popover-text);
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1.45;
+    white-space: nowrap;
+    cursor: pointer;
+    transition:
+      opacity 220ms ease,
+      translate 340ms var(--release-popover-ease),
+      filter 300ms ease,
+      color 160ms ease;
+  }
+
+  .release-popover-trigger:hover {
+    color: var(--release-popover-strong);
+  }
+
+  .release-popover-trigger:focus-visible,
+  .release-popover-close:focus-visible,
+  .release-popover-link:focus-visible {
+    outline: 2px solid rgba(75, 84, 95, 0.22);
+    outline-offset: 2px;
+  }
+
+  /* 🦋 and the version, in the notice's stronger ink; no chip, so the pill stays one surface. */
+  .release-popover-version {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: 6px;
+    color: var(--release-popover-strong);
+    font-weight: 620;
+  }
+
+  .release-popover-version-icon {
+    font-size: 14px;
+    line-height: 1;
+  }
+
+  .release-popover-cta strong {
+    color: var(--release-popover-strong);
+    font-weight: 620;
+  }
+
+  /* The update notice's slow light sweep, across the whole pill until this release is opened. */
+  .release-popover-trigger::after {
+    position: absolute;
+    inset: -45% -75%;
+    content: "";
+    background: linear-gradient(
+      105deg,
+      transparent 38%,
+      rgba(255, 255, 255, 0.5) 48%,
+      rgba(255, 255, 255, 0.7) 50%,
+      rgba(255, 255, 255, 0.5) 52%,
+      transparent 62%
+    );
+    transform: translate3d(-34%, 0, 0) skewX(-16deg);
+    animation: release-popover-sweep 4.8s linear infinite;
+    pointer-events: none;
+  }
+
+  .release-popover[data-seen] .release-popover-trigger::after {
+    content: none;
+  }
+
+  @keyframes release-popover-sweep {
+    to {
+      transform: translate3d(34%, 0, 0) skewX(-16deg);
+    }
+  }
+
+  /*
+   * Out of the way while the homepage intro plays, while the footer (with its
+   * own links in that corner) is on screen, and while its own notes are open.
+   */
+  html[data-home-intro-js] body:not([data-home-intro="complete"]) .release-popover-trigger,
+  .release-popover[data-footer-visible] .release-popover-trigger,
+  .release-popover[data-open="true"] .release-popover-trigger {
+    opacity: 0;
+    translate: 0 8px;
+    filter: blur(6px);
+    pointer-events: none;
+  }
+
+  .release-popover-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: calc(var(--home-z-nav) + 1);
+    background: rgba(17, 24, 39, 0.06);
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 220ms ease,
+      visibility 0s linear 220ms;
+  }
+
+  .release-popover-panel {
+    position: fixed;
+    right: max(var(--release-popover-inset), env(safe-area-inset-right));
+    bottom: max(var(--release-popover-inset), env(safe-area-inset-bottom));
+    z-index: calc(var(--home-z-nav) + 2);
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    width: min(360px, calc(100vw - var(--release-popover-inset) * 2));
+    max-height: min(540px, calc(100dvh - 112px));
+    overflow: hidden;
+    border: 1px solid var(--release-popover-border);
+    border-radius: 20px;
+    background: var(--release-popover-bg);
+    box-shadow: var(--release-popover-shadow);
+    color: var(--release-popover-text);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(6px) scale(0.98);
+    transform-origin: right bottom;
+    filter: blur(6px);
+    transition:
+      opacity 220ms ease,
+      transform 340ms var(--release-popover-ease),
+      filter 300ms ease,
+      visibility 0s linear 340ms;
+  }
+
+  .release-popover[data-open="true"] .release-popover-backdrop,
+  .release-popover[data-open="true"] .release-popover-panel {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
+  }
+
+  .release-popover[data-open="true"] .release-popover-panel {
+    transform: none;
+    filter: none;
+  }
+
+  /* Opening focuses the panel itself, so Tab starts inside it; the panel needs no ring. */
+  .release-popover-panel:focus {
+    outline: none;
+  }
+
+  .release-popover-head {
+    position: relative;
+    display: flex;
+    flex: none;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 48px 14px 20px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+
+  .release-popover-close {
+    all: unset;
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 999px;
+    --lumno-corner-shape: round;
+    color: rgba(75, 84, 95, 0.62);
+    font-size: 15px;
+    cursor: pointer;
+    transform: translateY(-50%);
+    transition: background-color 160ms ease, color 160ms ease;
+  }
+
+  .release-popover-close:hover {
+    background: rgba(75, 84, 95, 0.08);
+    color: var(--release-popover-strong);
+  }
+
+  .release-popover-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 2px 20px 20px;
+    border-top: 1px solid var(--release-popover-hairline);
+    scrollbar-width: thin;
+    scrollbar-color: rgba(75, 84, 95, 0.18) transparent;
+  }
+
+  .release-popover-summary {
+    margin: 16px 0 0;
+    font-size: 13px;
+    line-height: 1.65;
+  }
+
+  .release-popover-section h3 {
+    margin: 18px 0 8px;
+    color: var(--release-popover-strong);
+    font-size: 13px;
+    font-weight: 620;
+    line-height: 1.4;
+  }
+
+  .release-popover-section ul {
+    display: grid;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .release-popover-section li {
+    font-size: 13px;
+    line-height: 1.65;
+  }
+
+  .release-popover-summary a,
+  .release-popover-section a {
+    color: var(--home-select-ink);
+    text-decoration: none;
+  }
+
+  .release-popover-section code {
+    padding: 1px 5px;
+    border-radius: 6px;
+    background: var(--release-popover-chip);
+    font-size: 0.92em;
+  }
+
+  [data-script="cjk"] .release-popover-section li,
+  [data-script="cjk"] .release-popover-summary {
+    line-break: strict;
+    letter-spacing: 0.01em;
+  }
+
+  .release-popover-foot {
+    display: flex;
+    flex: none;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 12px 12px 12px 14px;
+    border-top: 1px solid var(--release-popover-hairline);
+  }
+
+  .release-popover-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    min-height: 26px;
+    padding: 0 6px;
+    box-sizing: border-box;
+    border-radius: 6px;
+    color: var(--release-popover-text);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.25;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color 160ms ease, color 160ms ease;
+  }
+
+  .release-popover-link:hover {
+    color: var(--release-popover-strong);
+  }
+
+  /* Carries SettingsButton's class so it wins over settings-kit.css, which production loads after this sheet. */
+  .lumno-settings-button.release-popover-install {
+    margin-left: auto;
+    min-height: 34px;
+    padding: 7px 14px;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  /*
+   * Phones: the pill waits until the hero (whose scene switcher sits at the
+   * bottom of the first screen) has scrolled away, and the notes open as a
+   * sheet along the bottom, inset like the header's menu sheet.
+   */
+  @media (max-width: 760px) {
+    .release-popover {
+      --release-popover-inset: 12px;
+    }
+
+    .release-popover[data-hero-visible] .release-popover-trigger {
+      opacity: 0;
+      translate: 0 8px;
+      filter: blur(6px);
+      pointer-events: none;
+    }
+
+    .release-popover-backdrop {
+      background: rgba(17, 24, 39, 0.16);
+      touch-action: none;
+    }
+
+    .release-popover-panel {
+      left: max(8px, env(safe-area-inset-left));
+      right: max(8px, env(safe-area-inset-right));
+      bottom: max(8px, env(safe-area-inset-bottom));
+      width: auto;
+      max-height: min(620px, calc(100dvh - 88px));
+      border-radius: 24px;
+      transform: translateY(16px);
+      transform-origin: center bottom;
+    }
+
+    .release-popover-close {
+      width: 34px;
+      height: 34px;
+      font-size: 17px;
+    }
+
+    .release-popover-section li,
+    .release-popover-summary {
+      font-size: 14px;
+    }
+
+    .release-popover-link {
+      min-height: 40px;
+      font-size: 13px;
+    }
+
+    .lumno-settings-button.release-popover-install {
+      min-height: 40px;
+      padding: 8px 16px;
+      font-size: 13px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .release-popover-trigger::after {
+      content: none;
+    }
+
+    .release-popover-trigger,
+    .release-popover-panel {
+      translate: none;
+      transform: none;
+      filter: none;
+    }
+  }
+</style>

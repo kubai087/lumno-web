@@ -6,6 +6,7 @@ import ChromeReviewMarquee from "../components/home/ChromeReviewMarquee.astro";
 import CommandBarSection from "../components/home/sections/CommandBarSection.astro";
 import FaqSection from "../components/home/sections/FaqSection.astro";
 import FinalCta from "../components/home/sections/FinalCta.astro";
+import ReleasePopover from "../components/home/ReleasePopover.astro";
 import OpenSourceSection from "../components/home/sections/OpenSourceSection.astro";
 import NewTabSection from "../components/home/sections/NewTabSection.astro";
 import UtilitiesSection from "../components/home/sections/UtilitiesSection.astro";
@@ -412,6 +413,8 @@ const structuredData = [
     </main>
 
     <PageFooter locale={uiLocale} routeLanguageMap={routeLanguageMap} />
+
+    <ReleasePopover locale={uiLocale} />
 
     <script>
       import "../scripts/language-preference";

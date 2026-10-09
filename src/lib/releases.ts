@@ -43,7 +43,22 @@ const REPO_OWNER = "kubai087";
 const REPO_NAME = "lumno-extension";
 const cnToTw = OpenCC.Converter({ from: "cn", to: "tw" });
 
-export async function fetchReleases(): Promise<ReleaseItem[]> {
+let releasesRequest: Promise<ReleaseItem[]> | null = null;
+
+/**
+ * Every page in every locale reads the same list (the homepage's release popover, the
+ * release page, the sitemap), so one build makes one request. An empty result isn't
+ * kept: the next page retries.
+ */
+export function fetchReleases(): Promise<ReleaseItem[]> {
+  releasesRequest ??= requestReleases().then((items) => {
+    if (!items.length) releasesRequest = null;
+    return items;
+  });
+  return releasesRequest;
+}
+
+async function requestReleases(): Promise<ReleaseItem[]> {
   try {
     const owner = import.meta.env.GITHUB_RELEASES_OWNER || REPO_OWNER;
     const repo = import.meta.env.GITHUB_RELEASES_REPO || REPO_NAME;

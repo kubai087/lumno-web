@@ -176,18 +176,18 @@ const structuredData = [
     <script is:inline>
       // The hero intro hides the page until the demo hydrates. Gate that on JS so crawlers and
       // no-JS visitors always get visible content, and lift it if hydration never finishes.
-      // The intro is a first impression: play it at most once a day, never on a reload, and
-      // render returning visitors straight into the settled page (?intro forces a replay).
-      const HOME_INTRO_PLAYED_KEY = "lumno:home-intro-played-at";
-      const HOME_INTRO_REPLAY_MS = 24 * 60 * 60 * 1000;
+      // The intro greets a visit, not a page view: it plays when the homepage hasn't been seen
+      // for a while, and a refresh or quick return within that window (any language) renders
+      // straight into the settled page. Every view restarts the window; ?intro forces a replay.
+      const HOME_INTRO_SEEN_KEY = "lumno:home-intro-seen-at";
+      const HOME_INTRO_QUIET_MS = 30 * 60 * 1000;
       let playHomeIntro = true;
       try {
-        const navigation = performance.getEntriesByType("navigation")[0];
-        const playedAt = Number(localStorage.getItem(HOME_INTRO_PLAYED_KEY)) || 0;
+        const seenAt = Number(localStorage.getItem(HOME_INTRO_SEEN_KEY)) || 0;
         const forced = new URLSearchParams(location.search).has("intro");
-        playHomeIntro = forced
-          || (!(navigation && navigation.type === "reload") && Date.now() - playedAt > HOME_INTRO_REPLAY_MS);
-        if (playHomeIntro) localStorage.setItem(HOME_INTRO_PLAYED_KEY, String(Date.now()));
+        playHomeIntro = forced || Date.now() - seenAt > HOME_INTRO_QUIET_MS;
+        localStorage.setItem(HOME_INTRO_SEEN_KEY, String(Date.now()));
+        localStorage.removeItem("lumno:home-intro-played-at");
       } catch {}
       document.documentElement.setAttribute(playHomeIntro ? "data-home-intro-js" : "data-home-intro-skip", "");
       // Shortcut keycaps render both spellings; show Ctrl/Shift instead of ⌘/⇧ off Apple platforms.

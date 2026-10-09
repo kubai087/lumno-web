@@ -29,7 +29,8 @@ import {
   getLocaleScript,
   type SupportedLocale,
 } from "../../lib/locales";
-import { CHROME_STORE_URL, GITHUB_URL } from "../../lib/site-links";
+import { getHomeContent } from "../../lib/home-content";
+import { CHROME_STORE_URL, EDGE_STORE_URL, GITHUB_URL } from "../../lib/site-links";
 
 interface Props {
   forcedLocale?: SupportedLocale | null;
@@ -103,8 +104,8 @@ type ReleaseMessages = {
   features_label: string;
   bug_fixes_label: string;
   github_published: string;
-  chrome_published: string;
-  chrome_reviewing: string;
+  store_published: string;
+  store_reviewing: string;
   read_on_github: string;
   no_releases_title: string;
   no_releases_desc: string;
@@ -118,8 +119,8 @@ const RELEASE_MESSAGES: Record<SupportedLocale, ReleaseMessages> = {
     features_label: "新功能",
     bug_fixes_label: "问题修复",
     github_published: "已发布",
-    chrome_published: "已上架",
-    chrome_reviewing: "商店待更新",
+    store_published: "已上架",
+    store_reviewing: "商店待更新",
     read_on_github: "在 GitHub 查看",
     no_releases_title: "暂无发布记录",
     no_releases_desc: "发布 GitHub Release 后，下一次部署时会自动显示在这里。",
@@ -132,8 +133,8 @@ const RELEASE_MESSAGES: Record<SupportedLocale, ReleaseMessages> = {
     features_label: "新功能",
     bug_fixes_label: "錯誤修正",
     github_published: "已發布",
-    chrome_published: "已上架",
-    chrome_reviewing: "商店尚未更新",
+    store_published: "已上架",
+    store_reviewing: "商店尚未更新",
     read_on_github: "在 GitHub 查看",
     no_releases_title: "目前還沒有發布紀錄",
     no_releases_desc: "發布 GitHub Release 後，下次部署時就會顯示在這裡。",
@@ -146,8 +147,8 @@ const RELEASE_MESSAGES: Record<SupportedLocale, ReleaseMessages> = {
     features_label: "New features",
     bug_fixes_label: "Bug fixes",
     github_published: "Published",
-    chrome_published: "Live in store",
-    chrome_reviewing: "Store update pending",
+    store_published: "Live in store",
+    store_reviewing: "Store update pending",
     read_on_github: "View on GitHub",
     no_releases_title: "No releases yet",
     no_releases_desc: "Publish a GitHub Release and it will appear here after the next deploy.",
@@ -160,8 +161,8 @@ const RELEASE_MESSAGES: Record<SupportedLocale, ReleaseMessages> = {
     features_label: "新機能",
     bug_fixes_label: "不具合の修正",
     github_published: "公開済み",
-    chrome_published: "ストア公開中",
-    chrome_reviewing: "ストア反映待ち",
+    store_published: "ストア公開中",
+    store_reviewing: "ストア反映待ち",
     read_on_github: "GitHub で見る",
     no_releases_title: "リリースはまだありません",
     no_releases_desc: "GitHub Release を公開すると、次回のデプロイ後にここに表示されます。",
@@ -174,8 +175,8 @@ const RELEASE_MESSAGES: Record<SupportedLocale, ReleaseMessages> = {
     features_label: "새 기능",
     bug_fixes_label: "버그 수정",
     github_published: "출시됨",
-    chrome_published: "스토어 반영됨",
-    chrome_reviewing: "스토어 반영 대기",
+    store_published: "스토어 반영됨",
+    store_reviewing: "스토어 반영 대기",
     read_on_github: "GitHub에서 보기",
     no_releases_title: "아직 출시된 버전이 없습니다",
     no_releases_desc: "GitHub Release를 게시하면 다음 배포 후 여기에 표시됩니다.",
@@ -188,8 +189,8 @@ const RELEASE_MESSAGES: Record<SupportedLocale, ReleaseMessages> = {
     features_label: "Neue Funktionen",
     bug_fixes_label: "Fehlerbehebungen",
     github_published: "Veröffentlicht",
-    chrome_published: "Im Store",
-    chrome_reviewing: "Store-Update ausstehend",
+    store_published: "Im Store",
+    store_reviewing: "Store-Update ausstehend",
     read_on_github: "Auf GitHub ansehen",
     no_releases_title: "Noch keine Versionen",
     no_releases_desc: "Veröffentliche ein GitHub-Release – nach dem nächsten Deploy erscheint es hier.",
@@ -202,8 +203,8 @@ const RELEASE_MESSAGES: Record<SupportedLocale, ReleaseMessages> = {
     features_label: "Nouveautés",
     bug_fixes_label: "Corrections de bugs",
     github_published: "Publiée",
-    chrome_published: "Disponible sur le Store",
-    chrome_reviewing: "En attente sur le Store",
+    store_published: "Disponible sur le Store",
+    store_reviewing: "En attente sur le Store",
     read_on_github: "Voir sur GitHub",
     no_releases_title: "Aucune version pour l’instant",
     no_releases_desc: "Publiez une release GitHub : elle apparaîtra ici après le prochain déploiement.",
@@ -216,8 +217,8 @@ const RELEASE_MESSAGES: Record<SupportedLocale, ReleaseMessages> = {
     features_label: "Novedades",
     bug_fixes_label: "Correcciones",
     github_published: "Publicada",
-    chrome_published: "En la tienda",
-    chrome_reviewing: "Pendiente en la tienda",
+    store_published: "En la tienda",
+    store_reviewing: "Pendiente en la tienda",
     read_on_github: "Ver en GitHub",
     no_releases_title: "Aún no hay versiones",
     no_releases_desc: "Publica una release en GitHub y aparecerá aquí tras el próximo despliegue.",
@@ -230,8 +231,8 @@ const RELEASE_MESSAGES: Record<SupportedLocale, ReleaseMessages> = {
     features_label: "Novidades",
     bug_fixes_label: "Correções",
     github_published: "Publicada",
-    chrome_published: "Na loja",
-    chrome_reviewing: "Aguardando a loja",
+    store_published: "Na loja",
+    store_reviewing: "Aguardando a loja",
     read_on_github: "Ver no GitHub",
     no_releases_title: "Nenhuma versão ainda",
     no_releases_desc: "Publique uma release no GitHub e ela aparecerá aqui depois do próximo deploy.",
@@ -244,8 +245,8 @@ const RELEASE_MESSAGES: Record<SupportedLocale, ReleaseMessages> = {
     features_label: "Новые функции",
     bug_fixes_label: "Исправления",
     github_published: "Опубликовано",
-    chrome_published: "В магазине",
-    chrome_reviewing: "Ждёт обновления в магазине",
+    store_published: "В магазине",
+    store_reviewing: "Ждёт обновления в магазине",
     read_on_github: "Открыть на GitHub",
     no_releases_title: "Пока нет выпусков",
     no_releases_desc: "Опубликуйте релиз на GitHub — он появится здесь после следующего деплоя.",
@@ -256,7 +257,19 @@ const languageMessages = Object.fromEntries(
   LOCALE_CONFIG.map((item) => [`language_${item.code.toLowerCase().replace("-", "_")}`, item.label]),
 );
 const i18nMessages = Object.fromEntries(
-  SUPPORTED_UI_LANGUAGES.map((locale) => [locale, { ...languageMessages, ...RELEASE_MESSAGES[locale] }]),
+  SUPPORTED_UI_LANGUAGES.map((locale) => {
+    const homeContent = getHomeContent(locale);
+    return [
+      locale,
+      {
+        ...languageMessages,
+        ...RELEASE_MESSAGES[locale],
+        // Screen readers name the store, since both store chips share the same status text.
+        chrome_store_name: homeContent.installChromeStoreLabel,
+        edge_store_name: homeContent.installEdgeStoreLabel,
+      },
+    ];
+  }),
 );
 const uiMessages = RELEASE_MESSAGES[uiLocale];
 const initialUi = {
@@ -267,8 +280,10 @@ const initialUi = {
   featuresLabel: uiMessages.features_label,
   bugFixesLabel: uiMessages.bug_fixes_label,
   githubPublished: uiMessages.github_published,
-  chromePublished: uiMessages.chrome_published,
-  chromeReviewing: uiMessages.chrome_reviewing,
+  storePublished: uiMessages.store_published,
+  storeReviewing: uiMessages.store_reviewing,
+  chromeStoreName: getHomeContent(uiLocale).installChromeStoreLabel,
+  edgeStoreName: getHomeContent(uiLocale).installEdgeStoreLabel,
 };
 const releaseItemListSchema = releases.length
   ? buildItemListSchema({
@@ -315,7 +330,7 @@ const structuredData = [
   }),
 ];
 
-const { chrome: chromeStoreVersion } = await getStoreVersions({
+const { chrome: chromeStoreVersion, edge: edgeStoreVersion } = await getStoreVersions({
   chrome: import.meta.env.PUBLIC_CHROME_STORE_VERSION || import.meta.env.CHROME_STORE_VERSION,
   edge: import.meta.env.PUBLIC_EDGE_STORE_VERSION || import.meta.env.EDGE_STORE_VERSION,
 });
@@ -348,12 +363,34 @@ function compareVersion(a: string, b: string): number {
   return 0;
 }
 
-function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_reviewing" | null {
-  if (!chromeStoreVersion) return null;
-  return compareVersion(chromeStoreVersion, tag) >= 0
-    ? "chrome_published"
-    : "chrome_reviewing";
+type StoreStatus = "published" | "reviewing";
+
+/** An unknown store version hides that store's chip rather than guessing. */
+function getStoreStatus(storeVersion: string, tag: string): StoreStatus | null {
+  if (!storeVersion) return null;
+  return compareVersion(storeVersion, tag) >= 0 ? "published" : "reviewing";
 }
+
+const STORE_CHIPS = [
+  {
+    id: "chrome",
+    version: chromeStoreVersion,
+    href: CHROME_STORE_URL,
+    iconClass: "ri-chrome-fill",
+    nameKey: "chrome_store_name",
+    name: initialUi.chromeStoreName,
+    analyticsEvent: "open_chrome_web_store",
+  },
+  {
+    id: "edge",
+    version: edgeStoreVersion,
+    href: EDGE_STORE_URL,
+    iconClass: "ri-edge-new-fill",
+    nameKey: "edge_store_name",
+    name: initialUi.edgeStoreName,
+    analyticsEvent: "open_edge_addons",
+  },
+] as const;
 ---
 
 <html lang={uiLocale}>
@@ -684,6 +721,15 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         font-size: 13px;
       }
 
+      .chip-store-name {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+        white-space: nowrap;
+      }
+
       .chip-link {
         text-decoration: none;
         cursor: pointer;
@@ -695,13 +741,13 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
         color: #334155;
       }
 
-      .chip-chrome.is-published {
+      .chip-store.is-published {
         border-color: #a3e5c8;
         background: #ecfdf3;
         color: #027a48;
       }
 
-      .chip-chrome.is-reviewing {
+      .chip-store.is-reviewing {
         border-color: #ffd19a;
         background: #fff8eb;
         color: #b54708;
@@ -982,7 +1028,6 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
           releases.length > 0 ? (
             releases.map((item) => {
               const localeContent = item.parsed.locales[releaseContentLocale];
-              const chromeStatusKey = getChromeStatusI18nKey(item.tag);
               const anchor = item.tag.startsWith("v") ? item.tag : `v${item.tag}`;
 
               return (
@@ -1008,25 +1053,34 @@ function getChromeStatusI18nKey(tag: string): "chrome_published" | "chrome_revie
                             <i class="ri-github-fill" aria-hidden="true"></i>
                             <span data-i18n="github_published">{initialUi.githubPublished}</span>
                           </span>
-                          {chromeStatusKey === "chrome_published" ? (
-                            <a
-                              class="chip chip-status chip-chrome is-published chip-link"
-                              href={CHROME_STORE_URL}
-                              target="_blank"
-                              rel="noreferrer"
-                              data-analytics-event="open_chrome_web_store"
-                              data-analytics-category="cta"
-                              data-analytics-label={`release_chrome_status_${item.tag}`}
-                            >
-                              <i class="ri-chrome-fill" aria-hidden="true"></i>
-                              <span data-i18n={chromeStatusKey}>{initialUi.chromePublished}</span>
-                            </a>
-                          ) : chromeStatusKey ? (
-                            <span class="chip chip-status chip-chrome is-reviewing">
-                              <i class="ri-chrome-fill" aria-hidden="true"></i>
-                              <span data-i18n={chromeStatusKey}>{initialUi.chromeReviewing}</span>
-                            </span>
-                          ) : null}
+                          {STORE_CHIPS.map((store) => {
+                            const status = getStoreStatus(store.version, item.tag);
+                            if (!status) return null;
+                            const chipContent = (
+                              <>
+                                <i class={store.iconClass} aria-hidden="true"></i>
+                                <span class="chip-store-name" data-i18n={store.nameKey}>{store.name}</span>
+                                <span data-i18n={`store_${status}`}>
+                                  {status === "published" ? initialUi.storePublished : initialUi.storeReviewing}
+                                </span>
+                              </>
+                            );
+                            return status === "published" ? (
+                              <a
+                                class={`chip chip-status chip-store chip-${store.id} is-published chip-link`}
+                                href={store.href}
+                                target="_blank"
+                                rel="noreferrer"
+                                data-analytics-event={store.analyticsEvent}
+                                data-analytics-category="cta"
+                                data-analytics-label={`release_${store.id}_status_${item.tag}`}
+                              >
+                                {chipContent}
+                              </a>
+                            ) : (
+                              <span class={`chip chip-status chip-store chip-${store.id} is-reviewing`}>{chipContent}</span>
+                            );
+                          })}
                         </div>
 
                         <div class="entry-localized" data-release-locale={releaseContentLocale}>

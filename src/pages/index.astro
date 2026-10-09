@@ -1,4 +1,5 @@
 ---
+import heroArtPlaceholder from "../assets/hero-art-placeholder.png?inline";
 import LocaleNormalizer from "../components/LocaleNormalizer.astro";
 import SeoHead from "../components/SeoHead.astro";
 import ChromeReviewMarquee from "../components/home/ChromeReviewMarquee.astro";
@@ -198,12 +199,23 @@ const structuredData = [
           document.addEventListener("visibilitychange", () => window.setTimeout(liftStalledHomeIntro, 8000), { once: true });
           return;
         }
-        if (document.body && document.body.dataset.homeIntro === "pending") {
+        // Only a demo that never hydrated is stalled; a playing one finishes on its own timers.
+        if (
+          document.body
+          && document.body.dataset.homeIntro === "pending"
+          && !document.querySelector(".hero-safari-demo[data-intro-ready]")
+        ) {
+          // Settle into the page as a skipped intro would, so the hero card shows from the server HTML.
           document.documentElement.removeAttribute("data-home-intro-js");
+          document.documentElement.setAttribute("data-home-intro-skip", "");
         }
       };
       window.setTimeout(liftStalledHomeIntro, 8000);
     </script>
+    {/* The hero painting, found early but left at default priority so the demo's JS still arrives first. */}
+    <link rel="preload" as="image" href="/assets/settings-bg-light-monet-newtab.webp" type="image/webp" />
+    {/* Its 32px stand-in paints the intro's first frame with the CSS (hero-safari-demo.css). Inline style: Vite's url() rewriting chokes on long data URIs. */}
+    <style is:inline set:html={`:root{--hero-art-placeholder:url("${heroArtPlaceholder}")}`} />
     {content.heroTitleSerif && (
       <>
         <link rel="preload" as="font" type="font/woff2" href={ebGaramondLatin600} crossorigin />
@@ -286,6 +298,27 @@ const structuredData = [
           />
         </div>
       </section>
+      <script is:inline>
+        // Size the intro artwork before first paint, exactly as HeroSafariDemo's
+        // syncHomeIntroTargetGeometry does: the viewport, stretched to the demo
+        // card's far edges. The server-rendered painting then keeps its crop when
+        // React takes over (hero-safari-demo.css, "Before the demo hydrates").
+        (() => {
+          const slot = document.querySelector(".hero-demo-slot");
+          const visual = slot && slot.querySelector(".hero-safari-visual");
+          if (!visual || !document.documentElement.hasAttribute("data-home-intro-js")) return;
+          const sizeArt = () => {
+            const demo = visual.closest(".hero-safari-demo");
+            if (!demo || demo.dataset.introReady || demo.dataset.homeIntro !== "pending") return;
+            const rect = slot.getBoundingClientRect();
+            visual.style.setProperty("--hero-intro-art-width", `${Math.max(innerWidth, rect.right).toFixed(2)}px`);
+            visual.style.setProperty("--hero-intro-art-height", `${Math.max(innerHeight, rect.bottom).toFixed(2)}px`);
+          };
+          sizeArt();
+          if (document.fonts) document.fonts.ready.then(sizeArt);
+          addEventListener("resize", sizeArt);
+        })();
+      </script>
 
       <CommandBarSection content={content.commandBar} locale={uiLocale} />
 

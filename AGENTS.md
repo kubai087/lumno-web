@@ -75,6 +75,7 @@ Last updated: 2026-10-08
 - The header menus are React components rendered to static HTML with no `client:*` directive; `src/scripts/settings-select-runtime.ts` drives them. Keep it that way so `/release` and `/privacy` ship no React.
 - Community QR dialogs open from static `[data-community-qr-trigger]` buttons; `src/scripts/community-qr.ts` lazy-loads the React dialog on first use.
 - `src/integrations/island-modulepreload.mjs` adds `modulepreload` links for every `client:load` island's import graph; prefer `client:idle` / `client:visible` for anything the first paint does not need.
+- Homepage intro: before hydration it paints the hero artwork from server HTML (a 32px inlined placeholder under the real image, sized by the inline script after the hero) while the demo's CSS animations stay paused until `data-intro-ready`. Don't gate the reveal on the window `load` event; fonts and the stable-frame check are enough.
 - Fonts are subset by `scripts/subset-fonts.py`; rerun it after using a new Remix Icon class (`tests/font-assets.test.mjs` enforces this).
 
 ## SVG Rendering Notes (Safari)

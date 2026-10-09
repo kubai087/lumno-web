@@ -50,7 +50,7 @@ export function NewTabMock({ placeholder, time = "09:41" }: NewTabMockProps) {
             key={shortcut.title}
             style={{ "--nt-mock-tint": shortcut.tint } as CSSProperties}
           >
-            <img src={shortcut.icon} alt="" width={28} height={28} decoding="async" draggable={false} />
+            <img src={shortcut.icon} alt="" width={28} height={28} loading="lazy" decoding="async" draggable={false} />
           </span>
         ))}
       </div>

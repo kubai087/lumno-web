@@ -48,8 +48,14 @@ test("homepage opens with a full-screen Search All demo and can settle early on 
   assert.match(component, /if \(window\.scrollY > 1\) \{\s*completeHomeIntroForScroll\(\);/);
   assert.match(component, /window\.addEventListener\("scroll", handleHomeIntroScroll, \{ passive: true \}\)/);
   assert.match(component, /window\.removeEventListener\("scroll", handleHomeIntroScroll\)/);
-  assert.match(component, /const handleHomeIntroSkip = useCallback\(\(\) => \{[\s\S]*?document\.body\.dataset\.homeIntro !== "pending"[\s\S]*?revealHomeIntro\(\{ skipLoadWait: true \}\)/);
-  assert.match(component, /if \(!skipLoadWait && document\.readyState !== "complete"\)/);
+  assert.match(component, /const handleHomeIntroSkip = useCallback\(\(\) => \{[\s\S]*?document\.body\.dataset\.homeIntro !== "pending"[\s\S]*?revealHomeIntro\(\)/);
+  // The reveal waits for fonts and a stable card, never the window load event (images and third-party scripts).
+  assert.doesNotMatch(component, /addEventListener\("load"/);
+  // Before hydration the intro paints the artwork from the server HTML, with the demo hidden and its CSS paused.
+  assert.match(styles, /html\[data-home-intro-js\] \.hero-safari-demo\[data-home-intro="pending"\]:not\(\[data-intro-ready\]\) \.hero-safari-visual \{[\s\S]*?visibility: visible;/);
+  assert.match(styles, /:not\(\[data-intro-ready\]\) \.hero-safari-screen \*,[\s\S]*?animation-play-state: paused !important;/);
+  assert.match(source, /--hero-intro-art-height/);
+  assert.match(source, /<link rel="preload" as="image" href="\/assets\/settings-bg-light-monet-newtab\.webp"/);
   assert.match(component, /window\.addEventListener\("wheel", handleWheel, \{ passive: true \}\)/);
   assert.match(component, /window\.addEventListener\("keydown", handleKeyDown\)/);
   assert.match(component, /className="hero-intro-skip-hint"[\s\S]*?onClick=\{handleHomeIntroSkip\}[\s\S]*?\{siteCopy\.skipIntroLabel\}/);
@@ -271,7 +277,9 @@ test("hero demo restores the dithered background behind the search overlay", () 
   assert.match(styles, /\.hero-safari-dither/);
   assert.doesNotMatch(component, /BrowserWindow|browser-window/);
   assert.doesNotMatch(styles, /browser-window|browser-bar|browser-address/);
-  assert.match(styles, /background: url\("\/assets\/settings-bg-light-monet-newtab\.webp"\)/);
+  assert.match(styles, /background:\s*url\("\/assets\/settings-bg-light-monet-newtab\.webp"\) center \/ cover no-repeat,\s*var\(--hero-art-placeholder, none\)/);
+  // The dithered canvas fades in over that plain painting once drawn.
+  assert.match(styles, /\.hero-safari-dither\[data-dither-ready\] canvas \{\s*opacity: 1;/);
 });
 
 test("dither rendering is throttled and paints a single low-resolution buffer", () => {

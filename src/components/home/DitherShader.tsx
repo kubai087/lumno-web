@@ -192,6 +192,8 @@ export function DitherShader({
       }
 
       context.putImageData(outputData, 0, 0);
+      // Fades the dithered canvas in over the container's plain background (see hero-safari-demo.css).
+      container.dataset.ditherReady = "true";
     };
 
     const flushRender = () => {

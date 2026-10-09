@@ -625,7 +625,7 @@ export function AiIntentDemo({ locale }: AiIntentDemoProps) {
                     >
                       <span className="ai-intent-demo__tab-icon">
                         <span className="ai-intent-demo__spinner" />
-                        <img src={providerIcon} alt="" />
+                        <img src={providerIcon} alt="" loading="lazy" />
                       </span>
                       <span>{copy.provider.name}</span>
                     </span>
@@ -684,7 +684,7 @@ export function AiIntentDemo({ locale }: AiIntentDemoProps) {
                   tabIndex={phase === "mark" || toolbarOpen ? 0 : -1}
                   type="button"
                 >
-                  <img alt="" src="/assets/lumno-selection-mark.png" />
+                  <img alt="" src="/assets/lumno-selection-mark.png" loading="lazy" />
                 </button>
               </div>
               {/* The same surface carries the request: pill, then a dot that drops into the tab. */}

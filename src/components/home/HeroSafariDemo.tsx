@@ -1472,9 +1472,7 @@ export function HeroSafariDemo({
     completeHomeIntro();
   }, [completeHomeIntro, syncHomeIntroTargetGeometry]);
 
-  const revealHomeIntro = useCallback((
-    { skipLoadWait = false }: { skipLoadWait?: boolean } = {},
-  ) => {
+  const revealHomeIntro = useCallback(() => {
     if (
       document.body.dataset.homeIntro !== "pending"
       || introRevealRequestedRef.current
@@ -1488,13 +1486,11 @@ export function HeroSafariDemo({
     }
 
     const beginWhenLayoutIsStable = async () => {
-      // A user-requested skip must not sit behind slow images or third-party
-      // scripts; the stable-frame sampling below still guards the target rect.
-      if (!skipLoadWait && document.readyState !== "complete") {
-        await new Promise<void>((resolve) => {
-          window.addEventListener("load", () => resolve(), { once: true });
-        });
-      }
+      // Only fonts can move the card: nothing above it loads images. Waiting
+      // for the window load event instead held the finished demo on screen
+      // for seconds on slow connections, behind images further down the page
+      // and third-party scripts. The stable-frame sampling below still guards
+      // the target rect.
       await document.fonts?.ready;
       if (document.body.dataset.homeIntro !== "pending") {
         return;
@@ -1798,7 +1794,7 @@ export function HeroSafariDemo({
       return;
     }
 
-    revealHomeIntro({ skipLoadWait: true });
+    revealHomeIntro();
   }, [revealHomeIntro]);
 
   useEffect(() => {

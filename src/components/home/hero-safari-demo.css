@@ -99,6 +99,41 @@ html[data-home-intro-skip] .hero-safari-demo[data-home-intro="pending"] .hero-sa
   transform: none !important;
 }
 
+/*
+ * Before the demo hydrates (data-intro-ready), the intro used to be a blank
+ * page for as long as the JS took to arrive. Paint the full-screen artwork
+ * straight from the server HTML instead; the inline script after the hero sets
+ * the same --hero-intro-art-* size React computes, so the crop does not move
+ * when React takes over. The demo itself stays hidden, its CSS choreography
+ * paused, so the whole sequence still plays from the start once it can run.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  html[data-home-intro-js] .hero-safari-demo[data-home-intro="pending"]:not([data-intro-ready]) .hero-safari-visual {
+    visibility: visible;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    transform: none;
+  }
+
+  html[data-home-intro-js] .hero-safari-demo[data-home-intro="pending"]:not([data-intro-ready]) .hero-safari-mask-content {
+    width: 100%;
+    height: 100%;
+    transform: none;
+  }
+
+  html[data-home-intro-js] .hero-safari-demo[data-home-intro="pending"]:not([data-intro-ready]) .hero-safari-screen,
+  html[data-home-intro-js] .hero-safari-demo[data-home-intro="pending"]:not([data-intro-ready]) .hero-intro-skip-hint {
+    visibility: hidden;
+  }
+}
+
+html[data-home-intro-js] .hero-safari-demo[data-home-intro="pending"]:not([data-intro-ready]) .hero-safari-screen *,
+html[data-home-intro-js] .hero-safari-demo[data-home-intro="pending"]:not([data-intro-ready]) .hero-intro-skip-hint {
+  animation-play-state: paused !important;
+}
+
 .hero-safari-mask-content {
   position: absolute;
   top: 0;
@@ -142,7 +177,12 @@ html[data-home-intro-skip] .hero-safari-demo[data-home-intro="pending"] .hero-sa
   z-index: 1;
   overflow: hidden;
   border-radius: 0;
-  background: url("/assets/settings-bg-light-monet-newtab.webp") center / cover no-repeat;
+  /* Under the painting, a 32px copy of it (inlined by index.astro as
+     --hero-art-placeholder) is the intro's first frame while the full image
+     and the dither shader are still on their way. */
+  background:
+    url("/assets/settings-bg-light-monet-newtab.webp") center / cover no-repeat,
+    var(--hero-art-placeholder, none) center / cover no-repeat;
 }
 
 .hero-safari-dither canvas {
@@ -150,6 +190,19 @@ html[data-home-intro-skip] .hero-safari-demo[data-home-intro="pending"] .hero-sa
   width: 100%;
   height: 100%;
   image-rendering: pixelated;
+  opacity: 0;
+  transition: opacity 480ms ease;
+}
+
+/* Until the first dither pass, the container's plain painting shows through. */
+.hero-safari-dither[data-dither-ready] canvas {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-safari-dither canvas {
+    transition: none;
+  }
 }
 
 .hero-safari-screen {

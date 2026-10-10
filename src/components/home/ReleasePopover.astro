@@ -175,12 +175,6 @@ const renderInline = (markdown: string) => marked.parseInline(markdown, { async:
           {version}
         </span>
         <time datetime={latest.date}>{date}</time>
-        <button type="button" class="release-popover-close" data-release-popover-dismiss aria-label={messages.close}>
-          <i class="ri-close-line" aria-hidden="true"></i>
-        </button>
-      </header>
-
-      <div class="release-popover-body">
         {stores.length > 0 && (
           <ul class="release-popover-stores">
             {stores.map((store) => (
@@ -211,6 +205,12 @@ const renderInline = (markdown: string) => marked.parseInline(markdown, { async:
             ))}
           </ul>
         )}
+        <button type="button" class="release-popover-close" data-release-popover-dismiss aria-label={messages.close}>
+          <i class="ri-close-line" aria-hidden="true"></i>
+        </button>
+      </header>
+
+      <div class="release-popover-body">
         {notes.summary && <p class="release-popover-summary" set:html={renderInline(notes.summary)} />}
         {sections.map((section) => (
           <section class="release-popover-section">
@@ -435,6 +435,7 @@ const renderInline = (markdown: string) => marked.parseInline(markdown, { async:
     position: relative;
     display: flex;
     flex: none;
+    flex-wrap: wrap;
     align-items: center;
     gap: 10px;
     padding: 14px 48px 14px 20px;
@@ -442,12 +443,13 @@ const renderInline = (markdown: string) => marked.parseInline(markdown, { async:
     font-weight: 500;
   }
 
-  /* Where this release stands in each store: the release notes page's store chips, smaller. */
+  /* Where this release stands in each store: the release notes page's store chips, smaller, on the header's second row. */
   .release-popover-stores {
     display: flex;
+    flex-basis: 100%;
     flex-wrap: wrap;
     gap: 6px;
-    margin: 0 0 14px;
+    margin: 0;
     padding: 0;
     list-style: none;
   }
@@ -495,7 +497,8 @@ const renderInline = (markdown: string) => marked.parseInline(markdown, { async:
   .release-popover-close {
     all: unset;
     position: absolute;
-    top: 50%;
+    /* Level with the version row, whether or not the store row sits below it. */
+    top: 11px;
     right: 12px;
     display: inline-flex;
     align-items: center;
@@ -507,7 +510,6 @@ const renderInline = (markdown: string) => marked.parseInline(markdown, { async:
     color: rgba(75, 84, 95, 0.62);
     font-size: 15px;
     cursor: pointer;
-    transform: translateY(-50%);
     transition: background-color 160ms ease, color 160ms ease;
   }
 
@@ -673,6 +675,7 @@ const renderInline = (markdown: string) => marked.parseInline(markdown, { async:
     }
 
     .release-popover-close {
+      top: 7px;
       width: 34px;
       height: 34px;
       font-size: 17px;

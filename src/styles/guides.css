@@ -757,6 +757,12 @@
   cursor: zoom-out;
 }
 
+/* Opened dialogs take focus themselves (see GuideShell), and show no ring for it. */
+.guide-lightbox:focus,
+.guide-sheet:focus {
+  outline: none;
+}
+
 .guide-lightbox::backdrop {
   background: rgba(20, 22, 26, 0.72);
   backdrop-filter: blur(6px);
@@ -841,6 +847,13 @@
     transform: translateX(-50%);
   }
 
+  /* iOS Safari already keeps its own toolbar clear of the page, so the bar can sit lower. */
+  @supports (-webkit-touch-callout: none) {
+    .guide-dock {
+      bottom: max(12px, env(safe-area-inset-bottom));
+    }
+  }
+
   .guide-dock__button {
     display: flex;
     align-items: center;
@@ -893,7 +906,19 @@
     background: var(--surface);
     box-shadow: 0 -8px 32px rgba(15, 23, 42, 0.12);
     color: var(--guide-ink);
+    overflow: visible;
     animation: guide-sheet-in 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  /* Safari can leave a strip under the sheet uncovered; the sheet's white runs on below its edge. */
+  .guide-sheet[open]::after {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    height: 50vh;
+    background: var(--surface);
+    content: "";
   }
 
   .guide-sheet::backdrop {

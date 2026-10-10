@@ -2,6 +2,8 @@ Si ya usas otra extensión de nueva pestaña, como Momentum o Tabliss, puedes co
 
 ## Qué extensión gestiona la nueva pestaña {#which-extension}
 
+Por cómo funcionan las extensiones de navegador, que una extensión sustituya la nueva pestaña se decide al instalarla y no se puede desactivar mientras está en funcionamiento. Por eso Lumno no puede ofrecer un ajuste para dejar de usar su nueva pestaña; en su lugar, sigue los pasos que se indican a continuación.
+
 Solo una extensión puede gestionar la nueva pestaña a la vez. Si hay varias extensiones de este tipo instaladas, Chrome y Edge usan la que se instaló o activó más recientemente. Por tanto, para que la nueva pestaña muestre otra extensión, esta debe activarse después de Lumno.
 
 ## Usar la nueva pestaña de otra extensión {#switch}

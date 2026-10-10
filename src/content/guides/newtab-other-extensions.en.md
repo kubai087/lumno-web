@@ -2,6 +2,8 @@ If you already use another new tab extension, such as Momentum or Tabliss, you c
 
 ## Which extension controls the new tab {#which-extension}
 
+Because of how browser extensions work, whether an extension replaces the new tab is fixed when it's installed and can't be turned off while it runs. That's why Lumno can't offer a setting to stop using its new tab; use the steps below instead.
+
 Only one extension can control the new tab at a time. If several such extensions are installed, Chrome and Edge use the one that was installed or turned on most recently. So to use another extension's new tab, make sure it's turned on after Lumno.
 
 ## Use another extension's new tab {#switch}

@@ -7,7 +7,7 @@ Du kannst im neuen Tab die Uhrzeit anzeigen oder alles außer dem Suchfeld ausbl
 
 Du kannst die Schriftstärke der Uhrzeit ändern und festlegen, ob Sekunden angezeigt werden. Mit „Brand“ wird der Lumno-Schriftzug angezeigt, mit „Hide“ wird nichts angezeigt.
 
-![Der neue Tab mit der Uhrzeit 09:41 über dem Suchfeld und Shortcuts darunter](nt-clock "Eine Uhr über dem Suchfeld")
+![Der vollständige neue Tab: oben die Uhrzeit 09:41 und das Suchfeld, darunter eine Reihe Shortcuts, acht Lesezeichen und die meistbesuchten Seiten, dahinter ein impressionistischer Obstgarten](nt-clock "Eine Uhr über dem Suchfeld")
 
 ## Zen-Modus {#zen}
 

@@ -18,7 +18,7 @@ Para obtener más información, consulta [Buscar en pestañas, marcadores e hist
 
 ## Si vienes de Arc {#from-arc}
 
-Desde que Arc dejó de recibir funciones nuevas, muchos usuarios se han pasado a Dia, Chrome o Edge, y lo que más suelen echar de menos es la barra de comandos. Después de instalar Lumno, sigue estos pasos para recuperar una forma de trabajar familiar:
+Desde que Arc dejó de recibir funciones nuevas, muchos usuarios se han pasado a Dia, Chrome o Edge. Lumno se inspira en la barra de comandos de Arc, el cambio entre pestañas recientes, la restauración de pestañas fijadas y la imagen en imagen automática. Después de instalar Lumno, sigue estos pasos para configurar la barra de comandos:
 
 1. Abre `chrome://extensions/shortcuts` en la barra de direcciones.
 2. Busca Lumno y asigna `⌘ T` a "Open command bar".
@@ -43,7 +43,7 @@ A veces recuerdas haber leído un artículo, pero no si lo guardaste en marcador
 
 ![Al escribir css grid aparecen una página del historial y una página de MDN de la carpeta de marcadores CSS reading](uc-research "Buscar a la vez en marcadores e historial")
 
-Si un fragmento resulta difícil de entender, usa las acciones rápidas sobre la selección (Selection quick actions): selecciona el texto y aparecerá un botón de Lumno junto a él. Haz clic en el botón para elegir una acción como "Answer", "Explain" o "Research"; Lumno abrirá la respuesta de la IA en una pestaña nueva. Esta función está desactivada de forma predeterminada; puedes activarla en la sección Labs de los ajustes de Lumno.
+Si un fragmento resulta difícil de entender, usa las acciones rápidas sobre la selección (Selection quick actions): selecciona el texto y aparecerá un botón de Lumno junto a él. Haz clic en el botón para elegir una acción como "Answer", "Explain" o "Research"; Lumno abrirá la respuesta de la IA en una pestaña nueva. Lumno comprueba primero si el texto probablemente necesita ayuda, así que el botón no aparece cada vez que seleccionas algo. Esta función está desactivada de forma predeterminada; puedes activarla en la sección Labs de los ajustes de Lumno. Para obtener más información, consulta [Acciones rápidas sobre la selección](../selection-actions/).
 
 ![En un artículo, una frase sobre la unidad fr está seleccionada y junto a ella aparecen las acciones Answer, Explain y Research](uc-selection "Seleccionar texto para pedir a la IA una explicación o una investigación")
 
@@ -63,7 +63,7 @@ La nueva pestaña de Lumno puede mostrar solo lo que necesitas:
 - Reloj: muestra la hora sobre el cuadro de búsqueda.
 - Modo Zen: cuando necesites concentrarte, escribe `/zen` en el cuadro de búsqueda de la nueva pestaña para dejar solo el cuadro de búsqueda y el fondo.
 
-![La nueva pestaña con el reloj 09:41 sobre el cuadro de búsqueda y los accesos directos debajo](nt-clock "Un reloj sobre el cuadro de búsqueda")
+![La nueva pestaña completa: el reloj 09:41 y el cuadro de búsqueda arriba, luego una fila de accesos directos, ocho marcadores y los sitios más visitados, sobre un huerto impresionista](nt-clock "Un reloj sobre el cuadro de búsqueda")
 
 Para obtener más información, consulta [Cambiar el fondo](../newtab-wallpaper/) y [Reloj y modo Zen](../newtab-clock-zen/).
 

@@ -14,6 +14,7 @@ const content: GuideLocaleContent = {
       setup: "설치와 설정",
       "command-bar": "명령 바",
       "new-tab": "새 탭",
+      more: "기타 기능",
       scenarios: "이럴 때",
     },
     navToggle: "목차",
@@ -203,6 +204,22 @@ const content: GuideLocaleContent = {
       keywords: ["새 탭 확장 프로그램 충돌", "크롬 새 탭 확장 프로그램 변경", "Lumno 명령 바만 사용", "Momentum", "Tabliss"],
       title: "다른 새 탭 확장 프로그램과 함께 사용하기",
       navTitle: "다른 새 탭 확장과 함께 사용",
+    },
+    "selection-actions": {
+      pageTitle: "텍스트 선택 빠른 작업: 선택한 텍스트를 AI로 설명, 번역, 요약하기 | Lumno 도움말",
+      pageDescription:
+        "웹 페이지에서 텍스트를 선택하면 Lumno가 내용에 따라 답변, 번역, 설명, 요약, 조사, 계산 등의 AI 작업을 표시합니다. 도움이 필요한지 기기에서 먼저 판단하므로 선택할 때마다 나타나지 않습니다.",
+      keywords: ["텍스트 선택 AI", "선택 번역 확장 프로그램", "선택한 텍스트 설명", "크롬 선택 AI", "선택 요약"],
+      title: "텍스트 선택 빠른 작업",
+      navTitle: "텍스트 선택 빠른 작업",
+    },
+    "auto-pip": {
+      pageTitle: "자동 PIP: 탭을 전환하면 동영상을 작은 창에서 계속 재생 | Lumno 도움말",
+      pageDescription:
+        "동영상을 재생하다가 다른 탭으로 이동하면 동영상이 자동으로 PIP 창에서 재생되고, 돌아오면 원래대로 돌아옵니다. 작동 조건, 제외되는 사이트, 켜고 끄는 방법을 안내합니다.",
+      keywords: ["자동 PIP", "크롬 PIP 확장 프로그램", "탭 전환 동영상 작은 창", "Arc 자동 PIP", "동영상 플로팅 창"],
+      title: "자동 PIP",
+      navTitle: "자동 PIP",
     },
     "arc-command-bar": {
       pageTitle: "Arc에서 Chrome, Dia, Edge로: 명령 바와 단축키 그대로 | Lumno 도움말",

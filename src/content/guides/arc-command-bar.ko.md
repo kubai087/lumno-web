@@ -1,4 +1,4 @@
-Arc에 새 기능이 더 이상 추가되지 않으면서 많은 사용자가 Chrome, Dia, Edge로 옮겼고, 이때 가장 아쉬워하는 기능은 대개 명령 바입니다. Lumno의 디자인은 Arc를 참고했기 때문에 이러한 브라우저에서도 익숙한 명령 바를 사용할 수 있습니다.
+Arc에 새 기능이 더 이상 추가되지 않으면서 많은 사용자가 Chrome, Dia, Edge로 옮겼습니다. Lumno는 명령 바, 최근 탭 전환, 재시작 후 고정 탭 복원, 동영상 자동 PIP 등 Arc의 여러 기능을 참고했으며, 이러한 브라우저에서도 계속 사용할 수 있습니다.
 
 Lumno는 독립 오픈소스 프로젝트이며, Arc 및 The Browser Company와는 관련이 없습니다.
 
@@ -10,6 +10,8 @@ Lumno는 독립 오픈소스 프로젝트이며, Arc 및 The Browser Company와�
 | 명령 바에서 열린 탭으로 전환 | "Opened" 표시가 있는 결과를 선택하고 Return 키 누르기 |
 | `⌃ Tab`으로 최근 탭 전환 | `⌥ Q`로 최근 탭 전환기 열기 |
 | `⌘ ⇧ C`로 URL 복사 | 확장 프로그램 페이지에서 "Copy Current Page URL"에 단축키 지정 |
+| 재시작 후에도 고정 탭 유지 | Lumno 설정에서 "Restore Pinned Tabs After Restart" 켜기 |
+| 탭을 전환하면 동영상이 PIP로 재생 | [자동 PIP](../auto-pip/), 기본적으로 켜져 있음 |
 | 새 탭 | Lumno 새 탭(Dia에서는 아직 지원하지 않음) |
 
 ## 옮겨 오는 방법 {#steps}

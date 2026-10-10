@@ -7,7 +7,7 @@ Vous pouvez afficher l'heure dans le nouvel onglet, ou masquer tout sauf le cham
 
 Vous pouvez modifier la graisse de l'heure et choisir d'afficher ou non les secondes. Choisissez Brand pour afficher le logo Lumno, ou Hide pour n'afficher aucun contenu.
 
-![Le nouvel onglet avec l'horloge 09:41 au-dessus du champ de recherche et des raccourcis en dessous](nt-clock "Une horloge au-dessus du champ de recherche")
+![Le nouvel onglet complet : l'horloge 09:41 et le champ de recherche en haut, puis une rangée de raccourcis, huit favoris et les sites les plus visités, sur un verger impressionniste](nt-clock "Une horloge au-dessus du champ de recherche")
 
 ## Mode Zen {#zen}
 

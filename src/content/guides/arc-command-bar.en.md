@@ -1,4 +1,4 @@
-Since Arc stopped adding new features, many people have moved to Chrome, Dia or Edge, and the command bar is often what they miss most. Lumno's design is inspired by Arc, so you can use a familiar command bar in these browsers.
+Since Arc stopped adding new features, many people have moved to Chrome, Dia or Edge. Lumno brings several of Arc's interactions to these browsers: the command bar, switching between recent tabs, restoring pinned tabs after a restart, and automatic picture-in-picture for videos.
 
 Lumno is an independent open-source project and is not affiliated with Arc or The Browser Company.
 
@@ -10,6 +10,8 @@ Lumno is an independent open-source project and is not affiliated with Arc or Th
 | Switch to an open tab from the command bar | Select a result marked "Opened" and press Return |
 | `⌃ Tab` switches between recent tabs | `⌥ Q` opens the recent tab switcher |
 | `⌘ ⇧ C` copies the URL | Assign a shortcut to "Copy Current Page URL" on the extensions page |
+| Pinned tabs come back after a restart | Turn on "Restore Pinned Tabs After Restart" in Lumno's settings |
+| Videos move into picture-in-picture when you switch tabs | [Auto picture-in-picture](../auto-pip/), on by default |
 | New tab | Lumno's new tab (not yet available in Dia) |
 
 ## How to switch {#steps}

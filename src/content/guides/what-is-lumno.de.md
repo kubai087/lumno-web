@@ -16,14 +16,14 @@ Um zwischen den zuletzt verwendeten Seiten zu wechseln, drücke `⌥ Q` und öff
 
 Nach der Installation zeigt der neue Tab in Chrome und Edge die Startseite von Lumno: ein Gemälde als Hintergrund, deine Lieblingsseiten, deine Lesezeichen und die meistbesuchten Seiten auf einem Bildschirm. In den Appearance-Einstellungen legst du fest, wie schlicht oder umfangreich er sein soll.
 
-![Lumnos neuer Tab: oben Uhr und Suchfeld, in der Mitte Shortcuts und Lesezeichenordner, unten die meistbesuchten Seiten, dahinter eine Küste von Monet](newtab "Lumnos neuer Tab")
+![Lumnos neuer Tab: oben Uhr und Suchfeld, in der Mitte Shortcuts und Lesezeichenordner, unten die meistbesuchten Seiten, dahinter ein impressionistischer Obstgarten](newtab "Lumnos neuer Tab")
 
 ## Weitere Funktionen {#more}
 
-- Schnellaktionen für markierten Text (Selection quick actions): Markiere eine Passage und lass sie von der KI beantworten, übersetzen, erklären oder zusammenfassen. Standardmäßig deaktiviert; du aktivierst die Funktion in den Einstellungen unter Labs.
+- [Schnellaktionen für markierten Text](../selection-actions/) (Selection quick actions): Markiere eine Passage und lass sie von der KI beantworten, übersetzen, erklären oder zusammenfassen. Die Schaltfläche erscheint nur, wenn Lumno den Text als hilfebedürftig einschätzt. Standardmäßig deaktiviert; du aktivierst die Funktion in den Einstellungen unter Labs.
 - Web-Clip: Schneide einen Teil einer Seite aus und zeige ihn in einem schwebenden Bild-im-Bild-Fenster an.
-- Automatisches Bild-im-Bild: Wenn du einen YouTube- oder Twitch-Tab verlässt, wird das Video in einem kleinen Fenster weiter abgespielt.
-- Angeheftete Tabs wiederherstellen: Nach einem Neustart des Browsers werden angeheftete Tabs automatisch wiederhergestellt.
+- [Automatisches Bild-im-Bild](../auto-pip/): Wenn du einen YouTube- oder Twitch-Tab verlässt, wird das Video in einem kleinen Fenster weiter abgespielt.
+- Angeheftete Tabs wiederherstellen: Wenn „Restore Pinned Tabs After Restart“ aktiviert ist, werden angeheftete Tabs nach einem Neustart des Browsers automatisch wiederhergestellt.
 
 Jede dieser Funktionen kannst du in den Einstellungen von Lumno einzeln aktivieren oder deaktivieren.
 

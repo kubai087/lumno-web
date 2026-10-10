@@ -14,6 +14,7 @@ const content: GuideLocaleContent = {
       setup: "Installer et configurer",
       "command-bar": "Barre de commande",
       "new-tab": "Nouvel onglet",
+      more: "Autres fonctions",
       scenarios: "Cas d'usage",
     },
     navToggle: "Sommaire",
@@ -203,6 +204,22 @@ const content: GuideLocaleContent = {
       keywords: ["conflit extension nouvel onglet", "nouvel onglet Chrome modifié par une extension", "barre de commande Lumno seule", "Momentum", "Tabliss"],
       title: "Utiliser une autre extension de nouvel onglet",
       navTitle: "Autre extension de nouvel onglet",
+    },
+    "selection-actions": {
+      pageTitle: "Actions rapides sur la sélection : faire expliquer, traduire ou résumer un texte par l'IA | Aide Lumno",
+      pageDescription:
+        "Sélectionnez du texte sur une page, et Lumno propose des actions d'IA comme Answer, Translate, Explain, Summarize, Research ou Calculate. Lumno vérifie d'abord sur votre appareil si le texte a besoin d'aide : le bouton n'apparaît donc pas à chaque sélection.",
+      keywords: ["sélection de texte IA", "traduire la sélection", "expliquer un texte sélectionné", "extension Chrome sélection IA", "résumer la sélection"],
+      title: "Actions rapides sur la sélection",
+      navTitle: "Actions rapides sur la sélection",
+    },
+    "auto-pip": {
+      pageTitle: "Image dans l'image automatique : les vidéos continuent dans une petite fenêtre quand vous changez d'onglet | Aide Lumno",
+      pageDescription:
+        "Lorsque vous changez d'onglet pendant une vidéo, elle passe automatiquement en image dans l'image, puis revient sur la page à votre retour. Quand la fonction démarre, où elle ne démarre pas et comment la désactiver.",
+      keywords: ["image dans l'image automatique", "extension Chrome image dans l'image", "vidéo fenêtre flottante", "Arc image dans l'image", "changer d'onglet vidéo"],
+      title: "Image dans l'image automatique",
+      navTitle: "Image dans l'image automatique",
     },
     "arc-command-bar": {
       pageTitle: "Passer d'Arc à Chrome, Dia ou Edge : barre de commande et raccourcis | Aide Lumno",

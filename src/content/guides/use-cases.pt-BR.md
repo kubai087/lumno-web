@@ -18,7 +18,7 @@ Para saber mais, consulte [Pesquisar guias, favoritos e histórico](../search-ta
 
 ## Quando você vem do Arc {#from-arc}
 
-Desde que o Arc deixou de receber novos recursos, muitos usuários migraram para o Dia, o Chrome ou o Edge, e o que mais costuma fazer falta é a barra de comandos. Depois de instalar o Lumno, siga estas etapas para recuperar uma forma de trabalhar familiar:
+Desde que o Arc deixou de receber novos recursos, muitos usuários migraram para o Dia, o Chrome ou o Edge. O Lumno se inspira na barra de comandos do Arc, na alternância entre guias recentes, na restauração de guias fixadas e no picture-in-picture automático. Depois de instalar o Lumno, siga estas etapas para configurar a barra de comandos:
 
 1. Abra `chrome://extensions/shortcuts` na barra de endereço.
 2. Localize o Lumno e atribua `⌘ T` a "Open command bar".
@@ -43,7 +43,7 @@ Digite o atalho de um site e pressione `Tab` para pesquisar diretamente nele, se
 
 ![Ao digitar css grid, aparecem uma página do histórico e uma página do MDN na pasta de favoritos CSS reading](uc-research "Pesquisar ao mesmo tempo nos favoritos e no histórico")
 
-Se um trecho for difícil de entender, use as ações rápidas na seleção (Selection quick actions): selecione o texto, e um botão do Lumno aparecerá ao lado dele. Clique no botão e escolha uma ação como "Answer", "Explain" ou "Research"; o Lumno abrirá a resposta da IA em uma nova guia. Esse recurso vem desativado por padrão; você pode ativá-lo na seção Labs das configurações do Lumno.
+Se um trecho for difícil de entender, use as ações rápidas na seleção (Selection quick actions): selecione o texto, e um botão do Lumno aparecerá ao lado dele. Clique no botão e escolha uma ação como "Answer", "Explain" ou "Research"; o Lumno abrirá a resposta da IA em uma nova guia. O Lumno verifica primeiro se o texto provavelmente precisa de ajuda, por isso o botão não aparece toda vez que você seleciona algo. Esse recurso vem desativado por padrão; você pode ativá-lo na seção Labs das configurações do Lumno. Para saber mais, consulte [Ações rápidas na seleção](../selection-actions/).
 
 ![Em um artigo, uma frase sobre a unidade fr está selecionada, com as ações Answer, Explain e Research ao lado](uc-selection "Selecionar um texto para pedir à IA uma explicação ou uma pesquisa")
 
@@ -63,7 +63,7 @@ A nova guia do Lumno pode mostrar apenas o que você precisa:
 - Relógio: mostre a hora acima da caixa de pesquisa.
 - Modo Zen: quando precisar se concentrar, digite `/zen` na caixa de pesquisa da nova guia para manter apenas a caixa de pesquisa e o papel de parede.
 
-![A nova guia com o relógio 09:41 acima da caixa de pesquisa e os atalhos abaixo](nt-clock "Um relógio acima da caixa de pesquisa")
+![A nova guia completa: o relógio 09:41 e a caixa de pesquisa no alto, depois uma fileira de atalhos, oito favoritos e os sites mais visitados, sobre um pomar impressionista](nt-clock "Um relógio acima da caixa de pesquisa")
 
 Para saber mais, consulte [Mudar o papel de parede](../newtab-wallpaper/) e [Relógio e modo Zen](../newtab-clock-zen/).
 

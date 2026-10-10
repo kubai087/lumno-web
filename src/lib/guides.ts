@@ -43,6 +43,7 @@ export const GUIDE_NAV = [
           "newtab-other-extensions",
         ],
       },
+      { id: "more", slugs: ["selection-actions", "auto-pip"] },
       { id: "scenarios", slugs: ["arc-command-bar"] },
     ],
   },

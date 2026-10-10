@@ -18,7 +18,7 @@ Weitere Informationen findest du unter [Tabs, Lesezeichen und Verlauf durchsuche
 
 ## Wenn du von Arc gewechselt bist {#from-arc}
 
-Seit Arc keine neuen Funktionen mehr erhält, sind viele Nutzerinnen und Nutzer zu Dia, Chrome oder Edge gewechselt, und meist vermissen sie die Befehlsleiste am meisten. Nachdem du Lumno installiert hast, kannst du mit diesen Schritten zu einer vertrauten Arbeitsweise zurückkehren:
+Seit Arc keine neuen Funktionen mehr erhält, sind viele Nutzerinnen und Nutzer zu Dia, Chrome oder Edge gewechselt. Lumno orientiert sich an der Befehlsleiste, dem Wechsel zwischen den letzten Tabs, dem Wiederherstellen angehefteter Tabs und dem automatischen Bild-im-Bild von Arc. Nachdem du Lumno installiert hast, richtest du die Befehlsleiste mit diesen Schritten ein:
 
 1. Öffne `chrome://extensions/shortcuts` in der Adressleiste.
 2. Suche Lumno und lege „Open command bar“ auf `⌘ T`.
@@ -43,7 +43,7 @@ Oft erinnerst du dich an einen Artikel, weißt aber nicht mehr, ob du ihn als Le
 
 ![Die Eingabe css grid findet eine Seite aus dem Verlauf und eine MDN-Seite im Lesezeichenordner CSS reading](uc-research "Lesezeichen und Verlauf gemeinsam durchsuchen")
 
-Wenn eine Passage schwer verständlich ist, verwende die Schnellaktionen für markierten Text (Selection quick actions): Markiere den Text, und neben ihm erscheint eine Lumno-Schaltfläche. Klicke darauf und wähle eine Aktion wie „Answer“, „Explain“ oder „Research“. Lumno öffnet die Antwort der KI in einem neuen Tab. Die Funktion ist standardmäßig deaktiviert; du aktivierst sie in den Einstellungen von Lumno unter „Labs“.
+Wenn eine Passage schwer verständlich ist, verwende die Schnellaktionen für markierten Text (Selection quick actions): Markiere den Text, und neben ihm erscheint eine Lumno-Schaltfläche. Klicke darauf und wähle eine Aktion wie „Answer“, „Explain“ oder „Research“. Lumno öffnet die Antwort der KI in einem neuen Tab. Lumno prüft zuerst, ob der Text wahrscheinlich Hilfe braucht, daher erscheint die Schaltfläche nicht bei jeder Markierung. Die Funktion ist standardmäßig deaktiviert; du aktivierst sie in den Einstellungen von Lumno unter „Labs“. Weitere Informationen findest du unter [Schnellaktionen für markierten Text](../selection-actions/).
 
 ![In einem Artikel ist ein Satz über die Einheit fr markiert, daneben stehen die Aktionen Answer, Explain und Research](uc-selection "Text markieren und die KI um eine Erklärung oder Recherche bitten")
 
@@ -63,7 +63,7 @@ Lumnos neuer Tab kann genau das zeigen, was du brauchst:
 - Uhr: Zeige die Uhrzeit über dem Suchfeld an.
 - Zen-Modus: Wenn du dich konzentrieren möchtest, gib `/zen` in das Suchfeld des neuen Tabs ein. Dann bleiben nur das Suchfeld und der Hintergrund sichtbar.
 
-![Der neue Tab mit der Uhrzeit 09:41 über dem Suchfeld und Shortcuts darunter](nt-clock "Eine Uhr über dem Suchfeld")
+![Der vollständige neue Tab: oben die Uhrzeit 09:41 und das Suchfeld, darunter eine Reihe Shortcuts, acht Lesezeichen und die meistbesuchten Seiten, dahinter ein impressionistischer Obstgarten](nt-clock "Eine Uhr über dem Suchfeld")
 
 Weitere Informationen findest du unter [Hintergrund ändern](../newtab-wallpaper/) und [Uhr und Zen-Modus](../newtab-clock-zen/).
 

@@ -74,6 +74,16 @@
     "height": 400,
     "color": "#e8e8d8"
   },
+  "selection-actions": {
+    "width": 2000,
+    "height": 400,
+    "color": "#e8f8f8"
+  },
+  "auto-pip": {
+    "width": 2000,
+    "height": 400,
+    "color": "#f8f8e8"
+  },
   "arc-command-bar": {
     "width": 2000,
     "height": 400,

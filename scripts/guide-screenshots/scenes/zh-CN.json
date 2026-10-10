@@ -27,15 +27,6 @@
       ]
     },
     {
-      "title": "个人网站参考",
-      "children": [
-        {
-          "title": "Dribbble",
-          "url": "https://dribbble.com/"
-        }
-      ]
-    },
-    {
       "title": "竞品",
       "children": [
         {
@@ -54,15 +45,6 @@
         {
           "title": "DeepSeek",
           "url": "https://chat.deepseek.com/"
-        }
-      ]
-    },
-    {
-      "title": "设计系统",
-      "children": [
-        {
-          "title": "shadcn/ui",
-          "url": "https://ui.shadcn.com/"
         }
       ]
     },
@@ -91,6 +73,24 @@
     {
       "title": "GitHub",
       "url": "https://github.com/"
+    },
+    {
+      "title": "个人网站参考",
+      "children": [
+        {
+          "title": "Dribbble",
+          "url": "https://dribbble.com/"
+        }
+      ]
+    },
+    {
+      "title": "设计系统",
+      "children": [
+        {
+          "title": "shadcn/ui",
+          "url": "https://ui.shadcn.com/"
+        }
+      ]
     }
   ],
   "history": [
@@ -120,45 +120,44 @@
       "url": "https://github.com/"
     },
     {
-      "title": "X",
-      "url": "https://x.com/"
+      "title": "YouTube",
+      "url": "https://www.youtube.com/"
+    },
+    {
+      "title": "Claude",
+      "url": "https://claude.ai/"
+    },
+    {
+      "title": "豆瓣",
+      "url": "https://www.douban.com/"
     },
     {
       "title": "ChatGPT",
       "url": "https://chatgpt.com/"
     },
     {
-      "title": "Figma",
-      "url": "https://www.figma.com/"
+      "title": "哔哩哔哩",
+      "url": "https://www.bilibili.com/"
     },
     {
-      "title": "YouTube",
-      "url": "https://www.youtube.com/"
-    },
-    {
-      "title": "Notion",
-      "url": "https://www.notion.so/"
-    },
-    {
-      "title": "Gmail",
-      "url": "https://mail.google.com/"
+      "title": "知乎",
+      "url": "https://www.zhihu.com/"
     },
     {
       "title": "Dribbble",
       "url": "https://dribbble.com/"
     },
     {
-      "title": "哔哩哔哩",
-      "url": "https://www.bilibili.com/"
+      "title": "Notion",
+      "url": "https://www.notion.so/"
     }
   ],
   "quoteCategory": "poetry",
   "frequentSites": [
-    "https://github.com/kubai087/lumno-extension",
-    "https://m3.material.io/",
-    "https://www.figma.com/",
-    "https://developer.mozilla.org/zh-CN/",
-    "https://news.ycombinator.com/"
+    "https://sspai.com/",
+    "https://www.zhihu.com/",
+    "https://www.douban.com/",
+    "https://www.figma.com/"
   ],
   "wallpaper": "monet-coastal-white",
   "useCases": {
@@ -210,5 +209,10 @@
         "url": "https://www.qidian.com/chapter/1010868264/774712385/"
       }
     ]
+  },
+  "quote": {
+    "hitokoto": "海内存知己，天涯若比邻。",
+    "from": "送杜少府之任蜀州",
+    "from_who": "王勃"
   }
 }

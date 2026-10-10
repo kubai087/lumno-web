@@ -16,14 +16,14 @@ To move between the last few pages you used, press `⌥ Q` to open the [recent t
 
 After you install Lumno, the new tab in Chrome and Edge becomes Lumno's start page: a painting as the wallpaper, your favorite sites, your bookmarks and the places you visit most, all on one screen. You can make it as minimal or as full as you like in Appearance settings.
 
-![Lumno's new tab: a clock and search box at the top, shortcuts and bookmark folders in the middle, most visited sites below, over a Monet coastline](newtab "Lumno's new tab")
+![Lumno's new tab: a clock and search box at the top, shortcuts and bookmark folders in the middle, most visited sites below, over an impressionist orchard](newtab "Lumno's new tab")
 
 ## More features {#more}
 
-- Selection quick actions: select a passage and have AI answer, translate, explain or summarize it. Off by default; turn it on under Labs in settings.
+- [Selection quick actions](../selection-actions/): select a passage and have AI answer, translate, explain or summarize it. The button appears only when Lumno judges the text likely to need help. Off by default; turn it on under Labs in settings.
 - Web clip: clip part of a page into a floating picture-in-picture window.
-- Auto picture-in-picture: when you leave a YouTube or Twitch tab, the video keeps playing in a small window.
-- Restore pinned tabs: pinned tabs come back after you restart the browser.
+- [Auto picture-in-picture](../auto-pip/): when you leave a YouTube or Twitch tab, the video keeps playing in a small window.
+- Restore pinned tabs: with "Restore Pinned Tabs After Restart" turned on, pinned tabs come back automatically after you restart the browser.
 
 You can turn each of these on or off in Lumno's settings.
 

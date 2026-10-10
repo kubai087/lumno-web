@@ -7,7 +7,7 @@ Show the time above the search box, or hide everything except the search box whe
 
 You can change the time's font weight and choose whether to show seconds. Choose Brand to show the Lumno wordmark instead, or Hide to show nothing.
 
-![The new tab with the clock 09:41 above the search box and shortcuts below](nt-clock "A clock above the search box")
+![The full new tab: the clock 09:41 and search box at the top, then a row of shortcuts, eight bookmarks and most visited sites, over an impressionist orchard](nt-clock "A clock above the search box")
 
 ## Zen mode {#zen}
 

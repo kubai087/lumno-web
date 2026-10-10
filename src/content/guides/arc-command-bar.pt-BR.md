@@ -1,4 +1,4 @@
-Desde que o Arc deixou de receber novos recursos, muitos usuários migraram para o Chrome, o Dia ou o Edge, e o que mais costuma fazer falta é a barra de comandos. O funcionamento do Lumno se inspira no Arc, então você pode usar uma barra de comandos familiar nesses navegadores.
+Desde que o Arc deixou de receber novos recursos, muitos usuários migraram para o Chrome, o Dia ou o Edge. O Lumno se inspira em vários recursos do Arc, como a barra de comandos, a alternância entre guias recentes, a restauração de guias fixadas após reiniciar e o picture-in-picture automático para vídeos, e permite continuar usando esses recursos nesses navegadores.
 
 O Lumno é um projeto independente de código aberto, sem vínculo com o Arc nem com a The Browser Company.
 
@@ -10,6 +10,8 @@ O Lumno é um projeto independente de código aberto, sem vínculo com o Arc nem
 | Alternar para uma guia aberta pela barra de comandos | Selecionar um resultado marcado como "Opened" e pressionar Enter |
 | `⌃ Tab` alterna entre as guias recentes | `⌥ Q` abre o alternador de guias recentes |
 | `⌘ ⇧ C` copia a URL | Atribuir um atalho a "Copy Current Page URL" na página de extensões |
+| As guias fixadas são mantidas após reiniciar | Ativar "Restore Pinned Tabs After Restart" nas configurações do Lumno |
+| Os vídeos entram em picture-in-picture ao trocar de guia | [Picture-in-picture automático](../auto-pip/), ativado por padrão |
 | Nova guia | A nova guia do Lumno (ainda não disponível no Dia) |
 
 ## Etapas para migrar {#steps}

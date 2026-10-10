@@ -14,6 +14,7 @@ const content: GuideLocaleContent = {
       setup: "Installieren & einrichten",
       "command-bar": "Befehlsleiste",
       "new-tab": "Neuer Tab",
+      more: "Weitere Funktionen",
       scenarios: "Anwendungsfälle",
     },
     navToggle: "Inhalt",
@@ -203,6 +204,22 @@ const content: GuideLocaleContent = {
       keywords: ["Neuer-Tab-Erweiterung Konflikt", "Chrome neuer Tab von Erweiterung geändert", "nur Lumno Befehlsleiste", "Momentum", "Tabliss"],
       title: "Mit einer anderen Erweiterung für den neuen Tab verwenden",
       navTitle: "Mit anderer Neuer-Tab-Erweiterung",
+    },
+    "selection-actions": {
+      pageTitle: "Schnellaktionen für markierten Text: Text von einer KI erklären, übersetzen oder zusammenfassen lassen | Lumno-Hilfe",
+      pageDescription:
+        "Markiere Text auf einer Webseite, und Lumno schlägt KI-Aktionen wie Answer, Translate, Explain, Summarize, Research oder Calculate vor. Lumno prüft zuerst auf deinem Gerät, ob der Text Hilfe braucht, und erscheint deshalb nicht bei jeder Markierung.",
+      keywords: ["Text markieren KI", "markierten Text übersetzen", "markierten Text erklären", "Chrome Erweiterung Markierung KI", "Text zusammenfassen"],
+      title: "Schnellaktionen für markierten Text",
+      navTitle: "Schnellaktionen für markierten Text",
+    },
+    "auto-pip": {
+      pageTitle: "Automatisches Bild-im-Bild: Videos laufen beim Tabwechsel in einem kleinen Fenster weiter | Lumno-Hilfe",
+      pageDescription:
+        "Wenn du während eines Videos den Tab wechselst, läuft es automatisch im Bild-im-Bild-Fenster weiter und kehrt bei der Rückkehr auf die Seite zurück. Wann die Funktion startet, wo nicht und wie du sie deaktivierst.",
+      keywords: ["automatisches Bild-im-Bild", "Chrome Bild-im-Bild Erweiterung", "Video Tabwechsel kleines Fenster", "Arc Bild-im-Bild", "schwebendes Videofenster"],
+      title: "Automatisches Bild-im-Bild",
+      navTitle: "Automatisches Bild-im-Bild",
     },
     "arc-command-bar": {
       pageTitle: "Von Arc zu Chrome, Dia oder Edge: Befehlsleiste und Tastenkürzel | Lumno-Hilfe",

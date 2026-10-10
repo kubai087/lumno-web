@@ -1,4 +1,4 @@
-Seit Arc keine neuen Funktionen mehr erhält, sind viele Nutzerinnen und Nutzer zu Chrome, Dia oder Edge gewechselt. Am meisten vermissen sie dabei meist die Befehlsleiste. Lumnos Bedienung orientiert sich an Arc, sodass du auch in diesen Browsern eine vertraute Befehlsleiste verwenden kannst.
+Seit Arc keine neuen Funktionen mehr erhält, sind viele Nutzerinnen und Nutzer zu Chrome, Dia oder Edge gewechselt. Lumno orientiert sich an mehreren Bedienkonzepten von Arc, darunter die Befehlsleiste, der Wechsel zwischen den letzten Tabs, das Wiederherstellen angehefteter Tabs nach einem Neustart und automatisches Bild-im-Bild für Videos. Nach der Installation kannst du sie in diesen Browsern weiter nutzen.
 
 Lumno ist ein unabhängiges Open-Source-Projekt und steht in keiner Verbindung zu Arc oder The Browser Company.
 
@@ -10,6 +10,8 @@ Lumno ist ein unabhängiges Open-Source-Projekt und steht in keiner Verbindung z
 | Aus der Befehlsleiste zu einem offenen Tab wechseln | Ein Ergebnis mit „Opened“ auswählen und die Eingabetaste drücken |
 | `⌃ Tab` wechselt zwischen den letzten Tabs | `⌥ Q` öffnet den Tab-Umschalter |
 | `⌘ ⇧ C` kopiert die URL | Auf der Erweiterungsseite ein Tastenkürzel für „Copy Current Page URL“ festlegen |
+| Angeheftete Tabs bleiben nach einem Neustart erhalten | In den Einstellungen von Lumno „Restore Pinned Tabs After Restart“ aktivieren |
+| Videos wechseln beim Tabwechsel ins Bild-im-Bild | [Automatisches Bild-im-Bild](../auto-pip/), standardmäßig aktiviert |
 | Neuer Tab | Lumnos neuer Tab (in Dia noch nicht verfügbar) |
 
 ## So wechselst du {#steps}

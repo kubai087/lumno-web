@@ -14,6 +14,7 @@ const content: GuideLocaleContent = {
       setup: "安裝與設定",
       "command-bar": "命令列",
       "new-tab": "新分頁",
+      more: "更多功能",
       scenarios: "依情境",
     },
     navToggle: "目錄",
@@ -192,6 +193,22 @@ const content: GuideLocaleContent = {
       keywords: ["新分頁擴充功能衝突", "Chrome 新分頁被擴充功能接管", "只用 Lumno 命令列", "Momentum", "Infinity 新分頁"],
       title: "搭配其他新分頁擴充功能",
       navTitle: "搭配其他新分頁擴充功能",
+    },
+    "selection-actions": {
+      pageTitle: "選字快捷操作：選取文字，讓 AI 解釋、翻譯或摘要｜Lumno 說明中心",
+      pageDescription:
+        "在網頁上選取文字後，Lumno 會依照內容提供解答、翻譯、解釋、總結、研究或計算等 AI 操作。Lumno 先在本機判斷文字是否需要協助，不會每次選字都跳出。",
+      keywords: ["選字翻譯", "選字 AI", "選取文字 AI 解釋", "瀏覽器選字擴充功能", "選字摘要"],
+      title: "選字快捷操作",
+      navTitle: "選字快捷操作",
+    },
+    "auto-pip": {
+      pageTitle: "影片自動子母畫面：切換分頁時影片自動以小視窗播放｜Lumno 說明中心",
+      pageDescription:
+        "在網頁上看影片時切換到其他分頁，影片會自動進入子母畫面小視窗繼續播放，切回來時自動收起。說明觸發條件、不會觸發的網站和開關位置。",
+      keywords: ["自動子母畫面", "Chrome 子母畫面擴充功能", "切換分頁影片小視窗", "Arc 自動子母畫面", "影片浮動視窗"],
+      title: "影片自動子母畫面",
+      navTitle: "影片自動子母畫面",
     },
     "arc-command-bar": {
       pageTitle: "從 Arc 搬到 Chrome、Dia 或 Edge：命令列與快速鍵對照｜Lumno 說明中心",

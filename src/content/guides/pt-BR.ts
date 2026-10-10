@@ -14,6 +14,7 @@ const content: GuideLocaleContent = {
       setup: "Instalar e configurar",
       "command-bar": "Barra de comandos",
       "new-tab": "Nova guia",
+      more: "Mais recursos",
       scenarios: "Casos de uso",
     },
     navToggle: "Sumário",
@@ -203,6 +204,22 @@ const content: GuideLocaleContent = {
       keywords: ["conflito extensão nova guia", "nova guia do Chrome alterada por extensão", "apenas barra de comandos do Lumno", "Momentum", "Tabliss"],
       title: "Usar outra extensão de nova guia",
       navTitle: "Outra extensão de nova guia",
+    },
+    "selection-actions": {
+      pageTitle: "Ações rápidas na seleção: peça à IA para explicar, traduzir ou resumir um texto | Ajuda do Lumno",
+      pageDescription:
+        "Selecione um texto em uma página e o Lumno sugere ações de IA como Answer, Translate, Explain, Summarize, Research ou Calculate. O Lumno verifica primeiro no seu dispositivo se o texto precisa de ajuda, por isso não aparece a cada seleção.",
+      keywords: ["selecionar texto IA", "traduzir seleção", "explicar texto selecionado", "extensão Chrome seleção IA", "resumir seleção"],
+      title: "Ações rápidas na seleção",
+      navTitle: "Ações rápidas na seleção",
+    },
+    "auto-pip": {
+      pageTitle: "Picture-in-picture automático: vídeos continuam em uma janela pequena ao trocar de guia | Ajuda do Lumno",
+      pageDescription:
+        "Se você trocar de guia enquanto um vídeo é reproduzido, ele passa automaticamente para picture-in-picture e volta para a página quando você retorna. Quando é ativado, onde não é e como desativar.",
+      keywords: ["picture-in-picture automático", "extensão Chrome picture-in-picture", "vídeo janela flutuante", "Arc PiP automático", "trocar de guia vídeo"],
+      title: "Picture-in-picture automático",
+      navTitle: "Picture-in-picture automático",
     },
     "arc-command-bar": {
       pageTitle: "Do Arc para o Chrome, Dia ou Edge: a barra de comandos e os atalhos | Ajuda do Lumno",

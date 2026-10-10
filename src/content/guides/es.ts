@@ -14,6 +14,7 @@ const content: GuideLocaleContent = {
       setup: "Instalar y configurar",
       "command-bar": "Barra de comandos",
       "new-tab": "Nueva pestaña",
+      more: "Más funciones",
       scenarios: "Casos de uso",
     },
     navToggle: "Índice",
@@ -203,6 +204,22 @@ const content: GuideLocaleContent = {
       keywords: ["conflicto extensión nueva pestaña", "nueva pestaña de Chrome cambiada por una extensión", "solo barra de comandos de Lumno", "Momentum", "Tabliss"],
       title: "Usar otra extensión de nueva pestaña",
       navTitle: "Otra extensión de nueva pestaña",
+    },
+    "selection-actions": {
+      pageTitle: "Acciones rápidas sobre la selección: pide a la IA que explique, traduzca o resuma un texto | Ayuda de Lumno",
+      pageDescription:
+        "Selecciona texto en una página y Lumno sugiere acciones de IA como Answer, Translate, Explain, Summarize, Research o Calculate. Lumno comprueba primero en tu dispositivo si el texto necesita ayuda, así que no aparece en cada selección.",
+      keywords: ["seleccionar texto IA", "traducir selección", "explicar texto seleccionado", "extensión Chrome selección IA", "resumir selección"],
+      title: "Acciones rápidas sobre la selección",
+      navTitle: "Acciones rápidas sobre la selección",
+    },
+    "auto-pip": {
+      pageTitle: "Imagen en imagen automática: los vídeos siguen en una ventana pequeña al cambiar de pestaña | Ayuda de Lumno",
+      pageDescription:
+        "Si cambias de pestaña mientras se reproduce un vídeo, pasa automáticamente a imagen en imagen y vuelve a la página cuando regresas. Cuándo se activa, dónde no y cómo desactivarla.",
+      keywords: ["imagen en imagen automática", "extensión Chrome imagen en imagen", "vídeo ventana flotante", "Arc imagen en imagen", "cambiar de pestaña vídeo"],
+      title: "Imagen en imagen automática",
+      navTitle: "Imagen en imagen automática",
     },
     "arc-command-bar": {
       pageTitle: "De Arc a Chrome, Dia o Edge: la barra de comandos y los atajos | Ayuda de Lumno",

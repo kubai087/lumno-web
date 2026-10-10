@@ -2,6 +2,8 @@ Se você já usa outra extensão de nova guia, como o Momentum ou o Tabliss, pod
 
 ## Qual extensão controla a nova guia {#which-extension}
 
+Devido ao funcionamento das extensões de navegador, o fato de uma extensão substituir a nova guia é definido na instalação e não pode ser desativado enquanto ela está em execução. Por isso, o Lumno não pode oferecer uma configuração para deixar de usar a sua nova guia; use as etapas a seguir.
+
 Apenas uma extensão por vez pode controlar a nova guia. Quando há várias extensões desse tipo instaladas, o Chrome e o Edge usam a que foi instalada ou ativada mais recentemente. Portanto, para que a nova guia mostre outra extensão, ela precisa ser ativada depois do Lumno.
 
 ## Usar a nova guia de outra extensão {#switch}

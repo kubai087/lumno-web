@@ -14,6 +14,7 @@ const content: GuideLocaleContent = {
       setup: "Install & set up",
       "command-bar": "Command bar",
       "new-tab": "New tab",
+      more: "More features",
       scenarios: "Scenarios",
     },
     navToggle: "Contents",
@@ -203,6 +204,22 @@ const content: GuideLocaleContent = {
       keywords: ["new tab extension conflict", "Chrome new tab changed by extension", "use only Lumno command bar", "Momentum", "Tabliss"],
       title: "Use another new tab extension",
       navTitle: "Use another new tab extension",
+    },
+    "selection-actions": {
+      pageTitle: "Selection quick actions: select text to have AI explain, translate or summarize it | Lumno Help",
+      pageDescription:
+        "Select text on a page and Lumno suggests AI actions such as Answer, Translate, Explain, Summarize, Research or Calculate. Lumno first checks on your device whether the text needs help, so the button doesn't appear on every selection.",
+      keywords: ["select text AI", "AI translate selection", "explain selected text", "Chrome selection AI extension", "summarize selection"],
+      title: "Selection quick actions",
+      navTitle: "Selection quick actions",
+    },
+    "auto-pip": {
+      pageTitle: "Auto picture-in-picture: videos keep playing in a small window when you switch tabs | Lumno Help",
+      pageDescription:
+        "When you switch tabs while a video is playing, it moves into a picture-in-picture window and closes again when you come back. When it starts, where it doesn't, and how to turn it off.",
+      keywords: ["auto picture-in-picture", "Chrome picture in picture extension", "video floating window", "Arc auto PiP", "PiP when switching tabs"],
+      title: "Auto picture-in-picture",
+      navTitle: "Auto picture-in-picture",
     },
     "arc-command-bar": {
       pageTitle: "Moving from Arc to Chrome, Dia or Edge: the command bar and shortcuts | Lumno Help",

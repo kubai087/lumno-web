@@ -278,6 +278,24 @@ async function prepareNewtab() {
   });
 }
 
+const FULL_NEWTAB_WALLPAPER = cfg.fullNewtabWallpaper || "impressionist-orchard-white";
+async function stageFullNewtab() {
+  await setPrefs({
+    _x_extension_newtab_wallpaper_2026_unique_: { version: 2, sameForModes: true, light: FULL_NEWTAB_WALLPAPER, dark: FULL_NEWTAB_WALLPAPER },
+    _x_extension_newtab_wallpaper_overlay_2026_unique_: { version: 2, light: 0, dark: 0 },
+    _x_extension_bookmark_columns_2024_unique_: 4,
+    _x_extension_bookmark_count_2024_unique_: 8,
+    _x_extension_recent_count_2024_unique_: 4,
+  });
+}
+async function unstageFullNewtab() {
+  await setPrefs({
+    _x_extension_newtab_wallpaper_2026_unique_: { version: 2, sameForModes: true, light: cfg.wallpaper, dark: cfg.wallpaper },
+    _x_extension_newtab_wallpaper_overlay_2026_unique_: { version: 2, light: 50, dark: 50 },
+    _x_extension_bookmark_columns_2024_unique_: 6,
+  });
+}
+
 const scenes = {
   // Mixed results: open tab, bookmark, history under one query.
   async search(page) {
@@ -348,10 +366,15 @@ const scenes = {
     await shot("switcher", page, await overlayBox(page));
     await closeOverlay(page);
   },
+  // The whole new tab, staged like a real one: a vivid painting with no veil, eight bookmarks
+  // filling two rows of four, one full row of frequent sites.
   async newtab() {
+    await stageFullNewtab();
     const nt = await openNewtab();
+    await sleep(1200);
     await shot("newtab", nt);
     await nt.close();
+    await unstageFullNewtab();
   },
   // The page the extension opens right after installing.
   async onboarding() {
@@ -425,14 +448,22 @@ const scenes = {
     await page.close();
   },
   async "nt-clock"() {
+    await stageFullNewtab();
+    // The daily quote is a random draw; serve one chosen line so the picture stays the same.
+    if (cfg.quote) {
+      await ctx.route("https://v1.hitokoto.cn/**", (route) =>
+        route.fulfill({ contentType: "application/json", body: JSON.stringify(cfg.quote) }),
+      );
+    }
     await setPrefs({
       _x_extension_newtab_quote_prefs_2026_unique_: { enabled: true, position: "input", category: cfg.quoteCategory || "literature" },
     });
     const page = await openNewtab();
     await sleep(1500);
-    await shot("nt-clock", page, await boxOf(page, ["#_x_extension_newtab_wordmark_2026_unique_", "#_x_extension_newtab_root_2024_unique_", "#_x_extension_newtab_shortcuts_2026_unique_"]));
+    await shot("nt-clock", page);
     await page.close();
     await setPrefs({ _x_extension_newtab_quote_prefs_2026_unique_: { enabled: false } });
+    await unstageFullNewtab();
   },
   async "nt-zen"() {
     await setPrefs({ _x_extension_newtab_zen_mode_2026_unique_: true });

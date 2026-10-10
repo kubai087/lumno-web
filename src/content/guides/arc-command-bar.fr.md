@@ -1,4 +1,4 @@
-Depuis qu'Arc ne reçoit plus de nouvelles fonctions, de nombreux utilisateurs sont passés à Chrome, Dia ou Edge, et c'est souvent la barre de commande qui leur manque le plus. L'interface de Lumno s'inspire d'Arc : vous retrouvez ainsi une barre de commande familière dans ces navigateurs.
+Depuis qu'Arc ne reçoit plus de nouvelles fonctions, de nombreux utilisateurs sont passés à Chrome, Dia ou Edge. Lumno reprend plusieurs principes d'Arc : la barre de commande, le passage d'un onglet récent à l'autre, la restauration des onglets épinglés après un redémarrage et l'image dans l'image automatique pour les vidéos. Une fois Lumno installé, vous pouvez continuer à les utiliser dans ces navigateurs.
 
 Lumno est un projet open source indépendant, sans lien avec Arc ni avec The Browser Company.
 
@@ -10,6 +10,8 @@ Lumno est un projet open source indépendant, sans lien avec Arc ni avec The Bro
 | Basculer vers un onglet ouvert depuis la barre de commande | Sélectionner un résultat marqué « Opened » et appuyer sur Entrée |
 | `⌃ Tab` passe d'un onglet récent à l'autre | `⌥ Q` ouvre le sélecteur d'onglets récents |
 | `⌘ ⇧ C` copie l'URL | Attribuer un raccourci à « Copy Current Page URL » sur la page des extensions |
+| Les onglets épinglés sont conservés après un redémarrage | Activer « Restore Pinned Tabs After Restart » dans les réglages de Lumno |
+| Les vidéos passent en image dans l'image quand vous changez d'onglet | [Image dans l'image automatique](../auto-pip/), activée par défaut |
 | Nouvel onglet | Le nouvel onglet de Lumno (pas encore disponible dans Dia) |
 
 ## Étapes de la migration {#steps}

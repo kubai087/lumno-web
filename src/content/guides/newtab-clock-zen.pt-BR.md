@@ -7,7 +7,7 @@ Você pode mostrar a hora na nova guia ou ocultar tudo, exceto a caixa de pesqui
 
 Você pode alterar o peso da fonte da hora e escolher se os segundos são exibidos. Escolha Brand para mostrar o logotipo do Lumno ou Hide para não exibir nada.
 
-![A nova guia com o relógio 09:41 acima da caixa de pesquisa e os atalhos abaixo](nt-clock "Um relógio acima da caixa de pesquisa")
+![A nova guia completa: o relógio 09:41 e a caixa de pesquisa no alto, depois uma fileira de atalhos, oito favoritos e os sites mais visitados, sobre um pomar impressionista](nt-clock "Um relógio acima da caixa de pesquisa")
 
 ## Modo Zen {#zen}
 

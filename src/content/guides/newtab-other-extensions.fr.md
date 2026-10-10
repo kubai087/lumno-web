@@ -2,6 +2,8 @@ Si vous utilisez déjà une autre extension de nouvel onglet, comme Momentum ou 
 
 ## Quelle extension gère le nouvel onglet {#which-extension}
 
+En raison du fonctionnement des extensions de navigateur, le fait qu'une extension remplace le nouvel onglet est fixé lors de son installation et ne peut pas être désactivé pendant son fonctionnement. C'est pourquoi Lumno ne peut pas proposer de réglage pour désactiver son nouvel onglet ; utilisez plutôt les étapes ci-dessous.
+
 Une seule extension à la fois peut gérer le nouvel onglet. Lorsque plusieurs extensions de ce type sont installées, Chrome et Edge utilisent celle qui a été installée ou activée le plus récemment. Pour que le nouvel onglet affiche une autre extension, celle-ci doit donc être activée après Lumno.
 
 ## Utiliser le nouvel onglet d'une autre extension {#switch}

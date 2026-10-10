@@ -16,14 +16,14 @@ Para alternar entre as últimas páginas usadas, pressione `⌥ Q` e abra o [alt
 
 Depois que você instala o Lumno, a nova guia do Chrome e do Edge passa a mostrar a página inicial do Lumno: uma pintura como papel de parede, seus sites favoritos, seus favoritos e os sites mais visitados, tudo em uma única tela. Você pode escolher o que é exibido nas configurações de Appearance.
 
-![A nova guia do Lumno: relógio e caixa de pesquisa no alto, atalhos e pastas de favoritos no meio, sites mais visitados embaixo, sobre um litoral de Monet](newtab "A nova guia do Lumno")
+![A nova guia do Lumno: relógio e caixa de pesquisa no alto, atalhos e pastas de favoritos no meio, sites mais visitados embaixo, sobre um pomar impressionista](newtab "A nova guia do Lumno")
 
 ## Outros recursos {#more}
 
-- Ações rápidas na seleção (Selection quick actions): selecione um trecho para pedir à IA que o responda, traduza, explique ou resuma. Desativado por padrão; você pode ativá-lo na seção Labs das configurações.
+- [Ações rápidas na seleção](../selection-actions/) (Selection quick actions): selecione um trecho para pedir à IA que o responda, traduza, explique ou resuma. O botão só aparece quando o Lumno avalia que o texto precisa de ajuda. Desativado por padrão; você pode ativá-lo na seção Labs das configurações.
 - Recorte da web: recorte parte de uma página e exiba-a em uma janela flutuante de picture-in-picture.
-- Picture-in-picture automático: ao sair de uma guia do YouTube ou da Twitch, o vídeo continua sendo reproduzido em uma janela pequena.
-- Restauração de guias fixadas: ao reiniciar o navegador, as guias fixadas são restauradas automaticamente.
+- [Picture-in-picture automático](../auto-pip/): ao sair de uma guia do YouTube ou da Twitch, o vídeo continua sendo reproduzido em uma janela pequena.
+- Restauração de guias fixadas: com "Restore Pinned Tabs After Restart" ativado, as guias fixadas são restauradas automaticamente quando você reinicia o navegador.
 
 Você pode ativar ou desativar cada um desses recursos separadamente nas configurações do Lumno.
 

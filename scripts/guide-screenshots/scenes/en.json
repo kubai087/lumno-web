@@ -54,15 +54,6 @@
       ]
     },
     {
-      "title": "Design systems",
-      "children": [
-        {
-          "title": "shadcn/ui",
-          "url": "https://ui.shadcn.com/"
-        }
-      ]
-    },
-    {
       "title": "Inspiration",
       "children": [
         {
@@ -70,6 +61,14 @@
           "url": "https://www.are.na/"
         }
       ]
+    },
+    {
+      "title": "ChatGPT",
+      "url": "https://chatgpt.com/"
+    },
+    {
+      "title": "GitHub",
+      "url": "https://github.com/"
     },
     {
       "title": "Reading",
@@ -81,12 +80,13 @@
       ]
     },
     {
-      "title": "ChatGPT",
-      "url": "https://chatgpt.com/"
-    },
-    {
-      "title": "GitHub",
-      "url": "https://github.com/"
+      "title": "Design systems",
+      "children": [
+        {
+          "title": "shadcn/ui",
+          "url": "https://ui.shadcn.com/"
+        }
+      ]
     }
   ],
   "history": [
@@ -114,45 +114,44 @@
       "url": "https://github.com/"
     },
     {
-      "title": "X",
-      "url": "https://x.com/"
+      "title": "YouTube",
+      "url": "https://www.youtube.com/"
+    },
+    {
+      "title": "Claude",
+      "url": "https://claude.ai/"
+    },
+    {
+      "title": "Spotify",
+      "url": "https://open.spotify.com/"
     },
     {
       "title": "ChatGPT",
       "url": "https://chatgpt.com/"
     },
     {
-      "title": "Figma",
-      "url": "https://www.figma.com/"
+      "title": "Telegram",
+      "url": "https://web.telegram.org/"
     },
     {
-      "title": "YouTube",
-      "url": "https://www.youtube.com/"
-    },
-    {
-      "title": "Notion",
-      "url": "https://www.notion.so/"
-    },
-    {
-      "title": "Gmail",
-      "url": "https://mail.google.com/"
+      "title": "Linear",
+      "url": "https://linear.app/"
     },
     {
       "title": "Dribbble",
       "url": "https://dribbble.com/"
     },
     {
-      "title": "Reddit",
-      "url": "https://www.reddit.com/"
+      "title": "Notion",
+      "url": "https://www.notion.so/"
     }
   ],
   "quoteCategory": "literature",
   "frequentSites": [
-    "https://github.com/kubai087/lumno-extension",
-    "https://m3.material.io/",
     "https://www.figma.com/",
-    "https://developer.mozilla.org/en-US/",
-    "https://news.ycombinator.com/"
+    "https://www.notion.so/",
+    "https://dribbble.com/",
+    "https://github.com/"
   ],
   "wallpaper": "monet-coastal-white",
   "useCases": {

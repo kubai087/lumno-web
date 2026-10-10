@@ -18,7 +18,7 @@ Pour en savoir plus, consultez [Chercher dans les onglets, les favoris et l'hist
 
 ## Lorsque vous venez d'Arc {#from-arc}
 
-Depuis qu'Arc ne reçoit plus de nouvelles fonctions, de nombreux utilisateurs sont passés à Dia, Chrome ou Edge, et c'est souvent la barre de commande qui leur manque le plus. Après avoir installé Lumno, suivez ces étapes pour retrouver une façon de travailler familière :
+Depuis qu'Arc ne reçoit plus de nouvelles fonctions, de nombreux utilisateurs sont passés à Dia, Chrome ou Edge. Lumno s'inspire de la barre de commande d'Arc, du passage d'un onglet récent à l'autre, de la restauration des onglets épinglés et de l'image dans l'image automatique. Après avoir installé Lumno, suivez ces étapes pour configurer la barre de commande :
 
 1. Ouvrez `chrome://extensions/shortcuts` dans la barre d'adresse.
 2. Repérez Lumno et attribuez `⌘ T` à « Open command bar ».
@@ -43,7 +43,7 @@ Il arrive de se souvenir d'un article sans savoir s'il a été ajouté aux favor
 
 ![La saisie de css grid trouve une page de l'historique et une page MDN dans le dossier de favoris CSS reading](uc-research "Rechercher à la fois dans les favoris et l'historique")
 
-Si un passage est difficile à comprendre, utilisez les actions rapides sur la sélection (Selection quick actions) : sélectionnez le texte, et un bouton Lumno apparaît à côté. Cliquez dessus pour choisir une action comme « Answer », « Explain » ou « Research » ; Lumno ouvre la réponse de l'IA dans un nouvel onglet. Cette fonction est désactivée par défaut ; vous pouvez l'activer dans la section Labs des réglages de Lumno.
+Si un passage est difficile à comprendre, utilisez les actions rapides sur la sélection (Selection quick actions) : sélectionnez le texte, et un bouton Lumno apparaît à côté. Cliquez dessus pour choisir une action comme « Answer », « Explain » ou « Research » ; Lumno ouvre la réponse de l'IA dans un nouvel onglet. Lumno vérifie d'abord si le texte a probablement besoin d'aide : le bouton n'apparaît donc pas à chaque sélection. Cette fonction est désactivée par défaut ; vous pouvez l'activer dans la section Labs des réglages de Lumno. Pour en savoir plus, consultez [Actions rapides sur la sélection](../selection-actions/).
 
 ![Dans un article, une phrase sur l'unité fr est sélectionnée, avec les actions Answer, Explain et Research à côté](uc-selection "Sélectionner du texte pour demander à l'IA de l'expliquer ou de faire une recherche")
 
@@ -63,7 +63,7 @@ Le nouvel onglet de Lumno peut n'afficher que ce dont vous avez besoin :
 - Horloge : affichez l'heure au-dessus du champ de recherche.
 - Mode Zen : lorsque vous avez besoin de vous concentrer, saisissez `/zen` dans le champ de recherche du nouvel onglet pour ne garder que le champ de recherche et le fond d'écran.
 
-![Le nouvel onglet avec l'horloge 09:41 au-dessus du champ de recherche et des raccourcis en dessous](nt-clock "Une horloge au-dessus du champ de recherche")
+![Le nouvel onglet complet : l'horloge 09:41 et le champ de recherche en haut, puis une rangée de raccourcis, huit favoris et les sites les plus visités, sur un verger impressionniste](nt-clock "Une horloge au-dessus du champ de recherche")
 
 Pour en savoir plus, consultez [Changer le fond d'écran](../newtab-wallpaper/) et [Horloge et mode Zen](../newtab-clock-zen/).
 

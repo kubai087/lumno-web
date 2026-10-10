@@ -7,7 +7,7 @@ Puedes mostrar la hora en la nueva pestaña u ocultar todo excepto el cuadro de 
 
 Puedes cambiar el grosor de la hora y elegir si se muestran los segundos. Elige Brand para mostrar el logotipo de Lumno o Hide para no mostrar nada.
 
-![La nueva pestaña con el reloj 09:41 sobre el cuadro de búsqueda y los accesos directos debajo](nt-clock "Un reloj sobre el cuadro de búsqueda")
+![La nueva pestaña completa: el reloj 09:41 y el cuadro de búsqueda arriba, luego una fila de accesos directos, ocho marcadores y los sitios más visitados, sobre un huerto impresionista](nt-clock "Un reloj sobre el cuadro de búsqueda")
 
 ## Modo Zen {#zen}
 

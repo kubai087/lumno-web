@@ -16,14 +16,14 @@ Pour passer d'une page récente à l'autre, appuyez sur `⌥ Q` afin d'ouvrir le
 
 Une fois Lumno installé, le nouvel onglet de Chrome et d'Edge affiche la page d'accueil de Lumno : un tableau en fond d'écran, vos sites préférés, vos favoris et vos sites les plus visités, réunis sur un seul écran. Vous pouvez choisir les éléments affichés dans les réglages Appearance.
 
-![Le nouvel onglet de Lumno : une horloge et le champ de recherche en haut, des raccourcis et dossiers de favoris au centre, les sites les plus visités en bas, sur un littoral de Monet](newtab "Le nouvel onglet de Lumno")
+![Le nouvel onglet de Lumno : une horloge et le champ de recherche en haut, des raccourcis et dossiers de favoris au centre, les sites les plus visités en bas, sur un verger impressionniste](newtab "Le nouvel onglet de Lumno")
 
 ## Autres fonctions {#more}
 
-- Actions rapides sur la sélection (Selection quick actions) : sélectionnez un passage pour demander à l'IA d'y répondre, de le traduire, de l'expliquer ou de le résumer. Désactivé par défaut ; vous pouvez l'activer dans la section Labs des réglages.
+- [Actions rapides sur la sélection](../selection-actions/) (Selection quick actions) : sélectionnez un passage pour demander à l'IA d'y répondre, de le traduire, de l'expliquer ou de le résumer. Le bouton n'apparaît que lorsque Lumno estime que le texte a besoin d'aide. Désactivé par défaut ; vous pouvez l'activer dans la section Labs des réglages.
 - Capture web : découpez une partie d'une page et affichez-la dans une fenêtre flottante en image dans l'image.
-- Image dans l'image automatique : lorsque vous quittez un onglet YouTube ou Twitch, la vidéo continue dans une petite fenêtre.
-- Restauration des onglets épinglés : après un redémarrage du navigateur, les onglets épinglés sont rouverts automatiquement.
+- [Image dans l'image automatique](../auto-pip/) : lorsque vous quittez un onglet YouTube ou Twitch, la vidéo continue dans une petite fenêtre.
+- Restauration des onglets épinglés : lorsque « Restore Pinned Tabs After Restart » est activé, les onglets épinglés sont rouverts automatiquement après un redémarrage du navigateur.
 
 Chacune de ces fonctions peut être activée ou désactivée séparément dans les réglages de Lumno.
 

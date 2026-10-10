@@ -2,6 +2,8 @@ Wenn du bereits eine andere Erweiterung für den neuen Tab verwendest, etwa Mome
 
 ## Welche Erweiterung den neuen Tab steuert {#which-extension}
 
+Aufgrund der Funktionsweise von Browsererweiterungen wird bereits bei der Installation festgelegt, ob eine Erweiterung den neuen Tab übernimmt; im laufenden Betrieb lässt sich das nicht abschalten. Deshalb kann Lumno keine Einstellung anbieten, um den eigenen neuen Tab zu deaktivieren. Verwende stattdessen die folgenden Schritte.
+
 Es kann immer nur eine Erweiterung den neuen Tab steuern. Sind mehrere solcher Erweiterungen installiert, verwenden Chrome und Edge die zuletzt installierte oder zuletzt aktivierte. Damit der neue Tab die andere Erweiterung zeigt, muss diese also nach Lumno aktiviert werden.
 
 ## Den neuen Tab einer anderen Erweiterung verwenden {#switch}

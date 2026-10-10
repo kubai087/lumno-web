@@ -14,6 +14,7 @@ const content: GuideLocaleContent = {
       setup: "インストールと設定",
       "command-bar": "コマンドバー",
       "new-tab": "新しいタブ",
+      more: "そのほかの機能",
       scenarios: "シーン別",
     },
     navToggle: "目次",
@@ -192,6 +193,22 @@ const content: GuideLocaleContent = {
       keywords: ["新しいタブ 拡張機能 競合", "Chrome 新しいタブ 拡張機能で変更", "Lumno コマンドバーだけ", "Momentum", "Tabliss"],
       title: "ほかの新しいタブ拡張機能と併用する",
       navTitle: "ほかの新しいタブ拡張機能と併用",
+    },
+    "selection-actions": {
+      pageTitle: "選択テキストのクイック操作：選択した文章を AI に説明・翻訳・要約してもらう｜Lumno ヘルプ",
+      pageDescription:
+        "ウェブページでテキストを選択すると、Lumno が内容に応じて回答、翻訳、説明、要約、調査、計算などの AI 操作を表示します。手助けが必要かどうかをデバイス上で判断するため、選択のたびに表示されることはありません。",
+      keywords: ["選択テキスト AI", "選択 翻訳 拡張機能", "選択した文章 説明", "Chrome 選択 AI", "選択 要約"],
+      title: "選択テキストのクイック操作",
+      navTitle: "選択テキストのクイック操作",
+    },
+    "auto-pip": {
+      pageTitle: "動画の自動ピクチャー・イン・ピクチャー：タブを切り替えると動画を小さなウインドウで再生｜Lumno ヘルプ",
+      pageDescription:
+        "動画の再生中に別のタブに切り替えると、動画が自動的にピクチャー・イン・ピクチャーで再生され、戻ると元に戻ります。動作する条件、対象外のサイト、オン・オフの方法を説明します。",
+      keywords: ["自動ピクチャーインピクチャー", "Chrome ピクチャーインピクチャー 拡張機能", "タブ切り替え 動画 小窓", "Arc 自動 PiP", "動画 フローティング"],
+      title: "動画の自動ピクチャー・イン・ピクチャー",
+      navTitle: "自動ピクチャー・イン・ピクチャー",
     },
     "arc-command-bar": {
       pageTitle: "Arc から Chrome・Dia・Edge へ：コマンドバーとショートカットの対応表｜Lumno ヘルプ",

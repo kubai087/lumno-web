@@ -14,6 +14,7 @@ const content: GuideLocaleContent = {
       setup: "安装与设置",
       "command-bar": "命令栏",
       "new-tab": "新标签页",
+      more: "更多功能",
       scenarios: "按场景",
     },
     navToggle: "目录",
@@ -213,6 +214,22 @@ const content: GuideLocaleContent = {
       keywords: ["新标签页扩展冲突", "Chrome 新标签页被扩展接管", "只用 Lumno 命令栏", "Momentum", "WeTab", "Infinity 新标签页"],
       title: "搭配其他新标签页扩展",
       navTitle: "搭配其他新标签页扩展",
+    },
+    "selection-actions": {
+      pageTitle: "划词快捷操作：选中文字，让 AI 解释、翻译或总结｜Lumno 帮助中心",
+      pageDescription:
+        "在网页上选中文字后，Lumno 会根据内容给出解答、翻译、解释、总结、调研或计算等 AI 操作。Lumno 先在本机判断文字是否需要帮助，不会每次划词都弹出。",
+      keywords: ["划词翻译", "划词 AI", "选中文字 AI 解释", "浏览器划词插件", "划词总结"],
+      title: "划词快捷操作",
+      navTitle: "划词快捷操作",
+    },
+    "auto-pip": {
+      pageTitle: "视频自动画中画：切换标签页时视频自动小窗播放｜Lumno 帮助中心",
+      pageDescription:
+        "在网页上看视频时切换到其他标签页，视频会自动进入画中画小窗继续播放，切回来时自动收起。介绍触发条件、不会触发的网站和开关位置。",
+      keywords: ["自动画中画", "Chrome 画中画插件", "切换标签页视频小窗", "Arc 自动画中画", "视频悬浮窗"],
+      title: "视频自动画中画",
+      navTitle: "视频自动画中画",
     },
     "arc-command-bar": {
       pageTitle: "从 Arc 迁移到 Chrome、Dia 或 Edge：命令栏与快捷键对照｜Lumno 帮助中心",

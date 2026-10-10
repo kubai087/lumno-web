@@ -1,4 +1,4 @@
-Desde que Arc dejó de recibir funciones nuevas, muchos usuarios se han pasado a Chrome, Dia o Edge, y lo que más suelen echar de menos es la barra de comandos. El funcionamiento de Lumno se inspira en Arc, así que puedes usar una barra de comandos familiar en estos navegadores.
+Desde que Arc dejó de recibir funciones nuevas, muchos usuarios se han pasado a Chrome, Dia o Edge. Lumno se inspira en varias funciones de Arc, como la barra de comandos, el cambio entre pestañas recientes, la restauración de pestañas fijadas tras reiniciar y la imagen en imagen automática para vídeos, y te permite seguir usándolas en estos navegadores.
 
 Lumno es un proyecto de código abierto independiente y no tiene relación con Arc ni con The Browser Company.
 
@@ -10,6 +10,8 @@ Lumno es un proyecto de código abierto independiente y no tiene relación con A
 | Cambiar a una pestaña abierta desde la barra de comandos | Seleccionar un resultado marcado como "Opened" y pulsar Intro |
 | `⌃ Tab` cambia entre pestañas recientes | `⌥ Q` abre el selector de pestañas recientes |
 | `⌘ ⇧ C` copia la URL | Asignar un atajo a "Copy Current Page URL" en la página de extensiones |
+| Las pestañas fijadas se conservan al reiniciar | Activar "Restore Pinned Tabs After Restart" en los ajustes de Lumno |
+| Los vídeos pasan a imagen en imagen al cambiar de pestaña | [Imagen en imagen automática](../auto-pip/), activada por defecto |
 | Nueva pestaña | La nueva pestaña de Lumno (aún no disponible en Dia) |
 
 ## Pasos para el cambio {#steps}

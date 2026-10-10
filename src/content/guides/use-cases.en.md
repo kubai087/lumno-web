@@ -18,7 +18,7 @@ See [Search tabs, bookmarks and history](../search-tabs-bookmarks-history/) and 
 
 ## When you've moved from Arc {#from-arc}
 
-Since Arc stopped adding new features, many people have moved to Dia, Chrome or Edge, and the command bar is often what they miss most. After you install Lumno, follow these steps to get a familiar workflow back:
+Since Arc stopped adding new features, many people have moved to Dia, Chrome or Edge. Lumno is inspired by Arc's command bar, recent tab switching, pinned tab restore and automatic picture-in-picture. After you install Lumno, follow these steps to set up the command bar:
 
 1. Open `chrome://extensions/shortcuts` in the address bar.
 2. Find Lumno and set "Open command bar" to `⌘ T`.
@@ -43,7 +43,7 @@ You may remember reading an article but not whether you bookmarked it or only vi
 
 ![Typing css grid finds a page from history and an MDN page in the CSS reading bookmarks folder](uc-research "Search bookmarks and history together")
 
-When a passage is hard to follow, use selection quick actions: select the text, and a Lumno button appears next to it. Click it to choose an action such as Answer, Explain or Research, and Lumno opens the AI's answer in a new tab. This feature is off by default; turn it on under Labs in Lumno's settings.
+When a passage is hard to follow, use selection quick actions: select the text, and a Lumno button appears next to it. Click it to choose an action such as Answer, Explain or Research, and Lumno opens the AI's answer in a new tab. Lumno first checks whether the text is likely to need help, so the button doesn't appear every time you select something. This feature is off by default; turn it on under Labs in Lumno's settings. See [Selection quick actions](../selection-actions/).
 
 ![In an article, a selected sentence about the fr unit with Answer, Explain and Research actions next to it](uc-selection "Select text, then ask AI to explain or research it")
 
@@ -63,7 +63,7 @@ Lumno's new tab can show only what you need:
 - Clock: show the time above the search box.
 - Zen mode: when you need to focus, type `/zen` in the new tab's search box to keep only the search box and wallpaper.
 
-![The new tab with the clock 09:41 above the search box and shortcuts below](nt-clock "A clock above the search box")
+![The full new tab: the clock 09:41 and search box at the top, then a row of shortcuts, eight bookmarks and most visited sites, over an impressionist orchard](nt-clock "A clock above the search box")
 
 See [Change the wallpaper](../newtab-wallpaper/) and [Clock and Zen mode](../newtab-clock-zen/).
 

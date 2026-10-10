@@ -16,14 +16,14 @@ Para cambiar entre las últimas páginas que has usado, pulsa `⌥ Q` y abre el 
 
 Después de instalar Lumno, la nueva pestaña de Chrome y Edge muestra la página de inicio de Lumno: un cuadro como fondo, tus sitios favoritos, tus marcadores y los sitios que más visitas, todo en una sola pantalla. Puedes elegir qué elementos se muestran en los ajustes de Appearance.
 
-![La nueva pestaña de Lumno: un reloj y el cuadro de búsqueda arriba, accesos directos y carpetas de marcadores en el centro, los sitios más visitados abajo, sobre una costa de Monet](newtab "La nueva pestaña de Lumno")
+![La nueva pestaña de Lumno: un reloj y el cuadro de búsqueda arriba, accesos directos y carpetas de marcadores en el centro, los sitios más visitados abajo, sobre un huerto impresionista](newtab "La nueva pestaña de Lumno")
 
 ## Otras funciones {#more}
 
-- Acciones rápidas sobre la selección (Selection quick actions): selecciona un fragmento para que la IA lo responda, lo traduzca, lo explique o lo resuma. Está desactivada por defecto; puedes activarla en la sección Labs de los ajustes.
+- [Acciones rápidas sobre la selección](../selection-actions/) (Selection quick actions): selecciona un fragmento para que la IA lo responda, lo traduzca, lo explique o lo resuma. El botón solo aparece cuando Lumno considera que el texto necesita ayuda. Está desactivada por defecto; puedes activarla en la sección Labs de los ajustes.
 - Recorte web: recorta una parte de una página y muéstrala en una ventana flotante de imagen en imagen.
-- Imagen en imagen automática: al salir de una pestaña de YouTube o Twitch, el vídeo sigue reproduciéndose en una ventana pequeña.
-- Restauración de pestañas fijadas: al reiniciar el navegador, las pestañas fijadas se restauran automáticamente.
+- [Imagen en imagen automática](../auto-pip/): al salir de una pestaña de YouTube o Twitch, el vídeo sigue reproduciéndose en una ventana pequeña.
+- Restauración de pestañas fijadas: si activas "Restore Pinned Tabs After Restart", las pestañas fijadas se restauran automáticamente al reiniciar el navegador.
 
 Puedes activar o desactivar cada una de estas funciones por separado en los ajustes de Lumno.
 

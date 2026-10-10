@@ -105,8 +105,8 @@ test("pages read like a wiki: search, sidebar, keycaps, zoomable screenshots, pr
   assert.match(shell, /<details class="guide-nav" open>/);
   assert.match(shell, /aria-current=\{item === current \? "page" : undefined\}/);
   assert.match(shell, /guide-nav__list--nested/);
-  // Each entry is an icon row; the current page sits on a soft grey pill.
-  assert.match(shell, /<i class=\{GUIDE_ICONS\[item\]\} aria-hidden="true"><\/i>/);
+  // Plain text rows (no icons); the current page sits on a soft grey pill.
+  assert.doesNotMatch(shell, /GUIDE_ICONS/);
   assert.match(readSource("src/styles/guides.css"), /\.guide-nav a\[aria-current="page"\] \{\s*background: var\(--guide-row-current\);/);
   assert.match(article, /<kbd class="home-kbd">/);
   assert.match(article, /data-guide-zoom/);

@@ -284,8 +284,8 @@
 
 /*
  * Groups are bold headings with a hairline between them; sub-sections are small
- * grey labels. Each page is an icon row; the current one sits on a soft grey
- * pill, and rows keep a gap so hover and current pills never touch.
+ * grey labels. The current page sits on a soft grey pill, and rows keep a gap
+ * so hover and current pills never touch.
  */
 .guide-nav__group + .guide-nav__group {
   margin-top: 20px;
@@ -321,9 +321,7 @@
 }
 
 .guide-nav a {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  display: block;
   padding: 7px 10px;
   border-radius: 8px;
   color: var(--guide-text);
@@ -335,13 +333,6 @@
     color 160ms ease;
 }
 
-.guide-nav a i {
-  flex: none;
-  color: var(--text-soft);
-  font-size: 16px;
-  line-height: 1;
-}
-
 .guide-nav a:hover {
   background: var(--guide-row-hover);
   color: var(--guide-ink);
@@ -351,11 +342,6 @@
   background: var(--guide-row-current);
   color: var(--guide-ink);
   font-weight: 600;
-}
-
-.guide-nav a:hover i,
-.guide-nav a[aria-current="page"] i {
-  color: var(--guide-ink);
 }
 
 /* A strip of a built-in wallpaper over the article and the outline. */

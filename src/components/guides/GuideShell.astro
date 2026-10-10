@@ -3,7 +3,6 @@ import { marked } from "marked";
 import "../../styles/guides.css";
 import {
   GUIDES_LAST_UPDATED,
-  GUIDE_ICONS,
   GUIDE_NAV,
   getGuideBanner,
   getGuideContent,
@@ -87,8 +86,7 @@ const searchIndexHref = `${buildLocalizedPath(locale, "/guides/")}search-index.j
                   {section.slugs.map((item) => (
                     <li>
                       <a href={getGuidePath(locale, item)} aria-current={item === current ? "page" : undefined}>
-                        <i class={GUIDE_ICONS[item]} aria-hidden="true"></i>
-                        <span>{getGuideNavTitle(locale, item)}</span>
+                        {getGuideNavTitle(locale, item)}
                       </a>
                     </li>
                   ))}

@@ -23,7 +23,7 @@ Last updated: 2026-10-08
 - Keep route structure stable:
   - `/` for product homepage and feature intro
   - `/release` for changelog/release notes
-  - `/privacy` for the privacy policy
+  - `/privacy` for the privacy policy (rendered inside the help center's frame in every language; languages without a help center get the English sidebar)
   - `/guides/<slug>/` for the help center wiki (about Lumno, quick start, compatibility & trust); `/guides/` redirects to the first page
   - `/onboarding` is retired (the extension ships its own onboarding); it redirects to `/`
 

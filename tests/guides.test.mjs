@@ -132,14 +132,12 @@ test("the help center has no index page and is discoverable from the sitemap, ll
   assert.match(readSource("src/components/site/PageFooter.astro"), /getGuideContent\(locale\)\.ui\.navLabel, href: getGuidePath\(locale\)/);
 });
 
-test("the privacy policy keeps its URL and joins the help center in its languages", () => {
+test("the privacy policy keeps its URL and reads inside the help center", () => {
   const privacy = readSource("src/pages/privacy/index.astro");
   assert.match(navSource, /"privacy-data", "privacy", "security-open-source"/);
   assert.match(guidesSource, /slug === "privacy" \? "\/privacy\/"/);
-  assert.match(privacy, /const inHelpCenter = isGuideLocale\(uiLocale\);/);
+  assert.match(privacy, /const shellLocale = resolveGuideLocale\(uiLocale\);/);
   assert.match(privacy, /<GuideShell[\s\S]*?current="privacy"/);
-  // Other languages keep the standalone document.
-  assert.match(privacy, /<div class="doc">/);
   assert.match(readSource("src/lib/guide-search-index.ts"), /title: ui\.privacyLabel/);
 });
 

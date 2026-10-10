@@ -4,7 +4,7 @@ La présente politique de confidentialité (la «&nbsp;Politique&nbsp;») expliq
 
 - **Développeur et responsable du traitement&nbsp;:** Lumno est développé et maintenu par un développeur indépendant, Kubai087 (枯白啃设计), responsable des traitements décrits dans la présente Politique.
 - **Contact&nbsp;:** [i@kubai.design](mailto:i@kubai.design). Voir aussi la section&nbsp;15.
-- **Date d’entrée en vigueur&nbsp;:** 8&nbsp;octobre&nbsp;2026.
+- **Date d’entrée en vigueur&nbsp;:** 10&nbsp;octobre&nbsp;2026.
 - **Langue de référence&nbsp;:** la version en chinois simplifié de la présente Politique fait foi. Les autres versions sont des traductions fournies à titre indicatif&nbsp;; en cas de divergence, la version en chinois simplifié prévaut.
 
 Lumno ne propose ni compte ni stockage dans le cloud, et n’exploite aucun serveur qui stocke des données d’utilisateurs. La connexion à un compte, la synchronisation dans le cloud et les statistiques d’utilisation du produit ont été retirées de l’extension dans la version 0.9.40.

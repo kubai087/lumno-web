@@ -4,7 +4,7 @@ Esta Política de privacidad (la «Política») explica cómo la extensión de n
 
 - **Desarrollador y responsable del tratamiento:** Lumno lo desarrolla y mantiene un desarrollador independiente, Kubai087 (枯白啃设计), responsable del tratamiento descrito en esta Política.
 - **Contacto:** [i@kubai.design](mailto:i@kubai.design). Consulta también la sección 15.
-- **Fecha de entrada en vigor:** 8 de octubre de 2026.
+- **Fecha de entrada en vigor:** 10 de octubre de 2026.
 - **Idioma de referencia:** la versión en chino simplificado de esta Política es la que rige. Las demás versiones son traducciones informativas; si hay diferencias, prevalece la versión en chino simplificado.
 
 Lumno no ofrece cuentas ni almacenamiento en la nube, y no gestiona servidores que guarden datos de usuarios. El inicio de sesión con cuenta, la sincronización en la nube y las analíticas de uso del producto se eliminaron de la extensión en la versión 0.9.40.

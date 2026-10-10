@@ -4,7 +4,7 @@ Diese Datenschutzerklärung („diese Erklärung“) beschreibt, wie die Browser
 
 - **Entwickler und Verantwortlicher:** Lumno wird vom unabhängigen Entwickler Kubai087 (枯白啃设计) entwickelt und gepflegt, der für die in dieser Erklärung beschriebene Verarbeitung verantwortlich ist.
 - **Kontakt:** [i@kubai.design](mailto:i@kubai.design). Siehe auch Abschnitt 15.
-- **Gültig ab:** 8. Oktober 2026.
+- **Gültig ab:** 10. Oktober 2026.
 - **Maßgebliche Sprache:** Maßgeblich ist die vereinfacht-chinesische Fassung dieser Erklärung. Andere Sprachfassungen sind Übersetzungen zur Information; bei Abweichungen gilt die vereinfacht-chinesische Fassung.
 
 Lumno bietet keine Konten und keinen Cloudspeicher an und betreibt keine Server, die Nutzerdaten speichern. Kontoanmeldung, Cloud-Synchronisierung und Nutzungsanalysen wurden in Version 0.9.40 aus der Erweiterung entfernt.

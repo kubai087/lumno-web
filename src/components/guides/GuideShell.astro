@@ -25,9 +25,11 @@ interface Props {
   sections: Array<{ id: string; title: string }>;
   /** ISO date shown under the title; defaults to when the guides were last checked. */
   updated?: string;
+  /** Replaces the "updated {date}" line, for pages in a language other than the help center's. */
+  updatedText?: string;
 }
 
-const { locale, current, title, sections, updated = GUIDES_LAST_UPDATED } = Astro.props;
+const { locale, current, title, sections, updated = GUIDES_LAST_UPDATED, updatedText } = Astro.props;
 const { ui } = getGuideContent(locale);
 const banner = getGuideBanner(current);
 const displayUpdated = new Intl.DateTimeFormat(locale, {
@@ -104,7 +106,7 @@ const searchIndexHref = `${buildLocalizedPath(locale, "/guides/")}search-index.j
     <header class="guide__head">
       <h1>{title}</h1>
       <p class="guide__meta">
-        <time datetime={updated}>{ui.updatedLabel.replace("{date}", displayUpdated)}</time>
+        <time datetime={updated}>{updatedText ?? ui.updatedLabel.replace("{date}", displayUpdated)}</time>
         <slot name="meta" />
       </p>
       <slot name="note" />

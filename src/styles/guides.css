@@ -325,6 +325,19 @@
   margin-left: 1em;
 }
 
+/* The privacy policy: the note that a translation defers to the Simplified Chinese text. */
+.guide__note {
+  margin: 12px 0 0;
+  color: var(--guide-muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.guide__note a {
+  color: var(--guide-accent);
+  text-decoration: none;
+}
+
 /* The privacy policy's numbered sections. */
 .guide__body h2 .doc__num {
   margin-right: 8px;

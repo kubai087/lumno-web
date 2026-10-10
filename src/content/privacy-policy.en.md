@@ -4,7 +4,7 @@ This Privacy Policy ("this Policy") explains how the Lumno browser extension ("t
 
 - **Developer and controller:** Lumno is developed and maintained by an independent developer, Kubai087 (枯白啃设计), who is the controller of the processing described in this Policy.
 - **Contact:** [i@kubai.design](mailto:i@kubai.design). See Section 15.
-- **Effective date:** October 8, 2026.
+- **Effective date:** October 10, 2026.
 - **Governing language:** The Simplified Chinese version of this Policy governs. Other language versions are translations provided for convenience; if they differ, the Simplified Chinese version prevails.
 
 Lumno offers no accounts or cloud storage and runs no servers that store user data. Account sign-in, cloud sync, and product usage analytics were removed from the extension in version 0.9.40.

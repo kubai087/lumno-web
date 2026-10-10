@@ -19,31 +19,29 @@ test("privacy page is built on the shared site shell", () => {
   const source = readSource("src/pages/privacy/index.astro");
 
   assert.match(source, /import SitePage from "\.\.\/\.\.\/layouts\/SitePage\.astro"/);
-  // Help-center languages hand off at the help center's banner; the rest at the document head.
-  assert.match(source, /<SitePage[\s\S]*?basePath="\/privacy\/"[\s\S]*?analyticsScope="privacy"\s*navHandoff=\{inHelpCenter \? "\.guide__banner" : "\.doc__head"\}/);
+  // The policy reads inside the help center, so the top bar hands off at its banner.
+  assert.match(source, /<SitePage[\s\S]*?basePath="\/privacy\/"[\s\S]*?analyticsScope="privacy"\s*navHandoff="\.guide__banner"/);
   assert.match(readSource("src/layouts/SitePage.astro"), /<SiteHeader\s+locale=\{locale\}/);
   assert.doesNotMatch(source, /OptionsFeedbackSupportLink/);
 });
 
-test("privacy is a plain document with a header, a contents list, and the policy", () => {
+test("privacy reads inside the help center in every language", () => {
   const source = readSource("src/pages/privacy/index.astro");
   const contentSource = readSource("src/lib/privacy-content.ts");
 
-  assert.match(source, /<nav class="doc__toc" aria-label=\{content\.tocLabel\}>/);
-  assert.match(source, /<a href=\{`#\$\{section\.id\}`\}>\s*<span class="doc__num" aria-hidden="true">\{section\.number\}<\/span>/);
-  assert.match(source, /<h1><span>\{content\.title\}<\/span><\/h1>/);
-  assert.match(source, /<time datetime=\{PRIVACY_LAST_UPDATED\}>\{displayLastUpdated\}<\/time>/);
+  // Languages without a help center get the English sidebar around their own policy.
+  assert.match(source, /const shellLocale = resolveGuideLocale\(uiLocale\);/);
+  assert.match(source, /<GuideShell\s+locale=\{shellLocale\}\s+current="privacy"\s+title=\{content\.title\}/);
+  assert.match(source, /updated=\{PRIVACY_LAST_UPDATED\}/);
   assert.match(source, /<Fragment set:html=\{policyHtml\} \/>/);
-  // No marketing chrome on a legal document.
+  // The old standalone layout is gone, and so is marketing chrome.
+  assert.doesNotMatch(source, /class="doc"|doc__toc|<style/);
   assert.doesNotMatch(source, /home-sheet|page-hero|home-h2|data-reveal|SettingsButton/);
   // Section anchors stay stable across languages.
   const sectionIds = contentSource.match(/export const PRIVACY_SECTION_IDS = \[([\s\S]*?)\] as const;/)?.[1];
   assert.equal((sectionIds.match(/"[a-z][a-z-]+"/g) || []).length, 15);
   assert.match(source, /sectionTitles\.length !== PRIVACY_SECTION_IDS\.length/);
   assert.match(source, /return `<h2 id="\$\{id\}"><span class="doc__num" aria-hidden="true">\$\{number\}<\/span>/);
-  assert.match(contentSource, /tocLabel: "目录"/);
-  assert.match(contentSource, /tocLabel: "目錄"/);
-  assert.match(contentSource, /tocLabel: "On this page"/);
 });
 
 test("site pages hand the top bar over like the homepage", () => {
@@ -63,11 +61,9 @@ test("site pages hand the top bar over like the homepage", () => {
 test("privacy document stays readable on narrow screens", () => {
   const source = readSource("src/pages/privacy/index.astro");
 
-  assert.match(source, /const tableFrame = inHelpCenter \? "guide-table" : "doc__table";/);
-  assert.match(source, /replaceAll\("<table>", `<div class="\$\{tableFrame\}"><table>`\)/);
-  assert.match(source, /\.doc__table \{[\s\S]*?overflow-x: auto;/);
-  assert.match(source, /\.doc__body ul \{[\s\S]*?list-style: disc;/);
-  assert.match(source, /@media \(max-width: 900px\) \{[\s\S]*?\.doc \{[\s\S]*?grid-template-columns: minmax\(0, 1fr\);[\s\S]*?\.doc__toc \{[\s\S]*?position: static;/);
+  // Wide tables scroll inside the help center's table frame.
+  assert.match(source, /replaceAll\("<table>", '<div class="guide-table"><table>'\)/);
+  assert.match(readSource("src/styles/guides.css"), /\.guide-table \{[\s\S]*?overflow-x: auto;/);
 });
 
 test("privacy uses branded search copy and page-appropriate structured data", () => {

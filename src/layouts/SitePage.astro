@@ -54,6 +54,7 @@ const alternateLinks = buildAlternateLinks(
     : routeLanguageMap,
   basePath,
 );
+import LanguageScrollRestore from "../components/LanguageScrollRestore.astro";
 ---
 
 <!doctype html>
@@ -178,6 +179,8 @@ const alternateLinks = buildAlternateLinks(
         window.addEventListener("lumno:language-preference-ready", retry);
       }
     </script>
+
+    <LanguageScrollRestore />
 
     <style is:global>
       main.site-page {

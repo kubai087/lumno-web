@@ -182,6 +182,7 @@ const structuredData = [
     language: uiLocale,
   }),
 ];
+import LanguageScrollRestore from "../components/LanguageScrollRestore.astro";
 ---
 
 <!doctype html>
@@ -437,6 +438,7 @@ const structuredData = [
     </main>
 
     <PageFooter locale={uiLocale} routeLanguageMap={routeLanguageMap} />
+    <LanguageScrollRestore />
 
     <ReleasePopover locale={uiLocale} />
 

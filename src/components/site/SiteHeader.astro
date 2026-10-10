@@ -124,6 +124,44 @@ const {
   import "../../scripts/community-panel";
   import { enhanceSettingsSelect } from "../../scripts/settings-select-runtime";
 
+  /*
+   * Switching language: remember the section being read and how far into it,
+   * so the page in the other language opens at the same spot
+   * (LanguageScrollRestore.astro). Capture phase, because the language runtime
+   * handles the menu's clicks itself.
+   */
+  document.addEventListener(
+    "click",
+    (event) => {
+      if (!(event.target instanceof Element)) return;
+      const link = event.target.closest("#language-menu [data-lang-value], .site-footer__languages a[hreflang]");
+      if (!link || window.scrollY < 8) return;
+      const line = window.scrollY + 96;
+      const anchors = [...document.querySelectorAll<HTMLElement>("main section[id], main h2[id], main h3[id]")].filter(
+        (element) => /^[a-z][a-z0-9-]*$/.test(element.id),
+      );
+      const top = (element: HTMLElement) => element.getBoundingClientRect().top + window.scrollY;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      let anchor = "";
+      let progress = 0;
+      anchors.forEach((element, index) => {
+        if (top(element) > line) return;
+        const start = top(element);
+        const next = anchors[index + 1];
+        const end = next ? top(next) : maxScroll + 96;
+        anchor = element.id;
+        progress = end > start ? Math.min(1, (line - start) / (end - start)) : 0;
+      });
+      try {
+        sessionStorage.setItem(
+          "lumno-language-scroll",
+          JSON.stringify({ at: Date.now(), anchor, progress, ratio: maxScroll > 0 ? window.scrollY / maxScroll : 0 }),
+        );
+      } catch (_error) {}
+    },
+    true,
+  );
+
   document.querySelectorAll<HTMLElement>(".top-nav .lumno-settings-select").forEach(enhanceSettingsSelect);
 
   /*

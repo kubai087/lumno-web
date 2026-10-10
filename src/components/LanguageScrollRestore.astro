@@ -1,0 +1,47 @@
+---
+/*
+ * Switching language keeps the reader where they were instead of jumping to
+ * the top. SiteHeader records the section being read (sections and headings
+ * keep the same ids in every language) and how far into it; this script, at
+ * the end of the body so the page is laid out, scrolls the new page to the same
+ * spot before it paints. Pages without matching sections fall back to the same
+ * share of the page. The bar shows as the settled glass pill when the page
+ * opens scrolled, so it doesn't drop in again.
+ */
+---
+
+<script is:inline>
+  (() => {
+    let saved = null;
+    try {
+      saved = JSON.parse(sessionStorage.getItem("lumno-language-scroll") || "null");
+      sessionStorage.removeItem("lumno-language-scroll");
+    } catch (_error) {}
+    if (!saved || Date.now() - saved.at > 15000 || window.location.hash) return;
+
+    const LINE = 96;
+    const anchors = [...document.querySelectorAll("main section[id], main h2[id], main h3[id]")].filter((element) =>
+      /^[a-z][a-z0-9-]*$/.test(element.id),
+    );
+    const top = (element) => element.getBoundingClientRect().top + window.scrollY;
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    let target = null;
+    const index = saved.anchor ? anchors.findIndex((element) => element.id === saved.anchor) : -1;
+    if (index >= 0) {
+      const start = top(anchors[index]);
+      const end = anchors[index + 1] ? top(anchors[index + 1]) : maxScroll + LINE;
+      target = start + saved.progress * Math.max(0, end - start) - LINE;
+    } else if (typeof saved.ratio === "number") {
+      target = saved.ratio * maxScroll;
+    }
+    if (target === null || target <= 0) return;
+    window.scrollTo({ top: Math.min(target, maxScroll), behavior: "instant" });
+
+    const nav = document.querySelector(".top-nav");
+    const handoff = nav && nav.dataset.navHandoff ? document.querySelector(nav.dataset.navHandoff) : null;
+    if (nav && handoff && handoff.getBoundingClientRect().bottom <= 0) {
+      nav.removeAttribute("data-nav-surface");
+      document.body.classList.add("has-nav-install", "is-nav-install-settled");
+    }
+  })();
+</script>

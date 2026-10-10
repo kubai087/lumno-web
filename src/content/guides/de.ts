@@ -22,6 +22,8 @@ const content: GuideLocaleContent = {
     faqTitle: "Häufige Fragen",
     previousLabel: "Zurück",
     nextLabel: "Weiter",
+    homeCardLabel: "Website",
+    homeCardTitle: "Zur Lumno-Startseite",
     zoomLabel: "In voller Größe ansehen",
     closeLabel: "Schließen",
     privacyLabel: "Datenschutzerklärung",

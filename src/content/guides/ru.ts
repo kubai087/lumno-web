@@ -22,6 +22,8 @@ const content: GuideLocaleContent = {
     faqTitle: "Частые вопросы",
     previousLabel: "Назад",
     nextLabel: "Далее",
+    homeCardLabel: "Сайт",
+    homeCardTitle: "На главную Lumno",
     zoomLabel: "Открыть в полном размере",
     closeLabel: "Закрыть",
     privacyLabel: "Политика конфиденциальности",

@@ -325,7 +325,7 @@ const searchIndexHref = `${buildLocalizedPath(locale, "/guides/")}search-index.j
     };
     document.addEventListener("click", (event) => {
       if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-      const link = event.target instanceof Element ? event.target.closest(".guide-nav a, .guide__pager a, .guide-search__results a") : null;
+      const link = event.target instanceof Element ? event.target.closest(".guide-nav a, .guide__pager a:not([data-guide-home]), .guide-search__results a") : null;
       if (!link || link.target === "_blank") return;
       event.preventDefault();
       goTo(link.href);

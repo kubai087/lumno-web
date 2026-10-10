@@ -22,6 +22,8 @@ const content: GuideLocaleContent = {
     faqTitle: "よくある質問",
     previousLabel: "前へ",
     nextLabel: "次へ",
+    homeCardLabel: "公式サイト",
+    homeCardTitle: "Lumno のトップページへ",
     zoomLabel: "拡大表示",
     closeLabel: "閉じる",
     privacyLabel: "プライバシーポリシー",

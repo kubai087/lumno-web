@@ -22,6 +22,8 @@ const content: GuideLocaleContent = {
     faqTitle: "Questions fréquentes",
     previousLabel: "Précédent",
     nextLabel: "Suivant",
+    homeCardLabel: "Site officiel",
+    homeCardTitle: "Retour à l'accueil de Lumno",
     zoomLabel: "Voir en grand",
     closeLabel: "Fermer",
     privacyLabel: "Politique de confidentialité",

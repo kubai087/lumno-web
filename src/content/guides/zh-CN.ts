@@ -22,6 +22,8 @@ const content: GuideLocaleContent = {
     faqTitle: "常见问题",
     previousLabel: "上一篇",
     nextLabel: "下一篇",
+    homeCardLabel: "官网",
+    homeCardTitle: "回到 Lumno 首页",
     zoomLabel: "查看大图",
     closeLabel: "关闭",
     privacyLabel: "隐私政策",

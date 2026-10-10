@@ -149,7 +149,9 @@ test("moving between pages switches at once, then glides to the top", () => {
   const shell = readSource("src/components/guides/GuideShell.astro");
   const styles = readSource("src/styles/guides.css");
 
-  assert.match(shell, /closest\("\.guide-nav a, \.guide__pager a, \.guide-search__results a"\)/);
+  assert.match(shell, /closest\("\.guide-nav a, \.guide__pager a:not\(\[data-guide-home\]\), \.guide-search__results a"\)/);
+  // The first page's left card goes back to the website, as a normal page load.
+  assert.match(readSource("src/components/guides/GuideArticle.astro"), /href: buildLocalizedPath\(locale, "\/"\), label: ui\.homeCardLabel, title: ui\.homeCardTitle/);
   assert.match(shell, /if \(target\) goTo\(target\.href\);/);
   // The old offset carries over, the new page starts there and scrolls up.
   assert.match(shell, /sessionStorage\.setItem\("lumno-guide-page-scroll"/);

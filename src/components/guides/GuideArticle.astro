@@ -122,10 +122,15 @@ const faq = page.faq || [];
 if (faq.length) sections.push({ id: "faq", title: ui.faqTitle });
 
 const order = GUIDE_SLUGS.indexOf(slug);
+// The first page has no previous one: its left card leads back to the website instead.
 const neighbours = [
-  { slug: GUIDE_SLUGS[order - 1], label: ui.previousLabel, kind: "previous" },
-  { slug: GUIDE_SLUGS[order + 1], label: ui.nextLabel, kind: "next" },
-].filter((item): item is { slug: GuideSlug; label: string; kind: string } => Boolean(item.slug));
+  GUIDE_SLUGS[order - 1]
+    ? { href: getGuidePath(locale, GUIDE_SLUGS[order - 1]), label: ui.previousLabel, title: pages[GUIDE_SLUGS[order - 1]].navTitle, kind: "previous" }
+    : { href: buildLocalizedPath(locale, "/"), label: ui.homeCardLabel, title: ui.homeCardTitle, kind: "previous", home: true },
+  ...(GUIDE_SLUGS[order + 1]
+    ? [{ href: getGuidePath(locale, GUIDE_SLUGS[order + 1]), label: ui.nextLabel, title: pages[GUIDE_SLUGS[order + 1]].navTitle, kind: "next" }]
+    : []),
+];
 
 const structuredData = [
   buildTechArticleSchema({
@@ -180,9 +185,9 @@ const structuredData = [
 
     <nav slot="footer" class="guide__pager" aria-label={`${ui.previousLabel} / ${ui.nextLabel}`}>
       {neighbours.map((item) => (
-        <a class={`guide__pager-link guide__pager-link--${item.kind}`} href={getGuidePath(locale, item.slug)}>
+        <a class={`guide__pager-link guide__pager-link--${item.kind}`} href={item.href} data-guide-home={"home" in item ? "" : undefined}>
           <span class="guide__pager-label">{item.label}</span>
-          <span class="guide__pager-title">{pages[item.slug].navTitle}</span>
+          <span class="guide__pager-title">{item.title}</span>
         </a>
       ))}
     </nav>

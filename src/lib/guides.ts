@@ -87,6 +87,9 @@ export type GuideLocaleContent = {
     faqTitle: string;
     previousLabel: string;
     nextLabel: string;
+    /** The first page's left card, back to the website. */
+    homeCardLabel: string;
+    homeCardTitle: string;
     zoomLabel: string;
     closeLabel: string;
     privacyLabel: string;

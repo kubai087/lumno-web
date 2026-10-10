@@ -398,3 +398,11 @@ test("bar links to the open page glide back to the top, and the bar morphs betwe
   assert.match(header, /@media \(prefers-reduced-motion: reduce\) \{\s*@view-transition \{\s*navigation: none;/);
 });
 
+
+test("opening a dialog never shifts the page, release notes included", () => {
+  // The release page doesn't load site.css, so it repeats the rule that cancels the dialog's scrollbar compensation.
+  for (const file of ["src/styles/site.css", "src/pages/release/index.astro"]) {
+    const source = fs.readFileSync(path.join(workspaceRoot, file), "utf8");
+    assert.match(source, /html body\[data-scroll-locked\] \{\s*--removed-body-scroll-bar-size: 0px !important;\s*margin-right: 0 !important;/, file);
+  }
+});

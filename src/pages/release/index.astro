@@ -494,6 +494,16 @@ const STORE_CHIPS = [
         scrollbar-color: color-mix(in srgb, #15171a 18%, transparent) transparent;
       }
 
+      /*
+       * html already reserves the gutter, so cancel the scrollbar compensation a
+       * dialog adds when it opens (the community panel), or the page jumps left.
+       * Same rule as site.css, which this page doesn't load.
+       */
+      html body[data-scroll-locked] {
+        --removed-body-scroll-bar-size: 0px !important;
+        margin-right: 0 !important;
+      }
+
       html,
       body {
         margin: 0;

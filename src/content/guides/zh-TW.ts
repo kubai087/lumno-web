@@ -210,6 +210,14 @@ const content: GuideLocaleContent = {
       title: "影片自動子母畫面",
       navTitle: "影片自動子母畫面",
     },
+    "web-clip": {
+      pageTitle: "網頁剪裁：把網頁的一部分放進浮動視窗對照查看｜Lumno 說明中心",
+      pageDescription:
+        "網頁剪裁可以把表格、程式碼或圖表等網頁內容放進浮動視窗，切換分頁時也一直顯示。說明如何開啟、選取內容、使用浮動視窗，以及有哪些限制。",
+      keywords: ["網頁剪裁", "文件子母畫面", "網頁 浮動視窗", "Chrome 擴充功能 子母畫面", "網頁 對照查看"],
+      title: "網頁剪裁",
+      navTitle: "網頁剪裁",
+    },
     "arc-command-bar": {
       pageTitle: "從 Arc 搬到 Chrome、Dia 或 Edge：命令列與快速鍵對照｜Lumno 說明中心",
       pageDescription:

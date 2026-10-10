@@ -221,6 +221,14 @@ const content: GuideLocaleContent = {
       title: "Auto picture-in-picture",
       navTitle: "Auto picture-in-picture",
     },
+    "web-clip": {
+      pageTitle: "Web clip: keep part of a page in a floating window | Lumno Help",
+      pageDescription:
+        "Web clip puts a table, a block of code or a chart from any page into a floating window that stays on top while you switch tabs. Learn how to turn it on, choose content and use the window, and what its limitations are.",
+      keywords: ["web clip", "document picture-in-picture", "floating window Chrome extension", "pin part of a web page", "picture-in-picture any element"],
+      title: "Web clip",
+      navTitle: "Web clip",
+    },
     "arc-command-bar": {
       pageTitle: "Moving from Arc to Chrome, Dia or Edge: the command bar and shortcuts | Lumno Help",
       pageDescription:

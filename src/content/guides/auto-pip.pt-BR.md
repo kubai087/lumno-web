@@ -18,7 +18,7 @@ Ao voltar para a guia do vídeo, a janela de picture-in-picture se fecha e o ví
 
 - Lojas on-line e sites com feeds costumam reproduzir vídeos automaticamente. Para não atrapalhar, o Lumno não ativa o picture-in-picture automático no JD, no Taobao, no X (Twitter) e no Weibo.
 - Se um site desativar o picture-in-picture pela política do site, o navegador não o permite.
-- Enquanto uma janela de [recorte da web](../what-is-lumno/#more) estiver aberta, o picture-in-picture de vídeo não é ativado automaticamente.
+- Enquanto uma janela de [recorte da web](../web-clip/) estiver aberta, o picture-in-picture de vídeo não é ativado automaticamente.
 
 ## Ativar ou desativar {#toggle}
 

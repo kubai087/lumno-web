@@ -21,7 +21,7 @@ Depois que você instala o Lumno, a nova guia do Chrome e do Edge passa a mostra
 ## Outros recursos {#more}
 
 - [Ações rápidas na seleção](../selection-actions/) (Selection quick actions): selecione um trecho para pedir à IA que o responda, traduza, explique ou resuma. O botão só aparece quando o Lumno avalia que o texto precisa de ajuda. Desativado por padrão; você pode ativá-lo na seção Labs das configurações.
-- Recorte da web: recorte parte de uma página e exiba-a em uma janela flutuante de picture-in-picture.
+- [Recorte da web](../web-clip/): recorte parte de uma página e exiba-a em uma janela flutuante de picture-in-picture.
 - [Picture-in-picture automático](../auto-pip/): ao sair de uma guia do YouTube ou da Twitch, o vídeo continua sendo reproduzido em uma janela pequena.
 - Restauração de guias fixadas: com "Restore Pinned Tabs After Restart" ativado, as guias fixadas são restauradas automaticamente quando você reinicia o navegador.
 

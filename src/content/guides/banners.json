@@ -79,6 +79,11 @@
     "height": 400,
     "color": "#e8f8f8"
   },
+  "web-clip": {
+    "width": 2000,
+    "height": 400,
+    "color": "#f8f8e8"
+  },
   "auto-pip": {
     "width": 2000,
     "height": 400,

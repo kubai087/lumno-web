@@ -191,7 +191,31 @@
         "Column widths often use the fr unit, which stands for one share of the space left in the container. For example, grid-template-columns: 1fr 2fr splits the remaining space into three parts and gives two of them to the second column.",
         "Items can also span several cells, so a magazine-style layout takes only a few lines of code."
       ],
-      "select": "which stands for one share of the space left in the container"
+      "select": "which stands for one share of the space left in the container",
+      "table": {
+        "head": [
+          "Property",
+          "What it does"
+        ],
+        "rows": [
+          [
+            "grid-template-columns",
+            "Sets the number and width of columns"
+          ],
+          [
+            "grid-template-rows",
+            "Sets the number and height of rows"
+          ],
+          [
+            "gap",
+            "Sets the space between rows and columns"
+          ],
+          [
+            "grid-column",
+            "Lets an item span several columns"
+          ]
+        ]
+      }
     },
     "series": [
       {

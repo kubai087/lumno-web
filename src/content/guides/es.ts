@@ -221,6 +221,14 @@ const content: GuideLocaleContent = {
       title: "Imagen en imagen automática",
       navTitle: "Imagen en imagen automática",
     },
+    "web-clip": {
+      pageTitle: "Recorte web: mantén parte de una página en una ventana flotante | Ayuda de Lumno",
+      pageDescription:
+        "El recorte web coloca una tabla, un bloque de código o un gráfico en una ventana flotante que sigue visible al cambiar de pestaña. Aprende a activarlo, elegir el contenido y usar la ventana, y conoce sus limitaciones.",
+      keywords: ["recorte web", "Document Picture-in-Picture", "ventana flotante extensión Chrome", "fijar parte de una página", "imagen en imagen elemento"],
+      title: "Recorte web",
+      navTitle: "Recorte web",
+    },
     "arc-command-bar": {
       pageTitle: "De Arc a Chrome, Dia o Edge: la barra de comandos y los atajos | Ayuda de Lumno",
       pageDescription:

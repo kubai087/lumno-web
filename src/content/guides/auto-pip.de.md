@@ -18,7 +18,7 @@ Wenn du zum Tab mit dem Video zurückkehrst, schließt sich das Bild-im-Bild-Fen
 
 - Shopping-Websites und Feeds spielen Videos oft automatisch ab. Damit das nicht stört, startet Lumno auf JD, Taobao, X (Twitter) und Weibo kein automatisches Bild-im-Bild.
 - Wenn eine Website Bild-im-Bild über ihre Richtlinien deaktiviert, lässt der Browser es nicht zu.
-- Solange ein [Web-Clip](../what-is-lumno/#more)-Fenster geöffnet ist, startet kein automatisches Video-Bild-im-Bild.
+- Solange ein [Web-Clip](../web-clip/)-Fenster geöffnet ist, startet kein automatisches Video-Bild-im-Bild.
 
 ## Aktivieren oder deaktivieren {#toggle}
 

@@ -21,7 +21,7 @@ Nach der Installation zeigt der neue Tab in Chrome und Edge die Startseite von L
 ## Weitere Funktionen {#more}
 
 - [Schnellaktionen für markierten Text](../selection-actions/) (Selection quick actions): Markiere eine Passage und lass sie von der KI beantworten, übersetzen, erklären oder zusammenfassen. Die Schaltfläche erscheint nur, wenn Lumno den Text als hilfebedürftig einschätzt. Standardmäßig deaktiviert; du aktivierst die Funktion in den Einstellungen unter Labs.
-- Web-Clip: Schneide einen Teil einer Seite aus und zeige ihn in einem schwebenden Bild-im-Bild-Fenster an.
+- [Web-Clip](../web-clip/): Schneide einen Teil einer Seite aus und zeige ihn in einem schwebenden Bild-im-Bild-Fenster an.
 - [Automatisches Bild-im-Bild](../auto-pip/): Wenn du einen YouTube- oder Twitch-Tab verlässt, wird das Video in einem kleinen Fenster weiter abgespielt.
 - Angeheftete Tabs wiederherstellen: Wenn „Restore Pinned Tabs After Restart“ aktiviert ist, werden angeheftete Tabs nach einem Neustart des Browsers automatisch wiederhergestellt.
 

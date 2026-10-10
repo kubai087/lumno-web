@@ -37,6 +37,7 @@ const BANNERS = {
   "newtab-clock-zen": ["lumno-newtab-white-3d-observatory", 0.7],
   "newtab-other-extensions": ["lumno-newtab-impressionist-orchard-white", 0.8],
   "selection-actions": ["lumno-newtab-white-3d-architecture", 0.4],
+  "web-clip": ["lumno-newtab-seurat-riverside-white", 0.78],
   "auto-pip": ["lumno-newtab-white-linocut-topographic", 0.62],
   "arc-command-bar": ["lumno-newtab-pointillist-lakeside-white", 0.88],
   "browser-compatibility": ["lumno-newtab-white-linocut-topographic", 0.8],

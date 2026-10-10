@@ -221,6 +221,14 @@ const content: GuideLocaleContent = {
       title: "Automatisches Bild-im-Bild",
       navTitle: "Automatisches Bild-im-Bild",
     },
+    "web-clip": {
+      pageTitle: "Web-Clip: Einen Seitenbereich in einem schwebenden Fenster behalten | Lumno-Hilfe",
+      pageDescription:
+        "Mit Web-Clip legst du eine Tabelle, einen Codeblock oder ein Diagramm in ein schwebendes Fenster, das beim Tabwechsel sichtbar bleibt. So aktivierst du die Funktion, wählst Inhalte aus und nutzt das Fenster – und das sind die Einschränkungen.",
+      keywords: ["Web-Clip", "Document Picture-in-Picture", "schwebendes Fenster Chrome-Erweiterung", "Teil einer Webseite anheften", "Bild im Bild Element"],
+      title: "Web-Clip",
+      navTitle: "Web-Clip",
+    },
     "arc-command-bar": {
       pageTitle: "Von Arc zu Chrome, Dia oder Edge: Befehlsleiste und Tastenkürzel | Lumno-Hilfe",
       pageDescription:

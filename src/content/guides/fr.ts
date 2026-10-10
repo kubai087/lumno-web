@@ -221,6 +221,14 @@ const content: GuideLocaleContent = {
       title: "Image dans l'image automatique",
       navTitle: "Image dans l'image automatique",
     },
+    "web-clip": {
+      pageTitle: "Capture web : garder une partie de page dans une fenêtre flottante | Aide Lumno",
+      pageDescription:
+        "La capture web place un tableau, un bloc de code ou un graphique dans une fenêtre flottante qui reste visible quand vous changez d'onglet. Découvrez comment l'activer, choisir le contenu, utiliser la fenêtre, et quelles sont ses limites.",
+      keywords: ["capture web", "Document Picture-in-Picture", "fenêtre flottante extension Chrome", "épingler une partie de page", "image dans l'image élément"],
+      title: "Capture web",
+      navTitle: "Capture web",
+    },
     "arc-command-bar": {
       pageTitle: "Passer d'Arc à Chrome, Dia ou Edge : barre de commande et raccourcis | Aide Lumno",
       pageDescription:

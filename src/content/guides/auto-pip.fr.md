@@ -18,7 +18,7 @@ Lorsque vous revenez à l'onglet de la vidéo, la fenêtre en image dans l'image
 
 - Les sites marchands et les fils d'actualité lancent souvent des vidéos automatiquement. Pour ne pas vous déranger, Lumno ne démarre pas l'image dans l'image automatiquement sur JD, Taobao, X (Twitter) et Weibo.
 - Si un site désactive l'image dans l'image par sa politique, le navigateur ne l'autorise pas.
-- Tant qu'une fenêtre de [capture web](../what-is-lumno/#more) est ouverte, l'image dans l'image vidéo ne démarre pas automatiquement.
+- Tant qu'une fenêtre de [capture web](../web-clip/) est ouverte, l'image dans l'image vidéo ne démarre pas automatiquement.
 
 ## Activer ou désactiver {#toggle}
 

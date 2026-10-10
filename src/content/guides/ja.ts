@@ -210,6 +210,14 @@ const content: GuideLocaleContent = {
       title: "動画の自動ピクチャー・イン・ピクチャー",
       navTitle: "自動ピクチャー・イン・ピクチャー",
     },
+    "web-clip": {
+      pageTitle: "Webクリップ：ページの一部をフローティングウインドウで表示｜Lumno ヘルプ",
+      pageDescription:
+        "Webクリップを使うと、表やコード、グラフなどページの一部をフローティングウインドウに表示し、タブを切り替えても見続けられます。オンにする方法、内容の選び方、ウインドウの使い方と制限事項を説明します。",
+      keywords: ["Webクリップ", "ドキュメント ピクチャーインピクチャー", "ページの一部 小窓", "Chrome 拡張機能 フローティング", "Web ページ 見比べ"],
+      title: "Webクリップ",
+      navTitle: "Webクリップ",
+    },
     "arc-command-bar": {
       pageTitle: "Arc から Chrome・Dia・Edge へ：コマンドバーとショートカットの対応表｜Lumno ヘルプ",
       pageDescription:

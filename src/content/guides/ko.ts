@@ -221,6 +221,14 @@ const content: GuideLocaleContent = {
       title: "자동 PIP",
       navTitle: "자동 PIP",
     },
+    "web-clip": {
+      pageTitle: "웹 클립: 페이지 일부를 플로팅 창에 띄우기 | Lumno 도움말",
+      pageDescription:
+        "웹 클립을 사용하면 표, 코드, 차트 같은 페이지 일부를 플로팅 창에 띄워 탭을 전환해도 계속 볼 수 있습니다. 켜는 방법, 내용 선택, 창 사용법과 제한 사항을 설명합니다.",
+      keywords: ["웹 클립", "문서 PIP", "플로팅 창 크롬 확장 프로그램", "웹 페이지 일부 띄우기", "PIP 요소"],
+      title: "웹 클립",
+      navTitle: "웹 클립",
+    },
     "arc-command-bar": {
       pageTitle: "Arc에서 Chrome, Dia, Edge로: 명령 바와 단축키 그대로 | Lumno 도움말",
       pageDescription:

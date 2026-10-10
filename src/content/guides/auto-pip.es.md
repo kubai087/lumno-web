@@ -18,7 +18,7 @@ Al volver a la pestaña del vídeo, la ventana de imagen en imagen se cierra y e
 
 - Las tiendas en línea y los sitios con feeds suelen reproducir vídeos automáticamente. Para no molestarte, Lumno no activa la imagen en imagen automática en JD, Taobao, X (Twitter) ni Weibo.
 - Si un sitio desactiva la imagen en imagen mediante su política, el navegador no la permite.
-- Mientras haya abierta una ventana de [recorte web](../what-is-lumno/#more), la imagen en imagen de vídeo no se activa automáticamente.
+- Mientras haya abierta una ventana de [recorte web](../web-clip/), la imagen en imagen de vídeo no se activa automáticamente.
 
 ## Activar o desactivar {#toggle}
 

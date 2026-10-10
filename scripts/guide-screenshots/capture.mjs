@@ -35,7 +35,7 @@ const blankServer = http.createServer((request, response) => {
   response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
   const article = cfg.useCases && cfg.useCases.article;
   if (request.url.startsWith("/article") && article) {
-    response.end(`<!doctype html><title>${escapeHtml(article.title)}</title><body style="margin:0;background:#fff;color:#1f2328;font:18px/1.8 -apple-system,'PingFang SC','Hiragino Sans',sans-serif"><main style="max-width:640px;margin:96px auto;padding:0 24px"><h1 style="font-size:30px;line-height:1.3;margin:0 0 24px">${escapeHtml(article.title)}</h1>${article.paragraphs.map((text) => `<p style="margin:0 0 20px">${escapeHtml(text)}</p>`).join("")}</main></body>`);
+    response.end(`<!doctype html><title>${escapeHtml(article.title)}</title><body style="margin:0;background:#fff;color:#1f2328;font:18px/1.8 -apple-system,'PingFang SC','Hiragino Sans',sans-serif"><main style="max-width:640px;margin:96px auto;padding:0 24px"><h1 style="font-size:30px;line-height:1.3;margin:0 0 24px">${escapeHtml(article.title)}</h1>${article.paragraphs.map((text) => `<p style="margin:0 0 20px">${escapeHtml(text)}</p>`).join("")}${request.url.startsWith("/article-clip") && article.table ? `<table id="clip-target" style="border-collapse:collapse;width:100%;font-size:16px;line-height:1.6;margin:8px 0 0"><thead><tr>${article.table.head.map((cell) => `<th style="text-align:left;padding:10px 14px;border-bottom:1px solid #d0d7de;background:#f6f8fa">${escapeHtml(cell)}</th>`).join("")}</tr></thead><tbody>${article.table.rows.map((row) => `<tr>${row.map((cell, index) => `<td style="padding:10px 14px;border-bottom:1px solid #eaeef2;${index ? "" : "font-family:ui-monospace,Menlo,monospace;font-size:14px"}">${escapeHtml(cell)}</td>`).join("")}</tr>`).join("")}</tbody></table>` : ""}</main></body>`);
     return;
   }
   response.end(`<!doctype html><title>${cfg.blankTitle || "Blank"}</title><body style="margin:0;background:#f3f4f6"></body>`);
@@ -555,6 +555,50 @@ const scenes = {
     await shot("uc-selection", page, unionBox(selection.article, toolbar));
     await page.close();
     await setPrefs({ _x_extension_selection_quick_actions_enabled_2026_unique_: false });
+  },
+  // Web clip: the /clip command in the command bar, then the picker's highlight on an article.
+  async "web-clip"(front) {
+    const article = cfg.useCases && cfg.useCases.article;
+    if (!article || !article.table) return;
+    await setPrefs({ _x_extension_document_pip_enabled_2026_unique_: true });
+    // The command itself, on the plain page like the other command bar pictures.
+    await openOverlay(front);
+    await front.keyboard.type("/clip", { delay: 120 });
+    await sleep(900);
+    await shot("clip-command", front, await overlayBox(front));
+    await closeOverlay(front);
+    await closeOverlay(front);
+    const page = await ctx.newPage();
+    await page.goto(`${BLANK_URL}article-clip`);
+    await sleep(1500);
+    const before = await page.screenshot();
+    await openOverlay(page);
+    await page.keyboard.type("/clip", { delay: 120 });
+    await sleep(900);
+    await page.keyboard.press("Enter");
+    await sleep(1200);
+    const table = await page.evaluate(() => {
+      const r = document.getElementById("clip-target").getBoundingClientRect();
+      return { x: r.left + r.width / 2, y: r.top + r.height / 2, top: r.top, bottom: r.bottom };
+    });
+    await page.mouse.move(table.x - 30, table.y - 10);
+    await page.mouse.move(table.x, table.y, { steps: 8 });
+    await sleep(900);
+    // The picker starts on the article; one step inward ("]") lands on the table.
+    for (let step = 0; step < Number(process.env.CLIP_STEPS || 1); step++) {
+      await page.keyboard.press("]");
+      await sleep(700);
+    }
+    const picked = await diffBox(page, before, await page.screenshot());
+    // The hint at the top and the highlighted table, with the article around them.
+    const main = await page.evaluate(() => {
+      const r = document.querySelector("main").getBoundingClientRect();
+      return { left: r.left, top: r.top, right: r.right, bottom: r.bottom };
+    });
+    await shot("clip-picker", page, unionBox(picked, main));
+    await page.keyboard.press("Escape");
+    await page.close();
+    await setPrefs({ _x_extension_document_pip_enabled_2026_unique_: false });
   },
   // Pinned episode and chapter cards that follow progress (the radar icon).
   async "uc-series"() {

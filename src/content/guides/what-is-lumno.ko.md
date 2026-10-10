@@ -21,7 +21,7 @@ Lumno를 설치하면 Chrome과 Edge의 새 탭이 Lumno 시작 페이지로 바
 ## 기타 기능 {#more}
 
 - [텍스트 선택 빠른 작업](../selection-actions/)(Selection quick actions): 문단을 선택하면 AI에게 답변, 번역, 설명, 요약을 요청할 수 있습니다. 버튼은 Lumno가 도움이 필요하다고 판단할 때만 표시됩니다. 기본적으로 꺼져 있으며, 설정의 Labs에서 켤 수 있습니다.
-- 웹 클립: 페이지의 일부를 잘라 떠 있는 PIP 창에 표시합니다.
+- [웹 클립](../web-clip/): 페이지의 일부를 잘라 떠 있는 PIP 창에 표시합니다.
 - [자동 PIP](../auto-pip/): YouTube나 Twitch 탭에서 다른 탭으로 이동해도 영상이 작은 창에서 계속 재생됩니다.
 - 고정 탭 복원: "Restore Pinned Tabs After Restart"를 켜면 브라우저를 다시 시작할 때 고정한 탭이 자동으로 복원됩니다.
 

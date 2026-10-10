@@ -18,7 +18,7 @@ When you go back to the video's tab, the picture-in-picture window closes and th
 
 - Shopping sites and social feeds often play videos automatically. To avoid distractions, Lumno doesn't start picture-in-picture automatically on JD, Taobao, X (Twitter) or Weibo.
 - If a site disables picture-in-picture through its policy, the browser doesn't allow it.
-- While a [web clip](../what-is-lumno/#more) window is open, video picture-in-picture doesn't start automatically.
+- While a [web clip](../web-clip/) window is open, video picture-in-picture doesn't start automatically.
 
 ## Turn it on or off {#toggle}
 

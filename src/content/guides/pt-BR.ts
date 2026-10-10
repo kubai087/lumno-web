@@ -221,6 +221,14 @@ const content: GuideLocaleContent = {
       title: "Picture-in-picture automático",
       navTitle: "Picture-in-picture automático",
     },
+    "web-clip": {
+      pageTitle: "Recorte da web: mantenha parte de uma página em uma janela flutuante | Ajuda do Lumno",
+      pageDescription:
+        "O recorte da web coloca uma tabela, um bloco de código ou um gráfico em uma janela flutuante que continua visível quando você troca de guia. Veja como ativar, escolher o conteúdo e usar a janela, e quais são as limitações.",
+      keywords: ["recorte da web", "Document Picture-in-Picture", "janela flutuante extensão Chrome", "fixar parte de uma página", "picture-in-picture elemento"],
+      title: "Recorte da web",
+      navTitle: "Recorte da web",
+    },
     "arc-command-bar": {
       pageTitle: "Do Arc para o Chrome, Dia ou Edge: a barra de comandos e os atalhos | Ajuda do Lumno",
       pageDescription:

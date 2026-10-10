@@ -3,6 +3,14 @@
     1440,
     486
   ],
+  "en/clip-command": [
+    1440,
+    486
+  ],
+  "en/clip-picker": [
+    1440,
+    1490
+  ],
   "en/modemenu": [
     1440,
     939
@@ -83,6 +91,14 @@
     1440,
     486
   ],
+  "ja/clip-command": [
+    1440,
+    486
+  ],
+  "ja/clip-picker": [
+    1440,
+    1490
+  ],
   "ja/modemenu": [
     1440,
     939
@@ -162,6 +178,14 @@
   "zh-CN/ai": [
     1440,
     486
+  ],
+  "zh-CN/clip-command": [
+    1440,
+    486
+  ],
+  "zh-CN/clip-picker": [
+    1440,
+    1310
   ],
   "zh-CN/modemenu": [
     1440,
@@ -246,6 +270,14 @@
   "zh-TW/ai": [
     1440,
     486
+  ],
+  "zh-TW/clip-command": [
+    1440,
+    486
+  ],
+  "zh-TW/clip-picker": [
+    1440,
+    1310
   ],
   "zh-TW/modemenu": [
     1440,

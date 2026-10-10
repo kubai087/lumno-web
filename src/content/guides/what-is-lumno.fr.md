@@ -21,7 +21,7 @@ Une fois Lumno installé, le nouvel onglet de Chrome et d'Edge affiche la page d
 ## Autres fonctions {#more}
 
 - [Actions rapides sur la sélection](../selection-actions/) (Selection quick actions) : sélectionnez un passage pour demander à l'IA d'y répondre, de le traduire, de l'expliquer ou de le résumer. Le bouton n'apparaît que lorsque Lumno estime que le texte a besoin d'aide. Désactivé par défaut ; vous pouvez l'activer dans la section Labs des réglages.
-- Capture web : découpez une partie d'une page et affichez-la dans une fenêtre flottante en image dans l'image.
+- [Capture web](../web-clip/) : découpez une partie d'une page et affichez-la dans une fenêtre flottante en image dans l'image.
 - [Image dans l'image automatique](../auto-pip/) : lorsque vous quittez un onglet YouTube ou Twitch, la vidéo continue dans une petite fenêtre.
 - Restauration des onglets épinglés : lorsque « Restore Pinned Tabs After Restart » est activé, les onglets épinglés sont rouverts automatiquement après un redémarrage du navigateur.
 

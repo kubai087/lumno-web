@@ -231,6 +231,14 @@ const content: GuideLocaleContent = {
       title: "视频自动画中画",
       navTitle: "视频自动画中画",
     },
+    "web-clip": {
+      pageTitle: "网页剪裁：把网页的一部分放进悬浮窗口对照查看｜Lumno 帮助中心",
+      pageDescription:
+        "在命令栏输入 /clip，选中网页中的表格、代码或图表，即可在悬浮窗口中单独查看，原网页更新时同步刷新。介绍操作方法、按键和使用限制。",
+      keywords: ["网页剪裁", "网页悬浮窗", "Document Picture-in-Picture", "网页局部画中画", "Chrome 网页内容悬浮"],
+      title: "网页剪裁",
+      navTitle: "网页剪裁",
+    },
     "arc-command-bar": {
       pageTitle: "从 Arc 迁移到 Chrome、Dia 或 Edge：命令栏与快捷键对照｜Lumno 帮助中心",
       pageDescription:

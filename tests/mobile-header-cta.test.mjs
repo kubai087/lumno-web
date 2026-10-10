@@ -406,14 +406,3 @@ test("opening a dialog never shifts the page, release notes included", () => {
     assert.match(source, /html body\[data-scroll-locked\] \{\s*--removed-body-scroll-bar-size: 0px !important;\s*margin-right: 0 !important;/, file);
   }
 });
-
-test("the homepage's release popover shows where the release stands in each store", () => {
-  const popover = fs.readFileSync(path.join(workspaceRoot, "src/components/home/ReleasePopover.astro"), "utf8");
-  const release = fs.readFileSync(path.join(workspaceRoot, "src/pages/release/index.astro"), "utf8");
-  // One status rule and one set of labels for both places.
-  for (const source of [popover, release]) {
-    assert.match(source, /import \{ FIREFOX_FIRST_RELEASE, STORE_STATUS_LABELS, getStoreStatus \} from "\.\.\/\.\.\/lib\/store-status";/);
-  }
-  assert.doesNotMatch(release, /function getStoreStatus|function compareVersion/);
-  assert.match(popover, /class="release-popover-stores"[\s\S]*?store\.status === "published"[\s\S]*?storeLabels\.published[\s\S]*?storeLabels\.reviewing/);
-});

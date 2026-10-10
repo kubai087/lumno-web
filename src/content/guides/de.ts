@@ -51,7 +51,7 @@ const content: GuideLocaleContent = {
     limitations: {
       pageTitle: "Was Lumno nicht kann: Grenzen und bekannte Lücken | Lumno-Hilfe",
       pageDescription:
-        "Lumno ist eine Erweiterung, kein Browser: keine Seitenleiste, keine Spaces, keine geteilte Ansicht, keine Befehlsleiste auf chrome://-Seiten, kein Safari und kein neuer Tab in Dia. Hier steht, was nicht geht – und was du stattdessen nutzen kannst.",
+        "Lumno ist eine Erweiterung, kein Browser: keine Befehlsleiste auf chrome://-Seiten, kein Safari und kein neuer Tab in Dia. Hier steht, was noch nicht geht – und was du stattdessen nutzen kannst.",
       keywords: ["Lumno Grenzen", "Chrome-Erweiterung eingeschränkte Seiten", "Arc Seitenleiste Alternative", "Dia neuer Tab"],
       title: "Was Lumno nicht kann",
       navTitle: "Was Lumno nicht kann",

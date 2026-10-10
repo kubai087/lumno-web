@@ -1,11 +1,4 @@
-Lumno is an extension, not a new browser, so there are things the browser won't let it do. Here they are up front, so you don't find out after installing, along with tools that do cover them.
-
-## Sidebars, Spaces and split view {#not-a-browser}
-
-Vertical tabs, a sidebar, Arc's Spaces and split view all need the browser itself. Extensions can't change the address bar or the tab strip.
-
-- For vertical tabs, try [Microsoft Edge](https://www.microsoft.com/edge), which has them built in.
-- For an Arc-like sidebar, workspaces and split view, try [Zen Browser](https://zen-browser.app/) or [Vivaldi](https://vivaldi.com/).
+Lumno is only a browser extension, not a new browser, and there are things it can't do yet. These are the gaps we know of. If you need one of them, one of the other tools mentioned here may suit you better.
 
 ## Pages where the command bar won't open {#restricted-pages}
 

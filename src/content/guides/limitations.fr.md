@@ -1,11 +1,4 @@
-Lumno est une extension, pas un nouveau navigateur : certaines choses, le navigateur ne le permet tout simplement pas. Les voici d'emblée, pour ne pas les découvrir après l'installation, avec des outils qui les couvrent.
-
-## Barres latérales, espaces et écran partagé {#not-a-browser}
-
-Les onglets verticaux, une barre latérale, les espaces d'Arc et l'écran partagé dépendent du navigateur lui-même. Une extension ne peut modifier ni la barre d'adresse ni la barre d'onglets.
-
-- Pour des onglets verticaux, essayez [Microsoft Edge](https://www.microsoft.com/edge), qui les intègre.
-- Pour une barre latérale à la Arc, des espaces de travail et l'écran partagé, essayez [Zen Browser](https://zen-browser.app/) ou [Vivaldi](https://vivaldi.com/).
+Lumno n'est qu'une extension de navigateur, pas un nouveau navigateur, et certaines choses lui échappent encore. Voici les manques que nous connaissons. Si vous avez besoin de l'une de ces fonctions, l'un des outils cités ici vous conviendra peut-être mieux.
 
 ## Les pages où la barre ne s'ouvre pas {#restricted-pages}
 

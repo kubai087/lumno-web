@@ -1,11 +1,4 @@
-Lumno 是一个扩展，不是一个新浏览器。有些事受浏览器限制做不到，我们提前说清楚，省得你装完才发现。如果正好需要这些功能，下面也列出了能做到的工具。
-
-## 侧边栏、Spaces 和分屏 {#not-a-browser}
-
-垂直标签页、侧边栏、Arc 的 Spaces 和分屏，都需要浏览器本身支持，扩展改不了地址栏和标签栏。
-
-- 想要垂直标签页：可以试试 [Microsoft Edge](https://www.microsoft.com/edge)，它自带垂直标签页。
-- 想要接近 Arc 的侧边栏、工作区和分屏：可以试试 [Zen Browser](https://zen-browser.app/) 或 [Vivaldi](https://vivaldi.com/)。
+Lumno 只是一个浏览器扩展，不是新的浏览器，受浏览器的限制，有些事还做不到。下面是目前已知的不足，如果你正好需要这些功能，也许文中提到的其他工具会更合适。
 
 ## 有些页面唤不出命令栏 {#restricted-pages}
 

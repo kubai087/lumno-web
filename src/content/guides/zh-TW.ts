@@ -51,7 +51,7 @@ const content: GuideLocaleContent = {
     limitations: {
       pageTitle: "Lumno 做不到的事：功能邊界與已知限制｜Lumno 說明中心",
       pageDescription:
-        "Lumno 是擴充功能，不是瀏覽器：沒有側邊欄、Spaces 和分割畫面；在 chrome:// 等受限頁面無法叫出命令列；暫不支援 Safari，Dia 中無法使用新分頁。安裝前可以先了解這些限制。",
+        "Lumno 是擴充功能，不是瀏覽器：在 chrome:// 等受限頁面無法叫出命令列；暫不支援 Safari，Dia 中無法使用新分頁。安裝前可以先了解這些限制。",
       keywords: ["Lumno 限制", "Chrome 擴充功能受限頁面", "Arc 側邊欄替代", "Dia 新分頁"],
       title: "Lumno 做不到的事",
       navTitle: "Lumno 做不到的事",

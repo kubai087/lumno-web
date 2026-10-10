@@ -1,11 +1,4 @@
-O Lumno é uma extensão, não um navegador novo, então há coisas que o navegador não deixa ele fazer. Elas estão aqui logo de cara, para você não descobrir depois de instalar, junto com ferramentas que cobrem essas lacunas.
-
-## Barras laterais, Spaces e tela dividida {#not-a-browser}
-
-Guias verticais, barra lateral, os Spaces do Arc e a tela dividida dependem do próprio navegador. Extensões não conseguem mudar a barra de endereços nem a barra de guias.
-
-- Para guias verticais, experimente o [Microsoft Edge](https://www.microsoft.com/edge), que já vem com elas.
-- Para uma barra lateral como a do Arc, espaços de trabalho e tela dividida, experimente o [Zen Browser](https://zen-browser.app/) ou o [Vivaldi](https://vivaldi.com/).
+O Lumno é só uma extensão de navegador, não um navegador novo, e ainda há coisas que ele não faz. Estas são as lacunas que conhecemos. Se você precisa de alguma dessas funções, talvez uma das ferramentas citadas aqui atenda melhor.
 
 ## Páginas onde a barra não abre {#restricted-pages}
 

@@ -51,7 +51,7 @@ const content: GuideLocaleContent = {
     limitations: {
       pageTitle: "Lumno가 못 하는 것: 한계와 대안 | Lumno 도움말",
       pageDescription:
-        "Lumno는 브라우저가 아니라 확장 프로그램이라 사이드바, Spaces, 화면 분할은 없고, chrome:// 페이지에서는 명령 바가 열리지 않으며, Safari와 Dia의 새 탭은 지원하지 않아요. 못 하는 것과 대신 쓸 만한 도구를 정리했습니다.",
+        "Lumno는 브라우저가 아니라 확장 프로그램이라 chrome:// 페이지에서는 명령 바가 열리지 않고, Safari와 Dia의 새 탭은 지원하지 않아요. 아직 못 하는 것과 대신 쓸 만한 도구를 정리했습니다.",
       keywords: ["Lumno 한계", "크롬 확장 제한 페이지", "Arc 사이드바 대안", "Dia 새 탭"],
       title: "Lumno가 못 하는 것",
       navTitle: "Lumno가 못 하는 것",

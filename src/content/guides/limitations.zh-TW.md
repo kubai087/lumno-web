@@ -1,11 +1,4 @@
-Lumno 是擴充功能，不是一個新的瀏覽器。有些事受瀏覽器限制做不到，我們先講清楚，免得你裝完才發現。如果剛好需要這些功能，下面也列出了做得到的工具。
-
-## 側邊欄、Spaces 和分割畫面 {#not-a-browser}
-
-垂直分頁、側邊欄、Arc 的 Spaces 和分割畫面，都需要瀏覽器本身支援，擴充功能改不了網址列和分頁列。
-
-- 想要垂直分頁：可以試試 [Microsoft Edge](https://www.microsoft.com/edge)，它內建垂直分頁。
-- 想要接近 Arc 的側邊欄、工作區和分割畫面：可以試試 [Zen Browser](https://zen-browser.app/) 或 [Vivaldi](https://vivaldi.com/)。
+Lumno 只是一個瀏覽器擴充功能，不是新的瀏覽器，受瀏覽器的限制，有些事還做不到。下面是目前已知的不足，如果你剛好需要這些功能，也許文中提到的其他工具會更適合。
 
 ## 有些頁面叫不出命令列 {#restricted-pages}
 

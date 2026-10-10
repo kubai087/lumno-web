@@ -1,11 +1,4 @@
-Lumno ist eine Erweiterung, kein neuer Browser – manches lässt der Browser schlicht nicht zu. Hier steht es vorab, damit du es nicht erst nach der Installation merkst, zusammen mit Tools, die diese Lücken füllen.
-
-## Seitenleisten, Spaces und geteilte Ansicht {#not-a-browser}
-
-Vertikale Tabs, eine Seitenleiste, Arcs Spaces und die geteilte Ansicht muss der Browser selbst mitbringen. Erweiterungen können weder Adressleiste noch Tableiste verändern.
-
-- Für vertikale Tabs probier [Microsoft Edge](https://www.microsoft.com/edge), das sie eingebaut hat.
-- Für eine Seitenleiste wie in Arc, Arbeitsbereiche und geteilte Ansicht probier [Zen Browser](https://zen-browser.app/) oder [Vivaldi](https://vivaldi.com/).
+Lumno ist nur eine Browsererweiterung, kein neuer Browser, und manches kann es noch nicht. Hier sind die Lücken, die wir kennen. Wenn du eine dieser Funktionen brauchst, passt eines der hier genannten Tools vielleicht besser zu dir.
 
 ## Seiten, auf denen sich die Befehlsleiste nicht öffnet {#restricted-pages}
 

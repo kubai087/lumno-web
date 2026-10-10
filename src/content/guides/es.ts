@@ -51,7 +51,7 @@ const content: GuideLocaleContent = {
     limitations: {
       pageTitle: "Lo que Lumno no hace: límites y carencias conocidas | Ayuda de Lumno",
       pageDescription:
-        "Lumno es una extensión, no un navegador: no tiene barra lateral, espacios ni pantalla dividida, la barra de comandos no se abre en páginas chrome://, no funciona en Safari y no hay nueva pestaña en Dia. Aquí tienes lo que no hace y qué usar en su lugar.",
+        "Lumno es una extensión, no un navegador: la barra de comandos no se abre en páginas chrome://, no funciona en Safari y no hay nueva pestaña en Dia. Aquí tienes lo que todavía no hace y qué usar en su lugar.",
       keywords: ["límites de Lumno", "extensión Chrome páginas restringidas", "alternativa barra lateral Arc", "nueva pestaña Dia"],
       title: "Lo que Lumno no hace",
       navTitle: "Lo que Lumno no hace",

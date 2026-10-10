@@ -51,7 +51,7 @@ const content: GuideLocaleContent = {
     limitations: {
       pageTitle: "What Lumno can't do: limits and known gaps | Lumno Help",
       pageDescription:
-        "Lumno is an extension, not a browser: no sidebar, Spaces or split view, no command bar on chrome:// pages, no Safari, and no new tab in Dia. Here is what it can't do, and what to use instead.",
+        "Lumno is an extension, not a browser: no command bar on chrome:// pages, no Safari, and no new tab in Dia. Here is what it can't do yet, and what to use instead.",
       keywords: ["Lumno limitations", "Chrome extension restricted pages", "Arc sidebar alternative", "Dia new tab"],
       title: "What Lumno can't do",
       navTitle: "What Lumno can't do",

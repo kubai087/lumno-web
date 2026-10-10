@@ -51,7 +51,7 @@ const content: GuideLocaleContent = {
     limitations: {
       pageTitle: "Ce que Lumno ne fait pas : limites et manques connus | Aide Lumno",
       pageDescription:
-        "Lumno est une extension, pas un navigateur : pas de barre latérale, d'espaces ni d'écran partagé, pas de barre de commande sur les pages chrome://, pas de Safari et pas de nouvel onglet dans Dia. Voici ce qu'il ne fait pas, et quoi utiliser à la place.",
+        "Lumno est une extension, pas un navigateur : pas de barre de commande sur les pages chrome://, pas de Safari et pas de nouvel onglet dans Dia. Voici ce qu'il ne fait pas encore, et quoi utiliser à la place.",
       keywords: ["limites de Lumno", "extension Chrome pages restreintes", "alternative barre latérale Arc", "nouvel onglet Dia"],
       title: "Ce que Lumno ne fait pas",
       navTitle: "Ce que Lumno ne fait pas",

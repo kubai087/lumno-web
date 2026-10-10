@@ -51,7 +51,7 @@ const content: GuideLocaleContent = {
     limitations: {
       pageTitle: "Lumno にできないこと：機能の範囲と既知の制限｜Lumno ヘルプ",
       pageDescription:
-        "Lumno はブラウザではなく拡張機能です。サイドバーや Spaces、分割表示はなく、chrome:// などの制限ページではコマンドバーを開けません。Safari には非対応で、Dia では新しいタブを使えません。",
+        "Lumno はブラウザではなく拡張機能です。chrome:// などの制限ページではコマンドバーを開けません。Safari には非対応で、Dia では新しいタブを使えません。",
       keywords: ["Lumno 制限", "Chrome 拡張機能 制限ページ", "Arc サイドバー 代わり", "Dia 新しいタブ"],
       title: "Lumno にできないこと",
       navTitle: "Lumno にできないこと",

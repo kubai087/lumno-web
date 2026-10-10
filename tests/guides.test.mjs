@@ -102,9 +102,13 @@ test("pages read like a wiki: search, sidebar, keycaps, zoomable screenshots, pr
   const shell = readSource("src/components/guides/GuideShell.astro");
 
   assert.match(article, /<GuideShell locale=\{locale\} current=\{slug\}/);
-  assert.match(shell, /<details class="guide-nav" open>/);
-  assert.match(shell, /aria-current=\{item === current \? "page" : undefined\}/);
-  assert.match(shell, /guide-nav__list--nested/);
+  const navList = readSource("src/components/guides/GuideNavList.astro");
+  assert.match(shell, /<div class="guide-nav">\s*<GuideNavList locale=\{locale\} current=\{current\} \/>/);
+  assert.match(navList, /aria-current=\{item === current \? "page" : undefined\}/);
+  assert.match(navList, /guide-nav__list--nested/);
+  // Phones open the same list as a sheet from the bottom bar, next to the outline.
+  assert.match(shell, /data-guide-sheet-open="pages"[\s\S]*?data-guide-sheet-open="outline"/);
+  assert.match(shell, /<div class="guide-nav guide-nav--sheet">\s*<GuideNavList/);
   // Plain text rows (no icons); the current page sits on a soft grey pill.
   assert.doesNotMatch(shell, /GUIDE_ICONS/);
   assert.match(readSource("src/styles/guides.css"), /\.guide-nav a\[aria-current="page"\] \{\s*background: var\(--guide-row-current\);/);
@@ -188,10 +192,10 @@ test("links carry their site's icon, saved on this site", () => {
   }
 });
 
-test("the page list is always open on wide screens, folded only on phones", () => {
-  const shell = readSource("src/components/guides/GuideShell.astro");
-  assert.match(shell, /const fitNav = \(\) => \{\s*if \(nav\) nav\.open = !narrow\.matches;/);
-  assert.match(shell, /narrow\.addEventListener\("change", fitNav\);/);
+test("the page list stays in the sidebar on wide screens and moves to the bottom bar on phones", () => {
+  const styles = readSource("src/styles/guides.css");
+  assert.match(styles, /@media \(max-width: 959px\) \{[\s\S]*?\.guide-nav-frame \{\s*display: none;/);
+  assert.match(styles, /@media \(max-width: 959px\) \{[\s\S]*?\.guide-dock__button--pages \{\s*display: flex;/);
 });
 
 test("the header and every page point to help, and pages end with where to ask", () => {

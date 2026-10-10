@@ -37,7 +37,10 @@
   }
 }
 
-.guide {
+/* The bottom bar and its sheets sit outside .guide, so they take the same tokens. */
+.guide,
+.guide-dock,
+.guide-sheet {
   /* The logo's sky blue (#16a0fd) for marks; a deeper shade of the same hue for text (AA on white). */
   --guide-accent: #0a78c2;
   --guide-accent-bright: #16a0fd;
@@ -48,7 +51,9 @@
   --guide-line: var(--line);
   --guide-row-hover: rgba(29, 32, 36, 0.04);
   --guide-row-current: rgba(29, 32, 36, 0.06);
+}
 
+.guide {
   display: grid;
   grid-template-columns: 220px minmax(0, 720px) 180px;
   grid-template-areas:
@@ -282,10 +287,6 @@
 
 .guide-nav-step:hover {
   color: var(--guide-ink);
-}
-
-.guide-nav__toggle {
-  display: none;
 }
 
 /*
@@ -792,14 +793,15 @@
 }
 
 /*
- * The outline on narrower screens (sspai's pattern): a quiet pill at the bottom with the
- * section being read, opening the list as a sheet from the bottom edge.
+ * Narrower screens (sspai's pattern): one quiet bar at the bottom. Its outline half shows
+ * the section being read; on phones a page-list half sits beside it. Each opens its list
+ * as a sheet from the bottom edge.
  */
-.guide-outline-pill {
+.guide-dock {
   display: none;
 }
 
-.guide-outline-sheet {
+.guide-sheet {
   max-width: none;
   max-height: none;
   margin: 0;
@@ -821,49 +823,64 @@
     display: none;
   }
 
-  .guide-outline-pill {
+  .guide-dock {
     position: fixed;
     left: 50%;
     bottom: max(20px, calc(env(safe-area-inset-bottom) + 12px));
     z-index: 40;
     display: flex;
-    align-items: center;
-    gap: 8px;
+    align-items: stretch;
     max-width: min(440px, calc(100vw - 32px));
     height: 44px;
-    padding: 0 14px 0 16px;
     border: 1px solid var(--guide-line);
     border-radius: 999px;
     background: rgba(255, 255, 255, 0.92);
     -webkit-backdrop-filter: blur(16px);
     backdrop-filter: blur(16px);
     box-shadow: 0 6px 20px rgba(15, 23, 42, 0.08), 0 1px 2px rgba(15, 23, 42, 0.06);
+    transform: translateX(-50%);
+  }
+
+  .guide-dock__button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    padding: 0 14px 0 16px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
     color: var(--guide-muted);
     font: inherit;
     font-size: 14px;
-    transform: translateX(-50%);
+    white-space: nowrap;
     cursor: pointer;
   }
 
-  .guide-outline-pill > i {
+  /* The page list stays in the sidebar until phones. */
+  .guide-dock--pages-only,
+  .guide-dock__button--pages {
+    display: none;
+  }
+
+  .guide-dock__button > i {
     flex: none;
     font-size: 16px;
   }
 
-  .guide-outline-pill__label {
+  .guide-dock__label {
     flex: none;
   }
 
-  .guide-outline-pill__current {
+  .guide-dock__current {
     overflow: hidden;
     min-width: 0;
     color: var(--guide-ink);
     font-weight: 600;
     text-overflow: ellipsis;
-    white-space: nowrap;
   }
 
-  .guide-outline-sheet[open] {
+  .guide-sheet[open] {
     position: fixed;
     inset: auto 0 0;
     display: flex;
@@ -876,27 +893,28 @@
     background: var(--surface);
     box-shadow: 0 -8px 32px rgba(15, 23, 42, 0.12);
     color: var(--guide-ink);
-    animation: guide-outline-sheet-in 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    animation: guide-sheet-in 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
   }
 
-  .guide-outline-sheet::backdrop {
+  .guide-sheet::backdrop {
     background: rgba(15, 23, 42, 0.24);
   }
 
-  .guide-outline-sheet__head {
+  .guide-sheet__head {
     display: flex;
+    flex: none;
     align-items: center;
     justify-content: space-between;
     padding: 10px 12px 6px 24px;
   }
 
-  .guide-outline-sheet__title {
+  .guide-sheet__title {
     margin: 0;
     font-size: 15px;
     font-weight: 600;
   }
 
-  .guide-outline-sheet__close {
+  .guide-sheet__close {
     display: grid;
     place-items: center;
     width: 36px;
@@ -933,7 +951,7 @@
   }
 }
 
-@keyframes guide-outline-sheet-in {
+@keyframes guide-sheet-in {
   from {
     transform: translateY(24px);
     opacity: 0;
@@ -941,12 +959,12 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .guide-outline-sheet[open] {
+  .guide-sheet[open] {
     animation: none;
   }
 }
 
-/* Narrow screens: one column, the page list folded into a disclosure above the banner. */
+/* Narrow screens: one column; the page list moves into the bottom bar's sheet. */
 @media (max-width: 959px) {
   .guide {
     grid-template-columns: minmax(0, 1fr);
@@ -959,17 +977,13 @@
     padding-top: 96px;
   }
 
-  /*
-   * Phones: the search box scrolls away with the page, while the contents bar
-   * sticks under the site header and opens the page list as a drop-down.
-   */
   .guide-side {
     display: contents;
   }
 
   .guide-search {
     grid-area: search;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
   }
 
   .guide-search__hint {
@@ -981,82 +995,61 @@
   }
 
   .guide-nav-frame {
-    display: contents;
-  }
-
-  .guide-nav-step {
     display: none;
   }
 
-  .guide-nav,
-  .guide-nav[data-more] {
-    -webkit-mask-image: none;
-    mask-image: none;
-    padding-bottom: 0;
-    grid-area: nav;
-    position: sticky;
-    top: calc(max(10px, env(safe-area-inset-top)) + 66px);
-    z-index: 30;
-    align-self: start;
-    min-height: auto;
-    margin-bottom: 16px;
-    overflow: visible;
-    border: 1px solid var(--guide-line);
-    border-radius: 10px;
-    background: rgba(255, 255, 255, 0.92);
-    -webkit-backdrop-filter: blur(16px);
-    backdrop-filter: blur(16px);
+  .guide-dock {
+    width: min(440px, calc(100vw - 32px));
   }
 
-  .guide-nav[open] {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
+  .guide-dock--pages-only {
+    width: auto;
   }
 
-  .guide-nav__toggle {
+  .guide-dock--pages-only,
+  .guide-dock__button--pages {
     display: flex;
-    align-items: center;
-    gap: 8px;
-    min-height: 44px;
-    padding: 0 14px;
-    color: var(--guide-muted);
-    font-size: 14px;
-    cursor: pointer;
-    list-style: none;
   }
 
-  .guide-nav__toggle-current {
-    overflow: hidden;
+  .guide-dock__button--pages {
+    flex: none;
+    padding-right: 14px;
+  }
+
+  /* A hairline between the two halves. */
+  .guide-dock__button--outline {
     flex: 1;
-    color: var(--guide-ink);
-    font-weight: 600;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    position: relative;
+    padding-left: 14px;
   }
 
-  .guide-nav__toggle::-webkit-details-marker {
-    display: none;
-  }
-
-  .guide-nav[open] .guide-nav__toggle i {
-    transform: rotate(180deg);
-  }
-
-  /* The page list drops down under the bar and scrolls on its own. */
-  .guide-nav__body {
+  .guide-dock__button--outline::before {
     position: absolute;
-    top: 100%;
-    right: -1px;
-    left: -1px;
-    max-height: min(65vh, 520px);
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    padding: 4px 4px 12px;
-    border: 1px solid var(--guide-line);
-    border-top: 0;
-    border-radius: 0 0 10px 10px;
-    background: var(--surface);
-    box-shadow: var(--home-shadow-card);
+    top: 12px;
+    bottom: 12px;
+    left: 0;
+    width: 1px;
+    background: var(--guide-line);
+    content: "";
+  }
+
+  .guide-dock__button--outline > .ri-arrow-up-s-line {
+    margin-left: auto;
+  }
+
+  /* On phones the section name needs the room more than its label does. */
+  @media (max-width: 479px) {
+    .guide-dock__button--outline .guide-dock__label {
+      display: none;
+    }
+  }
+
+  .guide-pages-sheet[open] {
+    max-height: min(78vh, 640px);
+  }
+
+  .guide-nav--sheet {
+    padding: 0 12px 8px;
   }
 
   /* Comfortable tap targets, one size up at every level. */

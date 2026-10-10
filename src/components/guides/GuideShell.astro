@@ -3,15 +3,13 @@ import { marked } from "marked";
 import "../../styles/guides.css";
 import {
   GUIDES_LAST_UPDATED,
-  GUIDE_NAV,
   getGuideBanner,
   getGuideContent,
-  getGuideNavTitle,
-  getGuidePath,
   type GuideLocale,
   type GuideNavKey,
 } from "../../lib/guides";
 import { buildLocalizedPath } from "../../lib/locales";
+import GuideNavList from "./GuideNavList.astro";
 import { getCommunityPanel } from "../../lib/community-panel";
 import { COMMUNITY_LINKS } from "../../lib/community";
 import { getHomeContent } from "../../lib/home-content";
@@ -67,36 +65,11 @@ const searchIndexHref = `${buildLocalizedPath(locale, "/help/")}search-index.jso
       <div class="guide-search__results" id="guide-search-results" role="listbox" hidden></div>
     </div>
 
-    <!-- The pages, wiki style; on narrow screens the list folds into a disclosure. -->
+    <!-- The pages, wiki style; phones open the same list as a sheet from the bottom bar. -->
     <div class="guide-nav-frame">
-    <details class="guide-nav" open>
-      <summary class="guide-nav__toggle">
-        <span>{ui.navToggle}</span>
-        <span class="guide-nav__toggle-current">{current === "privacy" ? ui.privacyLabel : title}</span>
-        <i class="ri-arrow-down-s-line" aria-hidden="true"></i>
-      </summary>
-      <nav class="guide-nav__body" aria-label={ui.navTitle}>
-        {GUIDE_NAV.map((group) => (
-          <div class="guide-nav__group">
-            <p class="guide-nav__group-title">{ui.groups[group.id]}</p>
-            {group.sections.map((section) => (
-              <>
-                {"id" in section && <p class="guide-nav__section-title">{ui.sections[section.id]}</p>}
-                <ul class={"id" in section ? "guide-nav__list guide-nav__list--nested" : "guide-nav__list"}>
-                  {section.slugs.map((item) => (
-                    <li>
-                      <a href={getGuidePath(locale, item)} aria-current={item === current ? "page" : undefined}>
-                        {getGuideNavTitle(locale, item)}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </>
-            ))}
-          </div>
-        ))}
-      </nav>
-    </details>
+    <div class="guide-nav">
+      <GuideNavList locale={locale} current={current} />
+    </div>
     <!-- When the list overflows, these step it up or down; mouse only, since keyboard focus scrolls it anyway. -->
     <button type="button" class="guide-nav-step guide-nav-step--up" data-guide-nav-step="-1" tabindex="-1" aria-hidden="true">
       <i class="ri-arrow-up-s-line"></i>
@@ -212,31 +185,51 @@ const searchIndexHref = `${buildLocalizedPath(locale, "/help/")}search-index.jso
   )}
 </div>
 
-{sections.length > 0 && (
-  <>
-    {/* Narrower screens hide the outline column; a pill at the bottom opens the same list as a sheet. */}
-    <button type="button" class="guide-outline-pill" data-guide-outline-open aria-haspopup="dialog">
+{/*
+  * Narrower screens hide the outline column, and phones the page list too (sspai's pattern):
+  * one bar at the bottom opens either as a sheet. The page half shows on phones only.
+  */}
+<div class={sections.length > 0 ? "guide-dock" : "guide-dock guide-dock--pages-only"}>
+  <button type="button" class="guide-dock__button guide-dock__button--pages" data-guide-sheet-open="pages" aria-haspopup="dialog">
+    <i class="ri-book-open-line" aria-hidden="true"></i>
+    <span class="guide-dock__label">{ui.navToggle}</span>
+  </button>
+  {sections.length > 0 && (
+    <button type="button" class="guide-dock__button guide-dock__button--outline" data-guide-sheet-open="outline" aria-haspopup="dialog">
       <i class="ri-list-check" aria-hidden="true"></i>
-      <span class="guide-outline-pill__label">{ui.tocLabel}</span>
-      <span class="guide-outline-pill__current" data-guide-outline-current set:html={marked.parseInline(sections[0].title)} />
+      <span class="guide-dock__label">{ui.tocLabel}</span>
+      <span class="guide-dock__current" data-guide-outline-current set:html={marked.parseInline(sections[0].title)} />
       <i class="ri-arrow-up-s-line" aria-hidden="true"></i>
     </button>
-    <dialog class="guide-outline-sheet" aria-label={ui.tocLabel}>
-      <div class="guide-outline-sheet__head">
-        <p class="guide-outline-sheet__title">{ui.tocLabel}</p>
-        <button type="button" class="guide-outline-sheet__close" data-guide-outline-close aria-label={ui.closeLabel}>
-          <i class="ri-close-line" aria-hidden="true"></i>
-        </button>
-      </div>
-      <ol>
-        {sections.map((section) => (
-          <li>
-            <a href={`#${section.id}`} data-guide-toc={section.id} set:html={marked.parseInline(section.title)} />
-          </li>
-        ))}
-      </ol>
-    </dialog>
-  </>
+  )}
+</div>
+<dialog class="guide-sheet guide-pages-sheet" data-guide-sheet="pages" aria-label={ui.navToggle}>
+  <div class="guide-sheet__head">
+    <p class="guide-sheet__title">{ui.navToggle}</p>
+    <button type="button" class="guide-sheet__close" data-guide-sheet-close aria-label={ui.closeLabel}>
+      <i class="ri-close-line" aria-hidden="true"></i>
+    </button>
+  </div>
+  <div class="guide-nav guide-nav--sheet">
+    <GuideNavList locale={locale} current={current} />
+  </div>
+</dialog>
+{sections.length > 0 && (
+  <dialog class="guide-sheet guide-outline-sheet" data-guide-sheet="outline" aria-label={ui.tocLabel}>
+    <div class="guide-sheet__head">
+      <p class="guide-sheet__title">{ui.tocLabel}</p>
+      <button type="button" class="guide-sheet__close" data-guide-sheet-close aria-label={ui.closeLabel}>
+        <i class="ri-close-line" aria-hidden="true"></i>
+      </button>
+    </div>
+    <ol>
+      {sections.map((section) => (
+        <li>
+          <a href={`#${section.id}`} data-guide-toc={section.id} set:html={marked.parseInline(section.title)} />
+        </li>
+      ))}
+    </ol>
+  </dialog>
 )}
 
 <dialog class="guide-lightbox" aria-label={ui.zoomLabel}>
@@ -307,30 +300,21 @@ const searchIndexHref = `${buildLocalizedPath(locale, "/help/")}search-index.jso
       update();
     }
 
-    // The outline sheet: opens from the pill, closes on a section link, the close button,
-    // a tap on the backdrop or Esc. Links keep their own jump to the heading.
-    const sheet = document.querySelector(".guide-outline-sheet");
-    const pill = document.querySelector("[data-guide-outline-open]");
-    if (sheet && pill && typeof sheet.showModal === "function") {
-      pill.addEventListener("click", () => sheet.showModal());
+    // The bottom bar's sheets: each closes on a link, the close button, a tap on the
+    // backdrop or Esc. Section links keep their own jump to the heading.
+    document.querySelectorAll("[data-guide-sheet-open]").forEach((button) => {
+      const sheet = document.querySelector(`[data-guide-sheet="${button.dataset.guideSheetOpen}"]`);
+      if (!sheet || typeof sheet.showModal !== "function") return;
+      button.addEventListener("click", () => {
+        sheet.showModal();
+        const here = sheet.querySelector("[aria-current]");
+        if (here) here.scrollIntoView({ block: "center" });
+      });
       sheet.addEventListener("click", (event) => {
         const target = event.target instanceof Element ? event.target : null;
         if (!target) return;
-        if (target === sheet || target.closest("[data-guide-outline-close]") || target.closest("a[href^='#']")) sheet.close();
+        if (target === sheet || target.closest("[data-guide-sheet-close]") || target.closest("a")) sheet.close();
       });
-    }
-
-    // Phones fold the page list behind the contents bar; wider screens always show it (they
-    // have no bar to open it with), so the fold follows the width, including later resizes.
-    const nav = document.querySelector(".guide-nav");
-    const narrow = window.matchMedia("(max-width: 959px)");
-    const fitNav = () => {
-      if (nav) nav.open = !narrow.matches;
-    };
-    fitNav();
-    narrow.addEventListener("change", fitNav);
-    document.addEventListener("click", (event) => {
-      if (nav && narrow.matches && nav.open && !nav.contains(event.target)) nav.open = false;
     });
 
     // Screenshots open full size; a click anywhere or Esc closes them.

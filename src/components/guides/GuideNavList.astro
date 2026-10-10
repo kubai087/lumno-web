@@ -1,0 +1,41 @@
+---
+import {
+  GUIDE_NAV,
+  getGuideContent,
+  getGuideNavTitle,
+  getGuidePath,
+  type GuideLocale,
+  type GuideNavKey,
+} from "../../lib/guides";
+
+/* The help center's pages in their groups: the sidebar, and on phones the sheet from the bottom bar. */
+interface Props {
+  locale: GuideLocale;
+  current: GuideNavKey;
+}
+
+const { locale, current } = Astro.props;
+const { ui } = getGuideContent(locale);
+---
+
+<nav class="guide-nav__body" aria-label={ui.navTitle}>
+  {GUIDE_NAV.map((group) => (
+    <div class="guide-nav__group">
+      <p class="guide-nav__group-title">{ui.groups[group.id]}</p>
+      {group.sections.map((section) => (
+        <>
+          {"id" in section && <p class="guide-nav__section-title">{ui.sections[section.id]}</p>}
+          <ul class={"id" in section ? "guide-nav__list guide-nav__list--nested" : "guide-nav__list"}>
+            {section.slugs.map((item) => (
+              <li>
+                <a href={getGuidePath(locale, item)} aria-current={item === current ? "page" : undefined}>
+                  {getGuideNavTitle(locale, item)}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </>
+      ))}
+    </div>
+  ))}
+</nav>

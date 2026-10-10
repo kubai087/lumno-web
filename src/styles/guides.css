@@ -912,17 +912,18 @@
   }
 
   /*
-   * Safari 26 tints the strip under its bottom toolbar from a fixed element at the viewport's edge, but passes over
-   * one as tall as the page list; this short white band is what it finds there instead, whatever the sheet's height.
+   * Safari 26 tints the strip under its bottom toolbar from whatever it hits 4px above the viewport's edge. A hit on
+   * the dialog (or its pseudo-elements) reads as its ::backdrop and turns the strip grey, so a real fixed element sits
+   * there instead, above the list's scrolled-away rows, which Safari's hit test also sees.
    */
-  .guide-sheet[open]::before {
+  .guide-sheet__floor {
     position: fixed;
+    z-index: 1;
     inset: auto 0 0;
     width: min(100%, 560px);
     height: max(12px, env(safe-area-inset-bottom));
     margin: 0 auto;
     background: var(--surface);
-    content: "";
   }
 
   .guide-sheet::backdrop {

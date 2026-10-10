@@ -212,6 +212,7 @@ const searchIndexHref = `${buildLocalizedPath(locale, "/help/")}search-index.jso
   <div class="guide-nav guide-nav--sheet">
     <GuideNavList locale={locale} current={current} />
   </div>
+  <div class="guide-sheet__floor" aria-hidden="true"></div>
 </dialog>
 {sections.length > 0 && (
   <dialog class="guide-sheet guide-outline-sheet" data-guide-sheet="outline" tabindex="-1" aria-label={ui.tocLabel}>
@@ -226,6 +227,7 @@ const searchIndexHref = `${buildLocalizedPath(locale, "/help/")}search-index.jso
         </li>
       ))}
     </ol>
+    <div class="guide-sheet__floor" aria-hidden="true"></div>
   </dialog>
 )}
 

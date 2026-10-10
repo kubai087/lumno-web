@@ -374,7 +374,7 @@ const SCENES_BY_LOCALE: Record<ExtensionLocale, DemoScene[]> = {
         },
         {
           type: "history",
-          title: "Lumno 更新日志",
+          title: "Lumno 近期更新",
           detail: "https://lumno.kubai.design/release/",
           sourceTag: "历史",
           favicon: LUMNO_FAVICON,
@@ -496,7 +496,7 @@ const SCENES_BY_LOCALE: Record<ExtensionLocale, DemoScene[]> = {
       results: [
         { type: "topSite", title: "lumno-extension · 瀏覽器聚焦搜尋", detail: "https://github.com/kubai087/lumno-extension", sourceTag: "已開啟", sourceTagKind: "open-tab", favicon: GITHUB_FAVICON, actionTagLabel: "切換", visitButtonLabel: "切換", theme: GITHUB_THEME },
         { type: "bookmark", title: "Lumno 功能與快速鍵", detail: "書籤 / 效率工具 / 瀏覽器", sourceTag: "書籤", sourceTagKind: "bookmark", favicon: LUMNO_FAVICON, visitButtonLabel: "開啟", theme: LUMNO_THEME },
-        { type: "history", title: "Lumno 更新日誌", detail: "https://lumno.kubai.design/release/", sourceTag: "歷史", favicon: LUMNO_FAVICON, visitButtonLabel: "開啟", historyDeletable: true, theme: LUMNO_THEME },
+        { type: "history", title: "Lumno 近期更新", detail: "https://lumno.kubai.design/release/", sourceTag: "歷史", favicon: LUMNO_FAVICON, visitButtonLabel: "開啟", historyDeletable: true, theme: LUMNO_THEME },
         { type: "topSite", title: "Lumno - Chrome 線上應用程式商店", detail: "https://chromewebstore.google.com/detail/lumno", sourceTag: "常用", favicon: CHROME_STORE_FAVICON, visitButtonLabel: "開啟", theme: CHROME_THEME },
         { type: "newtab", title: '搜尋 "lumno"', visitButtonLabel: "搜尋" },
       ],

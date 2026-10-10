@@ -153,7 +153,7 @@ test("localized pages link to same-locale routes", () => {
 
 test("release page keeps a descriptive h1 for web visitors", () => {
   const source = readSource("src/pages/release/index.astro");
-  assert.match(source, /banner_title_web: "Lumno 更新日志"/);
+  assert.match(source, /banner_title_web: "Lumno 近期更新"/);
   assert.match(source, /bannerTitle: uiMessages\.banner_title_web/);
   assert.match(source, /banner_title_web: "Lumno Release Notes"/);
   assert.match(source, /!entryContext\.isExtensionEntry\s*\? getMessage\(resolvedLocale, "banner_title_web"\)/);

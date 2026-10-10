@@ -62,8 +62,8 @@ const alternateLinks = buildAlternateLinks(indexedReleaseLanguageMap, "/release/
 const ogLocale = getOpenGraphLocale(uiLocale);
 const v = latestReleaseVersion ? `v${latestReleaseVersion}` : "";
 const pageTitleByLocale: Record<SupportedLocale, string> = {
-  "zh-CN": v ? `Lumno 更新日志｜${v} 与浏览器命令栏发布记录` : "Lumno 更新日志｜浏览器命令栏与新标签页发布记录",
-  "zh-TW": v ? `Lumno 更新日誌｜${v} 與瀏覽器命令列發布紀錄` : "Lumno 更新日誌｜瀏覽器命令列與新分頁發布紀錄",
+  "zh-CN": v ? `Lumno 近期更新｜${v} 与浏览器命令栏发布记录` : "Lumno 近期更新｜浏览器命令栏与新标签页发布记录",
+  "zh-TW": v ? `Lumno 近期更新｜${v} 與瀏覽器命令列發布紀錄` : "Lumno 近期更新｜瀏覽器命令列與新分頁發布紀錄",
   en: v ? `Lumno Changelog | ${v} Browser Command Bar Release Notes` : "Lumno Changelog | Browser Command Bar Release Notes",
   ja: v ? `Lumno 更新履歴｜${v} とこれまでのリリースノート` : "Lumno 更新履歴｜コマンドバーと新しいタブのリリースノート",
   ko: v ? `Lumno 업데이트 내역 | ${v} 릴리스 노트` : "Lumno 업데이트 내역 | 커맨드 바와 새 탭 릴리스 노트",
@@ -88,7 +88,7 @@ const pageDescriptionByLocale: Record<SupportedLocale, string> = {
 const pageTitle = pageTitleByLocale[uiLocale];
 const pageDescription = pageDescriptionByLocale[uiLocale];
 const pageKeywords = buildKeywords(
-  ["Lumno 更新日志", "Lumno changelog", "浏览器命令栏更新", "新标签页更新", "Dia 支持", "Arc 浏览器迁移"],
+  ["Lumno 近期更新", "Lumno 更新日志", "Lumno changelog", "浏览器命令栏更新", "新标签页更新", "Dia 支持", "Arc 浏览器迁移"],
   uiLocale,
 );
 
@@ -115,7 +115,7 @@ const RELEASE_MESSAGES: Record<SupportedLocale, ReleaseMessages> = {
   "zh-CN": {
     banner_title: "已更新到最新版本！",
     banner_title_ext: "已更新到 {version}",
-    banner_title_web: "Lumno 更新日志",
+    banner_title_web: "Lumno 近期更新",
     language_select_aria: "选择语言",
     features_label: "新功能",
     bug_fixes_label: "问题修复",
@@ -129,7 +129,7 @@ const RELEASE_MESSAGES: Record<SupportedLocale, ReleaseMessages> = {
   "zh-TW": {
     banner_title: "已更新到最新版本！",
     banner_title_ext: "已更新到 {version}",
-    banner_title_web: "Lumno 更新日誌",
+    banner_title_web: "Lumno 近期更新",
     language_select_aria: "選擇語言",
     features_label: "新功能",
     bug_fixes_label: "錯誤修正",

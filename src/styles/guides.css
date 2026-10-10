@@ -89,26 +89,32 @@
   pointer-events: none;
 }
 
+/* The extension's own settings input: a faint grey well that turns a soft blue on hover and focus. */
 .guide-search input {
   width: 100%;
   height: 36px;
   padding: 0 32px 0 32px;
-  border: 1px solid var(--guide-line);
+  border: 1px solid rgba(15, 23, 42, 0.05);
   border-radius: 8px;
-  background: var(--surface-soft);
+  background: rgba(15, 23, 42, 0.04);
   color: var(--guide-ink);
   font-size: 14px;
   outline: none;
-  transition: border-color 160ms ease, background-color 160ms ease;
+  transition: border-color 160ms ease, background-color 220ms ease;
+}
+
+.guide-search input::placeholder {
+  color: rgba(100, 116, 139, 0.7);
 }
 
 .guide-search input::-webkit-search-cancel-button {
   display: none;
 }
 
+.guide-search input:hover,
 .guide-search input:focus {
-  border-color: var(--guide-accent-bright);
-  background: var(--surface);
+  border-color: rgba(59, 130, 246, 0.65);
+  background: rgba(59, 130, 246, 0.08);
 }
 
 .guide-search__hint {

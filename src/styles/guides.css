@@ -283,31 +283,33 @@
 }
 
 /*
- * Groups are bold headings with a hairline between them; sub-sections are small
- * grey labels. The current page sits on a soft grey pill, and rows keep a gap
- * so hover and current pills never touch.
+ * Type steps down one size per level: group, sub-section, page. Size alone is a
+ * weak divider, so the space above each level grows with its rank and a hairline
+ * still splits the groups. The current page sits on a soft grey pill, and rows
+ * keep a gap so hover and current pills never touch.
  */
 .guide-nav__group + .guide-nav__group {
-  margin-top: 20px;
-  padding-top: 20px;
+  margin-top: 28px;
+  padding-top: 28px;
   border-top: 1px solid var(--guide-line);
 }
 
 .guide-nav__group-title {
-  margin: 0 0 8px;
+  margin: 0 0 4px;
   padding: 0 10px;
   color: var(--guide-ink);
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 650;
+  line-height: 24px;
 }
 
 .guide-nav__section-title {
-  margin: 18px 0 6px;
+  margin: 20px 0 4px;
   padding: 0 10px;
-  color: var(--text-soft);
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.02em;
+  color: var(--guide-ink);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
 }
 
 .guide-nav__list {
@@ -317,15 +319,15 @@
 }
 
 .guide-nav li + li {
-  margin-top: 4px;
+  margin-top: 2px;
 }
 
 .guide-nav a {
   display: block;
-  padding: 7px 10px;
+  padding: 6px 10px;
   border-radius: 8px;
   color: var(--guide-text);
-  font-size: 14px;
+  font-size: 13px;
   line-height: 20px;
   text-decoration: none;
   transition:
@@ -909,14 +911,22 @@
     box-shadow: var(--home-shadow-card);
   }
 
-  /* Comfortable tap targets. */
-  .guide-nav a {
-    padding: 9px 10px;
+  /* Comfortable tap targets, one size up at every level. */
+  .guide-nav__group-title {
+    font-size: 17px;
+  }
+
+  .guide-nav__section-title {
     font-size: 15px;
   }
 
+  .guide-nav a {
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+
   .guide-nav__group:first-of-type {
-    padding-top: 4px;
+    padding-top: 12px;
   }
 
   .guide__banner {

@@ -4,7 +4,8 @@ import { SettingsButton } from "../extension-settings/SettingsKit";
 import { getHomeContent } from "../../lib/home-content";
 import { buildLocalizedPath, type SupportedLocale } from "../../lib/locales";
 import { fetchReleases, formatDate, isReleaseNoteLocale, parseReleaseBody } from "../../lib/releases";
-import { CHROME_STORE_URL } from "../../lib/site-links";
+import { CHROME_STORE_URL, EDGE_STORE_URL, FIREFOX_STORE_URL, getSiteStoreVersions } from "../../lib/site-links";
+import { FIREFOX_FIRST_RELEASE, STORE_STATUS_LABELS, getStoreStatus } from "../../lib/store-status";
 
 interface Props {
   locale: SupportedLocale;
@@ -127,6 +128,16 @@ const sections = notes
     ].filter((section) => section.items.length > 0)
   : [];
 const [ctaBefore, ctaAfter = ""] = messages.cta.split("{version}");
+// Where this release stands in each store, as the release notes page shows it.
+const storeVersions = await getSiteStoreVersions();
+const storeLabels = STORE_STATUS_LABELS[locale];
+const stores = latest
+  ? [
+      { id: "chrome", name: homeContent.installChromeStoreLabel, iconClass: "ri-chrome-fill", href: CHROME_STORE_URL, event: "open_chrome_web_store", status: getStoreStatus(storeVersions.chrome, latest.tag) },
+      { id: "edge", name: homeContent.installEdgeStoreLabel, iconClass: "ri-edge-new-fill", href: EDGE_STORE_URL, event: "open_edge_addons", status: getStoreStatus(storeVersions.edge, latest.tag) },
+      { id: "firefox", name: homeContent.installFirefoxStoreLabel, iconClass: "ri-firefox-fill", href: FIREFOX_STORE_URL, event: "open_firefox_addons", status: getStoreStatus(storeVersions.firefox, latest.tag, FIREFOX_FIRST_RELEASE) },
+    ].filter((store) => store.status)
+  : [];
 const renderInline = (markdown: string) => marked.parseInline(markdown, { async: false });
 ---
 
@@ -170,6 +181,36 @@ const renderInline = (markdown: string) => marked.parseInline(markdown, { async:
       </header>
 
       <div class="release-popover-body">
+        {stores.length > 0 && (
+          <ul class="release-popover-stores">
+            {stores.map((store) => (
+              <li>
+                {store.status === "published" ? (
+                  <a
+                    class={`release-popover-store is-published`}
+                    href={store.href}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    title={store.name}
+                    data-analytics-event={store.event}
+                    data-analytics-category="cta"
+                    data-analytics-label={`home_release_popover_${store.id}_status`}
+                  >
+                    <i class={store.iconClass} aria-hidden="true"></i>
+                    <span class="release-popover-store-name">{store.name}</span>
+                    {storeLabels.published}
+                  </a>
+                ) : (
+                  <span class="release-popover-store is-reviewing" title={store.name}>
+                    <i class={store.iconClass} aria-hidden="true"></i>
+                    <span class="release-popover-store-name">{store.name}</span>
+                    {storeLabels.reviewing}
+                  </span>
+                )}
+              </li>
+            ))}
+          </ul>
+        )}
         {notes.summary && <p class="release-popover-summary" set:html={renderInline(notes.summary)} />}
         {sections.map((section) => (
           <section class="release-popover-section">
@@ -399,6 +440,56 @@ const renderInline = (markdown: string) => marked.parseInline(markdown, { async:
     padding: 14px 48px 14px 20px;
     font-size: 12px;
     font-weight: 500;
+  }
+
+  /* Where this release stands in each store: the release notes page's store chips, smaller. */
+  .release-popover-stores {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0 0 14px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .release-popover-store {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    min-height: 24px;
+    padding: 0 9px;
+    border: 1px solid;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 500;
+    line-height: 1;
+    text-decoration: none;
+  }
+
+  .release-popover-store i {
+    font-size: 14px;
+  }
+
+  .release-popover-store.is-published {
+    border-color: #a3e5c8;
+    background: #ecfdf3;
+    color: #027a48;
+  }
+
+  .release-popover-store.is-reviewing {
+    border-color: #ffd19a;
+    background: #fff8eb;
+    color: #b54708;
+  }
+
+  /* The store's name is for screen readers; the icon says it to everyone else. */
+  .release-popover-store-name {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
 
   .release-popover-close {

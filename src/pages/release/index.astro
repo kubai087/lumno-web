@@ -8,6 +8,7 @@ import "../../styles/home.css";
 import "../../styles/locale-fonts.css";
 import { fetchReleases, formatDate, isReleaseNoteLocale, parseReleaseBody } from "../../lib/releases";
 import { getStoreVersions } from "../../lib/store-versions";
+import { FIREFOX_FIRST_RELEASE, STORE_STATUS_LABELS, getStoreStatus } from "../../lib/store-status";
 import { marked } from "marked";
 import {
   SITE_NAME,
@@ -120,8 +121,8 @@ const RELEASE_MESSAGES: Record<SupportedLocale, ReleaseMessages> = {
     features_label: "新功能",
     bug_fixes_label: "问题修复",
     github_published: "已发布",
-    store_published: "已上架",
-    store_reviewing: "商店待更新",
+    store_published: STORE_STATUS_LABELS["zh-CN"].published,
+    store_reviewing: STORE_STATUS_LABELS["zh-CN"].reviewing,
     read_on_github: "在 GitHub 查看",
     no_releases_title: "暂无发布记录",
     no_releases_desc: "发布 GitHub Release 后，下一次部署时会自动显示在这里。",
@@ -134,8 +135,8 @@ const RELEASE_MESSAGES: Record<SupportedLocale, ReleaseMessages> = {
     features_label: "新功能",
     bug_fixes_label: "錯誤修正",
     github_published: "已發布",
-    store_published: "已上架",
-    store_reviewing: "商店尚未更新",
+    store_published: STORE_STATUS_LABELS["zh-TW"].published,
+    store_reviewing: STORE_STATUS_LABELS["zh-TW"].reviewing,
     read_on_github: "在 GitHub 查看",
     no_releases_title: "目前還沒有發布紀錄",
     no_releases_desc: "發布 GitHub Release 後，下次部署時就會顯示在這裡。",
@@ -148,8 +149,8 @@ const RELEASE_MESSAGES: Record<SupportedLocale, ReleaseMessages> = {
     features_label: "New features",
     bug_fixes_label: "Bug fixes",
     github_published: "Published",
-    store_published: "Live in store",
-    store_reviewing: "Store update pending",
+    store_published: STORE_STATUS_LABELS["en"].published,
+    store_reviewing: STORE_STATUS_LABELS["en"].reviewing,
     read_on_github: "View on GitHub",
     no_releases_title: "No releases yet",
     no_releases_desc: "Publish a GitHub Release and it will appear here after the next deploy.",
@@ -162,8 +163,8 @@ const RELEASE_MESSAGES: Record<SupportedLocale, ReleaseMessages> = {
     features_label: "新機能",
     bug_fixes_label: "不具合の修正",
     github_published: "公開済み",
-    store_published: "ストア公開中",
-    store_reviewing: "ストア反映待ち",
+    store_published: STORE_STATUS_LABELS["ja"].published,
+    store_reviewing: STORE_STATUS_LABELS["ja"].reviewing,
     read_on_github: "GitHub で見る",
     no_releases_title: "リリースはまだありません",
     no_releases_desc: "GitHub Release を公開すると、次回のデプロイ後にここに表示されます。",
@@ -176,8 +177,8 @@ const RELEASE_MESSAGES: Record<SupportedLocale, ReleaseMessages> = {
     features_label: "새 기능",
     bug_fixes_label: "버그 수정",
     github_published: "출시됨",
-    store_published: "스토어 반영됨",
-    store_reviewing: "스토어 반영 대기",
+    store_published: STORE_STATUS_LABELS["ko"].published,
+    store_reviewing: STORE_STATUS_LABELS["ko"].reviewing,
     read_on_github: "GitHub에서 보기",
     no_releases_title: "아직 출시된 버전이 없습니다",
     no_releases_desc: "GitHub Release를 게시하면 다음 배포 후 여기에 표시됩니다.",
@@ -190,8 +191,8 @@ const RELEASE_MESSAGES: Record<SupportedLocale, ReleaseMessages> = {
     features_label: "Neue Funktionen",
     bug_fixes_label: "Fehlerbehebungen",
     github_published: "Veröffentlicht",
-    store_published: "Im Store",
-    store_reviewing: "Store-Update ausstehend",
+    store_published: STORE_STATUS_LABELS["de"].published,
+    store_reviewing: STORE_STATUS_LABELS["de"].reviewing,
     read_on_github: "Auf GitHub ansehen",
     no_releases_title: "Noch keine Versionen",
     no_releases_desc: "Veröffentliche ein GitHub-Release – nach dem nächsten Deploy erscheint es hier.",
@@ -204,8 +205,8 @@ const RELEASE_MESSAGES: Record<SupportedLocale, ReleaseMessages> = {
     features_label: "Nouveautés",
     bug_fixes_label: "Corrections de bugs",
     github_published: "Publiée",
-    store_published: "Disponible sur le Store",
-    store_reviewing: "En attente sur le Store",
+    store_published: STORE_STATUS_LABELS["fr"].published,
+    store_reviewing: STORE_STATUS_LABELS["fr"].reviewing,
     read_on_github: "Voir sur GitHub",
     no_releases_title: "Aucune version pour l’instant",
     no_releases_desc: "Publiez une release GitHub : elle apparaîtra ici après le prochain déploiement.",
@@ -218,8 +219,8 @@ const RELEASE_MESSAGES: Record<SupportedLocale, ReleaseMessages> = {
     features_label: "Novedades",
     bug_fixes_label: "Correcciones",
     github_published: "Publicada",
-    store_published: "En la tienda",
-    store_reviewing: "Pendiente en la tienda",
+    store_published: STORE_STATUS_LABELS["es"].published,
+    store_reviewing: STORE_STATUS_LABELS["es"].reviewing,
     read_on_github: "Ver en GitHub",
     no_releases_title: "Aún no hay versiones",
     no_releases_desc: "Publica una release en GitHub y aparecerá aquí tras el próximo despliegue.",
@@ -232,8 +233,8 @@ const RELEASE_MESSAGES: Record<SupportedLocale, ReleaseMessages> = {
     features_label: "Novidades",
     bug_fixes_label: "Correções",
     github_published: "Publicada",
-    store_published: "Na loja",
-    store_reviewing: "Aguardando a loja",
+    store_published: STORE_STATUS_LABELS["pt-BR"].published,
+    store_reviewing: STORE_STATUS_LABELS["pt-BR"].reviewing,
     read_on_github: "Ver no GitHub",
     no_releases_title: "Nenhuma versão ainda",
     no_releases_desc: "Publique uma release no GitHub e ela aparecerá aqui depois do próximo deploy.",
@@ -246,8 +247,8 @@ const RELEASE_MESSAGES: Record<SupportedLocale, ReleaseMessages> = {
     features_label: "Новые функции",
     bug_fixes_label: "Исправления",
     github_published: "Опубликовано",
-    store_published: "В магазине",
-    store_reviewing: "Ждёт обновления в магазине",
+    store_published: STORE_STATUS_LABELS["ru"].published,
+    store_reviewing: STORE_STATUS_LABELS["ru"].reviewing,
     read_on_github: "Открыть на GitHub",
     no_releases_title: "Пока нет выпусков",
     no_releases_desc: "Опубликуйте релиз на GitHub — он появится здесь после следующего деплоя.",
@@ -351,38 +352,6 @@ function renderMdBlock(markdown: string): string {
   return marked.parse(markdown || "", { async: false });
 }
 
-function normalizeVersion(raw: string): number[] {
-  const parts = String(raw || "")
-    .replace(/^[^\d]*/, "")
-    .match(/\d+/g);
-  return (parts || []).map((part) => Number(part));
-}
-
-function compareVersion(a: string, b: string): number {
-  const pa = normalizeVersion(a);
-  const pb = normalizeVersion(b);
-  const length = Math.max(pa.length, pb.length);
-  for (let i = 0; i < length; i += 1) {
-    const va = pa[i] || 0;
-    const vb = pb[i] || 0;
-    if (va > vb) return 1;
-    if (va < vb) return -1;
-  }
-  return 0;
-}
-
-type StoreStatus = "published" | "reviewing";
-
-/**
- * An unknown store version hides that store's chip rather than guessing, and so
- * does a release older than the store's first listed version.
- */
-function getStoreStatus(storeVersion: string, tag: string, since = ""): StoreStatus | null {
-  if (!storeVersion) return null;
-  if (since && compareVersion(tag, since) < 0) return null;
-  return compareVersion(storeVersion, tag) >= 0 ? "published" : "reviewing";
-}
-
 const STORE_CHIPS = [
   {
     id: "chrome",
@@ -406,7 +375,7 @@ const STORE_CHIPS = [
   {
     id: "firefox",
     version: firefoxStoreVersion,
-    since: "0.9.61",
+    since: FIREFOX_FIRST_RELEASE,
     href: FIREFOX_STORE_URL,
     iconClass: "ri-firefox-fill",
     nameKey: "firefox_store_name",

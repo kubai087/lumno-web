@@ -3,6 +3,7 @@ import { marked } from "marked";
 import "../../styles/guides.css";
 import {
   GUIDES_LAST_UPDATED,
+  GUIDE_ICONS,
   GUIDE_NAV,
   getGuideBanner,
   getGuideContent,
@@ -61,6 +62,7 @@ const searchIndexHref = `${buildLocalizedPath(locale, "/guides/")}search-index.j
     </div>
 
     <!-- The pages, wiki style; on narrow screens the list folds into a disclosure. -->
+    <div class="guide-nav-frame">
     <details class="guide-nav" open>
       <summary class="guide-nav__toggle">
         <span>{ui.navToggle}</span>
@@ -78,7 +80,8 @@ const searchIndexHref = `${buildLocalizedPath(locale, "/guides/")}search-index.j
                   {section.slugs.map((item) => (
                     <li>
                       <a href={getGuidePath(locale, item)} aria-current={item === current ? "page" : undefined}>
-                        {getGuideNavTitle(locale, item)}
+                        <i class={GUIDE_ICONS[item]} aria-hidden="true"></i>
+                        <span>{getGuideNavTitle(locale, item)}</span>
                       </a>
                     </li>
                   ))}
@@ -89,6 +92,14 @@ const searchIndexHref = `${buildLocalizedPath(locale, "/guides/")}search-index.j
         ))}
       </nav>
     </details>
+    <!-- When the list overflows, these step it up or down; mouse only, since keyboard focus scrolls it anyway. -->
+    <button type="button" class="guide-nav-step guide-nav-step--up" data-guide-nav-step="-1" tabindex="-1" aria-hidden="true">
+      <i class="ri-arrow-up-s-line"></i>
+    </button>
+    <button type="button" class="guide-nav-step guide-nav-step--down" data-guide-nav-step="1" tabindex="-1" aria-hidden="true">
+      <i class="ri-arrow-down-s-line"></i>
+    </button>
+    </div>
     <script is:inline>
       // Keep the page list where it was on the previous page, before anything paints.
       try {
@@ -96,8 +107,21 @@ const searchIndexHref = `${buildLocalizedPath(locale, "/guides/")}search-index.j
         if (saved) document.querySelector(".guide-nav").scrollTop = saved;
       } catch (_error) {}
       const nav = document.querySelector(".guide-nav");
-      const markMore = () => nav.toggleAttribute("data-more", nav.scrollTop + nav.clientHeight < nav.scrollHeight - 1);
+      const frame = nav.parentElement;
+      const markMore = () => {
+        const above = nav.scrollTop > 1;
+        const below = nav.scrollTop + nav.clientHeight < nav.scrollHeight - 1;
+        nav.toggleAttribute("data-more-above", above);
+        nav.toggleAttribute("data-more", below);
+        frame.toggleAttribute("data-above", above);
+        frame.toggleAttribute("data-below", below);
+      };
       markMore();
+      frame.querySelectorAll("[data-guide-nav-step]").forEach((button) => {
+        button.addEventListener("click", () => {
+          nav.scrollBy({ top: Number(button.dataset.guideNavStep) * nav.clientHeight * 0.6, behavior: "smooth" });
+        });
+      });
       nav.addEventListener("scroll", markMore, { passive: true });
       window.addEventListener("resize", markMore);
     </script>

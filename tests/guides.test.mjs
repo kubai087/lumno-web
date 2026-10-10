@@ -103,6 +103,9 @@ test("pages read like a wiki: search, sidebar, keycaps, zoomable screenshots, pr
   assert.match(shell, /<details class="guide-nav" open>/);
   assert.match(shell, /aria-current=\{item === current \? "page" : undefined\}/);
   assert.match(shell, /guide-nav__list--nested/);
+  // Each entry is an icon row; the current page sits on a soft grey pill.
+  assert.match(shell, /<i class=\{GUIDE_ICONS\[item\]\} aria-hidden="true"><\/i>/);
+  assert.match(readSource("src/styles/guides.css"), /\.guide-nav a\[aria-current="page"\] \{\s*background: var\(--guide-row-current\);/);
   assert.match(article, /<kbd class="home-kbd">/);
   assert.match(article, /data-guide-zoom/);
   assert.match(shell, /lightbox\.showModal\(\)/);
@@ -210,6 +213,10 @@ test("the help center ships in the extension's languages and switching language 
 test("the page list scrolls to its last item without clipping it", () => {
   const styles = readSource("src/styles/guides.css");
   // The bottom fades only while more of the list waits below.
-  assert.match(styles, /\.guide-nav\[data-more\] \{[\s\S]*?mask-image: linear-gradient/);
-  assert.match(readSource("src/components/guides/GuideShell.astro"), /nav\.toggleAttribute\("data-more", nav\.scrollTop \+ nav\.clientHeight < nav\.scrollHeight - 1\)/);
+  assert.match(styles, /\.guide-nav \{[\s\S]*?scrollbar-width: none;[\s\S]*?mask-image: linear-gradient\(/);
+  assert.match(styles, /\.guide-nav\[data-more\] \{\s*--guide-nav-fade-bottom: 48px;/);
+  // No scrollbar: arrow buttons at the edges that have more beyond them.
+  assert.match(readSource("src/components/guides/GuideShell.astro"), /class="guide-nav-step guide-nav-step--up" data-guide-nav-step="-1"[\s\S]*?class="guide-nav-step guide-nav-step--down" data-guide-nav-step="1"/);
+  assert.match(styles, /\.guide-nav-frame\[data-above\] \.guide-nav-step--up,\s*\.guide-nav-frame\[data-below\] \.guide-nav-step--down \{\s*opacity: 1;/);
+  assert.match(readSource("src/components/guides/GuideShell.astro"), /const below = nav\.scrollTop \+ nav\.clientHeight < nav\.scrollHeight - 1;[\s\S]*?nav\.toggleAttribute\("data-more", below\);/);
 });

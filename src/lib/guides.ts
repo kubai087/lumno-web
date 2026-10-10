@@ -50,6 +50,29 @@ export type GuideSectionId = Extract<GuideSection, { id: string }>["id"];
 export type GuideNavKey = GuideSection["slugs"][number];
 export type GuideSlug = Exclude<GuideNavKey, "privacy">;
 
+/** Each sidebar entry's icon (Remix Icon; rerun scripts/subset-fonts.py after adding one). */
+export const GUIDE_ICONS: Record<GuideNavKey, string> = {
+  "what-is-lumno": "ri-information-line",
+  limitations: "ri-error-warning-line",
+  "use-cases": "ri-lightbulb-line",
+  install: "ri-download-2-line",
+  "keyboard-shortcuts": "ri-keyboard-line",
+  sync: "ri-refresh-line",
+  "search-tabs-bookmarks-history": "ri-search-line",
+  "site-search": "ri-global-line",
+  "tab-switcher": "ri-arrow-left-right-line",
+  "newtab-wallpaper": "ri-image-line",
+  "newtab-bookmarks-shortcuts": "ri-bookmark-line",
+  "newtab-frequent-sites": "ri-pushpin-line",
+  "newtab-clock-zen": "ri-time-line",
+  "arc-command-bar": "ri-command-line",
+  "browser-compatibility": "ri-window-2-line",
+  "privacy-data": "ri-shield-user-line",
+  privacy: "ri-file-text-line",
+  "security-open-source": "ri-shield-check-line",
+  "ratings-reviews": "ri-star-line",
+};
+
 export const GUIDE_NAV_KEYS: GuideNavKey[] = GUIDE_NAV.flatMap((group) => group.sections.flatMap((section) => [...section.slugs]));
 export const GUIDE_SLUGS: GuideSlug[] = GUIDE_NAV_KEYS.filter((key): key is GuideSlug => key !== "privacy");
 

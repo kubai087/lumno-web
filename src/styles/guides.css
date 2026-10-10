@@ -46,6 +46,8 @@
   --guide-text: #3d434a;
   --guide-muted: var(--text-sub);
   --guide-line: var(--line);
+  --guide-row-hover: rgba(29, 32, 36, 0.04);
+  --guide-row-current: rgba(29, 32, 36, 0.06);
 
   display: grid;
   grid-template-columns: 220px minmax(0, 720px) 180px;
@@ -189,17 +191,91 @@
  * On short screens the list scrolls inside the sidebar. The padding lets the last
  * entry scroll clear of the edge, and the fade over it says there is more below.
  */
+.guide-nav-frame {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
 .guide-nav {
+  --guide-nav-fade-top: 0px;
+  --guide-nav-fade-bottom: 0px;
   min-height: 0;
   overflow-y: auto;
   padding-bottom: 12px;
   scrollbar-width: none;
+  /* Edges fade only where more of the list waits beyond them, instead of cutting an item in half. */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    #000 var(--guide-nav-fade-top),
+    #000 calc(100% - var(--guide-nav-fade-bottom)),
+    transparent
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    #000 var(--guide-nav-fade-top),
+    #000 calc(100% - var(--guide-nav-fade-bottom)),
+    transparent
+  );
 }
 
-/* Only while more of the list waits below: fade its bottom edge instead of cutting an item in half. */
+.guide-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.guide-nav[data-more-above] {
+  --guide-nav-fade-top: 32px;
+}
+
 .guide-nav[data-more] {
-  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 40px), transparent);
-  mask-image: linear-gradient(to bottom, #000 calc(100% - 40px), transparent);
+  --guide-nav-fade-bottom: 48px;
+}
+
+/* No scrollbar: a small round arrow at each edge that still has more beyond it. */
+.guide-nav-step {
+  position: absolute;
+  left: 50%;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  margin-left: -14px;
+  padding: 0;
+  border: 1px solid var(--guide-line);
+  border-radius: 999px;
+  background: var(--surface);
+  box-shadow: 0 2px 6px rgba(29, 32, 36, 0.08);
+  color: var(--text-soft);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 160ms ease,
+    color 160ms ease;
+}
+
+.guide-nav-step--up {
+  top: 0;
+}
+
+.guide-nav-step--down {
+  bottom: 6px;
+}
+
+.guide-nav-frame[data-above] .guide-nav-step--up,
+.guide-nav-frame[data-below] .guide-nav-step--down {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.guide-nav-step:hover {
+  color: var(--guide-ink);
 }
 
 .guide-nav__toggle {
@@ -207,25 +283,26 @@
 }
 
 /*
- * Three levels: a group is a bold heading with a hairline between groups; a
- * sub-section is a small grey label; its pages hang off an indented guide line.
+ * Groups are bold headings with a hairline between them; sub-sections are small
+ * grey labels. Each page is an icon row; the current one sits on a soft grey
+ * pill, and rows keep a gap so hover and current pills never touch.
  */
 .guide-nav__group + .guide-nav__group {
-  margin-top: 14px;
-  padding-top: 14px;
+  margin-top: 20px;
+  padding-top: 20px;
   border-top: 1px solid var(--guide-line);
 }
 
 .guide-nav__group-title {
-  margin: 0 0 6px;
+  margin: 0 0 8px;
   padding: 0 10px;
   color: var(--guide-ink);
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 650;
 }
 
 .guide-nav__section-title {
-  margin: 12px 0 4px;
+  margin: 18px 0 6px;
   padding: 0 10px;
   color: var(--text-soft);
   font-size: 12px;
@@ -239,51 +316,46 @@
   list-style: none;
 }
 
-.guide-nav__list--nested {
-  margin-left: 10px;
-  padding-left: 6px;
-  border-left: 1px solid var(--guide-line);
+.guide-nav li + li {
+  margin-top: 4px;
 }
 
 .guide-nav a {
-  position: relative;
-  display: block;
-  padding: 4px 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 10px;
+  border-radius: 8px;
   color: var(--guide-text);
   font-size: 14px;
-  line-height: 1.45;
+  line-height: 20px;
   text-decoration: none;
-  transition: color 160ms ease;
+  transition:
+    background-color 160ms ease,
+    color 160ms ease;
 }
 
-.guide-nav__list--nested a {
-  font-size: 13.5px;
+.guide-nav a i {
+  flex: none;
+  color: var(--text-soft);
+  font-size: 16px;
+  line-height: 1;
 }
 
-/* No backgrounds: hover darkens the text; the current page takes the accent with a short bar beside it. */
 .guide-nav a:hover {
+  background: var(--guide-row-hover);
   color: var(--guide-ink);
 }
 
 .guide-nav a[aria-current="page"] {
-  color: var(--guide-accent);
+  background: var(--guide-row-current);
+  color: var(--guide-ink);
   font-weight: 600;
 }
 
-.guide-nav a[aria-current="page"]::before {
-  content: "";
-  position: absolute;
-  top: 6px;
-  bottom: 6px;
-  left: 0;
-  width: 2px;
-  border-radius: 2px;
-  background: var(--guide-accent-bright);
-}
-
-/* Under a sub-section the bar lands on the guide line, turning that stretch of it blue. */
-.guide-nav__list--nested a[aria-current="page"]::before {
-  left: -7px;
+.guide-nav a:hover i,
+.guide-nav a[aria-current="page"] i {
+  color: var(--guide-ink);
 }
 
 /* A strip of a built-in wallpaper over the article and the outline. */
@@ -715,6 +787,14 @@
     width: 100%;
   }
 
+  .guide-nav-frame {
+    display: contents;
+  }
+
+  .guide-nav-step {
+    display: none;
+  }
+
   .guide-nav,
   .guide-nav[data-more] {
     -webkit-mask-image: none;
@@ -790,10 +870,6 @@
   .guide-nav a {
     padding: 9px 10px;
     font-size: 15px;
-  }
-
-  .guide-nav__list--nested a {
-    font-size: 14.5px;
   }
 
   .guide-nav__group:first-of-type {

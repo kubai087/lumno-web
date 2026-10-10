@@ -6,7 +6,8 @@ import { DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 /*
  * Kept apart from CommunityTrigger.tsx so the lazily loaded dialog
  * (community-panel-root.tsx) does not pull SettingsKit and its stylesheet
- * into every page's bundle.
+ * into every page's bundle. Colours are literal rather than theme tokens:
+ * some pages (the release notes) redefine --muted for their own text.
  */
 
 /**
@@ -48,7 +49,7 @@ export function CommunityPanel({ panel, onCloseAutoFocus }: CommunityPanelProps)
 
       {qr && (
         <img
-          className="mt-4 block h-auto w-full rounded-lg bg-muted"
+          className="mt-4 block h-auto w-full rounded-lg bg-[#f4f6f8]"
           src={qr.src}
           alt={qr.alt}
           width="866"
@@ -78,7 +79,7 @@ export function CommunityPanel({ panel, onCloseAutoFocus }: CommunityPanelProps)
           {links.map((link) => (
             <a
               key={link.href}
-              className="inline-flex h-8 items-center gap-1.5 rounded-full border px-3 text-sm text-foreground transition-colors hover:bg-muted"
+              className="inline-flex h-8 items-center gap-1.5 rounded-full border px-3 text-sm text-foreground transition-colors hover:bg-black/[0.04]"
               href={link.href}
               target="_blank"
               rel="noreferrer noopener"
@@ -96,7 +97,7 @@ export function CommunityPanel({ panel, onCloseAutoFocus }: CommunityPanelProps)
           {links.map((link) => (
             <li key={link.href}>
               <a
-                className="flex items-center gap-3 rounded-xl border px-4 py-3 text-foreground transition-colors hover:bg-muted"
+                className="flex items-center gap-3 rounded-xl border px-4 py-3 text-foreground transition-colors hover:bg-black/[0.04]"
                 href={link.href}
                 target="_blank"
                 rel="noreferrer noopener"

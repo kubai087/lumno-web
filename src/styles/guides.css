@@ -789,10 +789,11 @@
   place-items: center;
   width: 36px;
   height: 36px;
-  border: 0;
   border-radius: 999px;
   --lumno-corner-shape: round;
-  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
   color: var(--text-main);
   font-size: 18px;
   cursor: pointer;
@@ -942,13 +943,14 @@
   .guide-sheet__close {
     display: grid;
     place-items: center;
-    width: 36px;
-    height: 36px;
-    border: 0;
+    width: 32px;
+    height: 32px;
+    border: 1px solid var(--guide-line);
     border-radius: 999px;
-    background: transparent;
+    background: #fff;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
     color: var(--guide-muted);
-    font-size: 18px;
+    font-size: 17px;
     cursor: pointer;
   }
 

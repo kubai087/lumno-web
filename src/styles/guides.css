@@ -911,6 +911,20 @@
     content: "";
   }
 
+  /*
+   * Safari 26 tints the strip under its bottom toolbar from a fixed element at the viewport's edge, but passes over
+   * one as tall as the page list; this short white band is what it finds there instead, whatever the sheet's height.
+   */
+  .guide-sheet[open]::before {
+    position: fixed;
+    inset: auto 0 0;
+    width: min(100%, 560px);
+    height: max(12px, env(safe-area-inset-bottom));
+    margin: 0 auto;
+    background: var(--surface);
+    content: "";
+  }
+
   .guide-sheet::backdrop {
     background: rgba(15, 23, 42, 0.24);
   }

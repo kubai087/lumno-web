@@ -1,0 +1,158 @@
+{
+  "bookmarks": [
+    {
+      "title": "参考資料",
+      "children": [
+        {
+          "title": "Chrome 拡張機能ドキュメント",
+          "url": "https://developer.chrome.com/docs/extensions?hl=ja"
+        },
+        {
+          "title": "MDN Web Docs",
+          "url": "https://developer.mozilla.org/ja/"
+        }
+      ]
+    },
+    {
+      "title": "デザインガイドライン",
+      "children": [
+        {
+          "title": "Material Design 3",
+          "url": "https://m3.material.io/"
+        },
+        {
+          "title": "ヒューマンインターフェイスガイドライン",
+          "url": "https://developer.apple.com/jp/design/human-interface-guidelines/"
+        }
+      ]
+    },
+    {
+      "title": "ポートフォリオ参考",
+      "children": [
+        {
+          "title": "Dribbble",
+          "url": "https://dribbble.com/"
+        }
+      ]
+    },
+    {
+      "title": "競合",
+      "children": [
+        {
+          "title": "Raycast",
+          "url": "https://www.raycast.com/"
+        }
+      ]
+    },
+    {
+      "title": "AI リサーチ",
+      "children": [
+        {
+          "title": "Claude",
+          "url": "https://claude.ai/"
+        }
+      ]
+    },
+    {
+      "title": "デザインシステム",
+      "children": [
+        {
+          "title": "shadcn/ui",
+          "url": "https://ui.shadcn.com/"
+        }
+      ]
+    },
+    {
+      "title": "インスピレーション",
+      "children": [
+        {
+          "title": "Are.na",
+          "url": "https://www.are.na/"
+        }
+      ]
+    },
+    {
+      "title": "読みもの",
+      "children": [
+        {
+          "title": "note",
+          "url": "https://note.com/"
+        }
+      ]
+    },
+    {
+      "title": "ChatGPT",
+      "url": "https://chatgpt.com/"
+    },
+    {
+      "title": "GitHub",
+      "url": "https://github.com/"
+    }
+  ],
+  "history": [
+    "https://web.dev/",
+    "https://developer.chrome.com/docs/extensions/reference/api/tabs?hl=ja"
+  ],
+  "tabs": [
+    "https://github.com/kubai087/lumno-extension",
+    "https://ja.wikipedia.org/wiki/Google_Chrome",
+    "https://developer.mozilla.org/ja/docs/Web/CSS",
+    "blank"
+  ],
+  "queries": {
+    "search": "chrome",
+    "opentabs": "",
+    "siteKey": "gh",
+    "siteQuery": "command palette",
+    "aiKey": "gpt",
+    "aiQuery": "Arc のコマンドバーの代わりになるツールは？"
+  },
+  "blankTitle": "空白ページ",
+  "shortcuts": [
+    {
+      "title": "GitHub",
+      "url": "https://github.com/"
+    },
+    {
+      "title": "X",
+      "url": "https://x.com/"
+    },
+    {
+      "title": "ChatGPT",
+      "url": "https://chatgpt.com/"
+    },
+    {
+      "title": "Figma",
+      "url": "https://www.figma.com/"
+    },
+    {
+      "title": "YouTube",
+      "url": "https://www.youtube.com/"
+    },
+    {
+      "title": "Notion",
+      "url": "https://www.notion.so/"
+    },
+    {
+      "title": "Gmail",
+      "url": "https://mail.google.com/"
+    },
+    {
+      "title": "Dribbble",
+      "url": "https://dribbble.com/"
+    },
+    {
+      "title": "note",
+      "url": "https://note.com/"
+    }
+  ],
+  "quoteCategory": "literature",
+  "frequentSites": [
+    "https://github.com/kubai087/lumno-extension",
+    "https://m3.material.io/",
+    "https://www.figma.com/",
+    "https://developer.mozilla.org/ja/",
+    "https://news.ycombinator.com/"
+  ],
+  "wallpaper": "monet-coastal-white"
+}

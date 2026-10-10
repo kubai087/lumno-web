@@ -1,0 +1,158 @@
+{
+  "bookmarks": [
+    {
+      "title": "Reference",
+      "children": [
+        {
+          "title": "Chrome Extensions docs",
+          "url": "https://developer.chrome.com/docs/extensions"
+        },
+        {
+          "title": "MDN Web Docs",
+          "url": "https://developer.mozilla.org/en-US/"
+        }
+      ]
+    },
+    {
+      "title": "Design guidelines",
+      "children": [
+        {
+          "title": "Material Design 3",
+          "url": "https://m3.material.io/"
+        },
+        {
+          "title": "Human Interface Guidelines",
+          "url": "https://developer.apple.com/design/human-interface-guidelines/"
+        }
+      ]
+    },
+    {
+      "title": "Portfolio ideas",
+      "children": [
+        {
+          "title": "Dribbble",
+          "url": "https://dribbble.com/"
+        }
+      ]
+    },
+    {
+      "title": "Competitors",
+      "children": [
+        {
+          "title": "Raycast",
+          "url": "https://www.raycast.com/"
+        }
+      ]
+    },
+    {
+      "title": "AI research",
+      "children": [
+        {
+          "title": "Claude",
+          "url": "https://claude.ai/"
+        }
+      ]
+    },
+    {
+      "title": "Design systems",
+      "children": [
+        {
+          "title": "shadcn/ui",
+          "url": "https://ui.shadcn.com/"
+        }
+      ]
+    },
+    {
+      "title": "Inspiration",
+      "children": [
+        {
+          "title": "Are.na",
+          "url": "https://www.are.na/"
+        }
+      ]
+    },
+    {
+      "title": "Reading",
+      "children": [
+        {
+          "title": "Hacker News",
+          "url": "https://news.ycombinator.com/"
+        }
+      ]
+    },
+    {
+      "title": "ChatGPT",
+      "url": "https://chatgpt.com/"
+    },
+    {
+      "title": "GitHub",
+      "url": "https://github.com/"
+    }
+  ],
+  "history": [
+    "https://web.dev/",
+    "https://developer.chrome.com/docs/extensions/reference/api/tabs"
+  ],
+  "tabs": [
+    "https://github.com/kubai087/lumno-extension",
+    "https://en.wikipedia.org/wiki/Browser_extension",
+    "https://developer.mozilla.org/en-US/docs/Web/CSS",
+    "blank"
+  ],
+  "queries": {
+    "search": "chrome",
+    "opentabs": "",
+    "siteKey": "gh",
+    "siteQuery": "command palette",
+    "aiKey": "gpt",
+    "aiQuery": "What are good alternatives to Arc's command bar?"
+  },
+  "blankTitle": "Blank page",
+  "shortcuts": [
+    {
+      "title": "GitHub",
+      "url": "https://github.com/"
+    },
+    {
+      "title": "X",
+      "url": "https://x.com/"
+    },
+    {
+      "title": "ChatGPT",
+      "url": "https://chatgpt.com/"
+    },
+    {
+      "title": "Figma",
+      "url": "https://www.figma.com/"
+    },
+    {
+      "title": "YouTube",
+      "url": "https://www.youtube.com/"
+    },
+    {
+      "title": "Notion",
+      "url": "https://www.notion.so/"
+    },
+    {
+      "title": "Gmail",
+      "url": "https://mail.google.com/"
+    },
+    {
+      "title": "Dribbble",
+      "url": "https://dribbble.com/"
+    },
+    {
+      "title": "Reddit",
+      "url": "https://www.reddit.com/"
+    }
+  ],
+  "quoteCategory": "literature",
+  "frequentSites": [
+    "https://github.com/kubai087/lumno-extension",
+    "https://m3.material.io/",
+    "https://www.figma.com/",
+    "https://developer.mozilla.org/en-US/",
+    "https://news.ycombinator.com/"
+  ],
+  "wallpaper": "monet-coastal-white"
+}

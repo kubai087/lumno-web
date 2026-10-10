@@ -189,3 +189,19 @@ test("the header links to the help center in the languages that have it", () => 
   assert.match(links, /value: "help" as const/);
   assert.match(links, /analyticsEvent: "open_help_center"/);
 });
+
+test("the help center ships in the extension's languages and switching language keeps the page", () => {
+  assert.deepEqual(locales, ["zh-CN", "zh-TW", "en", "ja"]);
+  assert.match(guidesSource, /GUIDE_FALLBACK_LOCALE: GuideLocale = "en"/);
+  // Every language in the menu lands on the same page, in English where the help center isn't written.
+  assert.match(guidesSource, /LOCALE_CONFIG\.map\(\(item\) => \[item\.code, getGuidePath\(resolveGuideLocale\(item\.code\), slug\)\]\)/);
+  assert.match(readSource("src/components/guides/GuideArticle.astro"), /routeLanguageMap=\{buildGuideRouteLanguageMap\(slug\)\}/);
+  // Each language's pages use screenshots taken in that language's UI.
+  for (const locale of locales) {
+    for (const slug of slugs) {
+      for (const [, name] of readSource(guideFile(slug, locale)).matchAll(/!\[[^\]]*\]\(([a-z0-9-]+)/g)) {
+        assert.ok(screenshots[`${locale}/${name}`], `${slug} (${locale}): screenshot ${name}`);
+      }
+    }
+  }
+});

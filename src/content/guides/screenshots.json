@@ -1,4 +1,132 @@
 {
+  "en/ai": [
+    1440,
+    486
+  ],
+  "en/modemenu": [
+    1440,
+    939
+  ],
+  "en/newtab": [
+    1440,
+    900
+  ],
+  "en/nt-appearance": [
+    1440,
+    900
+  ],
+  "en/nt-bookmarks-folder": [
+    1440,
+    264
+  ],
+  "en/nt-bookmarks-top": [
+    1440,
+    477
+  ],
+  "en/nt-clock": [
+    1440,
+    601
+  ],
+  "en/nt-recent": [
+    1440,
+    310
+  ],
+  "en/nt-shortcuts": [
+    1440,
+    630
+  ],
+  "en/nt-zen": [
+    1440,
+    900
+  ],
+  "en/onboarding": [
+    1440,
+    900
+  ],
+  "en/opentabs": [
+    1440,
+    740
+  ],
+  "en/search": [
+    1440,
+    918
+  ],
+  "en/shortcuts": [
+    1440,
+    640
+  ],
+  "en/sitesearch": [
+    1440,
+    486
+  ],
+  "en/switcher": [
+    1440,
+    498
+  ],
+  "ja/ai": [
+    1440,
+    486
+  ],
+  "ja/modemenu": [
+    1440,
+    939
+  ],
+  "ja/newtab": [
+    1440,
+    900
+  ],
+  "ja/nt-appearance": [
+    1440,
+    900
+  ],
+  "ja/nt-bookmarks-folder": [
+    1440,
+    264
+  ],
+  "ja/nt-bookmarks-top": [
+    1440,
+    477
+  ],
+  "ja/nt-clock": [
+    1440,
+    601
+  ],
+  "ja/nt-recent": [
+    1440,
+    310
+  ],
+  "ja/nt-shortcuts": [
+    1440,
+    630
+  ],
+  "ja/nt-zen": [
+    1440,
+    900
+  ],
+  "ja/onboarding": [
+    1440,
+    900
+  ],
+  "ja/opentabs": [
+    1440,
+    740
+  ],
+  "ja/search": [
+    1440,
+    1008
+  ],
+  "ja/shortcuts": [
+    1440,
+    640
+  ],
+  "ja/sitesearch": [
+    1440,
+    485
+  ],
+  "ja/switcher": [
+    1440,
+    498
+  ],
   "zh-CN/ai": [
     1440,
     486
@@ -64,6 +192,70 @@
     485
   ],
   "zh-CN/switcher": [
+    1440,
+    498
+  ],
+  "zh-TW/ai": [
+    1440,
+    486
+  ],
+  "zh-TW/modemenu": [
+    1440,
+    937
+  ],
+  "zh-TW/newtab": [
+    1440,
+    900
+  ],
+  "zh-TW/nt-appearance": [
+    1440,
+    900
+  ],
+  "zh-TW/nt-bookmarks-folder": [
+    1440,
+    264
+  ],
+  "zh-TW/nt-bookmarks-top": [
+    1440,
+    477
+  ],
+  "zh-TW/nt-clock": [
+    1440,
+    672
+  ],
+  "zh-TW/nt-recent": [
+    1440,
+    310
+  ],
+  "zh-TW/nt-shortcuts": [
+    1440,
+    630
+  ],
+  "zh-TW/nt-zen": [
+    1440,
+    900
+  ],
+  "zh-TW/onboarding": [
+    1440,
+    900
+  ],
+  "zh-TW/opentabs": [
+    1440,
+    740
+  ],
+  "zh-TW/search": [
+    1440,
+    918
+  ],
+  "zh-TW/shortcuts": [
+    1440,
+    640
+  ],
+  "zh-TW/sitesearch": [
+    1440,
+    485
+  ],
+  "zh-TW/switcher": [
     1440,
     498
   ]

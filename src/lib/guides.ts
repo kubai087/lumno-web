@@ -1,7 +1,10 @@
 import { LOCALE_CONFIG, buildLocalizedPath, type SupportedLocale } from "./locales";
 import guideBanners from "../content/guides/banners.json";
 import guideScreenshots from "../content/guides/screenshots.json";
+import en from "../content/guides/en";
+import ja from "../content/guides/ja";
 import zhCN from "../content/guides/zh-CN";
+import zhTW from "../content/guides/zh-TW";
 
 /**
  * The help center (/guides/): a small wiki of answer-shaped pages for people,
@@ -10,7 +13,9 @@ import zhCN from "../content/guides/zh-CN";
  * captures of the extension in that locale's UI (scripts/guide-screenshots), so
  * a language ships only where the extension itself speaks it.
  */
-export const GUIDE_LOCALES = ["zh-CN"] as const satisfies readonly SupportedLocale[];
+export const GUIDE_LOCALES = ["zh-CN", "zh-TW", "en", "ja"] as const satisfies readonly SupportedLocale[];
+/** Languages without a help center read the English one (sidebar, links, language menu). */
+export const GUIDE_FALLBACK_LOCALE: GuideLocale = "en";
 export type GuideLocale = (typeof GUIDE_LOCALES)[number];
 
 /**
@@ -88,7 +93,7 @@ export type GuideLocaleContent = {
   pages: Record<GuideSlug, GuidePageContent>;
 };
 
-const CONTENT: Record<GuideLocale, GuideLocaleContent> = { "zh-CN": zhCN };
+const CONTENT: Record<GuideLocale, GuideLocaleContent> = { "zh-CN": zhCN, "zh-TW": zhTW, en, ja };
 
 export function getGuideContent(locale: GuideLocale): GuideLocaleContent {
   return CONTENT[locale];
@@ -135,16 +140,18 @@ export function toSearchText(markdown: string): string {
     .trim();
 }
 
+/** The help center language a visitor in `locale` reads. */
+export function resolveGuideLocale(locale: SupportedLocale): GuideLocale {
+  return isGuideLocale(locale) ? locale : GUIDE_FALLBACK_LOCALE;
+}
+
 /**
- * The language menu for a page: guide languages keep the page; the rest go to
- * their homepage, since the page has no version in that language.
+ * The language menu for a page: switching language keeps the reader on the same
+ * page, in English for languages the help center isn't written in.
  */
 export function buildGuideRouteLanguageMap(slug: GuideSlug): Record<SupportedLocale, string> {
   return Object.fromEntries(
-    LOCALE_CONFIG.map((item) => [
-      item.code,
-      isGuideLocale(item.code) ? getGuidePath(item.code, slug) : buildLocalizedPath(item.code, "/"),
-    ]),
+    LOCALE_CONFIG.map((item) => [item.code, getGuidePath(resolveGuideLocale(item.code), slug)]),
   ) as Record<SupportedLocale, string>;
 }
 

@@ -10,6 +10,7 @@
 // longer loads unpacked extensions from the command line. CHROMIUM_PATH picks a
 // specific build; HEADED=1 shows the window.
 import { chromium } from "playwright";
+import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import http from "node:http";
 import sharp from "sharp";
@@ -25,6 +26,7 @@ const OUT = path.join(WORK, locale);
 fs.mkdirSync(OUT, { recursive: true });
 const cfg = JSON.parse(fs.readFileSync(path.join(import.meta.dirname, "scenes", `${locale}.json`), "utf8"));
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const APPLE_LANGUAGE = { "zh-CN": "zh-Hans", "zh-TW": "zh-Hant", en: "en", ja: "ja" };
 
 // "blank" in the tab list is a plain local page, so nothing competes with Lumno behind the overlay.
 const blankServer = http.createServer((_request, response) => {
@@ -34,9 +36,25 @@ const blankServer = http.createServer((_request, response) => {
 await new Promise((resolve) => blankServer.listen(0, "127.0.0.1", resolve));
 const BLANK_URL = `http://127.0.0.1:${blankServer.address().port}/`;
 
+// macOS Chromium takes its own UI language (chrome:// pages, default site names) from the
+// app's AppleLanguages preference, not --lang (and won't accept it as an argument), so set it
+// on the test browser's own bundle for this run and remove it again on exit.
+const executablePath = process.env.CHROMIUM_PATH || chromium.executablePath();
+let languageBundle = "";
+if (process.platform === "darwin") {
+  const infoPlist = path.join(executablePath.split(".app/")[0] + ".app", "Contents/Info");
+  languageBundle = execFileSync("defaults", ["read", infoPlist, "CFBundleIdentifier"], { encoding: "utf8" }).trim();
+  execFileSync("defaults", ["write", languageBundle, "AppleLanguages", "-array", APPLE_LANGUAGE[locale] || locale]);
+  process.on("exit", () => {
+    try {
+      execFileSync("defaults", ["delete", languageBundle, "AppleLanguages"]);
+    } catch (_error) {}
+  });
+}
+
 const profile = fs.mkdtempSync(path.join(WORK, "profile-"));
 const ctx = await chromium.launchPersistentContext(profile, {
-  executablePath: process.env.CHROMIUM_PATH || undefined,
+  executablePath,
   headless: process.env.HEADED ? false : true,
   locale,
   viewport: { width: 1280, height: 800 },
@@ -186,6 +204,8 @@ async function openNewtab() {
   await page.clock.setFixedTime(new Date("2026-10-10T09:41:00"));
   await page.goto(extBase + "newtab.html");
   await sleep(2500);
+  // Shortcut icons arrive one by one; a cold profile can still be fetching some.
+  await page.waitForFunction(() => [...document.images].every((img) => img.complete), null, { timeout: 8000 }).catch(() => {});
   await dismissHints(page);
   await page.mouse.move(5, 5);
   return page;

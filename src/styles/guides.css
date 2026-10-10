@@ -404,6 +404,59 @@
   margin-left: 1em;
 }
 
+/* Under every page: where to ask when the page didn't answer it. */
+.guide__stuck {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 20px;
+  margin-top: 48px;
+  padding: 16px 20px;
+  border: 1px solid var(--guide-line);
+  border-radius: 12px;
+}
+
+.guide__stuck p {
+  margin: 0;
+  color: var(--guide-text);
+  font-size: 15px;
+}
+
+.guide__stuck-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.guide__stuck-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 0 14px;
+  border: 1px solid var(--guide-line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--guide-ink);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 160ms ease;
+}
+
+.guide__stuck-button:hover {
+  background: var(--guide-row-hover);
+}
+
+.guide__stuck-button i {
+  font-size: 16px;
+  line-height: 1;
+}
+
 /* The privacy policy: the note that a translation defers to the Simplified Chinese text. */
 .guide__note {
   margin: 12px 0 0;
@@ -609,6 +662,10 @@
 }
 
 /* Previous and next page. */
+.guide__stuck + .guide__pager {
+  margin-top: 24px;
+}
+
 .guide__pager {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

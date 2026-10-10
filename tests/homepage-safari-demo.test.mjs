@@ -138,21 +138,24 @@ test("homepage opens with a full-screen Search All demo and can settle early on 
 test("homepage hero exposes install and community actions below the subtitle", () => {
   const source = readSource("src/pages/index.astro");
   const installTooltip = readSource("src/components/home/HeroInstallTooltip.tsx");
-  const communityDialog = readSource("src/components/home/CommunityQrDialog.tsx");
+  const trigger = readSource("src/components/home/CommunityTrigger.tsx");
   const content = readSource("src/lib/home-content.ts");
 
   assert.match(
     source,
-    /<p class="hero-description">[\s\S]*?<CopyLines text=\{content\.heroDescription\} \/>[\s\S]*?<div class="hero-actions">[\s\S]*?content\.heroInstallLabel[\s\S]*?content\.heroCommunityLabel/,
+    /<p class="hero-description">[\s\S]*?<CopyLines text=\{content\.heroDescription\} \/>[\s\S]*?<div class="hero-actions">[\s\S]*?content\.heroInstallLabel[\s\S]*?community\.kind === "group"/,
   );
   // The tooltip only matters on hover, so it hydrates once the page is idle instead of competing with the demo.
   assert.match(source, /<HeroInstallTooltip[^/]*?href=\{CHROME_STORE_URL\}[^/]*?client:idle/);
   assert.match(installTooltip, /<TooltipTrigger asChild>[\s\S]*?<SettingsButton[\s\S]*?variant="primary"/);
   assert.match(installTooltip, /<SettingsButton[\s\S]*?\{label\}[\s\S]*?\{HERO_BUTTERFLY_MARK\}/);
-  assert.match(source, /<CommunityQrDialog[\s\S]*?triggerLabel=\{content\.heroCommunityLabel\}[\s\S]*?triggerVariant="hero"/);
-  // The QR triggers are static HTML; the dialog loads on first use (src/scripts/community-qr.ts).
-  assert.doesNotMatch(source, /<CommunityQrDialog\b[^>]*?client:/);
-  assert.match(communityDialog, /<SettingsButton[\s\S]*?variant="secondary"/);
+  // Chinese: join the group (the community panel). Elsewhere: the source on GitHub.
+  assert.match(source, /<CommunityTrigger[\s\S]*?label=\{community\.cta\}[\s\S]*?variant="hero"[\s\S]*?analyticsLabel="home_hero_community"/);
+  assert.match(source, /href=\{GITHUB_URL\}[\s\S]*?data-analytics-label="home_hero_github"[\s\S]*?\{community\.heroLabel\}/);
+  // The community triggers are static HTML; the panel loads on first use (src/scripts/community-panel.ts).
+  assert.doesNotMatch(source, /<CommunityTrigger\b[^>]*?client:/);
+  assert.match(trigger, /<SettingsButton[\s\S]*?variant="secondary"[\s\S]*?hero-community-button/);
+  assert.match(trigger, /"data-analytics-event": "open_community_panel"/);
   assert.match(installTooltip, /const HERO_BUTTERFLY_MARK = \([\s\S]*?className="hero-install-butterfly"/);
   assert.match(installTooltip, /className="hero-install-butterfly-wing hero-install-butterfly-wing-back"/);
   assert.match(installTooltip, /className="hero-install-butterfly-wing hero-install-butterfly-wing-front"/);
@@ -160,39 +163,39 @@ test("homepage hero exposes install and community actions below the subtitle", (
   assert.match(installTooltip, /<animateTransform[\s\S]*?type="rotate"/);
   assert.doesNotMatch(installTooltip, /lumno-selection-mark\.png/);
   assert.doesNotMatch(installTooltip, /iconClass=|ri-arrow-right-up-line/);
-  assert.doesNotMatch(communityDialog, /iconClass=|ri-feedback-line/);
-  // The closing CTA reuses both buttons under its own analytics labels; the hero keeps the defaults.
+  // The closing CTA is the install button alone; the hero keeps the community entry.
   assert.match(installTooltip, /analyticsLabel = "home_hero_install"[\s\S]*?href=\{href\}[\s\S]*?data-analytics-label=\{analyticsLabel\}/);
-  assert.match(communityDialog, /analyticsLabel = "home_hero_community"[\s\S]*?data-analytics-event="open_community_qrcode"[\s\S]*?data-analytics-label=\{analyticsLabel\}/);
-  assert.match(source, /<FinalCta[\s\S]*?<HeroInstallTooltip[\s\S]*?id="final-install-primary"[\s\S]*?analyticsLabel="home_final_install"[\s\S]*?<CommunityQrDialog[\s\S]*?analyticsLabel="home_final_community"/);
-  assert.match(communityDialog, /hero-community-button/);
+  assert.match(source, /<FinalCta[\s\S]*?<HeroInstallTooltip[\s\S]*?id="final-install-primary"[\s\S]*?analyticsLabel="home_final_install"[\s\S]*?<\/FinalCta>/);
+  assert.doesNotMatch(source.slice(source.indexOf("<FinalCta"), source.indexOf("</FinalCta>")), /CommunityTrigger/);
   assert.match(source, /\.hero-actions-button \{[\s\S]*?padding: 8px 16px;[\s\S]*?font-size: 14px;/);
   assert.match(source, /\.hero-actions-button \{[\s\S]*?padding: 7px 14px;[\s\S]*?font-size: 13px;/);
   assert.match(content, /heroInstallLabel: "免费安装 Lumno"/);
-  assert.match(content, /heroCommunityLabel: "反馈 & 功能许愿"/);
-  assert.match(content, /heroCommunityAria: "打开 Lumno 反馈与功能许愿二维码"/);
-  assert.doesNotMatch(content, /heroReviewLabel|heroReviewAria/);
+  assert.match(content, /cta: "反馈与功能许愿"/);
+  assert.doesNotMatch(content, /heroReviewLabel|heroReviewAria|heroCommunityLabel/);
 });
 
-test("homepage community CTA opens an accessible QR-code dialog", () => {
+test("community entries open one accessible panel", () => {
   const source = readSource("src/pages/index.astro");
-  const communityDialog = readSource("src/components/home/CommunityQrDialog.tsx");
+  const trigger = readSource("src/components/home/CommunityTrigger.tsx");
   const dialog = readSource("src/components/ui/dialog.tsx");
 
   assert.match(source, /import "\.\.\/styles\/globals\.css"/);
-  const panel = readSource("src/components/home/CommunityQrDialogPanel.tsx");
-  const dialogRoot = readSource("src/components/home/community-qr-dialog-root.tsx");
-  const triggerScript = readSource("src/scripts/community-qr.ts");
+  const panel = readSource("src/components/home/CommunityPanel.tsx");
+  const panelRoot = readSource("src/components/home/community-panel-root.tsx");
+  const triggerScript = readSource("src/scripts/community-panel.ts");
 
-  assert.match(panel, /export function CommunityQrDialogPanel\([\s\S]*?<DialogContent/);
+  assert.match(panel, /export function CommunityPanel\([\s\S]*?<DialogContent/);
   assert.match(panel, /<DialogTitle>\{title\}<\/DialogTitle>/);
+  assert.doesNotMatch(panel, /DialogDescription/);
+  // Chinese: the GitHub note sits right under the QR, then the follow row.
+  assert.match(panel, /\{qr && \([\s\S]*?\{note && \([\s\S]*?\{followLabel \? \(/);
   assert.match(panel, /closeLabel=\{closeLabel\}/);
   assert.match(panel, /width="866"[\s\S]*?height="1280"/);
-  assert.doesNotMatch(panel, /from "[^"]*SettingsKit"/, "the lazily loaded dialog must not pull the settings kit stylesheet onto every page");
-  assert.match(communityDialog, /aria-haspopup="dialog"[\s\S]*?\{\.\.\.dialogAttributes\}/);
-  assert.match(dialogRoot, /<Dialog open=\{open\} onOpenChange=\{setOpen\}>[\s\S]*?<CommunityQrDialogPanel/);
-  assert.match(triggerScript, /\[data-community-qr-trigger\]/);
-  assert.match(triggerScript, /import\("\.\.\/components\/home\/community-qr-dialog-root"\)/);
+  assert.doesNotMatch(panel, /from "[^"]*SettingsKit"/, "the lazily loaded panel must not pull the settings kit stylesheet onto every page");
+  assert.match(trigger, /"aria-haspopup": "dialog" as const[\s\S]*?\.\.\.communityTriggerAttributes\(panel\)/);
+  assert.match(panelRoot, /<Dialog open=\{open\} onOpenChange=\{setOpen\}>[\s\S]*?<CommunityPanel/);
+  assert.match(triggerScript, /\[data-community-trigger\]/);
+  assert.match(triggerScript, /import\("\.\.\/components\/home\/community-panel-root"\)/);
   assert.match(dialog, /data-open:animate-in[\s\S]*?data-open:zoom-in-95/);
   assert.match(dialog, /data-closed:animate-out[\s\S]*?data-closed:zoom-out-95/);
   assert.match(dialog, /motion-reduce:animate-none/);
@@ -203,17 +206,17 @@ test("homepage community CTA opens an accessible QR-code dialog", () => {
   assert.doesNotMatch(source, /id="community-qrcode-modal"|const openModal|qrcode-modal-panel/);
 });
 
-test("homepage footer reuses the shared community dialog", () => {
+test("the footer opens the community panel and lists the right profiles per language", () => {
   const source = readSource("src/components/site/PageFooter.astro");
 
   assert.match(readSource("src/pages/index.astro"), /<PageFooter locale=\{uiLocale\} routeLanguageMap=\{routeLanguageMap\} \/>/);
-  assert.match(source, /<SiteFooter[\s\S]*?feedback=\{\{[\s\S]*?label: content\.footerFeedback/);
+  assert.match(source, /community=\{\{ label: community\.label, panel: getCommunityPanel\(locale\)/);
   assert.match(
     readSource("src/components/home/sections/SiteFooter.astro"),
-    /<CommunityQrDialog[\s\S]*?triggerLabel=\{feedback\.label\}[\s\S]*?triggerVariant="footer"/,
+    /<CommunityTrigger[\s\S]*?panel=\{community\.panel\}[\s\S]*?variant="footer"/,
   );
-  // Chinese locales open the WeChat QR; every other locale links to Discord (lib/community.ts).
-  assert.match(source, /externalHref: getCommunityExternalHref\(locale\)/);
+  // GitHub and X everywhere; Xiaohongshu only for Chinese readers.
+  assert.match(source, /ri-github-line[\s\S]*?community\.kind === "group"[\s\S]*?COMMUNITY_LINKS\.xiaohongshuUrl[\s\S]*?ri-twitter-x-line/);
 });
 
 test("homepage install tooltip communicates broad Chromium browser support", () => {

@@ -1,7 +1,8 @@
 ---
 import SiteFooter from "../home/sections/SiteFooter.astro";
 import xiaohongshuIconSvg from "../../assets/home-icons/xiaohongshu-line.svg?raw";
-import { COMMUNITY_LINKS, getCommunityExternalHref } from "../../lib/community";
+import { COMMUNITY_LINKS } from "../../lib/community";
+import { getCommunityPanel } from "../../lib/community-panel";
 import { getGuideContent, getGuidePath } from "../../lib/guides";
 import { getHomeContent } from "../../lib/home-content";
 import { LOCALE_CONFIG, buildLocalizedPath, type SupportedLocale } from "../../lib/locales";
@@ -26,6 +27,7 @@ interface Props {
 /* The site footer with every page's shared links, copy and language switch. */
 const { locale, routeLanguageMap, analyticsScope = "home" } = Astro.props;
 const content = getHomeContent(locale);
+const { community } = content;
 // Firefox joins the store list once AMO serves a listed version.
 const { firefox: firefoxStoreVersion } = await getSiteStoreVersions();
 ---
@@ -70,19 +72,24 @@ const { firefox: firefoxStoreVersion } = await getSiteStoreVersions();
       analyticsEvent: "open_github_repo",
       analyticsLabel: `${analyticsScope}_footer_github`,
     },
+    // Chinese readers follow the author on Xiaohongshu first; Xiaohongshu means little elsewhere.
+    ...(community.kind === "group"
+      ? [
+          {
+            label: community.xiaohongshuLabel,
+            href: COMMUNITY_LINKS.xiaohongshuUrl,
+            iconSvg: xiaohongshuIconSvg,
+            analyticsEvent: "open_author_xiaohongshu",
+            analyticsLabel: `${analyticsScope}_footer_author_xiaohongshu`,
+          },
+        ]
+      : []),
     {
-      label: content.navContactX,
+      label: "X",
       href: COMMUNITY_LINKS.xUrl,
       iconClass: "ri-twitter-x-line",
       analyticsEvent: "open_author_x",
       analyticsLabel: `${analyticsScope}_footer_author_x`,
-    },
-    {
-      label: content.navContactXiaohongshu,
-      href: COMMUNITY_LINKS.xiaohongshuUrl,
-      iconSvg: xiaohongshuIconSvg,
-      analyticsEvent: "open_author_xiaohongshu",
-      analyticsLabel: `${analyticsScope}_footer_author_xiaohongshu`,
     },
   ]}
   columns={[
@@ -101,15 +108,7 @@ const { firefox: firefoxStoreVersion } = await getSiteStoreVersions();
       ],
     },
   ]}
-  feedback={{
-    label: content.footerFeedback,
-    ariaLabel: content.heroCommunityAria,
-    qrTitle: content.qrcodeTitle,
-    qrImageSrc: COMMUNITY_LINKS.wechatQrImagePath,
-    qrImageAlt: content.qrcodeImageAlt,
-    closeLabel: content.qrcodeCloseAria,
-    externalHref: getCommunityExternalHref(locale),
-  }}
+  community={{ label: community.label, panel: getCommunityPanel(locale), analyticsLabel: `${analyticsScope}_footer_community` }}
   copyright={content.footerCopyright}
   licenseHref={LICENSE_URL}
   languages={LOCALE_CONFIG.map((language) => ({

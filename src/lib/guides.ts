@@ -116,6 +116,11 @@ export type GuideLocaleContent = {
     searchPlaceholder: string;
     searchLabel: string;
     searchEmpty: string;
+    /** Above the pager: where to go when the page didn't answer it (the community panel's channels). */
+    stuckText: string;
+    /** Its two buttons: the group and GitHub in Chinese, GitHub and X elsewhere. */
+    stuckPrimary: string;
+    stuckSecondary: string;
   };
   pages: Record<GuideSlug, GuidePageContent>;
 };

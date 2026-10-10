@@ -72,7 +72,6 @@
 .ri-firefox-fill:before { content: "\ed34"; }
 .ri-flask-line:before { content: "\ed3f"; }
 .ri-fullscreen-line:before { content: "\ed9c"; }
-.ri-git-pull-request-line:before { content: "\edc3"; }
 .ri-github-fill:before { content: "\edca"; }
 .ri-github-line:before { content: "\edcb"; }
 .ri-global-line:before { content: "\edcf"; }
@@ -114,5 +113,6 @@
 .ri-time-line:before { content: "\f20f"; }
 .ri-translate:before { content: "\f227"; }
 .ri-twitter-x-line:before { content: "\f3e6"; }
+.ri-wechat-line:before { content: "\f2b6"; }
 .ri-window-2-line:before { content: "\f2c4"; }
 .ri-window-line:before { content: "\f2c6"; }

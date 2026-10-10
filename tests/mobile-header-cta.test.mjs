@@ -214,7 +214,7 @@ test("homepage navbar matches the content width and reveals after the hero intro
   );
 });
 
-test("homepage navbar animates in the community action and reuses the CTA dialog", () => {
+test("homepage navbar animates in the community action and opens the community panel", () => {
   const source = readHomeShell();
   const ghostLinks = fs.readFileSync(
     path.join(workspaceRoot, "src/components/navigation/HomeNavGhostLinks.tsx"),
@@ -224,58 +224,33 @@ test("homepage navbar animates in the community action and reuses the CTA dialog
     path.join(workspaceRoot, "src/components/navigation/home-nav-ghost-links.css"),
     "utf8",
   );
-  const communityDialog = fs.readFileSync(
-    path.join(workspaceRoot, "src/components/home/CommunityQrDialog.tsx"),
-    "utf8",
-  );
   const content = fs.readFileSync(path.join(workspaceRoot, "src/lib/home-content.ts"), "utf8");
 
-  assert.match(source, /<HomeNavGhostLinks[\s\S]*releaseHref=\{releaseHref\}[\s\S]*repositoryHref=\{GITHUB_URL\}[\s\S]*repositoryIssueHref=\{GITHUB_ISSUE_URL\}[\s\S]*repositoryPullRequestHref=\{GITHUB_PULL_REQUEST_URL\}[\s\S]*contactXHref=\{COMMUNITY_LINKS\.xUrl\}[\s\S]*contactXiaohongshuHref=\{COMMUNITY_LINKS\.xiaohongshuUrl\}[\s\S]*repositoryHomeLabel=\{content\.navRepositoryHome\}[\s\S]*communityLabel=\{content\.navCommunity\}[\s\S]*contactLabel=\{content\.navContact\}[\s\S]*contactMenuLabel=\{content\.navContactMenuAria\}[\s\S]*contactXLabel=\{content\.navContactX\}[\s\S]*contactXiaohongshuLabel=\{content\.navContactXiaohongshu\}[\s\S]*panelTitle=\{content\.qrcodeTitle\}[\s\S]*qrImageSrc=\{COMMUNITY_LINKS\.wechatQrImagePath\}/);
+  // Four entries: community, release notes, the help center and the author's profiles. GitHub lives in the panel and footer.
+  assert.match(source, /<HomeNavGhostLinks[\s\S]*releaseHref=\{releaseHref\}[\s\S]*helpHref=\{helpHref\}[\s\S]*communityLabel=\{content\.community\.label\}[\s\S]*communityPanel=\{getCommunityPanel\(locale\)\}/);
   assert.match(source, /<nav class="top-nav-actions"[\s\S]*?<HomeNavGhostLinks[\s\S]*?<LanguageMenu/);
   // No header island hydrates: pages without other islands ship no React.
   assert.doesNotMatch(source.slice(source.indexOf('<header'), source.indexOf('</header>')), /client:/);
   assert.match(source, /enhanceSettingsSelect/);
-  assert.match(content, /navCommunity: "反馈 & 功能许愿"/);
-  assert.match(content, /navContact: "联系作者"/);
-  assert.match(content, /navContactMenuAria: "打开作者主页"/);
-  assert.match(content, /navContactX: "X"/);
-  assert.match(content, /navContactXiaohongshu: "小红书"/);
-  assert.match(content, /navRepositoryMenuAria: "打开代码仓库操作"/);
-  assert.match(content, /navRepositoryHome: "访问仓库"/);
-  assert.match(content, /navRepositoryIssue: "提 Issue"/);
-  assert.match(content, /navRepositoryPullRequest: "提 PR"/);
-  assert.match(content, /heroCommunityLabel: "反馈 & 功能许愿"/);
-  assert.doesNotMatch(content, /heroCommunityLabel: "[^"]*\band\b/);
-  assert.doesNotMatch(content, /navSupportOpenSource/);
-  assert.equal((ghostLinks.match(/<SettingsButton\b/g) || []).length, 4, "repository, links, and the community action (QR dialog or Discord link) keep their dedicated button branches");
+  assert.match(content, /label: "反馈与功能许愿"/);
+  assert.doesNotMatch(content, /navRepository|navContact|footerFeedback|qrcodeTitle|navSupportOpenSource/);
+  assert.doesNotMatch(ghostLinks, /repository|Discord/i);
+  assert.match(ghostLinks, /value: "community"[\s\S]*analyticsLabel: "home_header_community"[\s\S]*value: "release"[\s\S]*value: "help"[\s\S]*value: "contact"/);
+  assert.equal((ghostLinks.match(/<SettingsButton\b/g) || []).length, 2, "the community button and the plain links");
+  // Contact: a menu when there are several profiles (Chinese: Xiaohongshu, then X), a direct link to X otherwise.
+  assert.match(ghostLinks, /link\.value === "contact" && !link\.href \? \([\s\S]*?className="top-nav-contact-menu"[\s\S]*?triggerVariant="ghost"[\s\S]*?items=\{contactMenuItems\}/);
+  assert.match(source, /community\.kind === "group"[\s\S]*?COMMUNITY_LINKS\.xiaohongshuUrl[\s\S]*?\{ value: "author_x", label: "X", href: COMMUNITY_LINKS\.xUrl/);
+  assert.match(ghostLinkStyles, /\.top-nav-contact-dropdown\s*\{[\s\S]*?min-width:\s*176px;/);
   assert.match(ghostLinks, /variant="ghost"/);
   assert.match(ghostLinks, /className="top-nav-ghost-button"/);
   assert.match(ghostLinks, /\{link\.label\}\s*<\/SettingsButton>/);
-  assert.match(ghostLinks, /value: "community"[\s\S]*analyticsLabel: "home_header_community"[\s\S]*value: "release"[\s\S]*value: "repository"[\s\S]*value: "contact"/);
-  assert.match(ghostLinks, /className="top-nav-repository-group"[\s\S]*href=\{link\.href!\}[\s\S]*triggerMode="icon"[\s\S]*triggerIconClass="ri-arrow-down-s-line"[\s\S]*items=\{repositoryActionItems\}/);
-  assert.match(ghostLinks, /value: "repository-issue"[\s\S]*href: repositoryIssueHref[\s\S]*value: "repository-pull-request"[\s\S]*href: repositoryPullRequestHref/);
-  assert.match(ghostLinks, /if \(link\.value === "repository"\) \{[\s\S]*children: mobileRepositoryActionItems,[\s\S]*if \(link\.value === "contact"\) \{[\s\S]*children: contactActionItems,/);
-  assert.match(ghostLinks, /value: "repository-home"[\s\S]*label: repositoryHomeLabel[\s\S]*href: repositoryHref/);
-  assert.match(ghostLinkStyles, /\.top-nav-repository-toggle\s*\{[\s\S]*?width:\s*28px;[\s\S]*?background:\s*transparent;[\s\S]*?font-size:\s*16px;/);
-  assert.match(ghostLinkStyles, /\.top-nav-repository-dropdown\s*\{[\s\S]*?min-width:\s*164px;/);
-  assert.match(ghostLinks, /value: "contact-x"[\s\S]*href: contactXHref[\s\S]*value: "contact-xiaohongshu"[\s\S]*href: contactXiaohongshuHref/);
-  assert.match(ghostLinks, /className="top-nav-contact-menu"[\s\S]*triggerVariant="ghost"[\s\S]*triggerLabel=\{contactLabel\}[\s\S]*items=\{contactActionItems\}/);
-  assert.match(ghostLinkStyles, /\.top-nav-contact-dropdown\s*\{[\s\S]*?min-width:\s*176px;/);
-  assert.match(ghostLinkStyles, /\.top-nav-more-option \.lumno-settings-select-option-expand-icon\s*\{[\s\S]*?font-size:\s*18px;[\s\S]*?\.top-nav-more-option\[data-expanded="true"\] \.lumno-settings-select-option-expand-icon\s*\{[\s\S]*?transform:\s*rotate\(90deg\);/);
-  assert.match(ghostLinkStyles, /\.top-nav-more-dropdown \.top-nav-more-option\[data-depth="1"\]\s*\{[\s\S]*?padding-left:\s*38px;/);
-  assert.match(
-    ghostLinkStyles,
-    /\.top-nav-repository-group\s*\{[\s\S]*?gap:\s*2px;[\s\S]*?\.top-nav-repository-group > \.top-nav-ghost-button\s*\{[\s\S]*?border-radius:\s*17px 8px 8px 17px;[\s\S]*?\.top-nav-repository-toggle\s*\{[\s\S]*?height:\s*34px;[\s\S]*?border-radius:\s*8px 17px 17px 8px;/,
-    "repository link and menu should align as one split control with a narrow seam",
-  );
   // The community entry waits for the glass pill; SiteHeader's script reveals every data-nav-primary-only entry.
   assert.match(ghostLinks, /"nav-primary-only": ""/);
   assert.match(source, /document\.body\.classList\.contains\("has-nav-install"\)/);
   assert.match(source, /new MutationObserver\(syncPrimaryNavigation\)/);
-  assert.match(source, /import "\.\.\/\.\.\/scripts\/community-qr"/);
-  assert.match(ghostLinks, /import \{ communityQrTriggerAttributes \} from "\.\.\/home\/CommunityQrDialogPanel"/);
-  assert.match(ghostLinks, /"qr-return-focus": "#top-nav-more-toggle"/);
-  assert.match(communityDialog, /import \{ communityQrTriggerAttributes \} from "\.\/CommunityQrDialogPanel"/);
+  assert.match(source, /import "\.\.\/\.\.\/scripts\/community-panel"/);
+  assert.match(ghostLinks, /import \{ communityTriggerAttributes \} from "\.\.\/home\/CommunityPanel"/);
+  assert.match(ghostLinks, /"community-return-focus": "#top-nav-more-toggle"/);
   assert.match(ghostLinks, /<SettingsSelect[\s\S]*triggerMode="icon"[\s\S]*triggerIconClass="ri-menu-line"/);
   assert.match(ghostLinks, /menuRole="menu"[\s\S]*optionRole="menuitem"/);
   assert.match(ghostLinks, /showSelected=\{false\}/);
@@ -284,7 +259,7 @@ test("homepage navbar animates in the community action and reuses the CTA dialog
   assert.match(ghostLinkStyles, /\.top-nav-community-slot\[data-visible="true"\]\s*\{[\s\S]*?grid-template-columns:\s*1fr;[\s\S]*?opacity:\s*1;[\s\S]*?visibility:\s*visible;/);
   assert.doesNotMatch(ghostLinkStyles, /\.top-nav-community-slot\s*\{[^}]*transition:/);
   assert.doesNotMatch(ghostLinkStyles, /\.top-nav-community-slot \.top-nav-ghost-button\s*\{/);
-  assert.doesNotMatch(ghostLinkStyles, /top-nav-community-popover/);
+  assert.doesNotMatch(ghostLinkStyles, /top-nav-community-popover|top-nav-repository/);
 
   assert.match(
     source,
@@ -395,13 +370,17 @@ test("mobile release banner cannot expand wider than the viewport", () => {
   );
 });
 
-test("community entries open the WeChat group in Chinese and Discord everywhere else", () => {
-  const community = fs.readFileSync(path.join(workspaceRoot, "src/lib/community.ts"), "utf8");
-  assert.match(community, /return locale\.startsWith\("zh"\) \? "wechat" : "discord";/);
-  const header = fs.readFileSync(path.join(workspaceRoot, "src/components/site/SiteHeader.astro"), "utf8");
-  assert.match(header, /communityHref=\{getCommunityExternalHref\(locale\)\}/);
-  const home = fs.readFileSync(path.join(workspaceRoot, "src/pages/index.astro"), "utf8");
-  assert.equal((home.match(/externalHref=\{communityExternalHref\}/g) || []).length, 2);
+test("community entries lead Chinese readers to the WeChat group and everyone else to GitHub and X", () => {
+  const panel = fs.readFileSync(path.join(workspaceRoot, "src/lib/community-panel.ts"), "utf8");
+  const content = fs.readFileSync(path.join(workspaceRoot, "src/lib/home-content.ts"), "utf8");
+  // Chinese: the group QR, then the author's Xiaohongshu before X, then a quiet GitHub issue link.
+  assert.match(panel, /if \(community\.kind === "group"\)[\s\S]*?qr: \{ src: COMMUNITY_LINKS\.wechatQrImagePath[\s\S]*?icon: "xiaohongshu"[\s\S]*?icon: "x"[\s\S]*?note: \{ label: community\.issueNote, href: GITHUB_ISSUE_URL/);
+  // Everyone else: GitHub, then X. No Discord on the site.
+  assert.match(panel, /icon: "github"[\s\S]*?icon: "x"/);
+  assert.equal((content.match(/kind: "group",/g) || []).length, 2, "zh-CN and zh-TW");
+  assert.equal((content.match(/kind: "open",/g) || []).length, 8);
+  assert.doesNotMatch(content, /Discord/);
+  // The extension keeps its own channel list until it moves to the same model.
   const payload = fs.readFileSync(path.join(workspaceRoot, "src/pages/community-links.json.ts"), "utf8");
   assert.match(payload, /SUPPORTED_UI_LANGUAGES\.map\(\(locale\) => \[locale, getCommunityChannel\(locale\)\]\)/);
 });

@@ -187,12 +187,17 @@ test("the page list is always open on wide screens, folded only on phones", () =
   assert.match(shell, /narrow\.addEventListener\("change", fitNav\);/);
 });
 
-test("the header links to the help center in every language", () => {
+test("the header and every page point to help, and pages end with where to ask", () => {
   const header = readSource("src/components/site/SiteHeader.astro");
   const links = readSource("src/components/navigation/HomeNavGhostLinks.tsx");
+  const shell = readSource("src/components/guides/GuideShell.astro");
   assert.match(header, /const helpHref = getGuidePath\(locale\);/);
-  assert.match(links, /value: "help" as const/);
+  assert.match(links, /value: "help"/);
   assert.match(links, /analyticsEvent: "open_help_center"/);
+  // Chinese pages offer the group (the community panel) and a quiet issue link; others GitHub and X.
+  assert.match(shell, /<aside class="guide__stuck">[\s\S]*?community\.kind === "group"[\s\S]*?communityTriggerAttributes\(getCommunityPanel\(locale\)\)[\s\S]*?\{ui\.stuckPrimary\}[\s\S]*?community\.kind === "group" \? GITHUB_ISSUE_URL : COMMUNITY_LINKS\.xUrl[\s\S]*?\{ui\.stuckSecondary\}/);
+  for (const locale of locales) assert.match(readSource(`src/content/guides/${locale}.ts`), /stuckText: "[^"]+",\n    stuckPrimary: "[^"]+",\n    stuckSecondary: "[^"]+"/, locale);
+  assert.match(readSource("src/content/guides/zh-CN.ts"), /stuckPrimary: "加入用户群",\n    stuckSecondary: "提交 Issue"/);
 });
 
 test("the help center ships in every site language and switching language keeps the page", () => {

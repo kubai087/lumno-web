@@ -28,6 +28,9 @@ const content: GuideLocaleContent = {
     searchPlaceholder: "Поиск по справке",
     searchLabel: "Поиск по справочному центру",
     searchEmpty: "Ничего не найдено",
+    stuckText: "Не получилось? Спросите на GitHub или напишите в X.",
+    stuckPrimary: "Спросить на GitHub",
+    stuckSecondary: "Написать в X",
   },
   pages: {
     "what-is-lumno": {

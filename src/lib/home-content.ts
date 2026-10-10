@@ -46,21 +46,52 @@ export type HomeNewTabScene = {
 export type HomeUtilityId = "clip" | "autoPip" | "progress" | "sync" | "pinned" | "languages";
 export type HomeTrustId = "local" | "source" | "optional";
 
+/**
+ * Where people talk to Lumno (lib/community-panel.ts). Chinese readers are led
+ * to the WeChat group, with the author's Xiaohongshu and X as follow-ups and
+ * GitHub for those who prefer it; everyone else gets GitHub and X.
+ */
+type HomeCommunityCopy = {
+  /** The entry's name in the top bar, the phone menu and the footer. */
+  label: string;
+  /** The top bar's own entry for the author's profiles (Xiaohongshu and X in Chinese, X elsewhere). */
+  contactLabel: string;
+  contactMenuAria: string;
+  /** The community panel every entry opens. */
+  title: string;
+  closeLabel: string;
+} & (
+  | {
+      kind: "group";
+      /** The hero's button. */
+      cta: string;
+      ctaAria: string;
+      /** The FAQ's button. */
+      askLabel: string;
+      askAria: string;
+      qrAlt: string;
+      followLabel: string;
+      xiaohongshuLabel: string;
+      xLabel: string;
+      /** The quiet way out for GitHub people. */
+      issueNote: string;
+    }
+  | {
+      kind: "open";
+      github: { label: string; description: string };
+      x: { label: string; description: string };
+      /** The hero's button: the source on GitHub. */
+      heroLabel: string;
+      heroAria: string;
+    }
+);
+
 type HomeContent = {
   navigationAria: string;
   navFeatures: string;
   navRelease: string;
-  navRepository: string;
-  navRepositoryMenuAria: string;
-  navRepositoryHome: string;
-  navRepositoryIssue: string;
-  navRepositoryPullRequest: string;
-  navCommunity: string;
-  navContact: string;
-  navContactMenuAria: string;
-  navContactX: string;
-  navContactXiaohongshu: string;
   navMoreMenuAria: string;
+  community: HomeCommunityCopy;
   installLabel: string;
   // A shorter header label for phones, where the full one would crowd the bar.
   installLabelShort?: string;
@@ -80,8 +111,6 @@ type HomeContent = {
   heroBrowserTooltipLabel: string;
   /** Replaces the Chromium-only browser wording once Firefox Add-ons lists Lumno. */
   firefoxCopy: { heroBrowserTooltipLabel: string; browsersLabel: string };
-  heroCommunityLabel: string;
-  heroCommunityAria: string;
   heroDemoAria: string;
 
   commandBar: {
@@ -187,9 +216,6 @@ type HomeContent = {
   };
   faqTitle: string;
   faqAskLabel: string;
-  /** Chinese locales open the WeChat group QR; everyone else goes to the Discord server (lib/community.ts). */
-  faqAuthorLabel: string;
-  faqAuthorAria: string;
   faqItems: HomeFaqItem[];
   /** Under the hero title where the closing CTA repeats it. */
   finalDescription: string;
@@ -200,14 +226,10 @@ type HomeContent = {
   footerRelease: string;
   footerReportIssue: string;
   footerPrivacy: string;
-  footerFeedback: string;
   footerSocialAria: string;
   footerGithub: string;
   footerCopyright: string;
   languageSelectAria: string;
-  qrcodeTitle: string;
-  qrcodeImageAlt: string;
-  qrcodeCloseAria: string;
 };
 
 const BROWSER_NAMES = ["Chrome", "Edge", "Dia", "Brave", "Vivaldi", "Comet", "Atlas", "Helium"];
@@ -217,17 +239,24 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     navigationAria: "主导航",
     navFeatures: "功能",
     navRelease: "近期更新",
-    navRepository: "代码仓库",
-    navRepositoryMenuAria: "打开代码仓库操作",
-    navRepositoryHome: "访问仓库",
-    navRepositoryIssue: "提 Issue",
-    navRepositoryPullRequest: "提 PR",
-    navCommunity: "反馈 & 功能许愿",
-    navContact: "联系作者",
-    navContactMenuAria: "打开作者主页",
-    navContactX: "X",
-    navContactXiaohongshu: "小红书",
     navMoreMenuAria: "打开更多导航",
+    community: {
+      kind: "group",
+      label: "反馈与功能许愿",
+      contactLabel: "联系作者",
+      contactMenuAria: "打开作者主页",
+      title: "加入 Lumno 用户群",
+      closeLabel: "关闭",
+      cta: "反馈与功能许愿",
+      ctaAria: "打开 Lumno 用户群二维码",
+      askLabel: "直接问作者（秒回）",
+      askAria: "打开用户群二维码，直接向作者提问",
+      qrAlt: "Lumno 微信群二维码",
+      followLabel: "关注作者",
+      xiaohongshuLabel: "小红书",
+      xLabel: "X",
+      issueNote: "习惯用 GitHub？提交 Issue",
+    },
     installLabel: "安装 Lumno",
     installAria: "打开 Lumno 安装选项",
     installChromeStoreLabel: "Chrome 应用商店",
@@ -246,8 +275,6 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
       heroBrowserTooltipLabel: "基于 GPL-3.0 开源，支持大多数 Chromium 内核浏览器和 Firefox",
       browsersLabel: "适用于 Chrome、Edge、Firefox 和大多数 Chromium 内核浏览器",
     },
-    heroCommunityLabel: "反馈 & 功能许愿",
-    heroCommunityAria: "打开 Lumno 反馈与功能许愿二维码",
     heroDemoAria: "Lumno 命令栏演示：搜索浏览器内容、站内搜索与指令",
 
     commandBar: {
@@ -442,8 +469,6 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     },
     faqTitle: "常见问题",
     faqAskLabel: "在 GitHub 提问",
-    faqAuthorLabel: "直接问作者（秒回）",
-    faqAuthorAria: "打开微信二维码，直接向作者提问",
     faqItems: [
       {
         question: "默认快捷键是什么？可以修改吗？",
@@ -506,30 +531,33 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerRelease: "近期更新",
     footerReportIssue: "报告问题",
     footerPrivacy: "隐私政策",
-    footerFeedback: "反馈与建议",
     footerSocialAria: "关注 Lumno",
     footerGithub: "GitHub",
     footerCopyright: "Lumno",
     languageSelectAria: "选择语言",
-    qrcodeTitle: "微信群二维码",
-    qrcodeImageAlt: "Lumno 微信群二维码",
-    qrcodeCloseAria: "关闭二维码弹窗",
   },
   "zh-TW": {
     navigationAria: "主導覽",
     navFeatures: "功能",
     navRelease: "近期更新",
-    navRepository: "程式碼",
-    navRepositoryMenuAria: "開啟程式碼儲存庫操作",
-    navRepositoryHome: "造訪儲存庫",
-    navRepositoryIssue: "提 Issue",
-    navRepositoryPullRequest: "提 PR",
-    navCommunity: "意見回饋 & 功能許願",
-    navContact: "聯絡作者",
-    navContactMenuAria: "開啟作者主頁",
-    navContactX: "X",
-    navContactXiaohongshu: "小紅書",
     navMoreMenuAria: "開啟更多導覽",
+    community: {
+      kind: "group",
+      label: "意見回饋與功能許願",
+      contactLabel: "聯絡作者",
+      contactMenuAria: "開啟作者主頁",
+      title: "加入 Lumno 使用者群組",
+      closeLabel: "關閉",
+      cta: "意見回饋與功能許願",
+      ctaAria: "開啟 Lumno 使用者群組 QR Code",
+      askLabel: "直接問作者（秒回）",
+      askAria: "開啟群組 QR Code，直接向作者提問",
+      qrAlt: "Lumno 微信群組 QR Code",
+      followLabel: "追蹤作者",
+      xiaohongshuLabel: "小紅書",
+      xLabel: "X",
+      issueNote: "習慣用 GitHub？提交 Issue",
+    },
     installLabel: "安裝 Lumno",
     installAria: "開啟 Lumno 安裝選項",
     installChromeStoreLabel: "Chrome 線上應用程式商店",
@@ -548,8 +576,6 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
       heroBrowserTooltipLabel: "以 GPL-3.0 授權開源，支援大多數 Chromium 核心瀏覽器與 Firefox",
       browsersLabel: "適用於 Chrome、Edge、Firefox 與大多數 Chromium 核心瀏覽器",
     },
-    heroCommunityLabel: "意見回饋 & 功能許願",
-    heroCommunityAria: "開啟 Lumno 意見回饋與功能許願的 QR Code",
     heroDemoAria: "Lumno 命令列示範：搜尋瀏覽器內容、站內搜尋與指令",
 
     commandBar: {
@@ -744,8 +770,6 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     },
     faqTitle: "常見問題",
     faqAskLabel: "在 GitHub 提問",
-    faqAuthorLabel: "直接問作者（秒回）",
-    faqAuthorAria: "開啟微信 QR Code，直接向作者提問",
     faqItems: [
       {
         question: "預設快速鍵是什麼？可以修改嗎？",
@@ -808,30 +832,28 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerRelease: "近期更新",
     footerReportIssue: "回報問題",
     footerPrivacy: "隱私權政策",
-    footerFeedback: "意見回饋",
     footerSocialAria: "追蹤 Lumno",
     footerGithub: "GitHub",
     footerCopyright: "Lumno",
     languageSelectAria: "選擇語言",
-    qrcodeTitle: "微信群組 QR Code",
-    qrcodeImageAlt: "Lumno 微信群組 QR Code",
-    qrcodeCloseAria: "關閉 QR Code 視窗",
   },
   en: {
     navigationAria: "Primary navigation",
     navFeatures: "Features",
     navRelease: "Release notes",
-    navRepository: "Repository",
-    navRepositoryMenuAria: "Open repository actions",
-    navRepositoryHome: "Open repository",
-    navRepositoryIssue: "Open an issue",
-    navRepositoryPullRequest: "Open a pull request",
-    navCommunity: "Feedback",
-    navContact: "Contact",
-    navContactMenuAria: "Open the author's profiles",
-    navContactX: "X",
-    navContactXiaohongshu: "Xiaohongshu",
     navMoreMenuAria: "Open more navigation",
+    community: {
+      kind: "open",
+      label: "Community",
+      contactLabel: "Contact",
+      contactMenuAria: "Open the author's profiles",
+      title: "Lumno community",
+      closeLabel: "Close",
+      github: { label: "Ask on GitHub", description: "Bugs, ideas and questions, out in the open" },
+      x: { label: "Follow on X", description: "Updates from the maker, @kubai087" },
+      heroLabel: "GitHub",
+      heroAria: "View Lumno's source code on GitHub",
+    },
     installLabel: "Install Lumno",
     installLabelShort: "Install",
     installAria: "Open Lumno install options",
@@ -852,8 +874,6 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
       heroBrowserTooltipLabel: "Open source under GPL-3.0. Works in most Chromium-based browsers and Firefox.",
       browsersLabel: "Works in Chrome, Edge, Firefox, and most Chromium-based browsers",
     },
-    heroCommunityLabel: "Feedback & requests",
-    heroCommunityAria: "Share feedback and feature requests on the Lumno Discord",
     heroDemoAria: "Lumno command bar demo: browser search, site search, and commands",
 
     commandBar: {
@@ -1047,8 +1067,6 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     },
     faqTitle: "Questions,\nanswered.",
     faqAskLabel: "Ask on GitHub",
-    faqAuthorLabel: "Ask on Discord",
-    faqAuthorAria: "Ask the author in the Lumno Discord",
     faqItems: [
       {
         question: "What is the default shortcut? Can I change it?",
@@ -1112,30 +1130,28 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerRelease: "Release notes",
     footerReportIssue: "Report an issue",
     footerPrivacy: "Privacy policy",
-    footerFeedback: "Feedback & requests",
     footerSocialAria: "Follow Lumno",
     footerGithub: "GitHub",
     footerCopyright: "Lumno",
     languageSelectAria: "Choose language",
-    qrcodeTitle: "WeChat group QR code",
-    qrcodeImageAlt: "QR code for the Lumno WeChat group",
-    qrcodeCloseAria: "Close the QR code dialog",
   },
   ja: {
     navigationAria: "メインナビゲーション",
     navFeatures: "機能",
     navRelease: "更新履歴",
-    navRepository: "リポジトリ",
-    navRepositoryMenuAria: "リポジトリのメニューを開く",
-    navRepositoryHome: "リポジトリを見る",
-    navRepositoryIssue: "Issue を作成",
-    navRepositoryPullRequest: "プルリクエストを送る",
-    navCommunity: "フィードバック",
-    navContact: "作者に連絡",
-    navContactMenuAria: "作者のプロフィールを開く",
-    navContactX: "X",
-    navContactXiaohongshu: "Xiaohongshu",
     navMoreMenuAria: "その他のメニューを開く",
+    community: {
+      kind: "open",
+      label: "コミュニティ",
+      contactLabel: "作者に連絡",
+      contactMenuAria: "作者のプロフィールを開く",
+      title: "Lumno コミュニティ",
+      closeLabel: "閉じる",
+      github: { label: "GitHub で質問する", description: "不具合、アイデア、質問をオープンに" },
+      x: { label: "X でフォロー", description: "作者の最新情報（@kubai087）" },
+      heroLabel: "GitHub",
+      heroAria: "GitHub で Lumno のソースコードを見る",
+    },
     installLabel: "インストール",
     installAria: "Lumno のインストール先を選ぶ",
     installChromeStoreLabel: "Chrome ウェブストア",
@@ -1154,8 +1170,6 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
       heroBrowserTooltipLabel: "GPL-3.0 のオープンソース。ほとんどの Chromium 系ブラウザと Firefox で使えます",
       browsersLabel: "Chrome、Edge、Firefox と、ほとんどの Chromium 系ブラウザで使えます",
     },
-    heroCommunityLabel: "フィードバック・要望",
-    heroCommunityAria: "Lumno の Discord でフィードバックや機能リクエストを送る",
     heroDemoAria: "Lumno コマンドバーのデモ：ブラウザ内検索、サイト内検索、コマンド",
 
     commandBar: {
@@ -1347,8 +1361,6 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     },
     faqTitle: "よくある質問",
     faqAskLabel: "GitHub で質問する",
-    faqAuthorLabel: "Discord で質問",
-    faqAuthorAria: "Lumno の Discord で作者に質問する",
     faqItems: [
       {
         question: "初期設定のショートカットは？ 変更できますか？",
@@ -1412,30 +1424,28 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerRelease: "更新履歴",
     footerReportIssue: "不具合を報告",
     footerPrivacy: "プライバシーポリシー",
-    footerFeedback: "フィードバック・要望",
     footerSocialAria: "Lumno をフォロー",
     footerGithub: "GitHub",
     footerCopyright: "Lumno",
     languageSelectAria: "言語を選択",
-    qrcodeTitle: "WeChat グループの QR コード",
-    qrcodeImageAlt: "Lumno の WeChat グループの QR コード",
-    qrcodeCloseAria: "QR コードを閉じる",
   },
   ko: {
     navigationAria: "주 메뉴",
     navFeatures: "기능",
     navRelease: "업데이트 내역",
-    navRepository: "저장소",
-    navRepositoryMenuAria: "저장소 메뉴 열기",
-    navRepositoryHome: "저장소 보기",
-    navRepositoryIssue: "이슈 등록",
-    navRepositoryPullRequest: "풀 리퀘스트 보내기",
-    navCommunity: "피드백",
-    navContact: "개발자에게 연락",
-    navContactMenuAria: "개발자 프로필 열기",
-    navContactX: "X",
-    navContactXiaohongshu: "Xiaohongshu",
     navMoreMenuAria: "메뉴 더 보기",
+    community: {
+      kind: "open",
+      label: "커뮤니티",
+      contactLabel: "개발자에게 연락",
+      contactMenuAria: "개발자 프로필 열기",
+      title: "Lumno 커뮤니티",
+      closeLabel: "닫기",
+      github: { label: "GitHub에서 질문하기", description: "버그, 아이디어, 질문을 공개적으로" },
+      x: { label: "X에서 팔로우", description: "만든 사람의 새 소식(@kubai087)" },
+      heroLabel: "GitHub",
+      heroAria: "GitHub에서 Lumno 소스 코드 보기",
+    },
     installLabel: "Lumno 설치",
     installAria: "Lumno 설치 옵션 열기",
     installChromeStoreLabel: "Chrome 웹 스토어",
@@ -1454,8 +1464,6 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
       heroBrowserTooltipLabel: "GPL-3.0 오픈 소스. 대부분의 Chromium 기반 브라우저와 Firefox에서 작동합니다",
       browsersLabel: "Chrome, Edge, Firefox와 대부분의 Chromium 기반 브라우저에서 작동합니다",
     },
-    heroCommunityLabel: "피드백 · 기능 제안",
-    heroCommunityAria: "Lumno Discord에서 피드백과 기능 제안 남기기",
     heroDemoAria: "Lumno 커맨드 바 데모: 브라우저 검색, 사이트 내 검색, 명령어",
 
     commandBar: {
@@ -1647,8 +1655,6 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     },
     faqTitle: "자주 묻는 질문",
     faqAskLabel: "GitHub에 질문하기",
-    faqAuthorLabel: "Discord에서 질문",
-    faqAuthorAria: "Lumno Discord에서 개발자에게 질문하기",
     faqItems: [
       {
         question: "기본 단축키는 무엇인가요? 바꿀 수 있나요?",
@@ -1712,30 +1718,28 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerRelease: "업데이트 내역",
     footerReportIssue: "문제 신고",
     footerPrivacy: "개인정보처리방침",
-    footerFeedback: "피드백 · 기능 제안",
     footerSocialAria: "Lumno 팔로우",
     footerGithub: "GitHub",
     footerCopyright: "Lumno",
     languageSelectAria: "언어 선택",
-    qrcodeTitle: "WeChat 그룹 QR 코드",
-    qrcodeImageAlt: "Lumno WeChat 그룹 QR 코드",
-    qrcodeCloseAria: "QR 코드 닫기",
   },
   de: {
     navigationAria: "Hauptnavigation",
     navFeatures: "Funktionen",
     navRelease: "Versionshinweise",
-    navRepository: "Repository",
-    navRepositoryMenuAria: "Repository-Aktionen öffnen",
-    navRepositoryHome: "Repository öffnen",
-    navRepositoryIssue: "Issue erstellen",
-    navRepositoryPullRequest: "Pull-Request erstellen",
-    navCommunity: "Feedback",
-    navContact: "Kontakt",
-    navContactMenuAria: "Profile des Entwicklers öffnen",
-    navContactX: "X",
-    navContactXiaohongshu: "Xiaohongshu",
     navMoreMenuAria: "Weitere Links öffnen",
+    community: {
+      kind: "open",
+      label: "Community",
+      contactLabel: "Kontakt",
+      contactMenuAria: "Profile des Entwicklers öffnen",
+      title: "Lumno-Community",
+      closeLabel: "Schließen",
+      github: { label: "Auf GitHub fragen", description: "Fehler, Ideen und Fragen – öffentlich" },
+      x: { label: "Auf X folgen", description: "Neues vom Entwickler, @kubai087" },
+      heroLabel: "GitHub",
+      heroAria: "Lumnos Quellcode auf GitHub ansehen",
+    },
     installLabel: "Installieren",
     installAria: "Installationsoptionen für Lumno öffnen",
     installChromeStoreLabel: "Chrome Web Store",
@@ -1755,8 +1759,6 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
       heroBrowserTooltipLabel: "Open Source unter GPL-3.0. Läuft in den meisten Chromium-Browsern und in Firefox.",
       browsersLabel: "Läuft in Chrome, Edge, Firefox und den meisten Chromium-Browsern",
     },
-    heroCommunityLabel: "Feedback & Wünsche",
-    heroCommunityAria: "Feedback und Funktionswünsche im Lumno-Discord teilen",
     heroDemoAria: "Demo der Lumno-Befehlsleiste: Browsersuche, Seitensuche und Befehle",
 
     commandBar: {
@@ -1949,8 +1951,6 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     },
     faqTitle: "Häufige Fragen,\nklar beantwortet.",
     faqAskLabel: "Auf GitHub fragen",
-    faqAuthorLabel: "Auf Discord fragen",
-    faqAuthorAria: "Den Entwickler im Lumno-Discord fragen",
     faqItems: [
       {
         question: "Wie lautet das Standardkürzel? Kann ich es ändern?",
@@ -2014,30 +2014,28 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerRelease: "Versionshinweise",
     footerReportIssue: "Problem melden",
     footerPrivacy: "Datenschutz",
-    footerFeedback: "Feedback & Wünsche",
     footerSocialAria: "Lumno folgen",
     footerGithub: "GitHub",
     footerCopyright: "Lumno",
     languageSelectAria: "Sprache wählen",
-    qrcodeTitle: "QR-Code der WeChat-Gruppe",
-    qrcodeImageAlt: "QR-Code der Lumno-WeChat-Gruppe",
-    qrcodeCloseAria: "QR-Code schließen",
   },
   fr: {
     navigationAria: "Navigation principale",
     navFeatures: "Fonctionnalités",
     navRelease: "Notes de version",
-    navRepository: "Dépôt",
-    navRepositoryMenuAria: "Ouvrir les actions du dépôt",
-    navRepositoryHome: "Voir le dépôt",
-    navRepositoryIssue: "Ouvrir une issue",
-    navRepositoryPullRequest: "Proposer une pull request",
-    navCommunity: "Votre avis",
-    navContact: "Contact",
-    navContactMenuAria: "Ouvrir les profils de l’auteur",
-    navContactX: "X",
-    navContactXiaohongshu: "Xiaohongshu",
     navMoreMenuAria: "Afficher plus de liens",
+    community: {
+      kind: "open",
+      label: "Communauté",
+      contactLabel: "Contact",
+      contactMenuAria: "Ouvrir les profils de l’auteur",
+      title: "Communauté Lumno",
+      closeLabel: "Fermer",
+      github: { label: "Poser la question sur GitHub", description: "Bugs, idées et questions, en public" },
+      x: { label: "Suivre sur X", description: "Les nouvelles du créateur, @kubai087" },
+      heroLabel: "GitHub",
+      heroAria: "Voir le code source de Lumno sur GitHub",
+    },
     installLabel: "Installer",
     installAria: "Voir les options d’installation de Lumno",
     installChromeStoreLabel: "Chrome Web Store",
@@ -2057,8 +2055,6 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
       heroBrowserTooltipLabel: "Open source sous licence GPL-3.0. Fonctionne dans la plupart des navigateurs Chromium et dans Firefox.",
       browsersLabel: "Fonctionne dans Chrome, Edge, Firefox et la plupart des navigateurs Chromium",
     },
-    heroCommunityLabel: "Avis et suggestions",
-    heroCommunityAria: "Donner votre avis ou suggérer une fonctionnalité sur le Discord de Lumno",
     heroDemoAria: "Démo de la barre de commande Lumno : recherche dans le navigateur, sur les sites et commandes",
 
     commandBar: {
@@ -2251,8 +2247,6 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     },
     faqTitle: "Vos questions,\nnos réponses.",
     faqAskLabel: "Poser la question sur GitHub",
-    faqAuthorLabel: "Demander sur Discord",
-    faqAuthorAria: "Poser la question à l’auteur sur le Discord de Lumno",
     faqItems: [
       {
         question: "Quel est le raccourci par défaut ? Puis-je le modifier ?",
@@ -2316,30 +2310,28 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerRelease: "Notes de version",
     footerReportIssue: "Signaler un problème",
     footerPrivacy: "Confidentialité",
-    footerFeedback: "Avis et suggestions",
     footerSocialAria: "Suivre Lumno",
     footerGithub: "GitHub",
     footerCopyright: "Lumno",
     languageSelectAria: "Choisir la langue",
-    qrcodeTitle: "QR code du groupe WeChat",
-    qrcodeImageAlt: "QR code du groupe WeChat de Lumno",
-    qrcodeCloseAria: "Fermer le QR code",
   },
   es: {
     navigationAria: "Navegación principal",
     navFeatures: "Funciones",
     navRelease: "Novedades",
-    navRepository: "Repositorio",
-    navRepositoryMenuAria: "Abrir acciones del repositorio",
-    navRepositoryHome: "Ver el repositorio",
-    navRepositoryIssue: "Abrir un issue",
-    navRepositoryPullRequest: "Enviar un pull request",
-    navCommunity: "Comentarios",
-    navContact: "Contacto",
-    navContactMenuAria: "Abrir los perfiles del autor",
-    navContactX: "X",
-    navContactXiaohongshu: "Xiaohongshu",
     navMoreMenuAria: "Ver más enlaces",
+    community: {
+      kind: "open",
+      label: "Comunidad",
+      contactLabel: "Contacto",
+      contactMenuAria: "Abrir los perfiles del autor",
+      title: "Comunidad de Lumno",
+      closeLabel: "Cerrar",
+      github: { label: "Preguntar en GitHub", description: "Errores, ideas y preguntas, en abierto" },
+      x: { label: "Sigue en X", description: "Novedades del creador, @kubai087" },
+      heroLabel: "GitHub",
+      heroAria: "Ver el código fuente de Lumno en GitHub",
+    },
     installLabel: "Instalar",
     installAria: "Ver opciones para instalar Lumno",
     installChromeStoreLabel: "Chrome Web Store",
@@ -2359,8 +2351,6 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
       heroBrowserTooltipLabel: "Código abierto con licencia GPL-3.0. Funciona en la mayoría de navegadores Chromium y en Firefox.",
       browsersLabel: "Funciona en Chrome, Edge, Firefox y la mayoría de navegadores Chromium",
     },
-    heroCommunityLabel: "Comentarios y sugerencias",
-    heroCommunityAria: "Enviar comentarios o sugerir funciones en el Discord de Lumno",
     heroDemoAria: "Demostración de la barra de comandos de Lumno: búsqueda en el navegador, en sitios y comandos",
 
     commandBar: {
@@ -2553,8 +2543,6 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     },
     faqTitle: "Tus preguntas,\nrespondidas.",
     faqAskLabel: "Preguntar en GitHub",
-    faqAuthorLabel: "Preguntar en Discord",
-    faqAuthorAria: "Preguntar al autor en el Discord de Lumno",
     faqItems: [
       {
         question: "¿Cuál es el atajo predeterminado? ¿Puedo cambiarlo?",
@@ -2618,30 +2606,28 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerRelease: "Novedades",
     footerReportIssue: "Informar de un problema",
     footerPrivacy: "Privacidad",
-    footerFeedback: "Comentarios y sugerencias",
     footerSocialAria: "Seguir a Lumno",
     footerGithub: "GitHub",
     footerCopyright: "Lumno",
     languageSelectAria: "Elegir idioma",
-    qrcodeTitle: "Código QR del grupo de WeChat",
-    qrcodeImageAlt: "Código QR del grupo de WeChat de Lumno",
-    qrcodeCloseAria: "Cerrar el código QR",
   },
   "pt-BR": {
     navigationAria: "Navegação principal",
     navFeatures: "Recursos",
     navRelease: "Novidades",
-    navRepository: "Repositório",
-    navRepositoryMenuAria: "Abrir ações do repositório",
-    navRepositoryHome: "Ver o repositório",
-    navRepositoryIssue: "Abrir uma issue",
-    navRepositoryPullRequest: "Enviar um pull request",
-    navCommunity: "Feedback",
-    navContact: "Contato",
-    navContactMenuAria: "Abrir os perfis do autor",
-    navContactX: "X",
-    navContactXiaohongshu: "Xiaohongshu",
     navMoreMenuAria: "Ver mais links",
+    community: {
+      kind: "open",
+      label: "Comunidade",
+      contactLabel: "Contato",
+      contactMenuAria: "Abrir os perfis do autor",
+      title: "Comunidade do Lumno",
+      closeLabel: "Fechar",
+      github: { label: "Perguntar no GitHub", description: "Problemas, ideias e perguntas, em aberto" },
+      x: { label: "Siga no X", description: "Novidades do criador, @kubai087" },
+      heroLabel: "GitHub",
+      heroAria: "Ver o código-fonte do Lumno no GitHub",
+    },
     installLabel: "Instalar",
     installAria: "Ver opções para instalar o Lumno",
     installChromeStoreLabel: "Chrome Web Store",
@@ -2661,8 +2647,6 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
       heroBrowserTooltipLabel: "Código aberto sob a licença GPL-3.0. Funciona na maioria dos navegadores Chromium e no Firefox.",
       browsersLabel: "Funciona no Chrome, no Edge, no Firefox e na maioria dos navegadores Chromium",
     },
-    heroCommunityLabel: "Feedback e sugestões",
-    heroCommunityAria: "Enviar feedback ou sugerir recursos no Discord do Lumno",
     heroDemoAria: "Demonstração da barra de comandos do Lumno: pesquisa no navegador, em sites e comandos",
 
     commandBar: {
@@ -2855,8 +2839,6 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     },
     faqTitle: "Suas perguntas,\nrespondidas.",
     faqAskLabel: "Perguntar no GitHub",
-    faqAuthorLabel: "Perguntar no Discord",
-    faqAuthorAria: "Perguntar ao autor no Discord do Lumno",
     faqItems: [
       {
         question: "Qual é o atalho padrão? Dá para mudar?",
@@ -2920,30 +2902,28 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerRelease: "Novidades",
     footerReportIssue: "Relatar um problema",
     footerPrivacy: "Privacidade",
-    footerFeedback: "Feedback e sugestões",
     footerSocialAria: "Seguir o Lumno",
     footerGithub: "GitHub",
     footerCopyright: "Lumno",
     languageSelectAria: "Escolher idioma",
-    qrcodeTitle: "QR code do grupo no WeChat",
-    qrcodeImageAlt: "QR code do grupo do Lumno no WeChat",
-    qrcodeCloseAria: "Fechar o QR code",
   },
   ru: {
     navigationAria: "Основная навигация",
     navFeatures: "Возможности",
     navRelease: "Что нового",
-    navRepository: "Репозиторий",
-    navRepositoryMenuAria: "Открыть действия с репозиторием",
-    navRepositoryHome: "Открыть репозиторий",
-    navRepositoryIssue: "Создать issue",
-    navRepositoryPullRequest: "Отправить pull request",
-    navCommunity: "Отзывы",
-    navContact: "Связаться",
-    navContactMenuAria: "Открыть профили автора",
-    navContactX: "X",
-    navContactXiaohongshu: "Xiaohongshu",
     navMoreMenuAria: "Показать ещё ссылки",
+    community: {
+      kind: "open",
+      label: "Сообщество",
+      contactLabel: "Связаться",
+      contactMenuAria: "Открыть профили автора",
+      title: "Сообщество Lumno",
+      closeLabel: "Закрыть",
+      github: { label: "Спросить на GitHub", description: "Ошибки, идеи и вопросы — открыто" },
+      x: { label: "Следить в X", description: "Новости от автора, @kubai087" },
+      heroLabel: "GitHub",
+      heroAria: "Исходный код Lumno на GitHub",
+    },
     installLabel: "Установить",
     installAria: "Варианты установки Lumno",
     installChromeStoreLabel: "Интернет-магазин Chrome",
@@ -2963,8 +2943,6 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
       heroBrowserTooltipLabel: "Открытый код под лицензией GPL-3.0. Работает в большинстве браузеров на Chromium и в Firefox.",
       browsersLabel: "Работает в Chrome, Edge, Firefox и большинстве браузеров на Chromium",
     },
-    heroCommunityLabel: "Отзывы и пожелания",
-    heroCommunityAria: "Оставить отзыв или предложить функцию в Discord Lumno",
     heroDemoAria: "Демонстрация командной панели Lumno: поиск по браузеру, по сайтам и команды",
 
     commandBar: {
@@ -3157,8 +3135,6 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     },
     faqTitle: "Вопросы\nи ответы.",
     faqAskLabel: "Спросить на GitHub",
-    faqAuthorLabel: "Спросить в Discord",
-    faqAuthorAria: "Задать вопрос автору в Discord Lumno",
     faqItems: [
       {
         question: "Какое сочетание клавиш по умолчанию? Можно ли его изменить?",
@@ -3222,14 +3198,10 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerRelease: "Что нового",
     footerReportIssue: "Сообщить о проблеме",
     footerPrivacy: "Конфиденциальность",
-    footerFeedback: "Отзывы и пожелания",
     footerSocialAria: "Следить за Lumno",
     footerGithub: "GitHub",
     footerCopyright: "Lumno",
     languageSelectAria: "Выбрать язык",
-    qrcodeTitle: "QR-код группы в WeChat",
-    qrcodeImageAlt: "QR-код группы Lumno в WeChat",
-    qrcodeCloseAria: "Закрыть QR-код",
   },
 };
 

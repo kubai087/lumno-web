@@ -28,6 +28,9 @@ const content: GuideLocaleContent = {
     searchPlaceholder: "Hilfe durchsuchen",
     searchLabel: "Die Hilfe durchsuchen",
     searchEmpty: "Nichts gefunden",
+    stuckText: "Noch nicht gelöst? Frag auf GitHub oder schreib auf X.",
+    stuckPrimary: "Auf GitHub fragen",
+    stuckSecondary: "Auf X schreiben",
   },
   pages: {
     "what-is-lumno": {

@@ -1,22 +1,23 @@
 import { useEffect, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
+import type { CommunityPanel as CommunityPanelContent } from "../../lib/community-panel";
 import { Dialog } from "../ui/dialog";
-import { CommunityQrDialogPanel, type CommunityQrDialogContent } from "./CommunityQrDialogPanel";
+import { CommunityPanel } from "./CommunityPanel";
 
 /*
- * The community QR dialog, mounted on first use. Its triggers are static HTML
- * (see communityQrTriggerAttributes), so pages that only need the dialog on a
- * click never download React up front; src/scripts/community-qr.ts imports
- * this module when a trigger is pressed.
+ * The community panel, mounted on first use. Its triggers are static HTML (see
+ * communityTriggerAttributes), so pages that only need the panel on a click
+ * never download React up front; src/scripts/community-panel.ts imports this
+ * module when a trigger is pressed.
  */
 
-type OpenRequest = { content: CommunityQrDialogContent; trigger: HTMLElement; returnFocus: HTMLElement | null };
+type OpenRequest = { panel: CommunityPanelContent; trigger: HTMLElement; returnFocus: HTMLElement | null };
 type OpenHandler = (request: OpenRequest) => void;
 
 let openHandler: OpenHandler | null = null;
 let pendingRequest: OpenRequest | null = null;
 
-function CommunityQrDialogHost() {
+function CommunityPanelHost() {
   const [request, setRequest] = useState<OpenRequest | null>(null);
   const [open, setOpen] = useState(false);
   const returnFocusRef = useRef<HTMLElement | null>(null);
@@ -45,8 +46,8 @@ function CommunityQrDialogHost() {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <CommunityQrDialogPanel
-        {...request.content}
+      <CommunityPanel
+        panel={request.panel}
         onCloseAutoFocus={(event) => {
           event.preventDefault();
           returnFocusRef.current?.focus();
@@ -56,14 +57,14 @@ function CommunityQrDialogHost() {
   );
 }
 
-export function openCommunityQrDialog(request: OpenRequest) {
+export function openCommunityPanel(request: OpenRequest) {
   if (openHandler) {
     openHandler(request);
     return;
   }
   pendingRequest = request;
   const container = document.createElement("div");
-  container.dataset.communityQrRoot = "";
+  container.dataset.communityPanelRoot = "";
   document.body.append(container);
-  createRoot(container).render(<CommunityQrDialogHost />);
+  createRoot(container).render(<CommunityPanelHost />);
 }

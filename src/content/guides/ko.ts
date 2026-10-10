@@ -28,6 +28,9 @@ const content: GuideLocaleContent = {
     searchPlaceholder: "도움말 검색",
     searchLabel: "도움말 센터 검색",
     searchEmpty: "검색 결과가 없어요",
+    stuckText: "아직 해결되지 않았나요? GitHub에 질문하거나 X로 연락해 주세요.",
+    stuckPrimary: "GitHub에서 질문하기",
+    stuckSecondary: "X로 연락하기",
   },
   pages: {
     "what-is-lumno": {

@@ -28,6 +28,9 @@ const content: GuideLocaleContent = {
     searchPlaceholder: "ヘルプを検索",
     searchLabel: "ヘルプセンターを検索",
     searchEmpty: "見つかりませんでした",
+    stuckText: "解決しませんか？GitHub で質問するか、X で声をかけてください。",
+    stuckPrimary: "GitHub で質問する",
+    stuckSecondary: "X で連絡する",
   },
   pages: {
     "what-is-lumno": {

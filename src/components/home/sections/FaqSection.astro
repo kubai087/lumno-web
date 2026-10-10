@@ -1,7 +1,8 @@
 ---
 import type { HomeFaqItem } from "../../../lib/home-content";
 import TitlePair from "../TitlePair.astro";
-import { CommunityQrDialog } from "../CommunityQrDialog";
+import { CommunityTrigger } from "../CommunityTrigger";
+import type { CommunityPanel } from "../../../lib/community-panel";
 import { SettingsButton } from "../../extension-settings/SettingsKit";
 import githubIcon from "../../../assets/home-icons/github-line.svg?raw";
 import wechatIcon from "../../../assets/home-icons/wechat-line.svg?raw";
@@ -10,18 +11,15 @@ interface Props {
   title: string;
   askLabel: string;
   askHref: string;
-  /** With `qr` the button opens the WeChat QR dialog; otherwise it links to `href` (Discord). */
-  author: {
-    label: string;
-    ariaLabel: string;
-    href: string;
-    iconSvg: string;
-    qr?: { title: string; imageSrc: string; imageAlt: string; closeLabel: string };
-  };
+  /**
+   * Chinese locales: asking in the WeChat group leads, and GitHub steps back to
+   * a quiet link. Elsewhere GitHub is the one button.
+   */
+  group?: { label: string; ariaLabel: string; panel: CommunityPanel };
   items: HomeFaqItem[];
 }
 
-const { title, askLabel, askHref, author, items } = Astro.props;
+const { title, askLabel, askHref, group, items } = Astro.props;
 
 /*
  * Answers are plain strings with two bits of inline markup: `code` for URLs and
@@ -49,47 +47,42 @@ function parseAnswer(answer: string): AnswerPart[] {
     <header class="faq__head">
       <h2 id="faq-title" class="home-h2" data-reveal="text"><TitlePair title={title} /></h2>
       <div class="faq__actions" data-reveal>
-        <SettingsButton
-          as="a"
-          variant="secondary"
-          className="hero-actions-button"
-          iconSvg={githubIcon}
-          href={askHref}
-          target="_blank"
-          rel="noreferrer noopener"
-          data-analytics-event="open_github_repo"
-          data-analytics-category="cta"
-          data-analytics-label="home_faq_ask"
-        >
-          {askLabel}
-        </SettingsButton>
-        {author.qr ? (
-          <CommunityQrDialog
-            analyticsLabel="home_faq_author"
-            triggerLabel={author.label}
-            triggerAriaLabel={author.ariaLabel}
-            triggerIconSvg={wechatIcon}
-            title={author.qr.title}
-            qrImageSrc={author.qr.imageSrc}
-            qrImageAlt={author.qr.imageAlt}
-            closeLabel={author.qr.closeLabel}
-            triggerVariant="hero"
-          />
+        {group ? (
+          <>
+            <CommunityTrigger
+              panel={group.panel}
+              label={group.label}
+              ariaLabel={group.ariaLabel}
+              iconSvg={wechatIcon}
+              variant="hero"
+              analyticsLabel="home_faq_author"
+            />
+            <a
+              class="faq__ask-link"
+              href={askHref}
+              target="_blank"
+              rel="noreferrer noopener"
+              data-analytics-event="open_github_issue"
+              data-analytics-category="cta"
+              data-analytics-label="home_faq_ask"
+            >
+              {askLabel}
+            </a>
+          </>
         ) : (
           <SettingsButton
             as="a"
             variant="secondary"
             className="hero-actions-button"
-            iconSvg={author.iconSvg}
-            href={author.href}
+            iconSvg={githubIcon}
+            href={askHref}
             target="_blank"
             rel="noreferrer noopener"
-            aria-label={author.ariaLabel}
-            data-analytics-event="open_discord"
+            data-analytics-event="open_github_issue"
             data-analytics-category="cta"
-            data-analytics-label="home_faq_author"
+            data-analytics-label="home_faq_ask"
           >
-            {author.label}
+            {askLabel}
           </SettingsButton>
         )}
       </div>
@@ -144,7 +137,23 @@ function parseAnswer(answer: string): AnswerPart[] {
   .faq__actions {
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     gap: var(--home-space-3);
+  }
+
+  /* Beside the group button, GitHub stays a quiet text link. */
+  .faq__ask-link {
+    padding: 0 var(--home-space-2);
+    color: var(--text-sub);
+    font-size: 14px;
+    text-decoration: none;
+    transition: color 160ms ease;
+  }
+
+  .faq__ask-link:hover {
+    color: var(--text-main);
+    text-decoration: underline;
+    text-underline-offset: 3px;
   }
 
   /*

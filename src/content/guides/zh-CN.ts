@@ -28,6 +28,9 @@ const content: GuideLocaleContent = {
     searchPlaceholder: "搜索帮助",
     searchLabel: "搜索帮助中心",
     searchEmpty: "没有找到相关内容",
+    stuckText: "还没解决？进群问问，作者就在群里。",
+    stuckPrimary: "加入用户群",
+    stuckSecondary: "提交 Issue",
   },
   pages: {
     "what-is-lumno": {

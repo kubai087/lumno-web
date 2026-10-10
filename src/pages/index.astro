@@ -12,7 +12,8 @@ import NewTabSection from "../components/home/sections/NewTabSection.astro";
 import UtilitiesSection from "../components/home/sections/UtilitiesSection.astro";
 import PageFooter from "../components/site/PageFooter.astro";
 import SiteHeader from "../components/site/SiteHeader.astro";
-import { CommunityQrDialog } from "../components/home/CommunityQrDialog";
+import { CommunityTrigger } from "../components/home/CommunityTrigger";
+import { SettingsButton } from "../components/extension-settings/SettingsKit";
 import { HeroInstallTooltip } from "../components/home/HeroInstallTooltip";
 import { AiIntentDemo } from "../components/home/AiIntentDemo";
 import { HeroSafariDemo } from "../components/home/HeroSafariDemo";
@@ -30,8 +31,8 @@ import "../styles/site.css";
 import "../styles/locale-fonts.css";
 import { localizeShowcaseReviews } from "../lib/chrome-store-review-translations";
 import { getChromeStoreReviews, selectShowcaseReviews } from "../lib/chrome-store-reviews";
-import { COMMUNITY_LINKS, getCommunityChannel, getCommunityExternalHref } from "../lib/community";
-import discordIcon from "../assets/home-icons/discord-fill.svg?raw";
+import { getCommunityPanel } from "../lib/community-panel";
+import githubIcon from "../assets/home-icons/github-line.svg?raw";
 import { getHomeContent } from "../lib/home-content";
 import { getLumnoBuiltinSiteSearchProviders } from "../lib/lumno-search-providers";
 import {
@@ -75,8 +76,9 @@ const { firefox: firefoxStoreVersion } = await getSiteStoreVersions();
 const firefoxListed = Boolean(firefoxStoreVersion);
 const content = getHomeContent(uiLocale, { firefoxListed });
 const localeScript = getLocaleScript(uiLocale);
-// Chinese pages open the WeChat group QR; every other locale links to the Discord server.
-const communityExternalHref = getCommunityExternalHref(uiLocale);
+// Chinese pages lead to the WeChat group; every other locale to GitHub and X (lib/community-panel.ts).
+const community = content.community;
+const communityPanel = getCommunityPanel(uiLocale);
 // CJK titles break after their first comma (，、 or Korean ,) on narrow screens.
 const heroTitleCommaIndex = localeScript === "cjk" ? content.heroTitle.search(/[，、,]/) : -1;
 const heroTitleSeparator = heroTitleCommaIndex >= 0 ? content.heroTitle[heroTitleCommaIndex] : "";
@@ -307,16 +309,31 @@ const structuredData = [
               showFirefox={firefoxListed}
               client:idle
             />
-            <CommunityQrDialog
-              triggerLabel={content.heroCommunityLabel}
-              triggerAriaLabel={content.heroCommunityAria}
-              title={content.qrcodeTitle}
-              qrImageSrc={COMMUNITY_LINKS.wechatQrImagePath}
-              qrImageAlt={content.qrcodeImageAlt}
-              closeLabel={content.qrcodeCloseAria}
-              triggerVariant="hero"
-              externalHref={communityExternalHref}
-            />
+            {community.kind === "group" ? (
+              <CommunityTrigger
+                panel={communityPanel}
+                label={community.cta}
+                ariaLabel={community.ctaAria}
+                variant="hero"
+                analyticsLabel="home_hero_community"
+              />
+            ) : (
+              <SettingsButton
+                as="a"
+                variant="secondary"
+                className="hero-actions-button hero-community-button"
+                iconSvg={githubIcon}
+                href={GITHUB_URL}
+                target="_blank"
+                rel="noreferrer noopener"
+                aria-label={community.heroAria}
+                data-analytics-event="open_github_repo"
+                data-analytics-category="cta"
+                data-analytics-label="home_hero_github"
+              >
+                {community.heroLabel}
+              </SettingsButton>
+            )}
           </div>
         </div>
         <div class="hero-demo-slot">
@@ -397,20 +414,9 @@ const structuredData = [
         title={content.faqTitle}
         askLabel={content.faqAskLabel}
         askHref={GITHUB_ISSUE_URL}
-        author={{
-          label: content.faqAuthorLabel,
-          ariaLabel: content.faqAuthorAria,
-          href: COMMUNITY_LINKS.discordUrl,
-          iconSvg: discordIcon,
-          qr: getCommunityChannel(uiLocale) === "wechat"
-            ? {
-                title: content.qrcodeTitle,
-                imageSrc: COMMUNITY_LINKS.wechatQrImagePath,
-                imageAlt: content.qrcodeImageAlt,
-                closeLabel: content.qrcodeCloseAria,
-              }
-            : undefined,
-        }}
+        group={community.kind === "group"
+          ? { label: community.askLabel, ariaLabel: community.askAria, panel: communityPanel }
+          : undefined}
         items={content.faqItems}
       />
 
@@ -426,17 +432,6 @@ const structuredData = [
           tooltipLabel={content.heroBrowserTooltipLabel}
           showFirefox={firefoxListed}
           client:visible
-        />
-        <CommunityQrDialog
-          analyticsLabel="home_final_community"
-          triggerLabel={content.heroCommunityLabel}
-          triggerAriaLabel={content.heroCommunityAria}
-          title={content.qrcodeTitle}
-          qrImageSrc={COMMUNITY_LINKS.wechatQrImagePath}
-          qrImageAlt={content.qrcodeImageAlt}
-          closeLabel={content.qrcodeCloseAria}
-          triggerVariant="hero"
-          externalHref={communityExternalHref}
         />
       </FinalCta>
     </main>

@@ -13,6 +13,11 @@ import {
   type GuideNavKey,
 } from "../../lib/guides";
 import { buildLocalizedPath } from "../../lib/locales";
+import { getCommunityPanel } from "../../lib/community-panel";
+import { COMMUNITY_LINKS } from "../../lib/community";
+import { getHomeContent } from "../../lib/home-content";
+import { GITHUB_ISSUE_URL } from "../../lib/site-links";
+import { communityTriggerAttributes } from "../home/CommunityPanel";
 
 /*
  * The help center's frame, shared by its pages and the privacy policy: search
@@ -32,6 +37,8 @@ interface Props {
 
 const { locale, current, title, sections, updated = GUIDES_LAST_UPDATED, updatedText } = Astro.props;
 const { ui } = getGuideContent(locale);
+// When a page doesn't answer it: the same channels as the community panel, in this language's order.
+const { community } = getHomeContent(locale);
 const banner = getGuideBanner(current);
 const displayUpdated = new Intl.DateTimeFormat(locale, {
   year: "numeric",
@@ -144,6 +151,51 @@ const searchIndexHref = `${buildLocalizedPath(locale, "/guides/")}search-index.j
     <div class="guide__body">
       <slot />
     </div>
+
+    <aside class="guide__stuck">
+      <p>{ui.stuckText}</p>
+      <div class="guide__stuck-actions">
+        {community.kind === "group" ? (
+          <button
+            type="button"
+            class="guide__stuck-button"
+            aria-haspopup="dialog"
+            data-analytics-event="open_community_panel"
+            data-analytics-category="cta"
+            data-analytics-label="guide_stuck_community"
+            {...communityTriggerAttributes(getCommunityPanel(locale))}
+          >
+            <i class="ri-wechat-line" aria-hidden="true"></i>
+            {ui.stuckPrimary}
+          </button>
+        ) : (
+          <a
+            class="guide__stuck-button"
+            href={GITHUB_ISSUE_URL}
+            target="_blank"
+            rel="noopener"
+            data-analytics-event="open_github_issue"
+            data-analytics-category="cta"
+            data-analytics-label="guide_stuck_issue"
+          >
+            <i class="ri-github-line" aria-hidden="true"></i>
+            {ui.stuckPrimary}
+          </a>
+        )}
+        <a
+          class="guide__stuck-button"
+          href={community.kind === "group" ? GITHUB_ISSUE_URL : COMMUNITY_LINKS.xUrl}
+          target="_blank"
+          rel="noopener"
+          data-analytics-event={community.kind === "group" ? "open_github_issue" : "open_author_x"}
+          data-analytics-category="cta"
+          data-analytics-label={community.kind === "group" ? "guide_stuck_issue" : "guide_stuck_x"}
+        >
+          <i class={community.kind === "group" ? "ri-github-line" : "ri-twitter-x-line"} aria-hidden="true"></i>
+          {ui.stuckSecondary}
+        </a>
+      </div>
+    </aside>
 
     <slot name="footer" />
   </article>

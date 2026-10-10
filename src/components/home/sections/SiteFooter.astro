@@ -1,6 +1,7 @@
 ---
 import logoIconSvg from "../../../assets/onboarding/logo.svg?raw";
-import { CommunityQrDialog } from "../CommunityQrDialog";
+import { CommunityTrigger } from "../CommunityTrigger";
+import type { CommunityPanel } from "../../../lib/community-panel";
 
 type Link = { label: string; href: string; external?: boolean };
 /** A Remix icon class, or raw inline SVG for brands Remix doesn't cover. */
@@ -15,23 +16,15 @@ interface Props {
   stores: Store[];
   socialAria: string;
   socials: Social[];
-  /** The feedback entry leads the last column, ahead of that column's links. */
+  /** The community entry leads the last column, ahead of that column's links. */
   columns: Array<{ title: string; links: Link[] }>;
-  feedback: {
-    label: string;
-    ariaLabel: string;
-    qrTitle: string;
-    qrImageSrc: string;
-    qrImageAlt: string;
-    closeLabel: string;
-    externalHref?: string;
-  };
+  community: { label: string; panel: CommunityPanel; analyticsLabel: string };
   copyright: string;
   licenseHref: string;
   languages: Array<{ code: string; label: string; href: string; current: boolean }>;
 }
 
-const { homeHref, tagline, storesLabel, stores, socialAria, socials, columns, feedback, copyright, licenseHref, languages } = Astro.props;
+const { homeHref, tagline, storesLabel, stores, socialAria, socials, columns, community, copyright, licenseHref, languages } = Astro.props;
 // A narrow (centred) tagline may only wrap between Chinese phrases, never inside a word.
 const taglinePhrases = tagline.split(/(?<=、)/);
 ---
@@ -91,15 +84,11 @@ const taglinePhrases = tagline.split(/(?<=、)/);
           <ul>
             {columnIndex === columns.length - 1 && (
               <li>
-                <CommunityQrDialog
-                  triggerLabel={feedback.label}
-                  triggerAriaLabel={feedback.ariaLabel}
-                  title={feedback.qrTitle}
-                  qrImageSrc={feedback.qrImageSrc}
-                  qrImageAlt={feedback.qrImageAlt}
-                  closeLabel={feedback.closeLabel}
-                  triggerVariant="footer"
-                  externalHref={feedback.externalHref}
+                <CommunityTrigger
+                  panel={community.panel}
+                  label={community.label}
+                  variant="footer"
+                  analyticsLabel={community.analyticsLabel}
                 />
               </li>
             )}

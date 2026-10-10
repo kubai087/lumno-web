@@ -3,18 +3,11 @@ import { getGuideContent, getGuidePath } from "../../lib/guides";
 import HomeNavGhostLinks from "../navigation/HomeNavGhostLinks";
 import InstallMenu from "../navigation/InstallMenu";
 import LanguageMenu from "../onboarding/LanguageMenu";
-import { COMMUNITY_LINKS, getCommunityExternalHref } from "../../lib/community";
+import { COMMUNITY_LINKS } from "../../lib/community";
+import { getCommunityPanel } from "../../lib/community-panel";
 import { getHomeContent } from "../../lib/home-content";
 import { buildLocalizedPath, getLocaleLabel, type SupportedLocale } from "../../lib/locales";
-import {
-  CHROME_STORE_URL,
-  EDGE_STORE_URL,
-  FIREFOX_STORE_URL,
-  GITHUB_ISSUE_URL,
-  GITHUB_PULL_REQUEST_URL,
-  GITHUB_URL,
-  getSiteStoreVersions,
-} from "../../lib/site-links";
+import { CHROME_STORE_URL, EDGE_STORE_URL, FIREFOX_STORE_URL, getSiteStoreVersions } from "../../lib/site-links";
 
 interface Props {
   locale: SupportedLocale;
@@ -42,7 +35,7 @@ interface Props {
  *
  * The menus are React components rendered to static HTML and never hydrated,
  * so pages without other islands ship no React: settings-select-runtime.ts
- * drives them and community-qr.ts loads the QR dialog on first use.
+ * drives them and community-panel.ts loads the community panel on first use.
  *
  * State: body.has-nav-install shows the install button and the glass surface;
  * .top-nav[data-nav-surface="hero"] overrides the surface back to the clear,
@@ -56,6 +49,14 @@ const homeHref = buildLocalizedPath(locale, "/");
 const releaseHref = buildLocalizedPath(locale, "/release/");
 const helpHref = getGuidePath(locale);
 const helpLabel = getGuideContent(locale).ui.navLabel;
+// The author's profiles: Xiaohongshu first for Chinese readers, X everywhere.
+const { community } = content;
+const contactItems = [
+  ...(community.kind === "group"
+    ? [{ value: "author_xiaohongshu", label: community.xiaohongshuLabel, href: COMMUNITY_LINKS.xiaohongshuUrl, iconClass: "ri-book-open-line", analyticsEvent: "open_author_xiaohongshu" }]
+    : []),
+  { value: "author_x", label: "X", href: COMMUNITY_LINKS.xUrl, iconClass: "ri-twitter-x-line", analyticsEvent: "open_author_x" },
+];
 const {
   chrome: chromeStoreVersion,
   edge: edgeStoreVersion,
@@ -82,30 +83,15 @@ const {
   <nav class="top-nav-actions" aria-label={content.navigationAria}>
     <HomeNavGhostLinks
       releaseHref={releaseHref}
+      releaseLabel={content.navRelease}
       helpHref={helpHref}
       helpLabel={helpLabel}
-      repositoryHref={GITHUB_URL}
-      repositoryIssueHref={GITHUB_ISSUE_URL}
-      repositoryPullRequestHref={GITHUB_PULL_REQUEST_URL}
-      contactXHref={COMMUNITY_LINKS.xUrl}
-      contactXiaohongshuHref={COMMUNITY_LINKS.xiaohongshuUrl}
-      releaseLabel={content.navRelease}
-      repositoryLabel={content.navRepository}
-      repositoryMenuLabel={content.navRepositoryMenuAria}
-      repositoryHomeLabel={content.navRepositoryHome}
-      repositoryIssueLabel={content.navRepositoryIssue}
-      repositoryPullRequestLabel={content.navRepositoryPullRequest}
-      communityLabel={content.navCommunity}
-      communityHref={getCommunityExternalHref(locale)}
-      contactLabel={content.navContact}
-      contactMenuLabel={content.navContactMenuAria}
-      contactXLabel={content.navContactX}
-      contactXiaohongshuLabel={content.navContactXiaohongshu}
+      communityLabel={content.community.label}
+      communityPanel={getCommunityPanel(locale)}
+      contactLabel={content.community.contactLabel}
+      contactMenuLabel={content.community.contactMenuAria}
+      contactItems={contactItems}
       menuLabel={content.navMoreMenuAria}
-      panelTitle={content.qrcodeTitle}
-      qrImageSrc={COMMUNITY_LINKS.wechatQrImagePath}
-      qrImageAlt={content.qrcodeImageAlt}
-      qrCloseLabel={content.qrcodeCloseAria}
     />
     <LanguageMenu
       currentLabel={getLocaleLabel(locale)}
@@ -135,7 +121,7 @@ const {
 </header>
 
 <script>
-  import "../../scripts/community-qr";
+  import "../../scripts/community-panel";
   import { enhanceSettingsSelect } from "../../scripts/settings-select-runtime";
 
   document.querySelectorAll<HTMLElement>(".top-nav .lumno-settings-select").forEach(enhanceSettingsSelect);

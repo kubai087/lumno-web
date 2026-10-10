@@ -37,7 +37,11 @@ test("homepage second section uses the Aceternity Hero Parallax composition", ()
   assert.match(componentSource, /offset: \["start 55%", "end 18%"\]/);
   assert.match(componentSource, /useTransform\(scrollYProgress, \[0, 0\.72\], \[0, 820\]\)/);
   assert.match(componentSource, /useTransform\(scrollYProgress, \[0, 0\.72\], \[0, -820\]\)/);
-  assert.match(componentSource, /useTransform\(scrollYProgress, \[0, 0\.18\], \[-700, -300\]\)/);
+  assert.match(componentSource, /const ENTRANCE_END = 0\.18;/);
+  assert.match(componentSource, /useTransform\(entrance, \[0, 1\], \[-700, -300\]\)/);
+  // The 3D tilt plays once per page view: after the stage first flattens, it stays flat.
+  assert.match(componentSource, /if \(progress >= ENTRANCE_END\) hasEnteredRef\.current = true;/);
+  assert.match(componentSource, /return hasEnteredRef\.current \? 1 : progress \/ ENTRANCE_END;/);
   // The copy reveals once it is in view, so it can never stay hidden on short pages.
   assert.match(componentSource, /const isHeaderInView = useInView\(headerRef, \{ once: true, amount: 0\.4 \}\)/);
   assert.match(componentSource, /const isHeaderVisible = isHeaderInView \|\| isHeaderPassed \|\| Boolean\(shouldReduceMotion\)/);

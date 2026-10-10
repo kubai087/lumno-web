@@ -58,6 +58,8 @@ const HERO_DESCRIPTION_TRANSITION: Transition = {
   filter: { duration: 0.82, delay: 0.13, ease: HERO_COPY_EASE },
 };
 const LOOP_COPY_COUNT = 3;
+// Share of the scroll range the 3D tilt takes to flatten out.
+const ENTRANCE_END = 0.18;
 
 export function HeroParallax({
   products,
@@ -106,18 +108,16 @@ export function HeroParallax({
     useTransform(scrollYProgress, [0, 0.72], [0, -820]),
     SPRING_CONFIG,
   );
-  const rotateX = useSpring(
-    useTransform(scrollYProgress, [0, 0.18], [15, 0]),
-    SPRING_CONFIG,
-  );
-  const rotateZ = useSpring(
-    useTransform(scrollYProgress, [0, 0.18], [20, 0]),
-    SPRING_CONFIG,
-  );
-  const translateY = useSpring(
-    useTransform(scrollYProgress, [0, 0.18], [-700, -300]),
-    SPRING_CONFIG,
-  );
+  // The 3D tilt plays once, on the first scroll down. Once the stage has flattened it stays
+  // flat for the rest of the page view, so scrolling back up only slides the rows; a reload resets it.
+  const hasEnteredRef = useRef(false);
+  const entrance = useTransform(scrollYProgress, (progress) => {
+    if (progress >= ENTRANCE_END) hasEnteredRef.current = true;
+    return hasEnteredRef.current ? 1 : progress / ENTRANCE_END;
+  });
+  const rotateX = useSpring(useTransform(entrance, [0, 1], [15, 0]), SPRING_CONFIG);
+  const rotateZ = useSpring(useTransform(entrance, [0, 1], [20, 0]), SPRING_CONFIG);
+  const translateY = useSpring(useTransform(entrance, [0, 1], [-700, -300]), SPRING_CONFIG);
   return (
     <div
       ref={containerRef}

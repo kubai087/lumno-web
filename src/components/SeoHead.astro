@@ -148,6 +148,45 @@ const normalizedCurrentHreflang = locale === "en_US" ? "en" : locale.replace("_"
       anonymize_ip: true,
     });
 
+    // Tag landings from AI assistants so GEO traffic can be reported on its own.
+    // ChatGPT also appends utm_source=chatgpt.com, so check both signals.
+    const aiAssistantSources = [
+      ["chatgpt", /(^|\.)(chatgpt\.com|chat\.openai\.com)$/],
+      ["perplexity", /(^|\.)perplexity\.ai$/],
+      ["claude", /(^|\.)claude\.ai$/],
+      ["gemini", /(^|\.)gemini\.google\.com$/],
+      ["copilot", /(^|\.)copilot\.microsoft\.com$|(^|\.)copilot\.cloud\.microsoft$/],
+      ["deepseek", /(^|\.)deepseek\.com$/],
+      ["doubao", /(^|\.)doubao\.com$/],
+      ["kimi", /(^|\.)(kimi\.com|kimi\.moonshot\.cn)$/],
+      ["yuanbao", /(^|\.)yuanbao\.tencent\.com$/],
+      ["grok", /(^|\.)grok\.com$/],
+      ["mistral", /(^|\.)chat\.mistral\.ai$/],
+      ["you", /(^|\.)you\.com$/],
+      ["phind", /(^|\.)phind\.com$/],
+    ];
+    const matchAiAssistant = (host) => {
+      const normalized = String(host || "").toLowerCase();
+      const match = aiAssistantSources.find(([, pattern]) => pattern.test(normalized));
+      return match ? match[0] : "";
+    };
+    let referrerHost = "";
+    try {
+      referrerHost = document.referrer ? new URL(document.referrer).hostname : "";
+    } catch (_error) {}
+    const aiSource =
+      matchAiAssistant(referrerHost) ||
+      matchAiAssistant(new URLSearchParams(window.location.search).get("utm_source"));
+    if (aiSource) {
+      // A user property, so installs on this or a later visit can be split by assistant.
+      window.gtag("set", "user_properties", { ai_source: aiSource });
+      window.gtag("event", "ai_assistant_visit", {
+        ai_source: aiSource,
+        referrer_host: referrerHost,
+        landing_path: window.location.pathname,
+      });
+    }
+
     document.addEventListener("click", (event) => {
       const target = event.target instanceof Element ? event.target.closest("[data-analytics-event]") : null;
       if (!target) return;

@@ -7,13 +7,20 @@ export const GET: APIRoute = async () => {
     .trim()
     .toLowerCase() !== "false";
   const aiCrawlerRule = allowAiCrawlers ? "Allow: /" : "Disallow: /";
+  // Search indexers, user-triggered fetchers and grounding tokens behind AI answers.
+  // Listed explicitly so PUBLIC_ALLOW_AI_CRAWLERS=false reaches every one of them.
   const aiAnswerCrawlers = [
     "GPTBot",
+    "OAI-SearchBot",
     "ChatGPT-User",
     "ClaudeBot",
+    "Claude-SearchBot",
+    "Claude-User",
     "anthropic-ai",
     "PerplexityBot",
+    "Perplexity-User",
     "Google-Extended",
+    "DuckAssistBot",
   ];
   const trainingOnlyCrawlers = ["Bytespider", "CCBot"];
   const body = [

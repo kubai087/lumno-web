@@ -102,6 +102,10 @@ test("robots policy allows AI answer crawlers by default with an opt-out", () =>
   assert.match(source, /PUBLIC_ALLOW_AI_CRAWLERS/);
   assert.match(source, /"GPTBot"/);
   assert.match(source, /"PerplexityBot"/);
+  // ChatGPT search and Claude search use their own crawlers, separate from GPTBot and ClaudeBot.
+  assert.match(source, /"OAI-SearchBot"/);
+  assert.match(source, /"Claude-SearchBot"/);
+  assert.match(source, /"Perplexity-User"/);
   assert.match(source, /"Google-Extended"/);
   assert.match(source, /const aiCrawlerRule = allowAiCrawlers \? "Allow: \/" : "Disallow: \/";/);
 });
@@ -183,5 +187,31 @@ test("site-search icons are self-hosted for visitors who cannot reach GitHub raw
   assert.match(providers, /export const LUMNO_SITE_SEARCH_ICON_ROOT = "\/assets\/site-search";/);
   for (const key of ["gh", "gpt", "ds", "kimi", "yt", "tb", "jd", "xhs"]) {
     assert.ok(fs.existsSync(path.join(workspaceRoot, `public/assets/site-search/tile-${key}.png`)), key);
+  }
+});
+
+test("IndexNow key file is served and deploys submit only changed sitemap URLs", () => {
+  const script = readSource("scripts/submit-indexnow.mjs");
+  const key = script.match(/const INDEXNOW_KEY = "([0-9a-f]{32})"/)?.[1];
+
+  assert.ok(key, "IndexNow key constant");
+  assert.equal(readSource(`public/${key}.txt`).trim(), key);
+  assert.match(script, /previous\.get\(loc\) !== lastmod/);
+
+  const workflow = readSource(".github/workflows/deploy-pages.yml");
+  assert.match(workflow, /live-sitemap\.xml/);
+  assert.match(workflow, /node scripts\/submit-indexnow\.mjs dist\/sitemap\.xml/);
+  assert.match(workflow, /name: Notify IndexNow\n\s+# .*\n\s+continue-on-error: true/);
+});
+
+test("analytics tags landings from AI assistants for GEO reporting", () => {
+  const source = readSource("src/components/SeoHead.astro");
+
+  assert.match(source, /"ai_assistant_visit"/);
+  assert.match(source, /window\.gtag\("set", "user_properties", \{ ai_source: aiSource \}\)/);
+  assert.match(source, /document\.referrer/);
+  assert.match(source, /get\("utm_source"\)/);
+  for (const host of ["chatgpt", "perplexity", "gemini", "deepseek", "doubao"]) {
+    assert.match(source, new RegExp(`\\["${host}",`), host);
   }
 });

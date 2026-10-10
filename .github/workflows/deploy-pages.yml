@@ -4,6 +4,11 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      indexnow_all:
+        description: "Submit every sitemap URL to IndexNow, not just changed ones"
+        type: boolean
+        default: false
   schedule:
     # Best-effort fallback; offset from the busy start of each hour.
     # Extension releases also dispatch this workflow directly, and the extension
@@ -108,6 +113,15 @@ jobs:
         with:
           path: dist
 
+      - name: Snapshot live sitemap
+        # IndexNow submits only the URLs whose lastmod differs from what is live now.
+        run: curl -fsS --max-time 20 https://lumno.kubai.design/sitemap.xml -o "$RUNNER_TEMP/live-sitemap.xml" || true
+
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Notify IndexNow
+        # Search indexing must never fail a deploy.
+        continue-on-error: true
+        run: node scripts/submit-indexnow.mjs dist/sitemap.xml "$RUNNER_TEMP/live-sitemap.xml" ${{ inputs.indexnow_all && '--all' || '' }}

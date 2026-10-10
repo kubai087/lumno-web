@@ -46,7 +46,7 @@ const displayUpdated = new Intl.DateTimeFormat(locale, {
   timeZone: "UTC",
 }).format(new Date(`${updated}T00:00:00Z`));
 // buildLocalizedPath ends paths with "/", so the file name goes after the directory.
-const searchIndexHref = `${buildLocalizedPath(locale, "/guides/")}search-index.json`;
+const searchIndexHref = `${buildLocalizedPath(locale, "/help/")}search-index.json`;
 ---
 
 <div class="guide">

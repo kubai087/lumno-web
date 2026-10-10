@@ -114,9 +114,9 @@ test("pages read like a wiki: search, sidebar, keycaps, zoomable screenshots, pr
   assert.match(article, /class="guide__pager"/);
   // Search: the index is built at build time and fetched on first focus.
   assert.match(shell, /data-guide-search data-index=\{searchIndexHref\}/);
-  assert.match(shell, /const searchIndexHref = `\$\{buildLocalizedPath\(locale, "\/guides\/"\)\}search-index\.json`;/);
+  assert.match(shell, /const searchIndexHref = `\$\{buildLocalizedPath\(locale, "\/help\/"\)\}search-index\.json`;/);
   assert.match(shell, /input\.addEventListener\("focus", \(\) => load\(\)\.then\(render\)\)/);
-  assert.match(readSource("src/pages/guides/search-index.json.ts"), /buildGuideSearchIndex\(DEFAULT_LOCALE\)/);
+  assert.match(readSource("src/pages/help/search-index.json.ts"), /buildGuideSearchIndex\(DEFAULT_LOCALE\)/);
   // Store numbers come from the build, never typed into the text.
   assert.match(readSource("src/content/guides/ratings-reviews.md"), /\{\{chromeRating\}\}/);
   assert.match(article, /getChromeStoreReviews\(\)/);
@@ -130,8 +130,13 @@ test("guide text is static HTML, never inside a hydrated island", () => {
 });
 
 test("the help center has no index page and is discoverable from the sitemap, llms.txt and footer", () => {
-  assert.ok(!fs.existsSync(path.join(workspaceRoot, "src/pages/guides/index.astro")));
-  assert.match(readSource("astro.config.mjs"), /"\/guides": "\/guides\/what-is-lumno\/"/);
+  assert.ok(!fs.existsSync(path.join(workspaceRoot, "src/pages/help/index.astro")));
+  assert.match(guidesSource, /slug === "privacy" \? "\/privacy\/" : `\/help\/\$\{slug\}\/`/);
+  assert.match(readSource("astro.config.mjs"), /"\/help": "\/help\/what-is-lumno\/",\s*"\/guides": "\/help\/what-is-lumno\/"/);
+  // It started at /guides/: every old page redirects to its /help/ address.
+  for (const route of ["src/pages/guides/[slug]/index.html.ts", "src/pages/[locale]/guides/[slug]/index.html.ts"]) {
+    assert.match(readSource(route), /quietRedirectPage\(target, new URL\(target, site\)\.href\)/, route);
+  }
   assert.match(readSource("src/pages/sitemap.xml.ts"), /\.\.\.guideUrls,/);
   assert.match(readSource("src/pages/llms.txt.ts"), /## Help Center/);
   assert.match(readSource("src/components/site/PageFooter.astro"), /getGuideContent\(locale\)\.ui\.navLabel, href: getGuidePath\(locale\)/);

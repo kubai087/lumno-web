@@ -13,7 +13,7 @@ import zhCN from "../content/guides/zh-CN";
 import zhTW from "../content/guides/zh-TW";
 
 /**
- * The help center (/guides/): a small wiki of answer-shaped pages for people,
+ * The help center (/help/): a small wiki of answer-shaped pages for people,
  * search and AI answer engines. Page text lives in src/content/guides/<locale>.ts
  * and bodies in <slug>.md (zh-CN) or <slug>.<locale>.md, in every site language.
  * Screenshots are real captures of the extension (scripts/guide-screenshots) in
@@ -128,9 +128,9 @@ export function getGuideSource(slug: GuideSlug, locale: GuideLocale): string {
   return source;
 }
 
-/** A page's path; without a slug, the help center's first page (/guides/ only redirects there). */
+/** A page's path; without a slug, the help center's first page (/help/ only redirects there). */
 export function getGuidePath(locale: SupportedLocale, slug: GuideNavKey = GUIDE_SLUGS[0]): string {
-  return buildLocalizedPath(locale, slug === "privacy" ? "/privacy/" : `/guides/${slug}/`);
+  return buildLocalizedPath(locale, slug === "privacy" ? "/privacy/" : `/help/${slug}/`);
 }
 
 /** The sidebar label for any entry, the privacy policy included. */

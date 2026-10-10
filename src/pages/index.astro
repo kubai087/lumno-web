@@ -261,9 +261,6 @@ import LanguageScrollRestore from "../components/LanguageScrollRestore.astro";
     <main>
       <section class="hero-section" aria-labelledby="hero-title">
         <div class="hero-copy">
-          {content.heroTitleSerif && (
-            <span class="hero-title-app-icon hero-serif-mark" aria-hidden="true" set:html={logoIconSvg}></span>
-          )}
           <h1
             id="hero-title"
             class:list={{
@@ -280,6 +277,7 @@ import LanguageScrollRestore from "../components/LanguageScrollRestore.astro";
                 </span>
                 <span class="hero-title-line hero-title-serif-accent">
                   <span class="hero-title-segment">{content.heroTitleSerif.accent}</span>
+                  <span class="hero-title-app-icon" aria-hidden="true" set:html={logoIconSvg}></span>
                 </span>
               </>
             ) : (
@@ -593,17 +591,33 @@ import LanguageScrollRestore from "../components/LanguageScrollRestore.astro";
         transform-origin: 24% 77%;
       }
 
-      /* English editorial slogan (Figma P1): EB Garamond roman lead + Cormorant Garamond italic gradient accent. */
+      /*
+       * Editorial slogan for alphabetic languages (Figma P1): EB Garamond roman
+       * lead + Cormorant Garamond italic gradient accent. On wide screens it
+       * reads on one line, closed by the app icon as the Chinese title is; it
+       * wraps into two lines where it can't fit (phones, the longer French).
+       * The title may run wider than the copy column below it.
+       */
       .hero-copy h1.hero-title-serif {
+        --hero-serif-width: min(1080px, calc(100vw - var(--home-gutter) * 2));
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: baseline;
+        column-gap: 0.26em;
+        width: var(--hero-serif-width);
         max-width: none;
+        margin-inline: calc((100% - var(--hero-serif-width)) / 2);
         font-family: "EB Garamond", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
-        font-size: clamp(48px, 5vw, 72px);
+        font-size: clamp(44px, 4.4vw, 62px);
         line-height: 1.02;
         letter-spacing: -0.05em;
       }
 
       .hero-title-serif .hero-title-line {
+        display: inline-block;
         padding-block: 0;
+        white-space: nowrap;
       }
 
       .hero-title-serif-lead {
@@ -627,7 +641,7 @@ import LanguageScrollRestore from "../components/LanguageScrollRestore.astro";
       .hero-title-serif-accent {
         margin-top: -0.02em;
         font-family: "Cormorant Garamond", "EB Garamond", "Iowan Old Style", Georgia, serif;
-        font-size: 1.24em;
+        font-size: 1.2em;
         font-style: italic;
         font-weight: 600;
         line-height: 1;
@@ -646,15 +660,6 @@ import LanguageScrollRestore from "../components/LanguageScrollRestore.astro";
         padding: 0.2em 0.2em 0.1em 0.04em;
         margin-right: -0.08em;
         background-image: linear-gradient(180deg, #4f4839 0%, #8a7f68 60%, #b2a68d 100%);
-      }
-
-      /* English title: the app icon sits above the headline instead of trailing it. */
-      .hero-serif-mark {
-        --hero-icon-box: clamp(40px, 3.4vw, 48px);
-        display: block;
-        margin: 0 auto clamp(14px, 1.4vw, 20px);
-        /* Centred above a centred headline, a tilt reads as misalignment. */
-        transform: none;
       }
 
       .hero-title-app-icon svg {

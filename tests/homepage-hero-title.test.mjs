@@ -60,6 +60,13 @@ test("English hero uses the editorial serif slogan", () => {
   assert.match(source, /\.hero-title-serif-accent\s*\{[\s\S]*?font-style:\s*italic;/);
 });
 
+test("serif hero reads on one line on wide screens, closed by the app icon", () => {
+  assert.match(source, /\.hero-copy h1\.hero-title-serif \{[\s\S]*?display: flex;[\s\S]*?flex-wrap: wrap;[\s\S]*?width: var\(--hero-serif-width\);/);
+  assert.match(source, /\.hero-title-serif \.hero-title-line \{[\s\S]*?white-space: nowrap;/);
+  assert.match(source, /<span class="hero-title-segment">\{content\.heroTitleSerif\.accent\}<\/span>\s*<span class="hero-title-app-icon" aria-hidden="true"/);
+  assert.doesNotMatch(source, /hero-serif-mark/);
+});
+
 test("serif hero gives accented italic lines room to clear the lead's descenders", () => {
   // es/fr/pt-BR/ru accents (ó, à, й) would otherwise collide with g/p/y above.
   // English: the lead's comma tail would otherwise touch the italic "d" below.

@@ -1,21 +1,25 @@
-import { LOCALE_CONFIG, buildLocalizedPath, type SupportedLocale } from "./locales";
+import { LOCALE_CONFIG, buildLocalizedPath, getExtensionLocale, type SupportedLocale } from "./locales";
 import guideBanners from "../content/guides/banners.json";
 import guideScreenshots from "../content/guides/screenshots.json";
+import de from "../content/guides/de";
 import en from "../content/guides/en";
+import es from "../content/guides/es";
+import fr from "../content/guides/fr";
 import ja from "../content/guides/ja";
+import ko from "../content/guides/ko";
+import ptBR from "../content/guides/pt-BR";
+import ru from "../content/guides/ru";
 import zhCN from "../content/guides/zh-CN";
 import zhTW from "../content/guides/zh-TW";
 
 /**
  * The help center (/guides/): a small wiki of answer-shaped pages for people,
  * search and AI answer engines. Page text lives in src/content/guides/<locale>.ts
- * and bodies in <slug>.md (zh-CN) or <slug>.<locale>.md. Screenshots are real
- * captures of the extension in that locale's UI (scripts/guide-screenshots), so
- * a language ships only where the extension itself speaks it.
+ * and bodies in <slug>.md (zh-CN) or <slug>.<locale>.md, in every site language.
+ * Screenshots are real captures of the extension (scripts/guide-screenshots) in
+ * the language it shows that reader; see getGuideScreenshot.
  */
-export const GUIDE_LOCALES = ["zh-CN", "zh-TW", "en", "ja"] as const satisfies readonly SupportedLocale[];
-/** Languages without a help center read the English one (sidebar, links, language menu). */
-export const GUIDE_FALLBACK_LOCALE: GuideLocale = "en";
+export const GUIDE_LOCALES = ["zh-CN", "zh-TW", "en", "ja", "ko", "de", "fr", "es", "pt-BR", "ru"] as const satisfies readonly SupportedLocale[];
 export type GuideLocale = (typeof GUIDE_LOCALES)[number];
 
 /**
@@ -116,7 +120,7 @@ export type GuideLocaleContent = {
   pages: Record<GuideSlug, GuidePageContent>;
 };
 
-const CONTENT: Record<GuideLocale, GuideLocaleContent> = { "zh-CN": zhCN, "zh-TW": zhTW, en, ja };
+const CONTENT: Record<GuideLocale, GuideLocaleContent> = { "zh-CN": zhCN, "zh-TW": zhTW, en, ja, ko, de, fr, es, "pt-BR": ptBR, ru };
 
 export function getGuideContent(locale: GuideLocale): GuideLocaleContent {
   return CONTENT[locale];
@@ -163,26 +167,24 @@ export function toSearchText(markdown: string): string {
     .trim();
 }
 
-/** The help center language a visitor in `locale` reads. */
-export function resolveGuideLocale(locale: SupportedLocale): GuideLocale {
-  return isGuideLocale(locale) ? locale : GUIDE_FALLBACK_LOCALE;
+/** The language menu for a page: switching language keeps the reader on the same page. */
+export function buildGuideRouteLanguageMap(slug: GuideSlug): Record<SupportedLocale, string> {
+  return Object.fromEntries(LOCALE_CONFIG.map((item) => [item.code, getGuidePath(item.code, slug)])) as Record<
+    SupportedLocale,
+    string
+  >;
 }
 
 /**
- * The language menu for a page: switching language keeps the reader on the same
- * page, in English for languages the help center isn't written in.
+ * Real screenshot dimensions, written by scripts/guide-screenshots/convert.mjs.
+ * Screenshots show the extension in the language it speaks to that reader, so
+ * languages it doesn't ship (Korean, German…) use the English captures.
  */
-export function buildGuideRouteLanguageMap(slug: GuideSlug): Record<SupportedLocale, string> {
-  return Object.fromEntries(
-    LOCALE_CONFIG.map((item) => [item.code, getGuidePath(resolveGuideLocale(item.code), slug)]),
-  ) as Record<SupportedLocale, string>;
-}
-
-/** Real screenshot dimensions, written by scripts/guide-screenshots/convert.mjs. */
 export function getGuideScreenshot(locale: GuideLocale, name: string) {
-  const size = (guideScreenshots as Record<string, number[]>)[`${locale}/${name}`];
-  if (!size) throw new Error(`Missing guide screenshot: ${locale}/${name} (run scripts/guide-screenshots)`);
-  return { src: `/assets/guides/${locale}/${name}.webp`, width: size[0], height: size[1] };
+  const shotLocale = getExtensionLocale(locale);
+  const size = (guideScreenshots as Record<string, number[]>)[`${shotLocale}/${name}`];
+  if (!size) throw new Error(`Missing guide screenshot: ${shotLocale}/${name} (run scripts/guide-screenshots)`);
+  return { src: `/assets/guides/${shotLocale}/${name}.webp`, width: size[0], height: size[1] };
 }
 
 /** A page's banner, cropped from a built-in wallpaper (scripts/guide-screenshots/banners.mjs); `color` paints while it loads. */

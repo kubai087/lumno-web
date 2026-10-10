@@ -29,9 +29,8 @@ test("privacy reads inside the help center in every language", () => {
   const source = readSource("src/pages/privacy/index.astro");
   const contentSource = readSource("src/lib/privacy-content.ts");
 
-  // Languages without a help center get the English sidebar around their own policy.
-  assert.match(source, /const shellLocale = resolveGuideLocale\(uiLocale\);/);
-  assert.match(source, /<GuideShell\s+locale=\{shellLocale\}\s+current="privacy"\s+title=\{content\.title\}/);
+  // Every language has a help center, so the policy reads inside its own language's sidebar.
+  assert.match(source, /<GuideShell\s+locale=\{uiLocale\}\s+current="privacy"\s+title=\{content\.title\}/);
   assert.match(source, /updated=\{PRIVACY_LAST_UPDATED\}/);
   assert.match(source, /<Fragment set:html=\{policyHtml\} \/>/);
   // The old standalone layout is gone, and so is marketing chrome.

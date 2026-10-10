@@ -1,5 +1,5 @@
 ---
-import { getGuideContent, getGuidePath, isGuideLocale } from "../../lib/guides";
+import { getGuideContent, getGuidePath } from "../../lib/guides";
 import HomeNavGhostLinks from "../navigation/HomeNavGhostLinks";
 import InstallMenu from "../navigation/InstallMenu";
 import LanguageMenu from "../onboarding/LanguageMenu";
@@ -54,8 +54,8 @@ const { locale, routeLanguageMap, analyticsScope = "home", handoff, keepInstall 
 const content = getHomeContent(locale);
 const homeHref = buildLocalizedPath(locale, "/");
 const releaseHref = buildLocalizedPath(locale, "/release/");
-const helpHref = isGuideLocale(locale) ? getGuidePath(locale) : undefined;
-const helpLabel = isGuideLocale(locale) ? getGuideContent(locale).ui.navLabel : undefined;
+const helpHref = getGuidePath(locale);
+const helpLabel = getGuideContent(locale).ui.navLabel;
 const {
   chrome: chromeStoreVersion,
   edge: edgeStoreVersion,

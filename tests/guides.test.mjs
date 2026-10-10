@@ -16,6 +16,8 @@ const navKeys = [...navSource.matchAll(/slugs: \[([^\]]*)\]/g)].flatMap(([, list
 const slugs = navKeys.filter((key) => key !== "privacy");
 const locales = JSON.parse(guidesSource.match(/GUIDE_LOCALES = (\[[^\]]*\])/)[1]);
 const screenshots = JSON.parse(readSource("src/content/guides/screenshots.json"));
+// Screenshots show the extension in the language it speaks to that reader; it ships zh-CN, zh-TW, en and ja.
+const shotLocale = (locale) => (["zh-CN", "zh-TW", "en", "ja"].includes(locale) ? locale : "en");
 const banners = JSON.parse(readSource("src/content/guides/banners.json"));
 
 function guideFile(slug, locale) {
@@ -72,8 +74,8 @@ test("screenshots are real captures that exist with recorded sizes", () => {
       for (const [, alt, name] of source.matchAll(/!\[([^\]]+)\]\(([a-z0-9-]+) "([^"]+)"\)/g)) {
         total += 1;
         assert.ok(alt.length > 10, `${slug} (${locale}) ${name} has descriptive alt text`);
-        assert.ok(screenshots[`${locale}/${name}`], `${locale}/${name} is in screenshots.json`);
-        assert.ok(fs.existsSync(path.join(workspaceRoot, `public/assets/guides/${locale}/${name}.webp`)), `${locale}/${name}.webp`);
+        assert.ok(screenshots[`${shotLocale(locale)}/${name}`], `${shotLocale(locale)}/${name} is in screenshots.json`);
+        assert.ok(fs.existsSync(path.join(workspaceRoot, `public/assets/guides/${shotLocale(locale)}/${name}.webp`)), `${shotLocale(locale)}/${name}.webp`);
       }
     }
   }
@@ -139,8 +141,7 @@ test("the privacy policy keeps its URL and reads inside the help center", () => 
   const privacy = readSource("src/pages/privacy/index.astro");
   assert.match(navSource, /"privacy-data", "privacy", "security-open-source"/);
   assert.match(guidesSource, /slug === "privacy" \? "\/privacy\/"/);
-  assert.match(privacy, /const shellLocale = resolveGuideLocale\(uiLocale\);/);
-  assert.match(privacy, /<GuideShell[\s\S]*?current="privacy"/);
+  assert.match(privacy, /<GuideShell\s+locale=\{uiLocale\}\s+current="privacy"/);
   assert.match(readSource("src/lib/guide-search-index.ts"), /title: ui\.privacyLabel/);
 });
 
@@ -186,27 +187,23 @@ test("the page list is always open on wide screens, folded only on phones", () =
   assert.match(shell, /narrow\.addEventListener\("change", fitNav\);/);
 });
 
-test("the header links to the help center in the languages that have it", () => {
+test("the header links to the help center in every language", () => {
   const header = readSource("src/components/site/SiteHeader.astro");
   const links = readSource("src/components/navigation/HomeNavGhostLinks.tsx");
-  assert.match(header, /const helpHref = isGuideLocale\(locale\) \? getGuidePath\(locale\) : undefined;/);
+  assert.match(header, /const helpHref = getGuidePath\(locale\);/);
   assert.match(links, /value: "help" as const/);
   assert.match(links, /analyticsEvent: "open_help_center"/);
 });
 
-test("the help center ships in the extension's languages and switching language keeps the page", () => {
-  assert.deepEqual(locales, ["zh-CN", "zh-TW", "en", "ja"]);
-  assert.match(guidesSource, /GUIDE_FALLBACK_LOCALE: GuideLocale = "en"/);
-  // Every language in the menu lands on the same page, in English where the help center isn't written.
-  assert.match(guidesSource, /LOCALE_CONFIG\.map\(\(item\) => \[item\.code, getGuidePath\(resolveGuideLocale\(item\.code\), slug\)\]\)/);
+test("the help center ships in every site language and switching language keeps the page", () => {
+  assert.deepEqual(locales, ["zh-CN", "zh-TW", "en", "ja", "ko", "de", "fr", "es", "pt-BR", "ru"]);
+  // Every language in the menu lands on the same page in that language.
+  assert.match(guidesSource, /LOCALE_CONFIG\.map\(\(item\) => \[item\.code, getGuidePath\(item\.code, slug\)\]\)/);
   assert.match(readSource("src/components/guides/GuideArticle.astro"), /routeLanguageMap=\{buildGuideRouteLanguageMap\(slug\)\}/);
-  // Each language's pages use screenshots taken in that language's UI.
-  for (const locale of locales) {
-    for (const slug of slugs) {
-      for (const [, name] of readSource(guideFile(slug, locale)).matchAll(/!\[[^\]]*\]\(([a-z0-9-]+)/g)) {
-        assert.ok(screenshots[`${locale}/${name}`], `${slug} (${locale}): screenshot ${name}`);
-      }
-    }
+  // Languages the extension doesn't speak read their own text around the English captures.
+  assert.match(guidesSource, /const shotLocale = getExtensionLocale\(locale\);/);
+  for (const locale of ["ko", "de", "fr", "es", "pt-BR", "ru"]) {
+    assert.doesNotMatch(readSource(guideFile("what-is-lumno", locale)), /Lumno is a free, open-source browser extension/, `${locale} is translated`);
   }
 });
 

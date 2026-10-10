@@ -2,7 +2,6 @@
 import { marked } from "marked";
 import SitePage from "../../layouts/SitePage.astro";
 import GuideShell from "../../components/guides/GuideShell.astro";
-import { resolveGuideLocale } from "../../lib/guides";
 import { DEFAULT_LOCALE, buildLocalizedPath, buildRouteLanguageMap, type SupportedLocale } from "../../lib/locales";
 import {
   PRIVACY_LAST_UPDATED,
@@ -72,8 +71,6 @@ renderer.heading = function ({ tokens, depth }) {
   sectionIndex += 1;
   return `<h2 id="${id}"><span class="doc__num" aria-hidden="true">${number}</span><span>${title}</span></h2>\n`;
 };
-// The policy reads inside the help center; languages without one get the English sidebar.
-const shellLocale = resolveGuideLocale(uiLocale);
 const policyHtml = marked
   .parse(content.policySource, { async: false, gfm: true, renderer })
   // Wide tables scroll inside their own frame on narrow screens.
@@ -96,7 +93,7 @@ const policyHtml = marked
   navHandoff=".guide__banner"
 >
   <GuideShell
-    locale={shellLocale}
+    locale={uiLocale}
     current="privacy"
     title={content.title}
     sections={sections.map((section) => ({ id: section.id, title: section.title }))}

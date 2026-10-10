@@ -1,0 +1,234 @@
+import type { GuideLocaleContent } from "../../lib/guides";
+
+/** Spanish help center. The extension itself shows English here, so its labels stay in English. */
+const content: GuideLocaleContent = {
+  ui: {
+    navLabel: "Centro de ayuda",
+    navTitle: "Centro de ayuda de Lumno",
+    groups: {
+      about: "Conoce Lumno",
+      quickstart: "Primeros pasos",
+      trust: "Compatibilidad y confianza",
+    },
+    sections: {
+      setup: "Instalar y configurar",
+      "command-bar": "Barra de comandos",
+      "new-tab": "Nueva pestaña",
+      scenarios: "Casos de uso",
+    },
+    navToggle: "Índice",
+    updatedLabel: "Actualizado el {date}",
+    tocLabel: "En esta página",
+    faqTitle: "Preguntas frecuentes",
+    previousLabel: "Anterior",
+    nextLabel: "Siguiente",
+    zoomLabel: "Ver a tamaño completo",
+    closeLabel: "Cerrar",
+    privacyLabel: "Política de privacidad",
+    searchPlaceholder: "Buscar en la ayuda",
+    searchLabel: "Buscar en el centro de ayuda",
+    searchEmpty: "No hay resultados",
+  },
+  pages: {
+    "what-is-lumno": {
+      pageTitle: "¿Qué es Lumno? Barra de comandos y nueva pestaña de código abierto | Ayuda de Lumno",
+      pageDescription:
+        "Lumno es una extensión de navegador gratuita y de código abierto. Pulsa ⌘⇧K en cualquier página para buscar en tus pestañas, marcadores e historial, buscar dentro de sitios o preguntar a la IA, y disfruta de una nueva pestaña tranquila y personalizable. Funciona en Chrome, Edge, Dia y otros navegadores Chromium.",
+      keywords: ["Lumno", "barra de comandos del navegador", "extensión paleta de comandos Chrome", "buscar pestañas", "extensión nueva pestaña", "barra de comandos de Arc"],
+      title: "¿Qué es Lumno?",
+      navTitle: "¿Qué es Lumno?",
+      faq: [
+        { question: "¿Lumno es gratis?", answer: "Sí. Lumno es de código abierto con licencia GPL-3.0, todas sus funciones son gratuitas y no hace falta crear ninguna cuenta." },
+        {
+          question: "¿En qué navegadores funciona?",
+          answer: "En Chrome, Edge, Dia, Brave, Arc, Vivaldi y otros navegadores Chromium. Safari no es compatible. Consulta Compatibilidad con navegadores.",
+        },
+      ],
+    },
+    limitations: {
+      pageTitle: "Lo que Lumno no hace: límites y carencias conocidas | Ayuda de Lumno",
+      pageDescription:
+        "Lumno es una extensión, no un navegador: no tiene barra lateral, espacios ni pantalla dividida, la barra de comandos no se abre en páginas chrome://, no funciona en Safari y no hay nueva pestaña en Dia. Aquí tienes lo que no hace y qué usar en su lugar.",
+      keywords: ["límites de Lumno", "extensión Chrome páginas restringidas", "alternativa barra lateral Arc", "nueva pestaña Dia"],
+      title: "Lo que Lumno no hace",
+      navTitle: "Lo que Lumno no hace",
+    },
+    "use-cases": {
+      pageTitle: "Para quién es Lumno: demasiadas pestañas, adiós a Arc, desarrollo y escritura | Ayuda de Lumno",
+      pageDescription:
+        "Donde más ayuda Lumno: decenas de pestañas abiertas, el paso de Arc a Chrome o Dia, desarrolladores entre documentación y GitHub, investigación y escritura, preguntas rápidas a la IA y una nueva pestaña tranquila.",
+      keywords: ["casos de uso de Lumno", "demasiadas pestañas", "alternativa a Arc", "extensión de navegador para desarrolladores", "atajo para preguntar a la IA"],
+      title: "Casos de uso",
+      navTitle: "Casos de uso",
+    },
+    install: {
+      pageTitle: "Instalar Lumno desde Chrome Web Store o los complementos de Edge | Ayuda de Lumno",
+      pageDescription:
+        "Instala Lumno desde Chrome Web Store en Chrome, Dia, Brave o Arc, o desde los complementos de Microsoft Edge en Edge. Se abre una página de bienvenida y ⌘⇧K queda listo para usar.",
+      keywords: ["instalar Lumno", "Lumno Chrome Web Store", "Lumno complementos de Edge", "instalar extensión de Chrome"],
+      title: "Instalar Lumno",
+      navTitle: "Instalar Lumno",
+      faq: [
+        { question: "¿Necesito una cuenta?", answer: "No. Lumno no tiene sistema de cuentas. Lo instalas y funciona." },
+        {
+          question: "¿Cómo lo desinstalo?",
+          answer: "Abre chrome://extensions (edge://extensions en Edge), busca Lumno y haz clic en Quitar. Así se borran también los ajustes e imágenes que Lumno guardó en tu dispositivo.",
+        },
+      ],
+    },
+    "keyboard-shortcuts": {
+      pageTitle: "Atajos de teclado de Lumno: predeterminados, cómo cambiarlos y teclas de la barra | Ayuda de Lumno",
+      pageDescription:
+        "Lumno se abre con ⌘⇧K (Ctrl+Mayús+K en Windows) y su selector de pestañas recientes con ⌥Q. Cámbialos en chrome://extensions/shortcuts, incluso a ⌘T. Además, todas las teclas de la barra de comandos y del selector.",
+      keywords: ["atajos de Lumno", "cambiar atajo de extensión Chrome", "chrome://extensions/shortcuts", "Cmd T barra de comandos"],
+      title: "Atajos de teclado",
+      navTitle: "Atajos de teclado",
+      faq: [
+        {
+          question: "El atajo no hace nada. ¿Qué hago?",
+          answer:
+            "Comprueba que no estás en una página restringida, como la configuración chrome:// o Chrome Web Store, y revisa en chrome://extensions/shortcuts si otra extensión usa el mismo atajo. En Dia, cambia el ámbito a Global.",
+        },
+      ],
+    },
+    sync: {
+      pageTitle: "Sincroniza Lumno entre ordenadores con la sincronización del navegador y WebDAV | Ayuda de Lumno",
+      pageDescription:
+        "Los ajustes de Lumno viajan con la sincronización de tu navegador. Activa la sincronización WebDAV para llevarte también los iconos de accesos directos y los fondos, con Nextcloud, un NAS o cualquier servidor WebDAV que controles.",
+      keywords: ["sincronización Lumno", "sincronización WebDAV", "Nextcloud WebDAV", "sincronizar ajustes de extensión Chrome", "sincronizar nueva pestaña"],
+      title: "Sincronización",
+      navTitle: "Sincronización",
+      faq: [
+        {
+          question: "¿Necesito una cuenta de Lumno para sincronizar?",
+          answer: "No. Lumno no tiene cuentas ni servidores. Los ajustes van por la sincronización de tu navegador; los iconos y fondos pueden ir por tu propio WebDAV.",
+        },
+        {
+          question: "¿Chrome y Firefox pueden sincronizarse entre sí?",
+          answer: "Sí, con WebDAV. Indica el mismo servidor y la misma carpeta en los dos navegadores, incluso en el mismo ordenador.",
+        },
+      ],
+    },
+    "search-tabs-bookmarks-history": {
+      pageTitle: "Busca en pestañas abiertas, marcadores e historial desde un solo cuadro | Ayuda de Lumno",
+      pageDescription:
+        "Pulsa ⌘⇧K (Ctrl+Mayús+K en Windows) en cualquier página para buscar en tus pestañas abiertas, marcadores, historial y sitios más visitados en un solo cuadro, o solo en las pestañas abiertas.",
+      keywords: ["buscar pestañas Chrome", "extensión buscar marcadores", "buscar en el historial", "buscar pestañas abiertas", "paleta de comandos Chrome"],
+      title: "Buscar en pestañas, marcadores e historial",
+      navTitle: "Pestañas, marcadores e historial",
+      faq: [
+        {
+          question: "¿Lumno sube mi historial o mis marcadores?",
+          answer:
+            "No. Las pestañas, los marcadores y el historial se buscan en tu dispositivo, y Lumno no los recopila. Lo que escribes se envía al servicio de sugerencias de tu buscador para mostrarte sugerencias, igual que en la barra de direcciones.",
+        },
+        {
+          question: "¿Los resultados pueden abrirse en una pestaña nueva?",
+          answer: "Sí. En los ajustes de Lumno puedes elegir abrirlos en la pestaña actual, a su izquierda o derecha, o al final de la barra de pestañas.",
+        },
+      ],
+    },
+    "site-search": {
+      pageTitle: "Búsqueda en sitios: escribe un atajo, pulsa Tab y busca en GitHub, YouTube o ChatGPT | Ayuda de Lumno",
+      pageDescription:
+        "Lumno trae 46 atajos de búsqueda. Escribe gh, yt o sf y pulsa Tab para buscar directamente en GitHub, YouTube o Stack Overflow, o manda una pregunta directamente a ChatGPT, Gemini o Perplexity.",
+      keywords: ["búsqueda en sitios Chrome", "Tab para buscar", "atajos de búsqueda navegador", "buscar en GitHub rápido", "atajo para ChatGPT", "buscador personalizado"],
+      title: "Búsqueda en sitios y preguntas a la IA",
+      navTitle: "Búsqueda en sitios e IA",
+      faq: [
+        {
+          question: "¿Qué sitios vienen incluidos?",
+          answer:
+            "46 en total: 11 buscadores, 11 chats y buscadores con IA (como ChatGPT, Gemini, Perplexity y DeepSeek) y 24 sitios, entre ellos GitHub, YouTube, Stack Overflow y Reddit. Puedes añadir los tuyos.",
+        },
+        { question: "¿La búsqueda en sitios pasa por servidores de Lumno?", answer: "No. Lumno no tiene servidores; al pulsar Intro se abre directamente la página de búsqueda del sitio." },
+      ],
+    },
+    "tab-switcher": {
+      pageTitle: "Selector de pestañas recientes: pulsa ⌥Q para saltar entre pestañas recientes | Ayuda de Lumno",
+      pageDescription:
+        "Pulsa ⌥Q (Alt+Q en Windows) para abrir el selector de pestañas recientes de Lumno, con tus pestañas en el orden en que las usaste y una vista previa de cada una. Mantén ⌥, pulsa Q y suelta.",
+      keywords: ["selector de pestañas Chrome", "pestañas recientes", "Alt Tab para el navegador", "Arc Ctrl Tab"],
+      title: "Saltar entre pestañas recientes",
+      navTitle: "Pestañas recientes",
+    },
+    "newtab-wallpaper": {
+      pageTitle: "Fondos de la nueva pestaña: cuadros clásicos, foto del día de Bing, tus fotos y filtros | Ayuda de Lumno",
+      pageDescription:
+        "Cambia el fondo de la nueva pestaña de Lumno en los ajustes de Appearance: cuadros incluidos, la foto del día de Bing, fotos seleccionadas, tus propias imágenes o un enlace de imagen, con velo, filtros y fondos distintos para los modos claro y oscuro.",
+      keywords: ["fondo de nueva pestaña", "fondo nueva pestaña Chrome", "fondo diario de Bing", "extensión nueva pestaña"],
+      title: "Cambiar el fondo",
+      navTitle: "Cambiar el fondo",
+    },
+    "newtab-bookmarks-shortcuts": {
+      pageTitle: "Accesos directos y marcadores en la nueva pestaña: añadir sitios, tres diseños | Ayuda de Lumno",
+      pageDescription:
+        "Añade tus sitios de siempre como accesos directos en la nueva pestaña de Lumno, elige sus iconos y explora tus marcadores como carpetas, lista anidada o barra superior.",
+      keywords: ["accesos directos nueva pestaña", "marcadores nueva pestaña", "barra de marcadores Chrome", "carpetas de marcadores"],
+      title: "Accesos directos y marcadores",
+      navTitle: "Accesos directos y marcadores",
+    },
+    "newtab-frequent-sites": {
+      pageTitle: "Sitios frecuentes y tarjetas de progreso: fija sitios y no pierdas el hilo de una serie | Ayuda de Lumno",
+      pageDescription:
+        "La nueva pestaña de Lumno muestra tus sitios más visitados o recientes. Fija hasta tres; fija una serie o una novela por entregas y la tarjeta te sigue al siguiente episodio o capítulo.",
+      keywords: ["sitios más visitados nueva pestaña", "seguir progreso de series", "progreso de web novel", "fijar sitios"],
+      title: "Sitios frecuentes y tarjetas de progreso",
+      navTitle: "Sitios frecuentes y progreso",
+    },
+    "newtab-clock-zen": {
+      pageTitle: "Reloj y modo Zen: una nueva pestaña con solo el cuadro de búsqueda | Ayuda de Lumno",
+      pageDescription: "Muestra un reloj en la nueva pestaña de Lumno, o escribe /zen para ocultar todo salvo el cuadro de búsqueda.",
+      keywords: ["reloj nueva pestaña", "nueva pestaña minimalista", "modo Zen", "nueva pestaña para concentrarse"],
+      title: "Reloj y modo Zen",
+      navTitle: "Reloj y modo Zen",
+    },
+    "arc-command-bar": {
+      pageTitle: "De Arc a Chrome, Dia o Edge: la barra de comandos y los atajos | Ayuda de Lumno",
+      pageDescription:
+        "¿Has dejado Arc por Chrome, Dia o Edge? Lumno recupera una barra de comandos al estilo de Arc: ⌘⇧K busca en pestañas, marcadores e historial (o cámbialo a ⌘T) y ⌥Q salta entre pestañas recientes. Incluye una tabla de equivalencias de atajos de Arc.",
+      keywords: ["alternativa barra de comandos Arc", "alternativa al navegador Arc", "pasar de Arc a Chrome", "barra de comandos Dia", "atajos de Arc"],
+      title: "Si vienes de Arc",
+      navTitle: "Si vienes de Arc",
+      faq: [
+        {
+          question: "¿Lumno tiene relación con Arc?",
+          answer: "No. Lumno es un proyecto de código abierto independiente, inspirado en la barra de comandos de Arc, sin relación con Arc ni con The Browser Company.",
+        },
+      ],
+    },
+    "browser-compatibility": {
+      pageTitle: "Compatibilidad con navegadores: Chrome, Edge, Dia, Brave, Firefox y Safari | Ayuda de Lumno",
+      pageDescription:
+        "Lumno funciona por completo en Chrome, Edge, Brave, Arc, Vivaldi y otros navegadores Chromium. Dia no tiene la nueva pestaña de Lumno, a la versión de Firefox le faltan algunas funciones, y Safari y los navegadores móviles no son compatibles.",
+      keywords: ["compatibilidad Lumno", "extensión Dia", "extensión Edge", "versión de Firefox", "extensión Chromium"],
+      title: "Compatibilidad con navegadores",
+      navTitle: "Compatibilidad con navegadores",
+    },
+    "privacy-data": {
+      pageTitle: "Privacidad y datos: Lumno funciona en tu dispositivo y no recopila nada | Ayuda de Lumno",
+      pageDescription:
+        "Lumno no tiene cuentas ni servidores. Tus pestañas, marcadores e historial se quedan en tu dispositivo, y no se recopilan datos de uso. Aquí verás qué sale de tu dispositivo y cómo funcionan la sincronización del navegador y WebDAV.",
+      keywords: ["privacidad Lumno", "privacidad extensión navegador", "datos extensión Chrome", "sincronización WebDAV"],
+      title: "Privacidad y datos",
+      navTitle: "Privacidad y datos",
+    },
+    "security-open-source": {
+      pageTitle: "Seguridad y código abierto: código GPL-3.0, permisos, Manifest V3 | Ayuda de Lumno",
+      pageDescription:
+        "Lumno es de código abierto con licencia GPL-3.0 en GitHub, construido con Manifest V3 y sin código remoto. Aquí explicamos para qué sirve cada permiso del navegador.",
+      keywords: ["Lumno código abierto", "seguridad Lumno", "permisos extensión Chrome", "Manifest V3"],
+      title: "Seguridad y código abierto",
+      navTitle: "Seguridad y código abierto",
+    },
+    "ratings-reviews": {
+      pageTitle: "Valoraciones y prensa: reseñas de Chrome Web Store y artículos | Ayuda de Lumno",
+      pageDescription: "La valoración y las reseñas de Lumno en Chrome Web Store, y los artículos que se han escrito sobre él.",
+      keywords: ["reseñas Lumno", "valoración Lumno", "análisis extensión barra de comandos Chrome"],
+      title: "Valoraciones y prensa",
+      navTitle: "Valoraciones y prensa",
+    },
+  },
+};
+
+export default content;

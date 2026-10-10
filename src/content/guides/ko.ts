@@ -1,0 +1,234 @@
+import type { GuideLocaleContent } from "../../lib/guides";
+
+/** Korean help center. The extension itself shows English here, so its labels stay in English. */
+const content: GuideLocaleContent = {
+  ui: {
+    navLabel: "도움말 센터",
+    navTitle: "Lumno 도움말 센터",
+    groups: {
+      about: "Lumno 알아보기",
+      quickstart: "시작하기",
+      trust: "호환성과 신뢰",
+    },
+    sections: {
+      setup: "설치와 설정",
+      "command-bar": "명령 바",
+      "new-tab": "새 탭",
+      scenarios: "이럴 때",
+    },
+    navToggle: "목차",
+    updatedLabel: "{date} 업데이트",
+    tocLabel: "이 페이지에서",
+    faqTitle: "자주 묻는 질문",
+    previousLabel: "이전",
+    nextLabel: "다음",
+    zoomLabel: "크게 보기",
+    closeLabel: "닫기",
+    privacyLabel: "개인정보처리방침",
+    searchPlaceholder: "도움말 검색",
+    searchLabel: "도움말 센터 검색",
+    searchEmpty: "검색 결과가 없어요",
+  },
+  pages: {
+    "what-is-lumno": {
+      pageTitle: "Lumno란? 오픈소스 브라우저 명령 바와 새 탭 | Lumno 도움말",
+      pageDescription:
+        "Lumno는 무료 오픈소스 브라우저 확장 프로그램입니다. 어떤 페이지에서든 ⌘⇧K를 누르면 탭, 북마크, 방문 기록을 검색하고 사이트 안을 바로 검색하거나 AI에게 물어볼 수 있고, 새 탭은 차분하게 꾸밀 수 있어요. Chrome, Edge, Dia 등 Chromium 브라우저에서 동작합니다.",
+      keywords: ["Lumno", "브라우저 명령 바", "크롬 명령 팔레트 확장", "탭 검색", "새 탭 확장 프로그램", "Arc 명령 바"],
+      title: "Lumno란?",
+      navTitle: "Lumno란?",
+      faq: [
+        { question: "Lumno는 무료인가요?", answer: "네. GPL-3.0 오픈소스이고 모든 기능이 무료이며, 계정을 만들 필요도 없어요." },
+        {
+          question: "어떤 브라우저에서 쓸 수 있나요?",
+          answer: "Chrome, Edge, Dia, Brave, Arc, Vivaldi 등 Chromium 브라우저에서 쓸 수 있어요. Safari는 지원하지 않습니다. 자세한 내용은 브라우저 호환성을 확인하세요.",
+        },
+      ],
+    },
+    limitations: {
+      pageTitle: "Lumno가 못 하는 것: 한계와 대안 | Lumno 도움말",
+      pageDescription:
+        "Lumno는 브라우저가 아니라 확장 프로그램이라 사이드바, Spaces, 화면 분할은 없고, chrome:// 페이지에서는 명령 바가 열리지 않으며, Safari와 Dia의 새 탭은 지원하지 않아요. 못 하는 것과 대신 쓸 만한 도구를 정리했습니다.",
+      keywords: ["Lumno 한계", "크롬 확장 제한 페이지", "Arc 사이드바 대안", "Dia 새 탭"],
+      title: "Lumno가 못 하는 것",
+      navTitle: "Lumno가 못 하는 것",
+    },
+    "use-cases": {
+      pageTitle: "이런 분께 맞아요: 탭이 너무 많을 때, Arc를 떠났을 때, 개발과 글쓰기 | Lumno 도움말",
+      pageDescription:
+        "탭이 수십 개 열려 있을 때, Arc에서 Chrome이나 Dia로 옮겼을 때, 문서와 GitHub를 오가는 개발자, 자료 조사와 글쓰기, AI에게 먼저 묻는 습관, 차분한 새 탭까지. Lumno가 가장 도움이 되는 순간들입니다.",
+      keywords: ["Lumno 활용", "탭이 너무 많을 때", "Arc 대안", "개발자 브라우저 확장", "AI 바로 질문"],
+      title: "이럴 때 써 보세요",
+      navTitle: "이럴 때 써 보세요",
+    },
+    install: {
+      pageTitle: "Chrome 웹 스토어나 Edge 추가 기능에서 Lumno 설치하기 | Lumno 도움말",
+      pageDescription:
+        "Chrome, Dia, Brave, Arc에서는 Chrome 웹 스토어에서, Edge에서는 Microsoft Edge 추가 기능에서 설치하세요. 설치하면 환영 페이지가 열리고 바로 ⌘⇧K를 쓸 수 있어요.",
+      keywords: ["Lumno 설치", "Lumno 크롬 웹 스토어", "Lumno Edge 추가 기능", "크롬 확장 프로그램 설치"],
+      title: "Lumno 설치하기",
+      navTitle: "Lumno 설치하기",
+      faq: [
+        { question: "계정이 필요한가요?", answer: "아니요. Lumno에는 계정이 없어요. 설치하면 바로 쓸 수 있습니다." },
+        {
+          question: "어떻게 삭제하나요?",
+          answer: "chrome://extensions(Edge는 edge://extensions)를 열고 Lumno를 찾아 삭제를 누르세요. Lumno가 기기에 저장한 설정과 이미지도 함께 지워집니다.",
+        },
+      ],
+    },
+    "keyboard-shortcuts": {
+      pageTitle: "Lumno 단축키: 기본값, 바꾸는 법, 명령 바 안의 키 | Lumno 도움말",
+      pageDescription:
+        "Lumno는 ⌘⇧K(Windows는 Ctrl+Shift+K)로 열고, 최근 탭 전환기는 ⌥Q로 엽니다. chrome://extensions/shortcuts에서 ⌘T 등 원하는 키로 바꿀 수 있어요. 명령 바와 전환기 안에서 쓰는 키도 정리했습니다.",
+      keywords: ["Lumno 단축키", "크롬 확장 단축키 변경", "chrome://extensions/shortcuts", "Cmd T 명령 바"],
+      title: "단축키",
+      navTitle: "단축키",
+      faq: [
+        {
+          question: "단축키를 눌러도 아무 반응이 없어요.",
+          answer:
+            "chrome:// 설정이나 웹 스토어 같은 제한된 페이지가 아닌지 먼저 확인하고, chrome://extensions/shortcuts에서 다른 확장 프로그램과 겹치지 않는지 보세요. Dia에서는 범위를 Global로 바꾸세요.",
+        },
+      ],
+    },
+    sync: {
+      pageTitle: "브라우저 동기화와 WebDAV로 여러 컴퓨터에서 Lumno 쓰기 | Lumno 도움말",
+      pageDescription:
+        "Lumno 설정은 브라우저 동기화를 따라 함께 옮겨 갑니다. 직접 올린 아이콘과 배경화면까지 옮기려면 WebDAV 동기화를 켜세요. Nextcloud, NAS 등 직접 관리하는 WebDAV 서버를 쓸 수 있어요.",
+      keywords: ["Lumno 동기화", "WebDAV 동기화", "Nextcloud WebDAV", "크롬 확장 설정 동기화", "새 탭 동기화"],
+      title: "동기화",
+      navTitle: "동기화",
+      faq: [
+        {
+          question: "동기화하려면 Lumno 계정이 있어야 하나요?",
+          answer: "아니요. Lumno에는 계정도 서버도 없어요. 설정은 브라우저 동기화로, 아이콘과 배경화면은 직접 준비한 WebDAV로 옮깁니다.",
+        },
+        {
+          question: "Chrome과 Firefox끼리도 동기화되나요?",
+          answer: "네, WebDAV로 가능해요. 두 브라우저에 같은 서버와 폴더를 지정하면 되고, 같은 컴퓨터에서도 됩니다.",
+        },
+      ],
+    },
+    "search-tabs-bookmarks-history": {
+      pageTitle: "열린 탭, 북마크, 방문 기록을 검색창 하나로 찾기 | Lumno 도움말",
+      pageDescription:
+        "어떤 페이지에서든 ⌘⇧K(Windows는 Ctrl+Shift+K)를 누르면 열린 탭, 북마크, 방문 기록, 자주 가는 사이트를 한 번에 검색할 수 있고, 열린 탭만 골라 찾을 수도 있어요.",
+      keywords: ["크롬 탭 검색", "북마크 검색 확장", "방문 기록 검색", "열린 탭 찾기", "크롬 명령 팔레트"],
+      title: "탭, 북마크, 방문 기록 검색",
+      navTitle: "탭·북마크·기록 검색",
+      faq: [
+        {
+          question: "방문 기록이나 북마크가 업로드되나요?",
+          answer:
+            "아니요. 탭, 북마크, 방문 기록은 기기 안에서만 검색하고 Lumno는 이를 수집하지 않아요. 입력한 내용은 추천 검색어를 보여 주기 위해 검색 엔진의 추천 서비스로 전송되는데, 주소창에 입력할 때와 같습니다.",
+        },
+        {
+          question: "결과를 새 탭에서 열 수 있나요?",
+          answer: "네. Lumno 설정에서 현재 탭, 현재 탭의 왼쪽이나 오른쪽, 탭 줄 맨 끝 중 원하는 곳을 고르세요.",
+        },
+      ],
+    },
+    "site-search": {
+      pageTitle: "사이트 검색: 단축어 입력 후 Tab으로 GitHub, YouTube, ChatGPT 바로 검색 | Lumno 도움말",
+      pageDescription:
+        "Lumno에는 검색 단축어 46개가 들어 있어요. gh, yt, sf를 입력하고 Tab을 누르면 GitHub, YouTube, Stack Overflow를 바로 검색하고, ChatGPT, Gemini, Perplexity에도 질문을 곧장 보낼 수 있습니다.",
+      keywords: ["크롬 사이트 검색", "Tab 검색", "브라우저 검색 단축어", "GitHub 빠르게 검색", "ChatGPT 바로 질문", "맞춤 검색 엔진"],
+      title: "사이트 검색과 AI에게 묻기",
+      navTitle: "사이트 검색·AI에게 묻기",
+      faq: [
+        {
+          question: "어떤 사이트가 기본으로 들어 있나요?",
+          answer:
+            "모두 46개예요. 검색 엔진 11개, ChatGPT, Gemini, Perplexity, DeepSeek 같은 AI 채팅과 AI 검색 11개, GitHub, YouTube, Stack Overflow, Reddit 등 사이트 24개가 있고 직접 추가할 수도 있어요.",
+        },
+        { question: "사이트 검색이 Lumno 서버를 거치나요?", answer: "아니요. Lumno에는 서버가 없어요. Return을 누르면 해당 사이트의 검색 페이지가 바로 열립니다." },
+      ],
+    },
+    "tab-switcher": {
+      pageTitle: "최근 탭 전환기: ⌥Q로 최근 탭 사이를 오가기 | Lumno 도움말",
+      pageDescription:
+        "⌥Q(Windows는 Alt+Q)를 누르면 Lumno의 최근 탭 전환기가 열리고, 사용한 순서대로 탭이 미리보기와 함께 나타나요. ⌥를 누른 채 Q를 톡톡 누르고, 손을 떼면 됩니다.",
+      keywords: ["크롬 탭 전환", "최근 탭", "브라우저 Alt Tab", "Arc Ctrl Tab"],
+      title: "최근 탭 사이 전환",
+      navTitle: "최근 탭 전환",
+    },
+    "newtab-wallpaper": {
+      pageTitle: "새 탭 배경화면: 명화, Bing 오늘의 사진, 내 사진과 필터 | Lumno 도움말",
+      pageDescription:
+        "Appearance 설정에서 Lumno 새 탭의 배경화면을 바꾸세요. 기본 명화, Bing 오늘의 사진, 엄선한 사진, 내 이미지나 이미지 링크를 쓸 수 있고, 마스크와 필터, 라이트·다크 모드별 배경도 고를 수 있어요.",
+      keywords: ["새 탭 배경화면", "크롬 새 탭 배경", "Bing 오늘의 배경화면", "새 탭 확장 프로그램"],
+      title: "배경화면 바꾸기",
+      navTitle: "배경화면 바꾸기",
+    },
+    "newtab-bookmarks-shortcuts": {
+      pageTitle: "새 탭 바로가기와 북마크: 사이트 추가, 북마크 레이아웃 세 가지 | Lumno 도움말",
+      pageDescription:
+        "자주 가는 사이트를 Lumno 새 탭에 바로가기로 추가하고 아이콘을 고르세요. 북마크는 폴더, 다단계 목록, 상단 바 중 편한 방식으로 볼 수 있어요.",
+      keywords: ["새 탭 바로가기", "새 탭 북마크", "크롬 북마크바", "북마크 폴더"],
+      title: "바로가기와 북마크",
+      navTitle: "바로가기와 북마크",
+    },
+    "newtab-frequent-sites": {
+      pageTitle: "자주 가는 사이트와 진행 카드: 사이트 고정, 보던 회차 이어 보기 | Lumno 도움말",
+      pageDescription:
+        "Lumno 새 탭에는 자주 가거나 최근에 간 사이트가 보여요. 최대 세 개까지 고정할 수 있고, 드라마나 연재 소설을 고정하면 다음 화로 넘어갈 때 카드도 따라옵니다.",
+      keywords: ["새 탭 자주 가는 사이트", "드라마 진도 기록", "웹소설 진도", "사이트 고정"],
+      title: "자주 가는 사이트와 진행 카드",
+      navTitle: "자주 가는 사이트·진행 카드",
+    },
+    "newtab-clock-zen": {
+      pageTitle: "시계와 Zen 모드: 검색창만 남긴 새 탭 | Lumno 도움말",
+      pageDescription: "Lumno 새 탭에 시계를 띄우거나, /zen을 입력해 검색창만 남겨 보세요.",
+      keywords: ["새 탭 시계", "미니멀 새 탭", "Zen 모드", "집중 새 탭"],
+      title: "시계와 Zen 모드",
+      navTitle: "시계와 Zen 모드",
+    },
+    "arc-command-bar": {
+      pageTitle: "Arc에서 Chrome, Dia, Edge로: 명령 바와 단축키 그대로 | Lumno 도움말",
+      pageDescription:
+        "Arc를 떠나 Chrome, Dia, Edge로 옮기셨나요? Lumno가 Arc 같은 명령 바를 되살려 줍니다. ⌘⇧K(또는 ⌘T)로 탭, 북마크, 방문 기록을 찾고 ⌥Q로 최근 탭을 전환하세요. Arc 단축키 대응표도 있어요.",
+      keywords: ["Arc 명령 바 대안", "Arc 브라우저 대안", "Arc에서 크롬으로", "Dia 명령 바", "Arc 단축키"],
+      title: "Arc에서 옮겨 왔다면",
+      navTitle: "Arc에서 옮겨 왔다면",
+      faq: [
+        {
+          question: "Lumno는 Arc와 관련이 있나요?",
+          answer: "아니요. Lumno는 Arc의 명령 바에서 영감을 받은 독립 오픈소스 프로젝트이며, Arc나 The Browser Company와는 관련이 없어요.",
+        },
+      ],
+    },
+    "browser-compatibility": {
+      pageTitle: "브라우저 호환성: Chrome, Edge, Dia, Brave, Firefox, Safari | Lumno 도움말",
+      pageDescription:
+        "Lumno는 Chrome, Edge, Brave, Arc, Vivaldi 등 Chromium 브라우저에서 모든 기능이 동작해요. Dia에서는 새 탭을 쓸 수 없고, Firefox 버전은 일부 기능이 빠져 있으며, Safari와 모바일 브라우저는 지원하지 않습니다.",
+      keywords: ["Lumno 호환성", "Dia 확장 프로그램", "Edge 확장 프로그램", "Firefox 버전", "Chromium 확장"],
+      title: "브라우저 호환성",
+      navTitle: "브라우저 호환성",
+    },
+    "privacy-data": {
+      pageTitle: "개인정보와 데이터: Lumno는 기기 안에서 동작하고 아무것도 수집하지 않아요 | Lumno 도움말",
+      pageDescription:
+        "Lumno에는 계정도 서버도 없어요. 탭, 북마크, 방문 기록은 기기에 그대로 남고 사용 데이터도 수집하지 않습니다. 기기 밖으로 나가는 요청과 브라우저·WebDAV 동기화 방식을 정리했어요.",
+      keywords: ["Lumno 개인정보", "브라우저 확장 개인정보", "크롬 확장 데이터", "WebDAV 동기화"],
+      title: "개인정보와 데이터",
+      navTitle: "개인정보와 데이터",
+    },
+    "security-open-source": {
+      pageTitle: "보안과 오픈소스: GPL-3.0 코드, 권한, Manifest V3 | Lumno 도움말",
+      pageDescription:
+        "Lumno는 GitHub에 GPL-3.0으로 공개된 오픈소스이며, 원격 코드 없이 Manifest V3로 만들어졌어요. 브라우저 권한을 각각 어디에 쓰는지 정리했습니다.",
+      keywords: ["Lumno 오픈소스", "Lumno 보안", "크롬 확장 권한", "Manifest V3"],
+      title: "보안과 오픈소스",
+      navTitle: "보안과 오픈소스",
+    },
+    "ratings-reviews": {
+      pageTitle: "평점과 소개 기사: Chrome 웹 스토어 리뷰와 언론 소개 | Lumno 도움말",
+      pageDescription: "Chrome 웹 스토어에서 Lumno의 평점과 리뷰, 그리고 Lumno를 소개한 글을 모았어요.",
+      keywords: ["Lumno 리뷰", "Lumno 평점", "크롬 명령 바 확장 리뷰"],
+      title: "평점과 소개 기사",
+      navTitle: "평점과 소개 기사",
+    },
+  },
+};
+
+export default content;

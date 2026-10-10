@@ -49,7 +49,8 @@ const escapeHtml = (value: string) =>
   value.replaceAll("&", "&amp;").replaceAll('"', "&quot;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
 
 // `⌘ ⇧ K`, `Ctrl + Shift + K`, `Tab`: inline code made only of key names renders as keycaps.
-const KEY_NAME = /^(?:[⌘⇧⌥⌃↩↑↓←→⌫]|Esc|Tab|Enter|Ctrl|Shift|Alt|Space|Backspace|[A-Z0-9])$/;
+// Includes the names keyboards print in German (Strg, Umschalt), French (Maj) and Spanish (Mayús).
+const KEY_NAME = /^(?:[⌘⇧⌥⌃↩↑↓←→⌫]|Esc|Tab|Enter|Ctrl|Strg|Shift|Umschalt|Maj|Mayús|Alt|Space|Backspace|[A-Z0-9])$/;
 function renderKeys(text: string): string | null {
   const keys = text.trim().split(/\s*\+\s*|\s+/).filter(Boolean);
   if (!keys.length || !keys.every((key) => KEY_NAME.test(key))) return null;

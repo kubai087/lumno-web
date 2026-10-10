@@ -181,3 +181,11 @@ test("the page list is always open on wide screens, folded only on phones", () =
   assert.match(shell, /const fitNav = \(\) => \{\s*if \(nav\) nav\.open = !narrow\.matches;/);
   assert.match(shell, /narrow\.addEventListener\("change", fitNav\);/);
 });
+
+test("the header links to the help center in the languages that have it", () => {
+  const header = readSource("src/components/site/SiteHeader.astro");
+  const links = readSource("src/components/navigation/HomeNavGhostLinks.tsx");
+  assert.match(header, /const helpHref = isGuideLocale\(locale\) \? getGuidePath\(locale\) : undefined;/);
+  assert.match(links, /value: "help" as const/);
+  assert.match(links, /analyticsEvent: "open_help_center"/);
+});

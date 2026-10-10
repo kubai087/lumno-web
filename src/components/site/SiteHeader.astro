@@ -1,4 +1,5 @@
 ---
+import { getGuideContent, getGuidePath, isGuideLocale } from "../../lib/guides";
 import HomeNavGhostLinks from "../navigation/HomeNavGhostLinks";
 import InstallMenu from "../navigation/InstallMenu";
 import LanguageMenu from "../onboarding/LanguageMenu";
@@ -53,6 +54,8 @@ const { locale, routeLanguageMap, analyticsScope = "home", handoff, keepInstall 
 const content = getHomeContent(locale);
 const homeHref = buildLocalizedPath(locale, "/");
 const releaseHref = buildLocalizedPath(locale, "/release/");
+const helpHref = isGuideLocale(locale) ? getGuidePath(locale) : undefined;
+const helpLabel = isGuideLocale(locale) ? getGuideContent(locale).ui.navLabel : undefined;
 const {
   chrome: chromeStoreVersion,
   edge: edgeStoreVersion,
@@ -79,6 +82,8 @@ const {
   <nav class="top-nav-actions" aria-label={content.navigationAria}>
     <HomeNavGhostLinks
       releaseHref={releaseHref}
+      helpHref={helpHref}
+      helpLabel={helpLabel}
       repositoryHref={GITHUB_URL}
       repositoryIssueHref={GITHUB_ISSUE_URL}
       repositoryPullRequestHref={GITHUB_PULL_REQUEST_URL}

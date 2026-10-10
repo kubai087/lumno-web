@@ -14,7 +14,7 @@ import "./home-nav-ghost-links.css";
  * entries marked data-nav-primary-only once the bar becomes the glass pill.
  */
 
-type NavGhostLinkValue = "community" | "release" | "repository" | "contact";
+type NavGhostLinkValue = "community" | "release" | "help" | "repository" | "contact";
 type RepositoryActionValue = "repository-issue" | "repository-pull-request";
 type ContactActionValue = "contact-x" | "contact-xiaohongshu";
 type MobileNavItemValue =
@@ -35,6 +35,9 @@ type NavGhostLink = {
 
 interface Props {
   releaseHref: string;
+  /** The help center; only languages that have one pass it. */
+  helpHref?: string;
+  helpLabel?: string;
   repositoryHref: string;
   repositoryIssueHref: string;
   repositoryPullRequestHref: string;
@@ -62,6 +65,8 @@ interface Props {
 
 export default function HomeNavGhostLinks({
   releaseHref,
+  helpHref,
+  helpLabel,
   repositoryHref,
   repositoryIssueHref,
   repositoryPullRequestHref,
@@ -111,6 +116,18 @@ export default function HomeNavGhostLinks({
       analyticsCategory: "navigation",
       analyticsLabel: "home_header_release",
     },
+    ...(helpHref && helpLabel
+      ? [
+          {
+            value: "help" as const,
+            label: helpLabel,
+            href: helpHref,
+            analyticsEvent: "open_help_center",
+            analyticsCategory: "navigation" as const,
+            analyticsLabel: "home_header_help",
+          },
+        ]
+      : []),
     {
       value: "repository",
       label: repositoryLabel,

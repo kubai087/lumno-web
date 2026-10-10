@@ -218,9 +218,12 @@ const {
       }
       navExitTimeout = window.setTimeout(finishNavExit, 120);
     };
+    // Set while a same-page link carries the reader back to the top: the pill stays away until then.
+    let returningToTop = false;
     const updateNav = () => {
       navFrame = 0;
-      const shouldSurface = window.scrollY > 0 && handoff.getBoundingClientRect().bottom <= 0;
+      if (returningToTop && window.scrollY <= 0) returningToTop = false;
+      const shouldSurface = !returningToTop && window.scrollY > 0 && handoff.getBoundingClientRect().bottom <= 0;
 
       if (shouldSurface) {
         // Coming straight back down: cancel the exit and keep the settled pill without replaying entry.
@@ -244,6 +247,50 @@ const {
       navFrame = window.requestAnimationFrame(updateNav);
     };
     updateNav();
+
+    /*
+     * A bar link to the page already open (the wordmark on the homepage, the
+     * release notes on the release page…) doesn't reload: the pill retracts and
+     * the page glides back to its top, starting at most a screen down so a long
+     * page still arrives quickly. Touching the page hands control back.
+     */
+    const samePath = (href: string) => {
+      const url = new URL(href, window.location.href);
+      const trim = (path: string) => path.replace(/\/$/, "");
+      return url.origin === window.location.origin && trim(url.pathname) === trim(window.location.pathname);
+    };
+    const returnToTop = () => {
+      if (window.scrollY <= 0) return;
+      returningToTop = true;
+      if (isSurfaced() && !body.classList.contains("is-nav-install-exiting")) exitNav();
+      if (reduceMotion()) {
+        window.scrollTo({ top: 0, behavior: "instant" });
+        return;
+      }
+      if (window.scrollY > window.innerHeight) window.scrollTo({ top: window.innerHeight, behavior: "instant" });
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    };
+    topNav.addEventListener("click", (event) => {
+      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      const link = event.target instanceof Element ? event.target.closest<HTMLAnchorElement>("a[href]") : null;
+      if (!link || link.target === "_blank" || !samePath(link.href)) return;
+      event.preventDefault();
+      link.blur();
+      returnToTop();
+    });
+    // Arriving from another help page (GuideShell.astro): retract the bar and glide up as one motion.
+    if (document.documentElement.dataset.navArrival === "glide") {
+      delete document.documentElement.dataset.navArrival;
+      returnToTop();
+    }
+    for (const type of ["wheel", "touchstart", "keydown"] as const) {
+      window.addEventListener(type, () => {
+        if (!returningToTop) return;
+        returningToTop = false;
+        scheduleNavUpdate();
+      }, { passive: true });
+    }
+
     window.addEventListener("scroll", scheduleNavUpdate, { passive: true });
     window.addEventListener("resize", scheduleNavUpdate);
     const navResizeObserver = new ResizeObserver(scheduleNavUpdate);
@@ -253,6 +300,42 @@ const {
 </script>
 
 <style is:global>
+  /*
+   * Moving between pages: the new page appears at once (no fade), and only the
+   * bar morphs from where it was (the glass pill, or scrolled out of view) to
+   * where it rests on the new page, so the switch reads as one motion even
+   * from halfway down the old page.
+   */
+  @view-transition {
+    navigation: auto;
+  }
+
+  .top-nav {
+    view-transition-name: site-nav;
+  }
+
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+
+  ::view-transition-group(site-nav) {
+    animation-duration: 320ms;
+    animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  ::view-transition-old(site-nav),
+  ::view-transition-new(site-nav) {
+    height: 100%;
+    animation-duration: 200ms;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    @view-transition {
+      navigation: none;
+    }
+  }
+
   .top-nav {
     position: absolute;
     top: 18px;
@@ -403,6 +486,8 @@ const {
     position: absolute;
     top: 50%;
     left: 50%;
+    /* Centred from the middle, so without this its width would stop at half the bar and squeeze the first link. */
+    width: max-content;
     align-items: center;
     gap: 2px;
     transform: translate(-50%, -50%);
@@ -491,7 +576,8 @@ const {
     min-width: 180px;
   }
 
-  @media (min-width: 761px) and (max-width: 840px) {
+  /* Below this the four entries (longest in English) would run into the language and install buttons. */
+  @media (min-width: 761px) and (max-width: 900px) {
     body.has-nav-install .top-nav-ghost-links {
       display: none;
     }

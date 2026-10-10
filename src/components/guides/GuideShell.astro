@@ -157,7 +157,23 @@ const searchIndexHref = `${buildLocalizedPath(locale, "/guides/")}search-index.j
       // Start at most about a screen down, so even a long page arrives quickly.
       const start = Math.min(from, window.innerHeight, document.documentElement.scrollHeight - window.innerHeight);
       window.scrollTo({ top: start, behavior: "instant" });
-      requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: "smooth" }));
+      /*
+       * The bar must not move during the swap: no morph between the pages and
+       * no drop-in on this one. Where the banner is already out of view it
+       * shows as the settled glass pill, as it was on the last page; the site
+       * header then retracts it while it glides the page up (data-nav-arrival).
+       */
+      const nav = document.querySelector(".top-nav");
+      const banner = document.querySelector(".guide__banner");
+      if (nav) {
+        nav.style.viewTransitionName = "none";
+        window.setTimeout(() => nav.style.removeProperty("view-transition-name"), 1000);
+        if (banner && banner.getBoundingClientRect().bottom <= 0) {
+          nav.removeAttribute("data-nav-surface");
+          document.body.classList.add("has-nav-install", "is-nav-install-settled");
+        }
+      }
+      document.documentElement.dataset.navArrival = "glide";
     }
   })();
 
@@ -228,6 +244,9 @@ const searchIndexHref = `${buildLocalizedPath(locale, "/guides/")}search-index.j
         sessionStorage.setItem("lumno-guide-nav-scroll", String(document.querySelector(".guide-nav").scrollTop));
         if (!url.hash && !reduceMotion) sessionStorage.setItem("lumno-guide-page-scroll", String(Math.round(window.scrollY)));
       } catch (_error) {}
+      // Between help pages the bar stays put instead of morphing (see the arrival script).
+      const nav = document.querySelector(".top-nav");
+      if (nav) nav.style.viewTransitionName = "none";
       window.location.href = url.href;
     };
     document.addEventListener("click", (event) => {

@@ -21,9 +21,9 @@
   navigation: auto;
 }
 
-::view-transition-group(*),
-::view-transition-old(*),
-::view-transition-new(*) {
+/* The page itself switches at once; the site bar keeps its own morph (SiteHeader.astro). */
+::view-transition-old(root),
+::view-transition-new(root) {
   animation: none;
 }
 

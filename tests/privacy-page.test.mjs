@@ -50,7 +50,7 @@ test("site pages hand the top bar over like the homepage", () => {
 
   // Clear at the top, scrolls away with the page's opening, returns as glass once it has left the screen.
   assert.match(header, /data-nav-surface=\{keepInstall \? "hero" : undefined\}/);
-  assert.match(header, /const shouldSurface = window\.scrollY > 0 && handoff\.getBoundingClientRect\(\)\.bottom <= 0;/);
+  assert.match(header, /const shouldSurface = !returningToTop && window\.scrollY > 0 && handoff\.getBoundingClientRect\(\)\.bottom <= 0;/);
   assert.match(layout, /<SiteHeader[\s\S]*?handoff=\{navHandoff\}[\s\S]*?keepInstall/);
   // The clear state must win over the install-keeping pages' glass state.
   assert.match(header, /\.top-nav\[data-nav-surface="hero"\],\s*body\.has-nav-install \.top-nav\[data-nav-surface="hero"\] \{\s*position: absolute;/);

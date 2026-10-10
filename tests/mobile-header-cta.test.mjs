@@ -70,7 +70,7 @@ test("homepage glass navigation enters after the hero primary CTA has scrolled a
   assert.match(source, /<div class="top-nav-install-slot">[\s\S]*?<InstallMenu/);
   assert.match(
     source,
-    /const shouldSurface = window\.scrollY > 0 && handoff\.getBoundingClientRect\(\)\.bottom <= 0;[\s\S]*?if \(!isSurfaced\(\)\) enterNav\(\);/,
+    /const shouldSurface = !returningToTop && window\.scrollY > 0 && handoff\.getBoundingClientRect\(\)\.bottom <= 0;[\s\S]*?if \(!isSurfaced\(\)\) enterNav\(\);/,
   );
   assert.match(
     source,
@@ -310,7 +310,7 @@ test("homepage navbar animates in the community action and reuses the CTA dialog
   assert.doesNotMatch(source, /\.top-nav-more-dropdown[^{]*\{[^}]*backdrop-filter:/);
   assert.match(
     source,
-    /@media \(min-width:\s*761px\) and \(max-width:\s*840px\)[\s\S]*?body\.has-nav-install \.top-nav-ghost-links\s*\{[\s\S]*?display:\s*none;[\s\S]*?body\.has-nav-install \.top-nav-more-menu\s*\{[\s\S]*?display:\s*block;/,
+    /@media \(min-width:\s*761px\) and \(max-width:\s*900px\)[\s\S]*?body\.has-nav-install \.top-nav-ghost-links\s*\{[\s\S]*?display:\s*none;[\s\S]*?body\.has-nav-install \.top-nav-more-menu\s*\{[\s\S]*?display:\s*block;/,
     "the primary install state should collapse the centered links before they overlap the right actions",
   );
   assert.match(
@@ -405,3 +405,17 @@ test("community entries open the WeChat group in Chinese and Discord everywhere 
   const payload = fs.readFileSync(path.join(workspaceRoot, "src/pages/community-links.json.ts"), "utf8");
   assert.match(payload, /SUPPORTED_UI_LANGUAGES\.map\(\(locale\) => \[locale, getCommunityChannel\(locale\)\]\)/);
 });
+
+test("bar links to the open page glide back to the top, and the bar morphs between pages", () => {
+  const header = fs.readFileSync(path.join(workspaceRoot, "src/components/site/SiteHeader.astro"), "utf8");
+  // Same page: no reload; the pill retracts and the page glides up from at most a screen down.
+  assert.match(header, /if \(!link \|\| link\.target === "_blank" \|\| !samePath\(link\.href\)\) return;[\s\S]*?event\.preventDefault\(\);[\s\S]*?returnToTop\(\);/);
+  assert.match(header, /returningToTop = true;\s*if \(isSurfaced\(\) && !body\.classList\.contains\("is-nav-install-exiting"\)\) exitNav\(\);/);
+  assert.match(header, /window\.scrollTo\(\{ top: window\.innerHeight, behavior: "instant" \}\)[\s\S]*?window\.scrollTo\(\{ top: 0, behavior: "smooth" \}\)/);
+  assert.match(header, /const shouldSurface = !returningToTop && window\.scrollY > 0/);
+  // Across pages: the page swaps at once and only the bar morphs.
+  assert.match(header, /@view-transition \{\s*navigation: auto;\s*\}[\s\S]*?\.top-nav \{\s*view-transition-name: site-nav;/);
+  assert.match(header, /::view-transition-old\(root\),\s*::view-transition-new\(root\) \{\s*animation: none;/);
+  assert.match(header, /@media \(prefers-reduced-motion: reduce\) \{\s*@view-transition \{\s*navigation: none;/);
+});
+

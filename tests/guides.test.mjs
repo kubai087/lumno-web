@@ -149,12 +149,15 @@ test("moving between pages switches at once, then glides to the top", () => {
   assert.match(shell, /if \(target\) goTo\(target\.href\);/);
   // The old offset carries over, the new page starts there and scrolls up.
   assert.match(shell, /sessionStorage\.setItem\("lumno-guide-page-scroll"/);
-  assert.match(shell, /behavior: "instant"[\s\S]*?window\.scrollTo\(\{ top: 0, behavior: "smooth" \}\)/);
+  assert.match(shell, /window\.scrollTo\(\{ top: start, behavior: "instant" \}\);/);
+  // The bar holds still through the swap (no morph, no drop-in); the site header retracts it while gliding up.
+  assert.match(shell, /nav\.style\.viewTransitionName = "none";[\s\S]*?document\.body\.classList\.add\("has-nav-install", "is-nav-install-settled"\);[\s\S]*?document\.documentElement\.dataset\.navArrival = "glide";/);
+  assert.match(readSource("src/components/site/SiteHeader.astro"), /if \(document\.documentElement\.dataset\.navArrival === "glide"\) \{[\s\S]*?returnToTop\(\);/);
   // The page list keeps its scroll position across pages.
   assert.match(shell, /sessionStorage\.getItem\("lumno-guide-nav-scroll"\)/);
   // No blank flash, no fade.
   assert.match(styles, /@view-transition \{\s*navigation: auto;\s*\}/);
-  assert.match(styles, /::view-transition-new\(\*\) \{\s*animation: none;/);
+  assert.match(styles, /::view-transition-new\(root\) \{\s*animation: none;/);
   // Reduced motion: no glide.
   assert.match(styles, /@media \(prefers-reduced-motion: reduce\)/);
   assert.match(shell, /prefers-reduced-motion: reduce/);

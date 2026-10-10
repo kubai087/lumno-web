@@ -212,6 +212,33 @@ const searchIndexHref = `${buildLocalizedPath(locale, "/help/")}search-index.jso
   )}
 </div>
 
+{sections.length > 0 && (
+  <>
+    {/* Narrower screens hide the outline column; a pill at the bottom opens the same list as a sheet. */}
+    <button type="button" class="guide-outline-pill" data-guide-outline-open aria-haspopup="dialog">
+      <i class="ri-list-check" aria-hidden="true"></i>
+      <span class="guide-outline-pill__label">{ui.tocLabel}</span>
+      <span class="guide-outline-pill__current" data-guide-outline-current set:html={marked.parseInline(sections[0].title)} />
+      <i class="ri-arrow-up-s-line" aria-hidden="true"></i>
+    </button>
+    <dialog class="guide-outline-sheet" aria-label={ui.tocLabel}>
+      <div class="guide-outline-sheet__head">
+        <p class="guide-outline-sheet__title">{ui.tocLabel}</p>
+        <button type="button" class="guide-outline-sheet__close" data-guide-outline-close aria-label={ui.closeLabel}>
+          <i class="ri-close-line" aria-hidden="true"></i>
+        </button>
+      </div>
+      <ol>
+        {sections.map((section) => (
+          <li>
+            <a href={`#${section.id}`} data-guide-toc={section.id} set:html={marked.parseInline(section.title)} />
+          </li>
+        ))}
+      </ol>
+    </dialog>
+  </>
+)}
+
 <dialog class="guide-lightbox" aria-label={ui.zoomLabel}>
   <img alt="" />
   <button type="button" class="guide-lightbox__close" aria-label={ui.closeLabel}>
@@ -268,6 +295,9 @@ const searchIndexHref = `${buildLocalizedPath(locale, "/help/")}search-index.jso
           if (link.dataset.guideToc === current.id) link.setAttribute("aria-current", "location");
           else link.removeAttribute("aria-current");
         });
+        const label = document.querySelector("[data-guide-outline-current]");
+        const source = links.find((link) => link.dataset.guideToc === current.id);
+        if (label && source && label.innerHTML !== source.innerHTML) label.innerHTML = source.innerHTML;
       };
       const schedule = () => {
         if (!frame) frame = requestAnimationFrame(update);
@@ -275,6 +305,19 @@ const searchIndexHref = `${buildLocalizedPath(locale, "/help/")}search-index.jso
       window.addEventListener("scroll", schedule, { passive: true });
       window.addEventListener("resize", schedule);
       update();
+    }
+
+    // The outline sheet: opens from the pill, closes on a section link, the close button,
+    // a tap on the backdrop or Esc. Links keep their own jump to the heading.
+    const sheet = document.querySelector(".guide-outline-sheet");
+    const pill = document.querySelector("[data-guide-outline-open]");
+    if (sheet && pill && typeof sheet.showModal === "function") {
+      pill.addEventListener("click", () => sheet.showModal());
+      sheet.addEventListener("click", (event) => {
+        const target = event.target instanceof Element ? event.target : null;
+        if (!target) return;
+        if (target === sheet || target.closest("[data-guide-outline-close]") || target.closest("a[href^='#']")) sheet.close();
+      });
     }
 
     // Phones fold the page list behind the contents bar; wider screens always show it (they

@@ -791,16 +791,158 @@
   cursor: pointer;
 }
 
+/*
+ * The outline on narrower screens (sspai's pattern): a quiet pill at the bottom with the
+ * section being read, opening the list as a sheet from the bottom edge.
+ */
+.guide-outline-pill {
+  display: none;
+}
+
+.guide-outline-sheet {
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
 @media (max-width: 1240px) {
   .guide {
     grid-template-columns: 220px minmax(0, 720px);
     grid-template-areas:
       "nav banner"
       "nav article";
+    padding-bottom: 136px;
   }
 
   .guide__toc {
     display: none;
+  }
+
+  .guide-outline-pill {
+    position: fixed;
+    left: 50%;
+    bottom: max(20px, calc(env(safe-area-inset-bottom) + 12px));
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    max-width: min(440px, calc(100vw - 32px));
+    height: 44px;
+    padding: 0 14px 0 16px;
+    border: 1px solid var(--guide-line);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.92);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.08), 0 1px 2px rgba(15, 23, 42, 0.06);
+    color: var(--guide-muted);
+    font: inherit;
+    font-size: 14px;
+    transform: translateX(-50%);
+    cursor: pointer;
+  }
+
+  .guide-outline-pill > i {
+    flex: none;
+    font-size: 16px;
+  }
+
+  .guide-outline-pill__label {
+    flex: none;
+  }
+
+  .guide-outline-pill__current {
+    overflow: hidden;
+    min-width: 0;
+    color: var(--guide-ink);
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .guide-outline-sheet[open] {
+    position: fixed;
+    inset: auto 0 0;
+    display: flex;
+    flex-direction: column;
+    width: min(100%, 560px);
+    max-height: min(70vh, 560px);
+    margin: 0 auto;
+    padding: 6px 0 max(12px, env(safe-area-inset-bottom));
+    border-radius: 20px 20px 0 0;
+    background: var(--surface);
+    box-shadow: 0 -8px 32px rgba(15, 23, 42, 0.12);
+    color: var(--guide-ink);
+    animation: guide-outline-sheet-in 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .guide-outline-sheet::backdrop {
+    background: rgba(15, 23, 42, 0.24);
+  }
+
+  .guide-outline-sheet__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px 6px 24px;
+  }
+
+  .guide-outline-sheet__title {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  .guide-outline-sheet__close {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border: 0;
+    border-radius: 999px;
+    background: transparent;
+    color: var(--guide-muted);
+    font-size: 18px;
+    cursor: pointer;
+  }
+
+  .guide-outline-sheet ol {
+    overflow-y: auto;
+    margin: 0;
+    padding: 4px 12px 8px;
+    list-style: none;
+  }
+
+  .guide-outline-sheet a {
+    display: block;
+    padding: 12px;
+    border-radius: 10px;
+    color: var(--guide-text);
+    font-size: 15px;
+    line-height: 1.45;
+    text-decoration: none;
+  }
+
+  .guide-outline-sheet a[aria-current] {
+    background: var(--guide-row-current);
+    color: var(--guide-accent);
+    font-weight: 600;
+  }
+}
+
+@keyframes guide-outline-sheet-in {
+  from {
+    transform: translateY(24px);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .guide-outline-sheet[open] {
+    animation: none;
   }
 }
 

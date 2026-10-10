@@ -95,6 +95,11 @@ const searchIndexHref = `${buildLocalizedPath(locale, "/guides/")}search-index.j
         const saved = Number(sessionStorage.getItem("lumno-guide-nav-scroll"));
         if (saved) document.querySelector(".guide-nav").scrollTop = saved;
       } catch (_error) {}
+      const nav = document.querySelector(".guide-nav");
+      const markMore = () => nav.toggleAttribute("data-more", nav.scrollTop + nav.clientHeight < nav.scrollHeight - 1);
+      markMore();
+      nav.addEventListener("scroll", markMore, { passive: true });
+      window.addEventListener("resize", markMore);
     </script>
   </aside>
 

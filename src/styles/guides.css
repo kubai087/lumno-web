@@ -185,10 +185,21 @@
   font-size: 13px;
 }
 
+/*
+ * On short screens the list scrolls inside the sidebar. The padding lets the last
+ * entry scroll clear of the edge, and the fade over it says there is more below.
+ */
 .guide-nav {
   min-height: 0;
   overflow-y: auto;
+  padding-bottom: 12px;
   scrollbar-width: none;
+}
+
+/* Only while more of the list waits below: fade its bottom edge instead of cutting an item in half. */
+.guide-nav[data-more] {
+  -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 40px), transparent);
+  mask-image: linear-gradient(to bottom, #000 calc(100% - 40px), transparent);
 }
 
 .guide-nav__toggle {
@@ -200,8 +211,8 @@
  * sub-section is a small grey label; its pages hang off an indented guide line.
  */
 .guide-nav__group + .guide-nav__group {
-  margin-top: 16px;
-  padding-top: 16px;
+  margin-top: 14px;
+  padding-top: 14px;
   border-top: 1px solid var(--guide-line);
 }
 
@@ -247,10 +258,6 @@
 
 .guide-nav__list--nested a {
   font-size: 13.5px;
-}
-
-.guide-nav li + li {
-  margin-top: 2px;
 }
 
 /* No backgrounds: hover darkens the text; the current page takes the accent with a short bar beside it. */
@@ -708,7 +715,11 @@
     width: 100%;
   }
 
-  .guide-nav {
+  .guide-nav,
+  .guide-nav[data-more] {
+    -webkit-mask-image: none;
+    mask-image: none;
+    padding-bottom: 0;
     grid-area: nav;
     position: sticky;
     top: calc(max(10px, env(safe-area-inset-top)) + 66px);

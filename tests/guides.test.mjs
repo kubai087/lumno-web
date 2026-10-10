@@ -203,3 +203,10 @@ test("the help center ships in the extension's languages and switching language 
     }
   }
 });
+
+test("the page list scrolls to its last item without clipping it", () => {
+  const styles = readSource("src/styles/guides.css");
+  // The bottom fades only while more of the list waits below.
+  assert.match(styles, /\.guide-nav\[data-more\] \{[\s\S]*?mask-image: linear-gradient/);
+  assert.match(readSource("src/components/guides/GuideShell.astro"), /nav\.toggleAttribute\("data-more", nav\.scrollTop \+ nav\.clientHeight < nav\.scrollHeight - 1\)/);
+});

@@ -1,29 +1,29 @@
-Com dezenas de guias abertas e centenas de favoritos, achar uma página pode demorar mais do que abrir. O Lumno junta tudo numa só caixa: aperte um atalho, digite algumas letras, e tudo o que está aberto, salvo e visitado aparece junto.
+Com dezenas de guias abertas e centenas de favoritos, encontrar uma página pode levar mais tempo do que abri-la. O Lumno reúne tudo em uma única caixa de pesquisa: pressione um atalho, digite algumas letras e veja juntos suas guias abertas, seus favoritos e seu histórico.
 
 ## Abrir a caixa de pesquisa {#open}
 
-Aperte `⌘ ⇧ K` (`Ctrl + Shift + K` no Windows e no Linux) em qualquer página. A caixa aparece no meio da tela. Aperte `Esc` ou clique fora para fechar.
+Pressione `⌘ ⇧ K` (`Ctrl + Shift + K` no Windows e no Linux) em qualquer página. A caixa de pesquisa aparece no centro da tela. Para fechá-la, pressione `Esc` ou clique fora da caixa.
 
-Em páginas restritas, como as configurações `chrome://` ou as lojas de extensões, os navegadores não deixam extensões mostrarem nada. Nesse caso, o Lumno segue a opção "Restricted page behavior" das configurações.
+Em páginas restritas, como as configurações `chrome://` ou as lojas de extensões, os navegadores não permitem que extensões exibam conteúdo. Nessas páginas, o Lumno aplica a opção "Restricted page behavior" das configurações.
 
-## Tudo numa lista só {#results}
+## Resultados da pesquisa {#results}
 
-A etiqueta ao lado de cada resultado mostra de onde ele vem:
+O rótulo ao lado de cada resultado indica sua origem:
 
-- Opened: uma guia que você tem aberta. Aperte Enter para ir até ela em vez de abrir uma duplicada.
-- Bookmark: uma página da sua barra de favoritos ou das suas pastas, com a pasta indicada.
-- Frequent e History: os sites que você mais visita e o seu histórico.
+- Opened: uma guia aberta no momento. Pressione Enter para alternar para ela em vez de abrir a página novamente.
+- Bookmark: uma página da barra de favoritos ou das suas pastas; a pasta também é exibida.
+- Frequent e History: os sites que você mais visita e seu histórico de navegação.
 
-As sugestões do seu mecanismo de pesquisa também aparecem; aperte Enter para pesquisar. Os resultados que você mais escolhe sobem para o topo.
+As sugestões do seu mecanismo de pesquisa também são exibidas; pressione Enter para pesquisar. Os resultados que você escolhe com mais frequência aparecem mais acima.
 
-![O Lumno aberto numa página em branco: ao digitar chrome aparecem uma guia aberta do GitHub, sugestões de pesquisa, um favorito e sites mais visitados](search "Digite chrome: o que está aberto, salvo e visitado, junto")
+![O Lumno aberto em uma página em branco: ao digitar chrome aparecem uma guia aberta do GitHub, sugestões de pesquisa, um favorito e sites mais visitados](search "Ao digitar chrome, guias abertas, favoritos e sites frequentes aparecem juntos")
 
-Duas teclas úteis: `⌥ ↩` abre na guia atual e `⇧ ↩` abre outra cópia de uma guia aberta. Todas as teclas estão em [Atalhos de teclado](../keyboard-shortcuts/#command-bar-keys).
+Outras teclas úteis: `⌥ ↩` abre um resultado na guia atual, e `⇧ ↩` abre novamente uma guia que já está aberta. Para ver todas as teclas, consulte [Atalhos de teclado](../keyboard-shortcuts/#command-bar-keys).
 
-## Pesquisar só nas guias abertas {#open-tabs}
+## Pesquisar apenas nas guias abertas {#open-tabs}
 
-Quando há guias demais, filtre: aperte `Tab` uma vez com a caixa vazia. "Search open tabs" aparece à esquerda e só as guias abertas ficam na lista. Digite para filtrar, Enter para ir até a guia e `Esc` para sair.
+Se houver muitas guias abertas, você pode restringir a pesquisa: pressione `Tab` uma vez com a caixa vazia. "Search open tabs" aparece à esquerda, e apenas as guias abertas permanecem na lista. Digite para filtrar, pressione Enter para alternar e `Esc` para sair.
 
-![A caixa de pesquisa mostra "Search open tabs" à esquerda, com só as guias abertas na lista](opentabs "Pesquisar só nas guias abertas")
+![A caixa de pesquisa mostra "Search open tabs" à esquerda, com apenas as guias abertas na lista](opentabs "Pesquisar apenas nas guias abertas")
 
-Para pesquisar só em favoritos, histórico ou sites mais visitados, aperte `Tab` duas vezes com a caixa vazia e escolha no painel de escopo de pesquisa.
+Para pesquisar apenas em favoritos, no histórico ou nos sites frequentes, pressione `Tab` duas vezes com a caixa vazia e escolha uma opção no painel de escopo de pesquisa.

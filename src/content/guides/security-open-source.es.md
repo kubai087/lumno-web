@@ -1,23 +1,23 @@
-Cada línea del código de Lumno es pública, así que cualquiera puede ver qué hace la extensión y qué no.
+Todo el código de Lumno es público, así que cualquier persona puede comprobar qué hace la extensión y qué no hace.
 
 ## Código abierto {#open-source}
 
 - Código: [github.com/kubai087/lumno-extension](https://github.com/kubai087/lumno-extension)
 - Licencia: GPL-3.0
-- ¿Has encontrado un problema? Abre una incidencia en GitHub
+- Informar de un problema: abre una incidencia (issue) en GitHub
 
-Cada versión de las tiendas se compila a partir de ese mismo código, y los cambios se recogen en las [novedades](/es/release/) y en GitHub Releases.
+Cada versión publicada en las tiendas se compila a partir de este mismo código. Los cambios se detallan en las [notas de la versión](/es/release/) y en GitHub Releases.
 
-## Diseñado para ser seguro {#design}
+## Seguridad desde el diseño {#design}
 
-- Manifest V3: los navegadores no dejan que las extensiones Manifest V3 descarguen y ejecuten código remoto, así que todo el código de Lumno está en el paquete revisado.
-- Sin servidores: sin sistema de cuentas y sin ningún sitio donde se guarden tus datos.
-- Solo los permisos necesarios, y ninguno opcional.
-- Tu contraseña de aplicación de WebDAV se queda en tu dispositivo y nunca pasa por la sincronización del navegador.
+- Manifest V3: los navegadores no permiten que las extensiones Manifest V3 descarguen y ejecuten código remoto, por lo que todo el código de Lumno está incluido en el paquete revisado.
+- Sin servidores: no hay sistema de cuentas ni ningún lugar donde se almacenen tus datos.
+- Permisos mínimos: Lumno solo solicita los permisos necesarios y ningún permiso opcional.
+- Tu contraseña de aplicación de WebDAV se guarda solo en tu dispositivo y nunca se sincroniza a través del navegador.
 
-## Para qué sirve cada permiso {#permissions}
+## Uso de cada permiso {#permissions}
 
-| Permiso | Para qué se usa |
+| Permiso | Uso |
 | --- | --- |
 | `tabs`, `tabGroups` | Buscar, cambiar y restaurar pestañas; capturar las vistas previas del selector |
 | `history` | Buscar en tu historial en tu dispositivo |
@@ -25,8 +25,8 @@ Cada versión de las tiendas se compila a partir de ese mismo código, y los cam
 | `topSites` | Mostrar tus sitios más visitados en la nueva pestaña |
 | `storage`, `unlimitedStorage` | Guardar ajustes, iconos y fondos |
 | `alarms` | Comprobar periódicamente el estado de la sincronización WebDAV |
-| `search` | Pasar las búsquedas a tu buscador predeterminado |
+| `search` | Enviar búsquedas a tu buscador predeterminado |
 | `favicon` | Mostrar iconos de sitios |
-| `scripting` y acceso a todos los sitios | Mostrar la barra de comandos en las páginas, responder a atajos, acciones de texto e imagen en imagen |
+| `scripting` y acceso a todos los sitios | Mostrar la barra de comandos en las páginas, responder a los atajos y ofrecer las acciones sobre la selección y la imagen en imagen |
 
-El acceso a todos los sitios solo se usa para mostrar la barra de comandos y funciones parecidas en las páginas. Lumno no lee ni sube el contenido de las páginas de forma masiva.
+El acceso a todos los sitios se usa solo para mostrar la barra de comandos y funciones similares en las páginas. Lumno no lee ni sube el contenido de las páginas de forma masiva.

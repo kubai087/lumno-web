@@ -1,40 +1,40 @@
-Neuer Computer oder mehrere Browser gleichzeitig? Deine Shortcuts, Hintergründe und Einstellungen können mitkommen. Lumno hat keine eigenen Server, deshalb nutzt die Synchronisierung zwei Dinge, die du schon hast: die Synchronisierung deines Browsers und einen eigenen WebDAV-Server.
+Wenn du mehrere Computer oder Browser verwendest, können deine Shortcuts, Hintergründe und Einstellungen mitkommen. Lumno hat keine eigenen Server und nutzt für die Synchronisierung deshalb zwei Wege, die du bereits hast: die Synchronisierung deines Browsers und deinen eigenen WebDAV-Server.
 
-## Browser-Synchronisierung: nichts zu tun {#browser-sync}
+## Browser-Synchronisierung: keine Einrichtung nötig {#browser-sync}
 
-Bist du in deinem Browser angemeldet und die Synchronisierung ist an, folgen dir Lumnos Einstellungen automatisch: Design, Suchmaschinen, Shortcuts, angeheftete Seitenkarten, die Sperrliste sowie deine Hintergrundwahl und Bildlinks.
+Wenn du in deinem Browser angemeldet bist und die Synchronisierung aktiviert ist, werden Lumnos Einstellungen automatisch synchronisiert. Dazu gehören Design, Suchmaschinen, Shortcuts, angeheftete Websitekarten, die Sperrliste sowie deine Hintergrundauswahl und Bildlinks.
 
-Hochgeladene Icons und lokale Hintergründe sind für die Browser-Synchronisierung zu groß. Sollen sie mit, nutze WebDAV.
+Hochgeladene Symbole und lokale Hintergründe sind für die Browser-Synchronisierung zu groß. Um auch diese zu synchronisieren, verwende WebDAV.
 
-## WebDAV-Sync: auch Icons und Hintergründe {#webdav}
+## WebDAV-Synchronisierung: auch Symbole und Hintergründe {#webdav}
 
-WebDAV-Sync ist in der Beta und standardmäßig aus. Eingeschaltet landen deine vollständigen Einstellungen, hochgeladenen Shortcut-Icons und eigenen Hintergründe auf dem Server deiner Wahl.
+Die WebDAV-Synchronisierung befindet sich in der Betaphase und ist standardmäßig deaktiviert. Wenn sie aktiviert ist, werden deine vollständigen Einstellungen, hochgeladenen Shortcut-Symbole und eigenen Hintergründe auf einem Server deiner Wahl gespeichert.
 
-1. Öffne Lumnos Einstellungen, geh zu „Account & sync“ und dann zu WebDAV.
-2. Klick auf „Add WebDAV“ und trag Serveradresse, Sync-Ordner, Benutzernamen und App-Passwort ein.
-3. Klick bei Bedarf auf „Test connectivity“ und dann auf „Save and turn on sync“.
+1. Öffne die Einstellungen von Lumno und gehe zu „Account & sync“ → WebDAV.
+2. Klicke auf „Add WebDAV“ und gib Serveradresse, Sync-Ordner, Benutzernamen und App-Passwort ein.
+3. Klicke optional auf „Test connectivity“ und anschließend auf „Save and turn on sync“.
 
-Füg die Verbindung auf jedem Gerät hinzu. Benutzername und Passwort bleiben auf dem jeweiligen Computer und laufen nie über die Browser-Synchronisierung.
+Füge die Verbindung auf jedem Gerät separat hinzu. Benutzername und Passwort werden nur auf dem jeweiligen Computer gespeichert und nie über die Browser-Synchronisierung übertragen.
 
-## Wo du die Daten ablegst {#hosts}
+## Einen Server auswählen {#hosts}
 
-Getestet wurde Lumno mit selbst gehostetem Nextcloud, mit WebDAV-Servern auf Basis von Apache, nginx, rclone und WsgiDAV sowie mit Nutstore. Gehostete Dienste und NAS-Geräte wie Synology sollten funktionieren, wenn sie Standard-WebDAV unterstützen, sind aber noch nicht geprüft.
+Lumno wurde mit selbst gehostetem Nextcloud, mit WebDAV-Servern auf Basis von Apache, nginx, rclone und WsgiDAV sowie mit Nutstore (坚果云) getestet. Gehostete Dienste und NAS-Geräte wie Synology sollten funktionieren, sofern sie Standard-WebDAV unterstützen, wurden aber noch nicht getestet.
 
-Nimm ein eigenes App-Passwort für Lumno, wenn dein Dienst das anbietet, statt deines Hauptpassworts.
+Wenn dein Dienst App-Passwörter anbietet, erstelle ein eigenes App-Passwort für Lumno, anstatt dein Hauptpasswort zu verwenden.
 
-## Auf deinem zweiten Computer {#second-device}
+## Einen weiteren Computer einrichten {#second-device}
 
-Füg denselben Server, denselben Ordner und dasselbe Konto hinzu. Liegen auf dem Server schon Daten, fragt Lumno, welche Version gelten soll – meist wählst du „Use server version“. Bevor etwas ersetzt wird, legt Lumno eine vollständige Sicherung der Einstellungen dieses Computers an.
+Füge eine Verbindung mit demselben Server, demselben Ordner und demselben Konto hinzu. Wenn sich bereits Daten auf dem Server befinden, fragt Lumno, welche Version verwendet werden soll; in den meisten Fällen wählst du „Use server version“. Bevor Daten ersetzt werden, erstellt Lumno eine vollständige Sicherung der Einstellungen dieses Computers.
 
-Danach werden Änderungen auf beiden Seiten automatisch zusammengeführt. Ändern zwei Computer dasselbe, etwa die Shortcuts, zeigt die Karte einen Konflikt. Klick auf „Show differences“, sieh dir an, was jede Seite geändert hat, und wähl eine aus.
+Danach werden Änderungen auf beiden Computern automatisch zusammengeführt. Wenn beide Computer dieselbe Einstellung ändern, zum Beispiel die Shortcuts, zeigt die Karte einen Konflikt an. Klicke auf „Show differences“, um die Änderungen beider Seiten zu vergleichen, und wähle dann die Version aus, die du behalten möchtest.
 
 ## Was nicht synchronisiert wird {#not-synced}
 
-- Verlauf, Lesezeichen und offene Tabs: Die synchronisiert dein Browser wie gewohnt.
-- Dein WebDAV-Benutzername und -Passwort: Jedes Gerät speichert seine eigenen.
+- Verlauf, Lesezeichen und offene Tabs: Diese synchronisiert dein Browser wie gewohnt.
+- Dein WebDAV-Benutzername und -Passwort: Jedes Gerät speichert eigene Zugangsdaten.
 
-Schaltest du WebDAV aus oder entfernst die Verbindung, bleiben die Dateien auf deinem Server; lösch sie dort, wenn du willst. WebDAV ist nicht Ende-zu-Ende-verschlüsselt, der Administrator des Servers kann die Dateien also lesen.
+Wenn du WebDAV deaktivierst oder die Verbindung entfernst, bleiben die Dateien auf deinem Server erhalten. Bei Bedarf kannst du sie dort löschen. Die WebDAV-Synchronisierung ist nicht Ende-zu-Ende-verschlüsselt, daher kann der Administrator des Servers die Dateien lesen.
 
 ## Exportieren und importieren {#export}
 
-Lieber ohne Synchronisierung? Exportier deine Konfiguration in Lumnos Einstellungen als Datei und importier sie auf dem anderen Computer. Die Datei enthält deine Einstellungen, nicht deine Bilder.
+Wenn du keine Synchronisierung verwenden möchtest, kannst du deine Konfiguration in den Einstellungen von Lumno als Datei exportieren und auf einem anderen Computer importieren. Die Datei enthält deine Einstellungen, aber keine Bilder.

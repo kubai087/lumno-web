@@ -30,9 +30,9 @@ const content: GuideLocaleContent = {
     searchPlaceholder: "Buscar en la ayuda",
     searchLabel: "Buscar en el centro de ayuda",
     searchEmpty: "No hay resultados",
-    stuckText: "¿Sigues atascado? Pregunta en GitHub o escribe en X.",
+    stuckText: "¿Todavía tienes dudas? Pregunta en GitHub o contáctanos en X.",
     stuckPrimary: "Preguntar en GitHub",
-    stuckSecondary: "Escribir en X",
+    stuckSecondary: "Contactar en X",
   },
   pages: {
     "what-is-lumno": {
@@ -59,12 +59,20 @@ const content: GuideLocaleContent = {
       navTitle: "Lo que Lumno no hace",
     },
     "use-cases": {
-      pageTitle: "Para quién es Lumno: demasiadas pestañas, adiós a Arc, desarrollo y escritura | Ayuda de Lumno",
+      pageTitle: "Casos de uso de Lumno: muchas pestañas, cambio desde Arc, desarrollo y escritura | Ayuda de Lumno",
       pageDescription:
-        "Donde más ayuda Lumno: decenas de pestañas abiertas, el paso de Arc a Chrome o Dia, desarrolladores entre documentación y GitHub, investigación y escritura, preguntas rápidas a la IA y una nueva pestaña tranquila.",
+        "Usos habituales de Lumno, paso a paso: decenas de pestañas abiertas, el cambio de Arc a Chrome o Dia, la consulta de documentación y GitHub, la investigación y la escritura, las preguntas a la IA y una nueva pestaña tranquila.",
       keywords: ["casos de uso de Lumno", "demasiadas pestañas", "alternativa a Arc", "extensión de navegador para desarrolladores", "atajo para preguntar a la IA"],
       title: "Casos de uso",
       navTitle: "Casos de uso",
+    },
+    faq: {
+      pageTitle: "Preguntas frecuentes sobre Lumno: atajos, páginas restringidas, nueva pestaña y sincronización | Ayuda de Lumno",
+      pageDescription:
+        "Respuestas a las preguntas frecuentes sobre Lumno: el atajo predeterminado y cómo cambiarlo, qué hacer si no funciona, cómo usarlo con otra extensión de nueva pestaña, navegadores compatibles, sincronización de ajustes y tratamiento de los datos de navegación.",
+      keywords: ["preguntas frecuentes Lumno", "Lumno FAQ", "atajo de extensión de Chrome no funciona", "conflicto extensión nueva pestaña", "Lumno gratis"],
+      title: "Preguntas frecuentes",
+      navTitle: "Preguntas frecuentes",
     },
     install: {
       pageTitle: "Instalar Lumno desde Chrome Web Store o los complementos de Edge | Ayuda de Lumno",
@@ -74,7 +82,7 @@ const content: GuideLocaleContent = {
       title: "Instalar Lumno",
       navTitle: "Instalar Lumno",
       faq: [
-        { question: "¿Necesito una cuenta?", answer: "No. Lumno no tiene sistema de cuentas. Lo instalas y funciona." },
+        { question: "¿Necesito una cuenta?", answer: "No. Lumno no tiene sistema de cuentas y se puede usar en cuanto lo instalas." },
         {
           question: "¿Cómo lo desinstalo?",
           answer: "Abre chrome://extensions (edge://extensions en Edge), busca Lumno y haz clic en Quitar. Así se borran también los ajustes e imágenes que Lumno guardó en tu dispositivo.",
@@ -90,9 +98,9 @@ const content: GuideLocaleContent = {
       navTitle: "Atajos de teclado",
       faq: [
         {
-          question: "El atajo no hace nada. ¿Qué hago?",
+          question: "¿Qué hago si el atajo no funciona?",
           answer:
-            "Comprueba que no estás en una página restringida, como la configuración chrome:// o Chrome Web Store, y revisa en chrome://extensions/shortcuts si otra extensión usa el mismo atajo. En Dia, cambia el ámbito a Global.",
+            "Primero, comprueba que no estás en una página restringida, como la configuración chrome:// o Chrome Web Store. Después, comprueba en chrome://extensions/shortcuts que ninguna otra extensión usa el mismo atajo. En Dia, cambia el ámbito a \"Global\".",
         },
       ],
     },
@@ -152,7 +160,7 @@ const content: GuideLocaleContent = {
     "tab-switcher": {
       pageTitle: "Selector de pestañas recientes: pulsa ⌥Q para saltar entre pestañas recientes | Ayuda de Lumno",
       pageDescription:
-        "Pulsa ⌥Q (Alt+Q en Windows) para abrir el selector de pestañas recientes de Lumno, con tus pestañas en el orden en que las usaste y una vista previa de cada una. Mantén ⌥, pulsa Q y suelta.",
+        "Pulsa ⌥Q (Alt+Q en Windows) para abrir el selector de pestañas recientes de Lumno, con tus pestañas en el orden en que las usaste y una vista previa de cada una. Mantén pulsada ⌥, pulsa Q varias veces y suelta ⌥ para cambiar de pestaña.",
       keywords: ["selector de pestañas Chrome", "pestañas recientes", "Alt Tab para el navegador", "Arc Ctrl Tab"],
       title: "Saltar entre pestañas recientes",
       navTitle: "Pestañas recientes",
@@ -183,10 +191,18 @@ const content: GuideLocaleContent = {
     },
     "newtab-clock-zen": {
       pageTitle: "Reloj y modo Zen: una nueva pestaña con solo el cuadro de búsqueda | Ayuda de Lumno",
-      pageDescription: "Muestra un reloj en la nueva pestaña de Lumno, o escribe /zen para ocultar todo salvo el cuadro de búsqueda.",
+      pageDescription: "Muestra un reloj en la nueva pestaña de Lumno o escribe /zen para ocultar todo excepto el cuadro de búsqueda.",
       keywords: ["reloj nueva pestaña", "nueva pestaña minimalista", "modo Zen", "nueva pestaña para concentrarse"],
       title: "Reloj y modo Zen",
       navTitle: "Reloj y modo Zen",
+    },
+    "newtab-other-extensions": {
+      pageTitle: "Usar otra extensión de nueva pestaña con la barra de comandos de Lumno | Ayuda de Lumno",
+      pageDescription:
+        "Conserva Momentum, Tabliss u otra extensión de nueva pestaña y usa solo la barra de comandos de Lumno: activa la otra extensión después de Lumno para que se encargue de la nueva pestaña. Cuando el navegador pregunte, conserva el cambio; deshacerlo desactiva la extensión por completo.",
+      keywords: ["conflicto extensión nueva pestaña", "nueva pestaña de Chrome cambiada por una extensión", "solo barra de comandos de Lumno", "Momentum", "Tabliss"],
+      title: "Usar otra extensión de nueva pestaña",
+      navTitle: "Otra extensión de nueva pestaña",
     },
     "arc-command-bar": {
       pageTitle: "De Arc a Chrome, Dia o Edge: la barra de comandos y los atajos | Ayuda de Lumno",

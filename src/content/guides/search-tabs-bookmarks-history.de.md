@@ -1,29 +1,29 @@
-Mit Dutzenden offenen Tabs und Hunderten Lesezeichen dauert das Finden einer Seite oft länger als das Öffnen. Lumno packt alles in ein Feld: Kürzel drücken, ein paar Buchstaben tippen, und alles Offene, Gespeicherte und Besuchte erscheint zusammen.
+Bei Dutzenden offenen Tabs und Hunderten Lesezeichen dauert es oft länger, eine Seite zu finden, als sie zu öffnen. Lumno führt alles in einem Suchfeld zusammen: Drücke das Tastenkürzel, gib ein paar Buchstaben ein, und offene Tabs, Lesezeichen und Verlauf werden gemeinsam angezeigt.
 
 ## Das Suchfeld öffnen {#open}
 
-Drück auf einer beliebigen Seite `⌘ ⇧ K` (unter Windows und Linux `Strg + Umschalt + K`). Das Feld erscheint in der Bildschirmmitte. Mit `Esc` oder einem Klick daneben schließt du es.
+Drücke auf einer beliebigen Seite `⌘ ⇧ K` (unter Windows und Linux `Strg + Umschalt + K`). Das Suchfeld erscheint in der Mitte des Bildschirms. Um es zu schließen, drücke `Esc` oder klicke außerhalb des Suchfelds.
 
-Auf eingeschränkten Seiten wie den `chrome://`-Einstellungen oder Erweiterungs-Stores lassen Browser Erweiterungen nichts anzeigen. Dann greift die Option „Restricted page behavior“ in Lumnos Einstellungen.
+Auf eingeschränkten Seiten wie den `chrome://`-Einstellungen oder Erweiterungs-Stores erlauben Browser Erweiterungen nicht, Inhalte anzuzeigen. Auf diesen Seiten richtet sich Lumno nach der Option „Restricted page behavior“ in den Einstellungen.
 
-## Alles in einer Liste {#results}
+## Suchergebnisse {#results}
 
-Die Markierung neben jedem Ergebnis verrät, woher es kommt:
+Die Kennzeichnung neben jedem Ergebnis gibt an, woher es stammt:
 
-- Opened: ein offener Tab. Mit Enter wechselst du dorthin, statt ihn doppelt zu öffnen.
-- Bookmark: eine Seite aus deiner Lesezeichenleiste oder deinen Ordnern, mit Ordnerangabe.
-- Frequent und History: deine meistbesuchten Seiten und dein Verlauf.
+- Opened: ein aktuell geöffneter Tab. Wenn du die Eingabetaste drückst, wechselst du zu diesem Tab, statt die Seite ein zweites Mal zu öffnen.
+- Bookmark: eine Seite aus deiner Lesezeichenleiste oder deinen Ordnern; der Ordner wird ebenfalls angezeigt.
+- Frequent und History: deine meistbesuchten Seiten und dein Browserverlauf.
 
-Auch die Vorschläge deiner Suchmaschine erscheinen; mit Enter suchst du. Was du oft auswählst, rückt nach oben.
+Zusätzlich werden Vorschläge deiner Suchmaschine angezeigt; mit der Eingabetaste startest du die Suche. Ergebnisse, die du häufiger auswählst, erscheinen weiter oben.
 
-![Lumno auf einer leeren Seite: Die Eingabe chrome zeigt einen offenen GitHub-Tab, Suchvorschläge, ein Lesezeichen und meistbesuchte Seiten](search "chrome eintippen: Offenes, Gespeichertes und Besuchtes zusammen")
+![Lumno auf einer leeren Seite: Die Eingabe chrome zeigt einen offenen GitHub-Tab, Suchvorschläge, ein Lesezeichen und meistbesuchte Seiten](search "Die Eingabe chrome zeigt offene Tabs, Lesezeichen und meistbesuchte Seiten zusammen")
 
-Zwei praktische Tasten: `⌥ ↩` öffnet im aktuellen Tab, `⇧ ↩` öffnet einen offenen Tab ein zweites Mal. Alle Tasten findest du unter [Tastenkürzel](../keyboard-shortcuts/#command-bar-keys).
+Weitere nützliche Tasten: `⌥ ↩` öffnet ein Ergebnis im aktuellen Tab, `⇧ ↩` öffnet einen bereits geöffneten Tab ein weiteres Mal in einem neuen Tab. Alle Tasten findest du unter [Tastenkürzel](../keyboard-shortcuts/#command-bar-keys).
 
 ## Nur offene Tabs durchsuchen {#open-tabs}
 
-Sind es einfach zu viele Tabs, grenz die Suche ein: Drück einmal `Tab`, solange das Feld leer ist. Links erscheint „Search open tabs“, und nur noch offene Tabs bleiben übrig. Tipp zum Filtern, wechsle mit Enter, verlass die Suche mit `Esc`.
+Bei vielen offenen Tabs kannst du die Suche eingrenzen: Drücke einmal `Tab`, während das Suchfeld leer ist. Links erscheint „Search open tabs“, und nur noch deine offenen Tabs werden aufgelistet. Gib einen Suchbegriff ein, um die Liste zu filtern, wechsle mit der Eingabetaste und beende die Suche mit `Esc`.
 
 ![Das Suchfeld zeigt links „Search open tabs“, darunter nur die gerade offenen Tabs](opentabs "Nur offene Tabs durchsuchen")
 
-Um nur Lesezeichen, Verlauf oder meistbesuchte Seiten zu durchsuchen, drück im leeren Feld zweimal `Tab` und wähl im Suchbereich-Panel aus.
+Um nur Lesezeichen, den Verlauf oder die meistbesuchten Seiten zu durchsuchen, drücke bei leerem Suchfeld zweimal `Tab` und wähle im Suchbereich-Panel die gewünschte Option aus.

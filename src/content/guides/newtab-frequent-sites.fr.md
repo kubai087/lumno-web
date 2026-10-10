@@ -1,22 +1,22 @@
-En bas du nouvel onglet se trouvent les endroits où vous allez le plus. Épinglez ceux que vous utilisez tous les jours ; pour les séries et feuilletons, la carte garde votre place.
+Le bas du nouvel onglet affiche les sites que vous visitez le plus. Vous pouvez épingler ceux que vous utilisez tous les jours. Pour les séries et les romans-feuilletons, une carte peut également mémoriser où vous en êtes.
 
-## Vos sites fréquents {#frequent}
+## Sites fréquents {#frequent}
 
-Les cartes du bas affichent par défaut vos sites les plus visités. Un clic, et vous y êtes.
+Par défaut, les cartes en bas de la page affichent vos sites les plus visités. Cliquez sur une carte pour ouvrir le site.
 
 ![Les cartes des sites les plus visités en bas du nouvel onglet : GitHub, Material, Figma et Mozilla](nt-recent "Les plus visités")
 
-Pour voir plutôt où vous êtes allé récemment, cliquez sur « ··· » en haut à droite des cartes et choisissez les sites récents. Dans les réglages de Lumno, sous New Tab Bottom Content, affichez une rangée, deux rangées ou aucune.
+Pour afficher plutôt les sites visités récemment, cliquez sur « ··· » en haut à droite des cartes et choisissez « Show Recent ». Dans les réglages de Lumno, sous New Tab Bottom Content, vous pouvez afficher une rangée, deux rangées ou aucune.
 
-## Épinglez ceux qui comptent {#pin}
+## Épingler un site {#pin}
 
-Survolez une carte et cliquez sur l'épingle en bas à droite. Vous pouvez en épingler jusqu'à trois ; cliquez à nouveau pour désépingler. Les cartes épinglées se synchronisent avec votre navigateur.
+Survolez une carte et cliquez sur l'icône en forme d'épingle en bas à droite. Vous pouvez épingler jusqu'à trois cartes. Cliquez de nouveau pour retirer l'épingle. Les cartes épinglées sont synchronisées par votre navigateur.
 
-## Reprendre une série là où vous en étiez {#progress}
+## Suivre la progression d'une série {#progress}
 
-Épinglez une série ou un roman-feuilleton et Lumno commence à suivre votre progression : quand vous passez à l'épisode ou au chapitre suivant du même titre, la carte bascule dessus, et la prochaine fois vous reprenez exactement là où vous vous étiez arrêté.
+Lorsque vous épinglez une série ou un roman-feuilleton, Lumno commence à suivre votre progression. Dès que vous passez à l'épisode ou au chapitre suivant du même titre, la carte est mise à jour automatiquement : la prochaine fois, il vous suffit de cliquer dessus pour reprendre là où vous vous étiez arrêté.
 
-- Une carte qui suit votre progression affiche une icône radar. Cliquez dessus pour arrêter.
-- Pas besoin de cette fonction ? Désactivez « Keep pinned shows and novels up to date » dans les réglages de Lumno.
+- Une carte dont la progression est suivie affiche une icône radar. Cliquez sur cette icône pour arrêter le suivi.
+- Si vous n'avez pas besoin de cette fonction, désactivez « Keep pinned shows and novels up to date » dans les réglages de Lumno.
 
 La progression est mise à jour sur votre ordinateur à partir des pages que vous ouvrez, et n'est envoyée nulle part.

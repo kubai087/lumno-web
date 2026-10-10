@@ -30,7 +30,7 @@ const content: GuideLocaleContent = {
     searchPlaceholder: "搜尋說明",
     searchLabel: "搜尋說明中心",
     searchEmpty: "找不到相關內容",
-    stuckText: "還沒解決？進群組問問，作者就在裡面。",
+    stuckText: "仍未解決？歡迎加入使用者群組提問，作者也在群組裡。",
     stuckPrimary: "加入使用者群組",
     stuckSecondary: "提交 Issue",
   },
@@ -43,7 +43,7 @@ const content: GuideLocaleContent = {
       title: "Lumno 是什麼",
       navTitle: "Lumno 是什麼",
       faq: [
-        { question: "Lumno 要付費嗎？", answer: "不用。Lumno 以 GPL-3.0 授權開源，所有功能免費使用，也不需要註冊帳號。" },
+        { question: "Lumno 要付費嗎？", answer: "不需要。Lumno 以 GPL-3.0 授權開源，所有功能免費使用，也不需要註冊帳號。" },
         {
           question: "Lumno 支援哪些瀏覽器？",
           answer: "支援 Chrome、Edge、Dia、Brave、Arc、Vivaldi 等 Chromium 核心的瀏覽器，暫不支援 Safari。詳見「瀏覽器相容性」。",
@@ -66,15 +66,23 @@ const content: GuideLocaleContent = {
       title: "使用情境",
       navTitle: "使用情境",
     },
+    faq: {
+      pageTitle: "Lumno 常見問題：快速鍵、受限頁面、新分頁與資料同步｜Lumno 說明中心",
+      pageDescription:
+        "Lumno 的常見問題：預設快速鍵和修改方式、快速鍵沒有反應怎麼辦、能否搭配其他新分頁擴充功能、支援哪些瀏覽器、設定如何同步，以及是否上傳瀏覽資料。",
+      keywords: ["Lumno 常見問題", "Lumno FAQ", "Chrome 擴充功能快速鍵沒反應", "新分頁擴充功能衝突", "Lumno 免費嗎"],
+      title: "常見問題",
+      navTitle: "常見問題",
+    },
     install: {
       pageTitle: "安裝 Lumno：從 Chrome 線上應用程式商店或 Edge 附加元件安裝｜Lumno 說明中心",
       pageDescription:
-        "在 Chrome、Dia、Brave、Arc 中從 Chrome 線上應用程式商店安裝 Lumno，在 Edge 中從 Microsoft Edge 附加元件安裝。安裝後會開啟歡迎頁，按 ⌘⇧K 就能開始使用。",
+        "在 Chrome、Dia、Brave、Arc 中從 Chrome 線上應用程式商店安裝 Lumno，在 Edge 中從 Microsoft Edge 附加元件安裝。安裝後會開啟歡迎頁，按 ⌘⇧K 即可開始使用。",
       keywords: ["安裝 Lumno", "Lumno Chrome 線上應用程式商店", "Lumno Edge 附加元件", "安裝 Chrome 擴充功能"],
       title: "安裝 Lumno",
       navTitle: "安裝 Lumno",
       faq: [
-        { question: "需要註冊帳號嗎？", answer: "不需要。Lumno 沒有帳號系統，裝好就能用。" },
+        { question: "需要註冊帳號嗎？", answer: "不需要。Lumno 沒有帳號系統，安裝後即可使用。" },
         {
           question: "要怎麼移除？",
           answer: "在 chrome://extensions（Edge 為 edge://extensions）找到 Lumno，按「移除」。移除後，擴充功能存在這台電腦上的設定和圖片也會一併刪除。",
@@ -90,7 +98,7 @@ const content: GuideLocaleContent = {
       navTitle: "快速鍵",
       faq: [
         {
-          question: "按快速鍵沒反應怎麼辦？",
+          question: "按下快速鍵沒有反應怎麼辦？",
           answer:
             "先確認目前不是 chrome:// 設定頁或擴充功能商店這類受限頁面，再到 chrome://extensions/shortcuts 檢查是否被其他擴充功能佔用。在 Dia 中，請把範圍改成「全域」。",
         },
@@ -105,7 +113,7 @@ const content: GuideLocaleContent = {
       navTitle: "同步設定",
       faq: [
         { question: "同步需要註冊 Lumno 帳號嗎？", answer: "不需要。Lumno 沒有帳號和伺服器，設定透過瀏覽器內建的同步傳遞；圖示和桌布可以透過你自己的 WebDAV 同步。" },
-        { question: "Chrome 和 Firefox 之間能同步嗎？", answer: "可以，用 WebDAV。兩個瀏覽器連到同一個 WebDAV 伺服器和目錄，就算在同一台電腦上同時開著也能同步。" },
+        { question: "Chrome 和 Firefox 之間能同步嗎？", answer: "可以，請使用 WebDAV。兩個瀏覽器連線到同一個 WebDAV 伺服器和目錄，即使在同一台電腦上同時開啟也能同步。" },
       ],
     },
     "search-tabs-bookmarks-history": {
@@ -127,7 +135,7 @@ const content: GuideLocaleContent = {
     "site-search": {
       pageTitle: "站內搜尋：輸入簡稱按 Tab，直接在 GitHub、YouTube、維基百科中搜尋｜Lumno 說明中心",
       pageDescription:
-        "Lumno 內建 46 個搜尋入口：輸入 gh、yt、zw 等簡稱後按 Tab，就能直接在 GitHub、YouTube、維基百科中搜尋，也能把問題直接丟給 ChatGPT、Gemini、DeepSeek。附簡稱列表。",
+        "Lumno 內建 46 個搜尋入口：輸入 gh、yt、zw 等簡稱後按 Tab，就能直接在 GitHub、YouTube、維基百科中搜尋，也能把問題直接送給 ChatGPT、Gemini、DeepSeek。附簡稱列表。",
       keywords: ["Chrome 站內搜尋", "Tab 鍵站內搜尋", "瀏覽器搜尋捷徑", "快速搜尋 GitHub", "快速問 ChatGPT", "自訂搜尋引擎"],
       title: "站內搜尋和問 AI",
       navTitle: "站內搜尋和問 AI",
@@ -142,7 +150,7 @@ const content: GuideLocaleContent = {
     "tab-switcher": {
       pageTitle: "最近分頁切換器：按 ⌥Q 在最近的分頁之間切換｜Lumno 說明中心",
       pageDescription:
-        "按 ⌥Q（Windows 為 Alt+Q）開啟 Lumno 的最近分頁切換器，分頁依最近使用的順序排列並顯示預覽。按住 ⌥ 連按 Q 選擇，放開就切過去。",
+        "按 ⌥Q（Windows 為 Alt+Q）開啟 Lumno 的最近分頁切換器，分頁依最近使用的順序排列並顯示預覽。按住 ⌥ 連按 Q 選擇，放開即可切換。",
       keywords: ["Chrome 分頁切換", "最近分頁", "瀏覽器 Alt Tab", "Arc Ctrl Tab"],
       title: "切換最近的分頁",
       navTitle: "切換最近的分頁",
@@ -176,6 +184,14 @@ const content: GuideLocaleContent = {
       keywords: ["新分頁時鐘", "每日一句", "極簡新分頁", "Zen 模式"],
       title: "時鐘、名句和 Zen 模式",
       navTitle: "時鐘、名句和 Zen 模式",
+    },
+    "newtab-other-extensions": {
+      pageTitle: "搭配其他新分頁擴充功能：保留 Momentum 等起始頁，只用 Lumno 命令列｜Lumno 說明中心",
+      pageDescription:
+        "想繼續使用其他新分頁擴充功能，同時使用 Lumno 的命令列：讓另一個擴充功能更晚啟用即可接管新分頁。瀏覽器詢問是否保留變更時請選擇保留，選擇還原會停用整個擴充功能。",
+      keywords: ["新分頁擴充功能衝突", "Chrome 新分頁被擴充功能接管", "只用 Lumno 命令列", "Momentum", "Infinity 新分頁"],
+      title: "搭配其他新分頁擴充功能",
+      navTitle: "搭配其他新分頁擴充功能",
     },
     "arc-command-bar": {
       pageTitle: "從 Arc 搬到 Chrome、Dia 或 Edge：命令列與快速鍵對照｜Lumno 說明中心",

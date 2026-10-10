@@ -1,40 +1,40 @@
-Computador novo, ou vários navegadores ao mesmo tempo? Seus atalhos, papéis de parede e configurações podem ir junto. O Lumno não tem servidores próprios, então a sincronização usa duas coisas que você já tem: a sincronização do navegador e o seu próprio servidor WebDAV.
+Se você usa vários computadores ou navegadores, seus atalhos, papéis de parede e configurações podem ser sincronizados. O Lumno não tem servidores próprios, por isso a sincronização usa dois recursos que você já tem: a sincronização do navegador e o seu próprio servidor WebDAV.
 
-## Sincronização do navegador: nada a fazer {#browser-sync}
+## Sincronização do navegador: nenhuma configuração necessária {#browser-sync}
 
-Se você está conectado ao navegador com a sincronização ativada, as configurações do Lumno vão junto automaticamente: tema, mecanismos de pesquisa, atalhos, cartões de sites fixados, a lista de bloqueio, e sua escolha de papel de parede e links de imagem.
+Se você estiver conectado ao navegador com a sincronização ativada, as configurações do Lumno serão sincronizadas automaticamente. Isso inclui o tema, os mecanismos de pesquisa, os atalhos, os cartões de sites fixados, a lista de bloqueio, a escolha de papel de parede e os links de imagem.
 
-Ícones enviados e papéis de parede locais são grandes demais para a sincronização do navegador. Para levá-los também, use o WebDAV.
+Os ícones enviados e os papéis de parede locais são grandes demais para a sincronização do navegador. Para sincronizá-los também, use o WebDAV.
 
-## Sincronização WebDAV: ícones e papéis de parede também {#webdav}
+## Sincronização WebDAV: ícones e papéis de parede incluídos {#webdav}
 
-A sincronização WebDAV está em beta e vem desativada. Quando ativada, suas configurações completas, os ícones de atalhos enviados e os papéis de parede personalizados ficam guardados no servidor que você escolher.
+A sincronização WebDAV está em versão beta e vem desativada por padrão. Quando ativada, suas configurações completas, os ícones de atalhos enviados e os papéis de parede personalizados são armazenados no servidor que você escolher.
 
-1. Abra as configurações do Lumno, vá em "Account & sync" e depois em WebDAV.
-2. Clique em "Add WebDAV" e preencha o endereço do servidor, a pasta de sincronização, o usuário e a senha de app.
-3. Se quiser, clique em "Test connectivity" e depois em "Save and turn on sync".
+1. Abra as configurações do Lumno e acesse Account & sync → WebDAV.
+2. Clique em "Add WebDAV" e informe o endereço do servidor, a pasta de sincronização, o nome de usuário e a senha de app.
+3. Se quiser, clique em "Test connectivity" e, em seguida, em "Save and turn on sync".
 
-Adicione a conexão em cada dispositivo. O usuário e a senha ficam naquele computador e nunca passam pela sincronização do navegador.
+Adicione a conexão separadamente em cada dispositivo. O nome de usuário e a senha ficam armazenados apenas naquele computador e nunca são sincronizados pelo navegador.
 
-## Onde hospedar {#hosts}
+## Escolher um servidor {#hosts}
 
-O Lumno foi testado com Nextcloud auto-hospedado, servidores WebDAV com Apache, nginx, rclone e WsgiDAV, e com o Nutstore. Serviços hospedados e NAS como o Synology devem funcionar se forem compatíveis com WebDAV padrão, mas ainda não foram verificados.
+O Lumno foi testado com o Nextcloud auto-hospedado, com servidores WebDAV do Apache, nginx, rclone e WsgiDAV e com o Nutstore (坚果云). Serviços hospedados e dispositivos NAS, como o Synology, devem funcionar se forem compatíveis com o WebDAV padrão, mas ainda não foram testados.
 
-Se o seu serviço permitir, use uma senha de app criada para o Lumno em vez da senha principal da sua conta.
+Se o seu serviço oferecer senhas de app, crie uma para o Lumno em vez de usar a senha principal da sua conta.
 
-## No seu segundo computador {#second-device}
+## Configurar outro computador {#second-device}
 
-Adicione o mesmo servidor, pasta e conta. Se o servidor já tiver dados, o Lumno pergunta qual versão usar; normalmente escolha "Use server version". Antes de substituir qualquer coisa, o Lumno faz um backup completo das configurações daquele computador.
+Adicione uma conexão com o mesmo servidor, a mesma pasta e a mesma conta. Se o servidor já tiver dados, o Lumno perguntará qual versão usar; na maioria dos casos, escolha "Use server version". Antes de substituir qualquer dado, o Lumno faz um backup completo das configurações desse computador.
 
-Daí em diante, as mudanças dos dois lados se juntam automaticamente. Se dois computadores mudarem a mesma coisa, como os atalhos, o cartão mostra um conflito. Clique em "Show differences" para ver o que cada lado mudou e escolha um.
+A partir daí, as alterações feitas nos dois computadores são combinadas automaticamente. Se os dois computadores alterarem a mesma configuração, como os atalhos, o cartão mostrará um conflito. Clique em "Show differences" para comparar as alterações de cada lado e escolha a versão que deseja manter.
 
-## O que não é sincronizado {#not-synced}
+## Itens que não são sincronizados {#not-synced}
 
-- Histórico, favoritos e guias abertas: o seu navegador continua sincronizando normalmente.
-- Seu usuário e senha do WebDAV: cada dispositivo guarda os seus.
+- Histórico, favoritos e guias abertas: o navegador continua a sincronizá-los normalmente.
+- Nome de usuário e senha do WebDAV: cada dispositivo armazena os seus.
 
-Desativar o WebDAV ou remover a conexão deixa os arquivos no seu servidor; apague lá se quiser. O WebDAV não tem criptografia de ponta a ponta, então o administrador do servidor consegue ler os arquivos.
+Se você desativar o WebDAV ou remover a conexão, os arquivos permanecerão no seu servidor; você pode excluí-los lá, se quiser. A sincronização WebDAV não tem criptografia de ponta a ponta, por isso o administrador do servidor pode ler os arquivos.
 
 ## Exportar e importar {#export}
 
-Prefere não sincronizar? Exporte sua configuração para um arquivo nas configurações do Lumno e importe no outro computador. O arquivo tem suas configurações, não suas imagens.
+Se preferir não usar a sincronização, você pode exportar sua configuração para um arquivo nas configurações do Lumno e importá-lo em outro computador. O arquivo contém suas configurações, mas não suas imagens.

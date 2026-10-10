@@ -30,7 +30,7 @@ const content: GuideLocaleContent = {
     searchPlaceholder: "ヘルプを検索",
     searchLabel: "ヘルプセンターを検索",
     searchEmpty: "見つかりませんでした",
-    stuckText: "解決しませんか？GitHub で質問するか、X で声をかけてください。",
+    stuckText: "解決しない場合は、GitHub で質問するか、X でお問い合わせください。",
     stuckPrimary: "GitHub で質問する",
     stuckSecondary: "X で連絡する",
   },
@@ -45,8 +45,8 @@ const content: GuideLocaleContent = {
       faq: [
         { question: "Lumno は無料ですか？", answer: "はい。GPL-3.0 のオープンソースで、すべての機能を無料で使えます。アカウント登録も不要です。" },
         {
-          question: "対応しているブラウザは？",
-          answer: "Chrome、Edge、Dia、Brave、Arc、Vivaldi など Chromium 系のブラウザです。Safari には対応していません。詳しくは「ブラウザ互換性」をご覧ください。",
+          question: "どのブラウザで使用できますか？",
+          answer: "Chrome、Edge、Dia、Brave、Arc、Vivaldi など Chromium 系のブラウザです。Safari には対応していません。詳しくは「ブラウザ互換性」を参照してください。",
         },
       ],
     },
@@ -66,6 +66,14 @@ const content: GuideLocaleContent = {
       title: "活用シーン",
       navTitle: "活用シーン",
     },
+    faq: {
+      pageTitle: "Lumno のよくある質問：ショートカット、制限ページ、新しいタブ、同期｜Lumno ヘルプ",
+      pageDescription:
+        "Lumno のよくある質問。初期設定のショートカットと変更方法、ショートカットが反応しない場合の対処、ほかの新しいタブ拡張機能との併用、対応ブラウザ、設定の同期、閲覧データの扱いについて説明します。",
+      keywords: ["Lumno よくある質問", "Lumno FAQ", "Chrome 拡張機能 ショートカット 反応しない", "新しいタブ 拡張機能 競合", "Lumno 無料"],
+      title: "よくある質問",
+      navTitle: "よくある質問",
+    },
     install: {
       pageTitle: "Lumno のインストール：Chrome ウェブストアまたは Edge アドオンから｜Lumno ヘルプ",
       pageDescription:
@@ -74,9 +82,9 @@ const content: GuideLocaleContent = {
       title: "Lumno をインストールする",
       navTitle: "インストール",
       faq: [
-        { question: "アカウントは必要ですか？", answer: "いいえ。Lumno にはアカウントの仕組みがありません。インストールすればすぐに使えます。" },
+        { question: "アカウントは必要ですか？", answer: "いいえ。Lumno にはアカウントの仕組みがありません。インストール後すぐに使用できます。" },
         {
-          question: "アンインストールするには？",
+          question: "アンインストールするにはどうすればよいですか？",
           answer: "chrome://extensions（Edge では edge://extensions）で Lumno の「削除」をクリックします。この端末に保存された設定や画像も削除されます。",
         },
       ],
@@ -90,7 +98,7 @@ const content: GuideLocaleContent = {
       navTitle: "ショートカット",
       faq: [
         {
-          question: "ショートカットが反応しません。",
+          question: "ショートカットキーが反応しない場合はどうすればよいですか？",
           answer:
             "chrome:// の設定ページや拡張機能ストアなどの制限ページでないか確認し、chrome://extensions/shortcuts でほかの拡張機能と重なっていないか確かめてください。Dia では範囲を「グローバル」にします。",
         },
@@ -105,7 +113,7 @@ const content: GuideLocaleContent = {
       navTitle: "同期",
       faq: [
         { question: "同期に Lumno のアカウントは必要ですか？", answer: "いいえ。Lumno にはアカウントもサーバーもありません。設定はブラウザの同期で、アイコンや壁紙は自分の WebDAV で同期します。" },
-        { question: "Chrome と Firefox の間で同期できますか？", answer: "WebDAV なら可能です。両方のブラウザを同じサーバーとフォルダにつなげば、同じパソコンで同時に開いていても同期できます。" },
+        { question: "Chrome と Firefox の間で同期できますか？", answer: "はい、WebDAV を使用すれば同期できます。両方のブラウザを同じサーバーとフォルダに接続すると、同じパソコンで同時に開いている場合でも同期されます。" },
       ],
     },
     "search-tabs-bookmarks-history": {
@@ -136,7 +144,7 @@ const content: GuideLocaleContent = {
           question: "どのサイトに対応していますか？",
           answer: "46 種類です。検索エンジン 11、AI チャットと AI 検索 11（ChatGPT、Gemini、Perplexity、DeepSeek など）、GitHub、YouTube、Stack Overflow などのサイト 24。自分でサイトを追加することもできます。",
         },
-        { question: "サイト内検索は Lumno のサーバーを経由しますか？", answer: "しません。Lumno にはサーバーがなく、Enter を押すと目的のサイトの検索ページを直接開きます。" },
+        { question: "サイト内検索は Lumno のサーバーを経由しますか？", answer: "いいえ。Lumno にはサーバーがなく、Enter キーを押すと目的のサイトの検索ページが直接開きます。" },
       ],
     },
     "tab-switcher": {
@@ -177,6 +185,14 @@ const content: GuideLocaleContent = {
       title: "時計と Zen モード",
       navTitle: "時計と Zen モード",
     },
+    "newtab-other-extensions": {
+      pageTitle: "ほかの新しいタブ拡張機能と併用する：Lumno のコマンドバーだけを使う｜Lumno ヘルプ",
+      pageDescription:
+        "Momentum や Tabliss などの新しいタブ拡張機能を使い続けながら、Lumno のコマンドバーだけを使用する方法。ほかの拡張機能を Lumno よりあとにオンにすると、新しいタブを置き換えられます。変更の確認では「維持」を選択してください。",
+      keywords: ["新しいタブ 拡張機能 競合", "Chrome 新しいタブ 拡張機能で変更", "Lumno コマンドバーだけ", "Momentum", "Tabliss"],
+      title: "ほかの新しいタブ拡張機能と併用する",
+      navTitle: "ほかの新しいタブ拡張機能と併用",
+    },
     "arc-command-bar": {
       pageTitle: "Arc から Chrome・Dia・Edge へ：コマンドバーとショートカットの対応表｜Lumno ヘルプ",
       pageDescription:
@@ -185,7 +201,7 @@ const content: GuideLocaleContent = {
       title: "Arc から乗り換える",
       navTitle: "Arc から乗り換える",
       faq: [
-        { question: "Lumno は Arc と関係がありますか？", answer: "ありません。Lumno は Arc を参考にした独立のオープンソースプロジェクトで、Arc や The Browser Company とは無関係です。" },
+        { question: "Lumno は Arc と関係がありますか？", answer: "いいえ。Lumno は Arc を参考にした独立したオープンソースプロジェクトであり、Arc および The Browser Company とは関係ありません。" },
       ],
     },
     "browser-compatibility": {

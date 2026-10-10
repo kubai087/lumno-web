@@ -27,7 +27,7 @@ export type GuideLocale = (typeof GUIDE_LOCALES)[number];
  * installing: set it up, use the command bar, then the new tab, then scenarios.
  */
 export const GUIDE_NAV = [
-  { id: "about", sections: [{ slugs: ["what-is-lumno", "limitations", "use-cases"] }] },
+  { id: "about", sections: [{ slugs: ["what-is-lumno", "limitations", "use-cases", "faq"] }] },
   {
     id: "quickstart",
     sections: [
@@ -35,7 +35,13 @@ export const GUIDE_NAV = [
       { id: "command-bar", slugs: ["search-tabs-bookmarks-history", "site-search", "tab-switcher"] },
       {
         id: "new-tab",
-        slugs: ["newtab-wallpaper", "newtab-bookmarks-shortcuts", "newtab-frequent-sites", "newtab-clock-zen"],
+        slugs: [
+          "newtab-wallpaper",
+          "newtab-bookmarks-shortcuts",
+          "newtab-frequent-sites",
+          "newtab-clock-zen",
+          "newtab-other-extensions",
+        ],
       },
       { id: "scenarios", slugs: ["arc-command-bar"] },
     ],
@@ -58,7 +64,7 @@ export const GUIDE_NAV_KEYS: GuideNavKey[] = GUIDE_NAV.flatMap((group) => group.
 export const GUIDE_SLUGS: GuideSlug[] = GUIDE_NAV_KEYS.filter((key): key is GuideSlug => key !== "privacy");
 
 /** When the pages were last checked against the extension. */
-export const GUIDES_LAST_UPDATED = "2026-10-10";
+export const GUIDES_LAST_UPDATED = "2026-10-11";
 export const GUIDES_EXTENSION_VERSION = "0.9.61";
 
 type GuideFaqItem = { question: string; answer: string };

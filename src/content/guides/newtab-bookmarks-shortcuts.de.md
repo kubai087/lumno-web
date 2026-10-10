@@ -1,44 +1,44 @@
-Deine Lieblingsseiten liegen direkt unter dem Suchfeld, einen Klick entfernt. Und egal, wie viele Lesezeichen du hast – suchen musst du nicht.
+Lege deine wichtigsten Websites direkt unter das Suchfeld und öffne sie mit einem Klick. Auch bei vielen Lesezeichen musst du dich nicht durch Ordner klicken.
 
 ## Shortcuts {#shortcuts}
 
-Die Icon-Reihe unter dem Suchfeld sind deine Shortcuts. Fährst du mit der Maus darüber, vergrößern sie sich wie im macOS-Dock.
+Die Symbolreihe unter dem Suchfeld zeigt deine Shortcuts. Wenn du mit dem Mauszeiger darüberfährst, werden sie wie im macOS-Dock vergrößert.
 
-![Eine Reihe Shortcut-Icons unter dem Suchfeld; das Figma-Icon unter dem Mauszeiger ist vergrößert und zeigt seinen Namen](nt-shortcuts "Deine Lieblingsseiten, einen Klick entfernt")
+![Eine Reihe Shortcut-Icons unter dem Suchfeld; das Figma-Icon unter dem Mauszeiger ist vergrößert und zeigt seinen Namen](nt-shortcuts "Lieblingsseiten mit einem Klick öffnen")
 
-### Hinzufügen
+### Einen Shortcut hinzufügen
 
-1. Klick auf das „+“ am Ende deiner Shortcuts.
-2. Gib Namen und URL ein. Browserseiten wie `chrome://inspect/#devices` gehen auch.
-3. Wähl ein Icon: eingebaut, online oder selbst hochgeladen (am besten ein quadratisches Bild ab 128 × 128 px).
-4. Speichere.
+1. Klicke auf „+“ am Ende deiner Shortcuts.
+2. Gib einen Namen und eine URL ein. Auch Browserseiten wie `chrome://inspect/#devices` sind möglich.
+3. Wähle ein Symbol aus: ein integriertes Symbol, ein Online-Symbol oder ein eigenes Bild (empfohlen ist ein quadratisches Bild ab 128 × 128 px).
+4. Klicke auf „Speichern“.
 
-### Aufräumen
+### Shortcuts organisieren
 
-- Rechtsklick auf einen Shortcut, um ihn zu bearbeiten oder zu entfernen. Den falschen erwischt? Die Meldung bietet einen Rückgängig-Link.
-- Zieh Shortcuts, um sie umzusortieren; zieh einen auf deine Lesezeichen, um ein Lesezeichen daraus zu machen.
-- Shortcuts pro Reihe, Icon-Größe, Abstände, die Dock-Vergrößerung und der „+“-Button stehen in Lumnos Einstellungen unter Appearance → Shortcuts.
+- Klicke mit der rechten Maustaste auf einen Shortcut, um ihn zu bearbeiten oder zu entfernen. Wenn du versehentlich einen Shortcut entfernt hast, kannst du dies mit dem in der Meldung angezeigten Tastenkürzel rückgängig machen.
+- Ziehe Shortcuts, um ihre Reihenfolge zu ändern. Wenn du einen Shortcut auf deine Lesezeichen ziehst, wird daraus ein Lesezeichen.
+- Anzahl pro Reihe, Symbolgröße, Abstände, Dock-Vergrößerung und die Schaltfläche „+“ legst du in den Einstellungen von Lumno unter Appearance → Shortcuts fest.
 
 ## Lesezeichen {#bookmarks}
 
-Der Lesezeichenbereich zeigt, was in der Lesezeichenleiste deines Browsers liegt. Fahr über einen Ordner, um ihn zu öffnen.
+Der Lesezeichenbereich zeigt den Inhalt der Lesezeichenleiste deines Browsers. Wenn du mit dem Mauszeiger über einen Ordner fährst, werden die darin enthaltenen Seiten angezeigt.
 
 ![Der Lesezeichenbereich im neuen Tab: Ordner wie Reference, Design guidelines und Competitors sowie Lesezeichen für ChatGPT und GitHub](nt-bookmarks-folder "Mehrstufige Ordneransicht")
 
-### Drei Layouts
+### Layouts für Lesezeichen
 
-Klick oben rechts im Lesezeichenbereich auf „···“, um zu wechseln:
+Klicke oben rechts im Lesezeichenbereich auf „···“, um das Layout zu wechseln:
 
-- Mehrstufige Ordneransicht: Ordner als Karten, die sich beim Darüberfahren Ebene für Ebene öffnen.
-- Mehrstufige Listenansicht: Ordnerinhalte als verschachtelte Menüs.
-- Lesezeichenleiste oben: Lesezeichen in einer Reihe am oberen Seitenrand, wie die Leiste des Browsers.
+- Mehrstufige Ordneransicht: Ordner werden als Karten angezeigt und öffnen sich Ebene für Ebene, wenn du mit dem Mauszeiger darüberfährst.
+- Mehrstufige Listenansicht: Ordnerinhalte werden als verschachtelte Menüs angezeigt.
+- Lesezeichenleiste oben: Lesezeichen werden wie in der Lesezeichenleiste des Browsers in einer Reihe am oberen Seitenrand angezeigt.
 
 ![Das Layout mit Lesezeichenleiste oben: Lesezeichenordner in einer Reihe am oberen Rand des neuen Tabs](nt-bookmarks-top "Lesezeichenleiste oben")
 
-Bei der Leiste oben kannst du auch den Hintergrund ändern: adaptiver Nebel, klares Glas, transparent oder eine eigene Farbe.
+Für die Lesezeichenleiste oben kannst du außerdem einen Hintergrund wählen: adaptiver Nebel, klares Glas, transparent oder eine eigene Farbe.
 
-### Noch ein paar Details
+### Weitere Einstellungen
 
-- Viele Lesezeichen? Blättere mit den Pfeilen oben rechts oder stell in den Einstellungen ein, wie viele Reihen angezeigt werden.
-- Rechtsklick auf einen Ordner, um seine Farbe zu ändern; in Menüs erscheint er dann in derselben Farbe.
-- Klick auf das Lesezeichensymbol, um den Lesezeichen-Manager des Browsers zu öffnen.
+- Bei vielen Lesezeichen kannst du mit den Pfeilen oben rechts blättern oder in den Einstellungen festlegen, wie viele Reihen angezeigt werden.
+- Klicke mit der rechten Maustaste auf einen Ordner, um seine Farbe zu ändern. Der Ordner erscheint auch in Menüs in dieser Farbe.
+- Klicke auf das Lesezeichensymbol, um den Lesezeichen-Manager des Browsers zu öffnen.

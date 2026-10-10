@@ -30,9 +30,9 @@ const content: GuideLocaleContent = {
     searchPlaceholder: "Pesquisar na ajuda",
     searchLabel: "Pesquisar na central de ajuda",
     searchEmpty: "Nenhum resultado",
-    stuckText: "Ainda não resolveu? Pergunte no GitHub ou fale no X.",
+    stuckText: "Ainda precisa de ajuda? Pergunte no GitHub ou entre em contato pelo X.",
     stuckPrimary: "Perguntar no GitHub",
-    stuckSecondary: "Falar no X",
+    stuckSecondary: "Contato pelo X",
   },
   pages: {
     "what-is-lumno": {
@@ -66,6 +66,14 @@ const content: GuideLocaleContent = {
       title: "Casos de uso",
       navTitle: "Casos de uso",
     },
+    faq: {
+      pageTitle: "Perguntas frequentes sobre o Lumno: atalhos, páginas restritas, nova guia e sincronização | Ajuda do Lumno",
+      pageDescription:
+        "Respostas às perguntas frequentes sobre o Lumno: o atalho padrão e como alterá-lo, o que fazer se ele não funcionar, como usar com outra extensão de nova guia, navegadores compatíveis, sincronização das configurações e tratamento dos dados de navegação.",
+      keywords: ["perguntas frequentes Lumno", "Lumno FAQ", "atalho de extensão do Chrome não funciona", "conflito extensão nova guia", "Lumno gratuito"],
+      title: "Perguntas frequentes",
+      navTitle: "Perguntas frequentes",
+    },
     install: {
       pageTitle: "Instale o Lumno pela Chrome Web Store ou pelos Complementos do Edge | Ajuda do Lumno",
       pageDescription:
@@ -74,7 +82,7 @@ const content: GuideLocaleContent = {
       title: "Instalar o Lumno",
       navTitle: "Instalar o Lumno",
       faq: [
-        { question: "Preciso de uma conta?", answer: "Não. O Lumno não tem sistema de contas. É só instalar e usar." },
+        { question: "Preciso de uma conta?", answer: "Não. O Lumno não tem sistema de contas e pode ser usado assim que é instalado." },
         {
           question: "Como desinstalo?",
           answer: "Abra chrome://extensions (edge://extensions no Edge), encontre o Lumno e clique em Remover. Isso também apaga as configurações e imagens que o Lumno guardou no seu dispositivo.",
@@ -90,9 +98,9 @@ const content: GuideLocaleContent = {
       navTitle: "Atalhos de teclado",
       faq: [
         {
-          question: "O atalho não faz nada. E agora?",
+          question: "O que fazer se o atalho não funcionar?",
           answer:
-            "Confira se você não está numa página restrita, como as configurações chrome:// ou a Web Store, e veja em chrome://extensions/shortcuts se outra extensão usa o mesmo atalho. No Dia, mude o escopo para Global.",
+            "Primeiro, verifique se você não está em uma página restrita, como as configurações chrome:// ou a Chrome Web Store. Depois, verifique em chrome://extensions/shortcuts se outra extensão usa o mesmo atalho. No Dia, altere o escopo para Global.",
         },
       ],
     },
@@ -115,9 +123,9 @@ const content: GuideLocaleContent = {
       ],
     },
     "search-tabs-bookmarks-history": {
-      pageTitle: "Pesquise guias abertas, favoritos e histórico numa só caixa | Ajuda do Lumno",
+      pageTitle: "Pesquise guias abertas, favoritos e histórico em uma única caixa | Ajuda do Lumno",
       pageDescription:
-        "Pressione ⌘⇧K (Ctrl+Shift+K no Windows) em qualquer página para pesquisar suas guias abertas, favoritos, histórico e sites mais visitados numa só caixa, ou só nas guias abertas.",
+        "Pressione ⌘⇧K (Ctrl+Shift+K no Windows) em qualquer página para pesquisar suas guias abertas, favoritos, histórico e sites mais visitados em uma única caixa, ou apenas nas guias abertas.",
       keywords: ["pesquisar guias no Chrome", "extensão para pesquisar favoritos", "pesquisar histórico", "pesquisar guias abertas", "paleta de comandos do Chrome"],
       title: "Pesquisar guias, favoritos e histórico",
       navTitle: "Guias, favoritos e histórico",
@@ -128,15 +136,15 @@ const content: GuideLocaleContent = {
             "Não. Guias, favoritos e histórico são pesquisados no seu dispositivo, e o Lumno não os coleta. O que você digita vai para o serviço de sugestões do seu mecanismo de pesquisa, igual à barra de endereços.",
         },
         {
-          question: "Os resultados podem abrir numa nova guia?",
+          question: "Os resultados podem ser abertos em uma nova guia?",
           answer: "Sim. Nas configurações do Lumno, escolha abrir na guia atual, à esquerda ou à direita dela, ou no fim da barra de guias.",
         },
       ],
     },
     "site-search": {
-      pageTitle: "Pesquisa em sites: digite um atalho, aperte Tab e pesquise no GitHub, YouTube ou ChatGPT | Ajuda do Lumno",
+      pageTitle: "Pesquisa em sites: digite um atalho, pressione Tab e pesquise no GitHub, YouTube ou ChatGPT | Ajuda do Lumno",
       pageDescription:
-        "O Lumno vem com 46 atalhos de pesquisa. Digite gh, yt ou sf e aperte Tab para pesquisar direto no GitHub, YouTube ou Stack Overflow, ou mande uma pergunta direto para o ChatGPT, Gemini ou Perplexity.",
+        "O Lumno inclui 46 atalhos de pesquisa. Digite gh, yt ou sf e pressione Tab para pesquisar diretamente no GitHub, no YouTube ou no Stack Overflow, ou envie uma pergunta diretamente ao ChatGPT, ao Gemini ou ao Perplexity.",
       keywords: ["pesquisa em sites no Chrome", "Tab para pesquisar", "atalhos de pesquisa no navegador", "pesquisar no GitHub rápido", "atalho para o ChatGPT", "mecanismo de pesquisa personalizado"],
       title: "Pesquisa em sites e perguntas à IA",
       navTitle: "Pesquisa em sites e IA",
@@ -150,9 +158,9 @@ const content: GuideLocaleContent = {
       ],
     },
     "tab-switcher": {
-      pageTitle: "Alternador de guias recentes: aperte ⌥Q para pular entre guias recentes | Ajuda do Lumno",
+      pageTitle: "Alternador de guias recentes: pressione ⌥Q para alternar entre guias recentes | Ajuda do Lumno",
       pageDescription:
-        "Aperte ⌥Q (Alt+Q no Windows) para abrir o alternador de guias recentes do Lumno, com suas guias na ordem em que você as usou e uma prévia de cada uma. Segure ⌥, toque Q e solte.",
+        "Pressione ⌥Q (Alt+Q no Windows) para abrir o alternador de guias recentes do Lumno, com suas guias na ordem em que foram usadas e uma prévia de cada uma. Mantenha ⌥ pressionada, pressione Q várias vezes e solte ⌥ para alternar.",
       keywords: ["alternador de guias do Chrome", "guias recentes", "Alt Tab para o navegador", "Arc Ctrl Tab"],
       title: "Alternar entre guias recentes",
       navTitle: "Guias recentes",
@@ -187,6 +195,14 @@ const content: GuideLocaleContent = {
       keywords: ["relógio na nova guia", "nova guia minimalista", "modo Zen", "nova guia para foco"],
       title: "Relógio e modo Zen",
       navTitle: "Relógio e modo Zen",
+    },
+    "newtab-other-extensions": {
+      pageTitle: "Usar outra extensão de nova guia com a barra de comandos do Lumno | Ajuda do Lumno",
+      pageDescription:
+        "Mantenha o Momentum, o Tabliss ou outra extensão de nova guia e use apenas a barra de comandos do Lumno: ative a outra extensão depois do Lumno para que ela controle a nova guia. Quando o navegador perguntar, mantenha a alteração; desfazê-la desativa a extensão inteira.",
+      keywords: ["conflito extensão nova guia", "nova guia do Chrome alterada por extensão", "apenas barra de comandos do Lumno", "Momentum", "Tabliss"],
+      title: "Usar outra extensão de nova guia",
+      navTitle: "Outra extensão de nova guia",
     },
     "arc-command-bar": {
       pageTitle: "Do Arc para o Chrome, Dia ou Edge: a barra de comandos e os atalhos | Ajuda do Lumno",

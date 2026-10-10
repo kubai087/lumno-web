@@ -160,5 +160,55 @@
     "https://developer.mozilla.org/zh-CN/",
     "https://news.ycombinator.com/"
   ],
-  "wallpaper": "monet-coastal-white"
+  "wallpaper": "monet-coastal-white",
+  "useCases": {
+    "tabs": [
+      "https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_grid_layout",
+      "https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_flexible_box_layout",
+      "https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_multicol_layout",
+      "https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_positioned_layout",
+      "https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_box_alignment",
+      "https://news.ycombinator.com/",
+      "https://m3.material.io/",
+      "https://www.figma.com/",
+      "https://www.wikipedia.org/",
+      "https://www.raycast.com/",
+      "https://ui.shadcn.com/"
+    ],
+    "tabsQuery": "布局",
+    "research": {
+      "history": [
+        "https://www.ruanyifeng.com/blog/2019/03/grid-layout-tutorial.html"
+      ],
+      "folder": {
+        "title": "CSS 资料",
+        "children": [
+          {
+            "title": "CSS 网格布局 - MDN",
+            "url": "https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_grid_layout"
+          }
+        ]
+      },
+      "query": "网格布局"
+    },
+    "article": {
+      "title": "CSS 网格布局入门",
+      "paragraphs": [
+        "网格布局用行和列来划分页面。与只处理一个方向的弹性盒子不同，网格可以同时安排元素的横向和纵向位置，适合用来搭建整页的版式。",
+        "定义列宽时常用 fr 单位，它表示容器剩余空间中的一份。例如 grid-template-columns: 1fr 2fr 会把剩余空间分成三份，第二列占其中两份。",
+        "元素还可以跨越多个单元格，用很少的代码就能写出杂志式的排版。"
+      ],
+      "select": "它表示容器剩余空间中的一份"
+    },
+    "series": [
+      {
+        "title": "凡人修仙传 第128话",
+        "url": "https://www.bilibili.com/bangumi/play/ep1231523"
+      },
+      {
+        "title": "诡秘之主 第一千二百章",
+        "url": "https://www.qidian.com/chapter/1010868264/774712385/"
+      }
+    ]
+  }
 }

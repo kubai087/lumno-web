@@ -29,8 +29,15 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const APPLE_LANGUAGE = { "zh-CN": "zh-Hans", "zh-TW": "zh-Hant", en: "en", ja: "ja" };
 
 // "blank" in the tab list is a plain local page, so nothing competes with Lumno behind the overlay.
-const blankServer = http.createServer((_request, response) => {
+// "/article" is a short plain article to select text in (use cases).
+const escapeHtml = (value) => String(value).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+const blankServer = http.createServer((request, response) => {
   response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
+  const article = cfg.useCases && cfg.useCases.article;
+  if (request.url.startsWith("/article") && article) {
+    response.end(`<!doctype html><title>${escapeHtml(article.title)}</title><body style="margin:0;background:#fff;color:#1f2328;font:18px/1.8 -apple-system,'PingFang SC','Hiragino Sans',sans-serif"><main style="max-width:640px;margin:96px auto;padding:0 24px"><h1 style="font-size:30px;line-height:1.3;margin:0 0 24px">${escapeHtml(article.title)}</h1>${article.paragraphs.map((text) => `<p style="margin:0 0 20px">${escapeHtml(text)}</p>`).join("")}</main></body>`);
+    return;
+  }
   response.end(`<!doctype html><title>${cfg.blankTitle || "Blank"}</title><body style="margin:0;background:#f3f4f6"></body>`);
 });
 await new Promise((resolve) => blankServer.listen(0, "127.0.0.1", resolve));
@@ -181,6 +188,30 @@ async function overlayBox(page) {
   if (right < 0) return null;
   return { left: left / scale, top: top / scale, right: right / scale, bottom: bottom / scale };
 }
+
+// The box of whatever changed between two screenshots of the same page (Lumno UI that has
+// just appeared over a busy page, where overlayBox's plain-backdrop trick doesn't work).
+async function diffBox(page, before, after) {
+  const read = (image) => sharp(image).removeAlpha().raw().toBuffer({ resolveWithObject: true });
+  const [{ data: a, info }, { data: b }] = await Promise.all([read(before), read(after)]);
+  const scale = info.width / page.viewportSize().width;
+  let left = info.width, top = info.height, right = -1, bottom = -1;
+  for (let y = 0; y < info.height; y++) {
+    for (let x = 0; x < info.width; x++) {
+      const i = (y * info.width + x) * 3;
+      if (Math.abs(a[i] - b[i]) + Math.abs(a[i + 1] - b[i + 1]) + Math.abs(a[i + 2] - b[i + 2]) > 30) {
+        if (x < left) left = x;
+        if (x > right) right = x;
+        if (y < top) top = y;
+        if (y > bottom) bottom = y;
+      }
+    }
+  }
+  if (right < 0) return null;
+  return { left: left / scale, top: top / scale, right: right / scale, bottom: bottom / scale };
+}
+const unionBox = (a, b) => (!a ? b : !b ? a : { left: Math.min(a.left, b.left), top: Math.min(a.top, b.top), right: Math.max(a.right, b.right), bottom: Math.max(a.bottom, b.bottom) });
+const PINNED_SITES_KEY = "_x_extension_newtab_pinned_recent_sites_2026_unique_";
 
 // New tab helpers: preferences go to both storage areas the extension may read from.
 async function setPrefs(values) {
@@ -409,6 +440,111 @@ const scenes = {
     await shot("nt-zen", page);
     await page.close();
     await setPrefs({ _x_extension_newtab_zen_mode_2026_unique_: false });
+  },
+  // Use cases. Bookmarks and history that turn up for one query: a saved page and a read one.
+  async "uc-research"(page) {
+    const research = cfg.useCases && cfg.useCases.research;
+    if (!research) return;
+    for (const url of research.history) await (await visit(url)).close();
+    const folderId = await sw.evaluate(async ({ title, children }) => {
+      const [bar] = (await chrome.bookmarks.getTree())[0].children;
+      const folder = await chrome.bookmarks.create({ parentId: bar.id, title });
+      for (const child of children) await chrome.bookmarks.create({ parentId: folder.id, ...child });
+      return folder.id;
+    }, research.folder);
+    // Search suggestions follow the network's region, not the page language; keep this
+    // picture to what Lumno found in bookmarks and history.
+    await ctx.route("https://suggestqueries.google.com/**", (route) => route.fulfill({ contentType: "application/json", body: "[]" }));
+    await openOverlay(page);
+    await page.keyboard.type(research.query, { delay: 80 });
+    // Suggestions arrive after the local results; measure once the list has settled.
+    await sleep(2000);
+    await shot("uc-research", page, await overlayBox(page));
+    await closeOverlay(page);
+    await sw.evaluate((id) => chrome.bookmarks.removeTree(id), folderId);
+    await ctx.unroute("https://suggestqueries.google.com/**");
+  },
+  // Dozens of tabs, narrowed to the open ones whose titles match.
+  async "uc-tabs"(page) {
+    const useCases = cfg.useCases;
+    if (!useCases || !useCases.tabs) return;
+    const extra = [];
+    for (const url of useCases.tabs) extra.push(await visit(url));
+    await page.bringToFront();
+    await sleep(800);
+    await openOverlay(page);
+    await page.keyboard.press("Tab");
+    await sleep(700);
+    await page.keyboard.type(useCases.tabsQuery, { delay: 80 });
+    await shot("uc-tabs", page, await overlayBox(page));
+    await closeOverlay(page);
+    await closeOverlay(page);
+    for (const tab of extra) await tab.close();
+  },
+  // Select a sentence in an article; Lumno's selection button opens its actions.
+  async "uc-selection"() {
+    const article = cfg.useCases && cfg.useCases.article;
+    if (!article) return;
+    await setPrefs({ _x_extension_selection_quick_actions_enabled_2026_unique_: true });
+    const page = await ctx.newPage();
+    await page.goto(`${BLANK_URL}article`);
+    await sleep(1500);
+    const selection = await page.evaluate((target) => {
+      for (const p of document.querySelectorAll("p")) {
+        const node = p.firstChild;
+        const start = node && node.textContent.indexOf(target);
+        if (!node || start < 0) continue;
+        const range = document.createRange();
+        range.setStart(node, start);
+        range.setEnd(node, start + target.length);
+        const rects = [...range.getClientRects()];
+        const first = rects[0];
+        const last = rects[rects.length - 1];
+        const para = p.closest("main").getBoundingClientRect();
+        return {
+          from: { x: first.left + 1, y: first.top + first.height / 2 },
+          to: { x: last.right - 1, y: last.top + last.height / 2 },
+          article: { left: para.left, top: para.top, right: para.right, bottom: para.bottom },
+        };
+      }
+      return null;
+    }, article.select);
+    if (!selection) throw new Error("selection text not found");
+    await page.mouse.move(selection.from.x, selection.from.y);
+    await page.mouse.down();
+    await page.mouse.move(selection.to.x, selection.to.y, { steps: 12 });
+    await page.mouse.up();
+    const selected = await page.screenshot();
+    await sleep(1000);
+    const entry = await diffBox(page, selected, await page.screenshot());
+    if (!entry) throw new Error("selection button did not appear");
+    await page.mouse.click((entry.left + entry.right) / 2, (entry.top + entry.bottom) / 2);
+    await sleep(1600);
+    const toolbar = await diffBox(page, selected, await page.screenshot());
+    await shot("uc-selection", page, unionBox(selection.article, toolbar));
+    await page.close();
+    await setPrefs({ _x_extension_selection_quick_actions_enabled_2026_unique_: false });
+  },
+  // Pinned episode and chapter cards that follow progress (the radar icon).
+  async "uc-series"() {
+    const series = cfg.useCases && cfg.useCases.series;
+    if (!series) return;
+    await prepareNewtab();
+    const now = Date.now();
+    await setPrefs({
+      [PINNED_SITES_KEY]: series.map((item, index) => ({
+        ...item,
+        progressTracking: true,
+        progressId: `guide-${index}`,
+        pinnedAt: now - index * 1000,
+        lastVisitTime: now - index * 60000,
+      })),
+    });
+    const page = await openNewtab();
+    await sleep(1200);
+    await shot("uc-series", page, await boxOf(page, ["#_x_extension_newtab_bottom_dock_scroller_2024_unique_ > section:not(#_x_extension_newtab_bookmarks_2024_unique_)"]));
+    await page.close();
+    await setPrefs({ [PINNED_SITES_KEY]: [] });
   },
   async shortcuts() {
     const sc = await ctx.newPage();

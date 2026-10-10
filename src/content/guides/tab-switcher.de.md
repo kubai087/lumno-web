@@ -1,25 +1,25 @@
-Um zwischen den zwei, drei Seiten zu springen, die du gerade benutzt hast, ist der Umschalter am schnellsten: nichts tippen, zwei Tastendrücke.
+Um zwischen den zwei oder drei zuletzt verwendeten Seiten zu wechseln, ist der Tab-Umschalter am schnellsten: Du musst nichts eingeben, zwei Tastendrücke genügen.
 
-## Den Umschalter öffnen {#open}
+## Den Tab-Umschalter öffnen {#open}
 
-Drück `⌥ Q` (unter Windows `Alt + Q`). Deine letzten Tabs reihen sich in der Reihenfolge auf, in der du sie genutzt hast, jeweils mit Vorschau.
+Drücke `⌥ Q` (unter Windows `Alt + Q`). Deine zuletzt verwendeten Tabs werden in der Reihenfolge ihrer Nutzung mit einer Seitenvorschau angezeigt.
 
 ![Der Tab-Umschalter mit vier Tabs in der Reihenfolge ihrer Nutzung, jeweils mit Seitenvorschau](switcher "Der Tab-Umschalter")
 
-## Auswählen, loslassen {#switch}
+## Tabs wechseln {#switch}
 
-1. Halt `⌥` gedrückt und tipp `Q`, bis du bei der gewünschten Seite bist. `Tab` und die Pfeiltasten gehen auch.
-2. Lass `⌥` los oder drück `↩`, um zu wechseln.
+1. Halte `⌥` gedrückt und drücke wiederholt `Q`, bis die gewünschte Seite ausgewählt ist. Du kannst auch `Tab` oder die Pfeiltasten verwenden.
+2. Lass `⌥` los oder drücke `↩`, um zu dieser Seite zu wechseln.
 
-Dasselbe Prinzip wie `⌘ Tab` auf dem Mac oder `⌃ Tab` in Arc.
+Die Bedienung entspricht weitgehend `⌘ Tab` auf dem Mac oder `⌃ Tab` in Arc.
 
-## Umschalter oder Suche in offenen Tabs? {#vs-search}
+## Tab-Umschalter oder Suche in offenen Tabs {#vs-search}
 
-- Die Seite ist eine der letzten paar: Nimm den Umschalter, zwei Tastendrücke und du bist da.
-- Zu viele Tabs und der gesuchte liegt weit zurück: Drück `⌘ ⇧ K`, dann im leeren Feld `Tab`, um nur offene Tabs zu durchsuchen. Siehe [Tabs, Lesezeichen und Verlauf durchsuchen](../search-tabs-bookmarks-history/#open-tabs).
+- Wenn die gewünschte Seite zu den zuletzt verwendeten gehört, verwende den Tab-Umschalter. Zwei Tastendrücke genügen.
+- Wenn viele Tabs geöffnet sind und die gesuchte Seite nicht zu den zuletzt verwendeten gehört, drücke `⌘ ⇧ K` und dann bei leerem Suchfeld `Tab`, um nur offene Tabs zu durchsuchen. Weitere Informationen findest du unter [Tabs, Lesezeichen und Verlauf durchsuchen](../search-tabs-bookmarks-history/#open-tabs).
 
-## Das Kürzel ändern {#shortcut}
+## Das Tastenkürzel ändern {#shortcut}
 
-Das Kürzel des Umschalters änderst du unter `chrome://extensions/shortcuts`. Siehe [Tastenkürzel](../keyboard-shortcuts/#change).
+Das Tastenkürzel des Tab-Umschalters kannst du unter `chrome://extensions/shortcuts` ändern. Weitere Informationen findest du unter [Tastenkürzel](../keyboard-shortcuts/#change).
 
-Die Vorschauen entstehen auf deinem Computer, während du Tabs wechselst, werden jeweils höchstens zwei Stunden aufbewahrt und verlassen dein Gerät nie.
+Die Seitenvorschauen werden beim Wechseln der Tabs auf deinem Computer erstellt. Jede Vorschau wird höchstens zwei Stunden lang gespeichert und verlässt dein Gerät nicht.

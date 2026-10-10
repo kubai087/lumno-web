@@ -1,45 +1,45 @@
-Every new tab can open on a painting. Lumno comes with classic art and ink landscapes, can bring in Bing's photo of the day, or use your own pictures.
+Every new tab can open on a painting. Lumno includes classic paintings and ink landscapes, can show Bing's photo of the day, or can use your own pictures.
 
 ## Open Appearance settings {#open}
 
-Click the Appearance button in the bottom-right corner of the new tab. Appearance settings slide in from the right; wallpapers are in the Wallpaper section.
+Click the Appearance button in the bottom-right corner of the new tab. Appearance settings open on the right, and wallpapers are in the Wallpaper section.
 
 ![Appearance settings open on the right of the new tab, with wallpaper sources and built-in wallpaper thumbnails](nt-appearance "Changing the wallpaper in Appearance settings")
 
-## Where wallpapers come from {#sources}
+## Wallpaper sources {#sources}
 
-| Source | What you get |
+| Source | Description |
 | --- | --- |
-| Built-in | Lumno's own paintings, ink landscapes and illustrations, in light and dark |
+| Built-in | Paintings, ink landscapes and illustrations that come with Lumno, in light and dark versions |
 | Local | Your own JPG, PNG or WebP images, up to 8 MB |
-| Bing | Bing's photo of the day, updated daily or picked from the past week |
-| Curated | Photos by category: nature, water, city, minimal and art, with a new one daily if you like |
+| Bing | Bing's photo of the day, updated daily or chosen from the past week |
+| Curated | Photos in categories such as nature, water, city, minimal and art, with an optional new photo every day |
 
-Found a picture online you love? Click "Add image link" and paste an address starting with `https://`.
+To use a picture from the web, click "Add image link" and paste an image address that starts with `https://`.
 
-With daily updates on, a wallpaper you pick by hand lasts for the day; tomorrow the daily one comes back.
+When daily updates are on, a wallpaper you choose yourself stays for the rest of the day; the next day, the daily wallpaper returns.
 
-## One for day, one for night {#dark-mode}
+## Separate wallpapers for light and dark mode {#dark-mode}
 
-"Match light and dark mode" is on by default, so both use the same wallpaper. Turn it off to choose separately: a painting by day, a moonlit landscape at night.
+"Match light and dark mode" is on by default, so both modes use the same wallpaper. Turn it off to choose a different wallpaper for each mode, such as a painting by day and a moonlit landscape at night.
 
-Light and dark mode itself is at the top of the panel: follow the system, light or dark, for the whole extension or just the new tab.
+You can set light and dark mode itself at the top of the panel: follow the system, or always use light or dark. You can apply it to the whole extension or only to the new tab.
 
 ## Mask and filters {#effects}
 
 - Mask effect: if the wallpaper is busy and the search box is hard to read, make the mask stronger; for a clearer picture, make it lighter.
-- Wallpaper filter: the same painting, a different texture. Some filters have strength or size controls.
+- Wallpaper filter: gives the same picture a different texture. Some filters let you adjust strength or size.
 
 | Filter | Effect |
 | --- | --- |
 | Glass blur | Softens the background so content stands out |
-| Grain | Fine, film-like noise |
+| Grain | Adds fine, film-like noise |
 | Blocks | Rebuilds the picture from pixel blocks |
-| Halftone | Print-style dot screen |
-| Dither | Retro dithering with a limited palette |
-| ASCII | Redraws the darks or lights in characters |
-| CRT | Scan lines, glow and screen curvature |
+| Halftone | Adds a print-style dot screen |
+| Dither | Adds retro dithering with a limited palette |
+| ASCII | Redraws the dark or light areas with characters |
+| CRT | Adds scan lines, glow and screen curvature |
 
-## On your other computers {#sync}
+## Use on other devices {#sync}
 
-Your choice of built-in, Bing or curated wallpaper, and your image links, sync with your browser. Local images you upload stay on that computer; to use them elsewhere, turn on WebDAV sync.
+Your choice of built-in, Bing or curated wallpaper, along with your image links, syncs through your browser. Local images you upload stay on the computer where you added them. To use them on other devices, turn on [WebDAV sync](../sync/#webdav).

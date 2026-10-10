@@ -1,34 +1,34 @@
-O Lumno é só uma extensão de navegador, não um navegador novo, e ainda há coisas que ele não faz. Estas são as lacunas que conhecemos. Se você precisa de alguma dessas funções, talvez uma das ferramentas citadas aqui atenda melhor.
+O Lumno é uma extensão de navegador, e não um navegador próprio, por isso alguns recursos dependem das limitações do navegador. Estas são as limitações conhecidas. Se você precisar de algum desses recursos, uma das ferramentas mencionadas nesta página pode ser mais adequada.
 
-## Páginas onde a barra não abre {#restricted-pages}
+## Páginas em que a barra de comandos não abre {#restricted-pages}
 
-Por segurança, os navegadores não deixam extensões mostrarem nada nestas páginas:
+Por motivos de segurança, os navegadores não permitem que extensões exibam conteúdo nestas páginas:
 
 - Páginas do navegador que começam com `chrome://` ou `edge://`
-- A Chrome Web Store e os Complementos do Edge
+- A Chrome Web Store e o site de complementos do Edge
 
-Se você apertar o atalho nelas, vale a opção "Restricted page behavior" nas configurações do Lumno.
+Se você pressionar o atalho em uma dessas páginas, o Lumno aplica a opção "Restricted page behavior" das configurações.
 
-Arquivos locais (PDF ou HTML que começam com `file://`) funcionam assim que você ativa o acesso a URLs de arquivo na página de detalhes do Lumno.
+Em arquivos locais (PDF ou HTML cujo endereço começa com `file://`), você pode usar a barra de comandos depois de permitir o acesso a URLs de arquivo na página de detalhes da extensão.
 
-## O que está fora do navegador {#outside-browser}
+## Conteúdo fora do navegador {#outside-browser}
 
-O Lumno só pesquisa o que está no seu navegador. Para pesquisar apps, arquivos e ajustes do sistema com um só atalho, experimente o [Raycast](https://www.raycast.com/) ou o [Alfred](https://www.alfredapp.com/) no macOS.
+O Lumno pesquisa apenas o conteúdo do seu navegador. Para pesquisar apps, arquivos e configurações do sistema com um único atalho, experimente o [Raycast](https://www.raycast.com/) ou o [Alfred](https://www.alfredapp.com/) no macOS.
 
-## Navegadores não compatíveis {#browsers}
+## Compatibilidade com navegadores {#browsers}
 
-- O Safari não é compatível, nem os navegadores de celular.
-- No Dia, a barra de comandos funciona, mas a nova guia do Lumno não.
-- A versão para Firefox não tem alguns recursos. Veja [Compatibilidade com navegadores](../browser-compatibility/).
+- O Safari não é compatível, nem os navegadores de dispositivos móveis.
+- No Dia, a barra de comandos funciona, mas a nova guia do Lumno não está disponível.
+- Alguns recursos não estão disponíveis na versão para Firefox. Para saber mais, consulte [Compatibilidade com navegadores](../browser-compatibility/).
 
 ## Widgets na nova guia {#widgets}
 
-A nova guia do Lumno é simples: sem previsão do tempo, tarefas ou notas. Se você quer uma nova guia cheia de widgets, experimente o [Momentum](https://momentumdash.com/) ou o [Tabliss](https://tabliss.io/).
+A nova guia do Lumno prioriza a simplicidade e não inclui widgets como previsão do tempo, tarefas ou notas. Se você quiser uma nova guia com muitos widgets, experimente o [Momentum](https://momentumdash.com/) ou o [Tabliss](https://tabliss.io/).
 
-O navegador só deixa uma extensão cuidar da nova guia por vez. Você pode ficar com a deles e continuar usando a barra de comandos do Lumno.
+Os navegadores permitem que apenas uma extensão por vez controle a nova guia. Você pode continuar usando a nova guia de outra extensão e, ao mesmo tempo, a barra de comandos do Lumno. Para saber mais, consulte [Usar outra extensão de nova guia](../newtab-other-extensions/).
 
 ## Sincronização na nuvem {#data}
 
-O Lumno não tem servidores, então não há conta na nuvem. As configurações seguem a sincronização do seu navegador. Para levar também ícones e papéis de parede, você precisa do seu próprio servidor WebDAV, como Nextcloud ou um NAS. Veja [Sincronização](../sync/).
+O Lumno não tem servidores e, por isso, não oferece conta na nuvem. Suas configurações são sincronizadas pela sincronização integrada do navegador. Para sincronizar também ícones e papéis de parede, você precisa de um servidor WebDAV próprio, como o Nextcloud ou um NAS. Para saber mais, consulte [Sincronização](../sync/).
 
-Histórico, favoritos e guias abertas não fazem parte da sincronização do Lumno. O seu navegador continua sincronizando tudo isso normalmente.
+O histórico, os favoritos e as guias abertas não fazem parte da sincronização do Lumno. O navegador continua a sincronizá-los normalmente.

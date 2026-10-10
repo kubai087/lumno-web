@@ -1,19 +1,19 @@
-Chercher sur GitHub voulait dire ouvrir GitHub, puis cliquer dans son champ de recherche. Avec Lumno, vous sautez la page d'accueil : tapez un raccourci, appuyez sur `Tab`, tapez ce que vous cherchez et validez avec Entrée pour arriver sur les résultats. Interroger une IA fonctionne de la même façon.
+Jusqu'ici, pour effectuer une recherche sur GitHub, il fallait d'abord ouvrir GitHub, puis utiliser son champ de recherche. Avec Lumno, vous pouvez passer directement aux résultats : saisissez le raccourci du site, appuyez sur `Tab`, saisissez votre recherche, puis appuyez sur Entrée. Les questions à une IA fonctionnent de la même façon.
 
-## Comment ça marche {#how}
+## Utiliser la recherche sur site {#how}
 
-1. Appuyez sur `⌘ ⇧ K` (`Ctrl + Maj + K` sous Windows) sur n'importe quelle page.
-2. Tapez un raccourci de site, par exemple `gh`.
-3. Appuyez sur `Tab`. GitHub apparaît à gauche du champ.
-4. Tapez votre recherche et appuyez sur Entrée.
+1. Appuyez sur `⌘ ⇧ K` (`Ctrl + Maj + K` sous Windows) depuis n'importe quelle page.
+2. Saisissez un raccourci de site, par exemple `gh`.
+3. Appuyez sur `Tab`. GitHub s'affiche à gauche du champ.
+4. Saisissez votre recherche et appuyez sur Entrée.
 
-![Le champ affiche GitHub à gauche ; en tapant command palette, Lumno propose de chercher command palette sur GitHub](sitesearch "gh puis Tab : cherchez directement sur GitHub")
+![Le champ affiche GitHub à gauche ; en tapant command palette, Lumno propose de chercher command palette sur GitHub](sitesearch "Saisir gh puis appuyer sur Tab pour rechercher directement sur GitHub")
 
 Pour revenir à une recherche normale, appuyez sur `Esc`.
 
 ## Raccourcis de sites {#shortcuts}
 
-Lumno intègre 46 raccourcis de recherche. En voici quelques-uns. Un trou de mémoire ? Le nom du site fonctionne aussi, comme `github` ou `youtube`.
+Lumno intègre 46 raccourcis de recherche, dont voici une sélection. Si vous ne vous souvenez plus d'un raccourci, vous pouvez aussi saisir le nom du site, par exemple `github` ou `youtube`.
 
 | Site | Raccourci |
 | --- | --- |
@@ -29,9 +29,9 @@ Lumno intègre 46 raccourcis de recherche. En voici quelques-uns. Un trou de mé
 | Google Scholar | `gs` |
 | Google Maps | `maps` |
 
-## Interroger l'IA directement {#ai}
+## Poser une question à une IA {#ai}
 
-Tapez le raccourci de l'IA, appuyez sur `Tab`, écrivez votre question et validez avec Entrée. Lumno ouvre l'application web de l'IA et envoie la question pour vous.
+Saisissez le raccourci de l'IA, appuyez sur `Tab`, rédigez votre question, puis appuyez sur Entrée. Lumno ouvre l'application web de l'IA et envoie la question pour vous.
 
 | IA | Raccourci |
 | --- | --- |
@@ -41,16 +41,16 @@ Tapez le raccourci de l'IA, appuyez sur `Tab`, écrivez votre question et valide
 | DeepSeek | `ds` |
 | Kimi | `kimi` |
 
-![Le champ affiche ChatGPT à gauche avec une question sur les alternatives à la barre de commande d'Arc, prêt à ouvrir ChatGPT](ai "gpt puis Tab : votre question part vers ChatGPT")
+![Le champ affiche ChatGPT à gauche avec une question sur les alternatives à la barre de commande d'Arc, prêt à ouvrir ChatGPT](ai "Saisir gpt puis appuyer sur Tab pour envoyer la question à ChatGPT")
 
-## Un raccourci oublié ? Choisissez dans le panneau {#scope-panel}
+## Choisir dans le panneau de portée de recherche {#scope-panel}
 
-Appuyez deux fois sur `Tab` dans le champ vide pour ouvrir le panneau de portée de recherche. Moteurs de recherche, sites et IA y sont regroupés. Utilisez les flèches, ou tapez pour filtrer.
+Lorsque le champ est vide, appuyez deux fois sur `Tab` pour ouvrir le panneau de portée de recherche. Les moteurs de recherche, les recherches sur site et les IA y sont classés par catégorie. Utilisez les touches fléchées pour faire votre choix, ou saisissez un terme pour filtrer la liste.
 
 ![Le panneau de portée de recherche, avec les moteurs de recherche et la recherche sur site regroupés](modemenu "Le panneau de portée de recherche")
 
-## Ajouter vos propres sites {#custom}
+## Ajouter une recherche personnalisée {#custom}
 
-L'intranet de votre entreprise ou la documentation que vous consultez chaque jour peut devenir une recherche personnalisée dans les réglages de Lumno, avec le raccourci de votre choix.
+Vous pouvez ajouter l'intranet de votre entreprise ou des sites de documentation que vous consultez souvent comme recherches personnalisées dans les réglages de Lumno, avec un raccourci facile à retenir.
 
-Vous pouvez aussi combiner 2 à 10 sources en une recherche groupée : vous tapez une fois, et les résultats s'ouvrent dans plusieurs onglets à la fois, réunis dans un groupe d'onglets.
+Vous pouvez également regrouper 2 à 10 sources dans une recherche groupée : vous saisissez votre recherche une seule fois, et les résultats s'ouvrent simultanément dans plusieurs onglets, réunis dans un même groupe d'onglets.

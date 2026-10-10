@@ -30,9 +30,9 @@ const content: GuideLocaleContent = {
     searchPlaceholder: "Rechercher dans l'aide",
     searchLabel: "Rechercher dans le centre d'aide",
     searchEmpty: "Aucun résultat",
-    stuckText: "Toujours bloqué ? Posez la question sur GitHub ou écrivez sur X.",
+    stuckText: "Vous avez encore une question ? Posez-la sur GitHub ou contactez-nous sur X.",
     stuckPrimary: "Poser la question sur GitHub",
-    stuckSecondary: "Écrire sur X",
+    stuckSecondary: "Nous contacter sur X",
   },
   pages: {
     "what-is-lumno": {
@@ -61,10 +61,18 @@ const content: GuideLocaleContent = {
     "use-cases": {
       pageTitle: "Pour qui est Lumno : trop d'onglets, départ d'Arc, développement et écriture | Aide Lumno",
       pageDescription:
-        "Là où Lumno aide le plus : des dizaines d'onglets ouverts, le passage d'Arc à Chrome ou Dia, les développeurs entre documentation et GitHub, la recherche et l'écriture, les questions à l'IA et un nouvel onglet apaisé.",
+        "Les usages courants de Lumno, étape par étape : des dizaines d'onglets ouverts, le passage d'Arc à Chrome ou Dia, la documentation et GitHub, la recherche et la rédaction, les questions à l'IA et un nouvel onglet épuré.",
       keywords: ["cas d'usage Lumno", "trop d'onglets", "alternative à Arc", "extension navigateur développeur", "raccourci pour interroger l'IA"],
       title: "Cas d'usage",
       navTitle: "Cas d'usage",
+    },
+    faq: {
+      pageTitle: "Questions fréquentes sur Lumno : raccourcis, pages restreintes, nouvel onglet et synchronisation | Aide Lumno",
+      pageDescription:
+        "Réponses aux questions fréquentes sur Lumno : le raccourci par défaut et sa modification, que faire s'il ne fonctionne pas, l'utilisation avec une autre extension de nouvel onglet, les navigateurs pris en charge, la synchronisation des réglages et le traitement des données de navigation.",
+      keywords: ["Lumno FAQ", "questions fréquentes Lumno", "raccourci extension Chrome ne fonctionne pas", "conflit extension nouvel onglet", "Lumno gratuit"],
+      title: "Questions fréquentes",
+      navTitle: "Questions fréquentes",
     },
     install: {
       pageTitle: "Installer Lumno depuis le Chrome Web Store ou les modules Edge | Aide Lumno",
@@ -74,7 +82,7 @@ const content: GuideLocaleContent = {
       title: "Installer Lumno",
       navTitle: "Installer Lumno",
       faq: [
-        { question: "Faut-il un compte ?", answer: "Non. Lumno n'a pas de système de compte. Installez-le, il fonctionne." },
+        { question: "Faut-il un compte ?", answer: "Non. Lumno n'a pas de système de compte et peut être utilisé dès l'installation." },
         {
           question: "Comment le désinstaller ?",
           answer: "Ouvrez chrome://extensions (edge://extensions dans Edge), trouvez Lumno et cliquez sur Supprimer. Les réglages et images que Lumno avait enregistrés sur votre appareil sont aussi effacés.",
@@ -90,9 +98,9 @@ const content: GuideLocaleContent = {
       navTitle: "Raccourcis clavier",
       faq: [
         {
-          question: "Le raccourci ne fait rien. Que faire ?",
+          question: "Que faire si le raccourci ne fonctionne pas ?",
           answer:
-            "Vérifiez que vous n'êtes pas sur une page restreinte, comme les paramètres chrome:// ou le Web Store, puis regardez dans chrome://extensions/shortcuts si une autre extension utilise le même raccourci. Dans Dia, réglez la portée sur Global.",
+            "Vérifiez d'abord que vous ne vous trouvez pas sur une page restreinte, comme les paramètres chrome:// ou le Chrome Web Store, puis vérifiez dans chrome://extensions/shortcuts qu'aucune autre extension n'utilise le même raccourci. Dans Dia, réglez la portée sur « Global ».",
         },
       ],
     },
@@ -110,7 +118,7 @@ const content: GuideLocaleContent = {
         },
         {
           question: "Chrome et Firefox peuvent-ils se synchroniser entre eux ?",
-          answer: "Oui, via WebDAV. Indiquez le même serveur et le même dossier dans les deux navigateurs, même sur un seul ordinateur.",
+          answer: "Oui, grâce à WebDAV. Indiquez le même serveur et le même dossier dans les deux navigateurs ; cela fonctionne aussi sur un même ordinateur.",
         },
       ],
     },
@@ -136,7 +144,7 @@ const content: GuideLocaleContent = {
     "site-search": {
       pageTitle: "Recherche sur site : tapez un raccourci, appuyez sur Tab, cherchez sur GitHub, YouTube ou ChatGPT | Aide Lumno",
       pageDescription:
-        "Lumno intègre 46 raccourcis de recherche. Tapez gh, yt ou sf puis Tab pour chercher directement sur GitHub, YouTube ou Stack Overflow, ou envoyez une question tout droit à ChatGPT, Gemini ou Perplexity.",
+        "Lumno intègre 46 raccourcis de recherche. Saisissez gh, yt ou sf, puis appuyez sur Tab pour rechercher directement sur GitHub, YouTube ou Stack Overflow, ou envoyez une question directement à ChatGPT, Gemini ou Perplexity.",
       keywords: ["recherche sur site Chrome", "Tab pour rechercher", "raccourcis de recherche navigateur", "chercher vite sur GitHub", "raccourci ChatGPT", "moteur de recherche personnalisé"],
       title: "Recherche sur site et questions à l'IA",
       navTitle: "Recherche sur site et IA",
@@ -146,13 +154,13 @@ const content: GuideLocaleContent = {
           answer:
             "46 au total : 11 moteurs de recherche, 11 chats et moteurs de recherche IA (comme ChatGPT, Gemini, Perplexity et DeepSeek) et 24 sites dont GitHub, YouTube, Stack Overflow et Reddit. Vous pouvez ajouter les vôtres.",
         },
-        { question: "La recherche sur site passe-t-elle par les serveurs de Lumno ?", answer: "Non. Lumno n'a pas de serveur ; Entrée ouvre directement la page de recherche du site." },
+        { question: "La recherche sur site passe-t-elle par les serveurs de Lumno ?", answer: "Non. Lumno n'a pas de serveur ; lorsque vous appuyez sur Entrée, la page de recherche du site s'ouvre directement." },
       ],
     },
     "tab-switcher": {
       pageTitle: "Sélecteur d'onglets récents : ⌥Q pour passer d'un onglet récent à l'autre | Aide Lumno",
       pageDescription:
-        "Appuyez sur ⌥Q (Alt+Q sous Windows) pour ouvrir le sélecteur d'onglets récents de Lumno : vos onglets dans l'ordre où vous les avez utilisés, chacun avec un aperçu. Maintenez ⌥, tapez Q, relâchez.",
+        "Appuyez sur ⌥Q (Alt+Q sous Windows) pour ouvrir le sélecteur d'onglets récents de Lumno : vos onglets s'affichent dans l'ordre de leur utilisation, chacun avec un aperçu. Maintenez ⌥ enfoncée, appuyez plusieurs fois sur Q, puis relâchez ⌥ pour basculer.",
       keywords: ["sélecteur d'onglets Chrome", "onglets récents", "Alt Tab pour navigateur", "Arc Ctrl Tab"],
       title: "Passer d'un onglet récent à l'autre",
       navTitle: "Onglets récents",
@@ -183,10 +191,18 @@ const content: GuideLocaleContent = {
     },
     "newtab-clock-zen": {
       pageTitle: "Horloge et mode Zen : un nouvel onglet réduit au champ de recherche | Aide Lumno",
-      pageDescription: "Affichez une horloge sur le nouvel onglet Lumno, ou tapez /zen pour ne garder que le champ de recherche.",
+      pageDescription: "Affichez une horloge dans le nouvel onglet de Lumno, ou saisissez /zen pour ne garder que le champ de recherche.",
       keywords: ["horloge nouvel onglet", "nouvel onglet minimaliste", "mode Zen", "nouvel onglet concentration"],
       title: "Horloge et mode Zen",
       navTitle: "Horloge et mode Zen",
+    },
+    "newtab-other-extensions": {
+      pageTitle: "Utiliser une autre extension de nouvel onglet avec la barre de commande de Lumno | Aide Lumno",
+      pageDescription:
+        "Conservez Momentum, Tabliss ou une autre extension de nouvel onglet et utilisez uniquement la barre de commande de Lumno : activez l'autre extension après Lumno pour qu'elle prenne en charge le nouvel onglet. Lorsque le navigateur le demande, conservez la modification ; l'annuler désactive l'extension entière.",
+      keywords: ["conflit extension nouvel onglet", "nouvel onglet Chrome modifié par une extension", "barre de commande Lumno seule", "Momentum", "Tabliss"],
+      title: "Utiliser une autre extension de nouvel onglet",
+      navTitle: "Autre extension de nouvel onglet",
     },
     "arc-command-bar": {
       pageTitle: "Passer d'Arc à Chrome, Dia ou Edge : barre de commande et raccourcis | Aide Lumno",
@@ -228,7 +244,7 @@ const content: GuideLocaleContent = {
     },
     "ratings-reviews": {
       pageTitle: "Avis et presse : avis du Chrome Web Store et articles | Aide Lumno",
-      pageDescription: "La note et les avis de Lumno sur le Chrome Web Store, et les articles qui en parlent.",
+      pageDescription: "La note et les avis de Lumno sur le Chrome Web Store, ainsi que les articles qui lui sont consacrés.",
       keywords: ["avis Lumno", "note Lumno", "test extension barre de commande Chrome"],
       title: "Avis et presse",
       navTitle: "Avis et presse",

@@ -1,8 +1,8 @@
-Lumno 为 Chromium 浏览器而生，也有 Firefox 版。下面是在各个浏览器里能用到哪些。
+Lumno 主要面向 Chromium 浏览器，同时提供 Firefox 版。下表列出各浏览器中可用的功能。
 
-## 一览 {#support}
+## 支持情况 {#support}
 
-| 浏览器 | 命令栏 | 新标签页 | 去哪里装 |
+| 浏览器 | 命令栏 | 新标签页 | 安装渠道 |
 | --- | --- | --- | --- |
 | Google Chrome | 支持 | 支持 | Chrome 应用商店 |
 | Microsoft Edge | 支持 | 支持 | Edge 加载项 |
@@ -11,35 +11,35 @@ Lumno 为 Chromium 浏览器而生，也有 Firefox 版。下面是在各个浏�
 | Firefox、Zen 等 | 部分支持 | 支持 | 见下文 |
 | Safari | 不支持 | 不支持 | — |
 
-手机和平板上的浏览器暂时都不支持。
+暂不支持手机和平板上的浏览器。
 
 ## Dia {#dia}
 
-Dia 限制了扩展接管新标签页，所以 Lumno 的新标签页在 Dia 里用不了，命令栏一切正常。
+Dia 限制了扩展接管新标签页，因此 Lumno 的新标签页在 Dia 中无法使用，命令栏则可以正常使用。
 
-按快捷键没反应的话，打开扩展快捷键页，把 Lumno 这一项右边的范围从「在 Dia 中」改成「全局」。
+如果按下快捷键没有反应，请打开扩展快捷键页面，将 Lumno 对应项右侧的范围从「在 Dia 中」改为「全局」。
 
 ## Firefox {#firefox}
 
-Firefox 版还没上架 Firefox 附加组件商店，上架后会在这个网站放出安装入口。它适用于 Firefox 140 及以上，也能用在 Zen、LibreWolf、Floorp 这些基于 Firefox 的浏览器里。
+Firefox 版尚未在 Firefox 附加组件商店上架，上架后将在本网站提供安装入口。它适用于 Firefox 140 及以上版本，也可以在 Zen、LibreWolf、Floorp 等基于 Firefox 的浏览器中使用。
 
-Firefox 的扩展接口和 Chromium 不太一样，所以有几处用不了：
+由于 Firefox 的扩展接口与 Chromium 有所不同，以下功能无法使用：
 
-| 功能 | 在 Firefox 里 |
+| 功能 | 在 Firefox 中 |
 | --- | --- |
-| 视频自动画中画 | 用不了，Firefox 不允许扩展让网页视频进入画中画 |
-| 网页剪裁 | 用不了，Firefox 不支持文档画中画 |
-| 在 `about:` 页面和附加组件网站唤出命令栏 | 用不了 |
-| 从快捷方式或命令栏打开 `about:` 页面 | 用不了 |
-| 在本地 `file://` 页面唤出命令栏 | 用不了 |
-| 网站图标 | 没去过的网站，可能先显示一个占位图标 |
+| 视频自动画中画 | 不可用，Firefox 不允许扩展让网页视频进入画中画 |
+| 网页剪裁 | 不可用，Firefox 不支持文档画中画 |
+| 在 `about:` 页面和附加组件网站唤出命令栏 | 不可用 |
+| 从快捷方式或命令栏打开 `about:` 页面 | 不可用 |
+| 在本地 `file://` 页面唤出命令栏 | 不可用 |
+| 网站图标 | 未访问过的网站可能会先显示占位图标 |
 
-Firefox 自己占用了 `⌘ ⇧ K`，所以 Firefox 版在 macOS 上默认用 `⌃ ⇧ K`，在 Windows 和 Linux 上默认用 `Alt + K`，`Alt + Q` 不变。
+Firefox 自身占用了 `⌘ ⇧ K`，因此 Firefox 版在 macOS 上默认使用 `⌃ ⇧ K`，在 Windows 和 Linux 上默认使用 `Alt + K`；`Alt + Q` 保持不变。
 
 ## Safari {#safari}
 
-Safari 的扩展体系和 Chromium 差别很大，Lumno 暂时没有 Safari 版。在 Mac 上想要类似的全局搜索，可以试试 [Raycast](https://www.raycast.com/) 或 [Alfred](https://www.alfredapp.com/)。
+Safari 的扩展体系与 Chromium 差异较大，Lumno 暂时没有 Safari 版。如果想在 Mac 上使用类似的全局搜索，可以试试 [Raycast](https://www.raycast.com/) 或 [Alfred](https://www.alfredapp.com/)。
 
 ## 界面语言 {#languages}
 
-扩展支持简体中文、繁体中文、英文和日文，默认跟着浏览器语言走，也可以在设置里换。
+扩展界面支持简体中文、繁体中文、英文和日文，默认跟随浏览器语言，也可以在设置中更改。

@@ -1,19 +1,19 @@
-Um auf GitHub zu suchen, musstest du bisher GitHub öffnen und dann in dessen Suchfeld klicken. Mit Lumno überspringst du die Startseite: Kürzel tippen, `Tab` drücken, Suchbegriff eingeben, Enter – und du landest direkt in den Ergebnissen. KI fragen funktioniert genauso.
+Um auf GitHub zu suchen, musstest du bisher zuerst GitHub öffnen und dann das dortige Suchfeld verwenden. Mit Lumno überspringst du die Startseite: Gib das Kürzel der Website ein, drücke `Tab`, gib deinen Suchbegriff ein und drücke die Eingabetaste, um direkt zu den Ergebnissen zu gelangen. Fragen an eine KI funktionieren genauso.
 
-## So geht's {#how}
+## Seitensuche verwenden {#how}
 
-1. Drück auf einer beliebigen Seite `⌘ ⇧ K` (unter Windows `Strg + Umschalt + K`).
-2. Tipp ein Seitenkürzel, etwa `gh`.
-3. Drück `Tab`. Links im Feld erscheint GitHub.
-4. Gib deinen Suchbegriff ein und drück Enter.
+1. Drücke auf einer beliebigen Seite `⌘ ⇧ K` (unter Windows `Strg + Umschalt + K`).
+2. Gib ein Seitenkürzel ein, zum Beispiel `gh`.
+3. Drücke `Tab`. Links im Suchfeld wird GitHub angezeigt.
+4. Gib deinen Suchbegriff ein und drücke die Eingabetaste.
 
-![Das Suchfeld zeigt links GitHub; nach der Eingabe command palette wird angeboten, GitHub nach command palette zu durchsuchen](sitesearch "gh, dann Tab: direkt auf GitHub suchen")
+![Das Suchfeld zeigt links GitHub; nach der Eingabe command palette wird angeboten, GitHub nach command palette zu durchsuchen](sitesearch "gh eingeben und Tab drücken, um direkt auf GitHub zu suchen")
 
-Zurück zur normalen Suche geht's mit `Esc`.
+Um zur normalen Suche zurückzukehren, drücke `Esc`.
 
 ## Seitenkürzel {#shortcuts}
 
-Lumno bringt 46 Suchkürzel mit. Hier eine Auswahl. Kürzel vergessen? Der Name der Website geht auch, etwa `github` oder `youtube`.
+Lumno enthält 46 integrierte Suchkürzel. Eine Auswahl findest du in der folgenden Tabelle. Wenn du ein Kürzel nicht mehr weißt, kannst du auch den Namen der Website eingeben, zum Beispiel `github` oder `youtube`.
 
 | Website | Kürzel |
 | --- | --- |
@@ -29,9 +29,9 @@ Lumno bringt 46 Suchkürzel mit. Hier eine Auswahl. Kürzel vergessen? Der Name 
 | Google Scholar | `gs` |
 | Google Maps | `maps` |
 
-## Direkt die KI fragen {#ai}
+## Eine KI fragen {#ai}
 
-Tipp das Kürzel der KI, drück `Tab`, schreib deine Frage und drück Enter. Lumno öffnet die Web-App der KI und schickt die Frage für dich ab.
+Gib das Kürzel der KI ein, drücke `Tab`, formuliere deine Frage und drücke die Eingabetaste. Lumno öffnet die Web-App der KI und sendet die Frage für dich ab.
 
 | KI | Kürzel |
 | --- | --- |
@@ -41,16 +41,16 @@ Tipp das Kürzel der KI, drück `Tab`, schreib deine Frage und drück Enter. Lum
 | DeepSeek | `ds` |
 | Kimi | `kimi` |
 
-![Das Suchfeld zeigt links ChatGPT mit einer Frage nach Alternativen zu Arcs Befehlsleiste, bereit, ChatGPT zu öffnen](ai "gpt, dann Tab: deine Frage geht an ChatGPT")
+![Das Suchfeld zeigt links ChatGPT mit einer Frage nach Alternativen zu Arcs Befehlsleiste, bereit, ChatGPT zu öffnen](ai "gpt eingeben und Tab drücken, um die Frage an ChatGPT zu senden")
 
-## Kürzel vergessen? Im Panel auswählen {#scope-panel}
+## Im Suchbereich-Panel auswählen {#scope-panel}
 
-Drück im leeren Feld zweimal `Tab`, um das Suchbereich-Panel zu öffnen. Dort sind Suchmaschinen, Websites und KI gruppiert. Wähl mit den Pfeiltasten oder tipp zum Filtern.
+Drücke bei leerem Suchfeld zweimal `Tab`, um das Suchbereich-Panel zu öffnen. Suchmaschinen, Seitensuchen und KI sind dort nach Kategorien gruppiert. Wähle mit den Pfeiltasten aus oder gib einen Begriff ein, um die Liste zu filtern.
 
 ![Das Suchbereich-Panel mit gruppierten Suchmaschinen und Seitensuchen](modemenu "Das Suchbereich-Panel")
 
-## Eigene Websites hinzufügen {#custom}
+## Eigene Suche hinzufügen {#custom}
 
-Das Intranet deiner Firma oder die Doku, die du jeden Tag aufrufst, wird in Lumnos Einstellungen zu einer eigenen Suche mit einem Kürzel deiner Wahl.
+Das Intranet deines Unternehmens oder häufig genutzte Dokumentationsseiten kannst du in den Einstellungen von Lumno als eigene Suche hinzufügen und ihnen ein leicht zu merkendes Kürzel geben.
 
-Du kannst auch 2 bis 10 Quellen zu einer Sammelsuche bündeln: einmal tippen, und die Ergebnisse öffnen sich gleichzeitig in mehreren Tabs, zusammengefasst in einer Tabgruppe.
+Du kannst außerdem 2 bis 10 Quellen zu einer Sammelsuche zusammenfassen: Du gibst den Suchbegriff einmal ein, und die Ergebnisse öffnen sich gleichzeitig in mehreren Tabs, die in einer Tabgruppe zusammengefasst werden.

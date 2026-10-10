@@ -1,39 +1,39 @@
-Lumno hat keine Konten und keine Server, die Nutzerdaten speichern. Deine Tabs, Lesezeichen und dein Verlauf werden nur in deinem eigenen Browser verarbeitet und nie an uns gesendet. Das hier ist eine kurze Zusammenfassung; den vollständigen Text findest du in der [Datenschutzerklärung](/de/privacy/).
+Lumno hat keine Konten und keine Server, auf denen Nutzerdaten gespeichert werden. Deine Tabs, Lesezeichen und dein Verlauf werden ausschließlich in deinem eigenen Browser verarbeitet und nie an uns gesendet. Diese Seite ist eine Zusammenfassung; den vollständigen Text findest du in der [Datenschutzerklärung](/de/privacy/).
 
-## Was auf deinem Gerät bleibt {#local}
+## Auf deinem Gerät gespeicherte Daten {#local}
 
-Zum Suchen, Wechseln und Anzeigen des neuen Tabs liest Lumno auf deinem Gerät:
+Für die Suche, das Wechseln von Tabs und die Anzeige des neuen Tabs liest und speichert Lumno auf deinem Gerät Folgendes:
 
-- Deine offenen Tabs, deinen Verlauf, deine Lesezeichen und meistbesuchten Seiten
-- Was du in Lumno eintippst und welche Ergebnisse du wählst, damit Häufiges nach oben rückt
-- Deine Einstellungen sowie hochgeladene Icons und Hintergründe
+- Deine offenen Tabs, deinen Verlauf, deine Lesezeichen und deine meistbesuchten Websites
+- Deine Eingaben in Lumno und die ausgewählten Ergebnisse, damit häufig genutzte Ergebnisse weiter oben erscheinen
+- Deine Einstellungen sowie hochgeladene Symbole und Hintergründe
 
-Auch die Seitenvorschauen des Umschalters bleiben auf deinem Gerät: höchstens 12, jeweils bis zu zwei Stunden.
+Auch die Seitenvorschauen des Tab-Umschalters werden nur auf deinem Gerät gespeichert: höchstens 12, jeweils bis zu zwei Stunden lang.
 
-## Was wir nicht erheben {#not-collected}
+## Daten, die wir nicht erheben {#not-collected}
 
-Keine Registrierung, keine Anmeldung. Lumno erhebt weder Namen noch E-Mail-Adresse und meldet keine Nutzungszahlen, Klicks, Gerätekennungen oder Absturzdaten.
+Eine Registrierung oder Anmeldung ist nicht erforderlich. Lumno erhebt weder deinen Namen noch deine E-Mail-Adresse und übermittelt keine Nutzungszahlen, Klicks, Gerätekennungen oder Absturzdaten.
 
-## Anfragen, die deinen Computer verlassen {#requests}
+## Anfragen, die dein Gerät verlassen {#requests}
 
-Diese gehen direkt von der Erweiterung an den jeweiligen Dienst, nie über uns:
+Die folgenden Anfragen gehen direkt von der Erweiterung an den jeweiligen Dienst und nie über uns:
 
-| Anfrage | Geht an | Wann |
+| Anfrage | Empfänger | Zeitpunkt |
 | --- | --- | --- |
-| Suchvorschläge | Deine Suchmaschine (etwa Google oder Bing) | Während du in Lumnos Suchfeld tippst |
-| Suchen und KI-Fragen | Die gewählte Website oder KI | Wenn du Enter drückst |
-| Website-Icons | Googles Favicon-Dienst oder Favicon.is | Beim Anzeigen von Website-Icons |
-| Hintergründe | Bing, Lorem Picsum, das Cleveland Museum of Art | Wenn du Online-Hintergründe nutzt |
+| Suchvorschläge | Deine Suchmaschine (z. B. Google oder Bing) | Bei der Eingabe in Lumnos Suchfeld |
+| Suchen und Fragen an eine KI | Die ausgewählte Website oder KI | Wenn du die Eingabetaste drückst |
+| Website-Symbole | Googles Favicon-Dienst oder Favicon.is | Beim Anzeigen von Website-Symbolen |
+| Hintergründe | Bing, Lorem Picsum, Cleveland Museum of Art | Wenn du Online-Hintergründe verwendest |
 | Update-Hinweise | GitHub | Nach einem Update der Erweiterung |
 
-## Wie Einstellungen synchronisiert werden {#sync}
+## So werden Einstellungen synchronisiert {#sync}
 
-- Mit deinem Browser: Design, Shortcuts, Hintergrundwahl und ähnliche Einstellungen laufen über dein Browserkonto.
-- WebDAV (optional): standardmäßig aus. Eingeschaltet landen deine vollständigen Einstellungen, hochgeladenen Icons und Hintergründe auf einem Server deiner Wahl. Verlauf, Lesezeichen und Tabs werden nicht hochgeladen.
-- Exportieren und importieren: Speichere deine Einstellungen als Datei und importier sie auf einem anderen Computer.
+- Browser-Synchronisierung: Design, Shortcuts, Hintergrundauswahl und ähnliche Einstellungen werden über dein Browserkonto synchronisiert.
+- WebDAV-Synchronisierung (optional): Standardmäßig deaktiviert. Wenn sie aktiviert ist, werden deine vollständigen Einstellungen sowie hochgeladene Symbole und Hintergründe auf einem Server deiner Wahl gespeichert. Verlauf, Lesezeichen und Tabs werden nicht hochgeladen.
+- Exportieren und importieren: Speichere deine Einstellungen als Datei und importiere sie auf einem anderen Computer.
 
-Wie du das einrichtest, steht unter [Synchronisierung](../sync/).
+Eine Anleitung zur Einrichtung findest du unter [Synchronisierung](../sync/).
 
 ## Über diese Website {#website}
 
-Diese Website (lumno.kubai.design) nutzt eine Webanalyse, um zu sehen, wie viele Leute sie besuchen und woher sie kommen. Das ist von der Erweiterung getrennt; die Erweiterung lädt überhaupt keine Analyse.
+Diese Website (lumno.kubai.design) verwendet eine Webanalyse, um die Anzahl der Besuche und deren Herkunft zu messen. Dies ist von der Erweiterung getrennt; die Erweiterung selbst lädt keinerlei Analyseskripte.

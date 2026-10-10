@@ -1,10 +1,10 @@
-Lumno entsteht gemeinsam mit den Menschen, die es nutzen. Hier ist, was sie sagen, und was über Lumno geschrieben wurde.
+Lumno wird auf Grundlage des Feedbacks seiner Nutzerinnen und Nutzer kontinuierlich verbessert. Hier findest du Bewertungen und Artikel über Lumno.
 
 ## Chrome Web Store {#chrome-web-store}
 
-Im Chrome Web Store hat Lumno {{chromeRating}} von 5 Sternen bei {{chromeRatingCount}} Bewertungen.
+Im Chrome Web Store ist Lumno auf Grundlage von {{chromeRatingCount}} Bewertungen mit {{chromeRating}} von 5 Sternen bewertet.
 
-Die Rezensionen findest du auf der [Bewertungsseite im Chrome Web Store](https://chromewebstore.google.com/detail/nggfkkbmogmadfoikakkfegkoilfcfao/reviews). Wenn Lumno dir geholfen hat, bedeutet eine Bewertung einem kleinen, unabhängigen Projekt sehr viel.
+Die Rezensionen kannst du auf der [Bewertungsseite im Chrome Web Store](https://chromewebstore.google.com/detail/nggfkkbmogmadfoikakkfegkoilfcfao/reviews) lesen. Wenn Lumno dir geholfen hat, freuen wir uns über eine Bewertung. Für ein kleines, unabhängiges Projekt ist das eine große Unterstützung.
 
 ## Presse {#press}
 
@@ -13,6 +13,6 @@ Beide Artikel sind auf Chinesisch.
 - sspai (少数派): [Lumno: eine durchdachte Suchleiste, die die alltäglichen Einstiege in den Browser neu ordnet](https://sspai.com/post/111782)
 - sspai (少数派): [Browsererweiterungen im Überblick: sechs nützliche und unterhaltsame Neuentdeckungen](https://sspai.com/post/113495)
 
-## Mitmachen {#community}
+## Mitwirken {#community}
 
-Lumnos Code und Diskussionen sind offen auf [GitHub](https://github.com/kubai087/lumno-extension). Meld ein Problem, wünsch dir eine Funktion oder schau einfach, was als Nächstes kommt.
+Der Code und die Diskussionen zu Lumno sind öffentlich auf [GitHub](https://github.com/kubai087/lumno-extension). Dort kannst du Probleme melden, Funktionen vorschlagen und sehen, was als Nächstes geplant ist.

@@ -1,4 +1,4 @@
-Avec Lumno, presque tout se passe au clavier. Voici les raccourcis par défaut, comment les modifier, et les touches pratiques dans la barre de commande.
+La plupart des fonctions de Lumno s'utilisent au clavier. Cette page présente les raccourcis par défaut, la façon de les modifier et les touches disponibles dans la barre de commande et dans le sélecteur d'onglets.
 
 ## Raccourcis par défaut {#defaults}
 
@@ -6,41 +6,41 @@ Avec Lumno, presque tout se passe au clavier. Voici les raccourcis par défaut, 
 | --- | --- | --- |
 | Ouvrir la barre de commande | `⌘ ⇧ K` | `Ctrl + Maj + K` |
 | Ouvrir le sélecteur d'onglets récents | `⌥ Q` | `Alt + Q` |
-| Ouvrir la barre avec l'URL de la page actuelle | À définir | À définir |
-| Copier l'URL de la page actuelle | À définir | À définir |
+| Ouvrir la barre de commande avec l'URL de la page actuelle | Aucun par défaut | Aucun par défaut |
+| Copier l'URL de la page actuelle | Aucun par défaut | Aucun par défaut |
 
-Les deux derniers peuvent afficher « Non défini » juste après l'installation. Attribuez-leur un raccourci comme expliqué ci-dessous.
+Les deux dernières actions peuvent s'afficher comme « Non défini » après l'installation. Pour leur attribuer un raccourci, suivez les étapes ci-dessous.
 
 ## Modifier un raccourci {#change}
 
 Les navigateurs gèrent les raccourcis des extensions sur une page dédiée :
 
-1. Tapez `chrome://extensions/shortcuts` dans la barre d'adresse (`edge://extensions/shortcuts` dans Edge).
-2. Trouvez Lumno et cliquez sur le crayon à côté de l'action à modifier.
+1. Saisissez `chrome://extensions/shortcuts` dans la barre d'adresse (`edge://extensions/shortcuts` dans Edge).
+2. Repérez Lumno, puis cliquez sur l'icône en forme de crayon à côté de l'action à modifier.
 3. Appuyez sur la nouvelle combinaison de touches.
 
 ![La page des raccourcis d'extensions du navigateur : « Open command bar » de Lumno réglé sur ⇧⌘K et « Open recent tab switcher » sur ⌥Q](shortcuts "Modifier les raccourcis sur la page des extensions")
 
-Vous venez d'Arc ? Réglez « Open command bar » sur `⌘ T` et vous êtes comme chez vous.
+Si vous avez l'habitude d'Arc, vous pouvez attribuer `⌘ T` à « Open command bar ».
 
-Si le raccourci ne fait rien dans Dia, passez la portée juste à côté de « In Dia » à « Global ».
+Si le raccourci ne fonctionne pas dans Dia, remplacez la portée indiquée à côté, « In Dia », par « Global ».
 
-## Touches dans la barre de commande {#command-bar-keys}
+## Touches de la barre de commande {#command-bar-keys}
 
 | Touche | Action |
 | --- | --- |
-| `↑` `↓` | Parcourir les résultats |
+| `↑` `↓` | Sélectionner un résultat |
 | `↩` | Ouvrir un résultat ou basculer vers un onglet ouvert |
-| `⌥ ↩` | Ouvrir dans l'onglet actuel plutôt que dans un nouveau |
-| `⇧ ↩` | Ouvrir une autre copie d'un onglet ouvert dans un nouvel onglet |
-| `Tab` | Après un raccourci de site : lancer la recherche sur site ; champ vide : chercher seulement dans les onglets ouverts |
-| `Tab` `Tab` | Champ vide : ouvrir le panneau de portée de recherche |
-| `Esc` | Quitter la recherche sur site ou fermer la barre de commande |
+| `⌥ ↩` | Ouvrir dans l'onglet actuel plutôt que dans un nouvel onglet |
+| `⇧ ↩` | Si le résultat est un onglet ouvert, l'ouvrir une seconde fois dans un nouvel onglet |
+| `Tab` | Après un raccourci de site, lancer la recherche sur le site ; si le champ est vide, rechercher uniquement dans les onglets ouverts |
+| `Tab` `Tab` | Si le champ est vide, ouvrir le panneau de portée de recherche |
+| `Esc` | Quitter la recherche sur le site ou fermer la barre de commande |
 
-## Touches dans le sélecteur {#switcher-keys}
+## Touches du sélecteur d'onglets {#switcher-keys}
 
 | Touche | Action |
 | --- | --- |
-| Maintenir `⌥`, taper `Q` | Parcourir les onglets récents |
-| `Tab` ou flèches | Déplacer la sélection |
+| Maintenir `⌥` et appuyer plusieurs fois sur `Q` | Parcourir les onglets récents |
+| `Tab` ou touches fléchées | Déplacer la sélection |
 | Relâcher `⌥` ou appuyer sur `↩` | Basculer vers l'onglet sélectionné |

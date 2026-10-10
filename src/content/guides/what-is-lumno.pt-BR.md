@@ -1,37 +1,37 @@
-O Lumno é uma extensão de navegador gratuita e de código aberto que faz duas coisas. Aperte um atalho em qualquer página e aparece uma barra de comandos que encontra qualquer coisa no seu navegador. E a sua nova guia vira um ponto de partida tranquilo e bonito. Funciona no Chrome, Edge, Dia, Brave e outros navegadores Chromium.
+O Lumno é uma extensão de navegador gratuita e de código aberto com duas funções principais. Em qualquer página, um atalho de teclado abre uma barra de comandos que pesquisa em todo o navegador. Além disso, a nova guia se torna uma página inicial organizada e agradável. O Lumno funciona no Chrome, Edge, Dia, Brave e em outros navegadores Chromium.
 
 ## A barra de comandos {#command-bar}
 
-Aperte `⌘ ⇧ K` (`Ctrl + Shift + K` no Windows) em qualquer página e a barra de comandos abre no meio da tela.
+Pressione `⌘ ⇧ K` (`Ctrl + Shift + K` no Windows) em qualquer página para abrir a barra de comandos no centro da tela.
 
-- Encontre uma guia aberta, um favorito ou uma página do histórico com poucas letras e aperte Enter para ir direto. Veja [Pesquisar guias, favoritos e histórico](../search-tabs-bookmarks-history/).
-- Pesquise dentro do GitHub, YouTube ou Stack Overflow sem passar pela página inicial deles: digite um atalho, aperte `Tab` e pesquise. Perguntar ao ChatGPT ou ao Gemini funciona do mesmo jeito. Veja [Pesquisa em sites e perguntas à IA](../site-search/).
-- Digite uma URL, ou uma página do navegador como `chrome://settings`, e abra.
+- Digite algumas letras para encontrar uma guia aberta, um favorito ou uma página do histórico e pressione Enter para acessá-la diretamente. Para saber mais, consulte [Pesquisar guias, favoritos e histórico](../search-tabs-bookmarks-history/).
+- Você pode pesquisar no GitHub, no YouTube ou no Stack Overflow sem abrir a página inicial desses sites: digite o atalho do site, pressione `Tab` e digite sua pesquisa. Perguntas ao ChatGPT ou ao Gemini funcionam da mesma forma. Para saber mais, consulte [Pesquisa em sites e perguntas à IA](../site-search/).
+- Digite uma URL ou uma página do navegador, como `chrome://settings`, para abri-la diretamente.
 
-![A barra de comandos do Lumno numa página em branco: ao digitar chrome aparecem uma guia aberta do GitHub, sugestões de pesquisa, um favorito e sites mais visitados](search "Uma só caixa para tudo no seu navegador")
+![A barra de comandos do Lumno em uma página em branco: ao digitar chrome aparecem uma guia aberta do GitHub, sugestões de pesquisa, um favorito e sites mais visitados](search "Uma única caixa para pesquisar em todo o navegador")
 
-Para pular entre as últimas páginas que você usou, aperte `⌥ Q` e abra o [alternador de guias recentes](../tab-switcher/).
+Para alternar entre as últimas páginas usadas, pressione `⌥ Q` e abra o [alternador de guias recentes](../tab-switcher/).
 
 ## A nova guia {#new-tab}
 
-Com o Lumno instalado, a nova guia do Chrome e do Edge passa a ser a do Lumno: uma pintura como papel de parede, seus sites de sempre, seus favoritos e os lugares que você mais visita, tudo numa tela só. Deixe minimalista ou encha do seu jeito nas configurações de Appearance.
+Depois que você instala o Lumno, a nova guia do Chrome e do Edge passa a mostrar a página inicial do Lumno: uma pintura como papel de parede, seus sites favoritos, seus favoritos e os sites mais visitados, tudo em uma única tela. Você pode escolher o que é exibido nas configurações de Appearance.
 
 ![A nova guia do Lumno: relógio e caixa de pesquisa no alto, atalhos e pastas de favoritos no meio, sites mais visitados embaixo, sobre um litoral de Monet](newtab "A nova guia do Lumno")
 
-## Pequenos detalhes que fazem diferença {#more}
+## Outros recursos {#more}
 
-- Selecione um texto e pergunte à IA: destaque um trecho e deixe a IA responder, traduzir, explicar ou resumir. Desativado por padrão.
-- Recorte da web: recorte parte de uma página numa janela flutuante de picture-in-picture.
-- Picture-in-picture automático: saia de uma guia do YouTube ou da Twitch e o vídeo continua numa janelinha.
-- As guias fixadas voltam quando você reinicia o navegador.
+- Ações rápidas na seleção (Selection quick actions): selecione um trecho para pedir à IA que o responda, traduza, explique ou resuma. Desativado por padrão; você pode ativá-lo na seção Labs das configurações.
+- Recorte da web: recorte parte de uma página e exiba-a em uma janela flutuante de picture-in-picture.
+- Picture-in-picture automático: ao sair de uma guia do YouTube ou da Twitch, o vídeo continua sendo reproduzido em uma janela pequena.
+- Restauração de guias fixadas: ao reiniciar o navegador, as guias fixadas são restauradas automaticamente.
 
-Cada um tem sua própria chave nas configurações do Lumno. Fique só com o que você usa.
+Você pode ativar ou desativar cada um desses recursos separadamente nas configurações do Lumno.
 
-## Por que o Lumno {#strengths}
+## Vantagens do Lumno {#strengths}
 
-- Gratuito e de código aberto: GPL-3.0, com todo o código no [GitHub](https://github.com/kubai087/lumno-extension).
-- Sem conta: o Lumno não tem cadastro nem servidores. Seus dados de navegação ficam no seu navegador. Veja [Privacidade e dados](../privacy-data/).
-- Sem trocar de navegador: uma barra de comandos no estilo do Arc no Chrome, Edge ou Dia.
-- Feito para o mundo: a interface está em inglês, japonês e chinês simplificado e tradicional, com sites do mundo todo já incluídos.
+- Gratuito e de código aberto: o Lumno é distribuído sob a licença GPL-3.0, e todo o código está disponível no [GitHub](https://github.com/kubai087/lumno-extension).
+- Sem conta: o Lumno não exige cadastro e não usa servidores. Seus dados de navegação permanecem no seu navegador. Para saber mais, consulte [Privacidade e dados](../privacy-data/).
+- Sem trocar de navegador: você tem uma barra de comandos no estilo do Arc no Chrome, Edge ou Dia.
+- Multilíngue: a interface está disponível em inglês, japonês e chinês simplificado e tradicional, e inclui sites de todo o mundo.
 
-Antes de instalar, vale dar uma olhada no [que o Lumno não faz](../limitations/).
+Antes de instalar, você também pode consultar [o que o Lumno não faz](../limitations/).

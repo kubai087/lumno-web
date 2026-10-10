@@ -1,22 +1,22 @@
-En la parte de abajo de la nueva pestaña están los sitios a los que más vas. Fija los que usas a diario; con series y novelas por entregas, la tarjeta te guarda el sitio.
+La parte inferior de la nueva pestaña muestra los sitios que más visitas. Puedes fijar los que usas a diario y, en el caso de series y novelas por entregas, una tarjeta puede recordar por dónde vas.
 
-## Tus sitios frecuentes {#frequent}
+## Sitios frecuentes {#frequent}
 
-Las tarjetas de abajo muestran por defecto tus sitios más visitados. Haz clic en una y listo.
+De forma predeterminada, las tarjetas de la parte inferior muestran tus sitios más visitados. Haz clic en una tarjeta para abrir el sitio.
 
 ![Tarjetas de sitios más visitados en la parte inferior de la nueva pestaña: GitHub, Material, Figma y Mozilla](nt-recent "Más visitados")
 
-Para ver en cambio dónde has estado últimamente, haz clic en "···" arriba a la derecha de las tarjetas y elige los recientes. En los ajustes de Lumno, en New Tab Bottom Content, puedes mostrar una fila, dos o ninguna.
+Para ver los sitios visitados recientemente, haz clic en "···", en la esquina superior derecha de las tarjetas, y elige "Show Recent". En los ajustes de Lumno, en New Tab Bottom Content, puedes mostrar una fila, dos filas o ninguna.
 
-## Fija los que usas {#pin}
+## Fijar un sitio {#pin}
 
-Pasa el ratón por una tarjeta y haz clic en la chincheta de abajo a la derecha. Puedes fijar hasta tres; vuelve a hacer clic para soltarla. Las tarjetas fijadas se sincronizan con tu navegador.
+Pasa el puntero sobre una tarjeta y haz clic en el icono de la chincheta, en la esquina inferior derecha. Puedes fijar hasta tres tarjetas. Haz clic de nuevo para dejar de fijarla. Las tarjetas fijadas se sincronizan a través de tu navegador.
 
-## No pierdas el hilo de una serie {#progress}
+## Seguir el progreso de una serie {#progress}
 
-Fija una serie o una novela por entregas y Lumno empieza a seguir tu progreso: cuando llegas al siguiente episodio o capítulo del mismo título, la tarjeta cambia a él, así que la próxima vez retomas justo donde lo dejaste.
+Cuando fijas una serie o una novela por entregas, Lumno empieza a seguir tu progreso. Al pasar al siguiente episodio o capítulo del mismo título, la tarjeta se actualiza automáticamente, de modo que la próxima vez puedes continuar donde lo dejaste con un solo clic.
 
-- Una tarjeta que está siguiendo tu progreso muestra un icono de radar. Haz clic en él para pararlo.
-- ¿No lo necesitas? Desactiva "Keep pinned shows and novels up to date" en los ajustes de Lumno.
+- Las tarjetas que siguen tu progreso muestran un icono de radar. Haz clic en él para dejar de seguir el progreso.
+- Si no necesitas esta función, desactiva "Keep pinned shows and novels up to date" en los ajustes de Lumno.
 
 El progreso se actualiza en tu ordenador a partir de las páginas que abres y no se envía a ningún sitio.

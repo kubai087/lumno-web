@@ -1,34 +1,34 @@
-Lumno es solo una extensión de navegador, no un navegador nuevo, y todavía hay cosas que no puede hacer. Estas son las carencias que conocemos. Si necesitas alguna de estas funciones, quizá alguna de las herramientas que mencionamos aquí te encaje mejor.
+Lumno es una extensión de navegador, no un navegador propio, por lo que algunas funciones dependen de las limitaciones del navegador. Estas son las limitaciones conocidas. Si necesitas alguna de estas funciones, puede que alguna de las herramientas que se mencionan en esta página se ajuste mejor a ti.
 
-## Páginas donde la barra no se abre {#restricted-pages}
+## Páginas en las que la barra de comandos no se abre {#restricted-pages}
 
-Por seguridad, los navegadores no dejan que las extensiones muestren nada en estas páginas:
+Por motivos de seguridad, los navegadores no permiten que las extensiones muestren contenido en estas páginas:
 
 - Las páginas del navegador que empiezan por `chrome://` o `edge://`
-- Chrome Web Store y los complementos de Edge
+- Chrome Web Store y el sitio de complementos de Edge
 
-Si pulsas el atajo en ellas, se aplica la opción "Restricted page behavior" de los ajustes de Lumno.
+Si pulsas el atajo en una de estas páginas, Lumno aplica la opción "Restricted page behavior" de sus ajustes.
 
-Los archivos locales (PDF o HTML que empiezan por `file://`) funcionan en cuanto activas el acceso a las URL de archivo en la página de detalles de Lumno.
+En los archivos locales (PDF o HTML cuya dirección empieza por `file://`), puedes usar la barra de comandos después de permitir el acceso a las URL de archivo en la página de detalles de la extensión.
 
-## Lo que está fuera del navegador {#outside-browser}
+## Contenido fuera del navegador {#outside-browser}
 
-Lumno solo busca en lo que hay en tu navegador. Para buscar apps, archivos y ajustes del sistema con un solo atajo, prueba [Raycast](https://www.raycast.com/) o [Alfred](https://www.alfredapp.com/) en macOS.
+Lumno solo busca en el contenido de tu navegador. Si quieres buscar apps, archivos y ajustes del sistema con un solo atajo, prueba [Raycast](https://www.raycast.com/) o [Alfred](https://www.alfredapp.com/) en macOS.
 
-## Navegadores no compatibles {#browsers}
+## Compatibilidad con navegadores {#browsers}
 
-- Safari no es compatible, ni tampoco los navegadores móviles.
-- En Dia funciona la barra de comandos, pero no la nueva pestaña de Lumno.
-- A la versión de Firefox le faltan algunas funciones. Consulta [Compatibilidad con navegadores](../browser-compatibility/).
+- Safari no es compatible, ni tampoco los navegadores de dispositivos móviles.
+- En Dia, la barra de comandos funciona, pero la nueva pestaña de Lumno no está disponible.
+- Algunas funciones no están disponibles en la versión de Firefox. Para obtener más información, consulta [Compatibilidad con navegadores](../browser-compatibility/).
 
 ## Widgets en la nueva pestaña {#widgets}
 
-La nueva pestaña de Lumno es sencilla: sin tiempo, tareas ni notas. Si quieres una nueva pestaña llena de widgets, prueba [Momentum](https://momentumdash.com/) o [Tabliss](https://tabliss.io/).
+La nueva pestaña de Lumno prioriza la sencillez y no incluye widgets como el tiempo, tareas o notas. Si quieres una nueva pestaña con muchos widgets, prueba [Momentum](https://momentumdash.com/) o [Tabliss](https://tabliss.io/).
 
-El navegador solo deja que una extensión se encargue de la nueva pestaña. Puedes quedarte con la suya y seguir usando la barra de comandos de Lumno.
+Los navegadores solo permiten que una extensión gestione la nueva pestaña a la vez. Puedes seguir usando la nueva pestaña de otra extensión y, al mismo tiempo, la barra de comandos de Lumno. Para obtener más información, consulta [Usar otra extensión de nueva pestaña](../newtab-other-extensions/).
 
 ## Sincronización en la nube {#data}
 
-Lumno no tiene servidores, así que no hay cuenta en la nube. Los ajustes siguen a la sincronización de tu navegador. Para llevarte también los iconos y fondos, necesitas tu propio servidor WebDAV, como Nextcloud o un NAS. Consulta [Sincronización](../sync/).
+Lumno no tiene servidores, por lo que no ofrece cuentas en la nube. Tus ajustes se sincronizan mediante la sincronización integrada de tu navegador. Para sincronizar también los iconos y los fondos, necesitas tu propio servidor WebDAV, como Nextcloud o un NAS. Para obtener más información, consulta [Sincronización](../sync/).
 
-El historial, los marcadores y las pestañas abiertas no entran en la sincronización de Lumno. Tu navegador los sigue sincronizando como siempre.
+El historial, los marcadores y las pestañas abiertas no forman parte de la sincronización de Lumno. Tu navegador los sigue sincronizando como de costumbre.

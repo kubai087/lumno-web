@@ -1,25 +1,25 @@
-To bounce between the two or three pages you just used, the switcher is fastest: no typing, two key presses.
+To move between the two or three pages you used most recently, the switcher is the fastest option: no typing, just two key presses.
 
 ## Open the switcher {#open}
 
-Press `⌥ Q` (`Alt + Q` on Windows). Your recent tabs line up in the order you used them, each with a preview.
+Press `⌥ Q` (`Alt + Q` on Windows). Your recent tabs appear in the order you used them, each with a page preview.
 
 ![The recent tab switcher, listing four tabs in the order they were used, each with a page preview](switcher "The recent tab switcher")
 
-## Pick one, let go {#switch}
+## Switch tabs {#switch}
 
-1. Hold `⌥` and tap `Q` until you reach the page you want. `Tab` and the arrow keys work too.
-2. Let go of `⌥`, or press `↩`, to switch.
+1. Hold `⌥` and press `Q` repeatedly until you reach the page you want. You can also use `Tab` or the arrow keys.
+2. Release `⌥`, or press `↩`, to switch to that page.
 
-Same idea as `⌘ Tab` on your Mac, or `⌃ Tab` in Arc.
+It works much like `⌘ Tab` on a Mac, or `⌃ Tab` in Arc.
 
-## Switcher or open-tab search? {#vs-search}
+## The switcher or open-tab search {#vs-search}
 
-- The page is one of the last few: use the switcher, two presses and you're there.
-- Too many tabs and the one you want is long gone: press `⌘ ⇧ K`, then `Tab` in the empty box to search only open tabs. See [Search tabs, bookmarks and history](../search-tabs-bookmarks-history/#open-tabs).
+- If the page is one of the last few you used, use the switcher to get there in two key presses.
+- If you have many tabs and the page isn't among the recent ones, press `⌘ ⇧ K`, then press `Tab` in the empty search box to search only open tabs. See [Search tabs, bookmarks and history](../search-tabs-bookmarks-history/#open-tabs).
 
 ## Change the shortcut {#shortcut}
 
-Change the switcher's shortcut in `chrome://extensions/shortcuts`. See [Keyboard shortcuts](../keyboard-shortcuts/#change).
+You can change the switcher's shortcut at `chrome://extensions/shortcuts`. See [Keyboard shortcuts](../keyboard-shortcuts/#change).
 
-The previews are captured on your computer as you switch tabs, kept for at most two hours each, and never leave your device.
+Page previews are captured on your computer when you switch tabs. Each is kept for up to two hours and never leaves your device.

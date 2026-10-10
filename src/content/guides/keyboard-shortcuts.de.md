@@ -1,4 +1,4 @@
-Bei Lumno passiert fast alles über die Tastatur. Hier sind die Standardkürzel, wie du sie änderst, und die praktischen Tasten in der Befehlsleiste.
+Die meisten Funktionen von Lumno kannst du mit der Tastatur bedienen. Hier findest du die Standardkürzel, die Anleitung zum Ändern sowie die Tasten, die du in der Befehlsleiste und im Tab-Umschalter verwenden kannst.
 
 ## Standardkürzel {#defaults}
 
@@ -6,41 +6,41 @@ Bei Lumno passiert fast alles über die Tastatur. Hier sind die Standardkürzel,
 | --- | --- | --- |
 | Befehlsleiste öffnen | `⌘ ⇧ K` | `Strg + Umschalt + K` |
 | Tab-Umschalter öffnen | `⌥ Q` | `Alt + Q` |
-| Befehlsleiste mit der URL der aktuellen Seite öffnen | Selbst festlegen | Selbst festlegen |
-| URL der aktuellen Seite kopieren | Selbst festlegen | Selbst festlegen |
+| Befehlsleiste mit der URL der aktuellen Seite öffnen | Nicht voreingestellt | Nicht voreingestellt |
+| URL der aktuellen Seite kopieren | Nicht voreingestellt | Nicht voreingestellt |
 
-Die letzten beiden stehen direkt nach der Installation eventuell auf „Nicht festgelegt“. Leg sie wie unten beschrieben fest.
+Die letzten beiden Aktionen werden nach der Installation möglicherweise als „Nicht festgelegt“ angezeigt. Wie du ihnen ein Tastenkürzel zuweist, ist unten beschrieben.
 
-## Ein Kürzel ändern {#change}
+## Ein Tastenkürzel ändern {#change}
 
-Browser verwalten die Kürzel von Erweiterungen auf einer eigenen Seite:
+Browser verwalten die Tastenkürzel von Erweiterungen auf einer eigenen Seite:
 
-1. Tipp `chrome://extensions/shortcuts` in die Adressleiste (in Edge `edge://extensions/shortcuts`).
-2. Such Lumno und klick auf den Stift neben der Aktion, die du ändern willst.
-3. Drück die neue Tastenkombination.
+1. Gib `chrome://extensions/shortcuts` in die Adressleiste ein (in Edge `edge://extensions/shortcuts`).
+2. Suche Lumno und klicke neben der Aktion, die du ändern möchtest, auf das Stiftsymbol.
+3. Drücke die neue Tastenkombination.
 
-![Die Seite für Erweiterungs-Tastenkürzel im Browser: Lumnos „Open command bar“ steht auf ⇧⌘K, „Open recent tab switcher“ auf ⌥Q](shortcuts "Kürzel auf der Erweiterungsseite ändern")
+![Die Seite für Erweiterungs-Tastenkürzel im Browser: Lumnos „Open command bar“ steht auf ⇧⌘K, „Open recent tab switcher“ auf ⌥Q](shortcuts "Tastenkürzel auf der Erweiterungsseite ändern")
 
-Du kommst von Arc? Leg „Open command bar“ auf `⌘ T`, und du fühlst dich sofort zu Hause.
+Wenn du an Arc gewöhnt bist, kannst du „Open command bar“ auf `⌘ T` legen.
 
-Tut das Kürzel in Dia nichts, stell den Bereich daneben von „In Dia“ auf „Global“ um.
+Wenn das Tastenkürzel in Dia nicht funktioniert, ändere den Bereich daneben von „In Dia“ zu „Global“.
 
 ## Tasten in der Befehlsleiste {#command-bar-keys}
 
 | Taste | Funktion |
 | --- | --- |
-| `↑` `↓` | Durch die Ergebnisse gehen |
+| `↑` `↓` | Ergebnis auswählen |
 | `↩` | Ergebnis öffnen oder zu einem offenen Tab wechseln |
-| `⌥ ↩` | Im aktuellen Tab statt in einem neuen öffnen |
-| `⇧ ↩` | Einen offenen Tab zusätzlich in einem neuen Tab öffnen |
-| `Tab` | Nach einem Seitenkürzel: Seitensuche starten; im leeren Feld: nur offene Tabs durchsuchen |
-| `Tab` `Tab` | Im leeren Feld: Suchbereich-Panel öffnen |
-| `Esc` | Seitensuche verlassen oder Befehlsleiste schließen |
+| `⌥ ↩` | Im aktuellen Tab statt in einem neuen Tab öffnen |
+| `⇧ ↩` | Wenn das Ergebnis ein offener Tab ist, ihn zusätzlich in einem neuen Tab öffnen |
+| `Tab` | Nach einem Seitenkürzel die Seitensuche starten; bei leerem Suchfeld nur offene Tabs durchsuchen |
+| `Tab` `Tab` | Bei leerem Suchfeld das Suchbereich-Panel öffnen |
+| `Esc` | Seitensuche beenden oder Befehlsleiste schließen |
 
-## Tasten im Umschalter {#switcher-keys}
+## Tasten im Tab-Umschalter {#switcher-keys}
 
 | Taste | Funktion |
 | --- | --- |
-| `⌥` halten, `Q` tippen | Durch die letzten Tabs gehen |
+| `⌥` gedrückt halten und wiederholt `Q` drücken | Durch die letzten Tabs blättern |
 | `Tab` oder Pfeiltasten | Auswahl verschieben |
 | `⌥` loslassen oder `↩` drücken | Zum ausgewählten Tab wechseln |

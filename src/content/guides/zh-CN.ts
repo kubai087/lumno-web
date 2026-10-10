@@ -30,7 +30,7 @@ const content: GuideLocaleContent = {
     searchPlaceholder: "搜索帮助",
     searchLabel: "搜索帮助中心",
     searchEmpty: "没有找到相关内容",
-    stuckText: "还没解决？进群问问，作者就在群里。",
+    stuckText: "仍未解决？欢迎加入用户群提问，作者也在群里。",
     stuckPrimary: "加入用户群",
     stuckSecondary: "提交 Issue",
   },
@@ -68,6 +68,14 @@ const content: GuideLocaleContent = {
       keywords: ["Lumno 使用场景", "标签页太多怎么办", "Arc 迁移", "开发者浏览器插件", "AI 快捷提问"],
       title: "使用场景",
       navTitle: "使用场景",
+    },
+    faq: {
+      pageTitle: "Lumno 常见问题：快捷键、受限页面、新标签页与数据同步｜Lumno 帮助中心",
+      pageDescription:
+        "Lumno 的常见问题：默认快捷键和修改方法、快捷键没有反应怎么办、能否搭配其他新标签页扩展、支持哪些浏览器、设置如何同步，以及是否上传浏览数据。",
+      keywords: ["Lumno 常见问题", "Lumno FAQ", "Chrome 扩展快捷键没反应", "新标签页插件冲突", "Lumno 收费吗"],
+      title: "常见问题",
+      navTitle: "常见问题",
     },
     install: {
       pageTitle: "安装 Lumno：从 Chrome 应用商店或 Edge 加载项安装｜Lumno 帮助中心",
@@ -197,6 +205,14 @@ const content: GuideLocaleContent = {
       keywords: ["新标签页时钟", "每日一句", "极简新标签页", "Zen 模式"],
       title: "时钟、名句和 Zen 模式",
       navTitle: "时钟、名句和 Zen 模式",
+    },
+    "newtab-other-extensions": {
+      pageTitle: "搭配其他新标签页扩展：保留 Momentum、WeTab 等起始页，只用 Lumno 命令栏｜Lumno 帮助中心",
+      pageDescription:
+        "想继续使用其他新标签页扩展，同时使用 Lumno 的命令栏：让另一个扩展更晚启用即可接管新标签页。浏览器询问是否保留更改时请选择保留，选择恢复会停用整个扩展。",
+      keywords: ["新标签页扩展冲突", "Chrome 新标签页被扩展接管", "只用 Lumno 命令栏", "Momentum", "WeTab", "Infinity 新标签页"],
+      title: "搭配其他新标签页扩展",
+      navTitle: "搭配其他新标签页扩展",
     },
     "arc-command-bar": {
       pageTitle: "从 Arc 迁移到 Chrome、Dia 或 Edge：命令栏与快捷键对照｜Lumno 帮助中心",

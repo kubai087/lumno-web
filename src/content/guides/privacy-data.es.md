@@ -1,39 +1,39 @@
-Lumno no tiene cuentas ni servidores que guarden datos de usuarios. Tus pestañas, marcadores e historial se procesan solo en tu navegador y nunca nos llegan. Esto es un resumen breve; el texto completo está en la [Política de privacidad](/es/privacy/).
+Lumno no tiene cuentas ni servidores que almacenen datos de usuarios. Tus pestañas, marcadores e historial se procesan solo en tu propio navegador y nunca se nos envían. Esta página es un resumen; para consultar el texto completo, lee la [Política de privacidad](/es/privacy/).
 
-## Lo que se queda en tu dispositivo {#local}
+## Datos que se guardan en tu dispositivo {#local}
 
-Para buscar, cambiar de pestaña y mostrar la nueva pestaña, Lumno lee en tu dispositivo:
+Para ofrecer la búsqueda, el cambio de pestañas y la nueva pestaña, Lumno lee y guarda en tu dispositivo lo siguiente:
 
-- Tus pestañas abiertas, historial, marcadores y sitios más visitados
-- Lo que escribes en Lumno y los resultados que eliges, para que los que usas suban arriba
-- Tus ajustes, y los iconos y fondos que subes
+- Tus pestañas abiertas, tu historial, tus marcadores y tus sitios más visitados
+- Lo que escribes en Lumno y los resultados que eliges, para mostrar más arriba los que usas con frecuencia
+- Tus ajustes, así como los iconos y fondos que subes
 
-Las vistas previas de páginas del selector también se quedan en tu dispositivo: como máximo 12, cada una durante un máximo de dos horas.
+Las vistas previas de páginas del selector de pestañas también se guardan solo en tu dispositivo: 12 como máximo, cada una durante un máximo de dos horas.
 
-## Lo que no recopilamos {#not-collected}
+## Información que no recopilamos {#not-collected}
 
-Sin registro ni inicio de sesión. Lumno no recopila tu nombre ni tu correo, y no envía estadísticas de uso, clics, identificadores de dispositivo ni datos de errores.
+No es necesario registrarse ni iniciar sesión. Lumno no recopila tu nombre ni tu dirección de correo electrónico, y no envía estadísticas de uso, clics, identificadores de dispositivo ni informes de errores.
 
-## Las solicitudes que salen de tu ordenador {#requests}
+## Solicitudes que salen de tu dispositivo {#requests}
 
-Van directamente de la extensión al servicio en cuestión, nunca a través de nosotros:
+Las siguientes solicitudes se envían directamente desde la extensión al servicio correspondiente, sin pasar nunca por nosotros:
 
-| Solicitud | Se envía a | Cuándo |
+| Solicitud | Destinatario | Momento |
 | --- | --- | --- |
-| Sugerencias de búsqueda | Tu buscador (como Google o Bing) | Mientras escribes en el cuadro de Lumno |
-| Búsquedas y preguntas a la IA | El sitio o la IA que elegiste | Al pulsar Intro |
+| Sugerencias de búsqueda | Tu buscador (por ejemplo, Google o Bing) | Al escribir en el cuadro de búsqueda de Lumno |
+| Búsquedas y preguntas a la IA | El sitio o la IA que elijas | Al pulsar Intro |
 | Iconos de sitios | El servicio de favicons de Google o Favicon.is | Al mostrar iconos de sitios |
-| Fondos | Bing, Lorem Picsum, el Museo de Arte de Cleveland | Al usar fondos en línea |
-| Notas de actualización | GitHub | Después de actualizarse la extensión |
+| Fondos | Bing, Lorem Picsum, Cleveland Museum of Art | Al usar fondos en línea |
+| Notas de actualización | GitHub | Después de que se actualice la extensión |
 
 ## Cómo se sincronizan los ajustes {#sync}
 
-- Con tu navegador: el tema, los accesos directos, la elección de fondo y ajustes parecidos se sincronizan a través de tu cuenta del navegador.
-- WebDAV (opcional): desactivado por defecto. Al activarlo, tus ajustes completos, iconos y fondos subidos se guardan en el servidor que elijas. El historial, los marcadores y las pestañas no se suben.
+- Sincronización del navegador: el tema, los accesos directos, la elección de fondo y otros ajustes similares se sincronizan a través de tu cuenta del navegador.
+- Sincronización WebDAV (opcional): desactivada de forma predeterminada. Cuando la activas, tus ajustes completos y los iconos y fondos que has subido se guardan en un servidor que elijas. El historial, los marcadores y las pestañas no se suben.
 - Exportar e importar: guarda tus ajustes en un archivo e impórtalo en otro ordenador.
 
-Para configurarlo, consulta [Sincronización](../sync/).
+Para ver cómo configurarlo, consulta [Sincronización](../sync/).
 
-## Sobre este sitio web {#website}
+## Acerca de este sitio web {#website}
 
-Este sitio web (lumno.kubai.design) usa analítica para saber cuántas personas lo visitan y de dónde vienen. Es algo aparte de la extensión, que no carga ninguna analítica.
+Este sitio web (lumno.kubai.design) utiliza una herramienta de analítica para conocer el número de visitas y su procedencia. Esto es independiente de la extensión, que no carga ningún script de analítica.

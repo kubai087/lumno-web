@@ -1,26 +1,26 @@
-Seit Arc keine neuen Funktionen mehr bekommt, sind viele zu Chrome, Dia oder Edge gewechselt – und meist fehlt ihnen die Befehlsleiste am meisten. Lumnos Design orientiert sich an Arc. Installieren, und die Befehlsleiste ist zurück.
+Seit Arc keine neuen Funktionen mehr erhält, sind viele Nutzerinnen und Nutzer zu Chrome, Dia oder Edge gewechselt. Am meisten vermissen sie dabei meist die Befehlsleiste. Lumnos Bedienung orientiert sich an Arc, sodass du auch in diesen Browsern eine vertraute Befehlsleiste verwenden kannst.
 
 Lumno ist ein unabhängiges Open-Source-Projekt und steht in keiner Verbindung zu Arc oder The Browser Company.
 
-## Was du gewohnt bist – und wo es jetzt steckt {#mapping}
+## Arc und Lumno im Vergleich {#mapping}
 
-| In Arc | In Lumno |
+| Arc | Lumno |
 | --- | --- |
-| `⌘ T` öffnet die Befehlsleiste | `⌘ ⇧ K` öffnet die Befehlsleiste, oder leg sie auf `⌘ T` |
-| Aus der Befehlsleiste zu einem offenen Tab wechseln | Ergebnisse mit „Opened“; mit Enter wechseln |
+| `⌘ T` öffnet die Befehlsleiste | `⌘ ⇧ K` öffnet die Befehlsleiste; du kannst das Kürzel auf `⌘ T` ändern |
+| Aus der Befehlsleiste zu einem offenen Tab wechseln | Ein Ergebnis mit „Opened“ auswählen und die Eingabetaste drücken |
 | `⌃ Tab` wechselt zwischen den letzten Tabs | `⌥ Q` öffnet den Tab-Umschalter |
-| `⌘ ⇧ C` kopiert die URL | Leg auf der Erweiterungsseite ein Kürzel für „Copy Current Page URL“ fest |
+| `⌘ ⇧ C` kopiert die URL | Auf der Erweiterungsseite ein Tastenkürzel für „Copy Current Page URL“ festlegen |
 | Neuer Tab | Lumnos neuer Tab (in Dia noch nicht verfügbar) |
 
-## In vier Schritten umziehen {#steps}
+## So wechselst du {#steps}
 
-1. [Installier Lumno](../install/): aus dem Chrome Web Store für Chrome und Dia, über Edge-Add-ons für Edge.
-2. Öffne `chrome://extensions/shortcuts` und leg „Open command bar“ auf `⌘ T`. Siehe [Tastenkürzel](../keyboard-shortcuts/#change).
-3. Drück `⌘ T` und probier, [Tabs, Lesezeichen und Verlauf zu durchsuchen](../search-tabs-bookmarks-history/).
-4. Um zwischen den letzten Seiten zu springen, öffne mit `⌥ Q` den [Tab-Umschalter](../tab-switcher/).
+1. [Installiere Lumno](../install/): für Chrome und Dia über den Chrome Web Store, für Edge über die Edge-Add-ons.
+2. Öffne `chrome://extensions/shortcuts` und lege „Open command bar“ auf `⌘ T`. Weitere Informationen findest du unter [Tastenkürzel](../keyboard-shortcuts/#change).
+3. Drücke `⌘ T` und probiere aus, [Tabs, Lesezeichen und Verlauf zu durchsuchen](../search-tabs-bookmarks-history/).
+4. Um zwischen den zuletzt verwendeten Seiten zu wechseln, drücke `⌥ Q` und öffne den [Tab-Umschalter](../tab-switcher/).
 
-Tut das Kürzel in Dia nichts, stell auf der Erweiterungsseite den Bereich von „In Dia“ auf „Global“ um.
+Wenn das Tastenkürzel in Dia nicht funktioniert, ändere auf der Erweiterungsseite den Bereich von „In Dia“ zu „Global“.
 
-## Was Arc hat und Lumno nicht {#limits}
+## Arc-Funktionen, die Lumno nicht bieten kann {#limits}
 
-Seitenleiste, Spaces und geteilte Ansicht muss der Browser selbst mitbringen; eine Erweiterung kann sie nicht nachrüsten. Kannst du nicht ohne, probier [Zen Browser](https://zen-browser.app/), einen Firefox-basierten Browser, der sich sehr nach Arc anfühlt, oder [Vivaldi](https://vivaldi.com/), das ebenfalls Seitenleiste, Arbeitsbereiche und geteilte Ansicht hat. Mehr dazu unter [Was Lumno nicht kann](../limitations/).
+Seitenleiste, Spaces und geteilte Ansicht hängen vom Browser selbst ab und lassen sich nicht über eine Erweiterung hinzufügen. Wenn du darauf angewiesen bist, probiere [Zen Browser](https://zen-browser.app/) aus, einen Firefox-basierten Browser, der Arc sehr ähnlich ist, oder [Vivaldi](https://vivaldi.com/), das ebenfalls eine Seitenleiste, Arbeitsbereiche und eine geteilte Ansicht bietet. Weitere Informationen findest du unter [Was Lumno nicht kann](../limitations/).

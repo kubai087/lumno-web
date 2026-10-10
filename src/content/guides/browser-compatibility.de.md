@@ -1,8 +1,8 @@
-Lumno ist für Chromium-Browser gebaut, eine Firefox-Version gibt es auch. Hier siehst du, was wo funktioniert.
+Lumno wurde für Chromium-Browser entwickelt und ist zusätzlich als Firefox-Version erhältlich. Die folgende Übersicht zeigt, welche Funktionen in welchem Browser verfügbar sind.
 
-## Auf einen Blick {#support}
+## Unterstützte Browser {#support}
 
-| Browser | Befehlsleiste | Neuer Tab | Wo du Lumno bekommst |
+| Browser | Befehlsleiste | Neuer Tab | Installieren über |
 | --- | --- | --- | --- |
 | Google Chrome | Ja | Ja | Chrome Web Store |
 | Microsoft Edge | Ja | Ja | Edge-Add-ons |
@@ -11,35 +11,35 @@ Lumno ist für Chromium-Browser gebaut, eine Firefox-Version gibt es auch. Hier 
 | Firefox, Zen und andere | Teilweise | Ja | Siehe unten |
 | Safari | Nein | Nein | — |
 
-Browser auf Smartphones und Tablets werden noch nicht unterstützt.
+Browser auf Smartphones und Tablets werden derzeit nicht unterstützt.
 
 ## Dia {#dia}
 
-Dia lässt Erweiterungen den neuen Tab nicht übernehmen, deshalb gibt es dort keinen Lumno-Tab. Die Befehlsleiste funktioniert ganz normal.
+Dia erlaubt Erweiterungen nicht, den neuen Tab zu ersetzen. Daher ist Lumnos neuer Tab dort nicht verfügbar. Die Befehlsleiste funktioniert normal.
 
-Tut das Kürzel nichts, öffne die Seite für Erweiterungs-Tastenkürzel und stell den Bereich neben Lumno von „In Dia“ auf „Global“ um.
+Wenn das Tastenkürzel nicht funktioniert, öffne die Seite für Erweiterungs-Tastenkürzel und ändere den Bereich neben Lumno von „In Dia“ zu „Global“.
 
 ## Firefox {#firefox}
 
-Die Firefox-Version ist noch nicht auf Firefox Add-ons gelistet; sobald sie es ist, verlinkt diese Website darauf. Sie ist für Firefox 140 und neuer sowie für Firefox-basierte Browser wie Zen, LibreWolf und Floorp gedacht.
+Die Firefox-Version ist noch nicht auf Firefox Add-ons verfügbar. Sobald sie dort gelistet ist, verlinkt diese Website darauf. Sie unterstützt Firefox 140 und neuer sowie Firefox-basierte Browser wie Zen, LibreWolf und Floorp.
 
-Die Erweiterungs-APIs von Firefox unterscheiden sich von denen in Chromium, deshalb funktionieren ein paar Dinge nicht:
+Da sich die Erweiterungs-APIs von Firefox von denen in Chromium unterscheiden, sind einige Funktionen nicht verfügbar:
 
 | Funktion | In Firefox |
 | --- | --- |
-| Automatisches Bild-im-Bild | Nicht verfügbar; Firefox lässt Erweiterungen Webvideos nicht ins Bild-im-Bild schicken |
+| Automatisches Bild-im-Bild | Nicht verfügbar; Firefox erlaubt Erweiterungen nicht, Webvideos im Bild-im-Bild-Modus anzuzeigen |
 | Web-Clip | Nicht verfügbar; Firefox unterstützt kein Dokument-Bild-im-Bild |
 | Befehlsleiste auf `about:`-Seiten und der Add-ons-Website | Nicht verfügbar |
 | `about:`-Seiten über Shortcuts oder die Befehlsleiste öffnen | Nicht verfügbar |
 | Befehlsleiste auf lokalen `file://`-Seiten | Nicht verfügbar |
-| Website-Icons | Noch nie besuchte Seiten zeigen anfangs eventuell ein Platzhalter-Icon |
+| Website-Symbole | Bei noch nicht besuchten Websites wird anfangs möglicherweise ein Platzhaltersymbol angezeigt |
 
-Firefox belegt `⌘ ⇧ K` schon selbst, deshalb nutzt die Firefox-Version standardmäßig `⌃ ⇧ K` auf dem Mac und `Alt + K` unter Windows und Linux. `Alt + Q` bleibt gleich.
+Da Firefox `⌘ ⇧ K` bereits selbst verwendet, nutzt die Firefox-Version standardmäßig `⌃ ⇧ K` unter macOS und `Alt + K` unter Windows und Linux. `Alt + Q` bleibt unverändert.
 
 ## Safari {#safari}
 
-Safaris Erweiterungssystem unterscheidet sich stark von Chromium, und eine Safari-Version von Lumno gibt es noch nicht. Für eine ähnliche systemweite Suche auf dem Mac probier [Raycast](https://www.raycast.com/) oder [Alfred](https://www.alfredapp.com/).
+Das Erweiterungssystem von Safari unterscheidet sich stark von Chromium, daher gibt es noch keine Safari-Version von Lumno. Für eine ähnliche systemweite Suche auf dem Mac kannst du [Raycast](https://www.raycast.com/) oder [Alfred](https://www.alfredapp.com/) ausprobieren.
 
-## Sprachen der Oberfläche {#languages}
+## Sprachen der Benutzeroberfläche {#languages}
 
-Die Erweiterung gibt es auf Englisch, Japanisch sowie in vereinfachtem und traditionellem Chinesisch; bei deutscher Browsersprache zeigt sie Englisch. Standardmäßig folgt sie der Sprache deines Browsers, ändern kannst du das in den Einstellungen.
+Die Erweiterung ist auf Englisch, Japanisch sowie in vereinfachtem und traditionellem Chinesisch verfügbar. Bei deutscher Browsersprache wird sie auf Englisch angezeigt. Standardmäßig richtet sie sich nach der Sprache deines Browsers; du kannst die Sprache in den Einstellungen ändern.

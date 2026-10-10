@@ -1,21 +1,21 @@
-Every line of Lumno's code is public, so anyone can see what the extension does and doesn't do.
+All of Lumno's code is public, so anyone can check what the extension does and doesn't do.
 
 ## Open source {#open-source}
 
 - Code: [github.com/kubai087/lumno-extension](https://github.com/kubai087/lumno-extension)
 - License: GPL-3.0
-- Found a problem? Open an issue on GitHub
+- Report a problem: open an issue on GitHub
 
-Each store release is built from that same code, and what changed is listed in the [release notes](/en/release/) and on GitHub Releases.
+Each store release is built from the same code. You can see what changed in the [release notes](/en/release/) and on GitHub Releases.
 
-## Built to be safe {#design}
+## Security by design {#design}
 
-- Manifest V3: browsers don't let Manifest V3 extensions download and run remote code, so all of Lumno's code is in the reviewed package.
-- No servers: no account system, and nowhere that stores your data.
-- Only the permissions it needs, and no optional ones.
-- Your WebDAV app password stays on your device and never goes through browser sync.
+- Manifest V3: browsers don't allow Manifest V3 extensions to download and run remote code, so all of Lumno's code is in the reviewed package.
+- No servers: there's no account system and nowhere that stores your data.
+- Minimal permissions: Lumno requests only the permissions it needs, and no optional ones.
+- Your WebDAV app password is stored only on your device and is never synced through your browser.
 
-## What each permission is for {#permissions}
+## What each permission is used for {#permissions}
 
 | Permission | Used for |
 | --- | --- |
@@ -25,8 +25,8 @@ Each store release is built from that same code, and what changed is listed in t
 | `topSites` | Showing your top sites on the new tab |
 | `storage`, `unlimitedStorage` | Saving settings, icons and wallpapers |
 | `alarms` | Checking WebDAV sync status on a schedule |
-| `search` | Handing searches to your default search engine |
+| `search` | Sending searches to your default search engine |
 | `favicon` | Showing site icons |
-| `scripting` and access to all sites | Showing the command bar on pages, responding to shortcuts, text actions and picture-in-picture |
+| `scripting` and access to all sites | Showing the command bar on pages, responding to shortcuts, and providing selection actions and picture-in-picture |
 
-Access to all sites is only used to show the command bar and similar features on pages. Lumno doesn't read or upload page content in bulk.
+Access to all sites is used only to show the command bar and similar features on pages. Lumno doesn't read or upload page content in bulk.

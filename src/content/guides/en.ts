@@ -30,9 +30,9 @@ const content: GuideLocaleContent = {
     searchPlaceholder: "Search help",
     searchLabel: "Search the help center",
     searchEmpty: "Nothing found",
-    stuckText: "Still stuck? Ask on GitHub, or reach out on X.",
+    stuckText: "Still need help? Ask on GitHub or contact us on X.",
     stuckPrimary: "Ask on GitHub",
-    stuckSecondary: "Reach out on X",
+    stuckSecondary: "Contact us on X",
   },
   pages: {
     "what-is-lumno": {
@@ -66,6 +66,14 @@ const content: GuideLocaleContent = {
       title: "Use cases",
       navTitle: "Use cases",
     },
+    faq: {
+      pageTitle: "Lumno FAQ: shortcuts, restricted pages, new tab and sync | Lumno Help",
+      pageDescription:
+        "Answers to common questions about Lumno: the default shortcut and how to change it, what to do when it doesn't work, using another new tab extension, supported browsers, syncing settings and whether browsing data is uploaded.",
+      keywords: ["Lumno FAQ", "Lumno questions", "Chrome extension shortcut not working", "new tab extension conflict", "is Lumno free"],
+      title: "Frequently asked questions",
+      navTitle: "FAQ",
+    },
     install: {
       pageTitle: "Install Lumno from the Chrome Web Store or Edge Add-ons | Lumno Help",
       pageDescription:
@@ -74,7 +82,7 @@ const content: GuideLocaleContent = {
       title: "Install Lumno",
       navTitle: "Install Lumno",
       faq: [
-        { question: "Do I need an account?", answer: "No. Lumno has no account system. Install it and it works." },
+        { question: "Do I need an account?", answer: "No. Lumno has no account system, so you can start using it as soon as you install it." },
         {
           question: "How do I uninstall it?",
           answer: "Open chrome://extensions (edge://extensions in Edge), find Lumno and click Remove. This deletes the settings and images Lumno stored on your device.",
@@ -90,9 +98,9 @@ const content: GuideLocaleContent = {
       navTitle: "Keyboard shortcuts",
       faq: [
         {
-          question: "The shortcut does nothing. What now?",
+          question: "What if the shortcut doesn't work?",
           answer:
-            "Make sure you're not on a restricted page such as chrome:// settings or the Web Store, then check chrome://extensions/shortcuts for a conflict with another extension. In Dia, set the scope to Global.",
+            "First, make sure you're not on a restricted page such as chrome:// settings or the Chrome Web Store. Then check chrome://extensions/shortcuts for a conflict with another extension. In Dia, set the scope to Global.",
         },
       ],
     },
@@ -152,7 +160,7 @@ const content: GuideLocaleContent = {
     "tab-switcher": {
       pageTitle: "Recent tab switcher: press ⌥Q to jump between recent tabs | Lumno Help",
       pageDescription:
-        "Press ⌥Q (Alt+Q on Windows) to open Lumno's recent tab switcher, with your tabs in the order you used them and a preview of each. Hold ⌥, tap Q, let go.",
+        "Press ⌥Q (Alt+Q on Windows) to open Lumno's recent tab switcher, with your tabs in the order you used them and a preview of each. Hold ⌥ and press Q to choose a tab, then release ⌥ to switch.",
       keywords: ["Chrome tab switcher", "recent tabs", "Alt Tab for browser", "Arc Ctrl Tab"],
       title: "Switch between recent tabs",
       navTitle: "Switch between recent tabs",
@@ -187,6 +195,14 @@ const content: GuideLocaleContent = {
       keywords: ["new tab clock", "minimal new tab", "Zen mode", "focus new tab"],
       title: "Clock and Zen mode",
       navTitle: "Clock & Zen mode",
+    },
+    "newtab-other-extensions": {
+      pageTitle: "Use another new tab extension with Lumno's command bar | Lumno Help",
+      pageDescription:
+        "Keep Momentum, Tabliss or another new tab extension and use only Lumno's command bar: turn the other extension on after Lumno so it takes over the new tab. When the browser asks, keep the change; changing it back turns off the whole extension.",
+      keywords: ["new tab extension conflict", "Chrome new tab changed by extension", "use only Lumno command bar", "Momentum", "Tabliss"],
+      title: "Use another new tab extension",
+      navTitle: "Use another new tab extension",
     },
     "arc-command-bar": {
       pageTitle: "Moving from Arc to Chrome, Dia or Edge: the command bar and shortcuts | Lumno Help",

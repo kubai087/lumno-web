@@ -1,18 +1,18 @@
-O Lumno é construído junto com quem usa. Veja o que as pessoas dizem e o que já foi escrito sobre ele.
+O Lumno é aprimorado continuamente com base no feedback de quem o usa. Aqui você encontra as avaliações dos usuários e os artigos publicados sobre o Lumno.
 
 ## Chrome Web Store {#chrome-web-store}
 
-O Lumno tem nota {{chromeRating}} de 5 na Chrome Web Store, com {{chromeRatingCount}} avaliações.
+Na Chrome Web Store, o Lumno tem nota {{chromeRating}} de 5, com base em {{chromeRatingCount}} avaliações.
 
-Leia as avaliações na [página de avaliações da Chrome Web Store](https://chromewebstore.google.com/detail/nggfkkbmogmadfoikakkfegkoilfcfao/reviews). Se o Lumno ajudou você, uma avaliação faz muita diferença para um projeto pequeno e independente.
+Você pode ler as avaliações na [página de avaliações da Chrome Web Store](https://chromewebstore.google.com/detail/nggfkkbmogmadfoikakkfegkoilfcfao/reviews). Se o Lumno foi útil para você, considere deixar uma avaliação: isso faz muita diferença para um projeto pequeno e independente.
 
 ## Imprensa {#press}
 
 Os dois artigos estão em chinês.
 
-- sspai (少数派): [Lumno, uma barra de pesquisa caprichada que reorganiza as entradas do dia a dia no seu navegador](https://sspai.com/post/111782)
-- sspai (少数派): [Seleção de extensões de navegador: seis achados novos, úteis e divertidos](https://sspai.com/post/113495)
+- sspai (少数派): [Lumno: uma barra de pesquisa refinada que reorganiza os pontos de entrada do dia a dia no navegador](https://sspai.com/post/111782)
+- sspai (少数派): [Seleção de extensões de navegador: seis descobertas novas, úteis e divertidas](https://sspai.com/post/113495)
 
-## Participe {#community}
+## Participar {#community}
 
-O código e as discussões do Lumno estão abertos no [GitHub](https://github.com/kubai087/lumno-extension). Relate um problema, peça um recurso ou só veja o que vem por aí.
+O código e as discussões do Lumno são públicos no [GitHub](https://github.com/kubai087/lumno-extension). Lá você pode relatar um problema, sugerir um recurso ou acompanhar as próximas novidades.

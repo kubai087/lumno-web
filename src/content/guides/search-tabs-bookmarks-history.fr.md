@@ -1,29 +1,29 @@
-Avec des dizaines d'onglets ouverts et des centaines de favoris, retrouver une page prend parfois plus de temps que de l'ouvrir. Lumno réunit tout dans un seul champ : un raccourci, quelques lettres, et tout ce qui est ouvert, enregistré ou visité apparaît ensemble.
+Avec des dizaines d'onglets ouverts et des centaines de favoris, retrouver une page prend parfois plus de temps que de l'ouvrir. Lumno réunit tout dans un seul champ de recherche : appuyez sur un raccourci, saisissez quelques lettres, et vos onglets ouverts, vos favoris et votre historique s'affichent ensemble.
 
 ## Ouvrir le champ de recherche {#open}
 
-Appuyez sur `⌘ ⇧ K` (`Ctrl + Maj + K` sous Windows et Linux) sur n'importe quelle page. Le champ apparaît au milieu de l'écran. Appuyez sur `Esc` ou cliquez à côté pour le fermer.
+Appuyez sur `⌘ ⇧ K` (`Ctrl + Maj + K` sous Windows et Linux) depuis n'importe quelle page. Le champ de recherche s'affiche au centre de l'écran. Pour le fermer, appuyez sur `Esc` ou cliquez en dehors du champ.
 
-Sur les pages restreintes comme les paramètres `chrome://` ou les boutiques d'extensions, les navigateurs n'autorisent pas les extensions à afficher quoi que ce soit. Lumno suit alors l'option « Restricted page behavior » de ses réglages.
+Sur les pages restreintes, comme les paramètres `chrome://` ou les boutiques d'extensions, les navigateurs n'autorisent pas les extensions à afficher du contenu. Sur ces pages, Lumno applique l'option « Restricted page behavior » de ses réglages.
 
-## Tout dans une seule liste {#results}
+## Résultats de recherche {#results}
 
-L'étiquette à côté de chaque résultat indique sa provenance :
+L'étiquette affichée à côté de chaque résultat indique sa provenance :
 
-- Opened : un onglet ouvert. Appuyez sur Entrée pour y basculer au lieu d'ouvrir un doublon.
-- Bookmark : une page de votre barre de favoris ou de vos dossiers, avec le dossier indiqué.
-- Frequent et History : les sites que vous visitez le plus, et votre historique.
+- Opened : un onglet actuellement ouvert. Appuyez sur Entrée pour basculer vers cet onglet au lieu d'ouvrir la page une seconde fois.
+- Bookmark : une page de votre barre de favoris ou de vos dossiers ; le dossier est également indiqué.
+- Frequent et History : les sites que vous visitez le plus souvent et votre historique de navigation.
 
-Les suggestions de votre moteur de recherche s'affichent aussi ; appuyez sur Entrée pour lancer la recherche. Les résultats que vous choisissez le plus remontent en tête.
+Les suggestions de votre moteur de recherche s'affichent également ; appuyez sur Entrée pour lancer la recherche. Les résultats que vous choisissez le plus souvent apparaissent plus haut.
 
-![Lumno ouvert sur une page vide : en tapant chrome, on voit un onglet GitHub ouvert, des suggestions de recherche, un favori et des sites fréquents](search "Tapez chrome : l'ouvert, l'enregistré et le visité, ensemble")
+![Lumno ouvert sur une page vide : en tapant chrome, on voit un onglet GitHub ouvert, des suggestions de recherche, un favori et des sites fréquents](search "La saisie de chrome affiche ensemble les onglets ouverts, les favoris et les sites fréquents")
 
-Deux touches pratiques : `⌥ ↩` ouvre dans l'onglet actuel, et `⇧ ↩` ouvre une autre copie d'un onglet ouvert. Toutes les touches sont dans [Raccourcis clavier](../keyboard-shortcuts/#command-bar-keys).
+Autres touches utiles : `⌥ ↩` ouvre un résultat dans l'onglet actuel, et `⇧ ↩` ouvre une seconde fois un onglet déjà ouvert. Pour la liste complète, consultez [Raccourcis clavier](../keyboard-shortcuts/#command-bar-keys).
 
-## Chercher seulement dans les onglets ouverts {#open-tabs}
+## Rechercher uniquement dans les onglets ouverts {#open-tabs}
 
-Quand il y a vraiment trop d'onglets, resserrez : appuyez une fois sur `Tab` quand le champ est vide. « Search open tabs » s'affiche à gauche et seuls vos onglets ouverts restent. Tapez pour filtrer, Entrée pour basculer, `Esc` pour sortir.
+Si de nombreux onglets sont ouverts, vous pouvez restreindre la recherche : appuyez une fois sur `Tab` lorsque le champ est vide. « Search open tabs » s'affiche à gauche, et seuls vos onglets ouverts restent dans la liste. Saisissez un terme pour filtrer, appuyez sur Entrée pour basculer et sur `Esc` pour quitter.
 
-![Le champ de recherche affiche « Search open tabs » à gauche, avec seulement les onglets actuellement ouverts](opentabs "Chercher seulement dans les onglets ouverts")
+![Le champ de recherche affiche « Search open tabs » à gauche, avec seulement les onglets actuellement ouverts](opentabs "Rechercher uniquement dans les onglets ouverts")
 
-Pour ne chercher que dans les favoris, l'historique ou les sites fréquents, appuyez deux fois sur `Tab` dans le champ vide et choisissez dans le panneau de portée de recherche.
+Pour rechercher uniquement dans les favoris, l'historique ou les sites fréquents, appuyez deux fois sur `Tab` lorsque le champ est vide, puis faites votre choix dans le panneau de portée de recherche.

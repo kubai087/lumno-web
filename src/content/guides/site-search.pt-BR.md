@@ -1,19 +1,19 @@
-Pesquisar no GitHub era abrir o GitHub e depois clicar na caixa de pesquisa dele. No Lumno, você pula a página inicial: digite um atalho, aperte `Tab`, escreva o que procura e aperte Enter para cair direto nos resultados. Perguntar à IA funciona do mesmo jeito.
+Até agora, para pesquisar no GitHub, era preciso abrir o GitHub e depois usar a caixa de pesquisa do site. No Lumno, você pode pular a página inicial: digite o atalho do site, pressione `Tab`, digite sua pesquisa e pressione Enter para ir direto aos resultados. Perguntas à IA funcionam da mesma forma.
 
-## Como funciona {#how}
+## Como usar a pesquisa em sites {#how}
 
-1. Aperte `⌘ ⇧ K` (`Ctrl + Shift + K` no Windows) em qualquer página.
-2. Digite um atalho de site, como `gh`.
-3. Aperte `Tab`. O GitHub aparece à esquerda da caixa.
-4. Digite sua pesquisa e aperte Enter.
+1. Pressione `⌘ ⇧ K` (`Ctrl + Shift + K` no Windows) em qualquer página.
+2. Digite um atalho de site, por exemplo `gh`.
+3. Pressione `Tab`. O GitHub aparece à esquerda da caixa.
+4. Digite sua pesquisa e pressione Enter.
 
-![A caixa mostra o GitHub à esquerda; ao digitar command palette, aparece a opção de pesquisar command palette no GitHub](sitesearch "gh e Tab: pesquise direto no GitHub")
+![A caixa mostra o GitHub à esquerda; ao digitar command palette, aparece a opção de pesquisar command palette no GitHub](sitesearch "Digitar gh e pressionar Tab para pesquisar diretamente no GitHub")
 
-Para voltar à pesquisa normal, aperte `Esc`.
+Para voltar à pesquisa normal, pressione `Esc`.
 
 ## Atalhos de sites {#shortcuts}
 
-O Lumno vem com 46 atalhos de pesquisa. Aqui estão alguns. Esqueceu um? O nome do site também funciona, como `github` ou `youtube`.
+O Lumno inclui 46 atalhos de pesquisa; alguns deles aparecem na tabela a seguir. Se não se lembrar de um atalho, você também pode digitar o nome do site, como `github` ou `youtube`.
 
 | Site | Atalho |
 | --- | --- |
@@ -29,9 +29,9 @@ O Lumno vem com 46 atalhos de pesquisa. Aqui estão alguns. Esqueceu um? O nome 
 | Google Acadêmico | `gs` |
 | Google Maps | `maps` |
 
-## Pergunte direto à IA {#ai}
+## Fazer perguntas à IA {#ai}
 
-Digite o atalho da IA, aperte `Tab`, escreva sua pergunta e aperte Enter. O Lumno abre o app web daquela IA e envia a pergunta para você.
+Digite o atalho da IA, pressione `Tab`, escreva sua pergunta e pressione Enter. O Lumno abre o app da web dessa IA e envia a pergunta para você.
 
 | IA | Atalho |
 | --- | --- |
@@ -41,16 +41,16 @@ Digite o atalho da IA, aperte `Tab`, escreva sua pergunta e aperte Enter. O Lumn
 | DeepSeek | `ds` |
 | Kimi | `kimi` |
 
-![A caixa mostra o ChatGPT à esquerda com uma pergunta sobre alternativas à barra de comandos do Arc, pronta para abrir o ChatGPT](ai "gpt e Tab: sua pergunta vai para o ChatGPT")
+![A caixa mostra o ChatGPT à esquerda com uma pergunta sobre alternativas à barra de comandos do Arc, pronta para abrir o ChatGPT](ai "Digitar gpt e pressionar Tab para enviar a pergunta ao ChatGPT")
 
-## Esqueceu um atalho? Escolha no painel {#scope-panel}
+## Escolher no painel de escopo de pesquisa {#scope-panel}
 
-Aperte `Tab` duas vezes com a caixa vazia para abrir o painel de escopo de pesquisa. Mecanismos de pesquisa, sites e IA ficam agrupados ali. Use as setas, ou digite para filtrar.
+Com a caixa vazia, pressione `Tab` duas vezes para abrir o painel de escopo de pesquisa. Os mecanismos de pesquisa, as pesquisas em sites e as IAs ficam agrupados por categoria. Use as teclas de seta para escolher ou digite para filtrar a lista.
 
 ![O painel de escopo de pesquisa, com mecanismos de pesquisa e pesquisa em sites agrupados](modemenu "O painel de escopo de pesquisa")
 
-## Adicione seus próprios sites {#custom}
+## Adicionar uma pesquisa personalizada {#custom}
 
-A intranet da sua empresa ou a documentação que você consulta todo dia podem virar uma pesquisa personalizada nas configurações do Lumno, com o atalho que você quiser.
+Você pode adicionar a intranet da sua empresa ou sites de documentação que consulta com frequência como pesquisas personalizadas nas configurações do Lumno, cada uma com um atalho fácil de lembrar.
 
-Você também pode juntar de 2 a 10 fontes numa pesquisa combinada: digita uma vez e os resultados abrem ao mesmo tempo em várias guias, reunidas num grupo de guias.
+Você também pode combinar de 2 a 10 fontes em uma pesquisa combinada: basta digitar a pesquisa uma vez para que os resultados sejam abertos ao mesmo tempo em várias guias, reunidas em um mesmo grupo de guias.

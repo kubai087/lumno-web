@@ -1,10 +1,10 @@
-Lumno is shaped together with the people who use it. Here's what they say, and what's been written about it.
+Lumno keeps improving with feedback from the people who use it. Here's what users say, and what has been written about it.
 
 ## Chrome Web Store {#chrome-web-store}
 
-Lumno is rated {{chromeRating}} out of 5 on the Chrome Web Store, from {{chromeRatingCount}} ratings.
+Lumno is rated {{chromeRating}} out of 5 on the Chrome Web Store, based on {{chromeRatingCount}} ratings.
 
-Read the reviews on the [Chrome Web Store reviews page](https://chromewebstore.google.com/detail/nggfkkbmogmadfoikakkfegkoilfcfao/reviews). If Lumno has helped you, a review means a lot to a small, independent project.
+You can read reviews on the [Chrome Web Store reviews page](https://chromewebstore.google.com/detail/nggfkkbmogmadfoikakkfegkoilfcfao/reviews). If Lumno has helped you, please consider leaving a review. It makes a real difference to a small, independent project.
 
 ## Press {#press}
 
@@ -15,4 +15,4 @@ Both articles are in Chinese.
 
 ## Get involved {#community}
 
-Lumno's code and discussions are open on [GitHub](https://github.com/kubai087/lumno-extension). Report a problem, ask for a feature, or just see what's coming next.
+Lumno's code and discussions are public on [GitHub](https://github.com/kubai087/lumno-extension). You can report a problem, request a feature or see what's planned next there.

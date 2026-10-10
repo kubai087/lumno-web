@@ -1,11 +1,11 @@
-Lumno est conçu pour les navigateurs Chromium, avec aussi une version Firefox. Voici ce qui fonctionne, et où.
+Lumno est conçu pour les navigateurs Chromium et existe également en version Firefox. Le tableau ci-dessous indique les fonctions disponibles dans chaque navigateur.
 
-## En un coup d'œil {#support}
+## Navigateurs pris en charge {#support}
 
-| Navigateur | Barre de commande | Nouvel onglet | Où l'obtenir |
+| Navigateur | Barre de commande | Nouvel onglet | Installer depuis |
 | --- | --- | --- | --- |
 | Google Chrome | Oui | Oui | Chrome Web Store |
-| Microsoft Edge | Oui | Oui | Modules Edge |
+| Microsoft Edge | Oui | Oui | Modules complémentaires Edge |
 | Brave, Arc, Vivaldi, Opera | Oui | Oui | Chrome Web Store |
 | Dia | Oui | Pas encore | Chrome Web Store |
 | Firefox, Zen et autres | En partie | Oui | Voir ci-dessous |
@@ -15,26 +15,26 @@ Les navigateurs sur téléphone et tablette ne sont pas encore pris en charge.
 
 ## Dia {#dia}
 
-Dia ne laisse pas les extensions remplacer le nouvel onglet : le nouvel onglet de Lumno n'y est donc pas disponible. La barre de commande fonctionne normalement.
+Dia n'autorise pas les extensions à remplacer le nouvel onglet : le nouvel onglet de Lumno n'y est donc pas disponible. La barre de commande fonctionne normalement.
 
-Si le raccourci ne fait rien, ouvrez la page des raccourcis d'extensions et passez la portée à côté de Lumno de « In Dia » à « Global ».
+Si le raccourci ne fonctionne pas, ouvrez la page des raccourcis d'extensions et remplacez la portée indiquée à côté de Lumno, « In Dia », par « Global ».
 
 ## Firefox {#firefox}
 
-La version Firefox n'est pas encore sur le site des modules Firefox ; dès qu'elle y sera, ce site en donnera le lien. Elle est destinée à Firefox 140 et versions ultérieures, et aux navigateurs basés sur Firefox comme Zen, LibreWolf et Floorp.
+La version Firefox n'est pas encore disponible sur le site des modules complémentaires Firefox. Une fois publiée, ce site y renverra. Elle prend en charge Firefox 140 et versions ultérieures, ainsi que les navigateurs basés sur Firefox comme Zen, LibreWolf et Floorp.
 
-Les API d'extensions de Firefox diffèrent de celles de Chromium, donc certaines choses ne fonctionnent pas :
+Les API d'extensions de Firefox étant différentes de celles de Chromium, certaines fonctions ne sont pas disponibles :
 
 | Fonction | Dans Firefox |
 | --- | --- |
-| Image dans l'image automatique | Indisponible ; Firefox ne laisse pas les extensions mettre une vidéo web en image dans l'image |
-| Capture web | Indisponible ; Firefox ne prend pas en charge l'image dans l'image de document |
-| Barre de commande sur les pages `about:` et le site des modules | Indisponible |
-| Ouvrir des pages `about:` depuis les raccourcis ou la barre | Indisponible |
-| Barre de commande sur les pages locales `file://` | Indisponible |
+| Image dans l'image automatique | Non disponible ; Firefox n'autorise pas les extensions à placer une vidéo web en image dans l'image |
+| Capture web | Non disponible ; Firefox ne prend pas en charge l'image dans l'image pour les documents |
+| Barre de commande sur les pages `about:` et le site des modules complémentaires | Non disponible |
+| Ouverture de pages `about:` depuis les raccourcis ou la barre de commande | Non disponible |
+| Barre de commande sur les pages locales `file://` | Non disponible |
 | Icônes de sites | Les sites jamais visités peuvent d'abord afficher une icône générique |
 
-Firefox utilise déjà `⌘ ⇧ K`, donc la version Firefox utilise par défaut `⌃ ⇧ K` sur macOS et `Alt + K` sous Windows et Linux. `Alt + Q` ne change pas.
+Comme Firefox utilise déjà `⌘ ⇧ K`, la version Firefox utilise par défaut `⌃ ⇧ K` sur macOS et `Alt + K` sous Windows et Linux. `Alt + Q` reste inchangé.
 
 ## Safari {#safari}
 
@@ -42,4 +42,4 @@ Le système d'extensions de Safari est très différent de celui de Chromium, et
 
 ## Langues de l'interface {#languages}
 
-L'extension existe en anglais, en japonais et en chinois simplifié et traditionnel ; avec un navigateur en français, elle s'affiche en anglais. Elle suit la langue de votre navigateur par défaut, et vous pouvez la changer dans les réglages.
+L'extension est disponible en anglais, en japonais et en chinois simplifié et traditionnel ; si votre navigateur est en français, elle s'affiche en anglais. Par défaut, elle utilise la langue de votre navigateur, que vous pouvez modifier dans les réglages.

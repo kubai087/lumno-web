@@ -1,45 +1,45 @@
-Lumno está hecho para navegadores Chromium, y también tiene una versión para Firefox. Esto es lo que funciona en cada uno.
+Lumno está diseñado para navegadores Chromium y también tiene una versión para Firefox. En la tabla siguiente se indica qué funciones están disponibles en cada navegador.
 
-## De un vistazo {#support}
+## Navegadores compatibles {#support}
 
-| Navegador | Barra de comandos | Nueva pestaña | Dónde conseguirlo |
+| Navegador | Barra de comandos | Nueva pestaña | Instalar desde |
 | --- | --- | --- | --- |
 | Google Chrome | Sí | Sí | Chrome Web Store |
 | Microsoft Edge | Sí | Sí | Complementos de Edge |
 | Brave, Arc, Vivaldi, Opera | Sí | Sí | Chrome Web Store |
 | Dia | Sí | Todavía no | Chrome Web Store |
-| Firefox, Zen y otros | En parte | Sí | Ver abajo |
+| Firefox, Zen y otros | En parte | Sí | Ver más abajo |
 | Safari | No | No | — |
 
-Los navegadores de móviles y tabletas aún no son compatibles.
+Los navegadores de teléfonos y tabletas todavía no son compatibles.
 
 ## Dia {#dia}
 
-Dia no deja que las extensiones sustituyan la nueva pestaña, así que la nueva pestaña de Lumno no está disponible allí. La barra de comandos funciona con normalidad.
+Dia no permite que las extensiones sustituyan la nueva pestaña, por lo que la nueva pestaña de Lumno no está disponible en este navegador. La barra de comandos funciona con normalidad.
 
-Si el atajo no hace nada, abre la página de atajos de extensiones y cambia el ámbito junto a Lumno de "In Dia" a "Global".
+Si el atajo no funciona, abre la página de atajos de extensiones y cambia el ámbito que aparece junto a Lumno de "In Dia" a "Global".
 
 ## Firefox {#firefox}
 
-La versión para Firefox todavía no está en Firefox Add-ons; cuando lo esté, este sitio la enlazará. Es para Firefox 140 o posterior y para navegadores basados en Firefox como Zen, LibreWolf y Floorp.
+La versión para Firefox todavía no está disponible en el sitio de complementos de Firefox. Cuando se publique, este sitio incluirá el enlace. Es compatible con Firefox 140 y versiones posteriores, así como con navegadores basados en Firefox como Zen, LibreWolf y Floorp.
 
-Las API de extensiones de Firefox son distintas de las de Chromium, así que algunas cosas no funcionan:
+Como las API de extensiones de Firefox son distintas de las de Chromium, algunas funciones no están disponibles:
 
 | Función | En Firefox |
 | --- | --- |
-| Imagen en imagen automática | No disponible; Firefox no deja que las extensiones pongan un vídeo web en imagen en imagen |
-| Recorte web | No disponible; Firefox no admite imagen en imagen de documentos |
-| Barra de comandos en páginas `about:` y en la web de complementos | No disponible |
-| Abrir páginas `about:` desde accesos directos o la barra | No disponible |
+| Imagen en imagen automática | No disponible; Firefox no permite que las extensiones pongan vídeos web en imagen en imagen |
+| Recorte web | No disponible; Firefox no admite imagen en imagen para documentos |
+| Barra de comandos en páginas `about:` y en el sitio de complementos | No disponible |
+| Abrir páginas `about:` desde los accesos directos o la barra de comandos | No disponible |
 | Barra de comandos en páginas locales `file://` | No disponible |
-| Iconos de sitios | Los sitios que nunca has visitado pueden mostrar al principio un icono genérico |
+| Iconos de sitios | Los sitios que no has visitado pueden mostrar al principio un icono genérico |
 
-Firefox ya usa `⌘ ⇧ K`, así que la versión para Firefox usa por defecto `⌃ ⇧ K` en macOS y `Alt + K` en Windows y Linux. `Alt + Q` no cambia.
+Como Firefox ya usa `⌘ ⇧ K`, la versión para Firefox usa de forma predeterminada `⌃ ⇧ K` en macOS y `Alt + K` en Windows y Linux. `Alt + Q` no cambia.
 
 ## Safari {#safari}
 
-El sistema de extensiones de Safari es muy distinto del de Chromium, y todavía no hay versión de Lumno para Safari. Para una búsqueda parecida en todo el sistema del Mac, prueba [Raycast](https://www.raycast.com/) o [Alfred](https://www.alfredapp.com/).
+El sistema de extensiones de Safari es muy distinto del de Chromium, y todavía no existe una versión de Lumno para Safari. Si quieres una búsqueda similar en todo el sistema en el Mac, prueba [Raycast](https://www.raycast.com/) o [Alfred](https://www.alfredapp.com/).
 
 ## Idiomas de la interfaz {#languages}
 
-La extensión está en inglés, japonés y chino simplificado y tradicional; con el navegador en español, se muestra en inglés. Sigue el idioma de tu navegador por defecto y puedes cambiarlo en los ajustes.
+La extensión está disponible en inglés, japonés y chino simplificado y tradicional; si tu navegador está en español, se muestra en inglés. De forma predeterminada usa el idioma de tu navegador, y puedes cambiarlo en los ajustes.

@@ -63,6 +63,22 @@
     1440,
     498
   ],
+  "en/uc-research": [
+    1440,
+    651
+  ],
+  "en/uc-selection": [
+    1440,
+    891
+  ],
+  "en/uc-series": [
+    1440,
+    310
+  ],
+  "en/uc-tabs": [
+    1440,
+    742
+  ],
   "ja/ai": [
     1440,
     486
@@ -126,6 +142,22 @@
   "ja/switcher": [
     1440,
     498
+  ],
+  "ja/uc-research": [
+    1440,
+    740
+  ],
+  "ja/uc-selection": [
+    1440,
+    683
+  ],
+  "ja/uc-series": [
+    1440,
+    310
+  ],
+  "ja/uc-tabs": [
+    1440,
+    740
   ],
   "zh-CN/ai": [
     1440,
@@ -195,6 +227,22 @@
     1440,
     498
   ],
+  "zh-CN/uc-research": [
+    1440,
+    652
+  ],
+  "zh-CN/uc-selection": [
+    1440,
+    629
+  ],
+  "zh-CN/uc-series": [
+    1440,
+    310
+  ],
+  "zh-CN/uc-tabs": [
+    1440,
+    740
+  ],
   "zh-TW/ai": [
     1440,
     486
@@ -258,5 +306,21 @@
   "zh-TW/switcher": [
     1440,
     498
+  ],
+  "zh-TW/uc-research": [
+    1440,
+    651
+  ],
+  "zh-TW/uc-selection": [
+    1440,
+    629
+  ],
+  "zh-TW/uc-series": [
+    1440,
+    310
+  ],
+  "zh-TW/uc-tabs": [
+    1440,
+    740
   ]
 }

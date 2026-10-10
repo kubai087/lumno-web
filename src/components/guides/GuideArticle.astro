@@ -16,6 +16,7 @@ import {
   getGuidePath,
   getGuideScreenshot,
   getGuideSource,
+  toSearchText,
   type GuideLocale,
   type GuideSlug,
 } from "../../lib/guides";
@@ -120,6 +121,15 @@ const bodyHtml = marked
   .replaceAll("</table>", "</table></div>");
 const faq = page.faq || [];
 if (faq.length) sections.push({ id: "faq", title: ui.faqTitle });
+// The FAQ page writes its questions as ### headings in the body; they become its FAQ schema.
+const faqSchemaItems = faq.length
+  ? faq
+  : slug === "faq"
+    ? [...source.matchAll(/^### (.+)\n+([\s\S]*?)(?=\n#{2,3} |$(?![\s\S]))/gm)].map(([, question, answer]) => ({
+        question: question.trim(),
+        answer: toSearchText(answer),
+      }))
+    : [];
 
 const order = GUIDE_SLUGS.indexOf(slug);
 // The first page has no previous one: its left card leads back to the website instead.
@@ -142,7 +152,7 @@ const structuredData = [
     dateModified: GUIDES_LAST_UPDATED,
     version: GUIDES_EXTENSION_VERSION,
   }),
-  ...(faq.length ? [buildFAQPageSchema({ items: faq, language: locale })] : []),
+  ...(faqSchemaItems.length ? [buildFAQPageSchema({ items: faqSchemaItems, language: locale })] : []),
   buildBreadcrumbListSchema({
     items: [
       { name: SITE_NAME, path: buildLocalizedPath(locale, "/") },

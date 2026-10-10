@@ -1,40 +1,40 @@
-New computer, or several browsers at once? Your shortcuts, wallpapers and settings can come along. Lumno has no servers of its own, so sync relies on two things you already have: your browser's sync, and a WebDAV server of your own.
+If you use more than one computer or browser, your shortcuts, wallpapers and settings can come with you. Lumno has no servers of its own, so it syncs through two things you already have: your browser's sync, and your own WebDAV server.
 
-## Browser sync: nothing to do {#browser-sync}
+## Browser sync: no setup needed {#browser-sync}
 
-If you're signed in to your browser with sync on, Lumno's settings follow you automatically: theme, search engines, shortcuts, pinned site cards, the blocklist, and your wallpaper choice and image links.
+If you're signed in to your browser with sync turned on, Lumno's settings sync automatically. This includes your theme, search engines, shortcuts, pinned site cards, blocklist, wallpaper choice and image links.
 
-Uploaded icons and local wallpapers are too big for browser sync. To bring them too, use WebDAV.
+Uploaded icons and local wallpapers are too large for browser sync. To sync them as well, use WebDAV.
 
 ## WebDAV sync: icons and wallpapers too {#webdav}
 
-WebDAV sync is in beta and off by default. Once on, your full settings, uploaded shortcut icons and custom wallpapers are stored on the server you choose.
+WebDAV sync is in beta and is off by default. When it's on, your full settings, uploaded shortcut icons and custom wallpapers are stored on a server you choose.
 
-1. Open Lumno's settings and go to "Account & sync", then WebDAV.
-2. Click "Add WebDAV" and fill in the server address, sync folder, username and app password.
-3. Optionally click "Test connectivity", then "Save and turn on sync".
+1. Open Lumno's settings and go to Account & sync → WebDAV.
+2. Click "Add WebDAV" and enter the server address, sync folder, username and app password.
+3. Optionally, click "Test connectivity". Then click "Save and turn on sync".
 
-Add the connection on each device. The username and password stay on that computer and never travel through browser sync.
+Add the connection on each device separately. Your username and password are stored only on that computer and are never synced through your browser.
 
-## Where to host it {#hosts}
+## Choose a server {#hosts}
 
-Lumno has been tested with self-hosted Nextcloud and Apache, nginx, rclone and WsgiDAV WebDAV servers, and with Nutstore (坚果云). Hosted services and NAS units such as Synology should work if they support standard WebDAV, but haven't been verified yet.
+Lumno has been tested with self-hosted Nextcloud and with Apache, nginx, rclone and WsgiDAV WebDAV servers, as well as with Nutstore (坚果云). Hosted services and NAS devices such as Synology should work if they support standard WebDAV, but they haven't been tested yet.
 
-Use an app password made for Lumno where your service offers one, rather than your main account password.
+If your service offers app passwords, create one for Lumno instead of using your main account password.
 
-## On your second computer {#second-device}
+## Set up another computer {#second-device}
 
-Add the same server, folder and account. If the server already has data, Lumno asks which version to use; usually choose "Use server version". Before replacing anything, Lumno keeps a full backup of that computer's settings.
+Add a connection with the same server, folder and account. If the server already has data, Lumno asks which version to use; in most cases, choose "Use server version". Before replacing anything, Lumno makes a full backup of that computer's settings.
 
-From then on, changes on both sides merge automatically. If two computers change the same thing, such as the shortcuts, the card shows a conflict. Click "Show differences" to see what each side changed, then pick one.
+After that, changes from both computers merge automatically. If both computers change the same setting, such as your shortcuts, the card shows a conflict. Click "Show differences" to see what changed on each side, then choose which version to keep.
 
 ## What doesn't sync {#not-synced}
 
-- History, bookmarks and open tabs: your browser keeps syncing them as usual.
-- Your WebDAV username and password: each device keeps its own.
+- History, bookmarks and open tabs: your browser continues to sync these as usual.
+- Your WebDAV username and password: each device stores its own.
 
-Turning off WebDAV or removing the connection leaves the files on your server; delete them there if you want. WebDAV isn't end-to-end encrypted, so the server's administrator can read the files.
+If you turn off WebDAV or remove the connection, the files stay on your server; you can delete them there if you want. WebDAV sync isn't end-to-end encrypted, so the server's administrator can read the files.
 
 ## Export and import {#export}
 
-Prefer not to sync? Export your configuration to a file in Lumno's settings and import it on the other computer. The file has your settings, not your images.
+If you prefer not to sync, you can export your configuration to a file in Lumno's settings and import it on another computer. The file contains your settings but not your images.

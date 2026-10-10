@@ -1,25 +1,25 @@
-Pour jongler entre les deux ou trois pages que vous venez d'utiliser, rien de plus rapide que le sélecteur : pas besoin de taper, deux touches suffisent.
+Pour passer d'une des deux ou trois dernières pages utilisées à l'autre, le sélecteur d'onglets est la méthode la plus rapide : aucune saisie n'est nécessaire, deux touches suffisent.
 
 ## Ouvrir le sélecteur {#open}
 
-Appuyez sur `⌥ Q` (`Alt + Q` sous Windows). Vos onglets récents s'alignent dans l'ordre où vous les avez utilisés, chacun avec un aperçu.
+Appuyez sur `⌥ Q` (`Alt + Q` sous Windows). Vos onglets récents s'affichent dans l'ordre de leur utilisation, chacun avec un aperçu de la page.
 
 ![Le sélecteur d'onglets récents, avec quatre onglets dans l'ordre d'utilisation, chacun avec un aperçu de la page](switcher "Le sélecteur d'onglets récents")
 
-## Choisir, relâcher {#switch}
+## Changer d'onglet {#switch}
 
-1. Maintenez `⌥` et tapez `Q` jusqu'à atteindre la page voulue. `Tab` et les flèches fonctionnent aussi.
-2. Relâchez `⌥`, ou appuyez sur `↩`, pour basculer.
+1. Maintenez `⌥` enfoncée et appuyez plusieurs fois sur `Q` jusqu'à atteindre la page souhaitée. Vous pouvez aussi utiliser `Tab` ou les touches fléchées.
+2. Relâchez `⌥` ou appuyez sur `↩` pour basculer vers cette page.
 
-Même principe que `⌘ Tab` sur Mac, ou `⌃ Tab` dans Arc.
+Le fonctionnement est semblable à celui de `⌘ Tab` sur Mac ou de `⌃ Tab` dans Arc.
 
-## Sélecteur ou recherche dans les onglets ouverts ? {#vs-search}
+## Sélecteur ou recherche dans les onglets ouverts {#vs-search}
 
-- La page fait partie des dernières : prenez le sélecteur, deux touches et vous y êtes.
-- Trop d'onglets, et celui que vous cherchez est loin derrière : appuyez sur `⌘ ⇧ K`, puis `Tab` dans le champ vide pour chercher seulement dans les onglets ouverts. Voir [Chercher dans les onglets, les favoris et l'historique](../search-tabs-bookmarks-history/#open-tabs).
+- Si la page fait partie des dernières que vous avez utilisées, utilisez le sélecteur : deux touches suffisent.
+- Si de nombreux onglets sont ouverts et que la page ne figure pas parmi les plus récentes, appuyez sur `⌘ ⇧ K`, puis sur `Tab` lorsque le champ est vide, pour rechercher uniquement dans les onglets ouverts. Pour en savoir plus, consultez [Chercher dans les onglets, les favoris et l'historique](../search-tabs-bookmarks-history/#open-tabs).
 
 ## Modifier le raccourci {#shortcut}
 
-Modifiez le raccourci du sélecteur dans `chrome://extensions/shortcuts`. Voir [Raccourcis clavier](../keyboard-shortcuts/#change).
+Vous pouvez modifier le raccourci du sélecteur dans `chrome://extensions/shortcuts`. Pour en savoir plus, consultez [Raccourcis clavier](../keyboard-shortcuts/#change).
 
-Les aperçus sont capturés sur votre ordinateur au fil de vos changements d'onglet, conservés deux heures au plus chacun, et ne quittent jamais votre appareil.
+Les aperçus des pages sont capturés sur votre ordinateur lorsque vous changez d'onglet. Chacun est conservé deux heures au maximum et ne quitte jamais votre appareil.

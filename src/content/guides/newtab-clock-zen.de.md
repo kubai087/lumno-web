@@ -1,18 +1,18 @@
-Die Uhrzeit genau da, wo du hinschaust. Und wenn du dich konzentrieren musst, nur noch das Suchfeld.
+Du kannst im neuen Tab die Uhrzeit anzeigen oder alles außer dem Suchfeld ausblenden, wenn du dich konzentrieren möchtest.
 
 ## Uhr {#clock}
 
-1. Klick unten rechts im neuen Tab auf den Appearance-Button.
-2. Stell im Bereich Search box „Content above the search bar“ auf Time.
+1. Klicke unten rechts im neuen Tab auf die Schaltfläche „Appearance“.
+2. Stelle im Bereich „Search box“ die Option „Content above the search bar“ auf „Time“.
 
-Du kannst die Schriftstärke der Uhrzeit ändern und Sekunden einblenden. Brand zeigt den Lumno-Schriftzug, Hide zeigt gar nichts.
+Du kannst die Schriftstärke der Uhrzeit ändern und festlegen, ob Sekunden angezeigt werden. Mit „Brand“ wird der Lumno-Schriftzug angezeigt, mit „Hide“ wird nichts angezeigt.
 
 ![Der neue Tab mit der Uhrzeit 09:41 über dem Suchfeld und Shortcuts darunter](nt-clock "Eine Uhr über dem Suchfeld")
 
 ## Zen-Modus {#zen}
 
-Tipp `/zen` ins Suchfeld des neuen Tabs und drück Enter. Alles außer Suchfeld und Hintergrund verschwindet. Tipp noch einmal `/zen`, um alles zurückzuholen.
+Gib `/zen` in das Suchfeld des neuen Tabs ein und drücke die Eingabetaste. Alles außer dem Suchfeld und dem Hintergrund wird ausgeblendet. Gib erneut `/zen` ein, um alles wieder anzuzeigen.
 
-![Der neue Tab im Zen-Modus: nur das Suchfeld vor einer Küste von Monet](nt-zen "Nur das Suchfeld, wenn du dich konzentrieren willst")
+![Der neue Tab im Zen-Modus: nur das Suchfeld vor einer Küste von Monet](nt-zen "Im Zen-Modus wird nur das Suchfeld angezeigt")
 
-Der Zen-Modus wird mit deinem Browser synchronisiert, deine anderen Computer bleiben also auch ruhig.
+Der Zen-Modus wird über deinen Browser synchronisiert und gilt daher auch auf deinen anderen Computern.

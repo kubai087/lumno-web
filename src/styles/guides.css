@@ -913,8 +913,8 @@
 
   /*
    * Safari 26 tints the strip under its bottom toolbar from whatever it hits 4px above the viewport's edge. A hit on
-   * the dialog (or its pseudo-elements) reads as its ::backdrop and turns the strip grey, so a real fixed element sits
-   * there instead, above the list's scrolled-away rows, which Safari's hit test also sees.
+   * the dialog (or its pseudo-elements) reads as its ::backdrop, so a real fixed element sits there instead, above the
+   * list's scrolled-away rows, which Safari's hit test also sees.
    */
   .guide-sheet__floor {
     position: fixed;
@@ -926,8 +926,9 @@
     background: var(--surface);
   }
 
+  /* No dimming: while the sheet slides in, Safari reads the backdrop and would flash its toolbar strip grey. */
   .guide-sheet::backdrop {
-    background: rgba(15, 23, 42, 0.24);
+    background: transparent;
   }
 
   .guide-sheet__head {

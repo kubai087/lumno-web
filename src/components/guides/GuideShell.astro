@@ -10,6 +10,7 @@ import {
 } from "../../lib/guides";
 import { buildLocalizedPath } from "../../lib/locales";
 import GuideNavList from "./GuideNavList.astro";
+import { SettingsIconButton } from "../extension-settings/SettingsKit";
 import { getCommunityPanel } from "../../lib/community-panel";
 import { COMMUNITY_LINKS } from "../../lib/community";
 import { getHomeContent } from "../../lib/home-content";
@@ -206,9 +207,7 @@ const searchIndexHref = `${buildLocalizedPath(locale, "/help/")}search-index.jso
 <dialog class="guide-sheet guide-pages-sheet" data-guide-sheet="pages" tabindex="-1" aria-label={ui.navToggle}>
   <div class="guide-sheet__head">
     <p class="guide-sheet__title">{ui.navToggle}</p>
-    <button type="button" class="guide-sheet__close" data-guide-sheet-close aria-label={ui.closeLabel}>
-      <i class="ri-close-line" aria-hidden="true"></i>
-    </button>
+    <SettingsIconButton type="button" className="guide-sheet__close" data-guide-sheet-close="" label={ui.closeLabel} iconClass="ri-close-line" />
   </div>
   <div class="guide-nav guide-nav--sheet">
     <GuideNavList locale={locale} current={current} />
@@ -218,9 +217,7 @@ const searchIndexHref = `${buildLocalizedPath(locale, "/help/")}search-index.jso
   <dialog class="guide-sheet guide-outline-sheet" data-guide-sheet="outline" tabindex="-1" aria-label={ui.tocLabel}>
     <div class="guide-sheet__head">
       <p class="guide-sheet__title">{ui.tocLabel}</p>
-      <button type="button" class="guide-sheet__close" data-guide-sheet-close aria-label={ui.closeLabel}>
-        <i class="ri-close-line" aria-hidden="true"></i>
-      </button>
+      <SettingsIconButton type="button" className="guide-sheet__close" data-guide-sheet-close="" label={ui.closeLabel} iconClass="ri-close-line" />
     </div>
     <ol>
       {sections.map((section) => (
@@ -234,9 +231,7 @@ const searchIndexHref = `${buildLocalizedPath(locale, "/help/")}search-index.jso
 
 <dialog class="guide-lightbox" tabindex="-1" aria-label={ui.zoomLabel}>
   <img alt="" />
-  <button type="button" class="guide-lightbox__close" aria-label={ui.closeLabel}>
-    <i class="ri-close-line" aria-hidden="true"></i>
-  </button>
+  <SettingsIconButton type="button" className="guide-lightbox__close" label={ui.closeLabel} iconClass="ri-close-line" />
 </dialog>
 
 <script is:inline>

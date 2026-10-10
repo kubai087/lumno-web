@@ -1,6 +1,8 @@
 ---
 import { marked } from "marked";
 import SitePage from "../../layouts/SitePage.astro";
+import GuideShell from "../../components/guides/GuideShell.astro";
+import { isGuideLocale } from "../../lib/guides";
 import "@fontsource/eb-garamond/600.css";
 import { DEFAULT_LOCALE, buildLocalizedPath, buildRouteLanguageMap, type SupportedLocale } from "../../lib/locales";
 import {
@@ -71,10 +73,13 @@ renderer.heading = function ({ tokens, depth }) {
   sectionIndex += 1;
   return `<h2 id="${id}"><span class="doc__num" aria-hidden="true">${number}</span><span>${title}</span></h2>\n`;
 };
+// Languages the help center covers show the policy inside it; the rest keep the standalone document.
+const inHelpCenter = isGuideLocale(uiLocale);
+const tableFrame = inHelpCenter ? "guide-table" : "doc__table";
 const policyHtml = marked
   .parse(content.policySource, { async: false, gfm: true, renderer })
   // Wide tables scroll inside their own frame on narrow screens.
-  .replaceAll("<table>", '<div class="doc__table"><table>')
+  .replaceAll("<table>", `<div class="${tableFrame}"><table>`)
   .replaceAll("</table>", "</table></div>");
 ---
 
@@ -90,8 +95,20 @@ const policyHtml = marked
   type="article"
   structuredData={structuredData}
   analyticsScope="privacy"
-  navHandoff=".doc__head"
+  navHandoff={inHelpCenter ? ".guide__banner" : ".doc__head"}
 >
+  {inHelpCenter && isGuideLocale(uiLocale) ? (
+    <GuideShell
+      locale={uiLocale}
+      current="privacy"
+      title={content.title}
+      sections={sections.map((section) => ({ id: section.id, title: section.title }))}
+      updated={PRIVACY_LAST_UPDATED}
+    >
+      <span slot="meta" class="guide__meta-extra">{appliesTo}</span>
+      <Fragment set:html={policyHtml} />
+    </GuideShell>
+  ) : (
   <div class="doc">
     <header class="doc__head">
       <h1><span>{content.title}</span></h1>
@@ -132,6 +149,7 @@ const policyHtml = marked
       <Fragment set:html={policyHtml} />
     </article>
   </div>
+  )}
 </SitePage>
 
 <style is:global>

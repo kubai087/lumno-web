@@ -2,6 +2,7 @@
 import SiteFooter from "../home/sections/SiteFooter.astro";
 import xiaohongshuIconSvg from "../../assets/home-icons/xiaohongshu-line.svg?raw";
 import { COMMUNITY_LINKS, getCommunityExternalHref } from "../../lib/community";
+import { getGuideContent, getGuidePath, isGuideLocale } from "../../lib/guides";
 import { getHomeContent } from "../../lib/home-content";
 import { LOCALE_CONFIG, buildLocalizedPath, type SupportedLocale } from "../../lib/locales";
 import {
@@ -89,6 +90,8 @@ const { firefox: firefoxStoreVersion } = await getSiteStoreVersions();
       title: content.footerProduct,
       links: [
         { label: content.footerRelease, href: buildLocalizedPath(locale, "/release/") },
+        // Only languages the guides are written in link to them.
+        ...(isGuideLocale(locale) ? [{ label: getGuideContent(locale).ui.navLabel, href: getGuidePath(locale) }] : []),
       ],
     },
     {

@@ -1,0 +1,800 @@
+/*
+ * Help center: a small wiki. The page list on the left, the article in a
+ * 720px column under a wallpaper banner, a quiet outline on the right.
+ * Plain help-document type (16px body, even spacing, one heading weight) and the
+ * logo's blue as the one accent: a deeper shade for text (AA on white), the logo
+ * tone itself for marks that carry no text.
+ */
+
+/* Pure white like the release notes, rather than the homepage's #fafafa. */
+:root:has(.guide) {
+  --bg: #ffffff;
+  scroll-behavior: smooth;
+}
+
+/*
+ * Moving between help pages swaps straight to the new page without the blank
+ * flash of a normal load: the transition keeps the old page on screen until the
+ * new one is ready, with no fade. The new page then glides up (GuideShell.astro).
+ */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-group(*),
+::view-transition-old(*),
+::view-transition-new(*) {
+  animation: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root:has(.guide) {
+    scroll-behavior: auto;
+  }
+
+  @view-transition {
+    navigation: none;
+  }
+}
+
+.guide {
+  /* The logo's sky blue (#16a0fd) for marks; a deeper shade of the same hue for text (AA on white). */
+  --guide-accent: #0a78c2;
+  --guide-accent-bright: #16a0fd;
+  --guide-accent-soft: #ebf7ff;
+  --guide-ink: #1f2328;
+  --guide-text: #3d434a;
+  --guide-muted: var(--text-sub);
+  --guide-line: var(--line);
+
+  display: grid;
+  grid-template-columns: 220px minmax(0, 720px) 180px;
+  grid-template-areas:
+    "nav banner banner"
+    "nav article toc";
+  justify-content: center;
+  gap: 0 48px;
+  width: min(100% - 48px, 1280px);
+  margin-inline: auto;
+  padding: 112px 0 96px;
+}
+
+/* Sidebar: search, then the page list. */
+/* Sticks exactly where it starts (the page's top padding), so scrolling never nudges it. */
+.guide-side {
+  grid-area: nav;
+  position: sticky;
+  top: 112px;
+  align-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-height: calc(100vh - 132px);
+}
+
+.guide-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: none;
+}
+
+.guide-search > i {
+  position: absolute;
+  left: 10px;
+  color: var(--text-soft);
+  font-size: 15px;
+  pointer-events: none;
+}
+
+.guide-search input {
+  width: 100%;
+  height: 36px;
+  padding: 0 32px 0 32px;
+  border: 1px solid var(--guide-line);
+  border-radius: 8px;
+  background: var(--surface-soft);
+  color: var(--guide-ink);
+  font-size: 14px;
+  outline: none;
+  transition: border-color 160ms ease, background-color 160ms ease;
+}
+
+.guide-search input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.guide-search input:focus {
+  border-color: var(--guide-accent-bright);
+  background: var(--surface);
+}
+
+.guide-search__hint {
+  position: absolute;
+  right: 8px;
+  display: grid;
+  place-items: center;
+  min-width: 20px;
+  height: 20px;
+  border: 1px solid var(--guide-line);
+  border-radius: 5px;
+  background: var(--surface);
+  color: var(--text-soft);
+  font-family: inherit;
+  font-size: 12px;
+  pointer-events: none;
+}
+
+.guide-search input:focus ~ .guide-search__hint {
+  display: none;
+}
+
+.guide-search__results {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 20;
+  width: max(100%, 360px);
+  max-height: min(420px, 70vh);
+  overflow-y: auto;
+  padding: 6px;
+  border: 1px solid var(--guide-line);
+  border-radius: 10px;
+  background: var(--surface);
+  box-shadow: var(--home-shadow-card);
+}
+
+.guide-search__results a {
+  display: grid;
+  gap: 2px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  text-decoration: none;
+}
+
+.guide-search__results a:hover,
+.guide-search__results a[aria-selected="true"] {
+  background: var(--guide-accent-soft);
+}
+
+.guide-search__title {
+  color: var(--guide-ink);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.guide-search__detail {
+  overflow: hidden;
+  color: var(--guide-muted);
+  font-size: 13px;
+  line-height: 1.5;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.guide-search__results mark {
+  background: none;
+  color: var(--guide-accent);
+  font-weight: 600;
+}
+
+.guide-search__empty {
+  margin: 0;
+  padding: 10px;
+  color: var(--guide-muted);
+  font-size: 13px;
+}
+
+.guide-nav {
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.guide-nav__toggle {
+  display: none;
+}
+
+/*
+ * Three levels: a group is a bold heading with a hairline between groups; a
+ * sub-section is a small grey label; its pages hang off an indented guide line.
+ */
+.guide-nav__group + .guide-nav__group {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--guide-line);
+}
+
+.guide-nav__group-title {
+  margin: 0 0 6px;
+  padding: 0 10px;
+  color: var(--guide-ink);
+  font-size: 14px;
+  font-weight: 650;
+}
+
+.guide-nav__section-title {
+  margin: 12px 0 4px;
+  padding: 0 10px;
+  color: var(--text-soft);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.guide-nav__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.guide-nav__list--nested {
+  margin-left: 10px;
+  padding-left: 6px;
+  border-left: 1px solid var(--guide-line);
+}
+
+.guide-nav a {
+  position: relative;
+  display: block;
+  padding: 4px 10px;
+  color: var(--guide-text);
+  font-size: 14px;
+  line-height: 1.45;
+  text-decoration: none;
+  transition: color 160ms ease;
+}
+
+.guide-nav__list--nested a {
+  font-size: 13.5px;
+}
+
+.guide-nav li + li {
+  margin-top: 2px;
+}
+
+/* No backgrounds: hover darkens the text; the current page takes the accent with a short bar beside it. */
+.guide-nav a:hover {
+  color: var(--guide-ink);
+}
+
+.guide-nav a[aria-current="page"] {
+  color: var(--guide-accent);
+  font-weight: 600;
+}
+
+.guide-nav a[aria-current="page"]::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  bottom: 6px;
+  left: 0;
+  width: 2px;
+  border-radius: 2px;
+  background: var(--guide-accent-bright);
+}
+
+/* Under a sub-section the bar lands on the guide line, turning that stretch of it blue. */
+.guide-nav__list--nested a[aria-current="page"]::before {
+  left: -7px;
+}
+
+/* A strip of a built-in wallpaper over the article and the outline. */
+.guide__banner {
+  grid-area: banner;
+  margin-bottom: 40px;
+  overflow: hidden;
+  aspect-ratio: 5 / 1;
+  border-radius: 12px;
+}
+
+.guide__banner img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.guide__article {
+  grid-area: article;
+  min-width: 0;
+}
+
+.guide__head h1 {
+  margin: 0;
+  color: var(--guide-ink);
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+[data-script="cjk"] .guide__head h1 {
+  letter-spacing: 0;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+.guide__meta {
+  margin: 12px 0 0;
+  color: var(--guide-muted);
+  font-size: 14px;
+}
+
+.guide__meta-extra {
+  margin-left: 1em;
+}
+
+/* The privacy policy's numbered sections. */
+.guide__body h2 .doc__num {
+  margin-right: 8px;
+  color: var(--text-soft);
+  font-variant-numeric: tabular-nums;
+  font-weight: 500;
+}
+
+.guide__body {
+  margin-top: 28px;
+  color: var(--guide-text);
+  font-size: 16px;
+  line-height: 1.75;
+}
+
+[data-script="cjk"] .guide__body {
+  line-break: strict;
+}
+
+.guide__body h2 {
+  margin: 40px 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--guide-line);
+  color: var(--guide-ink);
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1.4;
+  scroll-margin-top: 96px;
+}
+
+.guide__body h3 {
+  margin: 24px 0 8px;
+  color: var(--guide-ink);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.6;
+}
+
+.guide__body p,
+.guide__body ul,
+.guide__body ol {
+  margin: 0 0 16px;
+}
+
+/* Tailwind's preflight strips list markers; a document wants them back. */
+.guide__body ul {
+  padding-left: 1.4em;
+  list-style: disc;
+}
+
+.guide__body ol {
+  padding-left: 1.4em;
+  list-style: decimal;
+}
+
+.guide__body li + li {
+  margin-top: 4px;
+}
+
+.guide__body ul li::marker {
+  color: var(--text-soft);
+}
+
+.guide__body ol li::marker {
+  color: var(--guide-accent);
+  font-weight: 600;
+}
+
+.guide__body strong {
+  color: var(--guide-ink);
+  font-weight: 600;
+}
+
+.guide__body a {
+  color: var(--guide-accent);
+  text-decoration: none;
+}
+
+.guide__body a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* Each link opens with its site's icon, set on the text line. */
+.guide-link__icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin: 0 4px 0 2px;
+  border-radius: 4px;
+  vertical-align: -3px;
+}
+
+/* Addresses and things to type: quiet inline code. */
+.guide__body code {
+  padding: 1px 6px;
+  border-radius: 5px;
+  background: var(--surface-soft);
+  color: var(--guide-ink);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.85em;
+  white-space: nowrap;
+}
+
+/*
+ * Keys: one homepage keycap per key, in the system face so ⌘ ⇧ ⌥ get their
+ * proper glyphs, sized to sit on the text line.
+ */
+.guide-keys {
+  display: inline-flex;
+  gap: 3px;
+  margin-inline: 2px;
+  vertical-align: 1px;
+}
+
+.guide-keys .home-kbd {
+  min-width: 22px;
+  height: 22px;
+  padding: 0 5px;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", "Open Sans", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.guide-table {
+  margin: 0 0 20px;
+  overflow-x: auto;
+  border: 1px solid var(--guide-line);
+  border-radius: 8px;
+}
+
+.guide-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.guide-table th,
+.guide-table td {
+  padding: 10px 14px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.guide-table th {
+  background: var(--surface-soft);
+  color: var(--guide-ink);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.guide-table tbody tr {
+  border-top: 1px solid var(--guide-line);
+}
+
+/* Screenshots: a hairline and a small radius, no lift; they open full size. */
+.guide-shot {
+  margin: 24px 0;
+}
+
+.guide-shot__zoom {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
+}
+
+.guide-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--guide-line);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.guide-shot figcaption {
+  margin-top: 8px;
+  color: var(--guide-muted);
+  font-size: 14px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.guide__faq p {
+  margin-bottom: 0;
+}
+
+/* Previous and next page. */
+.guide__pager {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 56px;
+}
+
+.guide__pager-link {
+  display: grid;
+  gap: 2px;
+  padding: 14px 16px;
+  border: 1px solid var(--guide-line);
+  border-radius: 10px;
+  text-decoration: none;
+  transition: border-color 160ms ease, background-color 160ms ease;
+}
+
+.guide__pager-link:hover {
+  border-color: var(--line-strong);
+  background: var(--surface-soft);
+}
+
+.guide__pager-link--next {
+  grid-column: 2;
+  text-align: right;
+}
+
+.guide__pager-label {
+  color: var(--guide-muted);
+  font-size: 13px;
+}
+
+.guide__pager-title {
+  color: var(--guide-ink);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* Outline: small grey links on a hairline; the section being read takes the accent. */
+.guide__toc {
+  grid-area: toc;
+  position: sticky;
+  top: 100px;
+  align-self: start;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+  font-size: 13px;
+  line-height: 1.5;
+  scrollbar-width: none;
+}
+
+.guide__toc-title {
+  margin: 0 0 8px;
+  color: var(--guide-ink);
+  font-weight: 600;
+}
+
+.guide__toc ol {
+  margin: 0;
+  padding: 0;
+  border-left: 1px solid var(--guide-line);
+  list-style: none;
+}
+
+.guide__toc a {
+  display: block;
+  margin-left: -1px;
+  padding: 4px 0 4px 12px;
+  border-left: 1px solid transparent;
+  color: var(--guide-muted);
+  text-decoration: none;
+  transition: color 160ms ease, border-color 160ms ease;
+}
+
+.guide__toc a:hover {
+  color: var(--guide-ink);
+}
+
+.guide__toc a[aria-current] {
+  border-left-color: var(--guide-accent-bright);
+  color: var(--guide-accent);
+}
+
+/* Full-size screenshot. */
+.guide-lightbox {
+  max-width: none;
+  max-height: none;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: zoom-out;
+}
+
+.guide-lightbox::backdrop {
+  background: rgba(20, 22, 26, 0.72);
+  backdrop-filter: blur(6px);
+}
+
+.guide-lightbox[open] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.guide-lightbox img {
+  max-width: min(94vw, 1600px);
+  max-height: 90vh;
+  border-radius: 10px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35);
+}
+
+.guide-lightbox__close {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border: 0;
+  border-radius: 999px;
+  --lumno-corner-shape: round;
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--text-main);
+  font-size: 18px;
+  cursor: pointer;
+}
+
+@media (max-width: 1240px) {
+  .guide {
+    grid-template-columns: 220px minmax(0, 720px);
+    grid-template-areas:
+      "nav banner"
+      "nav article";
+  }
+
+  .guide__toc {
+    display: none;
+  }
+}
+
+/* Narrow screens: one column, the page list folded into a disclosure above the banner. */
+@media (max-width: 959px) {
+  .guide {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      "search"
+      "nav"
+      "banner"
+      "article";
+    width: min(100% - 32px, 720px);
+    padding-top: 96px;
+  }
+
+  /*
+   * Phones: the search box scrolls away with the page, while the contents bar
+   * sticks under the site header and opens the page list as a drop-down.
+   */
+  .guide-side {
+    display: contents;
+  }
+
+  .guide-search {
+    grid-area: search;
+    margin-bottom: 10px;
+  }
+
+  .guide-search__hint {
+    display: none;
+  }
+
+  .guide-search__results {
+    width: 100%;
+  }
+
+  .guide-nav {
+    grid-area: nav;
+    position: sticky;
+    top: calc(max(10px, env(safe-area-inset-top)) + 66px);
+    z-index: 30;
+    align-self: start;
+    min-height: auto;
+    margin-bottom: 16px;
+    overflow: visible;
+    border: 1px solid var(--guide-line);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.92);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+  }
+
+  .guide-nav[open] {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  .guide-nav__toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 14px;
+    color: var(--guide-muted);
+    font-size: 14px;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .guide-nav__toggle-current {
+    overflow: hidden;
+    flex: 1;
+    color: var(--guide-ink);
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .guide-nav__toggle::-webkit-details-marker {
+    display: none;
+  }
+
+  .guide-nav[open] .guide-nav__toggle i {
+    transform: rotate(180deg);
+  }
+
+  /* The page list drops down under the bar and scrolls on its own. */
+  .guide-nav__body {
+    position: absolute;
+    top: 100%;
+    right: -1px;
+    left: -1px;
+    max-height: min(65vh, 520px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 4px 4px 12px;
+    border: 1px solid var(--guide-line);
+    border-top: 0;
+    border-radius: 0 0 10px 10px;
+    background: var(--surface);
+    box-shadow: var(--home-shadow-card);
+  }
+
+  /* Comfortable tap targets. */
+  .guide-nav a {
+    padding: 9px 10px;
+    font-size: 15px;
+  }
+
+  .guide-nav__list--nested a {
+    font-size: 14.5px;
+  }
+
+  .guide-nav__group:first-of-type {
+    padding-top: 4px;
+  }
+
+  .guide__banner {
+    margin-bottom: 28px;
+    aspect-ratio: 3 / 1;
+    border-radius: 10px;
+  }
+
+  .guide__head h1 {
+    font-size: 26px;
+  }
+
+  .guide__body h2 {
+    font-size: 20px;
+  }
+
+  .guide__pager {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .guide__pager-link--next {
+    grid-column: 1;
+  }
+}

@@ -1,0 +1,13 @@
+---
+import GuideArticle from "../../components/guides/GuideArticle.astro";
+import { GUIDE_SLUGS, type GuideSlug } from "../../lib/guides";
+import { DEFAULT_LOCALE } from "../../lib/locales";
+
+export function getStaticPaths() {
+  return GUIDE_SLUGS.map((slug) => ({ params: { slug } }));
+}
+
+const slug = Astro.params.slug as GuideSlug;
+---
+
+<GuideArticle locale={DEFAULT_LOCALE} slug={slug} />

@@ -1,0 +1,354 @@
+---
+import { marked } from "marked";
+import "../../styles/guides.css";
+import {
+  GUIDES_LAST_UPDATED,
+  GUIDE_NAV,
+  getGuideBanner,
+  getGuideContent,
+  getGuideNavTitle,
+  getGuidePath,
+  type GuideLocale,
+  type GuideNavKey,
+} from "../../lib/guides";
+import { buildLocalizedPath } from "../../lib/locales";
+
+/*
+ * The help center's frame, shared by its pages and the privacy policy: search
+ * and the page list on the left, the article under its banner, the outline on
+ * the right, and the full-size screenshot viewer.
+ */
+interface Props {
+  locale: GuideLocale;
+  current: GuideNavKey;
+  title: string;
+  sections: Array<{ id: string; title: string }>;
+  /** ISO date shown under the title; defaults to when the guides were last checked. */
+  updated?: string;
+}
+
+const { locale, current, title, sections, updated = GUIDES_LAST_UPDATED } = Astro.props;
+const { ui } = getGuideContent(locale);
+const banner = getGuideBanner(current);
+const displayUpdated = new Intl.DateTimeFormat(locale, {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+  timeZone: "UTC",
+}).format(new Date(`${updated}T00:00:00Z`));
+// buildLocalizedPath ends paths with "/", so the file name goes after the directory.
+const searchIndexHref = `${buildLocalizedPath(locale, "/guides/")}search-index.json`;
+---
+
+<div class="guide">
+  <aside class="guide-side">
+    <div class="guide-search" data-guide-search data-index={searchIndexHref} data-empty={ui.searchEmpty}>
+      <i class="ri-search-line" aria-hidden="true"></i>
+      <input
+        type="search"
+        placeholder={ui.searchPlaceholder}
+        aria-label={ui.searchLabel}
+        autocomplete="off"
+        spellcheck="false"
+        role="combobox"
+        aria-expanded="false"
+        aria-controls="guide-search-results"
+      />
+      <kbd class="guide-search__hint" aria-hidden="true">/</kbd>
+      <div class="guide-search__results" id="guide-search-results" role="listbox" hidden></div>
+    </div>
+
+    <!-- The pages, wiki style; on narrow screens the list folds into a disclosure. -->
+    <details class="guide-nav" open>
+      <summary class="guide-nav__toggle">
+        <span>{ui.navToggle}</span>
+        <span class="guide-nav__toggle-current">{current === "privacy" ? ui.privacyLabel : title}</span>
+        <i class="ri-arrow-down-s-line" aria-hidden="true"></i>
+      </summary>
+      <nav class="guide-nav__body" aria-label={ui.navTitle}>
+        {GUIDE_NAV.map((group) => (
+          <div class="guide-nav__group">
+            <p class="guide-nav__group-title">{ui.groups[group.id]}</p>
+            {group.sections.map((section) => (
+              <>
+                {"id" in section && <p class="guide-nav__section-title">{ui.sections[section.id]}</p>}
+                <ul class={"id" in section ? "guide-nav__list guide-nav__list--nested" : "guide-nav__list"}>
+                  {section.slugs.map((item) => (
+                    <li>
+                      <a href={getGuidePath(locale, item)} aria-current={item === current ? "page" : undefined}>
+                        {getGuideNavTitle(locale, item)}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            ))}
+          </div>
+        ))}
+      </nav>
+    </details>
+    <script is:inline>
+      // Keep the page list where it was on the previous page, before anything paints.
+      try {
+        const saved = Number(sessionStorage.getItem("lumno-guide-nav-scroll"));
+        if (saved) document.querySelector(".guide-nav").scrollTop = saved;
+      } catch (_error) {}
+    </script>
+  </aside>
+
+  <div class="guide__banner" style={`background-color: ${banner.color}`}>
+    <img src={banner.src} width={banner.width} height={banner.height} alt="" loading="eager" fetchpriority="high" decoding="async" />
+  </div>
+
+  <article class="guide__article">
+    <header class="guide__head">
+      <h1>{title}</h1>
+      <p class="guide__meta">
+        <time datetime={updated}>{ui.updatedLabel.replace("{date}", displayUpdated)}</time>
+        <slot name="meta" />
+      </p>
+      <slot name="note" />
+    </header>
+
+    <div class="guide__body">
+      <slot />
+    </div>
+
+    <slot name="footer" />
+  </article>
+
+  {sections.length > 0 && (
+    <nav class="guide__toc" aria-label={ui.tocLabel}>
+      <p class="guide__toc-title">{ui.tocLabel}</p>
+      <ol>
+        {sections.map((section) => (
+          <li>
+            <a href={`#${section.id}`} data-guide-toc={section.id} set:html={marked.parseInline(section.title)} />
+          </li>
+        ))}
+      </ol>
+    </nav>
+  )}
+</div>
+
+<dialog class="guide-lightbox" aria-label={ui.zoomLabel}>
+  <img alt="" />
+  <button type="button" class="guide-lightbox__close" aria-label={ui.closeLabel}>
+    <i class="ri-close-line" aria-hidden="true"></i>
+  </button>
+</dialog>
+
+<script is:inline>
+  (() => {
+    // Arriving from another help page: start where the reader was, then glide to the top.
+    let from = 0;
+    try {
+      from = Number(sessionStorage.getItem("lumno-guide-page-scroll")) || 0;
+      sessionStorage.removeItem("lumno-guide-page-scroll");
+    } catch (_error) {}
+    if (from > 0 && !window.location.hash) {
+      // Start at most about a screen down, so even a long page arrives quickly.
+      const start = Math.min(from, window.innerHeight, document.documentElement.scrollHeight - window.innerHeight);
+      window.scrollTo({ top: start, behavior: "instant" });
+      requestAnimationFrame(() => window.scrollTo({ top: 0, behavior: "smooth" }));
+    }
+  })();
+
+  (() => {
+    // Mark the section being read in the outline: the last heading above the top fifth of the screen.
+    const links = [...document.querySelectorAll("[data-guide-toc]")];
+    const headings = links.map((link) => document.getElementById(link.dataset.guideToc)).filter(Boolean);
+    if (headings.length) {
+      let frame = 0;
+      const update = () => {
+        frame = 0;
+        const line = window.innerHeight * 0.2;
+        let current = headings[0];
+        for (const heading of headings) {
+          if (heading.getBoundingClientRect().top <= line) current = heading;
+        }
+        links.forEach((link) => {
+          if (link.dataset.guideToc === current.id) link.setAttribute("aria-current", "location");
+          else link.removeAttribute("aria-current");
+        });
+      };
+      const schedule = () => {
+        if (!frame) frame = requestAnimationFrame(update);
+      };
+      window.addEventListener("scroll", schedule, { passive: true });
+      window.addEventListener("resize", schedule);
+      update();
+    }
+
+    // Phones fold the page list behind the contents bar; wider screens always show it (they
+    // have no bar to open it with), so the fold follows the width, including later resizes.
+    const nav = document.querySelector(".guide-nav");
+    const narrow = window.matchMedia("(max-width: 959px)");
+    const fitNav = () => {
+      if (nav) nav.open = !narrow.matches;
+    };
+    fitNav();
+    narrow.addEventListener("change", fitNav);
+    document.addEventListener("click", (event) => {
+      if (nav && narrow.matches && nav.open && !nav.contains(event.target)) nav.open = false;
+    });
+
+    // Screenshots open full size; a click anywhere or Esc closes them.
+    const lightbox = document.querySelector(".guide-lightbox");
+    const lightboxImage = lightbox && lightbox.querySelector("img");
+    if (lightbox && lightboxImage && typeof lightbox.showModal === "function") {
+      document.addEventListener("click", (event) => {
+        const trigger = event.target instanceof Element ? event.target.closest("[data-guide-zoom]") : null;
+        if (!trigger) return;
+        const image = trigger.querySelector("img");
+        lightboxImage.src = image.currentSrc || image.src;
+        lightboxImage.alt = image.alt;
+        lightbox.showModal();
+      });
+      lightbox.addEventListener("click", () => lightbox.close());
+    }
+
+    // Moving to another page: switch at once, then glide up from where the reader was.
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const goTo = (href) => {
+      const url = new URL(href, window.location.href);
+      const samePage = url.pathname === window.location.pathname && url.search === window.location.search;
+      if (samePage) {
+        window.location.hash = url.hash;
+        return;
+      }
+      try {
+        sessionStorage.setItem("lumno-guide-nav-scroll", String(document.querySelector(".guide-nav").scrollTop));
+        if (!url.hash && !reduceMotion) sessionStorage.setItem("lumno-guide-page-scroll", String(Math.round(window.scrollY)));
+      } catch (_error) {}
+      window.location.href = url.href;
+    };
+    document.addEventListener("click", (event) => {
+      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      const link = event.target instanceof Element ? event.target.closest(".guide-nav a, .guide__pager a, .guide-search__results a") : null;
+      if (!link || link.target === "_blank") return;
+      event.preventDefault();
+      goTo(link.href);
+    });
+
+    // Search: the index is fetched on first focus, then matched in the page. "/" focuses the box.
+    const box = document.querySelector("[data-guide-search]");
+    const input = box && box.querySelector("input");
+    const results = box && box.querySelector(".guide-search__results");
+    if (!box || !input || !results) return;
+    let index = null;
+    let loading = null;
+    let active = -1;
+    const load = () => {
+      if (!loading) {
+        loading = fetch(box.dataset.index)
+          .then((response) => response.json())
+          .then((data) => (index = data))
+          .catch(() => (loading = null));
+      }
+      return loading;
+    };
+    const escape = (value) =>
+      value.replace(/[&<>"]/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[char]);
+    const highlight = (text, terms) => {
+      let html = escape(text);
+      terms.forEach((term) => {
+        const pattern = new RegExp(escape(term).replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi");
+        html = html.replace(pattern, (match) => `<mark>${match}</mark>`);
+      });
+      return html;
+    };
+    const snippet = (text, term) => {
+      const at = text.toLowerCase().indexOf(term);
+      if (at < 0) return text.slice(0, 60);
+      const start = Math.max(0, at - 24);
+      return `${start > 0 ? "…" : ""}${text.slice(start, at + term.length + 36)}…`;
+    };
+    const search = (query) => {
+      const terms = query.toLowerCase().split(/\s+/).filter(Boolean);
+      if (!terms.length || !index) return [];
+      return index
+        .map((doc) => {
+          const title = doc.title.toLowerCase();
+          const text = doc.text.toLowerCase();
+          let score = 0;
+          let section = null;
+          for (const term of terms) {
+            const heading = doc.sections.find((item) => item.title.toLowerCase().includes(term));
+            if (title.includes(term)) score += 10;
+            else if (heading) score += 4;
+            else if (text.includes(term)) score += 1;
+            else return null;
+            if (heading && !section) section = heading;
+          }
+          return {
+            score,
+            href: section ? `${doc.href}#${section.id}` : doc.href,
+            title: doc.title,
+            detail: section ? section.title : snippet(doc.text, terms[0]),
+            terms,
+          };
+        })
+        .filter(Boolean)
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 8);
+    };
+    const setActive = (next) => {
+      const items = [...results.querySelectorAll("a")];
+      if (!items.length) return;
+      active = (next + items.length) % items.length;
+      items.forEach((item, i) => item.setAttribute("aria-selected", i === active ? "true" : "false"));
+      items[active].scrollIntoView({ block: "nearest" });
+    };
+    const render = () => {
+      const query = input.value.trim();
+      active = -1;
+      if (!query) {
+        results.hidden = true;
+        input.setAttribute("aria-expanded", "false");
+        return;
+      }
+      const found = search(query);
+      results.innerHTML = found.length
+        ? found
+            .map(
+              (item) =>
+                `<a role="option" href="${item.href}"><span class="guide-search__title">${highlight(item.title, item.terms)}</span><span class="guide-search__detail">${highlight(item.detail, item.terms)}</span></a>`,
+            )
+            .join("")
+        : `<p class="guide-search__empty">${escape(box.dataset.empty)}</p>`;
+      results.hidden = false;
+      input.setAttribute("aria-expanded", "true");
+    };
+    input.addEventListener("focus", () => load().then(render));
+    input.addEventListener("input", () => load().then(render));
+    input.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowDown") {
+        event.preventDefault();
+        setActive(active + 1);
+      } else if (event.key === "ArrowUp") {
+        event.preventDefault();
+        setActive(active - 1);
+      } else if (event.key === "Enter") {
+        const items = results.querySelectorAll("a");
+        const target = items[active >= 0 ? active : 0];
+        if (target) goTo(target.href);
+      } else if (event.key === "Escape") {
+        input.value = "";
+        render();
+        input.blur();
+      }
+    });
+    document.addEventListener("click", (event) => {
+      if (!box.contains(event.target)) results.hidden = true;
+    });
+    document.addEventListener("keydown", (event) => {
+      const target = event.target;
+      const typing = target instanceof HTMLElement && (target.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(target.tagName));
+      if (event.key === "/" && !typing && !event.metaKey && !event.ctrlKey && !event.altKey) {
+        event.preventDefault();
+        input.focus();
+      }
+    });
+  })();
+</script>

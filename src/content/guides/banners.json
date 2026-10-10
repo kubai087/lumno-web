@@ -1,0 +1,97 @@
+{
+  "what-is-lumno": {
+    "width": 2000,
+    "height": 400,
+    "color": "#f8f8e8"
+  },
+  "limitations": {
+    "width": 2000,
+    "height": 400,
+    "color": "#f8f8e8"
+  },
+  "use-cases": {
+    "width": 2000,
+    "height": 400,
+    "color": "#f8f8e8"
+  },
+  "install": {
+    "width": 2000,
+    "height": 400,
+    "color": "#f8f8e8"
+  },
+  "keyboard-shortcuts": {
+    "width": 2000,
+    "height": 400,
+    "color": "#f8f8e8"
+  },
+  "sync": {
+    "width": 2000,
+    "height": 400,
+    "color": "#f8f8f8"
+  },
+  "search-tabs-bookmarks-history": {
+    "width": 2000,
+    "height": 400,
+    "color": "#f8f8e8"
+  },
+  "site-search": {
+    "width": 2000,
+    "height": 400,
+    "color": "#e8d8d8"
+  },
+  "tab-switcher": {
+    "width": 2000,
+    "height": 400,
+    "color": "#f8f8f8"
+  },
+  "newtab-wallpaper": {
+    "width": 2000,
+    "height": 400,
+    "color": "#f8f8e8"
+  },
+  "newtab-bookmarks-shortcuts": {
+    "width": 2000,
+    "height": 400,
+    "color": "#e8e8c8"
+  },
+  "newtab-frequent-sites": {
+    "width": 2000,
+    "height": 400,
+    "color": "#f8f8f8"
+  },
+  "newtab-clock-zen": {
+    "width": 2000,
+    "height": 400,
+    "color": "#d8e8e8"
+  },
+  "arc-command-bar": {
+    "width": 2000,
+    "height": 400,
+    "color": "#f8f8d8"
+  },
+  "browser-compatibility": {
+    "width": 2000,
+    "height": 400,
+    "color": "#f8f8e8"
+  },
+  "privacy-data": {
+    "width": 2000,
+    "height": 400,
+    "color": "#f8f8e8"
+  },
+  "privacy": {
+    "width": 2000,
+    "height": 400,
+    "color": "#f8f8e8"
+  },
+  "security-open-source": {
+    "width": 2000,
+    "height": 400,
+    "color": "#e8e8c8"
+  },
+  "ratings-reviews": {
+    "width": 2000,
+    "height": 400,
+    "color": "#e8f8f8"
+  }
+}

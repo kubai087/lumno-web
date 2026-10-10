@@ -1,0 +1,164 @@
+{
+  "bookmarks": [
+    {
+      "title": "参考",
+      "children": [
+        {
+          "title": "Chrome 扩展开发文档",
+          "url": "https://developer.chrome.com/docs/extensions?hl=zh-cn"
+        },
+        {
+          "title": "MDN Web Docs",
+          "url": "https://developer.mozilla.org/zh-CN/"
+        }
+      ]
+    },
+    {
+      "title": "设计规范",
+      "children": [
+        {
+          "title": "Material Design 3",
+          "url": "https://m3.material.io/"
+        },
+        {
+          "title": "Apple 人机界面指南",
+          "url": "https://developer.apple.com/cn/design/human-interface-guidelines/"
+        }
+      ]
+    },
+    {
+      "title": "个人网站参考",
+      "children": [
+        {
+          "title": "Dribbble",
+          "url": "https://dribbble.com/"
+        }
+      ]
+    },
+    {
+      "title": "竞品",
+      "children": [
+        {
+          "title": "Raycast",
+          "url": "https://www.raycast.com/"
+        }
+      ]
+    },
+    {
+      "title": "AI 调研",
+      "children": [
+        {
+          "title": "Claude",
+          "url": "https://claude.ai/"
+        },
+        {
+          "title": "DeepSeek",
+          "url": "https://chat.deepseek.com/"
+        }
+      ]
+    },
+    {
+      "title": "设计系统",
+      "children": [
+        {
+          "title": "shadcn/ui",
+          "url": "https://ui.shadcn.com/"
+        }
+      ]
+    },
+    {
+      "title": "灵感",
+      "children": [
+        {
+          "title": "少数派",
+          "url": "https://sspai.com/"
+        }
+      ]
+    },
+    {
+      "title": "读书",
+      "children": [
+        {
+          "title": "阮一峰的网络日志",
+          "url": "https://www.ruanyifeng.com/blog/"
+        }
+      ]
+    },
+    {
+      "title": "ChatGPT",
+      "url": "https://chatgpt.com/"
+    },
+    {
+      "title": "GitHub",
+      "url": "https://github.com/"
+    }
+  ],
+  "history": [
+    "https://www.ruanyifeng.com/blog/",
+    "https://developer.chrome.com/docs/extensions/reference/api/tabs?hl=zh-cn",
+    "https://zh.wikipedia.org/wiki/%E4%B9%A6%E7%AD%BE"
+  ],
+  "tabs": [
+    "https://github.com/kubai087/lumno-extension",
+    "https://sspai.com/post/113495",
+    "https://developer.mozilla.org/zh-CN/docs/Web/CSS",
+    "blank"
+  ],
+  "queries": {
+    "search": "chrome",
+    "pinyin": "shaoshupai",
+    "opentabs": "",
+    "siteKey": "gh",
+    "siteQuery": "command palette",
+    "aiKey": "ds",
+    "aiQuery": "Arc 浏览器的命令栏有哪些替代方案？"
+  },
+  "blankTitle": "空白页",
+  "shortcuts": [
+    {
+      "title": "GitHub",
+      "url": "https://github.com/"
+    },
+    {
+      "title": "X",
+      "url": "https://x.com/"
+    },
+    {
+      "title": "ChatGPT",
+      "url": "https://chatgpt.com/"
+    },
+    {
+      "title": "Figma",
+      "url": "https://www.figma.com/"
+    },
+    {
+      "title": "YouTube",
+      "url": "https://www.youtube.com/"
+    },
+    {
+      "title": "Notion",
+      "url": "https://www.notion.so/"
+    },
+    {
+      "title": "Gmail",
+      "url": "https://mail.google.com/"
+    },
+    {
+      "title": "Dribbble",
+      "url": "https://dribbble.com/"
+    },
+    {
+      "title": "哔哩哔哩",
+      "url": "https://www.bilibili.com/"
+    }
+  ],
+  "quoteCategory": "poetry",
+  "frequentSites": [
+    "https://github.com/kubai087/lumno-extension",
+    "https://m3.material.io/",
+    "https://www.figma.com/",
+    "https://developer.mozilla.org/zh-CN/",
+    "https://news.ycombinator.com/"
+  ],
+  "wallpaper": "monet-coastal-white"
+}

@@ -1,0 +1,189 @@
+---
+import fs from "node:fs";
+import path from "node:path";
+import { marked } from "marked";
+import SitePage from "../../layouts/SitePage.astro";
+import GuideShell from "./GuideShell.astro";
+import { getChromeStoreReviews } from "../../lib/chrome-store-reviews";
+import { DEFAULT_LOCALE, buildLocalizedPath } from "../../lib/locales";
+import {
+  GUIDES_EXTENSION_VERSION,
+  GUIDES_LAST_UPDATED,
+  GUIDE_LOCALES,
+  GUIDE_SLUGS,
+  buildGuideRouteLanguageMap,
+  getGuideContent,
+  getGuidePath,
+  getGuideScreenshot,
+  getGuideSource,
+  type GuideLocale,
+  type GuideSlug,
+} from "../../lib/guides";
+import {
+  SITE_NAME,
+  buildBreadcrumbListSchema,
+  buildFAQPageSchema,
+  buildKeywords,
+  buildTechArticleSchema,
+} from "../../lib/seo";
+
+interface Props {
+  locale: GuideLocale;
+  slug: GuideSlug;
+}
+
+const { locale, slug } = Astro.props;
+const forcedLocale = locale === DEFAULT_LOCALE ? null : locale;
+const { ui, pages } = getGuideContent(locale);
+const page = pages[slug];
+const seoPath = getGuidePath(locale, slug);
+
+// Facts that change on their own: the store rating, read at build time.
+const reviews = await getChromeStoreReviews();
+const facts: Record<string, string> = {
+  chromeRating: reviews.averageRating.toFixed(1),
+  chromeRatingCount: String(reviews.ratingCount),
+};
+
+const escapeHtml = (value: string) =>
+  value.replaceAll("&", "&amp;").replaceAll('"', "&quot;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+
+// `⌘ ⇧ K`, `Ctrl + Shift + K`, `Tab`: inline code made only of key names renders as keycaps.
+const KEY_NAME = /^(?:[⌘⇧⌥⌃↩↑↓←→⌫]|Esc|Tab|Enter|Ctrl|Shift|Alt|Space|Backspace|[A-Z0-9])$/;
+function renderKeys(text: string): string | null {
+  const keys = text.trim().split(/\s*\+\s*|\s+/).filter(Boolean);
+  if (!keys.length || !keys.every((key) => KEY_NAME.test(key))) return null;
+  return `<span class="guide-keys">${keys.map((key) => `<kbd class="home-kbd">${escapeHtml(key)}</kbd>`).join("")}</span>`;
+}
+
+// Every link opens with the site's icon: Lumno's for pages on this site, the saved
+// favicon (scripts/guide-screenshots/favicons.mjs) for other sites.
+const FAVICON_DIR = path.join(process.cwd(), "public/assets/guides/favicons");
+function linkIcon(href: string): string {
+  if (href.startsWith("#") || href.startsWith("mailto:")) return "";
+  let src = "/favicon.png";
+  if (/^https?:\/\//.test(href)) {
+    const host = new URL(href).hostname;
+    if (!fs.existsSync(path.join(FAVICON_DIR, `${host}.png`))) return "";
+    src = `/assets/guides/favicons/${host}.png`;
+  }
+  return `<img class="guide-link__icon" src="${src}" width="16" height="16" alt="" loading="lazy" decoding="async" />`;
+}
+
+// Only repository-owned static Markdown is rendered here. User-provided input
+// must never be passed to this renderer without an explicit sanitization step.
+const sections: Array<{ id: string; title: string }> = [];
+const images: string[] = [];
+const renderer = new marked.Renderer();
+renderer.link = function ({ href, title, tokens }) {
+  const external = /^https?:\/\//.test(href);
+  const attributes = [
+    `href="${escapeHtml(href)}"`,
+    title ? `title="${escapeHtml(title)}"` : "",
+    external ? 'target="_blank" rel="noopener"' : "",
+  ].filter(Boolean).join(" ");
+  return `<a ${attributes} class="guide-link">${linkIcon(href)}${this.parser.parseInline(tokens)}</a>`;
+};
+renderer.codespan = function ({ text }) {
+  return renderKeys(text) ?? `<code>${text}</code>`;
+};
+renderer.heading = function ({ tokens, depth, text }) {
+  if (depth !== 2) return `<h${depth}>${this.parser.parseInline(tokens)}</h${depth}>\n`;
+  // "## 怎么用 {#how}": a stable ASCII anchor whatever the language.
+  const match = text.match(/^(.*?)\s*\{#([a-z0-9-]+)\}$/);
+  if (!match) throw new Error(`Guide ${slug} (${locale}): section "${text}" needs an {#anchor}.`);
+  const [, title, id] = match;
+  sections.push({ id, title });
+  return `<h2 id="${id}">${marked.parseInline(title, { renderer })}</h2>\n`;
+};
+// ![alt](screenshot-name "caption") → a sized figure from public/assets/guides/<locale>/, opened full size on click.
+renderer.image = function ({ href, title, text }) {
+  const shot = getGuideScreenshot(locale, href);
+  const loading = images.length ? "lazy" : "eager";
+  images.push(shot.src);
+  const caption = title ? `<figcaption>${escapeHtml(title)}</figcaption>` : "";
+  return `<figure class="guide-shot"><button type="button" class="guide-shot__zoom" data-guide-zoom aria-label="${escapeHtml(ui.zoomLabel)}"><img src="${shot.src}" width="${shot.width}" height="${shot.height}" alt="${escapeHtml(text)}" loading="${loading}" decoding="async" /></button>${caption}</figure>`;
+};
+// A paragraph holding only a figure must not wrap it in <p>.
+renderer.paragraph = function ({ tokens }) {
+  const html = this.parser.parseInline(tokens);
+  return html.startsWith("<figure") ? `${html}\n` : `<p>${html}</p>\n`;
+};
+const source = getGuideSource(slug, locale).replace(/\{\{(\w+)\}\}/g, (token, name) => {
+  if (!(name in facts)) throw new Error(`Guide ${slug} (${locale}): unknown placeholder ${token}.`);
+  return facts[name];
+});
+const bodyHtml = marked
+  .parse(source, { async: false, gfm: true, renderer })
+  .replaceAll("<table>", '<div class="guide-table"><table>')
+  .replaceAll("</table>", "</table></div>");
+const faq = page.faq || [];
+if (faq.length) sections.push({ id: "faq", title: ui.faqTitle });
+
+const order = GUIDE_SLUGS.indexOf(slug);
+const neighbours = [
+  { slug: GUIDE_SLUGS[order - 1], label: ui.previousLabel, kind: "previous" },
+  { slug: GUIDE_SLUGS[order + 1], label: ui.nextLabel, kind: "next" },
+].filter((item): item is { slug: GuideSlug; label: string; kind: string } => Boolean(item.slug));
+
+const structuredData = [
+  buildTechArticleSchema({
+    headline: page.title,
+    description: page.pageDescription,
+    path: seoPath,
+    language: locale,
+    images,
+    dateModified: GUIDES_LAST_UPDATED,
+    version: GUIDES_EXTENSION_VERSION,
+  }),
+  ...(faq.length ? [buildFAQPageSchema({ items: faq, language: locale })] : []),
+  buildBreadcrumbListSchema({
+    items: [
+      { name: SITE_NAME, path: buildLocalizedPath(locale, "/") },
+      { name: ui.navLabel, path: getGuidePath(locale) },
+      { name: page.title, path: seoPath },
+    ],
+  }),
+];
+---
+
+<SitePage
+  locale={locale}
+  forcedLocale={forcedLocale}
+  basePath={`/guides/${slug}/`}
+  seoPath={seoPath}
+  routeLanguageMap={buildGuideRouteLanguageMap(slug)}
+  alternateLocales={GUIDE_LOCALES}
+  title={page.pageTitle}
+  description={page.pageDescription}
+  keywords={buildKeywords(page.keywords, locale)}
+  type="article"
+  structuredData={structuredData}
+  analyticsScope="guide"
+  navHandoff=".guide__banner"
+>
+  <GuideShell locale={locale} current={slug} title={page.title} sections={sections}>
+    <Fragment set:html={bodyHtml} />
+
+    {faq.length > 0 && (
+      <>
+        <h2 id="faq">{ui.faqTitle}</h2>
+        {faq.map((item) => (
+          <section class="guide__faq">
+            <h3>{item.question}</h3>
+            <p>{item.answer}</p>
+          </section>
+        ))}
+      </>
+    )}
+
+    <nav slot="footer" class="guide__pager" aria-label={`${ui.previousLabel} / ${ui.nextLabel}`}>
+      {neighbours.map((item) => (
+        <a class={`guide__pager-link guide__pager-link--${item.kind}`} href={getGuidePath(locale, item.slug)}>
+          <span class="guide__pager-label">{item.label}</span>
+          <span class="guide__pager-title">{pages[item.slug].navTitle}</span>
+        </a>
+      ))}
+    </nav>
+  </GuideShell>
+</SitePage>

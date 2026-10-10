@@ -407,6 +407,45 @@ export function buildWebPageSchema({
   };
 }
 
+/** A how-to guide about Lumno, with its real screenshots as images. */
+export function buildTechArticleSchema({
+  headline,
+  description,
+  path,
+  language,
+  images,
+  dateModified,
+  version,
+}: {
+  headline: string;
+  description: string;
+  path: string;
+  language: string;
+  images: string[];
+  dateModified: string;
+  version: string;
+}) {
+  const url = buildAbsoluteUrl(path);
+  return {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "@id": `${url}#article`,
+    headline,
+    description,
+    url,
+    mainEntityOfPage: url,
+    inLanguage: language,
+    image: images.map((image) => buildAbsoluteUrl(image)),
+    dateModified,
+    proficiencyLevel: "Beginner",
+    dependencies: `Lumno ${version}`,
+    author: { "@id": ORGANIZATION_ID },
+    publisher: { "@id": ORGANIZATION_ID },
+    about: { "@id": APP_ID },
+    isPartOf: { "@id": WEBSITE_ID },
+  };
+}
+
 export function buildFAQPageSchema({
   items,
   language,

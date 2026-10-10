@@ -12,6 +12,8 @@ export default defineConfig({
     "/onboarding": "/",
     "/en/onboarding": "/en/",
     "/zh-tw/onboarding": "/zh-tw/",
+    // The help center has no index page; its sidebar starts at the first article.
+    "/guides": "/guides/what-is-lumno/",
     // The standalone features page was folded back into the homepage.
     "/features": "/",
     ...Object.fromEntries(

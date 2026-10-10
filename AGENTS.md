@@ -24,6 +24,7 @@ Last updated: 2026-10-08
   - `/` for product homepage and feature intro
   - `/release` for changelog/release notes
   - `/privacy` for the privacy policy
+  - `/guides/<slug>/` for the help center wiki (about Lumno, quick start, compatibility & trust); `/guides/` redirects to the first page
   - `/onboarding` is retired (the extension ships its own onboarding); it redirects to `/`
 
 ## Multilingual SEO Workflow
@@ -76,6 +77,7 @@ Last updated: 2026-10-08
 - Community QR dialogs open from static `[data-community-qr-trigger]` buttons; `src/scripts/community-qr.ts` lazy-loads the React dialog on first use.
 - `src/integrations/island-modulepreload.mjs` adds `modulepreload` links for every `client:load` island's import graph; prefer `client:idle` / `client:visible` for anything the first paint does not need.
 - Homepage intro: before hydration it paints the hero artwork from server HTML (a 32px inlined placeholder under the real image, sized by the inline script after the hero) while the demo's CSS animations stay paused until `data-intro-ready`. Don't gate the reveal on the window `load` event; fonts and the stable-frame check are enough.
+- Help center (`src/lib/guides.ts` holds the sidebar tree; page text in `src/content/guides/<locale>.ts`, bodies in `src/content/guides/*.md`) uses only real captures of the extension, taken by `scripts/guide-screenshots/` in each guide locale's UI language; a guide ships only in languages the extension itself speaks (zh-CN, zh-TW, en, ja), and hreflang lists only the languages that have it.
 - Fonts are subset by `scripts/subset-fonts.py`; rerun it after using a new Remix Icon class (`tests/font-assets.test.mjs` enforces this).
 
 ## SVG Rendering Notes (Safari)

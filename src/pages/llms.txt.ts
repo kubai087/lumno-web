@@ -2,6 +2,7 @@ import type { APIRoute } from "astro";
 import { LOCALE_CONFIG, buildLocalizedPath } from "../lib/locales";
 import { CHROME_STORE_URL, FIREFOX_STORE_URL, SITE_URL } from "../lib/seo";
 import { getSiteStoreVersions } from "../lib/site-links";
+import { GUIDE_LOCALES, GUIDE_SLUGS, getGuideContent, getGuidePath } from "../lib/guides";
 
 export const GET: APIRoute = async () => {
   // Firefox is named only once Firefox Add-ons lists Lumno.
@@ -12,6 +13,9 @@ export const GET: APIRoute = async () => {
   const localizedHomepages = LOCALE_CONFIG.filter((item) => item.segment)
     .map((item) => `${item.label} ${SITE_URL}${buildLocalizedPath(item.code, "/")}`)
     .join(", ");
+  const guideLines = GUIDE_LOCALES.flatMap((locale) =>
+    GUIDE_SLUGS.map((slug) => `- ${getGuideContent(locale).pages[slug].title} (${locale}): ${SITE_URL}${getGuidePath(locale, slug)}`),
+  ).join("\n");
   const body = `# Lumno
 
 Lumno is an open-source browser command bar and focus search extension for ${browsers}. It helps people run tab search, bookmark search, history search, site search, and minimalist new tab workflows from a lightweight command surface.
@@ -35,6 +39,12 @@ Lumno is an open-source browser command bar and focus search extension for ${bro
 - Privacy policy: ${SITE_URL}/privacy/ (English: ${SITE_URL}/en/privacy/)
 - Chrome Web Store: ${CHROME_STORE_URL}${firefoxStoreVersion ? `\n- Firefox Add-ons: ${FIREFOX_STORE_URL}` : ""}
 - GitHub: https://github.com/kubai087/lumno-extension
+
+## Help Center
+
+What Lumno is and isn't, step-by-step how-tos with real screenshots of the extension, and browser compatibility, privacy and security notes:
+
+${guideLines}
 
 ## Short Description
 

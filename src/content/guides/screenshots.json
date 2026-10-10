@@ -1,0 +1,70 @@
+{
+  "zh-CN/ai": [
+    1440,
+    486
+  ],
+  "zh-CN/modemenu": [
+    1440,
+    937
+  ],
+  "zh-CN/newtab": [
+    1440,
+    900
+  ],
+  "zh-CN/nt-appearance": [
+    1440,
+    900
+  ],
+  "zh-CN/nt-bookmarks-folder": [
+    1440,
+    264
+  ],
+  "zh-CN/nt-bookmarks-top": [
+    1440,
+    477
+  ],
+  "zh-CN/nt-clock": [
+    1440,
+    672
+  ],
+  "zh-CN/nt-recent": [
+    1440,
+    310
+  ],
+  "zh-CN/nt-shortcuts": [
+    1440,
+    630
+  ],
+  "zh-CN/nt-zen": [
+    1440,
+    900
+  ],
+  "zh-CN/onboarding": [
+    1440,
+    900
+  ],
+  "zh-CN/opentabs": [
+    1440,
+    740
+  ],
+  "zh-CN/pinyin": [
+    1440,
+    652
+  ],
+  "zh-CN/search": [
+    1440,
+    827
+  ],
+  "zh-CN/shortcuts": [
+    1440,
+    640
+  ],
+  "zh-CN/sitesearch": [
+    1440,
+    485
+  ],
+  "zh-CN/switcher": [
+    1440,
+    498
+  ]
+}

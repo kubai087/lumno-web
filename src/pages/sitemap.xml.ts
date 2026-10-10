@@ -1,6 +1,7 @@
 import type { APIRoute } from "astro";
 import { execFileSync } from "node:child_process";
 import { buildLocalizedPath, getNonDefaultLocales, stripLocaleSegment } from "../lib/locales";
+import { GUIDE_LOCALES, GUIDE_SLUGS, getGuidePath } from "../lib/guides";
 import { fetchReleases, isReleaseNoteLocale } from "../lib/releases";
 import { SITE_URL } from "../lib/seo";
 
@@ -45,6 +46,20 @@ export const GET: APIRoute = async () => {
     ],
     now,
   );
+  const guidesLastmod = readLastCommitIso(
+    ["src/content/guides/", "src/lib/guides.ts", "src/components/guides/", "public/assets/guides/"],
+    now,
+  );
+  // Guides exist only in the languages they are written in.
+  const guideUrls = GUIDE_LOCALES.flatMap((locale) =>
+    GUIDE_SLUGS.map((slug) => ({
+      locale,
+      loc: `${SITE_URL}${getGuidePath(locale, slug)}`,
+      lastmod: guidesLastmod,
+      changefreq: "monthly",
+      priority: "0.7",
+    })),
+  );
   const localizedHomeUrls = getNonDefaultLocales().map((locale) => ({
     locale,
     loc: `${SITE_URL}${buildLocalizedPath(locale, "/")}`,
@@ -87,6 +102,7 @@ export const GET: APIRoute = async () => {
       priority: "0.5",
     },
     ...localizedPrivacyUrls,
+    ...guideUrls,
   ];
 
   const alternateByPath = new Map<string, Array<{ hreflang: string; href: string }>>();

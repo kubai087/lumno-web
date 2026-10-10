@@ -29,6 +29,8 @@ interface Props {
   analyticsScope: string;
   /** Selector for the page's opening; the top bar turns to glass once it has scrolled away. */
   navHandoff: string;
+  /** Languages that have this page; hreflang lists only these. Defaults to every language. */
+  alternateLocales?: readonly SupportedLocale[];
 }
 
 const {
@@ -44,8 +46,14 @@ const {
   structuredData = [],
   analyticsScope,
   navHandoff,
+  alternateLocales,
 } = Astro.props;
-const alternateLinks = buildAlternateLinks(routeLanguageMap, basePath);
+const alternateLinks = buildAlternateLinks(
+  alternateLocales
+    ? Object.fromEntries(alternateLocales.map((code) => [code, routeLanguageMap[code]]))
+    : routeLanguageMap,
+  basePath,
+);
 ---
 
 <!doctype html>
@@ -56,7 +64,7 @@ const alternateLinks = buildAlternateLinks(routeLanguageMap, basePath);
     <LocaleNormalizer />
     {
       !forcedLocale && (
-        <script is:inline define:vars={{ routeLanguageMap }}>
+        <script is:inline define:vars={{ routeLanguageMap, redirectLocales: alternateLocales || null }}>
           (() => {
             // The default route stays stable for first-time visitors and crawlers; a saved
             // language choice moves the visitor to their localized route before anything paints.
@@ -71,7 +79,10 @@ const alternateLinks = buildAlternateLinks(routeLanguageMap, basePath);
 
             const browserLanguage = (Array.isArray(navigator.languages) && navigator.languages[0]) || navigator.language || "en";
             const mode = storedMode.toLowerCase() !== "system" ? storedMode : browserLanguage;
-            const targetPath = routeLanguageMap[window.__lumnoNormalizeLocale(mode, "en")];
+            const targetLocale = window.__lumnoNormalizeLocale(mode, "en");
+            // A page missing in the saved language stays put rather than leaving for that language's homepage.
+            if (redirectLocales && !redirectLocales.includes(targetLocale)) return;
+            const targetPath = routeLanguageMap[targetLocale];
             if (targetPath && window.location.pathname !== targetPath) {
               window.location.replace(`${targetPath}${window.location.search}${window.location.hash}`);
             }

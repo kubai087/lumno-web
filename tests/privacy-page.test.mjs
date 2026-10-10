@@ -19,7 +19,8 @@ test("privacy page is built on the shared site shell", () => {
   const source = readSource("src/pages/privacy/index.astro");
 
   assert.match(source, /import SitePage from "\.\.\/\.\.\/layouts\/SitePage\.astro"/);
-  assert.match(source, /<SitePage[\s\S]*?basePath="\/privacy\/"[\s\S]*?analyticsScope="privacy"\s*navHandoff="\.doc__head"/);
+  // Help-center languages hand off at the help center's banner; the rest at the document head.
+  assert.match(source, /<SitePage[\s\S]*?basePath="\/privacy\/"[\s\S]*?analyticsScope="privacy"\s*navHandoff=\{inHelpCenter \? "\.guide__banner" : "\.doc__head"\}/);
   assert.match(readSource("src/layouts/SitePage.astro"), /<SiteHeader\s+locale=\{locale\}/);
   assert.doesNotMatch(source, /OptionsFeedbackSupportLink/);
 });
@@ -62,7 +63,8 @@ test("site pages hand the top bar over like the homepage", () => {
 test("privacy document stays readable on narrow screens", () => {
   const source = readSource("src/pages/privacy/index.astro");
 
-  assert.match(source, /replaceAll\("<table>", '<div class="doc__table"><table>'\)/);
+  assert.match(source, /const tableFrame = inHelpCenter \? "guide-table" : "doc__table";/);
+  assert.match(source, /replaceAll\("<table>", `<div class="\$\{tableFrame\}"><table>`\)/);
   assert.match(source, /\.doc__table \{[\s\S]*?overflow-x: auto;/);
   assert.match(source, /\.doc__body ul \{[\s\S]*?list-style: disc;/);
   assert.match(source, /@media \(max-width: 900px\) \{[\s\S]*?\.doc \{[\s\S]*?grid-template-columns: minmax\(0, 1fr\);[\s\S]*?\.doc__toc \{[\s\S]*?position: static;/);

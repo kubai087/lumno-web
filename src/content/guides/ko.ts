@@ -95,10 +95,10 @@ const content: GuideLocaleContent = {
       ],
     },
     "keyboard-shortcuts": {
-      pageTitle: "Lumno 단축키: 기본 단축키, 변경 방법, 명령 바의 키 | Lumno 도움말",
+      pageTitle: "Lumno 단축키 총정리: 기본 단축키, 변경 방법, 모든 키 | Lumno 도움말",
       pageDescription:
-        "Lumno는 ⌘⇧K(Windows는 Ctrl+Shift+K)로 열고, 최근 탭 전환기는 ⌥Q로 엽니다. chrome://extensions/shortcuts에서 ⌘T 등 원하는 키로 변경할 수 있습니다. 명령 바와 전환기 안에서 쓰는 키도 정리했습니다.",
-      keywords: ["Lumno 단축키", "크롬 확장 단축키 변경", "chrome://extensions/shortcuts", "Cmd T 명령 바"],
+        "Lumno는 ⌘⇧K(Windows는 Ctrl+Shift+K)로 열고, 최근 탭 전환기는 ⌥Q(Alt+Q)로 엽니다. chrome://extensions/shortcuts에서 ⌘T 등 원하는 키로 변경할 수 있습니다. 명령 바, 새 탭, 전환기, 웹 클립에서 쓰는 모든 키와 백그라운드에서 열기 같은 클릭 동작도 정리했습니다.",
+      keywords: ["Lumno 단축키", "크롬 확장 단축키 변경", "chrome://extensions/shortcuts", "Cmd T 명령 바", "백그라운드 탭에서 열기"],
       title: "단축키",
       navTitle: "단축키",
       faq: [

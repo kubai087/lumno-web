@@ -95,10 +95,10 @@ const content: GuideLocaleContent = {
       ],
     },
     "keyboard-shortcuts": {
-      pageTitle: "Lumno-Tastenkürzel: Standards, ändern und Tasten in der Befehlsleiste | Lumno-Hilfe",
+      pageTitle: "Lumno-Tastenkürzel: Standards, ändern und alle Tasten | Lumno-Hilfe",
       pageDescription:
-        "Lumno öffnet sich mit ⌘⇧K (unter Windows Strg+Umschalt+K), der Tab-Umschalter mit ⌥Q. Ändern kannst du beides unter chrome://extensions/shortcuts, sogar auf ⌘T. Dazu alle Tasten in der Befehlsleiste und im Umschalter.",
-      keywords: ["Lumno Tastenkürzel", "Chrome-Erweiterung Tastenkürzel ändern", "chrome://extensions/shortcuts", "Cmd T Befehlsleiste"],
+        "Lumno öffnet sich mit ⌘⇧K (unter Windows Strg+Umschalt+K), der Tab-Umschalter mit ⌥Q (Alt+Q). Ändern kannst du beides unter chrome://extensions/shortcuts, sogar auf ⌘T. Dazu alle Tasten in Befehlsleiste, neuem Tab, Umschalter und Web-Clip sowie die passenden Klicks, etwa zum Öffnen im Hintergrund.",
+      keywords: ["Lumno Tastenkürzel", "Chrome-Erweiterung Tastenkürzel ändern", "chrome://extensions/shortcuts", "Cmd T Befehlsleiste", "im Hintergrund öffnen"],
       title: "Tastenkürzel",
       navTitle: "Tastenkürzel",
       faq: [

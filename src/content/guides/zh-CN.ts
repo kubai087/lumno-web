@@ -101,10 +101,10 @@ const content: GuideLocaleContent = {
       ],
     },
     "keyboard-shortcuts": {
-      pageTitle: "Lumno 快捷键：默认快捷键、修改方法和命令栏按键｜Lumno 帮助中心",
+      pageTitle: "Lumno 快捷键大全：默认快捷键、修改方法和全部按键｜Lumno 帮助中心",
       pageDescription:
-        "Lumno 默认用 ⌘⇧K（Windows 为 Ctrl+Shift+K）打开命令栏，⌥Q 打开最近标签页切换器。在 chrome://extensions/shortcuts 中可以修改，也可以改为 ⌘T。附命令栏和切换器内的全部按键。",
-      keywords: ["Lumno 快捷键", "修改 Chrome 扩展快捷键", "chrome://extensions/shortcuts", "⌘T 命令栏"],
+        "Lumno 默认用 ⌘⇧K（Windows 为 Ctrl+Shift+K）打开命令栏，⌥Q（Windows 为 Alt+Q）打开最近标签页切换器，可在 chrome://extensions/shortcuts 中修改，也可以改为 ⌘T。附命令栏、新标签页、切换器和网页剪裁中的全部按键，以及后台打开等对应的鼠标操作。",
+      keywords: ["Lumno 快捷键", "修改 Chrome 扩展快捷键", "chrome://extensions/shortcuts", "⌘T 命令栏", "后台打开标签页"],
       title: "快捷键",
       navTitle: "快捷键",
       faq: [

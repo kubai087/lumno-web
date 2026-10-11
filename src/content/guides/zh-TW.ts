@@ -95,10 +95,10 @@ const content: GuideLocaleContent = {
       ],
     },
     "keyboard-shortcuts": {
-      pageTitle: "Lumno 快速鍵：預設快速鍵、修改方式與命令列按鍵｜Lumno 說明中心",
+      pageTitle: "Lumno 快速鍵大全：預設快速鍵、修改方式與所有按鍵｜Lumno 說明中心",
       pageDescription:
-        "Lumno 預設用 ⌘⇧K（Windows 為 Ctrl+Shift+K）叫出命令列，用 ⌥Q 開啟最近分頁切換器。可以在 chrome://extensions/shortcuts 修改，也能改成 ⌘T。附命令列與切換器裡的所有按鍵。",
-      keywords: ["Lumno 快速鍵", "修改 Chrome 擴充功能快速鍵", "chrome://extensions/shortcuts", "⌘T 命令列"],
+        "Lumno 預設用 ⌘⇧K（Windows 為 Ctrl+Shift+K）叫出命令列，用 ⌥Q（Windows 為 Alt+Q）開啟最近分頁切換器，可以在 chrome://extensions/shortcuts 修改，也能改成 ⌘T。附命令列、新分頁、切換器和網頁剪裁中的所有按鍵，以及在背景開啟等對應的滑鼠操作。",
+      keywords: ["Lumno 快速鍵", "修改 Chrome 擴充功能快速鍵", "chrome://extensions/shortcuts", "⌘T 命令列", "在背景開啟分頁"],
       title: "快速鍵",
       navTitle: "快速鍵",
       faq: [

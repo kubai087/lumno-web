@@ -95,10 +95,10 @@ const content: GuideLocaleContent = {
       ],
     },
     "keyboard-shortcuts": {
-      pageTitle: "Raccourcis clavier de Lumno : par défaut, les modifier, touches de la barre | Aide Lumno",
+      pageTitle: "Raccourcis clavier de Lumno : par défaut, les modifier et toutes les touches | Aide Lumno",
       pageDescription:
-        "Lumno s'ouvre avec ⌘⇧K (Ctrl+Maj+K sous Windows) et son sélecteur d'onglets récents avec ⌥Q. Modifiez-les dans chrome://extensions/shortcuts, même en ⌘T. Avec toutes les touches de la barre de commande et du sélecteur.",
-      keywords: ["raccourcis Lumno", "modifier raccourci extension Chrome", "chrome://extensions/shortcuts", "Cmd T barre de commande"],
+        "Lumno s'ouvre avec ⌘⇧K (Ctrl+Maj+K sous Windows) et son sélecteur d'onglets récents avec ⌥Q (Alt+Q). Modifiez-les dans chrome://extensions/shortcuts, même en ⌘T. Avec toutes les touches de la barre de commande, du nouvel onglet, du sélecteur et de la capture web, et les clics équivalents, comme l'ouverture en arrière-plan.",
+      keywords: ["raccourcis Lumno", "modifier raccourci extension Chrome", "chrome://extensions/shortcuts", "Cmd T barre de commande", "ouvrir en arrière-plan"],
       title: "Raccourcis clavier",
       navTitle: "Raccourcis clavier",
       faq: [

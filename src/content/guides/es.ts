@@ -95,10 +95,10 @@ const content: GuideLocaleContent = {
       ],
     },
     "keyboard-shortcuts": {
-      pageTitle: "Atajos de teclado de Lumno: predeterminados, cómo cambiarlos y teclas de la barra | Ayuda de Lumno",
+      pageTitle: "Atajos de teclado de Lumno: predeterminados, cómo cambiarlos y todas las teclas | Ayuda de Lumno",
       pageDescription:
-        "Lumno se abre con ⌘⇧K (Ctrl+Mayús+K en Windows) y su selector de pestañas recientes con ⌥Q. Cámbialos en chrome://extensions/shortcuts, incluso a ⌘T. Además, todas las teclas de la barra de comandos y del selector.",
-      keywords: ["atajos de Lumno", "cambiar atajo de extensión Chrome", "chrome://extensions/shortcuts", "Cmd T barra de comandos"],
+        "Lumno se abre con ⌘⇧K (Ctrl+Mayús+K en Windows) y su selector de pestañas recientes con ⌥Q (Alt+Q). Cámbialos en chrome://extensions/shortcuts, incluso a ⌘T. Además, todas las teclas de la barra de comandos, la nueva pestaña, el selector y el recorte web, y los clics equivalentes, como abrir en segundo plano.",
+      keywords: ["atajos de Lumno", "cambiar atajo de extensión Chrome", "chrome://extensions/shortcuts", "Cmd T barra de comandos", "abrir en segundo plano"],
       title: "Atajos de teclado",
       navTitle: "Atajos de teclado",
       faq: [

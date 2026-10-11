@@ -95,10 +95,10 @@ const content: GuideLocaleContent = {
       ],
     },
     "keyboard-shortcuts": {
-      pageTitle: "Lumno のキーボードショートカット：初期設定・変更方法・コマンドバーのキー｜Lumno ヘルプ",
+      pageTitle: "Lumno のキーボードショートカット一覧：初期設定・変更方法・すべてのキー｜Lumno ヘルプ",
       pageDescription:
-        "Lumno は ⌘⇧K（Windows では Ctrl+Shift+K）でコマンドバーを、⌥Q で最近のタブ切り替えを開きます。chrome://extensions/shortcuts で変更でき、⌘T にもできます。コマンドバーと切り替え画面のキーもまとめました。",
-      keywords: ["Lumno ショートカット", "Chrome 拡張機能 ショートカット 変更", "chrome://extensions/shortcuts", "⌘T コマンドバー"],
+        "Lumno は ⌘⇧K（Windows では Ctrl+Shift+K）でコマンドバーを、⌥Q（Alt+Q）で最近のタブ切り替えを開きます。chrome://extensions/shortcuts で変更でき、⌘T にもできます。コマンドバー、新しいタブ、切り替え画面、Webクリップのキーと、バックグラウンドで開くなどのクリック操作もまとめました。",
+      keywords: ["Lumno ショートカット", "Chrome 拡張機能 ショートカット 変更", "chrome://extensions/shortcuts", "⌘T コマンドバー", "バックグラウンドで開く"],
       title: "キーボードショートカット",
       navTitle: "ショートカット",
       faq: [

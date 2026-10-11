@@ -95,10 +95,10 @@ const content: GuideLocaleContent = {
       ],
     },
     "keyboard-shortcuts": {
-      pageTitle: "Lumno keyboard shortcuts: defaults, changing them, and keys in the command bar | Lumno Help",
+      pageTitle: "Lumno keyboard shortcuts: defaults, how to change them, and every key | Lumno Help",
       pageDescription:
-        "Lumno opens with ⌘⇧K (Ctrl+Shift+K on Windows) and its recent tab switcher with ⌥Q. Change them in chrome://extensions/shortcuts, even to ⌘T. Plus every key inside the command bar and switcher.",
-      keywords: ["Lumno shortcuts", "change Chrome extension shortcut", "chrome://extensions/shortcuts", "Cmd T command bar"],
+        "Lumno opens with ⌘⇧K (Ctrl+Shift+K on Windows) and its recent tab switcher with ⌥Q (Alt+Q). Change them in chrome://extensions/shortcuts, even to ⌘T. Plus every key in the command bar, new tab, switcher and web clip, and the clicks that do the same, like opening in the background.",
+      keywords: ["Lumno shortcuts", "change Chrome extension shortcut", "chrome://extensions/shortcuts", "Cmd T command bar", "open in background tab"],
       title: "Keyboard shortcuts",
       navTitle: "Keyboard shortcuts",
       faq: [

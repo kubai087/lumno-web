@@ -23,6 +23,8 @@ A fileira de ícones abaixo da caixa de pesquisa mostra seus atalhos. Quando voc
 
 Quando os atalhos se acumularem, agrupe-os em pastas, como os apps na tela inicial do celular. Arraste um atalho até o centro de outro e solte quando aparecer "Release to create a folder in the bookmarks bar". Se soltar na borda de um ícone, você só muda a ordem.
 
+![O terceiro atalho abaixo da caixa de pesquisa é uma pasta; aberta, ela mostra Claude, ChatGPT, Gemini e Perplexity da pasta "AI"](nt-shortcut-folder "Uma pasta de atalhos aberta")
+
 - A nova pasta é salva no fim da barra de favoritos do navegador e fica no lugar do atalho sobre o qual você soltou. Pressione `⌘ Z` para desfazer.
 - Arraste um atalho até uma pasta para colocá-lo nela. Você também pode arrastar uma pasta da área de favoritos para os atalhos.
 - Clique em uma pasta para ver os sites dela e clique de novo para fechá-la.

@@ -39,6 +39,10 @@
     1440,
     310
   ],
+  "en/nt-shortcut-folder": [
+    1440,
+    768
+  ],
   "en/nt-shortcuts": [
     1440,
     630
@@ -127,6 +131,10 @@
     1440,
     310
   ],
+  "ja/nt-shortcut-folder": [
+    1440,
+    768
+  ],
   "ja/nt-shortcuts": [
     1440,
     630
@@ -214,6 +222,10 @@
   "zh-CN/nt-recent": [
     1440,
     310
+  ],
+  "zh-CN/nt-shortcut-folder": [
+    1440,
+    768
   ],
   "zh-CN/nt-shortcuts": [
     1440,
@@ -306,6 +318,10 @@
   "zh-TW/nt-recent": [
     1440,
     310
+  ],
+  "zh-TW/nt-shortcut-folder": [
+    1440,
+    768
   ],
   "zh-TW/nt-shortcuts": [
     1440,

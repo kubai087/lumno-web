@@ -442,6 +442,50 @@ const scenes = {
     await shot("nt-shortcuts", page, await boxOf(page, ["#_x_extension_newtab_wordmark_2026_unique_", "#_x_extension_newtab_root_2024_unique_", "#_x_extension_newtab_shortcuts_2026_unique_"]));
     await page.close();
   },
+  // A shortcut folder, opened: the AI shortcuts stacked into one bookmarks-bar folder, as dropping
+  // one shortcut on another makes them. The folder and the shortcut list are put back afterwards.
+  async "nt-shortcut-folder"() {
+    const folder = cfg.shortcutFolder;
+    if (!folder) return;
+    const folderId = await sw.evaluate(async ({ title, children }) => {
+      const [bar] = (await chrome.bookmarks.getTree())[0].children;
+      const node = await chrome.bookmarks.create({ parentId: bar.id, title });
+      for (const child of children) await chrome.bookmarks.create({ parentId: node.id, ...child });
+      return node.id;
+    }, folder);
+    const stacked = new Set(folder.children.map((child) => child.url));
+    const shortcuts = cfg.shortcuts || [];
+    const at = shortcuts.findIndex((item) => stacked.has(item.url));
+    const items = shortcuts.filter((item) => !stacked.has(item.url));
+    items.splice(Math.max(0, at), 0, { type: "folder", folderId, title: folder.title });
+    const save = (page, list) => page.evaluate(async (list) => {
+      await globalThis.LumnoNewtabShortcutsStore.saveShortcuts(chrome.storage.sync, list, {
+        key: "_x_extension_newtab_shortcuts_2026_unique_",
+        maxShortcuts: 60,
+      });
+    }, list);
+    // The bookmarks under the shortcuts would show half-covered behind the menu; hide them for this shot.
+    const BOOKMARK_COUNT_KEY = "_x_extension_bookmark_count_2024_unique_";
+    const bookmarkCount = await sw.evaluate(async (key) => (await chrome.storage.sync.get(key))[key], BOOKMARK_COUNT_KEY);
+    await setPrefs({ [BOOKMARK_COUNT_KEY]: 0 });
+    const setup = await openNewtab();
+    await save(setup, items);
+    await setup.close();
+    const page = await openNewtab();
+    const tile = page.locator(".x-nt-shortcut-tile").nth(Math.max(0, at));
+    await tile.click();
+    await sleep(1200);
+    // Folder sites' icons load after the menu opens.
+    await page.waitForFunction(() => [...document.images].every((img) => img.complete), null, { timeout: 8000 }).catch(() => {});
+    // The site cards then rise to just under the menu; hiding them (not their space) keeps the usual layout.
+    await page.addStyleTag({ content: "#_x_extension_newtab_bottom_dock_scroller_2024_unique_ > section:not(#_x_extension_newtab_bookmarks_2024_unique_) { visibility: hidden !important; }" });
+    await shot("nt-shortcut-folder", page, await boxOf(page, ["#_x_extension_newtab_root_2024_unique_", "#_x_extension_newtab_shortcuts_2026_unique_", ".x-nt-bookmark-cascade-level"]));
+    await page.keyboard.press("Escape");
+    await save(page, shortcuts);
+    await page.close();
+    await sw.evaluate((id) => chrome.bookmarks.removeTree(id), folderId);
+    await setPrefs({ [BOOKMARK_COUNT_KEY]: bookmarkCount ?? 8 });
+  },
   async "nt-recent"() {
     const page = await openNewtab();
     await shot("nt-recent", page, await boxOf(page, ["#_x_extension_newtab_bottom_dock_scroller_2024_unique_ > section:not(#_x_extension_newtab_bookmarks_2024_unique_)"]));

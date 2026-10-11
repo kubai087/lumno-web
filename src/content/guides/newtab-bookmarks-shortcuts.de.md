@@ -23,6 +23,8 @@ Die Symbolreihe unter dem Suchfeld zeigt deine Shortcuts. Wenn du mit dem Mausze
 
 Wenn sich deine Shortcuts häufen, stapelst du sie wie Apps auf dem Homescreen deines Smartphones in Ordnern. Ziehe einen Shortcut auf die Mitte eines anderen und lass los, sobald „Release to create a folder in the bookmarks bar“ erscheint. Lässt du ihn am Rand eines Symbols los, änderst du nur die Reihenfolge.
 
+![Der dritte Shortcut unter dem Suchfeld ist ein Ordner; geöffnet zeigt er Claude, ChatGPT, Gemini und Perplexity aus dem Ordner „AI“](nt-shortcut-folder "Ein geöffneter Shortcut-Ordner")
+
 - Der neue Ordner wird am Ende der Lesezeichenleiste deines Browsers gespeichert und erscheint dort, wo der Ziel-Shortcut war. Mit `⌘ Z` machst du das rückgängig.
 - Ziehe einen Shortcut auf einen Ordner, um ihn darin abzulegen. Auch Ordner aus dem Lesezeichenbereich kannst du direkt zu den Shortcuts ziehen.
 - Klicke auf einen Ordner, um seine Websites anzuzeigen, und klicke erneut, um ihn zu schließen.

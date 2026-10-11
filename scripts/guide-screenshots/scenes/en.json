@@ -227,5 +227,26 @@
         "url": "https://wanderinginn.com/2025/01/05/9-70/"
       }
     ]
+  },
+  "shortcutFolder": {
+    "title": "AI",
+    "children": [
+      {
+        "title": "Claude",
+        "url": "https://claude.ai/"
+      },
+      {
+        "title": "ChatGPT",
+        "url": "https://chatgpt.com/"
+      },
+      {
+        "title": "Gemini",
+        "url": "https://gemini.google.com/"
+      },
+      {
+        "title": "Perplexity",
+        "url": "https://www.perplexity.ai/"
+      }
+    ]
   }
 }

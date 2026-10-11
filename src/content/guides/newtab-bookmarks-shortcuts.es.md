@@ -23,6 +23,8 @@ La fila de iconos situada bajo el cuadro de búsqueda muestra tus accesos direct
 
 Cuando tengas muchos accesos directos, agrúpalos en carpetas, como las apps en la pantalla de inicio de un móvil. Arrastra un acceso directo al centro de otro y suéltalo cuando aparezca "Release to create a folder in the bookmarks bar". Si lo sueltas en un borde del icono, solo cambias el orden.
 
+![El tercer acceso directo bajo el cuadro de búsqueda es una carpeta; al abrirla muestra Claude, ChatGPT, Gemini y Perplexity de la carpeta "AI"](nt-shortcut-folder "Una carpeta de accesos directos abierta")
+
 - La carpeta nueva se guarda al final de la barra de marcadores del navegador y ocupa el lugar del acceso directo sobre el que lo soltaste. Pulsa `⌘ Z` para deshacerlo.
 - Arrastra un acceso directo sobre una carpeta para meterlo en ella. También puedes arrastrar una carpeta de la zona de marcadores a tus accesos directos.
 - Haz clic en una carpeta para ver sus sitios y vuelve a hacer clic para cerrarla.

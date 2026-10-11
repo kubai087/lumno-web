@@ -227,5 +227,26 @@
         "url": "https://ncode.syosetu.com/n6316bn/120/"
       }
     ]
+  },
+  "shortcutFolder": {
+    "title": "AI",
+    "children": [
+      {
+        "title": "Claude",
+        "url": "https://claude.ai/"
+      },
+      {
+        "title": "ChatGPT",
+        "url": "https://chatgpt.com/"
+      },
+      {
+        "title": "Gemini",
+        "url": "https://gemini.google.com/"
+      },
+      {
+        "title": "Perplexity",
+        "url": "https://www.perplexity.ai/"
+      }
+    ]
   }
 }

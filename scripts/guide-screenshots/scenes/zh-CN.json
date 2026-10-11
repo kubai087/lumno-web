@@ -238,5 +238,26 @@
     "hitokoto": "海内存知己，天涯若比邻。",
     "from": "送杜少府之任蜀州",
     "from_who": "王勃"
+  },
+  "shortcutFolder": {
+    "title": "AI 助手",
+    "children": [
+      {
+        "title": "Claude",
+        "url": "https://claude.ai/"
+      },
+      {
+        "title": "ChatGPT",
+        "url": "https://chatgpt.com/"
+      },
+      {
+        "title": "DeepSeek",
+        "url": "https://chat.deepseek.com/"
+      },
+      {
+        "title": "Kimi",
+        "url": "https://www.kimi.com/"
+      }
+    ]
   }
 }

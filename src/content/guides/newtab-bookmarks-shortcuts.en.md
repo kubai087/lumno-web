@@ -23,6 +23,8 @@ The row of icons under the search box shows your shortcuts. When you hover over 
 
 When your shortcuts pile up, stack them into folders, like apps on a phone's home screen. Drag one shortcut onto the middle of another, wait for "Release to create a folder in the bookmarks bar", then let go. Dropping it on either side of an icon just reorders.
 
+![The third shortcut under the search box is a folder; opened, it lists Claude, ChatGPT, Gemini and Perplexity from the "AI" folder](nt-shortcut-folder "An open shortcut folder")
+
 - The new folder is saved at the end of your browser's bookmarks bar and takes the place of the shortcut you dropped onto. Press `⌘ Z` to undo.
 - Drag a shortcut onto a folder to put it inside. You can also drag a folder from the bookmarks area into your shortcuts.
 - Click a folder to show its sites, and click it again to close it.

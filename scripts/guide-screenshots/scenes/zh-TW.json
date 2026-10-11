@@ -232,5 +232,26 @@
     "hitokoto": "海內存知己，天涯若比鄰。",
     "from": "送杜少府之任蜀州",
     "from_who": "王勃"
+  },
+  "shortcutFolder": {
+    "title": "AI 助理",
+    "children": [
+      {
+        "title": "Claude",
+        "url": "https://claude.ai/"
+      },
+      {
+        "title": "ChatGPT",
+        "url": "https://chatgpt.com/"
+      },
+      {
+        "title": "Gemini",
+        "url": "https://gemini.google.com/"
+      },
+      {
+        "title": "Perplexity",
+        "url": "https://www.perplexity.ai/"
+      }
+    ]
   }
 }

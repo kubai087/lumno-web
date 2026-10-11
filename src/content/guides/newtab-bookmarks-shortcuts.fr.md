@@ -23,6 +23,8 @@ La rangée d'icônes sous le champ de recherche correspond à vos raccourcis. Lo
 
 Quand vos raccourcis s'accumulent, regroupez-les en dossiers, comme les apps sur l'écran d'accueil d'un téléphone. Faites glisser un raccourci au centre d'un autre, puis relâchez quand « Release to create a folder in the bookmarks bar » s'affiche. Si vous le déposez sur un bord de l'icône, vous changez seulement l'ordre.
 
+![Le troisième raccourci sous le champ de recherche est un dossier ; ouvert, il affiche Claude, ChatGPT, Gemini et Perplexity du dossier « AI »](nt-shortcut-folder "Un dossier de raccourcis ouvert")
+
 - Le nouveau dossier est enregistré à la fin de la barre de favoris du navigateur et prend la place du raccourci sur lequel vous l'avez déposé. Appuyez sur `⌘ Z` pour annuler.
 - Faites glisser un raccourci sur un dossier pour l'y ranger. Vous pouvez aussi faire glisser un dossier de la zone des favoris vers vos raccourcis.
 - Cliquez sur un dossier pour afficher ses sites, puis cliquez à nouveau pour le fermer.

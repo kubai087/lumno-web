@@ -15,5 +15,6 @@ These requests go directly from the extension to the service involved, never thr
 | Site icons | Google's favicon service or Favicon.is | When site icons are shown |
 | Wallpapers | Bing, Lorem Picsum, the Cleveland Museum of Art | When you use online wallpapers |
 | Update notes | GitHub | After the extension updates |
+| Help Center search | The Lumno website (GitHub Pages) | When you search the Lumno Help Center; only the index is downloaded, not what you type |
 
 This summary is for convenience; the full policy below governs.

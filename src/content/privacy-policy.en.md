@@ -89,6 +89,7 @@ Wallpaper and quote downloads carry no cookies or referrer. Preview thumbnails i
 - **Update notices:** after an update, the extension requests that version's release title from GitHub (`api.github.com`, or `github.com` as a fallback) to show an update notice. You can turn off "Update Prompts" in settings.
 - **Changelog page:** after an update, the extension may open the website's changelog. Its URL includes the entry source, the update reason, and the extension version, and Section 6 applies to that page.
 - **Feedback links:** when you open a feedback or community link, the extension fetches the community link configuration (`community-links.json`) and the community QR code image from the website.
+- **Help Center search:** when you type in the “Lumno Help Center” site search, the extension downloads the help center’s search index for your interface language (`search-index.json`) from the website, matches it on your device and caches it for up to 10 minutes. What you type is not sent to the website.
 
 The website is hosted on GitHub Pages, and GitHub, as the host, may log requests including IP addresses.
 

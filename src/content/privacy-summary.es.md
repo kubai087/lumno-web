@@ -15,5 +15,6 @@ Las siguientes solicitudes se envían directamente desde la extensión al servic
 | Iconos de sitios | El servicio de favicons de Google o Favicon.is | Al mostrar iconos de sitios |
 | Fondos | Bing, Lorem Picsum, Cleveland Museum of Art | Al usar fondos en línea |
 | Notas de actualización | GitHub | Después de que se actualice la extensión |
+| Búsqueda en el centro de ayuda | Sitio web de Lumno (GitHub Pages) | Al buscar en «Lumno Help Center»; solo se descarga el índice, no lo que escribes |
 
 Este resumen es solo orientativo; prevalece la política completa que aparece a continuación.

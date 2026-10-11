@@ -89,6 +89,7 @@ Downloads von Hintergründen und Zitaten enthalten weder Cookies noch Referrer. 
 - **Update-Hinweise:** Nach einem Update fragt die Erweiterung den Titel dieser Version bei GitHub ab (`api.github.com`, ersatzweise `github.com`), um einen Update-Hinweis anzuzeigen. Du kannst „Update Prompts“ in den Einstellungen deaktivieren.
 - **Versionshinweise-Seite:** Nach einem Update kann die Erweiterung die Versionshinweise auf der Website öffnen. Die URL enthält Einstiegsquelle, Update-Grund und Erweiterungsversion; für diese Seite gilt Abschnitt 6.
 - **Feedback-Links:** Wenn du einen Feedback- oder Community-Link öffnest, lädt die Erweiterung die Konfiguration der Community-Links (`community-links.json`) und das QR-Code-Bild der Community von der Website.
+- **Suche im Hilfe-Center:** Wenn du in der Seitensuche „Lumno Help Center“ tippst, lädt die Erweiterung den Suchindex des Hilfe-Centers in deiner Oberflächensprache (`search-index.json`) von der Website, gleicht ihn auf deinem Gerät ab und speichert ihn bis zu 10 Minuten zwischen. Was du eingibst, wird nicht an die Website gesendet.
 
 Die Website wird auf GitHub Pages gehostet; GitHub kann als Hoster Anfragen einschließlich IP-Adressen protokollieren.
 

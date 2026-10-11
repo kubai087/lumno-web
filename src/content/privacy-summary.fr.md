@@ -15,5 +15,6 @@ Les requêtes suivantes sont envoyées directement par l'extension au service co
 | Icônes de sites | Le service de favicons de Google ou Favicon.is | Lors de l'affichage des icônes de sites |
 | Fonds d'écran | Bing, Lorem Picsum, Cleveland Museum of Art | Lorsque vous utilisez des fonds d'écran en ligne |
 | Notes de mise à jour | GitHub | Après une mise à jour de l'extension |
+| Recherche dans le centre d'aide | Site de Lumno (GitHub Pages) | Lorsque vous cherchez dans « Lumno Help Center » ; seul l'index est téléchargé, pas ce que vous tapez |
 
 Ce résumé est fourni à titre indicatif ; seule la politique complète ci-dessous fait foi.

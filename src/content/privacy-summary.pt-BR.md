@@ -15,5 +15,6 @@ As solicitações a seguir são enviadas diretamente da extensão para o serviç
 | Ícones de sites | O serviço de favicons do Google ou o Favicon.is | Ao exibir ícones de sites |
 | Papéis de parede | Bing, Lorem Picsum, Cleveland Museum of Art | Ao usar papéis de parede on-line |
 | Notas de atualização | GitHub | Depois que a extensão é atualizada |
+| Busca na central de ajuda | Site da Lumno (GitHub Pages) | Ao buscar no “Lumno Help Center”; só o índice é baixado, não o que você digita |
 
 Este resumo é apenas informativo; prevalece a política completa abaixo.

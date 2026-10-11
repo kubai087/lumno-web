@@ -89,6 +89,7 @@ Os downloads de papéis de parede e citações não levam cookies nem referencia
 - **Avisos de atualização:** após uma atualização, a extensão pede ao GitHub (`api.github.com`, ou `github.com` como alternativa) o título dessa versão para mostrar um aviso. Você pode desativar “Update Prompts” nas configurações.
 - **Página de novidades:** após uma atualização, a extensão pode abrir as notas de versão do site. A URL inclui a origem do acesso, o motivo da atualização e a versão da extensão, e a Seção 6 se aplica a essa página.
 - **Links de feedback:** quando você abre um link de feedback ou da comunidade, a extensão busca no site a configuração de links da comunidade (`community-links.json`) e a imagem do QR code da comunidade.
+- **Busca na central de ajuda:** quando você digita na busca de site “Lumno Help Center”, a extensão baixa do site o índice de busca da central de ajuda no idioma da sua interface (`search-index.json`), encontra os resultados no seu dispositivo e o mantém em cache por até 10 minutos. O que você digita não é enviado ao site.
 
 O site é hospedado no GitHub Pages, e o GitHub, como hospedeiro, pode registrar as solicitações, inclusive endereços IP.
 

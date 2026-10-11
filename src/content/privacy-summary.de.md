@@ -15,5 +15,6 @@ Die folgenden Anfragen gehen direkt von der Erweiterung an den jeweiligen Dienst
 | Website-Symbole | Googles Favicon-Dienst oder Favicon.is | Beim Anzeigen von Website-Symbolen |
 | Hintergründe | Bing, Lorem Picsum, Cleveland Museum of Art | Wenn du Online-Hintergründe verwendest |
 | Update-Hinweise | GitHub | Nach einem Update der Erweiterung |
+| Suche im Hilfe-Center | Lumno-Website (GitHub Pages) | Wenn du im „Lumno Help Center“ suchst; nur der Index wird geladen, nicht deine Eingabe |
 
 Diese Zusammenfassung dient nur der Übersicht; maßgeblich ist die vollständige Erklärung unten.

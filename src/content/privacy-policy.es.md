@@ -89,6 +89,7 @@ Las descargas de fondos y citas no llevan cookies ni referente. Las miniaturas d
 - **Avisos de actualización:** tras una actualización, la extensión solicita a GitHub (`api.github.com`, o `github.com` como alternativa) el título de esa versión para mostrar un aviso. Puedes desactivar «Update Prompts» en los ajustes.
 - **Página de novedades:** tras una actualización, la extensión puede abrir las notas de la versión del sitio web. Su URL incluye el origen de la visita, el motivo de la actualización y la versión de la extensión, y a esa página se le aplica la sección 6.
 - **Enlaces de comentarios:** cuando abres un enlace de comentarios o de la comunidad, la extensión obtiene del sitio web la configuración de enlaces de la comunidad (`community-links.json`) y la imagen del código QR de la comunidad.
+- **Búsqueda en el centro de ayuda:** cuando escribes en la búsqueda de sitio «Lumno Help Center», la extensión descarga del sitio web el índice de búsqueda del centro de ayuda en el idioma de tu interfaz (`search-index.json`), busca las coincidencias en tu dispositivo y lo guarda en caché hasta 10 minutos. Lo que escribes no se envía al sitio web.
 
 El sitio web está alojado en GitHub Pages, y GitHub, como proveedor de alojamiento, puede registrar las solicitudes, incluidas las direcciones IP.
 

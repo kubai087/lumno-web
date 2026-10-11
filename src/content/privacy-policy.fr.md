@@ -89,6 +89,7 @@ Les téléchargements de fonds d’écran et de citations ne transportent ni coo
 - **Avis de mise à jour&nbsp;:** après une mise à jour, l’extension demande à GitHub (`api.github.com`, ou `github.com` en secours) le titre de cette version pour afficher un avis de mise à jour. Vous pouvez désactiver «&nbsp;Update Prompts&nbsp;» dans les réglages.
 - **Page des notes de version&nbsp;:** après une mise à jour, l’extension peut ouvrir les notes de version du site. Son URL contient la source d’accès, le motif de la mise à jour et la version de l’extension, et la section&nbsp;6 s’applique à cette page.
 - **Liens de retour&nbsp;:** lorsque vous ouvrez un lien de retour ou de communauté, l’extension récupère sur le site la configuration des liens communautaires (`community-links.json`) et l’image du QR code de la communauté.
+- **Recherche dans le centre d’aide&nbsp;:** lorsque vous tapez dans la recherche de site «&nbsp;Lumno Help Center&nbsp;», l’extension télécharge sur le site l’index de recherche du centre d’aide dans la langue de votre interface (`search-index.json`), le consulte sur votre appareil et le garde en cache jusqu’à 10&nbsp;minutes. Ce que vous tapez n’est pas envoyé au site.
 
 Le site est hébergé sur GitHub Pages, et GitHub, en tant qu’hébergeur, peut journaliser les requêtes, adresses IP comprises.
 

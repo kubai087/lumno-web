@@ -4,6 +4,8 @@ Lumno is a free, open-source browser extension with two main parts. Press a shor
 
 Press `⌘ ⇧ K` (`Ctrl + Shift + K` on Windows) on any page, and the command bar opens in the middle of the screen.
 
+For the Arc or Zen feel, bind the command bar to `⌘ T`. See [Change a shortcut](../keyboard-shortcuts/#change).
+
 - Type a few letters to find an open tab, a bookmark or a page from your history, then press Return to go straight to it. See [Search tabs, bookmarks and history](../search-tabs-bookmarks-history/).
 - Search GitHub, YouTube or Stack Overflow without opening their home page first: type the site's shortcut, press `Tab`, then type your search. Asking ChatGPT or Gemini works the same way. See [Site search and asking AI](../site-search/).
 - Type a URL, or a browser page such as `chrome://settings`, to open it directly.

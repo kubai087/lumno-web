@@ -4,6 +4,8 @@ Lumno est une extension de navigateur gratuite et open source qui offre deux fon
 
 Appuyez sur `⌘ ⇧ K` (`Ctrl + Maj + K` sous Windows) depuis n'importe quelle page : la barre de commande s'ouvre au centre de l'écran.
 
+Pour retrouver l'expérience d'Arc ou de Zen, attribuez `⌘ T` à la barre de commande. Voir [Modifier un raccourci](../keyboard-shortcuts/#change).
+
 - Saisissez quelques lettres pour retrouver un onglet ouvert, un favori ou une page de votre historique, puis appuyez sur Entrée pour y accéder directement. Pour en savoir plus, consultez [Chercher dans les onglets, les favoris et l'historique](../search-tabs-bookmarks-history/).
 - Vous pouvez effectuer une recherche sur GitHub, YouTube ou Stack Overflow sans passer par leur page d'accueil : saisissez le raccourci du site, appuyez sur `Tab`, puis saisissez votre recherche. Les questions à ChatGPT ou à Gemini fonctionnent de la même façon. Pour en savoir plus, consultez [Recherche sur site et questions à l'IA](../site-search/).
 - Saisissez une URL ou une page du navigateur, comme `chrome://settings`, pour l'ouvrir directement.

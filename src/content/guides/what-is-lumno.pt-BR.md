@@ -4,6 +4,8 @@ O Lumno é uma extensão de navegador gratuita e de código aberto com duas fun�
 
 Pressione `⌘ ⇧ K` (`Ctrl + Shift + K` no Windows) em qualquer página para abrir a barra de comandos no centro da tela.
 
+Para ter a experiência do Arc ou do Zen, atribua `⌘ T` à barra de comandos. Veja [Alterar um atalho](../keyboard-shortcuts/#change).
+
 - Digite algumas letras para encontrar uma guia aberta, um favorito ou uma página do histórico e pressione Enter para acessá-la diretamente. Para saber mais, consulte [Pesquisar guias, favoritos e histórico](../search-tabs-bookmarks-history/).
 - Você pode pesquisar no GitHub, no YouTube ou no Stack Overflow sem abrir a página inicial desses sites: digite o atalho do site, pressione `Tab` e digite sua pesquisa. Perguntas ao ChatGPT ou ao Gemini funcionam da mesma forma. Para saber mais, consulte [Pesquisa em sites e perguntas à IA](../site-search/).
 - Digite uma URL ou uma página do navegador, como `chrome://settings`, para abri-la diretamente.

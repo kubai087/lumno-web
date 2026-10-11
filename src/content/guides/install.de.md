@@ -4,7 +4,7 @@ Lumno ist kostenlos, erfordert keine Registrierung und ist direkt nach der Insta
 
 | Browser | Installieren über |
 | --- | --- |
-| Chrome, Dia, Brave, Arc, Vivaldi, Opera | [Chrome Web Store](https://chromewebstore.google.com/detail/nggfkkbmogmadfoikakkfegkoilfcfao) |
+| Chrome, Dia, Brave, [Arc](https://arc.net/), Vivaldi, Opera | [Chrome Web Store](https://chromewebstore.google.com/detail/nggfkkbmogmadfoikakkfegkoilfcfao) |
 | Microsoft Edge | [Microsoft Edge-Add-ons](https://microsoftedge.microsoft.com/addons/detail/pfbklkaefmfamjpibfiapaiihlddhchc) |
 
 Öffne die Store-Seite, klicke auf „Hinzufügen“ bzw. „Abrufen“ und bestätige im angezeigten Dialogfenster. In Edge kannst du Lumno auch aus dem Chrome Web Store installieren.

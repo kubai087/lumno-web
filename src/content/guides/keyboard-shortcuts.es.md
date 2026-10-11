@@ -21,7 +21,7 @@ Los navegadores gestionan los atajos de las extensiones en una página específi
 
 ![La página de atajos de extensiones del navegador, con "Open command bar" de Lumno en ⇧⌘K y "Open recent tab switcher" en ⌥Q](shortcuts "Cambiar atajos en la página de extensiones")
 
-Si estás acostumbrado a Arc, puedes asignar `⌘ T` a "Open command bar".
+Si estás acostumbrado a [Arc](https://arc.net/) o [Zen](https://zen-browser.app/), puedes asignar `⌘ T` a "Open command bar".
 
 Si el atajo no funciona en Dia, cambia el ámbito que aparece junto a él de "In Dia" a "Global".
 

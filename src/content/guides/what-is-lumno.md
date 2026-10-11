@@ -4,7 +4,7 @@ Lumno 是一款免费、开源的浏览器扩展，主要提供两项功能：�
 
 在任意网页按下 `⌘ ⇧ K`（Windows 上为 `Ctrl + Shift + K`），命令栏会出现在页面中央。
 
-如果想要 Arc、Zen 那样的体验，可以把唤出命令栏的快捷键绑定为 `⌘ T`，详见[修改快捷键](../keyboard-shortcuts/#change)。
+如果想要 [Arc](https://arc.net/)、[Zen](https://zen-browser.app/) 那样的体验，可以把唤出命令栏的快捷键绑定为 `⌘ T`，详见[修改快捷键](../keyboard-shortcuts/#change)。
 
 - 输入几个字，即可找到已打开的标签页、书签和历史记录，按回车键直接切换过去。详见[搜索标签页、书签和历史记录](../search-tabs-bookmarks-history/)。
 - 想在 GitHub、B 站、知乎中搜索时，无需先打开网站首页：输入网站简称并按 `Tab`，即可直接在站内搜索。向 ChatGPT、DeepSeek 提问也是同样的操作。详见[站内搜索和 AI 提问](../site-search/)。

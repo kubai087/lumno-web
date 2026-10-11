@@ -1,4 +1,4 @@
-Seit Arc keine neuen Funktionen mehr erhält, sind viele Nutzerinnen und Nutzer zu Chrome, Dia oder Edge gewechselt. Lumno orientiert sich an mehreren Bedienkonzepten von Arc, darunter die Befehlsleiste, der Wechsel zwischen den letzten Tabs, das Wiederherstellen angehefteter Tabs nach einem Neustart und automatisches Bild-im-Bild für Videos. Nach der Installation kannst du sie in diesen Browsern weiter nutzen.
+Seit [Arc](https://arc.net/) keine neuen Funktionen mehr erhält, sind viele Nutzerinnen und Nutzer zu Chrome, Dia oder Edge gewechselt. Lumno orientiert sich an mehreren Bedienkonzepten von Arc, darunter die Befehlsleiste, der Wechsel zwischen den letzten Tabs, das Wiederherstellen angehefteter Tabs nach einem Neustart und automatisches Bild-im-Bild für Videos. Nach der Installation kannst du sie in diesen Browsern weiter nutzen.
 
 Lumno ist ein unabhängiges Open-Source-Projekt und steht in keiner Verbindung zu Arc oder The Browser Company.
 
@@ -17,7 +17,7 @@ Lumno ist ein unabhängiges Open-Source-Projekt und steht in keiner Verbindung z
 ## So wechselst du {#steps}
 
 1. [Installiere Lumno](../install/): für Chrome und Dia über den Chrome Web Store, für Edge über die Edge-Add-ons.
-2. Öffne `chrome://extensions/shortcuts` und lege „Open command bar“ auf `⌘ T`. Weitere Informationen findest du unter [Tastenkürzel](../keyboard-shortcuts/#change).
+2. Öffne `chrome://extensions/shortcuts` und lege „Open command bar“ auf `⌘ T`, wie in Arc und [Zen](https://zen-browser.app/). Weitere Informationen findest du unter [Tastenkürzel](../keyboard-shortcuts/#change).
 3. Drücke `⌘ T` und probiere aus, [Tabs, Lesezeichen und Verlauf zu durchsuchen](../search-tabs-bookmarks-history/).
 4. Um zwischen den zuletzt verwendeten Seiten zu wechseln, drücke `⌥ Q` und öffne den [Tab-Umschalter](../tab-switcher/).
 

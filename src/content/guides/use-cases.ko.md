@@ -18,7 +18,7 @@ Lumno를 자주 사용하는 방식을 단계별 사용 방법과 함께 소개�
 
 ## Arc에서 옮겨 왔을 때 {#from-arc}
 
-Arc에 새 기능이 더 이상 추가되지 않으면서 많은 사용자가 Dia, Chrome, Edge로 옮겼습니다. Lumno는 Arc의 명령 바, 최근 탭 전환, 재시작 후 고정 탭 복원, 동영상 자동 PIP를 참고했습니다. Lumno를 설치한 다음 아래 단계에 따라 명령 바를 설정하세요.
+[Arc](https://arc.net/)에 새 기능이 더 이상 추가되지 않으면서 많은 사용자가 Dia, Chrome, Edge로 옮겼습니다. Lumno는 Arc의 명령 바, 최근 탭 전환, 재시작 후 고정 탭 복원, 동영상 자동 PIP를 참고했습니다. Lumno를 설치한 다음 아래 단계에 따라 명령 바를 설정하세요.
 
 1. 주소창에서 `chrome://extensions/shortcuts`를 여세요.
 2. Lumno를 찾아 "Open command bar"를 `⌘ T`로 변경하세요.

@@ -6,9 +6,9 @@ O Lumno foi criado para navegadores Chromium e também tem uma versão para Fire
 | --- | --- | --- | --- |
 | Google Chrome | Sim | Sim | Chrome Web Store |
 | Microsoft Edge | Sim | Sim | Complementos do Edge |
-| Brave, Arc, Vivaldi, Opera | Sim | Sim | Chrome Web Store |
+| Brave, [Arc](https://arc.net/), Vivaldi, Opera | Sim | Sim | Chrome Web Store |
 | Dia | Sim | Ainda não | Chrome Web Store |
-| Firefox, Zen e outros | Em parte | Sim | Veja abaixo |
+| Firefox, [Zen](https://zen-browser.app/) e outros | Em parte | Sim | Veja abaixo |
 | Safari | Não | Não | — |
 
 Navegadores de celulares e tablets ainda não são compatíveis.

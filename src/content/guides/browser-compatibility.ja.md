@@ -6,9 +6,9 @@ Lumno は Chromium 系ブラウザ向けに開発されており、Firefox 版�
 | --- | --- | --- | --- |
 | Google Chrome | 対応 | 対応 | Chrome ウェブストア |
 | Microsoft Edge | 対応 | 対応 | Edge アドオン |
-| Brave、Arc、Vivaldi、Opera | 対応 | 対応 | Chrome ウェブストア |
+| Brave、[Arc](https://arc.net/)、Vivaldi、Opera | 対応 | 対応 | Chrome ウェブストア |
 | Dia | 対応 | 未対応 | Chrome ウェブストア |
-| Firefox、Zen など | 一部対応 | 対応 | 下記を参照 |
+| Firefox、[Zen](https://zen-browser.app/) など | 一部対応 | 対応 | 下記を参照 |
 | Safari | 非対応 | 非対応 | — |
 
 スマートフォンとタブレットのブラウザには、現在対応していません。

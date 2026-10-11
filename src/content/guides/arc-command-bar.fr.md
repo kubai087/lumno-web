@@ -1,4 +1,4 @@
-Depuis qu'Arc ne reçoit plus de nouvelles fonctions, de nombreux utilisateurs sont passés à Chrome, Dia ou Edge. Lumno reprend plusieurs principes d'Arc : la barre de commande, le passage d'un onglet récent à l'autre, la restauration des onglets épinglés après un redémarrage et l'image dans l'image automatique pour les vidéos. Une fois Lumno installé, vous pouvez continuer à les utiliser dans ces navigateurs.
+Depuis qu'[Arc](https://arc.net/) ne reçoit plus de nouvelles fonctions, de nombreux utilisateurs sont passés à Chrome, Dia ou Edge. Lumno reprend plusieurs principes d'Arc : la barre de commande, le passage d'un onglet récent à l'autre, la restauration des onglets épinglés après un redémarrage et l'image dans l'image automatique pour les vidéos. Une fois Lumno installé, vous pouvez continuer à les utiliser dans ces navigateurs.
 
 Lumno est un projet open source indépendant, sans lien avec Arc ni avec The Browser Company.
 
@@ -17,7 +17,7 @@ Lumno est un projet open source indépendant, sans lien avec Arc ni avec The Bro
 ## Étapes de la migration {#steps}
 
 1. [Installez Lumno](../install/) : depuis le Chrome Web Store pour Chrome et Dia, ou depuis les modules complémentaires Edge pour Edge.
-2. Ouvrez `chrome://extensions/shortcuts` et attribuez `⌘ T` à « Open command bar ». Pour en savoir plus, consultez [Raccourcis clavier](../keyboard-shortcuts/#change).
+2. Ouvrez `chrome://extensions/shortcuts` et attribuez `⌘ T` à « Open command bar », comme dans Arc et [Zen](https://zen-browser.app/). Pour en savoir plus, consultez [Raccourcis clavier](../keyboard-shortcuts/#change).
 3. Appuyez sur `⌘ T` et essayez de [chercher dans vos onglets, favoris et historique](../search-tabs-bookmarks-history/).
 4. Pour passer d'une page récente à l'autre, appuyez sur `⌥ Q` afin d'ouvrir le [sélecteur d'onglets récents](../tab-switcher/).
 

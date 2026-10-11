@@ -4,7 +4,7 @@ Lumno 完全免费，无需注册，从扩展商店安装后即可使用。
 
 | 浏览器 | 安装渠道 |
 | --- | --- |
-| Chrome、Dia、Brave、Arc、Vivaldi、Opera | [Chrome 应用商店](https://chromewebstore.google.com/detail/nggfkkbmogmadfoikakkfegkoilfcfao) |
+| Chrome、Dia、Brave、[Arc](https://arc.net/)、Vivaldi、Opera | [Chrome 应用商店](https://chromewebstore.google.com/detail/nggfkkbmogmadfoikakkfegkoilfcfao) |
 | Microsoft Edge | [Microsoft Edge 加载项](https://microsoftedge.microsoft.com/addons/detail/pfbklkaefmfamjpibfiapaiihlddhchc) |
 
 打开商店页面，点击「添加至 Chrome」或「获取」，然后在弹出的对话框中确认即可。Edge 用户也可以直接从 Chrome 应用商店安装。

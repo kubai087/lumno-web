@@ -21,7 +21,7 @@ Os navegadores gerenciam os atalhos das extensões em uma página própria:
 
 ![A página de atalhos de extensões do navegador, com "Open command bar" do Lumno em ⇧⌘K e "Open recent tab switcher" em ⌥Q](shortcuts "Alterar atalhos na página de extensões")
 
-Se você estiver acostumado com o Arc, pode atribuir `⌘ T` a "Open command bar".
+Se você estiver acostumado com o [Arc](https://arc.net/) ou o [Zen](https://zen-browser.app/), pode atribuir `⌘ T` a "Open command bar".
 
 Se o atalho não funcionar no Dia, altere o escopo ao lado dele de "In Dia" para "Global".
 

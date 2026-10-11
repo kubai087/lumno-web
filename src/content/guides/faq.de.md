@@ -20,7 +20,7 @@ Im Modus „Follow system“ berücksichtigt die Befehlsleiste zusätzlich die F
 
 ### Kann ich nach dem Wechsel von Arc eine vertraute Befehlsleiste verwenden?
 
-Ja. Lumnos Bedienung orientiert sich an Arc (Lumno steht in keiner Verbindung zu Arc), und du kannst die Befehlsleiste in Dia, Chrome und Edge jederzeit öffnen. Wenn du das Tastenkürzel auf `⌘ T` legst, behältst du deine Arc-Gewohnheiten bei. Weitere Informationen findest du unter [Umstieg von Arc](../arc-command-bar/).
+Ja. Lumnos Bedienung orientiert sich an [Arc](https://arc.net/) (Lumno steht in keiner Verbindung zu Arc), und du kannst die Befehlsleiste in Dia, Chrome und Edge jederzeit öffnen. Wenn du das Tastenkürzel auf `⌘ T` legst, behältst du deine Arc-Gewohnheiten bei. Weitere Informationen findest du unter [Umstieg von Arc](../arc-command-bar/).
 
 ## Neuer Tab {#new-tab}
 

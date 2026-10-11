@@ -21,7 +21,7 @@ Lumno의 대부분의 기능은 키보드로 사용할 수 있습니다. 이 페
 
 ![브라우저의 확장 프로그램 단축키 페이지. Lumno의 "Open command bar"는 ⇧⌘K, "Open recent tab switcher"는 ⌥Q로 설정되어 있다](shortcuts "확장 프로그램 페이지에서 단축키 변경하기")
 
-Arc 사용 방식에 익숙하다면 "Open command bar"를 `⌘ T`로 변경할 수 있습니다.
+[Arc](https://arc.net/)나 [Zen](https://zen-browser.app/) 사용 방식에 익숙하다면 "Open command bar"를 `⌘ T`로 변경할 수 있습니다.
 
 Dia에서 단축키가 작동하지 않으면 항목 옆의 범위를 "In Dia"에서 "Global"로 변경하세요.
 

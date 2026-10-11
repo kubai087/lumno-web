@@ -21,7 +21,7 @@ Browser verwalten die Tastenkürzel von Erweiterungen auf einer eigenen Seite:
 
 ![Die Seite für Erweiterungs-Tastenkürzel im Browser: Lumnos „Open command bar“ steht auf ⇧⌘K, „Open recent tab switcher“ auf ⌥Q](shortcuts "Tastenkürzel auf der Erweiterungsseite ändern")
 
-Wenn du an Arc gewöhnt bist, kannst du „Open command bar“ auf `⌘ T` legen.
+Wenn du an [Arc](https://arc.net/) oder [Zen](https://zen-browser.app/) gewöhnt bist, kannst du „Open command bar“ auf `⌘ T` legen.
 
 Wenn das Tastenkürzel in Dia nicht funktioniert, ändere den Bereich daneben von „In Dia“ zu „Global“.
 

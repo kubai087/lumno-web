@@ -1,4 +1,4 @@
-When you switch to another tab while a video is playing on a page, the video moves into a small picture-in-picture window and keeps playing. When you return to the original tab, the window closes and the video continues on the page. This works much like automatic picture-in-picture in Arc.
+When you switch to another tab while a video is playing on a page, the video moves into a small picture-in-picture window and keeps playing. When you return to the original tab, the window closes and the video continues on the page. This works much like automatic picture-in-picture in [Arc](https://arc.net/).
 
 ## When picture-in-picture starts {#when}
 

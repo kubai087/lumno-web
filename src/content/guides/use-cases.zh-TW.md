@@ -18,7 +18,7 @@
 
 ## 從 Arc 轉移過來 {#from-arc}
 
-Arc 停止加入新功能後，不少使用者轉向了 Dia、Chrome 或 Edge。Lumno 參考了 Arc 的命令列、最近分頁切換、重新啟動後還原釘選分頁和影片自動子母畫面。安裝 Lumno 後，可以依照以下步驟設定命令列：
+[Arc](https://arc.net/) 停止加入新功能後，不少使用者轉向了 Dia、Chrome 或 Edge。Lumno 參考了 Arc 的命令列、最近分頁切換、重新啟動後還原釘選分頁和影片自動子母畫面。安裝 Lumno 後，可以依照以下步驟設定命令列：
 
 1. 在網址列中開啟 `chrome://extensions/shortcuts`。
 2. 找到 Lumno，把「叫出聚焦搜尋視窗」改為 `⌘ T`。

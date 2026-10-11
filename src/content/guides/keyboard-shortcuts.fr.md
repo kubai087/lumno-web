@@ -21,7 +21,7 @@ Les navigateurs gèrent les raccourcis des extensions sur une page dédiée :
 
 ![La page des raccourcis d'extensions du navigateur : « Open command bar » de Lumno réglé sur ⇧⌘K et « Open recent tab switcher » sur ⌥Q](shortcuts "Modifier les raccourcis sur la page des extensions")
 
-Si vous avez l'habitude d'Arc, vous pouvez attribuer `⌘ T` à « Open command bar ».
+Si vous avez l'habitude d'[Arc](https://arc.net/) ou de [Zen](https://zen-browser.app/), vous pouvez attribuer `⌘ T` à « Open command bar ».
 
 Si le raccourci ne fonctionne pas dans Dia, remplacez la portée indiquée à côté, « In Dia », par « Global ».
 

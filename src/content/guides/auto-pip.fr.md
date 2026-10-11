@@ -1,4 +1,4 @@
-Lorsque vous passez à un autre onglet pendant la lecture d'une vidéo sur une page, la vidéo passe automatiquement dans une petite fenêtre en image dans l'image et continue de jouer. Lorsque vous revenez à l'onglet d'origine, la fenêtre se ferme et la vidéo reprend sur la page. Le fonctionnement est semblable à l'image dans l'image automatique d'Arc.
+Lorsque vous passez à un autre onglet pendant la lecture d'une vidéo sur une page, la vidéo passe automatiquement dans une petite fenêtre en image dans l'image et continue de jouer. Lorsque vous revenez à l'onglet d'origine, la fenêtre se ferme et la vidéo reprend sur la page. Le fonctionnement est semblable à l'image dans l'image automatique d'[Arc](https://arc.net/).
 
 ## Quand l'image dans l'image démarre {#when}
 

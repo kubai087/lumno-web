@@ -18,7 +18,7 @@ Para obtener más información, consulta [Buscar en pestañas, marcadores e hist
 
 ## Si vienes de Arc {#from-arc}
 
-Desde que Arc dejó de recibir funciones nuevas, muchos usuarios se han pasado a Dia, Chrome o Edge. Lumno se inspira en la barra de comandos de Arc, el cambio entre pestañas recientes, la restauración de pestañas fijadas y la imagen en imagen automática. Después de instalar Lumno, sigue estos pasos para configurar la barra de comandos:
+Desde que [Arc](https://arc.net/) dejó de recibir funciones nuevas, muchos usuarios se han pasado a Dia, Chrome o Edge. Lumno se inspira en la barra de comandos de Arc, el cambio entre pestañas recientes, la restauración de pestañas fijadas y la imagen en imagen automática. Después de instalar Lumno, sigue estos pasos para configurar la barra de comandos:
 
 1. Abre `chrome://extensions/shortcuts` en la barra de direcciones.
 2. Busca Lumno y asigna `⌘ T` a "Open command bar".

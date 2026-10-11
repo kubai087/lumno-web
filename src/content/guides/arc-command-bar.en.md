@@ -1,4 +1,4 @@
-Since Arc stopped adding new features, many people have moved to Chrome, Dia or Edge. Lumno brings several of Arc's interactions to these browsers: the command bar, switching between recent tabs, restoring pinned tabs after a restart, and automatic picture-in-picture for videos.
+Since [Arc](https://arc.net/) stopped adding new features, many people have moved to Chrome, Dia or Edge. Lumno brings several of Arc's interactions to these browsers: the command bar, switching between recent tabs, restoring pinned tabs after a restart, and automatic picture-in-picture for videos.
 
 Lumno is an independent open-source project and is not affiliated with Arc or The Browser Company.
 
@@ -17,7 +17,7 @@ Lumno is an independent open-source project and is not affiliated with Arc or Th
 ## How to switch {#steps}
 
 1. [Install Lumno](../install/): from the Chrome Web Store for Chrome and Dia, or from Edge Add-ons for Edge.
-2. Open `chrome://extensions/shortcuts` and set "Open command bar" to `⌘ T`. See [Keyboard shortcuts](../keyboard-shortcuts/#change).
+2. Open `chrome://extensions/shortcuts` and set "Open command bar" to `⌘ T`, the same key as in Arc and [Zen](https://zen-browser.app/). See [Keyboard shortcuts](../keyboard-shortcuts/#change).
 3. Press `⌘ T` and try [searching your tabs, bookmarks and history](../search-tabs-bookmarks-history/).
 4. To move between your last few pages, press `⌥ Q` to open the [recent tab switcher](../tab-switcher/).
 

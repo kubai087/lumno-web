@@ -18,7 +18,7 @@ Para saber mais, consulte [Pesquisar guias, favoritos e histórico](../search-ta
 
 ## Quando você vem do Arc {#from-arc}
 
-Desde que o Arc deixou de receber novos recursos, muitos usuários migraram para o Dia, o Chrome ou o Edge. O Lumno se inspira na barra de comandos do Arc, na alternância entre guias recentes, na restauração de guias fixadas e no picture-in-picture automático. Depois de instalar o Lumno, siga estas etapas para configurar a barra de comandos:
+Desde que o [Arc](https://arc.net/) deixou de receber novos recursos, muitos usuários migraram para o Dia, o Chrome ou o Edge. O Lumno se inspira na barra de comandos do Arc, na alternância entre guias recentes, na restauração de guias fixadas e no picture-in-picture automático. Depois de instalar o Lumno, siga estas etapas para configurar a barra de comandos:
 
 1. Abra `chrome://extensions/shortcuts` na barra de endereço.
 2. Localize o Lumno e atribua `⌘ T` a "Open command bar".

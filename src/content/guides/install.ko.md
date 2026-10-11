@@ -4,7 +4,7 @@ Lumno는 무료이며 가입할 필요가 없습니다. 스토어에서 설치�
 
 | 브라우저 | 설치 위치 |
 | --- | --- |
-| Chrome, Dia, Brave, Arc, Vivaldi, Opera | [Chrome 웹 스토어](https://chromewebstore.google.com/detail/nggfkkbmogmadfoikakkfegkoilfcfao) |
+| Chrome, Dia, Brave, [Arc](https://arc.net/), Vivaldi, Opera | [Chrome 웹 스토어](https://chromewebstore.google.com/detail/nggfkkbmogmadfoikakkfegkoilfcfao) |
 | Microsoft Edge | [Microsoft Edge 추가 기능](https://microsoftedge.microsoft.com/addons/detail/pfbklkaefmfamjpibfiapaiihlddhchc) |
 
 스토어 페이지를 열고 "Chrome에 추가" 또는 "다운로드"를 클릭한 다음, 표시되는 대화상자에서 확인하세요. Edge에서도 Chrome 웹 스토어에서 Lumno를 설치할 수 있습니다.

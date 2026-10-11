@@ -18,7 +18,7 @@
 
 ## 从 Arc 迁移过来 {#from-arc}
 
-Arc 停止开发新功能后，不少用户转向了 Dia、Chrome 或 Edge。Lumno 参考了 Arc 的命令栏、最近标签页切换、重启后恢复固定标签页和视频自动画中画。安装 Lumno 后，可以按以下步骤设置命令栏：
+[Arc](https://arc.net/) 停止开发新功能后，不少用户转向了 Dia、Chrome 或 Edge。Lumno 参考了 Arc 的命令栏、最近标签页切换、重启后恢复固定标签页和视频自动画中画。安装 Lumno 后，可以按以下步骤设置命令栏：
 
 1. 在地址栏中打开 `chrome://extensions/shortcuts`。
 2. 找到 Lumno，把「唤起聚焦搜索窗口」改为 `⌘ T`。

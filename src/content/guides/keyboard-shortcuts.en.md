@@ -21,7 +21,7 @@ Browsers manage extension shortcuts on a separate page:
 
 ![The browser's extension shortcuts page, with Lumno's "Open command bar" set to ⇧⌘K and "Open recent tab switcher" set to ⌥Q](shortcuts "Changing shortcuts on the extensions page")
 
-If you're used to Arc, set "Open command bar" to `⌘ T`.
+If you're used to [Arc](https://arc.net/) or [Zen](https://zen-browser.app/), set "Open command bar" to `⌘ T`.
 
 If the shortcut doesn't work in Dia, change the scope next to it from "In Dia" to "Global".
 

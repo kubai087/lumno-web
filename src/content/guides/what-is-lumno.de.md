@@ -4,7 +4,7 @@ Lumno ist eine kostenlose Open-Source-Browsererweiterung mit zwei Hauptfunktione
 
 Drücke auf einer beliebigen Seite `⌘ ⇧ K` (unter Windows `Strg + Umschalt + K`). Die Befehlsleiste öffnet sich in der Mitte des Bildschirms.
 
-Wenn es sich wie in Arc oder Zen anfühlen soll, lege die Befehlsleiste auf `⌘ T`. Weitere Informationen findest du unter [Ein Tastenkürzel ändern](../keyboard-shortcuts/#change).
+Wenn es sich wie in [Arc](https://arc.net/) oder [Zen](https://zen-browser.app/) anfühlen soll, lege die Befehlsleiste auf `⌘ T`. Weitere Informationen findest du unter [Ein Tastenkürzel ändern](../keyboard-shortcuts/#change).
 
 - Gib ein paar Buchstaben ein, um einen offenen Tab, ein Lesezeichen oder eine Seite aus deinem Verlauf zu finden, und drücke die Eingabetaste, um direkt dorthin zu wechseln. Weitere Informationen findest du unter [Tabs, Lesezeichen und Verlauf durchsuchen](../search-tabs-bookmarks-history/).
 - Du kannst GitHub, YouTube oder Stack Overflow durchsuchen, ohne zuerst die jeweilige Startseite zu öffnen: Gib das Kürzel der Website ein, drücke `Tab` und gib dann deinen Suchbegriff ein. Fragen an ChatGPT oder Gemini funktionieren genauso. Weitere Informationen findest du unter [Seitensuche und KI fragen](../site-search/).

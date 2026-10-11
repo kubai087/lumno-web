@@ -4,7 +4,7 @@ Lumno 是一款免費、開源的瀏覽器擴充功能，主要提供兩項功�
 
 在任何網頁按下 `⌘ ⇧ K`（Windows 上為 `Ctrl + Shift + K`），命令列會出現在畫面中央。
 
-如果想要 Arc、Zen 那樣的體驗，可以把叫出命令列的快速鍵設為 `⌘ T`，詳見[修改快速鍵](../keyboard-shortcuts/#change)。
+如果想要 [Arc](https://arc.net/)、[Zen](https://zen-browser.app/) 那樣的體驗，可以把叫出命令列的快速鍵設為 `⌘ T`，詳見[修改快速鍵](../keyboard-shortcuts/#change)。
 
 - 輸入幾個字，即可找到已開啟的分頁、書籤和瀏覽紀錄，按下 Enter 直接切換過去。詳見[搜尋分頁、書籤和瀏覽紀錄](../search-tabs-bookmarks-history/)。
 - 想在 GitHub、YouTube、維基百科中搜尋時，不必先開啟網站首頁：輸入網站簡稱並按 `Tab`，即可直接在站內搜尋。向 ChatGPT、Gemini 提問也是同樣的操作。詳見[站內搜尋和問 AI](../site-search/)。

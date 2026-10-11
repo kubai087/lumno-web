@@ -4,7 +4,7 @@ Lumno は無料で、登録は不要です。ストアからインストール�
 
 | ブラウザ | 入手先 |
 | --- | --- |
-| Chrome、Dia、Brave、Arc、Vivaldi、Opera | [Chrome ウェブストア](https://chromewebstore.google.com/detail/nggfkkbmogmadfoikakkfegkoilfcfao) |
+| Chrome、Dia、Brave、[Arc](https://arc.net/)、Vivaldi、Opera | [Chrome ウェブストア](https://chromewebstore.google.com/detail/nggfkkbmogmadfoikakkfegkoilfcfao) |
 | Microsoft Edge | [Microsoft Edge アドオン](https://microsoftedge.microsoft.com/addons/detail/pfbklkaefmfamjpibfiapaiihlddhchc) |
 
 ストアのページで「Chrome に追加」または「インストール」をクリックし、表示されたダイアログで確認します。Edge でも Chrome ウェブストアからインストールできます。

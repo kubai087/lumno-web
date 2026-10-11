@@ -20,7 +20,7 @@ En mode « Follow system », la barre de commande tient également compte des 
 
 ### Si je viens d'Arc, puis-je retrouver une barre de commande familière ?
 
-Oui. L'interface de Lumno s'inspire d'Arc (sans aucun lien avec Arc), et vous pouvez ouvrir la barre de commande à tout moment dans Dia, Chrome ou Edge. Attribuez `⌘ T` au raccourci pour conserver vos habitudes d'Arc. Pour en savoir plus, consultez [Venir d'Arc](../arc-command-bar/).
+Oui. L'interface de Lumno s'inspire d'[Arc](https://arc.net/) (sans aucun lien avec Arc), et vous pouvez ouvrir la barre de commande à tout moment dans Dia, Chrome ou Edge. Attribuez `⌘ T` au raccourci pour conserver vos habitudes d'Arc. Pour en savoir plus, consultez [Venir d'Arc](../arc-command-bar/).
 
 ## Nouvel onglet {#new-tab}
 

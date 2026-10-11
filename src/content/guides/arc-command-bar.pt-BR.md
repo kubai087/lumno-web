@@ -1,4 +1,4 @@
-Desde que o Arc deixou de receber novos recursos, muitos usuários migraram para o Chrome, o Dia ou o Edge. O Lumno se inspira em vários recursos do Arc, como a barra de comandos, a alternância entre guias recentes, a restauração de guias fixadas após reiniciar e o picture-in-picture automático para vídeos, e permite continuar usando esses recursos nesses navegadores.
+Desde que o [Arc](https://arc.net/) deixou de receber novos recursos, muitos usuários migraram para o Chrome, o Dia ou o Edge. O Lumno se inspira em vários recursos do Arc, como a barra de comandos, a alternância entre guias recentes, a restauração de guias fixadas após reiniciar e o picture-in-picture automático para vídeos, e permite continuar usando esses recursos nesses navegadores.
 
 O Lumno é um projeto independente de código aberto, sem vínculo com o Arc nem com a The Browser Company.
 
@@ -17,7 +17,7 @@ O Lumno é um projeto independente de código aberto, sem vínculo com o Arc nem
 ## Etapas para migrar {#steps}
 
 1. [Instale o Lumno](../install/): pela Chrome Web Store no Chrome e no Dia, ou pelos complementos do Edge no Edge.
-2. Abra `chrome://extensions/shortcuts` e atribua `⌘ T` a "Open command bar". Para saber mais, consulte [Atalhos de teclado](../keyboard-shortcuts/#change).
+2. Abra `chrome://extensions/shortcuts` e atribua `⌘ T` a "Open command bar", como no Arc e no [Zen](https://zen-browser.app/). Para saber mais, consulte [Atalhos de teclado](../keyboard-shortcuts/#change).
 3. Pressione `⌘ T` e experimente [pesquisar suas guias, favoritos e histórico](../search-tabs-bookmarks-history/).
 4. Para alternar entre suas últimas páginas, pressione `⌥ Q` e abra o [alternador de guias recentes](../tab-switcher/).
 

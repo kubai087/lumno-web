@@ -1,4 +1,4 @@
-Desde que Arc dejó de recibir funciones nuevas, muchos usuarios se han pasado a Chrome, Dia o Edge. Lumno se inspira en varias funciones de Arc, como la barra de comandos, el cambio entre pestañas recientes, la restauración de pestañas fijadas tras reiniciar y la imagen en imagen automática para vídeos, y te permite seguir usándolas en estos navegadores.
+Desde que [Arc](https://arc.net/) dejó de recibir funciones nuevas, muchos usuarios se han pasado a Chrome, Dia o Edge. Lumno se inspira en varias funciones de Arc, como la barra de comandos, el cambio entre pestañas recientes, la restauración de pestañas fijadas tras reiniciar y la imagen en imagen automática para vídeos, y te permite seguir usándolas en estos navegadores.
 
 Lumno es un proyecto de código abierto independiente y no tiene relación con Arc ni con The Browser Company.
 
@@ -17,7 +17,7 @@ Lumno es un proyecto de código abierto independiente y no tiene relación con A
 ## Pasos para el cambio {#steps}
 
 1. [Instala Lumno](../install/): desde Chrome Web Store para Chrome y Dia, o desde los complementos de Edge para Edge.
-2. Abre `chrome://extensions/shortcuts` y asigna `⌘ T` a "Open command bar". Para obtener más información, consulta [Atajos de teclado](../keyboard-shortcuts/#change).
+2. Abre `chrome://extensions/shortcuts` y asigna `⌘ T` a "Open command bar", como en Arc y [Zen](https://zen-browser.app/). Para obtener más información, consulta [Atajos de teclado](../keyboard-shortcuts/#change).
 3. Pulsa `⌘ T` y prueba a [buscar en tus pestañas, marcadores e historial](../search-tabs-bookmarks-history/).
 4. Para cambiar entre tus últimas páginas, pulsa `⌥ Q` y abre el [selector de pestañas recientes](../tab-switcher/).
 

@@ -20,7 +20,7 @@ No modo "Follow system", a barra de comandos também considera as cores da pági
 
 ### Se eu vier do Arc, posso usar uma barra de comandos familiar?
 
-Sim. O funcionamento do Lumno se inspira no Arc (sem vínculo com o Arc), e você pode abrir a barra de comandos a qualquer momento no Dia, no Chrome ou no Edge. Atribua `⌘ T` ao atalho para manter seus hábitos do Arc. Para saber mais, consulte [Vindo do Arc](../arc-command-bar/).
+Sim. O funcionamento do Lumno se inspira no [Arc](https://arc.net/) (sem vínculo com o Arc), e você pode abrir a barra de comandos a qualquer momento no Dia, no Chrome ou no Edge. Atribua `⌘ T` ao atalho para manter seus hábitos do Arc. Para saber mais, consulte [Vindo do Arc](../arc-command-bar/).
 
 ## Nova guia {#new-tab}
 

@@ -4,7 +4,7 @@ Lumno бесплатный, не требует регистрации и гот
 
 | Браузер | Где установить |
 | --- | --- |
-| Chrome, Dia, Brave, Arc, Vivaldi, Opera | [Интернет-магазин Chrome](https://chromewebstore.google.com/detail/nggfkkbmogmadfoikakkfegkoilfcfao) |
+| Chrome, Dia, Brave, [Arc](https://arc.net/), Vivaldi, Opera | [Интернет-магазин Chrome](https://chromewebstore.google.com/detail/nggfkkbmogmadfoikakkfegkoilfcfao) |
 | Microsoft Edge | [Надстройки Microsoft Edge](https://microsoftedge.microsoft.com/addons/detail/pfbklkaefmfamjpibfiapaiihlddhchc) |
 
 Откройте страницу расширения в магазине, нажмите «Установить» или «Получить» и подтвердите действие в появившемся окне. В Edge расширение также можно установить из Интернет-магазина Chrome.

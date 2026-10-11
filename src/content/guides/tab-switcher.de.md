@@ -11,7 +11,7 @@ Drücke `⌥ Q` (unter Windows `Alt + Q`). Deine zuletzt verwendeten Tabs werden
 1. Halte `⌥` gedrückt und drücke wiederholt `Q`, bis die gewünschte Seite ausgewählt ist. Du kannst auch `Tab` oder die Pfeiltasten verwenden.
 2. Lass `⌥` los oder drücke `↩`, um zu dieser Seite zu wechseln.
 
-Die Bedienung entspricht weitgehend `⌘ Tab` auf dem Mac oder `⌃ Tab` in Arc.
+Die Bedienung entspricht weitgehend `⌘ Tab` auf dem Mac oder `⌃ Tab` in [Arc](https://arc.net/).
 
 ## Tab-Umschalter oder Suche in offenen Tabs {#vs-search}
 

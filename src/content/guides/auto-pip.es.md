@@ -1,4 +1,4 @@
-Si cambias a otra pestaña mientras se reproduce un vídeo en una página, el vídeo pasa automáticamente a una pequeña ventana de imagen en imagen y sigue reproduciéndose. Al volver a la pestaña original, la ventana se cierra y el vídeo continúa en la página. Funciona de forma parecida a la imagen en imagen automática de Arc.
+Si cambias a otra pestaña mientras se reproduce un vídeo en una página, el vídeo pasa automáticamente a una pequeña ventana de imagen en imagen y sigue reproduciéndose. Al volver a la pestaña original, la ventana se cierra y el vídeo continúa en la página. Funciona de forma parecida a la imagen en imagen automática de [Arc](https://arc.net/).
 
 ## Cuándo se activa la imagen en imagen {#when}
 

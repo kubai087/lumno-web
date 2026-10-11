@@ -6,9 +6,9 @@ Lumno создан для браузеров на Chromium, а также дос
 | --- | --- | --- | --- |
 | Google Chrome | Да | Да | Интернет-магазин Chrome |
 | Microsoft Edge | Да | Да | Надстройки Edge |
-| Brave, Arc, Vivaldi, Opera | Да | Да | Интернет-магазин Chrome |
+| Brave, [Arc](https://arc.net/), Vivaldi, Opera | Да | Да | Интернет-магазин Chrome |
 | Dia | Да | Пока нет | Интернет-магазин Chrome |
-| Firefox, Zen и другие | Частично | Да | См. ниже |
+| Firefox, [Zen](https://zen-browser.app/) и другие | Частично | Да | См. ниже |
 | Safari | Нет | Нет | — |
 
 Браузеры на телефонах и планшетах пока не поддерживаются.

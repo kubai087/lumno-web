@@ -1,4 +1,4 @@
-Wenn du zu einem anderen Tab wechselst, während auf einer Webseite ein Video läuft, wird es automatisch in einem kleinen Bild-im-Bild-Fenster weiter abgespielt. Wenn du zum ursprünglichen Tab zurückkehrst, schließt sich das Fenster, und das Video läuft auf der Seite weiter. Das funktioniert ähnlich wie das automatische Bild-im-Bild in Arc.
+Wenn du zu einem anderen Tab wechselst, während auf einer Webseite ein Video läuft, wird es automatisch in einem kleinen Bild-im-Bild-Fenster weiter abgespielt. Wenn du zum ursprünglichen Tab zurückkehrst, schließt sich das Fenster, und das Video läuft auf der Seite weiter. Das funktioniert ähnlich wie das automatische Bild-im-Bild in [Arc](https://arc.net/).
 
 ## Wann Bild-im-Bild startet {#when}
 

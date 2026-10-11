@@ -4,7 +4,7 @@ O Lumno é gratuito, não exige cadastro e pode ser usado assim que é instalado
 
 | Navegador | Instalar pela |
 | --- | --- |
-| Chrome, Dia, Brave, Arc, Vivaldi, Opera | [Chrome Web Store](https://chromewebstore.google.com/detail/nggfkkbmogmadfoikakkfegkoilfcfao) |
+| Chrome, Dia, Brave, [Arc](https://arc.net/), Vivaldi, Opera | [Chrome Web Store](https://chromewebstore.google.com/detail/nggfkkbmogmadfoikakkfegkoilfcfao) |
 | Microsoft Edge | [Complementos do Microsoft Edge](https://microsoftedge.microsoft.com/addons/detail/pfbklkaefmfamjpibfiapaiihlddhchc) |
 
 Abra a página da loja, clique em "Usar no Chrome" ou "Obter" e confirme na caixa de diálogo exibida. No Edge, você também pode instalar o Lumno pela Chrome Web Store.

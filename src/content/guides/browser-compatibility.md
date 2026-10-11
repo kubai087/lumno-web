@@ -6,9 +6,9 @@ Lumno 主要面向 Chromium 浏览器，同时提供 Firefox 版。下表列出�
 | --- | --- | --- | --- |
 | Google Chrome | 支持 | 支持 | Chrome 应用商店 |
 | Microsoft Edge | 支持 | 支持 | Edge 加载项 |
-| Brave、Arc、Vivaldi、Opera | 支持 | 支持 | Chrome 应用商店 |
+| Brave、[Arc](https://arc.net/)、Vivaldi、Opera | 支持 | 支持 | Chrome 应用商店 |
 | Dia | 支持 | 暂不可用 | Chrome 应用商店 |
-| Firefox、Zen 等 | 部分支持 | 支持 | 见下文 |
+| Firefox、[Zen](https://zen-browser.app/) 等 | 部分支持 | 支持 | 见下文 |
 | Safari | 不支持 | 不支持 | — |
 
 暂不支持手机和平板上的浏览器。

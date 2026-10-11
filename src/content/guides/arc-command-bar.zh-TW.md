@@ -1,4 +1,4 @@
-Arc 停止加入新功能後，不少使用者轉向了 Chrome、Dia 或 Edge。Lumno 參考了 Arc 的多項互動，包括命令列、最近分頁切換、重新啟動後還原釘選分頁，以及影片自動子母畫面，安裝後即可在這些瀏覽器中繼續使用。
+[Arc](https://arc.net/) 停止加入新功能後，不少使用者轉向了 Chrome、Dia 或 Edge。Lumno 參考了 Arc 的多項互動，包括命令列、最近分頁切換、重新啟動後還原釘選分頁，以及影片自動子母畫面，安裝後即可在這些瀏覽器中繼續使用。
 
 Lumno 是獨立的開源專案，與 Arc 及 The Browser Company 沒有任何關聯。
 
@@ -17,7 +17,7 @@ Lumno 是獨立的開源專案，與 Arc 及 The Browser Company 沒有任何關
 ## 轉移步驟 {#steps}
 
 1. [安裝 Lumno](../install/)：Chrome、Dia 使用者從 Chrome 線上應用程式商店安裝，Edge 使用者從 Edge 附加元件安裝。
-2. 開啟 `chrome://extensions/shortcuts`，把「叫出聚焦搜尋視窗」改為 `⌘ T`，詳見[快速鍵](../keyboard-shortcuts/#change)。
+2. 開啟 `chrome://extensions/shortcuts`，把「叫出聚焦搜尋視窗」改為 `⌘ T`，和 Arc、[Zen](https://zen-browser.app/) 中的操作一致，詳見[快速鍵](../keyboard-shortcuts/#change)。
 3. 按 `⌘ T`，試著[搜尋分頁、書籤和瀏覽紀錄](../search-tabs-bookmarks-history/)。
 4. 需要在最近幾個頁面之間來回切換時，按 `⌥ Q` 開啟[最近分頁切換器](../tab-switcher/)。
 

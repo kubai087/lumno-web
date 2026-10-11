@@ -18,7 +18,7 @@ Weitere Informationen findest du unter [Tabs, Lesezeichen und Verlauf durchsuche
 
 ## Wenn du von Arc gewechselt bist {#from-arc}
 
-Seit Arc keine neuen Funktionen mehr erhält, sind viele Nutzerinnen und Nutzer zu Dia, Chrome oder Edge gewechselt. Lumno orientiert sich an der Befehlsleiste, dem Wechsel zwischen den letzten Tabs, dem Wiederherstellen angehefteter Tabs und dem automatischen Bild-im-Bild von Arc. Nachdem du Lumno installiert hast, richtest du die Befehlsleiste mit diesen Schritten ein:
+Seit [Arc](https://arc.net/) keine neuen Funktionen mehr erhält, sind viele Nutzerinnen und Nutzer zu Dia, Chrome oder Edge gewechselt. Lumno orientiert sich an der Befehlsleiste, dem Wechsel zwischen den letzten Tabs, dem Wiederherstellen angehefteter Tabs und dem automatischen Bild-im-Bild von Arc. Nachdem du Lumno installiert hast, richtest du die Befehlsleiste mit diesen Schritten ein:
 
 1. Öffne `chrome://extensions/shortcuts` in der Adressleiste.
 2. Suche Lumno und lege „Open command bar“ auf `⌘ T`.

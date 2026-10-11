@@ -1,4 +1,4 @@
-Arc 停止开发新功能后，不少用户转向了 Chrome、Dia 或 Edge。Lumno 参考了 Arc 的多项交互，包括命令栏、最近标签页切换、重启后恢复固定标签页和视频自动画中画，安装后即可在这些浏览器中继续使用。
+[Arc](https://arc.net/) 停止开发新功能后，不少用户转向了 Chrome、Dia 或 Edge。Lumno 参考了 Arc 的多项交互，包括命令栏、最近标签页切换、重启后恢复固定标签页和视频自动画中画，安装后即可在这些浏览器中继续使用。
 
 Lumno 是独立的开源项目，与 Arc 及 The Browser Company 没有任何关联。
 
@@ -17,7 +17,7 @@ Lumno 是独立的开源项目，与 Arc 及 The Browser Company 没有任何关
 ## 迁移步骤 {#steps}
 
 1. [安装 Lumno](../install/)：Chrome、Dia 用户从 Chrome 应用商店安装，Edge 用户从 Edge 加载项安装。
-2. 打开 `chrome://extensions/shortcuts`，把「唤起聚焦搜索窗口」改为 `⌘ T`，详见[快捷键](../keyboard-shortcuts/#change)。
+2. 打开 `chrome://extensions/shortcuts`，把「唤起聚焦搜索窗口」改为 `⌘ T`，和 Arc、[Zen](https://zen-browser.app/) 中的操作一致，详见[快捷键](../keyboard-shortcuts/#change)。
 3. 按 `⌘ T`，尝试[搜索标签页、书签和历史记录](../search-tabs-bookmarks-history/)。
 4. 需要在最近几个页面之间来回切换时，按 `⌥ Q` 打开[最近标签页切换器](../tab-switcher/)。
 

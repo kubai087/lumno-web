@@ -6,9 +6,9 @@ Lumno wurde für Chromium-Browser entwickelt und ist zusätzlich als Firefox-Ver
 | --- | --- | --- | --- |
 | Google Chrome | Ja | Ja | Chrome Web Store |
 | Microsoft Edge | Ja | Ja | Edge-Add-ons |
-| Brave, Arc, Vivaldi, Opera | Ja | Ja | Chrome Web Store |
+| Brave, [Arc](https://arc.net/), Vivaldi, Opera | Ja | Ja | Chrome Web Store |
 | Dia | Ja | Noch nicht | Chrome Web Store |
-| Firefox, Zen und andere | Teilweise | Ja | Siehe unten |
+| Firefox, [Zen](https://zen-browser.app/) und andere | Teilweise | Ja | Siehe unten |
 | Safari | Nein | Nein | — |
 
 Browser auf Smartphones und Tablets werden derzeit nicht unterstützt.

@@ -20,7 +20,7 @@
 
 ### 从 Arc 换过来，还能使用熟悉的命令栏吗？
 
-可以。Lumno 的交互参考了 Arc（与 Arc 官方没有关联），在 Dia、Chrome 和 Edge 中都可以随时唤出命令栏。把快捷键改为 `⌘ T`，即可沿用 Arc 的操作习惯。详见[从 Arc 迁移](../arc-command-bar/)。
+可以。Lumno 的交互参考了 [Arc](https://arc.net/)（与 Arc 官方没有关联），在 Dia、Chrome 和 Edge 中都可以随时唤出命令栏。把快捷键改为 `⌘ T`，即可沿用 Arc 的操作习惯。详见[从 Arc 迁移](../arc-command-bar/)。
 
 ## 新标签页 {#new-tab}
 

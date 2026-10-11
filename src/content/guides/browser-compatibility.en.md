@@ -6,9 +6,9 @@ Lumno is built for Chromium browsers and also has a Firefox version. The table b
 | --- | --- | --- | --- |
 | Google Chrome | Yes | Yes | Chrome Web Store |
 | Microsoft Edge | Yes | Yes | Edge Add-ons |
-| Brave, Arc, Vivaldi, Opera | Yes | Yes | Chrome Web Store |
+| Brave, [Arc](https://arc.net/), Vivaldi, Opera | Yes | Yes | Chrome Web Store |
 | Dia | Yes | Not yet | Chrome Web Store |
-| Firefox, Zen and others | Partly | Yes | See below |
+| Firefox, [Zen](https://zen-browser.app/) and others | Partly | Yes | See below |
 | Safari | No | No | — |
 
 Browsers on phones and tablets aren't supported yet.

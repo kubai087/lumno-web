@@ -11,7 +11,7 @@ Pulsa `⌥ Q` (`Alt + Q` en Windows). Tus pestañas recientes aparecen en el ord
 1. Mantén pulsada `⌥` y pulsa `Q` varias veces hasta llegar a la página que quieres. También puedes usar `Tab` o las teclas de flecha.
 2. Suelta `⌥` o pulsa `↩` para cambiar a esa página.
 
-Funciona de forma parecida a `⌘ Tab` en el Mac o a `⌃ Tab` en Arc.
+Funciona de forma parecida a `⌘ Tab` en el Mac o a `⌃ Tab` en [Arc](https://arc.net/).
 
 ## Selector o búsqueda en pestañas abiertas {#vs-search}
 

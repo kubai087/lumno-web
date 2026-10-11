@@ -1,4 +1,4 @@
-Arc の新機能の開発が止まってから、多くのユーザーが Chrome、Dia、Edge に移行しました。Lumno は、コマンドバー、最近のタブの切り替え、再起動後の固定タブの復元、動画の自動ピクチャー・イン・ピクチャーなど、Arc の操作を参考にしており、これらのブラウザでも引き続き使用できます。
+[Arc](https://arc.net/) の新機能の開発が止まってから、多くのユーザーが Chrome、Dia、Edge に移行しました。Lumno は、コマンドバー、最近のタブの切り替え、再起動後の固定タブの復元、動画の自動ピクチャー・イン・ピクチャーなど、Arc の操作を参考にしており、これらのブラウザでも引き続き使用できます。
 
 Lumno は独立したオープンソースプロジェクトであり、Arc および The Browser Company とは一切関係ありません。
 
@@ -17,7 +17,7 @@ Lumno は独立したオープンソースプロジェクトであり、Arc お�
 ## 移行の手順 {#steps}
 
 1. [Lumno をインストール](../install/)します。Chrome と Dia では Chrome ウェブストアから、Edge では Edge アドオンからインストールします。
-2. `chrome://extensions/shortcuts` を開き、「Lumnoを開く」を `⌘ T` に変更します。詳しくは、[キーボードショートカット](../keyboard-shortcuts/#change)を参照してください。
+2. `chrome://extensions/shortcuts` を開き、「Lumnoを開く」を Arc や [Zen](https://zen-browser.app/) と同じ `⌘ T` に変更します。詳しくは、[キーボードショートカット](../keyboard-shortcuts/#change)を参照してください。
 3. `⌘ T` を押して、[タブ・ブックマーク・履歴の検索](../search-tabs-bookmarks-history/)を試します。
 4. 直前の数ページを行き来するときは、`⌥ Q` を押して[最近のタブ切り替え](../tab-switcher/)を開きます。
 

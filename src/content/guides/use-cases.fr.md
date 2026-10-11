@@ -18,7 +18,7 @@ Pour en savoir plus, consultez [Chercher dans les onglets, les favoris et l'hist
 
 ## Lorsque vous venez d'Arc {#from-arc}
 
-Depuis qu'Arc ne reçoit plus de nouvelles fonctions, de nombreux utilisateurs sont passés à Dia, Chrome ou Edge. Lumno s'inspire de la barre de commande d'Arc, du passage d'un onglet récent à l'autre, de la restauration des onglets épinglés et de l'image dans l'image automatique. Après avoir installé Lumno, suivez ces étapes pour configurer la barre de commande :
+Depuis qu'[Arc](https://arc.net/) ne reçoit plus de nouvelles fonctions, de nombreux utilisateurs sont passés à Dia, Chrome ou Edge. Lumno s'inspire de la barre de commande d'Arc, du passage d'un onglet récent à l'autre, de la restauration des onglets épinglés et de l'image dans l'image automatique. Après avoir installé Lumno, suivez ces étapes pour configurer la barre de commande :
 
 1. Ouvrez `chrome://extensions/shortcuts` dans la barre d'adresse.
 2. Repérez Lumno et attribuez `⌘ T` à « Open command bar ».

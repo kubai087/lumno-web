@@ -6,9 +6,9 @@ Lumno는 Chromium 기반 브라우저를 위해 개발되었으며, Firefox 버�
 | --- | --- | --- | --- |
 | Google Chrome | 지원 | 지원 | Chrome 웹 스토어 |
 | Microsoft Edge | 지원 | 지원 | Edge 추가 기능 |
-| Brave, Arc, Vivaldi, Opera | 지원 | 지원 | Chrome 웹 스토어 |
+| Brave, [Arc](https://arc.net/), Vivaldi, Opera | 지원 | 지원 | Chrome 웹 스토어 |
 | Dia | 지원 | 아직 미지원 | Chrome 웹 스토어 |
-| Firefox, Zen 등 | 일부 지원 | 지원 | 아래 참고 |
+| Firefox, [Zen](https://zen-browser.app/) 등 | 일부 지원 | 지원 | 아래 참고 |
 | Safari | 미지원 | 미지원 | — |
 
 휴대전화와 태블릿의 브라우저는 아직 지원하지 않습니다.

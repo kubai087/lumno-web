@@ -18,7 +18,7 @@ See [Search tabs, bookmarks and history](../search-tabs-bookmarks-history/) and 
 
 ## When you've moved from Arc {#from-arc}
 
-Since Arc stopped adding new features, many people have moved to Dia, Chrome or Edge. Lumno is inspired by Arc's command bar, recent tab switching, pinned tab restore and automatic picture-in-picture. After you install Lumno, follow these steps to set up the command bar:
+Since [Arc](https://arc.net/) stopped adding new features, many people have moved to Dia, Chrome or Edge. Lumno is inspired by Arc's command bar, recent tab switching, pinned tab restore and automatic picture-in-picture. After you install Lumno, follow these steps to set up the command bar:
 
 1. Open `chrome://extensions/shortcuts` in the address bar.
 2. Find Lumno and set "Open command bar" to `⌘ T`.

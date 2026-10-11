@@ -1,4 +1,4 @@
-Se você trocar de guia enquanto um vídeo está sendo reproduzido em uma página, o vídeo passa automaticamente para uma pequena janela de picture-in-picture e continua sendo reproduzido. Ao voltar para a guia original, a janela se fecha e o vídeo continua na página. O funcionamento é semelhante ao picture-in-picture automático do Arc.
+Se você trocar de guia enquanto um vídeo está sendo reproduzido em uma página, o vídeo passa automaticamente para uma pequena janela de picture-in-picture e continua sendo reproduzido. Ao voltar para a guia original, a janela se fecha e o vídeo continua na página. O funcionamento é semelhante ao picture-in-picture automático do [Arc](https://arc.net/).
 
 ## Quando o picture-in-picture é ativado {#when}
 

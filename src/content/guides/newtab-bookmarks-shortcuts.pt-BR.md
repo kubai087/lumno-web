@@ -19,6 +19,16 @@ A fileira de ícones abaixo da caixa de pesquisa mostra seus atalhos. Quando voc
 - Arraste os atalhos para reordená-los. Se você soltar um atalho sobre os favoritos, ele se torna um favorito.
 - O número de atalhos por fileira, o tamanho dos ícones, o espaçamento, a ampliação estilo Dock e o botão "+" são definidos nas configurações do Lumno, em Appearance → Shortcuts.
 
+## Pastas de atalhos {#shortcut-folders}
+
+Quando os atalhos se acumularem, agrupe-os em pastas, como os apps na tela inicial do celular. Arraste um atalho até o centro de outro e solte quando aparecer "Release to create a folder in the bookmarks bar". Se soltar na borda de um ícone, você só muda a ordem.
+
+- A nova pasta é salva no fim da barra de favoritos do navegador e fica no lugar do atalho sobre o qual você soltou. Pressione `⌘ Z` para desfazer.
+- Arraste um atalho até uma pasta para colocá-lo nela. Você também pode arrastar uma pasta da área de favoritos para os atalhos.
+- Clique em uma pasta para ver os sites dela e clique de novo para fechá-la.
+- Clique com o botão direito em um site da pasta e escolha Edit para dar um ícone a ele, como em um atalho. O ícone fica salvo apenas neste dispositivo.
+- Clique com o botão direito em uma pasta para abrir todas as páginas dela em um novo grupo de guias, renomeá-la, mudar a cor ou removê-la dos atalhos. A pasta continua na sua barra de favoritos.
+
 ## Favoritos {#bookmarks}
 
 A área de favoritos mostra o conteúdo da barra de favoritos do navegador. Passe o cursor sobre uma pasta para ver as páginas que ela contém.
@@ -41,4 +51,6 @@ Com a barra de favoritos no topo, você também pode escolher o fundo: névoa ad
 
 - Se você tiver muitos favoritos, use as setas no canto superior direito para mudar de página ou altere nas configurações o número de fileiras exibidas.
 - Clique com o botão direito em uma pasta para mudar a cor dela. A pasta também aparece com essa cor nos menus.
+- Clique com o botão direito em uma pasta e escolha "Open in new tab group" para abrir todas as páginas dela de uma vez, reunidas em um mesmo grupo de guias.
 - Clique no ícone de favoritos para abrir o gerenciador de favoritos do navegador.
+- Por padrão, atalhos e favoritos abrem na guia atual. Para abri-los em uma nova guia, ative cada um nas configurações do Lumno, em General → New Tab Settings → Open in a new tab. Clicar segurando `⌘` ou com o botão do meio sempre abre em segundo plano.

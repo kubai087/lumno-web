@@ -13,7 +13,7 @@ Para voltar à pesquisa normal, pressione `Esc`.
 
 ## Atalhos de sites {#shortcuts}
 
-O Lumno inclui 46 atalhos de pesquisa; alguns deles aparecem na tabela a seguir. Se não se lembrar de um atalho, você também pode digitar o nome do site, como `github` ou `youtube`.
+O Lumno inclui 47 atalhos de pesquisa; alguns deles aparecem na tabela a seguir. Se não se lembrar de um atalho, você também pode digitar o nome do site, como `github` ou `youtube`.
 
 | Site | Atalho |
 | --- | --- |
@@ -42,6 +42,12 @@ Digite o atalho da IA, pressione `Tab`, escreva sua pergunta e pressione Enter. 
 | Kimi | `kimi` |
 
 ![A caixa mostra o ChatGPT à esquerda com uma pergunta sobre alternativas à barra de comandos do Arc, pronta para abrir o ChatGPT](ai "Digitar gpt e pressionar Tab para enviar a pergunta ao ChatGPT")
+
+## Perguntar à central de ajuda {#help-center}
+
+Não sabe como algo funciona? Pergunte pela caixa de pesquisa: digite `lm` ou `lumno`, pressione `Tab` e escreva sua pergunta. Aparecem até seis páginas de ajuda relacionadas, cada uma com o trecho correspondente. Escolha uma e pressione Enter para abrir a página nesse ponto. Já a primeira linha pesquisa no site da central de ajuda.
+
+Como o Lumno aparece em inglês, ele procura nas páginas de ajuda em inglês; por isso, pergunte em inglês, por exemplo "change a shortcut". Sua pergunta é comparada apenas no navegador; o Lumno só baixa o índice das páginas de ajuda.
 
 ## Escolher no painel de escopo de pesquisa {#scope-panel}
 

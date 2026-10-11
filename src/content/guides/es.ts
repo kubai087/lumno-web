@@ -149,7 +149,7 @@ const content: GuideLocaleContent = {
     "site-search": {
       pageTitle: "Búsqueda en sitios: escribe un atajo, pulsa Tab y busca en GitHub, YouTube o ChatGPT | Ayuda de Lumno",
       pageDescription:
-        "Lumno trae 46 atajos de búsqueda. Escribe gh, yt o sf y pulsa Tab para buscar directamente en GitHub, YouTube o Stack Overflow, o manda una pregunta directamente a ChatGPT, Gemini o Perplexity.",
+        "Lumno trae 47 atajos de búsqueda. Escribe gh, yt o sf y pulsa Tab para buscar directamente en GitHub, YouTube o Stack Overflow, o manda una pregunta directamente a ChatGPT, Gemini o Perplexity.",
       keywords: ["búsqueda en sitios Chrome", "Tab para buscar", "atajos de búsqueda navegador", "buscar en GitHub rápido", "atajo para ChatGPT", "buscador personalizado"],
       title: "Búsqueda en sitios y preguntas a la IA",
       navTitle: "Búsqueda en sitios e IA",
@@ -157,7 +157,7 @@ const content: GuideLocaleContent = {
         {
           question: "¿Qué sitios vienen incluidos?",
           answer:
-            "46 en total: 11 buscadores, 11 chats y buscadores con IA (como ChatGPT, Gemini, Perplexity y DeepSeek) y 24 sitios, entre ellos GitHub, YouTube, Stack Overflow y Reddit. Puedes añadir los tuyos.",
+            "47 en total: 11 buscadores, 11 chats y buscadores con IA (como ChatGPT, Gemini, Perplexity y DeepSeek) y 24 sitios, entre ellos GitHub, YouTube, Stack Overflow y Reddit, además del centro de ayuda de Lumno. Puedes añadir los tuyos.",
         },
         { question: "¿La búsqueda en sitios pasa por servidores de Lumno?", answer: "No. Lumno no tiene servidores; al pulsar Intro se abre directamente la página de búsqueda del sitio." },
       ],
@@ -181,7 +181,7 @@ const content: GuideLocaleContent = {
     "newtab-bookmarks-shortcuts": {
       pageTitle: "Accesos directos y marcadores en la nueva pestaña: añadir sitios, tres diseños | Ayuda de Lumno",
       pageDescription:
-        "Añade tus sitios de siempre como accesos directos en la nueva pestaña de Lumno, elige sus iconos y explora tus marcadores como carpetas, lista anidada o barra superior.",
+        "Añade tus sitios de siempre como accesos directos en la nueva pestaña de Lumno, elige sus iconos, agrúpalos en carpetas y explora tus marcadores como carpetas, lista anidada o barra superior.",
       keywords: ["accesos directos nueva pestaña", "marcadores nueva pestaña", "barra de marcadores Chrome", "carpetas de marcadores"],
       title: "Accesos directos y marcadores",
       navTitle: "Accesos directos y marcadores",

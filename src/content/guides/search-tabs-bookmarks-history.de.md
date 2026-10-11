@@ -27,3 +27,7 @@ Bei vielen offenen Tabs kannst du die Suche eingrenzen: Drücke einmal `Tab`, w�
 ![Das Suchfeld zeigt links „Search open tabs“, darunter nur die gerade offenen Tabs](opentabs "Nur offene Tabs durchsuchen")
 
 Um nur Lesezeichen, den Verlauf oder die meistbesuchten Seiten zu durchsuchen, drücke bei leerem Suchfeld zweimal `Tab` und wähle im Suchbereich-Panel die gewünschte Option aus.
+
+## Andere Tabs schließen {#close-other-tabs}
+
+Wenn sich die Tabs stapeln, klicke auf das Pinselsymbol rechts im Suchfeld, um die anderen Tabs im aktuellen Fenster zu schließen. Der aktuelle Tab, angeheftete Tabs und Tabs in Tabgruppen bleiben offen. Die Schaltfläche gibt es in der Befehlsleiste und im Suchfeld des neuen Tabs.

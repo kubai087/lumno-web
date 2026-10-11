@@ -27,3 +27,7 @@ Si de nombreux onglets sont ouverts, vous pouvez restreindre la recherche : app
 ![Le champ de recherche affiche « Search open tabs » à gauche, avec seulement les onglets actuellement ouverts](opentabs "Rechercher uniquement dans les onglets ouverts")
 
 Pour rechercher uniquement dans les favoris, l'historique ou les sites fréquents, appuyez deux fois sur `Tab` lorsque le champ est vide, puis faites votre choix dans le panneau de portée de recherche.
+
+## Fermer les autres onglets {#close-other-tabs}
+
+Quand les onglets s'accumulent, cliquez sur l'icône de pinceau à droite du champ de recherche pour fermer les autres onglets de la fenêtre actuelle. L'onglet actuel, les onglets épinglés et ceux qui appartiennent à un groupe d'onglets restent ouverts. Ce bouton se trouve à la fois dans la barre de commande et dans le champ de recherche du nouvel onglet.

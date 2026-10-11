@@ -13,7 +13,7 @@ Um zur normalen Suche zurückzukehren, drücke `Esc`.
 
 ## Seitenkürzel {#shortcuts}
 
-Lumno enthält 46 integrierte Suchkürzel. Eine Auswahl findest du in der folgenden Tabelle. Wenn du ein Kürzel nicht mehr weißt, kannst du auch den Namen der Website eingeben, zum Beispiel `github` oder `youtube`.
+Lumno enthält 47 integrierte Suchkürzel. Eine Auswahl findest du in der folgenden Tabelle. Wenn du ein Kürzel nicht mehr weißt, kannst du auch den Namen der Website eingeben, zum Beispiel `github` oder `youtube`.
 
 | Website | Kürzel |
 | --- | --- |
@@ -42,6 +42,12 @@ Gib das Kürzel der KI ein, drücke `Tab`, formuliere deine Frage und drücke di
 | Kimi | `kimi` |
 
 ![Das Suchfeld zeigt links ChatGPT mit einer Frage nach Alternativen zu Arcs Befehlsleiste, bereit, ChatGPT zu öffnen](ai "gpt eingeben und Tab drücken, um die Frage an ChatGPT zu senden")
+
+## Die Lumno-Hilfe fragen {#help-center}
+
+Du weißt nicht, wie etwas funktioniert? Frag direkt im Suchfeld: Gib `lm` oder `lumno` ein, drücke `Tab` und schreib deine Frage. Bis zu sechs passende Hilfeseiten erscheinen, jeweils mit dem Abschnitt, der passt. Wähle eine aus und drücke die Eingabetaste, um die Seite an dieser Stelle zu öffnen. Mit der obersten Zeile suchst du stattdessen auf der Website der Hilfe.
+
+Da Lumno bei dir auf Englisch angezeigt wird, sucht es in den englischen Hilfeseiten; stell deine Frage daher am besten auf Englisch, etwa „change a shortcut“. Deine Frage wird nur in deinem Browser abgeglichen; Lumno lädt lediglich das Verzeichnis der Hilfeseiten herunter.
 
 ## Im Suchbereich-Panel auswählen {#scope-panel}
 

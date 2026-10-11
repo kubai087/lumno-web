@@ -149,7 +149,7 @@ const content: GuideLocaleContent = {
     "site-search": {
       pageTitle: "Pesquisa em sites: digite um atalho, pressione Tab e pesquise no GitHub, YouTube ou ChatGPT | Ajuda do Lumno",
       pageDescription:
-        "O Lumno inclui 46 atalhos de pesquisa. Digite gh, yt ou sf e pressione Tab para pesquisar diretamente no GitHub, no YouTube ou no Stack Overflow, ou envie uma pergunta diretamente ao ChatGPT, ao Gemini ou ao Perplexity.",
+        "O Lumno inclui 47 atalhos de pesquisa. Digite gh, yt ou sf e pressione Tab para pesquisar diretamente no GitHub, no YouTube ou no Stack Overflow, ou envie uma pergunta diretamente ao ChatGPT, ao Gemini ou ao Perplexity.",
       keywords: ["pesquisa em sites no Chrome", "Tab para pesquisar", "atalhos de pesquisa no navegador", "pesquisar no GitHub rápido", "atalho para o ChatGPT", "mecanismo de pesquisa personalizado"],
       title: "Pesquisa em sites e perguntas à IA",
       navTitle: "Pesquisa em sites e IA",
@@ -157,7 +157,7 @@ const content: GuideLocaleContent = {
         {
           question: "Quais sites vêm incluídos?",
           answer:
-            "46 ao todo: 11 mecanismos de pesquisa, 11 chats e buscadores com IA (como ChatGPT, Gemini, Perplexity e DeepSeek) e 24 sites, entre eles GitHub, YouTube, Stack Overflow e Reddit. Você pode adicionar os seus.",
+            "47 ao todo: 11 mecanismos de pesquisa, 11 chats e buscadores com IA (como ChatGPT, Gemini, Perplexity e DeepSeek) e 24 sites, entre eles GitHub, YouTube, Stack Overflow e Reddit, além da central de ajuda do Lumno. Você pode adicionar os seus.",
         },
         { question: "A pesquisa em sites passa pelos servidores do Lumno?", answer: "Não. O Lumno não tem servidores; ao apertar Enter, a página de pesquisa do próprio site abre direto." },
       ],
@@ -181,7 +181,7 @@ const content: GuideLocaleContent = {
     "newtab-bookmarks-shortcuts": {
       pageTitle: "Atalhos e favoritos na nova guia: adicione sites, três layouts | Ajuda do Lumno",
       pageDescription:
-        "Adicione seus sites de sempre como atalhos na nova guia do Lumno, escolha os ícones e veja seus favoritos como pastas, lista aninhada ou barra no topo.",
+        "Adicione seus sites de sempre como atalhos na nova guia do Lumno, escolha os ícones, agrupe-os em pastas e veja seus favoritos como pastas, lista aninhada ou barra no topo.",
       keywords: ["atalhos da nova guia", "favoritos na nova guia", "barra de favoritos do Chrome", "pastas de favoritos"],
       title: "Atalhos e favoritos",
       navTitle: "Atalhos e favoritos",

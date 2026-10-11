@@ -67,7 +67,7 @@ El cuadro de búsqueda de la nueva pestaña usa las mismas teclas que la barra d
 | Tecla o clic | Acción |
 | --- | --- |
 | Empezar a escribir | El texto va directamente al cuadro de búsqueda, sin necesidad de hacer clic antes |
-| Clic en un acceso directo, un marcador o una tarjeta de sitio | Abrirlo en una pestaña nueva o en la actual, según tus ajustes |
+| Clic en un resultado, un acceso directo, un marcador o una tarjeta de sitio | Abrirlo en la pestaña actual de forma predeterminada, o en una nueva si lo activas en General → New Tab Settings → Open in a new tab |
 | Clic manteniendo pulsada `⌘` o clic central | Abrir en una pestaña en segundo plano |
 | `⌘ Z` | Deshacer tu último cambio en los accesos directos o marcadores, como quitar, mover o crear una carpeta |
 | `⌘ ⇧ Z` | Rehacer lo que acabas de deshacer |

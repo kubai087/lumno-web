@@ -67,7 +67,7 @@ A caixa de pesquisa da nova guia usa as mesmas teclas da barra de comandos. Alé
 | Tecla ou clique | Ação |
 | --- | --- |
 | Começar a digitar | O texto vai direto para a caixa de pesquisa, sem precisar clicar nela antes |
-| Clique em um atalho, favorito ou cartão de site | Abrir em uma nova guia ou na guia atual, conforme suas configurações |
+| Clique em um resultado, atalho, favorito ou cartão de site | Abrir na guia atual por padrão, ou em uma nova guia se você ativar em General → New Tab Settings → Open in a new tab |
 | Clique com `⌘` pressionada ou clique do meio | Abrir em uma guia em segundo plano |
 | `⌘ Z` | Desfazer sua última alteração em atalhos ou favoritos, como remover, mover ou criar uma pasta |
 | `⌘ ⇧ Z` | Refazer o que você acabou de desfazer |

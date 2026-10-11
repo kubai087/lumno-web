@@ -58,5 +58,8 @@
   { "q": "データを収集", "expect": ["privacy", "faq#data"] },
   { "q": "ソースコード", "expect": ["security-open-source#open-source"] },
   { "q": "インストール方法", "expect": ["install"] },
-  { "q": "不具合の報告", "expect": ["ratings-reviews#community", "security-open-source#open-source"] }
+  { "q": "不具合の報告", "expect": ["ratings-reviews#community", "security-open-source#open-source"] },
+  { "q": "他のタブを閉じる", "expect": ["search-tabs-bookmarks-history#close-other-tabs"] },
+  { "q": "ショートカットをフォルダにまとめる", "expect": ["newtab-bookmarks-shortcuts#shortcut-folders"] },
+  { "q": "ヘルプセンターに質問", "expect": ["site-search#help-center"] }
 ]

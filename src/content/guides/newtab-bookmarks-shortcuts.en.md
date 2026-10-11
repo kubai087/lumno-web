@@ -19,6 +19,16 @@ The row of icons under the search box shows your shortcuts. When you hover over 
 - Drag shortcuts to reorder them. Drag one onto your bookmarks to turn it into a bookmark.
 - To change how many shortcuts appear per row, icon size, spacing, Dock magnification or the "+" button, go to Appearance → Shortcuts in Lumno's settings.
 
+## Shortcut folders {#shortcut-folders}
+
+When your shortcuts pile up, stack them into folders, like apps on a phone's home screen. Drag one shortcut onto the middle of another, wait for "Release to create a folder in the bookmarks bar", then let go. Dropping it on either side of an icon just reorders.
+
+- The new folder is saved at the end of your browser's bookmarks bar and takes the place of the shortcut you dropped onto. Press `⌘ Z` to undo.
+- Drag a shortcut onto a folder to put it inside. You can also drag a folder from the bookmarks area into your shortcuts.
+- Click a folder to show its sites, and click it again to close it.
+- Right-click a site in a folder and choose Edit to give it an icon, just like a shortcut. The icon is saved on this device only.
+- Right-click a folder to open all of its pages in a new tab group, rename it, change its color, or remove it from your shortcuts. The folder stays in your bookmarks bar.
+
 ## Bookmarks {#bookmarks}
 
 The bookmarks area shows the contents of your browser's bookmarks bar. Hover over a folder to see the pages in it.
@@ -41,4 +51,6 @@ With the top bookmarks bar, you can also choose its background: adaptive mist, c
 
 - If you have many bookmarks, use the arrows at the top right to page through them, or change the number of rows in settings.
 - Right-click a folder to change its color. The folder also uses that color in menus.
+- Right-click a folder and choose "Open in new tab group" to open all of its pages at once, grouped together.
 - Click the bookmark icon to open the browser's bookmark manager.
+- Shortcuts and bookmarks open in the current tab by default. To open them in a new tab instead, turn each one on under General → New Tab Settings → Open in a new tab in Lumno's settings. Holding `⌘` while you click, or middle-clicking, always opens in the background.

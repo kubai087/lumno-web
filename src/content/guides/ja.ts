@@ -140,14 +140,14 @@ const content: GuideLocaleContent = {
     "site-search": {
       pageTitle: "サイト内検索：略称を入力して Tab、GitHub や YouTube を直接検索｜Lumno ヘルプ",
       pageDescription:
-        "Lumno には 46 の検索ショートカットが入っています。gh、yt、sf などを入力して Tab を押せば GitHub、YouTube、Stack Overflow を直接検索。ChatGPT や Gemini にそのまま質問することもできます。",
+        "Lumno には 47 の検索ショートカットが入っています。gh、yt、sf などを入力して Tab を押せば GitHub、YouTube、Stack Overflow を直接検索。ChatGPT や Gemini にそのまま質問することもできます。",
       keywords: ["Chrome サイト内検索", "Tab で検索", "ブラウザ 検索 ショートカット", "GitHub すばやく検索", "ChatGPT ショートカット", "カスタム検索エンジン"],
       title: "サイト内検索と AI への質問",
       navTitle: "サイト内検索と AI",
       faq: [
         {
           question: "どのサイトに対応していますか？",
-          answer: "46 種類です。検索エンジン 11、AI チャットと AI 検索 11（ChatGPT、Gemini、Perplexity、DeepSeek など）、GitHub、YouTube、Stack Overflow などのサイト 24。自分でサイトを追加することもできます。",
+          answer: "47 種類です。検索エンジン 11、AI チャットと AI 検索 11（ChatGPT、Gemini、Perplexity、DeepSeek など）、GitHub、YouTube、Stack Overflow などのサイト 24、そして Lumno ヘルプセンター。自分でサイトを追加することもできます。",
         },
         { question: "サイト内検索は Lumno のサーバーを経由しますか？", answer: "いいえ。Lumno にはサーバーがなく、Enter キーを押すと目的のサイトの検索ページが直接開きます。" },
       ],
@@ -170,7 +170,7 @@ const content: GuideLocaleContent = {
     },
     "newtab-bookmarks-shortcuts": {
       pageTitle: "新しいタブのショートカットとブックマーク：サイトの追加と 3 つのレイアウト｜Lumno ヘルプ",
-      pageDescription: "よく使うサイトを Lumno の新しいタブにショートカットとして追加し、アイコンを選び、ブックマークをフォルダ・階層リスト・上部バーの 3 つのレイアウトで表示できます。",
+      pageDescription: "よく使うサイトを Lumno の新しいタブにショートカットとして追加し、アイコンを選んでフォルダにまとめ、ブックマークをフォルダ・階層リスト・上部バーの 3 つのレイアウトで表示できます。",
       keywords: ["新しいタブ ショートカット", "新しいタブ ブックマーク", "Chrome ブックマークバー", "ブックマーク フォルダ"],
       title: "ショートカットとブックマーク",
       navTitle: "ショートカットとブックマーク",

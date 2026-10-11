@@ -13,7 +13,7 @@ Para volver a una búsqueda normal, pulsa `Esc`.
 
 ## Atajos de sitios {#shortcuts}
 
-Lumno incluye 46 atajos de búsqueda; en la tabla siguiente se muestran algunos. Si no recuerdas un atajo, también puedes escribir el nombre del sitio, por ejemplo `github` o `youtube`.
+Lumno incluye 47 atajos de búsqueda; en la tabla siguiente se muestran algunos. Si no recuerdas un atajo, también puedes escribir el nombre del sitio, por ejemplo `github` o `youtube`.
 
 | Sitio | Atajo |
 | --- | --- |
@@ -42,6 +42,12 @@ Escribe el atajo de la IA, pulsa `Tab`, escribe tu pregunta y pulsa Intro. Lumno
 | Kimi | `kimi` |
 
 ![El cuadro muestra ChatGPT a la izquierda con una pregunta sobre alternativas a la barra de comandos de Arc, listo para abrir ChatGPT](ai "Escribir gpt y pulsar Tab para enviar la pregunta a ChatGPT")
+
+## Preguntar al centro de ayuda {#help-center}
+
+¿No sabes cómo funciona algo? Pregúntalo desde el cuadro de búsqueda: escribe `lm` o `lumno`, pulsa `Tab` y escribe tu pregunta. Aparecen hasta seis páginas de ayuda relacionadas, cada una con el fragmento que coincide. Elige una y pulsa Intro para abrir la página en ese punto. Con la primera fila, en cambio, buscas en el sitio del centro de ayuda.
+
+Como Lumno se muestra en inglés, busca en las páginas de ayuda en inglés; conviene que preguntes en inglés, por ejemplo "change a shortcut". Tu pregunta solo se compara dentro del navegador; Lumno únicamente descarga el índice de las páginas de ayuda.
 
 ## Elegir en el panel de ámbitos de búsqueda {#scope-panel}
 

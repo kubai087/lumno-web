@@ -13,7 +13,7 @@ Pour revenir à une recherche normale, appuyez sur `Esc`.
 
 ## Raccourcis de sites {#shortcuts}
 
-Lumno intègre 46 raccourcis de recherche, dont voici une sélection. Si vous ne vous souvenez plus d'un raccourci, vous pouvez aussi saisir le nom du site, par exemple `github` ou `youtube`.
+Lumno intègre 47 raccourcis de recherche, dont voici une sélection. Si vous ne vous souvenez plus d'un raccourci, vous pouvez aussi saisir le nom du site, par exemple `github` ou `youtube`.
 
 | Site | Raccourci |
 | --- | --- |
@@ -42,6 +42,12 @@ Saisissez le raccourci de l'IA, appuyez sur `Tab`, rédigez votre question, puis
 | Kimi | `kimi` |
 
 ![Le champ affiche ChatGPT à gauche avec une question sur les alternatives à la barre de commande d'Arc, prêt à ouvrir ChatGPT](ai "Saisir gpt puis appuyer sur Tab pour envoyer la question à ChatGPT")
+
+## Poser une question au centre d'aide {#help-center}
+
+Vous ne savez pas comment fonctionne une fonction ? Posez la question depuis le champ de recherche : saisissez `lm` ou `lumno`, appuyez sur `Tab`, puis écrivez votre question. Jusqu'à six pages d'aide correspondantes s'affichent, chacune avec le passage trouvé. Choisissez-en une et appuyez sur Entrée pour ouvrir la page à cet endroit. La première ligne lance plutôt la recherche sur le site du centre d'aide.
+
+Lumno s'affiche chez vous en anglais et cherche donc dans les pages d'aide en anglais : posez plutôt votre question en anglais, par exemple « change a shortcut ». Votre question est comparée uniquement dans votre navigateur ; Lumno ne télécharge que l'index des pages d'aide.
 
 ## Choisir dans le panneau de portée de recherche {#scope-panel}
 

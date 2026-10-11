@@ -155,7 +155,7 @@ const content: GuideLocaleContent = {
     "site-search": {
       pageTitle: "站内搜索：输入简称按 Tab，在 GitHub、B 站、知乎中直接搜索｜Lumno 帮助中心",
       pageDescription:
-        "Lumno 内置 46 个搜索入口：输入 gh、bb、zh 等简称后按 Tab，可以直接在 GitHub、Bilibili、知乎中搜索，也可以把问题直接发给 ChatGPT、DeepSeek、Kimi、豆包。包含简称列表。",
+        "Lumno 内置 47 个搜索入口：输入 gh、bb、zh 等简称后按 Tab，可以直接在 GitHub、Bilibili、知乎中搜索，也可以把问题直接发给 ChatGPT、DeepSeek、Kimi、豆包。包含简称列表。",
       keywords: ["Chrome 站内搜索", "Tab 键站内搜索", "浏览器搜索快捷方式", "快速搜索 GitHub", "DeepSeek 快捷提问", "自定义搜索引擎"],
       title: "站内搜索和 AI 提问",
       navTitle: "站内搜索和 AI 提问",
@@ -163,7 +163,7 @@ const content: GuideLocaleContent = {
         {
           question: "支持哪些网站？",
           answer:
-            "内置 46 个：11 个搜索引擎，11 个 AI 和 AI 搜索（如 ChatGPT、DeepSeek、Kimi、Perplexity），以及 GitHub、YouTube、Bilibili、知乎、小红书等 24 个网站。也可以添加自定义网站。",
+            "内置 47 个：11 个搜索引擎，11 个 AI 和 AI 搜索（如 ChatGPT、DeepSeek、Kimi、Perplexity），以及 GitHub、YouTube、Bilibili、知乎、小红书等 24 个网站，还有 Lumno 帮助中心。也可以添加自定义网站。",
         },
         {
           question: "站内搜索会经过 Lumno 的服务器吗？",
@@ -190,7 +190,7 @@ const content: GuideLocaleContent = {
     "newtab-bookmarks-shortcuts": {
       pageTitle: "新标签页的快捷方式和书签：添加、排列与三种书签布局｜Lumno 帮助中心",
       pageDescription:
-        "在 Lumno 新标签页添加常用网站快捷方式、自定义图标，并在多层文件夹、多级列表和顶部书签栏三种布局中查看浏览器书签。",
+        "在 Lumno 新标签页添加常用网站快捷方式、自定义图标、把快捷方式叠成文件夹，并在多层文件夹、多级列表和顶部书签栏三种布局中查看浏览器书签。",
       keywords: ["新标签页快捷方式", "新标签页书签", "Chrome 书签栏", "书签文件夹"],
       title: "快捷方式和书签",
       navTitle: "快捷方式和书签",

@@ -19,6 +19,16 @@ Die Symbolreihe unter dem Suchfeld zeigt deine Shortcuts. Wenn du mit dem Mausze
 - Ziehe Shortcuts, um ihre Reihenfolge zu ändern. Wenn du einen Shortcut auf deine Lesezeichen ziehst, wird daraus ein Lesezeichen.
 - Anzahl pro Reihe, Symbolgröße, Abstände, Dock-Vergrößerung und die Schaltfläche „+“ legst du in den Einstellungen von Lumno unter Appearance → Shortcuts fest.
 
+## Shortcut-Ordner {#shortcut-folders}
+
+Wenn sich deine Shortcuts häufen, stapelst du sie wie Apps auf dem Homescreen deines Smartphones in Ordnern. Ziehe einen Shortcut auf die Mitte eines anderen und lass los, sobald „Release to create a folder in the bookmarks bar“ erscheint. Lässt du ihn am Rand eines Symbols los, änderst du nur die Reihenfolge.
+
+- Der neue Ordner wird am Ende der Lesezeichenleiste deines Browsers gespeichert und erscheint dort, wo der Ziel-Shortcut war. Mit `⌘ Z` machst du das rückgängig.
+- Ziehe einen Shortcut auf einen Ordner, um ihn darin abzulegen. Auch Ordner aus dem Lesezeichenbereich kannst du direkt zu den Shortcuts ziehen.
+- Klicke auf einen Ordner, um seine Websites anzuzeigen, und klicke erneut, um ihn zu schließen.
+- Klicke mit der rechten Maustaste auf eine Website im Ordner und wähle Edit, um ihr wie einem Shortcut ein Symbol zu geben. Das Symbol wird nur auf diesem Gerät gespeichert.
+- Klicke mit der rechten Maustaste auf einen Ordner, um alle seine Seiten in einer neuen Tabgruppe zu öffnen, ihn umzubenennen, seine Farbe zu ändern oder ihn aus den Shortcuts zu entfernen. Der Ordner bleibt in deiner Lesezeichenleiste erhalten.
+
 ## Lesezeichen {#bookmarks}
 
 Der Lesezeichenbereich zeigt den Inhalt der Lesezeichenleiste deines Browsers. Wenn du mit dem Mauszeiger über einen Ordner fährst, werden die darin enthaltenen Seiten angezeigt.
@@ -41,4 +51,6 @@ Für die Lesezeichenleiste oben kannst du außerdem einen Hintergrund wählen: a
 
 - Bei vielen Lesezeichen kannst du mit den Pfeilen oben rechts blättern oder in den Einstellungen festlegen, wie viele Reihen angezeigt werden.
 - Klicke mit der rechten Maustaste auf einen Ordner, um seine Farbe zu ändern. Der Ordner erscheint auch in Menüs in dieser Farbe.
+- Klicke mit der rechten Maustaste auf einen Ordner und wähle „Open in new tab group“, um alle seine Seiten auf einmal in einer gemeinsamen Tabgruppe zu öffnen.
 - Klicke auf das Lesezeichensymbol, um den Lesezeichen-Manager des Browsers zu öffnen.
+- Shortcuts und Lesezeichen öffnen sich standardmäßig im aktuellen Tab. Sollen sie sich in einem neuen Tab öffnen, aktiviere sie einzeln in den Einstellungen von Lumno unter General → New Tab Settings → Open in a new tab. Klickst du mit gedrückter `⌘` oder mit der mittleren Maustaste, öffnen sie sich immer im Hintergrund.

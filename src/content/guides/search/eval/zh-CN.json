@@ -90,5 +90,10 @@
   { "q": "怎么卸载", "expect": ["install", "newtab-other-extensions"] },
   { "q": "怎么下载", "expect": ["install#store"] },
   { "q": "改成英文界面", "expect": ["browser-compatibility#languages"] },
-  { "q": "反馈问题", "expect": ["ratings-reviews#community", "security-open-source#open-source"] }
+  { "q": "反馈问题", "expect": ["ratings-reviews#community", "security-open-source#open-source"] },
+  { "q": "关闭其他标签页", "expect": ["search-tabs-bookmarks-history#close-other-tabs"] },
+  { "q": "一键关闭所有标签", "expect": ["search-tabs-bookmarks-history#close-other-tabs"] },
+  { "q": "快捷方式文件夹", "expect": ["newtab-bookmarks-shortcuts#shortcut-folders"] },
+  { "q": "快捷方式怎么分组", "expect": ["newtab-bookmarks-shortcuts#shortcut-folders"] },
+  { "q": "在搜索框问帮助中心", "expect": ["site-search#help-center"] }
 ]

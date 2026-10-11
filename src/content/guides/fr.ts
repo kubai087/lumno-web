@@ -149,7 +149,7 @@ const content: GuideLocaleContent = {
     "site-search": {
       pageTitle: "Recherche sur site : tapez un raccourci, appuyez sur Tab, cherchez sur GitHub, YouTube ou ChatGPT | Aide Lumno",
       pageDescription:
-        "Lumno intègre 46 raccourcis de recherche. Saisissez gh, yt ou sf, puis appuyez sur Tab pour rechercher directement sur GitHub, YouTube ou Stack Overflow, ou envoyez une question directement à ChatGPT, Gemini ou Perplexity.",
+        "Lumno intègre 47 raccourcis de recherche. Saisissez gh, yt ou sf, puis appuyez sur Tab pour rechercher directement sur GitHub, YouTube ou Stack Overflow, ou envoyez une question directement à ChatGPT, Gemini ou Perplexity.",
       keywords: ["recherche sur site Chrome", "Tab pour rechercher", "raccourcis de recherche navigateur", "chercher vite sur GitHub", "raccourci ChatGPT", "moteur de recherche personnalisé"],
       title: "Recherche sur site et questions à l'IA",
       navTitle: "Recherche sur site et IA",
@@ -157,7 +157,7 @@ const content: GuideLocaleContent = {
         {
           question: "Quels sites sont intégrés ?",
           answer:
-            "46 au total : 11 moteurs de recherche, 11 chats et moteurs de recherche IA (comme ChatGPT, Gemini, Perplexity et DeepSeek) et 24 sites dont GitHub, YouTube, Stack Overflow et Reddit. Vous pouvez ajouter les vôtres.",
+            "47 au total : 11 moteurs de recherche, 11 chats et moteurs de recherche IA (comme ChatGPT, Gemini, Perplexity et DeepSeek) et 24 sites dont GitHub, YouTube, Stack Overflow et Reddit, plus le centre d'aide Lumno. Vous pouvez ajouter les vôtres.",
         },
         { question: "La recherche sur site passe-t-elle par les serveurs de Lumno ?", answer: "Non. Lumno n'a pas de serveur ; lorsque vous appuyez sur Entrée, la page de recherche du site s'ouvre directement." },
       ],
@@ -181,7 +181,7 @@ const content: GuideLocaleContent = {
     "newtab-bookmarks-shortcuts": {
       pageTitle: "Raccourcis et favoris du nouvel onglet : ajouter des sites, trois dispositions | Aide Lumno",
       pageDescription:
-        "Ajoutez vos sites favoris en raccourcis sur le nouvel onglet Lumno, choisissez leurs icônes et parcourez vos favoris en dossiers, en liste imbriquée ou en barre en haut.",
+        "Ajoutez vos sites favoris en raccourcis sur le nouvel onglet Lumno, choisissez leurs icônes, regroupez-les en dossiers et parcourez vos favoris en dossiers, en liste imbriquée ou en barre en haut.",
       keywords: ["raccourcis nouvel onglet", "favoris nouvel onglet", "barre de favoris Chrome", "dossiers de favoris"],
       title: "Raccourcis et favoris",
       navTitle: "Raccourcis et favoris",

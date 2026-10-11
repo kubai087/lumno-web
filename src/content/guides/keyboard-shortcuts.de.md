@@ -67,7 +67,7 @@ Im Suchfeld des neuen Tabs gelten dieselben Tasten wie in der Befehlsleiste. Au�
 | Taste oder Klick | Funktion |
 | --- | --- |
 | Einfach lostippen | Der Text landet direkt im Suchfeld, ohne dass du es vorher anklicken musst |
-| Klick auf einen Shortcut, ein Lesezeichen oder eine Website-Karte | Je nach Einstellung in einem neuen oder im aktuellen Tab öffnen |
+| Klick auf ein Suchergebnis, einen Shortcut, ein Lesezeichen oder eine Website-Karte | Standardmäßig im aktuellen Tab öffnen, in einem neuen Tab, wenn du es unter General → New Tab Settings → Open in a new tab aktivierst |
 | Klick mit gedrückter `⌘`-Taste oder mit der mittleren Maustaste | Im Hintergrund öffnen |
 | `⌘ Z` | Die letzte Änderung an Shortcuts oder Lesezeichen rückgängig machen, etwa Entfernen, Verschieben oder das Anlegen eines Ordners |
 | `⌘ ⇧ Z` | Das gerade Rückgängiggemachte wiederherstellen |

@@ -89,6 +89,7 @@ export default {
     open: ["How do I open the search box, popup or search bar?"],
     results: ["What do Open, Bookmark and History mean in results? Search suggestions, ranking"],
     "open-tabs": ["Only search open tabs, tab search", "Only search bookmarks, favorites or history"],
+    "close-other-tabs": ["Close all other tabs at once, close every tab, clean up tabs, what is the brush icon"],
   },
   "site-search": {
     "": ["Site search, search inside a website, search engines, change the search engine, default search engine"],
@@ -97,6 +98,7 @@ export default {
     ai: ["Ask ChatGPT, Gemini, Perplexity or DeepSeek directly. AI search"],
     "scope-panel": ["What opens when I press Tab twice? Search scope, switch search engine"],
     custom: ["Add a custom search engine or my own site. Search several sites at once, multi-search"],
+    "help-center": ["What is lm? Ask the Help Center from the search box, search the docs, help, manual, tutorial"],
   },
   "tab-switcher": {
     "": ["Tab switcher, switch tabs, recent tabs, previous tab, last tab, go back and forth between tabs"],
@@ -124,6 +126,7 @@ export default {
       "Turn off the dock magnification effect",
     ],
     bookmarks: ["Show bookmarks or favorites on the new tab, bookmarks bar at the top, bookmark layout, folder colors"],
+    "shortcut-folders": ["Put shortcuts in a folder, group shortcuts, stack icons, drag one onto another to make a folder", "Open a whole bookmark folder at once, open in a tab group"],
   },
   "newtab-frequent-sites": {
     "": ["Site cards at the bottom of the new tab, most visited, recently visited, top sites"],

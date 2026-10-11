@@ -27,3 +27,7 @@ Si tienes muchas pestañas abiertas, puedes acotar la búsqueda: pulsa `Tab` una
 ![El cuadro de búsqueda muestra "Search open tabs" a la izquierda, con solo las pestañas abiertas en la lista](opentabs "Buscar solo en las pestañas abiertas")
 
 Para buscar solo en marcadores, historial o sitios frecuentes, pulsa `Tab` dos veces con el cuadro vacío y elige una opción en el panel de ámbitos de búsqueda.
+
+## Cerrar las demás pestañas {#close-other-tabs}
+
+Cuando se acumulen las pestañas, haz clic en el icono del pincel a la derecha del cuadro de búsqueda para cerrar las demás pestañas de la ventana actual. La pestaña actual, las pestañas fijadas y las que están en un grupo de pestañas se quedan abiertas. El botón está tanto en la barra de comandos como en el cuadro de búsqueda de la nueva pestaña.

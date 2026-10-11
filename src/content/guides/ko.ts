@@ -149,7 +149,7 @@ const content: GuideLocaleContent = {
     "site-search": {
       pageTitle: "사이트 검색: 단축어 입력 후 Tab으로 GitHub, YouTube, ChatGPT 바로 검색 | Lumno 도움말",
       pageDescription:
-        "Lumno에는 46개의 검색 단축어가 기본으로 포함되어 있습니다. gh, yt, sf를 입력하고 Tab을 누르면 GitHub, YouTube, Stack Overflow를 바로 검색하고, ChatGPT, Gemini, Perplexity에도 질문을 곧장 보낼 수 있습니다.",
+        "Lumno에는 47개의 검색 단축어가 기본으로 포함되어 있습니다. gh, yt, sf를 입력하고 Tab을 누르면 GitHub, YouTube, Stack Overflow를 바로 검색하고, ChatGPT, Gemini, Perplexity에도 질문을 곧장 보낼 수 있습니다.",
       keywords: ["크롬 사이트 검색", "Tab 검색", "브라우저 검색 단축어", "GitHub 빠르게 검색", "ChatGPT 바로 질문", "맞춤 검색 엔진"],
       title: "사이트 검색과 AI에게 질문하기",
       navTitle: "사이트 검색·AI 질문",
@@ -157,7 +157,7 @@ const content: GuideLocaleContent = {
         {
           question: "어떤 사이트가 기본으로 들어 있나요?",
           answer:
-            "모두 46개입니다. 검색 엔진 11개, ChatGPT, Gemini, Perplexity, DeepSeek 같은 AI 채팅과 AI 검색 11개, GitHub, YouTube, Stack Overflow, Reddit 등 사이트 24개가 포함되어 있으며, 직접 추가할 수도 있습니다.",
+            "모두 47개입니다. 검색 엔진 11개, ChatGPT, Gemini, Perplexity, DeepSeek 같은 AI 채팅과 AI 검색 11개, GitHub, YouTube, Stack Overflow, Reddit 등 사이트 24개, 그리고 Lumno 도움말 센터가 포함되어 있으며, 직접 추가할 수도 있습니다.",
         },
         { question: "사이트 검색이 Lumno 서버를 거치나요?", answer: "아니요. Lumno에는 서버가 없습니다. Return 키를 누르면 해당 사이트의 검색 페이지가 바로 열립니다." },
       ],
@@ -181,7 +181,7 @@ const content: GuideLocaleContent = {
     "newtab-bookmarks-shortcuts": {
       pageTitle: "새 탭 바로가기와 북마크: 사이트 추가, 북마크 레이아웃 세 가지 | Lumno 도움말",
       pageDescription:
-        "자주 가는 사이트를 Lumno 새 탭에 바로가기로 추가하고 아이콘을 고르세요. 북마크는 폴더, 다단계 목록, 상단 바 중 원하는 방식으로 볼 수 있습니다.",
+        "자주 가는 사이트를 Lumno 새 탭에 바로가기로 추가하고 아이콘을 고르고 폴더로 묶어 보세요. 북마크는 폴더, 다단계 목록, 상단 바 중 원하는 방식으로 볼 수 있습니다.",
       keywords: ["새 탭 바로가기", "새 탭 북마크", "크롬 북마크바", "북마크 폴더"],
       title: "바로가기와 북마크",
       navTitle: "바로가기와 북마크",

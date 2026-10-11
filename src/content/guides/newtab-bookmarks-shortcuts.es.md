@@ -19,6 +19,16 @@ La fila de iconos situada bajo el cuadro de búsqueda muestra tus accesos direct
 - Arrastra los accesos directos para reordenarlos. Si sueltas uno sobre tus marcadores, se convierte en un marcador.
 - El número de accesos directos por fila, el tamaño de los iconos, el espaciado, la ampliación tipo Dock y el botón "+" se configuran en los ajustes de Lumno, en Appearance → Shortcuts.
 
+## Carpetas de accesos directos {#shortcut-folders}
+
+Cuando tengas muchos accesos directos, agrúpalos en carpetas, como las apps en la pantalla de inicio de un móvil. Arrastra un acceso directo al centro de otro y suéltalo cuando aparezca "Release to create a folder in the bookmarks bar". Si lo sueltas en un borde del icono, solo cambias el orden.
+
+- La carpeta nueva se guarda al final de la barra de marcadores del navegador y ocupa el lugar del acceso directo sobre el que lo soltaste. Pulsa `⌘ Z` para deshacerlo.
+- Arrastra un acceso directo sobre una carpeta para meterlo en ella. También puedes arrastrar una carpeta de la zona de marcadores a tus accesos directos.
+- Haz clic en una carpeta para ver sus sitios y vuelve a hacer clic para cerrarla.
+- Haz clic con el botón derecho en un sitio de la carpeta y elige Edit para ponerle un icono, igual que a un acceso directo. El icono solo se guarda en este dispositivo.
+- Haz clic con el botón derecho en una carpeta para abrir todas sus páginas en un grupo de pestañas nuevo, cambiarle el nombre o el color, o quitarla de tus accesos directos. La carpeta se queda en tu barra de marcadores.
+
 ## Marcadores {#bookmarks}
 
 La zona de marcadores muestra el contenido de la barra de marcadores de tu navegador. Pasa el puntero sobre una carpeta para ver las páginas que contiene.
@@ -41,4 +51,6 @@ Con la barra de marcadores superior también puedes elegir el fondo: niebla adap
 
 - Si tienes muchos marcadores, usa las flechas de la esquina superior derecha para pasar de página o cambia en los ajustes el número de filas que se muestran.
 - Haz clic con el botón derecho en una carpeta para cambiar su color. La carpeta también se muestra con ese color en los menús.
+- Haz clic con el botón derecho en una carpeta y elige "Open in new tab group" para abrir todas sus páginas a la vez, reunidas en un mismo grupo de pestañas.
 - Haz clic en el icono de marcadores para abrir el administrador de marcadores del navegador.
+- Los accesos directos y los marcadores se abren en la pestaña actual de forma predeterminada. Para abrirlos en una pestaña nueva, actívalos uno a uno en los ajustes de Lumno, en General → New Tab Settings → Open in a new tab. Si haces clic manteniendo pulsada `⌘` o con el botón central, siempre se abren en segundo plano.

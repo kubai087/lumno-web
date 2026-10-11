@@ -27,3 +27,7 @@ When you have many tabs open, you can narrow the search: press `Tab` once while 
 ![The search box shows "Search open tabs" on the left, with only the currently open tabs listed](opentabs "Search open tabs only")
 
 To search only bookmarks, history or top sites, press `Tab` twice while the search box is empty, then choose one in the search scope panel.
+
+## Close other tabs {#close-other-tabs}
+
+When tabs pile up, click the brush icon on the right of the search box to close the other tabs in the current window. The current tab, pinned tabs and tabs in tab groups stay open. The button is in both the command bar and the new tab's search box.

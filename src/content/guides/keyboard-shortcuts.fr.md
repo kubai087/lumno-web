@@ -67,7 +67,7 @@ Le champ de recherche du nouvel onglet utilise les mêmes touches que la barre d
 | Touche ou clic | Action |
 | --- | --- |
 | Commencer à taper | Le texte va directement dans le champ de recherche, sans avoir à cliquer dessus |
-| Clic sur un raccourci, un favori ou une carte de site | Ouvrir dans un nouvel onglet ou dans l'onglet actuel, selon vos réglages |
+| Clic sur un résultat, un raccourci, un favori ou une carte de site | Ouvrir dans l'onglet actuel par défaut, ou dans un nouvel onglet si vous l'activez sous General → New Tab Settings → Open in a new tab |
 | Clic en maintenant `⌘` ou clic du milieu | Ouvrir dans un onglet en arrière-plan |
 | `⌘ Z` | Annuler votre dernière modification des raccourcis ou des favoris : suppression, déplacement, création de dossier, etc. |
 | `⌘ ⇧ Z` | Rétablir ce que vous venez d'annuler |

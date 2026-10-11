@@ -67,7 +67,7 @@ The search box on the new tab page uses the same keys as the command bar. On top
 | Key or click | Action |
 | --- | --- |
 | Start typing | Your text goes straight into the search box; no need to click it first |
-| Click a shortcut, bookmark or site card | Open it in a new tab or the current tab, depending on your settings |
+| Click a search result, shortcut, bookmark or site card | Open it in the current tab by default, or in a new tab once you turn it on under General → New Tab Settings → Open in a new tab |
 | Hold `⌘` and click, or middle-click | Open in a background tab |
 | `⌘ Z` | Undo your last change to shortcuts or bookmarks, such as removing, moving or creating a folder |
 | `⌘ ⇧ Z` | Redo what you just undid |

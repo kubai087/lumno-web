@@ -19,6 +19,16 @@ La rangée d'icônes sous le champ de recherche correspond à vos raccourcis. Lo
 - Faites glisser les raccourcis pour les réorganiser. Déposez-en un sur vos favoris pour le transformer en favori.
 - Le nombre de raccourcis par rangée, la taille des icônes, l'espacement, l'effet d'agrandissement du Dock et le bouton « + » se règlent dans les réglages de Lumno, sous Appearance → Shortcuts.
 
+## Dossiers de raccourcis {#shortcut-folders}
+
+Quand vos raccourcis s'accumulent, regroupez-les en dossiers, comme les apps sur l'écran d'accueil d'un téléphone. Faites glisser un raccourci au centre d'un autre, puis relâchez quand « Release to create a folder in the bookmarks bar » s'affiche. Si vous le déposez sur un bord de l'icône, vous changez seulement l'ordre.
+
+- Le nouveau dossier est enregistré à la fin de la barre de favoris du navigateur et prend la place du raccourci sur lequel vous l'avez déposé. Appuyez sur `⌘ Z` pour annuler.
+- Faites glisser un raccourci sur un dossier pour l'y ranger. Vous pouvez aussi faire glisser un dossier de la zone des favoris vers vos raccourcis.
+- Cliquez sur un dossier pour afficher ses sites, puis cliquez à nouveau pour le fermer.
+- Faites un clic droit sur un site du dossier et choisissez Edit pour lui attribuer une icône, comme pour un raccourci. L'icône est enregistrée uniquement sur cet appareil.
+- Faites un clic droit sur un dossier pour ouvrir toutes ses pages dans un nouveau groupe d'onglets, le renommer, changer sa couleur ou le retirer de vos raccourcis. Le dossier reste dans votre barre de favoris.
+
 ## Favoris {#bookmarks}
 
 La zone des favoris affiche le contenu de la barre de favoris de votre navigateur. Survolez un dossier pour afficher les pages qu'il contient.
@@ -41,4 +51,6 @@ Avec la barre de favoris en haut, vous pouvez également choisir l'arrière-plan
 
 - Si vous avez beaucoup de favoris, faites-les défiler avec les flèches en haut à droite ou modifiez le nombre de rangées affichées dans les réglages.
 - Faites un clic droit sur un dossier pour changer sa couleur. Le dossier prend également cette couleur dans les menus.
+- Faites un clic droit sur un dossier et choisissez « Open in new tab group » pour ouvrir toutes ses pages d'un coup, réunies dans un même groupe d'onglets.
 - Cliquez sur l'icône des favoris pour ouvrir le gestionnaire de favoris du navigateur.
+- Par défaut, les raccourcis et les favoris s'ouvrent dans l'onglet actuel. Pour les ouvrir dans un nouvel onglet, activez-les un par un dans les réglages de Lumno, sous General → New Tab Settings → Open in a new tab. Un clic en maintenant `⌘` ou un clic du bouton central les ouvre toujours en arrière-plan.

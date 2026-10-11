@@ -75,5 +75,9 @@
   { "q": "is it safe", "expect": ["security-open-source", "privacy"] },
   { "q": "source code", "expect": ["security-open-source#open-source"] },
   { "q": "permissions", "expect": ["security-open-source#permissions", "privacy#permissions"] },
-  { "q": "report a bug", "expect": ["ratings-reviews#community", "security-open-source#open-source"] }
+  { "q": "report a bug", "expect": ["ratings-reviews#community", "security-open-source#open-source"] },
+  { "q": "close other tabs", "expect": ["search-tabs-bookmarks-history#close-other-tabs"] },
+  { "q": "shortcut folder", "expect": ["newtab-bookmarks-shortcuts#shortcut-folders"] },
+  { "q": "group shortcuts", "expect": ["newtab-bookmarks-shortcuts#shortcut-folders"] },
+  { "q": "ask the help center", "expect": ["site-search#help-center"] }
 ]

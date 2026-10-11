@@ -62,5 +62,8 @@
   { "q": "會上傳資料嗎", "expect": ["privacy", "faq#data"] },
   { "q": "原始碼", "expect": ["security-open-source#open-source"] },
   { "q": "怎麼下載", "expect": ["install#store"] },
-  { "q": "回報問題", "expect": ["ratings-reviews#community", "security-open-source#open-source"] }
+  { "q": "回報問題", "expect": ["ratings-reviews#community", "security-open-source#open-source"] },
+  { "q": "關閉其他分頁", "expect": ["search-tabs-bookmarks-history#close-other-tabs"] },
+  { "q": "捷徑資料夾", "expect": ["newtab-bookmarks-shortcuts#shortcut-folders"] },
+  { "q": "在搜尋框問說明中心", "expect": ["site-search#help-center"] }
 ]

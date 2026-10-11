@@ -149,7 +149,7 @@ const content: GuideLocaleContent = {
     "site-search": {
       pageTitle: "Site search: type a shortcut, press Tab, search GitHub, YouTube or ChatGPT | Lumno Help",
       pageDescription:
-        "Lumno has 46 built-in search shortcuts. Type gh, yt or sf and press Tab to search GitHub, YouTube or Stack Overflow directly, or send a question straight to ChatGPT, Gemini or Perplexity.",
+        "Lumno has 47 built-in search shortcuts. Type gh, yt or sf and press Tab to search GitHub, YouTube or Stack Overflow directly, or send a question straight to ChatGPT, Gemini or Perplexity.",
       keywords: ["Chrome site search", "Tab to search", "search shortcuts browser", "search GitHub fast", "ask ChatGPT shortcut", "custom search engine"],
       title: "Site search and asking AI",
       navTitle: "Site search & asking AI",
@@ -157,7 +157,7 @@ const content: GuideLocaleContent = {
         {
           question: "Which sites are built in?",
           answer:
-            "46 in all: 11 search engines, 11 AI chats and AI search engines (such as ChatGPT, Gemini, Perplexity and DeepSeek), and 24 sites including GitHub, YouTube, Stack Overflow and Reddit. You can add your own.",
+            "47 in all: 11 search engines, 11 AI chats and AI search engines (such as ChatGPT, Gemini, Perplexity and DeepSeek), and 24 sites including GitHub, YouTube, Stack Overflow and Reddit, plus the Lumno Help Center. You can add your own.",
         },
         { question: "Does site search go through Lumno's servers?", answer: "No. Lumno has no servers; pressing Return opens the site's own search page." },
       ],
@@ -181,7 +181,7 @@ const content: GuideLocaleContent = {
     "newtab-bookmarks-shortcuts": {
       pageTitle: "New tab shortcuts and bookmarks: add sites, three bookmark layouts | Lumno Help",
       pageDescription:
-        "Add your go-to sites as shortcuts on Lumno's new tab, pick their icons, and browse your bookmarks as folders, a nested list or a top bar.",
+        "Add your go-to sites as shortcuts on Lumno's new tab, pick their icons, stack them into folders, and browse your bookmarks as folders, a nested list or a top bar.",
       keywords: ["new tab shortcuts", "new tab bookmarks", "Chrome bookmarks bar", "bookmark folders"],
       title: "Shortcuts and bookmarks",
       navTitle: "Shortcuts & bookmarks",

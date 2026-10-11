@@ -140,14 +140,14 @@ const content: GuideLocaleContent = {
     "site-search": {
       pageTitle: "站內搜尋：輸入簡稱按 Tab，直接在 GitHub、YouTube、維基百科中搜尋｜Lumno 說明中心",
       pageDescription:
-        "Lumno 內建 46 個搜尋入口：輸入 gh、yt、zw 等簡稱後按 Tab，就能直接在 GitHub、YouTube、維基百科中搜尋，也能把問題直接送給 ChatGPT、Gemini、DeepSeek。附簡稱列表。",
+        "Lumno 內建 47 個搜尋入口：輸入 gh、yt、zw 等簡稱後按 Tab，就能直接在 GitHub、YouTube、維基百科中搜尋，也能把問題直接送給 ChatGPT、Gemini、DeepSeek。附簡稱列表。",
       keywords: ["Chrome 站內搜尋", "Tab 鍵站內搜尋", "瀏覽器搜尋捷徑", "快速搜尋 GitHub", "快速問 ChatGPT", "自訂搜尋引擎"],
       title: "站內搜尋和問 AI",
       navTitle: "站內搜尋和問 AI",
       faq: [
         {
           question: "支援哪些網站？",
-          answer: "內建 46 個：11 個搜尋引擎、11 個 AI 和 AI 搜尋（例如 ChatGPT、Gemini、DeepSeek、Perplexity），以及 GitHub、YouTube、維基百科等 24 個網站。也可以加入自訂網站。",
+          answer: "內建 47 個：11 個搜尋引擎、11 個 AI 和 AI 搜尋（例如 ChatGPT、Gemini、DeepSeek、Perplexity），以及 GitHub、YouTube、維基百科等 24 個網站，還有 Lumno 說明中心。也可以加入自訂網站。",
         },
         { question: "站內搜尋會經過 Lumno 的伺服器嗎？", answer: "不會。Lumno 沒有自己的伺服器，按 Enter 後會直接開啟目標網站的搜尋網址。" },
       ],
@@ -170,7 +170,7 @@ const content: GuideLocaleContent = {
     },
     "newtab-bookmarks-shortcuts": {
       pageTitle: "新分頁的捷徑和書籤：新增網站、三種書籤版面｜Lumno 說明中心",
-      pageDescription: "在 Lumno 新分頁加入常用網站的捷徑、自訂圖示，並以多層資料夾、多層級列表或頂端書籤列三種版面瀏覽書籤。",
+      pageDescription: "在 Lumno 新分頁加入常用網站的捷徑、自訂圖示、把捷徑疊成資料夾，並以多層資料夾、多層級列表或頂端書籤列三種版面瀏覽書籤。",
       keywords: ["新分頁捷徑", "新分頁書籤", "Chrome 書籤列", "書籤資料夾"],
       title: "捷徑和書籤",
       navTitle: "捷徑和書籤",

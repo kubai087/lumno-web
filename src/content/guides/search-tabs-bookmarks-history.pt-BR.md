@@ -27,3 +27,7 @@ Se houver muitas guias abertas, você pode restringir a pesquisa: pressione `Tab
 ![A caixa de pesquisa mostra "Search open tabs" à esquerda, com apenas as guias abertas na lista](opentabs "Pesquisar apenas nas guias abertas")
 
 Para pesquisar apenas em favoritos, no histórico ou nos sites frequentes, pressione `Tab` duas vezes com a caixa vazia e escolha uma opção no painel de escopo de pesquisa.
+
+## Fechar as outras guias {#close-other-tabs}
+
+Quando as guias se acumularem, clique no ícone de pincel à direita da caixa de pesquisa para fechar as outras guias da janela atual. A guia atual, as guias fixadas e as que estão em um grupo de guias continuam abertas. O botão fica tanto na barra de comandos quanto na caixa de pesquisa da nova guia.

@@ -13,7 +13,7 @@ To return to a normal search, press `Esc`.
 
 ## Site shortcuts {#shortcuts}
 
-Lumno includes 46 built-in search shortcuts; some of them are listed below. If you don't remember a shortcut, you can also type the site's name, such as `github` or `youtube`.
+Lumno includes 47 built-in search shortcuts; some of them are listed below. If you don't remember a shortcut, you can also type the site's name, such as `github` or `youtube`.
 
 | Site | Shortcut |
 | --- | --- |
@@ -42,6 +42,12 @@ Type the AI's shortcut, press `Tab`, write your question and press `↩`. Lumno 
 | Kimi | `kimi` |
 
 ![The search box shows ChatGPT on the left with a question about alternatives to Arc's command bar, ready to open ChatGPT](ai "Type gpt and press Tab to send your question to ChatGPT")
+
+## Ask the Help Center {#help-center}
+
+Not sure how something works? Ask from the search box: type `lm` or `lumno`, press `Tab`, then write your question, such as "change a shortcut". Up to six matching help pages appear, each with the passage that matched. Choose one and press Enter to open the page at that section. Choose the top row to search on the Help Center site instead.
+
+Your question is matched inside your browser; Lumno only downloads the index of the help pages.
 
 ## Choose from the search scope panel {#scope-panel}
 

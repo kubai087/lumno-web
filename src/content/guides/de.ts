@@ -149,7 +149,7 @@ const content: GuideLocaleContent = {
     "site-search": {
       pageTitle: "Seitensuche: Kürzel tippen, Tab drücken, GitHub, YouTube oder ChatGPT durchsuchen | Lumno-Hilfe",
       pageDescription:
-        "Lumno enthält 46 integrierte Suchkürzel. Gib gh, yt oder sf ein und drücke Tab, um GitHub, YouTube oder Stack Overflow direkt zu durchsuchen, oder sende eine Frage direkt an ChatGPT, Gemini oder Perplexity.",
+        "Lumno enthält 47 integrierte Suchkürzel. Gib gh, yt oder sf ein und drücke Tab, um GitHub, YouTube oder Stack Overflow direkt zu durchsuchen, oder sende eine Frage direkt an ChatGPT, Gemini oder Perplexity.",
       keywords: ["Chrome Seitensuche", "Tab zum Suchen", "Suchkürzel Browser", "GitHub schnell durchsuchen", "ChatGPT Tastenkürzel", "eigene Suchmaschine"],
       title: "Seitensuche und KI fragen",
       navTitle: "Seitensuche & KI fragen",
@@ -157,7 +157,7 @@ const content: GuideLocaleContent = {
         {
           question: "Welche Websites sind dabei?",
           answer:
-            "46 insgesamt: 11 Suchmaschinen, 11 KI-Chats und KI-Suchmaschinen (etwa ChatGPT, Gemini, Perplexity und DeepSeek) und 24 Websites wie GitHub, YouTube, Stack Overflow und Reddit. Eigene kannst du hinzufügen.",
+            "47 insgesamt: 11 Suchmaschinen, 11 KI-Chats und KI-Suchmaschinen (etwa ChatGPT, Gemini, Perplexity und DeepSeek) und 24 Websites wie GitHub, YouTube, Stack Overflow und Reddit, dazu die Lumno-Hilfe. Eigene kannst du hinzufügen.",
         },
         { question: "Läuft die Seitensuche über Lumnos Server?", answer: "Nein. Lumno hat keine Server; mit Enter öffnet sich direkt die Suchseite der Website." },
       ],
@@ -181,7 +181,7 @@ const content: GuideLocaleContent = {
     "newtab-bookmarks-shortcuts": {
       pageTitle: "Shortcuts und Lesezeichen im neuen Tab: Websites hinzufügen, drei Layouts | Lumno-Hilfe",
       pageDescription:
-        "Lege deine Lieblingsseiten als Shortcuts auf Lumnos neuen Tab, wähle ihre Symbole aus und zeige deine Lesezeichen als Ordner, verschachtelte Liste oder Leiste oben an.",
+        "Lege deine Lieblingsseiten als Shortcuts auf Lumnos neuen Tab, wähle ihre Symbole aus, stapel sie in Ordnern und zeige deine Lesezeichen als Ordner, verschachtelte Liste oder Leiste oben an.",
       keywords: ["neuer Tab Shortcuts", "neuer Tab Lesezeichen", "Chrome Lesezeichenleiste", "Lesezeichenordner"],
       title: "Shortcuts und Lesezeichen",
       navTitle: "Shortcuts & Lesezeichen",

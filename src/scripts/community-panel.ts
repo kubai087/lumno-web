@@ -7,7 +7,11 @@
 const TRIGGER = "[data-community-trigger]";
 const loadPanel = () => import("../components/home/community-panel-root");
 let panelModule: ReturnType<typeof loadPanel> | null = null;
-const preload = () => (panelModule ??= loadPanel());
+// A failed load (a chunk gone after a deploy) is forgotten so the next press tries again.
+const preload = () => (panelModule ??= loadPanel().catch((error) => {
+  panelModule = null;
+  throw error;
+}));
 
 const closestTrigger = (target: EventTarget | null) =>
   target instanceof Element ? target.closest<HTMLElement>(TRIGGER) : null;

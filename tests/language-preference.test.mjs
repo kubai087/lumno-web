@@ -98,6 +98,14 @@ test("privacy keeps x-default stable until a user has saved a language choice or
   );
 });
 
+test("an extension entry's ?lang= picks the localized route ahead of a saved choice and the browser language", () => {
+  const source = fs.readFileSync(path.join(workspaceRoot, "src/layouts/SitePage.astro"), "utf8");
+  const headSource = source.slice(0, source.indexOf("</head>"));
+
+  assert.match(headSource, /const requestedLanguage = isExtensionEntry\s*\?\s*String\(new URLSearchParams\(window\.location\.search\)\.get\("lang"\) \|\| ""\)\.trim\(\)/);
+  assert.match(headSource, /const mode = requestedLanguage \|\| \(storedMode && storedMode\.toLowerCase\(\) !== "system" \? storedMode : browserLanguage\);/);
+});
+
 test("the help center fills its search from ?q= so the extension's Lumno site search lands on results", () => {
   const source = fs.readFileSync(path.join(workspaceRoot, "src/components/guides/GuideShell.astro"), "utf8");
   assert.match(source, /new URLSearchParams\(window\.location\.search\)\.get\("q"\)/);

@@ -82,8 +82,13 @@ import LanguageScrollRestore from "../components/LanguageScrollRestore.astro";
             const isExtensionEntry = entryValues.includes(new URLSearchParams(window.location.search).get("entry"));
             if (!storedMode && !isExtensionEntry) return;
 
+            // The extension names the interface language it just showed help results in (?lang=),
+            // which outranks a saved choice and the browser language so the page matches them.
+            const requestedLanguage = isExtensionEntry
+              ? String(new URLSearchParams(window.location.search).get("lang") || "").trim()
+              : "";
             const browserLanguage = (Array.isArray(navigator.languages) && navigator.languages[0]) || navigator.language || "en";
-            const mode = storedMode && storedMode.toLowerCase() !== "system" ? storedMode : browserLanguage;
+            const mode = requestedLanguage || (storedMode && storedMode.toLowerCase() !== "system" ? storedMode : browserLanguage);
             const targetLocale = window.__lumnoNormalizeLocale(mode, "en");
             // A page missing in the saved language stays put rather than leaving for that language's homepage.
             if (redirectLocales && !redirectLocales.includes(targetLocale)) return;

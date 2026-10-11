@@ -374,7 +374,7 @@ test("community entries lead Chinese readers to the WeChat group and everyone el
   const panel = fs.readFileSync(path.join(workspaceRoot, "src/lib/community-panel.ts"), "utf8");
   const content = fs.readFileSync(path.join(workspaceRoot, "src/lib/home-content.ts"), "utf8");
   // Chinese: the group QR, then the author's Xiaohongshu before X, then a quiet GitHub issue link.
-  assert.match(panel, /if \(community\.kind === "group"\)[\s\S]*?qr: \{ src: COMMUNITY_LINKS\.wechatQrImagePath[\s\S]*?icon: "xiaohongshu"[\s\S]*?icon: "x"[\s\S]*?note: \{ label: community\.issueNote, href: GITHUB_ISSUE_URL/);
+  assert.match(panel, /if \(community\.kind === "group"\)[\s\S]*?qr: \{\s*src: COMMUNITY_LINKS\.wechatQrImagePath,\s*alt: community\.qrAlt,\s*wechatHint: community\.qrWechatHint,\s*phoneHint: community\.qrPhoneHint,\s*\}[\s\S]*?icon: "xiaohongshu"[\s\S]*?icon: "x"[\s\S]*?note: \{ label: community\.issueNote, href: GITHUB_ISSUE_URL/);
   // Everyone else: GitHub, then X. No Discord on the site.
   assert.match(panel, /icon: "github"[\s\S]*?icon: "x"/);
   assert.equal((content.match(/kind: "group",/g) || []).length, 2, "zh-CN and zh-TW");

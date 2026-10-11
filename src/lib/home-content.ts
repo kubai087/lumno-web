@@ -70,6 +70,9 @@ type HomeCommunityCopy = {
       askLabel: string;
       askAria: string;
       qrAlt: string;
+      /** Under the QR on phones: WeChat's in-app browser can read it in place; elsewhere it goes through Photos. */
+      qrWechatHint: string;
+      qrPhoneHint: string;
       followLabel: string;
       xiaohongshuLabel: string;
       xLabel: string;
@@ -252,6 +255,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
       askLabel: "直接问作者（秒回）",
       askAria: "打开用户群二维码，直接向作者提问",
       qrAlt: "Lumno 微信群二维码",
+      qrWechatHint: "长按二维码，选择「识别图中的二维码」即可加入",
+      qrPhoneHint: "长按图片存到相册，再用微信「扫一扫」从相册选取",
       followLabel: "关注作者",
       xiaohongshuLabel: "小红书",
       xLabel: "X",
@@ -553,6 +558,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
       askLabel: "直接問作者（秒回）",
       askAria: "開啟群組 QR Code，直接向作者提問",
       qrAlt: "Lumno 微信群組 QR Code",
+      qrWechatHint: "長按 QR Code，即可識別並加入群組",
+      qrPhoneHint: "長按圖片儲存到相簿，再用微信「掃一掃」從相簿選取",
       followLabel: "追蹤作者",
       xiaohongshuLabel: "小紅書",
       xLabel: "X",

@@ -191,6 +191,9 @@ test("community entries open one accessible panel", () => {
   assert.match(panel, /\{qr && \([\s\S]*?\{note && \([\s\S]*?\{followLabel \? \(/);
   assert.match(panel, /closeLabel=\{closeLabel\}/);
   assert.match(panel, /width="866"[\s\S]*?height="1280"/);
+  // WeChat can't join a group from a link: phones get a hint for reading the QR on the same screen.
+  assert.match(panel, /matchMedia\("\(pointer: coarse\)"\)[\s\S]*?\/MicroMessenger\/i\.test\(navigator\.userAgent\) \? qr\.wechatHint : qr\.phoneHint/);
+  assert.match(panel, /\{qr && \([\s\S]*?\{hint && <p[\s\S]*?\{note && \(/);
   assert.doesNotMatch(panel, /from "[^"]*SettingsKit"/, "the lazily loaded panel must not pull the settings kit stylesheet onto every page");
   assert.match(trigger, /"aria-haspopup": "dialog" as const[\s\S]*?\.\.\.communityTriggerAttributes\(panel\)/);
   assert.match(panelRoot, /<Dialog open=\{open\} onOpenChange=\{setOpen\}>[\s\S]*?<CommunityPanel/);

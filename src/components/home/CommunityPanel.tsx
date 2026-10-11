@@ -29,6 +29,17 @@ function LinkIcon({ icon }: { icon: CommunityPanelIcon }) {
   return <i className={`${icon === "github" ? "ri-github-line" : "ri-twitter-x-line"} shrink-0 text-[18px] leading-none`} aria-hidden="true" />;
 }
 
+/**
+ * On a phone the QR is already on the screen that would scan it. WeChat's own
+ * browser reads it on a long press; anywhere else it has to go through Photos.
+ * Desktops scan it with a phone, so they get no hint. The panel only renders
+ * in the browser (community-panel-root.tsx), so `navigator` is always there.
+ */
+function qrHint(qr: NonNullable<CommunityPanelContent["qr"]>) {
+  if (!window.matchMedia("(pointer: coarse)").matches) return null;
+  return /MicroMessenger/i.test(navigator.userAgent) ? qr.wechatHint : qr.phoneHint;
+}
+
 interface CommunityPanelProps {
   panel: CommunityPanelContent;
   onCloseAutoFocus?: ComponentProps<typeof DialogContent>["onCloseAutoFocus"];
@@ -36,6 +47,7 @@ interface CommunityPanelProps {
 
 export function CommunityPanel({ panel, onCloseAutoFocus }: CommunityPanelProps) {
   const { title, closeLabel, qr, followLabel, links, note } = panel;
+  const hint = qr ? qrHint(qr) : null;
   return (
     <DialogContent
       aria-describedby={undefined}
@@ -57,6 +69,7 @@ export function CommunityPanel({ panel, onCloseAutoFocus }: CommunityPanelProps)
           loading="lazy"
         />
       )}
+      {hint && <p className="mt-3 text-center text-[13px] text-muted-foreground">{hint}</p>}
 
       {note && (
         <a

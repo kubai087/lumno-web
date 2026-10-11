@@ -18,7 +18,8 @@ export type CommunityPanel = {
   title: string;
   closeLabel: string;
   /** Chinese readers: the WeChat group, front and centre. */
-  qr?: { src: string; alt: string };
+  /** WeChat can't join a group from a link, so phones get a hint for reading the QR on the same device. */
+  qr?: { src: string; alt: string; wechatHint: string; phoneHint: string };
   /** Set when the links are follow-ups under the QR rather than the panel's main rows. */
   followLabel?: string;
   links: CommunityPanelLink[];
@@ -36,7 +37,12 @@ export function getCommunityPanel(locale: SupportedLocale): CommunityPanel {
   if (community.kind === "group") {
     return {
       ...base,
-      qr: { src: COMMUNITY_LINKS.wechatQrImagePath, alt: community.qrAlt },
+      qr: {
+        src: COMMUNITY_LINKS.wechatQrImagePath,
+        alt: community.qrAlt,
+        wechatHint: community.qrWechatHint,
+        phoneHint: community.qrPhoneHint,
+      },
       followLabel: community.followLabel,
       links: [
         { label: community.xiaohongshuLabel, href: COMMUNITY_LINKS.xiaohongshuUrl, icon: "xiaohongshu", analyticsEvent: "open_author_xiaohongshu" },

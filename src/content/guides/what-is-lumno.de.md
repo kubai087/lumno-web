@@ -30,7 +30,7 @@ Jede dieser Funktionen kannst du in den Einstellungen von Lumno einzeln aktivier
 ## Vorteile von Lumno {#strengths}
 
 - Kostenlos und Open Source: Lumno steht unter der GPL-3.0, der gesamte Code ist auf [GitHub](https://github.com/kubai087/lumno-extension) verfügbar.
-- Kein Konto erforderlich: Lumno hat keine Registrierung und keine Server. Deine Browserdaten bleiben in deinem Browser. Weitere Informationen findest du unter [Datenschutz und Daten](../privacy-data/).
+- Kein Konto erforderlich: Lumno hat keine Registrierung und keine Server. Deine Browserdaten bleiben in deinem Browser. Weitere Informationen findest du in der [Datenschutzerklärung](/de/privacy/).
 - Kein Browserwechsel nötig: Du erhältst eine Befehlsleiste im Stil von Arc in Chrome, Edge oder Dia.
 - Mehrsprachig: Die Oberfläche ist auf Englisch, Japanisch sowie in vereinfachtem und traditionellem Chinesisch verfügbar, und Websites aus vielen Ländern sind bereits integriert.
 

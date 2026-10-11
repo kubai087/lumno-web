@@ -148,7 +148,14 @@ test("the help center has no index page and is discoverable from the sitemap, ll
 
 test("the privacy policy keeps its URL and reads inside the help center", () => {
   const privacy = readSource("src/pages/privacy/index.astro");
-  assert.match(navSource, /"privacy-data", "privacy", "security-open-source"/);
+  assert.match(navSource, /"browser-compatibility", "privacy", "security-open-source"/);
+  // The old "privacy and data" page is the policy's opening summary now; every old address lands on the policy.
+  assert.ok(!navKeys.includes("privacy-data"));
+  assert.ok(!fs.existsSync(path.join(workspaceRoot, "src/content/guides/privacy-data.md")));
+  const config = readSource("astro.config.mjs");
+  assert.match(config, /"\/help\/privacy-data": "\/privacy\/",\s*"\/guides\/privacy-data": "\/privacy\/"/);
+  assert.match(config, /\[`\/\$\{segment\}\/help\/privacy-data`, `\/\$\{segment\}\/privacy\/`\]/);
+  assert.match(config, /\[`\/\$\{segment\}\/guides\/privacy-data`, `\/\$\{segment\}\/privacy\/`\]/);
   assert.match(guidesSource, /slug === "privacy" \? "\/privacy\/"/);
   assert.match(privacy, /<GuideShell\s+locale=\{uiLocale\}\s+current="privacy"/);
   assert.match(readSource("src/lib/guide-search-index.ts"), /title: ui\.privacyLabel/);

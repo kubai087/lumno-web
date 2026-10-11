@@ -46,7 +46,7 @@ Sí. De forma predeterminada, los ajustes se sincronizan a través de tu cuenta 
 
 ### ¿Lumno sube mis datos de navegación?
 
-No. Las pestañas, los marcadores y el historial se buscan en tu dispositivo. Lo que escribes solo se envía cuando buscas en la web o haces una pregunta a la IA, y únicamente al buscador o al sitio de IA que hayas elegido. Para obtener más información, consulta [Privacidad y datos](../privacy-data/).
+No. Las pestañas, los marcadores y el historial se buscan en tu dispositivo. Lo que escribes solo se envía cuando buscas en la web o haces una pregunta a la IA, y únicamente al buscador o al sitio de IA que hayas elegido. Para obtener más información, consulta la [Política de privacidad](/es/privacy/).
 
 ### ¿Lumno es gratuito? ¿Hace falta una cuenta?
 

@@ -30,7 +30,7 @@ Lumno 是一款免費、開源的瀏覽器擴充功能，主要提供兩項功�
 ## 為什麼選擇 Lumno {#strengths}
 
 - 免費開源：採用 GPL-3.0 授權，原始碼公開在 [GitHub](https://github.com/kubai087/lumno-extension) 上。
-- 不必註冊：Lumno 沒有帳號系統，也沒有伺服器，你的瀏覽資料只保存在自己的瀏覽器中。詳見[隱私與資料](../privacy-data/)。
+- 不必註冊：Lumno 沒有帳號系統，也沒有伺服器，你的瀏覽資料只保存在自己的瀏覽器中。詳見[隱私權政策](/zh-tw/privacy/)。
 - 不必更換瀏覽器：在 Chrome、Edge、Dia 中即可使用 Arc 風格的命令列。
 - 多語言介面：支援繁體中文、簡體中文、英文和日文。
 

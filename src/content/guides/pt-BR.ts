@@ -251,14 +251,6 @@ const content: GuideLocaleContent = {
       title: "Compatibilidade com navegadores",
       navTitle: "Compatibilidade com navegadores",
     },
-    "privacy-data": {
-      pageTitle: "Privacidade e dados: o Lumno funciona no seu dispositivo e não coleta nada | Ajuda do Lumno",
-      pageDescription:
-        "O Lumno não tem contas nem servidores. Suas guias, favoritos e histórico ficam no seu dispositivo, e nenhum dado de uso é coletado. Veja o que sai do seu dispositivo e como funcionam a sincronização do navegador e o WebDAV.",
-      keywords: ["privacidade do Lumno", "privacidade de extensão de navegador", "dados de extensão do Chrome", "sincronização WebDAV"],
-      title: "Privacidade e dados",
-      navTitle: "Privacidade e dados",
-    },
     "security-open-source": {
       pageTitle: "Segurança e código aberto: código GPL-3.0, permissões, Manifest V3 | Ajuda do Lumno",
       pageDescription:

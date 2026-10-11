@@ -30,7 +30,7 @@ You can turn each of these on or off in Lumno's settings.
 ## Why Lumno {#strengths}
 
 - Free and open source: licensed under GPL-3.0, with all the code on [GitHub](https://github.com/kubai087/lumno-extension).
-- No account needed: Lumno has no sign-up and no servers, and your browsing data stays in your browser. See [Privacy and data](../privacy-data/).
+- No account needed: Lumno has no sign-up and no servers, and your browsing data stays in your browser. See the [Privacy Policy](/en/privacy/).
 - No need to switch browsers: get an Arc-style command bar in Chrome, Edge or Dia.
 - Multilingual: the interface is available in English, Japanese, and Simplified and Traditional Chinese, with popular sites from around the world built in.
 

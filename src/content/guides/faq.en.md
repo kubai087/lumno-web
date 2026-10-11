@@ -46,7 +46,7 @@ Yes. Settings sync through your browser account by default. Turn on WebDAV sync 
 
 ### Does Lumno upload my browsing data?
 
-No. Tabs, bookmarks and history are searched on your device. What you type is sent only when you search the web or ask AI, and only to the search engine or AI site you choose. See [Privacy and data](../privacy-data/).
+No. Tabs, bookmarks and history are searched on your device. What you type is sent only when you search the web or ask AI, and only to the search engine or AI site you choose. See the [Privacy Policy](/en/privacy/).
 
 ### Is Lumno free? Do I need an account?
 

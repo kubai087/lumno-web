@@ -46,7 +46,7 @@ Ja. Die Einstellungen werden standardmäßig über dein Browserkonto synchronisi
 
 ### Lädt Lumno meine Browserdaten hoch?
 
-Nein. Tabs, Lesezeichen und Verlauf werden auf deinem Gerät durchsucht. Deine Eingaben werden nur gesendet, wenn du im Web suchst oder eine KI fragst, und nur an die Suchmaschine oder KI-Website, die du ausgewählt hast. Weitere Informationen findest du unter [Datenschutz und Daten](../privacy-data/).
+Nein. Tabs, Lesezeichen und Verlauf werden auf deinem Gerät durchsucht. Deine Eingaben werden nur gesendet, wenn du im Web suchst oder eine KI fragst, und nur an die Suchmaschine oder KI-Website, die du ausgewählt hast. Weitere Informationen findest du in der [Datenschutzerklärung](/de/privacy/).
 
 ### Ist Lumno kostenlos? Brauche ich ein Konto?
 

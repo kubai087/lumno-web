@@ -251,14 +251,6 @@ const content: GuideLocaleContent = {
       title: "Browser compatibility",
       navTitle: "Browser compatibility",
     },
-    "privacy-data": {
-      pageTitle: "Privacy and data: Lumno works on your device and collects nothing | Lumno Help",
-      pageDescription:
-        "Lumno has no accounts or servers. Your tabs, bookmarks and history stay on your device, and no usage data is collected. Here is what does leave your device, and how browser and WebDAV sync work.",
-      keywords: ["Lumno privacy", "browser extension privacy", "Chrome extension data", "WebDAV sync"],
-      title: "Privacy and data",
-      navTitle: "Privacy and data",
-    },
     "security-open-source": {
       pageTitle: "Security and open source: GPL-3.0 code, permissions, Manifest V3 | Lumno Help",
       pageDescription:

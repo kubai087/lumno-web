@@ -39,8 +39,11 @@ export async function buildGuideSearchIndex(locale: GuideLocale): Promise<Search
   docs.push({
     title: ui.privacyLabel,
     href: getGuidePath(locale, "privacy"),
-    sections: PRIVACY_SECTION_IDS.map((id, index) => ({ id, title: privacyTitles[index] || "" })),
-    text: toSearchText(privacy.policySource),
+    sections: [
+      { id: "summary", title: privacy.summarySource.match(/^##\s+(.+)$/m)?.[1].trim() || "" },
+      ...PRIVACY_SECTION_IDS.map((id, index) => ({ id, title: privacyTitles[index] || "" })),
+    ],
+    text: toSearchText(`${privacy.summarySource}\n${privacy.policySource}`),
   });
   return docs;
 }

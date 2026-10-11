@@ -46,7 +46,7 @@ Sim. Por padrão, as configurações são sincronizadas pela sua conta do navega
 
 ### O Lumno envia meus dados de navegação?
 
-Não. As guias, os favoritos e o histórico são pesquisados no seu dispositivo. O que você digita só é enviado quando você pesquisa na web ou faz uma pergunta à IA, e apenas ao mecanismo de pesquisa ou ao site de IA que você escolheu. Para saber mais, consulte [Privacidade e dados](../privacy-data/).
+Não. As guias, os favoritos e o histórico são pesquisados no seu dispositivo. O que você digita só é enviado quando você pesquisa na web ou faz uma pergunta à IA, e apenas ao mecanismo de pesquisa ou ao site de IA que você escolheu. Para saber mais, consulte a [Política de Privacidade](/pt-br/privacy/).
 
 ### O Lumno é gratuito? É preciso criar uma conta?
 

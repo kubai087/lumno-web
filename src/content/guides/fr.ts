@@ -251,14 +251,6 @@ const content: GuideLocaleContent = {
       title: "Compatibilité des navigateurs",
       navTitle: "Compatibilité des navigateurs",
     },
-    "privacy-data": {
-      pageTitle: "Confidentialité et données : Lumno fonctionne sur votre appareil et ne collecte rien | Aide Lumno",
-      pageDescription:
-        "Lumno n'a ni comptes ni serveurs. Vos onglets, favoris et historique restent sur votre appareil, et aucune donnée d'usage n'est collectée. Voici ce qui quitte malgré tout votre appareil, et comment fonctionnent les synchros navigateur et WebDAV.",
-      keywords: ["confidentialité Lumno", "confidentialité extension navigateur", "données extension Chrome", "synchro WebDAV"],
-      title: "Confidentialité et données",
-      navTitle: "Confidentialité et données",
-    },
     "security-open-source": {
       pageTitle: "Sécurité et open source : code GPL-3.0, autorisations, Manifest V3 | Aide Lumno",
       pageDescription:

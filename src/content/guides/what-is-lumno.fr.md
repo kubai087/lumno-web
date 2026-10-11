@@ -30,7 +30,7 @@ Chacune de ces fonctions peut être activée ou désactivée séparément dans l
 ## Points forts de Lumno {#strengths}
 
 - Gratuit et open source : Lumno est publié sous licence GPL-3.0, et tout le code est disponible sur [GitHub](https://github.com/kubai087/lumno-extension).
-- Aucun compte requis : Lumno ne demande pas d'inscription et n'utilise aucun serveur. Vos données de navigation restent dans votre navigateur. Pour en savoir plus, consultez [Confidentialité et données](../privacy-data/).
+- Aucun compte requis : Lumno ne demande pas d'inscription et n'utilise aucun serveur. Vos données de navigation restent dans votre navigateur. Pour en savoir plus, consultez la [Politique de confidentialité](/fr/privacy/).
 - Aucun changement de navigateur : vous disposez d'une barre de commande inspirée d'Arc dans Chrome, Edge ou Dia.
 - Multilingue : l'interface est disponible en anglais, en japonais et en chinois simplifié et traditionnel, et des sites du monde entier sont intégrés.
 

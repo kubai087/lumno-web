@@ -261,14 +261,6 @@ const content: GuideLocaleContent = {
       title: "浏览器兼容性",
       navTitle: "浏览器兼容性",
     },
-    "privacy-data": {
-      pageTitle: "隐私与数据：Lumno 在本机处理数据，不收集使用信息｜Lumno 帮助中心",
-      pageDescription:
-        "Lumno 没有账号和服务器，标签页、书签和历史记录只在本机处理，不收集使用数据。本文说明哪些请求会离开你的设备，以及浏览器同步和 WebDAV 同步的范围。",
-      keywords: ["Lumno 隐私", "浏览器扩展隐私", "Chrome 扩展数据", "WebDAV 同步"],
-      title: "隐私与数据",
-      navTitle: "隐私与数据",
-    },
     "security-open-source": {
       pageTitle: "安全与开源：GPL-3.0 源码、权限用途和 Manifest V3｜Lumno 帮助中心",
       pageDescription:

@@ -43,6 +43,29 @@ test("privacy reads inside the help center in every language", () => {
   assert.match(source, /return `<h2 id="\$\{id\}"><span class="doc__num" aria-hidden="true">\$\{number\}<\/span>/);
 });
 
+test("a plain-language summary opens the policy in every language", () => {
+  const source = readSource("src/pages/privacy/index.astro");
+  const contentSource = readSource("src/lib/privacy-content.ts");
+
+  // Unnumbered, ahead of section 1, and first in the outline.
+  assert.match(source, /`<h2 id="summary">\$\{headingContent\}<\/h2>\\n`/);
+  assert.match(source, /marked\.parse\(content\.summarySource[\s\S]*?\+\s*marked\.parse\(content\.policySource/);
+  assert.match(source, /sections=\{\[\{ id: "summary", title: summaryTitle \}, \.\.\.sections/);
+  assert.match(readSource("src/lib/guide-search-index.ts"), /toSearchText\(`\$\{privacy\.summarySource\}\\n\$\{privacy\.policySource\}`\)/);
+  assert.equal((contentSource.match(/summarySource: privacySummary\w+,/g) || []).length, 10);
+
+  for (const suffix of ["", ".zh-TW", ".en", ".ja", ".ko", ".de", ".fr", ".es", ".pt-BR", ".ru"]) {
+    const file = `src/content/privacy-summary${suffix}.md`;
+    const summary = readSource(file);
+    // One heading, no numbered sections, and the requests table.
+    assert.equal((summary.match(/^## /gm) || []).length, 1, file);
+    assert.doesNotMatch(summary, /^## \d/m, file);
+    assert.match(summary, /\| --- \| --- \| --- \|/, file);
+    assert.match(summary, /Favicon\.is/, file);
+    assert.match(summary, /WebDAV/, file);
+  }
+});
+
 test("site pages hand the top bar over like the homepage", () => {
   const header = readSource("src/components/site/SiteHeader.astro");
   const layout = readSource("src/layouts/SitePage.astro");

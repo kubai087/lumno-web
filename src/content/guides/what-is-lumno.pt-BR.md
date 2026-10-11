@@ -30,7 +30,7 @@ Você pode ativar ou desativar cada um desses recursos separadamente nas configu
 ## Vantagens do Lumno {#strengths}
 
 - Gratuito e de código aberto: o Lumno é distribuído sob a licença GPL-3.0, e todo o código está disponível no [GitHub](https://github.com/kubai087/lumno-extension).
-- Sem conta: o Lumno não exige cadastro e não usa servidores. Seus dados de navegação permanecem no seu navegador. Para saber mais, consulte [Privacidade e dados](../privacy-data/).
+- Sem conta: o Lumno não exige cadastro e não usa servidores. Seus dados de navegação permanecem no seu navegador. Para saber mais, consulte a [Política de Privacidade](/pt-br/privacy/).
 - Sem trocar de navegador: você tem uma barra de comandos no estilo do Arc no Chrome, Edge ou Dia.
 - Multilíngue: a interface está disponível em inglês, japonês e chinês simplificado e tradicional, e inclui sites de todo o mundo.
 

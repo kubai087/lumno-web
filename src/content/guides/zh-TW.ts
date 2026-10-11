@@ -237,14 +237,6 @@ const content: GuideLocaleContent = {
       title: "瀏覽器相容性",
       navTitle: "瀏覽器相容性",
     },
-    "privacy-data": {
-      pageTitle: "隱私與資料：Lumno 在本機處理資料，不收集使用資訊｜Lumno 說明中心",
-      pageDescription:
-        "Lumno 沒有帳號和伺服器，分頁、書籤和瀏覽紀錄只在本機處理，不收集使用資料。本文說明哪些請求會離開你的電腦，以及瀏覽器同步和 WebDAV 同步的範圍。",
-      keywords: ["Lumno 隱私", "瀏覽器擴充功能隱私", "Chrome 擴充功能資料", "WebDAV 同步"],
-      title: "隱私與資料",
-      navTitle: "隱私與資料",
-    },
     "security-open-source": {
       pageTitle: "安全與開源：GPL-3.0 原始碼、權限用途與 Manifest V3｜Lumno 說明中心",
       pageDescription: "Lumno 以 GPL-3.0 授權開源，原始碼公開在 GitHub；採用 Manifest V3，不執行遠端程式碼。本文列出每項瀏覽器權限的用途。",

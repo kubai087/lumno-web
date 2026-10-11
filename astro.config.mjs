@@ -4,6 +4,9 @@ import tailwindcss from "@tailwindcss/vite";
 import islandModulePreload from "./src/integrations/island-modulepreload.mjs";
 import quietRedirects from "./src/integrations/quiet-redirects.mjs";
 
+// URL prefixes of every language but Simplified Chinese (src/lib/locales.ts).
+const LOCALE_SEGMENTS = ["zh-tw", "en", "ja", "ko", "de", "fr", "es", "pt-br", "ru"];
+
 export default defineConfig({
   site: "https://lumno.kubai.design",
   output: "static",
@@ -18,15 +21,24 @@ export default defineConfig({
     "/help": "/help/what-is-lumno/",
     "/guides": "/help/what-is-lumno/",
     ...Object.fromEntries(
-      ["zh-tw", "en", "ja", "ko", "de", "fr", "es", "pt-br", "ru"].flatMap((segment) => [
+      LOCALE_SEGMENTS.flatMap((segment) => [
         [`/${segment}/help`, `/${segment}/help/what-is-lumno/`],
         [`/${segment}/guides`, `/${segment}/help/what-is-lumno/`],
+      ]),
+    ),
+    // The "privacy and data" help page became the privacy policy's opening summary.
+    "/help/privacy-data": "/privacy/",
+    "/guides/privacy-data": "/privacy/",
+    ...Object.fromEntries(
+      LOCALE_SEGMENTS.flatMap((segment) => [
+        [`/${segment}/help/privacy-data`, `/${segment}/privacy/`],
+        [`/${segment}/guides/privacy-data`, `/${segment}/privacy/`],
       ]),
     ),
     // The standalone features page was folded back into the homepage.
     "/features": "/",
     ...Object.fromEntries(
-      ["zh-tw", "en", "ja", "ko", "de", "fr", "es", "pt-br", "ru"].map((segment) => [`/${segment}/features`, `/${segment}/`]),
+      LOCALE_SEGMENTS.map((segment) => [`/${segment}/features`, `/${segment}/`]),
     ),
   },
   integrations: [react(), islandModulePreload(), quietRedirects()],

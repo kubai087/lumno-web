@@ -251,14 +251,6 @@ const content: GuideLocaleContent = {
       title: "브라우저 호환성",
       navTitle: "브라우저 호환성",
     },
-    "privacy-data": {
-      pageTitle: "개인정보와 데이터: Lumno는 기기에서 작동하며 데이터를 수집하지 않습니다 | Lumno 도움말",
-      pageDescription:
-        "Lumno에는 계정도 서버도 없습니다. 탭, 북마크, 방문 기록은 기기에만 저장되며 사용 데이터도 수집하지 않습니다. 기기 밖으로 전송되는 요청과 브라우저·WebDAV 동기화 방식을 설명합니다.",
-      keywords: ["Lumno 개인정보", "브라우저 확장 개인정보", "크롬 확장 데이터", "WebDAV 동기화"],
-      title: "개인정보와 데이터",
-      navTitle: "개인정보와 데이터",
-    },
     "security-open-source": {
       pageTitle: "보안과 오픈소스: GPL-3.0 코드, 권한, Manifest V3 | Lumno 도움말",
       pageDescription:

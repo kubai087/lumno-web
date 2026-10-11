@@ -46,7 +46,7 @@ Oui. Par défaut, les réglages sont synchronisés par votre compte de navigateu
 
 ### Lumno envoie-t-il mes données de navigation ?
 
-Non. Les onglets, les favoris et l'historique sont recherchés sur votre appareil. Ce que vous saisissez n'est envoyé que lorsque vous effectuez une recherche sur le web ou posez une question à une IA, et uniquement au moteur de recherche ou au site d'IA que vous avez choisi. Pour en savoir plus, consultez [Confidentialité et données](../privacy-data/).
+Non. Les onglets, les favoris et l'historique sont recherchés sur votre appareil. Ce que vous saisissez n'est envoyé que lorsque vous effectuez une recherche sur le web ou posez une question à une IA, et uniquement au moteur de recherche ou au site d'IA que vous avez choisi. Pour en savoir plus, consultez la [Politique de confidentialité](/fr/privacy/).
 
 ### Lumno est-il gratuit ? Faut-il créer un compte ?
 

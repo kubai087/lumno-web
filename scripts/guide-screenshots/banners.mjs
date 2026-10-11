@@ -41,7 +41,6 @@ const BANNERS = {
   "auto-pip": ["lumno-newtab-white-linocut-topographic", 0.62],
   "arc-command-bar": ["lumno-newtab-pointillist-lakeside-white", 0.88],
   "browser-compatibility": ["lumno-newtab-white-linocut-topographic", 0.8],
-  "privacy-data": ["lumno-newtab-seurat-riverside-white", 0.86],
   privacy: ["lumno-newtab-seurat-riverside-white", 0.86],
   "security-open-source": ["lumno-newtab-white-shanshui-bamboo-bridge", 1],
   "ratings-reviews": ["lumno-newtab-white-3d-architecture", 0.92],

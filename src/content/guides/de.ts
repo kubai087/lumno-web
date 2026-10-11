@@ -251,14 +251,6 @@ const content: GuideLocaleContent = {
       title: "Browserkompatibilität",
       navTitle: "Browserkompatibilität",
     },
-    "privacy-data": {
-      pageTitle: "Datenschutz und Daten: Lumno arbeitet auf deinem Gerät und sammelt nichts | Lumno-Hilfe",
-      pageDescription:
-        "Lumno hat weder Konten noch Server. Tabs, Lesezeichen und Verlauf bleiben auf deinem Gerät, Nutzungsdaten werden nicht erhoben. Hier steht, was dein Gerät trotzdem verlässt und wie Browser- und WebDAV-Sync funktionieren.",
-      keywords: ["Lumno Datenschutz", "Browsererweiterung Datenschutz", "Chrome-Erweiterung Daten", "WebDAV Sync"],
-      title: "Datenschutz und Daten",
-      navTitle: "Datenschutz und Daten",
-    },
     "security-open-source": {
       pageTitle: "Sicherheit und Open Source: GPL-3.0-Code, Berechtigungen, Manifest V3 | Lumno-Hilfe",
       pageDescription:

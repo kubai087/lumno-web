@@ -60,6 +60,10 @@ const sections = PRIVACY_SECTION_IDS.map((id, index) => {
   return { id, number: number.padStart(2, "0"), title };
 });
 
+// The plain-language summary leads, unnumbered, ahead of the policy's numbered sections.
+const summaryTitle = content.summarySource.match(/^##\s+(.+)$/m)?.[1].trim();
+if (!summaryTitle) throw new Error(`privacy-summary (${uiLocale}) needs a "## " heading.`);
+
 // Only repository-owned static Markdown is rendered here. User-provided input
 // must never be passed to this renderer without an explicit sanitization step.
 const renderer = new marked.Renderer();
@@ -71,8 +75,15 @@ renderer.heading = function ({ tokens, depth }) {
   sectionIndex += 1;
   return `<h2 id="${id}"><span class="doc__num" aria-hidden="true">${number}</span><span>${title}</span></h2>\n`;
 };
-const policyHtml = marked
-  .parse(content.policySource, { async: false, gfm: true, renderer })
+const summaryRenderer = new marked.Renderer();
+summaryRenderer.heading = function ({ tokens, depth }) {
+  const headingContent = this.parser.parseInline(tokens);
+  return depth === 2 ? `<h2 id="summary">${headingContent}</h2>\n` : `<h${depth}>${headingContent}</h${depth}>\n`;
+};
+const policyHtml = (
+  marked.parse(content.summarySource, { async: false, gfm: true, renderer: summaryRenderer }) +
+  marked.parse(content.policySource, { async: false, gfm: true, renderer })
+)
   // Wide tables scroll inside their own frame on narrow screens.
   .replaceAll("<table>", '<div class="guide-table"><table>')
   .replaceAll("</table>", "</table></div>");
@@ -96,7 +107,7 @@ const policyHtml = marked
     locale={uiLocale}
     current="privacy"
     title={content.title}
-    sections={sections.map((section) => ({ id: section.id, title: section.title }))}
+    sections={[{ id: "summary", title: summaryTitle }, ...sections.map((section) => ({ id: section.id, title: section.title }))]}
     updated={PRIVACY_LAST_UPDATED}
     updatedText={`${content.lastUpdatedLabel} ${displayLastUpdated}`}
   >

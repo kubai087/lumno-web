@@ -49,8 +49,9 @@ export const GUIDE_NAV = [
   },
   {
     id: "trust",
-    // "privacy" is the privacy policy itself, kept at /privacy/ and shown in this layout.
-    sections: [{ slugs: ["browser-compatibility", "privacy-data", "privacy", "security-open-source", "ratings-reviews"] }],
+    // "privacy" is the privacy policy itself, kept at /privacy/ and shown in this layout. Its plain-language
+    // summary replaced the old "privacy-data" page, whose addresses redirect there (astro.config.mjs).
+    sections: [{ slugs: ["browser-compatibility", "privacy", "security-open-source", "ratings-reviews"] }],
   },
 ] as const;
 

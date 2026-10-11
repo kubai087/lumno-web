@@ -237,14 +237,6 @@ const content: GuideLocaleContent = {
       title: "ブラウザ互換性",
       navTitle: "ブラウザ互換性",
     },
-    "privacy-data": {
-      pageTitle: "プライバシーとデータ：Lumno は端末内で処理し、何も収集しません｜Lumno ヘルプ",
-      pageDescription:
-        "Lumno にはアカウントもサーバーもありません。タブ、ブックマーク、履歴は端末内で処理され、利用データは収集しません。端末の外に出る通信と、ブラウザ同期・WebDAV 同期の範囲を説明します。",
-      keywords: ["Lumno プライバシー", "ブラウザ拡張機能 プライバシー", "Chrome 拡張機能 データ", "WebDAV 同期"],
-      title: "プライバシーとデータ",
-      navTitle: "プライバシーとデータ",
-    },
     "security-open-source": {
       pageTitle: "安全性とオープンソース：GPL-3.0、権限の用途、Manifest V3｜Lumno ヘルプ",
       pageDescription: "Lumno は GPL-3.0 のオープンソースで、コードは GitHub で公開しています。Manifest V3 を採用し、リモートのコードは実行しません。各権限の用途をまとめました。",

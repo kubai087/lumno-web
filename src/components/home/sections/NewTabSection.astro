@@ -18,6 +18,11 @@ const { content } = Astro.props;
 
 // Filter renders are wallpaper only (the chrome on top is NewTabMock), so all locales share them.
 const fxShot = (id: HomeNewTabFilterId) => `/assets/feature-newtab/fx/fx-${id}.webp`;
+// 800w and 1200w copies for phones and 1x screens (scripts/build-newtab-image-variants.mjs).
+const fxSrcSet = (id: HomeNewTabFilterId) =>
+  `/assets/feature-newtab/fx/fx-${id}-800.webp 800w, /assets/feature-newtab/fx/fx-${id}-1200.webp 1200w, ${fxShot(id)} 1600w`;
+// The lab fills the content column: --home-column, with its 16px gutter from 760px down.
+const FX_SIZES = "(min-width: 1408px) 1360px, (max-width: 760px) calc(100vw - 32px), calc(100vw - 48px)";
 
 // "none" is the left half of the comparison, so it is not a tab.
 const FILTERS: Exclude<HomeNewTabFilterId, "none">[] = ["blur", "grain", "blocks", "halftone", "dither", "ascii", "crt"];
@@ -43,6 +48,8 @@ const START_FILTER = "blocks";
         <div class="nt-compare__layer">
           <img
             src={fxShot("none")}
+            srcset={fxSrcSet("none")}
+            sizes={FX_SIZES}
             alt={`${content.filters.items.none.name} · ${content.filters.alt}`}
             width="1600"
             height="1000"
@@ -56,6 +63,8 @@ const START_FILTER = "blocks";
             <img
               class="nt-slide"
               src={fxShot(id)}
+              srcset={fxSrcSet(id)}
+              sizes={FX_SIZES}
               alt={`${content.filters.items[id].name} · ${content.filters.alt}`}
               width="1600"
               height="1000"

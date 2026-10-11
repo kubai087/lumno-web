@@ -20,7 +20,7 @@ test("homepage second section uses the Aceternity Hero Parallax composition", ()
     for (let index = 1; index <= 15; index += 1) {
       for (const suffix of ["", "-480", "-960"]) {
         const file = `public/assets/feature-newtab/${locale}/parallax-${String(index).padStart(2, "0")}${suffix}.webp`;
-        assert.ok(fs.existsSync(path.join(workspaceRoot, file)), `${file} is missing (run scripts/build-parallax-variants.mjs)`);
+        assert.ok(fs.existsSync(path.join(workspaceRoot, file)), `${file} is missing (run scripts/build-newtab-image-variants.mjs)`);
       }
     }
   }
@@ -108,4 +108,16 @@ test("homepage second section uses the Aceternity Hero Parallax composition", ()
   assert.match(pageSource, /eyebrow=\{content\.newTab\.eyebrow\}/);
   // Feature cards follow the parallax inside the same section.
   assert.match(pageSource, /<HeroParallax[\s\S]*?<NewTabSection content=\{content\.newTab\} locale=\{uiLocale\} \/>[\s\S]*?<\/section>/);
+});
+
+test("new tab filter lab loads renders sized to the screen", () => {
+  const sectionSource = readSource("src/components/home/sections/NewTabSection.astro");
+  for (const id of ["none", "blur", "grain", "blocks", "halftone", "dither", "ascii", "crt"]) {
+    for (const suffix of ["", "-800", "-1200"]) {
+      const file = `public/assets/feature-newtab/fx/fx-${id}${suffix}.webp`;
+      assert.ok(fs.existsSync(path.join(workspaceRoot, file)), `${file} is missing (run scripts/build-newtab-image-variants.mjs)`);
+    }
+  }
+  assert.match(sectionSource, /fx-\$\{id\}-800\.webp 800w, \/assets\/feature-newtab\/fx\/fx-\$\{id\}-1200\.webp 1200w, \$\{fxShot\(id\)\} 1600w/);
+  assert.equal(sectionSource.match(/srcset=\{fxSrcSet\((?:"none"|id)\)\}\s*sizes=\{FX_SIZES\}/g)?.length, 2);
 });

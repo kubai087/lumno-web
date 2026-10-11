@@ -1,0 +1,187 @@
+import type { GuideSearchAliases } from "../../../lib/guide-search-index";
+
+// How people phrase it when they search: everyday words, synonyms and questions. Only written to search-index.json,
+// never shown on the page. Matching is by plain substring, so common phrasings go in as typed ("hotkey", "favorites").
+// The extension also uses this index for every language it doesn't have its own help for.
+export default {
+  "what-is-lumno": {
+    "": ["What is this browser extension, Chrome extension or add-on for?"],
+    "command-bar": [
+      "How do I open the popup, overlay, search bar or search box?",
+      "A Spotlight, Raycast or Alfred style launcher and command palette for the browser",
+      "Open it with Cmd T or ⌘T like Arc and Zen",
+    ],
+    "new-tab": ["What does the new tab page, start page or homepage look like?"],
+    strengths: ["Is it free? Does it cost money? Is there a paid plan?", "Do I need an account, sign up or log in?", "Why this over other extensions?"],
+  },
+  limitations: {
+    "": ["What can't it do? Known limitations, missing features"],
+    "restricted-pages": [
+      "Why won't the command bar open on some pages? Shortcut not working on settings pages",
+      "Doesn't work on chrome:// pages, the Chrome Web Store or the extension store",
+      "Doesn't work in PDFs or local files",
+    ],
+    "outside-browser": ["Can it search files and apps on my computer? Spotlight, Raycast or Alfred replacement?"],
+    browsers: ["Does it work on Safari? On mobile, iPhone, iPad or Android?"],
+    widgets: ["Does the new tab have weather, to-do, notes, calendar or widgets?"],
+    data: ["Is there cloud sync or a cloud account? Moving to a new computer"],
+  },
+  "use-cases": {
+    "": ["Who is it for? Ways to use it, tips and workflows"],
+    "many-tabs": ["Too many tabs open, can't find a tab, tab overload, tab hoarding"],
+    "from-arc": ["Arc is no longer updated, Arc alternative, Arc replacement"],
+    developers: ["For developers and programmers: search docs, GitHub, npm, MDN, Stack Overflow"],
+    research: ["Research and writing: find an article I read before"],
+    ai: ["Ask AI quickly: ask ChatGPT, Gemini, Perplexity"],
+    "quiet-new-tab": ["A clean, minimal, distraction-free new tab"],
+    series: ["Remember which episode or chapter I'm on, TV shows, web novels"],
+  },
+  faq: {
+    "": ["FAQ, common questions, help, troubleshooting"],
+    using: [
+      "Shortcut not working? Hotkey does nothing, keyboard shortcut not responding",
+      "Command bar won't open, popup doesn't appear",
+      "Command bar colors look wrong, dark mode or light mode doesn't match",
+    ],
+    "new-tab": [
+      "How do I turn off this extension's new tab? Get the default Chrome new tab back, restore the original new tab",
+      "Why does the address bar show a chrome-extension URL on the new tab?",
+    ],
+    compatibility: ["Which browsers does it support? Does it work in Edge, Brave, Dia or Safari?"],
+    data: ["Does it upload or collect my data? Is it safe?", "Sync not working, how do I sync my settings?"],
+  },
+  install: {
+    "": ["How do I install it? Download link, where to get it"],
+    store: ["Chrome Web Store, Edge Add-ons, extension store. Can't install?"],
+    "after-install": ["What happens after installing? Welcome page, onboarding", "Chrome asked whether to keep the changes to the new tab, chose wrong"],
+    try: ["How do I use it after installing? Getting started, first steps"],
+    "file-access": ["Use it in local PDF or HTML files, allow access to file URLs"],
+  },
+  "keyboard-shortcuts": {
+    "": ["Keyboard shortcuts, hotkeys, key bindings, keybindings, key combos, all keys"],
+    defaults: ["What is the default shortcut? Which key opens it? Cmd Shift K, Ctrl Shift K"],
+    change: [
+      "How do I change the shortcut? Change the hotkey, rebind, remap, customize keyboard shortcuts",
+      "Can I set the shortcut to ⌘T, Cmd T or Ctrl T like Arc?",
+      "Shortcut conflict, already in use, not working",
+      "Shortcut does nothing in Dia, set it to Global",
+    ],
+    "command-bar-keys": ["Which keys work in the command bar? Enter, Tab, Esc, arrow keys"],
+    "switcher-keys": ["Using the keyboard in the switcher: Alt Q, Option Q"],
+  },
+  sync: {
+    "": ["Sync not working, how to sync, back up settings, move to a new computer, several computers"],
+    "browser-sync": ["Sync settings with my Chrome or Google account"],
+    webdav: ["Set up WebDAV, sync icons, sync wallpapers, sync uploaded images"],
+    hosts: ["Which WebDAV server? Nextcloud, NAS, Synology, self-hosted"],
+    "second-device": ["Sync to a new computer, sync conflict"],
+    "not-synced": ["Do bookmarks, history and tabs sync?"],
+    export: ["Export settings, import settings, backup file"],
+  },
+  "search-tabs-bookmarks-history": {
+    "": ["Search bookmarks, favorites, history, browsing history, open tabs. Find a page I visited before"],
+    open: ["How do I open the search box, popup or search bar?"],
+    results: ["What do Open, Bookmark and History mean in results? Search suggestions, ranking"],
+    "open-tabs": ["Only search open tabs, tab search", "Only search bookmarks, favorites or history"],
+  },
+  "site-search": {
+    "": ["Site search, search inside a website, search engines, change the search engine, default search engine"],
+    how: ["What does typing a shortcut and pressing Tab do? Search GitHub, YouTube, Reddit or Wikipedia directly"],
+    shortcuts: ["List of site shortcuts, keywords, aliases, abbreviations"],
+    ai: ["Ask ChatGPT, Gemini, Perplexity or DeepSeek directly. AI search"],
+    "scope-panel": ["What opens when I press Tab twice? Search scope, switch search engine"],
+    custom: ["Add a custom search engine or my own site. Search several sites at once, multi-search"],
+  },
+  "tab-switcher": {
+    "": ["Tab switcher, switch tabs, recent tabs, previous tab, last tab, go back and forth between tabs"],
+    open: ["What does Alt Q, Option Q or ⌥Q do?"],
+    switch: ["Switch tabs like Ctrl Tab or Cmd Tab"],
+    shortcut: ["Change the switcher's shortcut"],
+  },
+  "newtab-wallpaper": {
+    "": ["Change the wallpaper, background, background image, new tab background, theme"],
+    open: ["Where are the appearance settings? Where are the wallpaper settings?"],
+    sources: [
+      "Use my own photo or image as wallpaper, upload a wallpaper",
+      "Bing wallpaper, daily wallpaper, change the wallpaper every day",
+      "Use an image URL from the web as wallpaper",
+    ],
+    "dark-mode": ["A different wallpaper for dark mode or night mode"],
+    effects: ["Wallpaper too busy, can't read the search box: blur, frosted glass, dim, overlay, filters"],
+    sync: ["Does the wallpaper sync to my other computers?"],
+  },
+  "newtab-bookmarks-shortcuts": {
+    "": ["New tab shortcuts, site icons, speed dial, bookmarks bar, favorites"],
+    shortcuts: [
+      "Add a shortcut, add a site, add an icon. Delete or edit a shortcut",
+      "Change a shortcut's icon, upload a custom icon",
+      "Turn off the dock magnification effect",
+    ],
+    bookmarks: ["Show bookmarks or favorites on the new tab, bookmarks bar at the top, bookmark layout, folder colors"],
+  },
+  "newtab-frequent-sites": {
+    "": ["Site cards at the bottom of the new tab, most visited, recently visited, top sites"],
+    frequent: ["Hide the frequent sites at the bottom, number of rows"],
+    pin: ["Pin a site card"],
+    progress: ["Episode progress, which chapter I'm on, track progress automatically"],
+  },
+  "newtab-clock-zen": {
+    "": ["New tab clock, time, date"],
+    clock: ["Show a clock, show the time, show seconds"],
+    zen: ["Focus mode, minimal mode, only the search box, how to leave /zen"],
+  },
+  "newtab-other-extensions": {
+    "": [
+      "Turn off this extension's new tab, don't want its new tab, only use the command bar",
+      "Get the default Chrome new tab back, restore the default new tab, Google homepage",
+      "Conflict with Momentum, Tabliss or another new tab extension",
+    ],
+    "keep-changes": ["Chrome asked whether to keep the changes and I chose wrong, the extension got disabled"],
+    "back-to-lumno": ["Use this extension's new tab again"],
+  },
+  "selection-actions": {
+    "": ["Select text, highlight text, translate selection, AI translate, AI explain, AI summarize"],
+    smart: ["Why doesn't a button appear when I select text?"],
+    how: ["Turn on selection quick actions, where are Labs features?"],
+    provider: ["Choose which AI: ChatGPT, Gemini, DeepSeek"],
+  },
+  "web-clip": {
+    "": ["Web clip, clip part of a page, crop a web page, floating window, always on top, pop out, mini window, /clip"],
+    enable: ["Turn on web clip"],
+    how: ["Put part of a web page in a small floating window"],
+    limits: ["Web clip not working"],
+  },
+  "auto-pip": {
+    "": ["Video picture-in-picture, PiP, floating video, mini player, pop out video"],
+    when: ["Video turns into a small window when I switch tabs"],
+    excluded: ["Why doesn't a video go into picture-in-picture? PiP not working"],
+    toggle: ["Turn off auto picture-in-picture, stop the floating video"],
+  },
+  "arc-command-bar": {
+    "": ["Arc browser alternative, Arc replacement, Arc no longer updated, switch from Arc to Chrome, Arc users"],
+    mapping: ["Arc shortcuts mapped: Cmd T, Ctrl Tab, Cmd Shift C"],
+    steps: ["Set it up like Arc, change the shortcut to Cmd T"],
+    limits: ["Sidebar, vertical tabs, Spaces, split view"],
+  },
+  "browser-compatibility": {
+    "": ["Which browsers are supported? Does it work in my browser? Compatible"],
+    support: ["Does it work in Edge, Brave, Opera, Vivaldi, Google Chrome?"],
+    dia: ["Dia new tab doesn't work, Dia shortcut does nothing"],
+    firefox: ["Does it work in Firefox or Zen browser?"],
+    safari: ["Does it work in Safari? Apple's browser on Mac"],
+    languages: ["Change the language: English, Chinese, Japanese interface"],
+  },
+  privacy: {
+    "": ["Privacy, data security, does it collect data, does it upload my browsing history, tracking"],
+  },
+  "security-open-source": {
+    "": ["Is it safe? Trustworthy? Malware or spyware? Is it open source? Where is the source code?"],
+    "open-source": ["GitHub repository, source code, license, report a bug, open an issue"],
+    permissions: ["Why does it need to read and change data on all websites? Permissions explained"],
+  },
+  "ratings-reviews": {
+    "": ["Reviews, is it good, rating, recommendations"],
+    press: ["Articles and press coverage"],
+    community: ["Report a problem, suggest a feature, community, contact the developer"],
+  },
+} satisfies GuideSearchAliases;

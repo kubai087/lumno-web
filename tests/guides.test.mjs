@@ -252,3 +252,15 @@ test("switching language keeps the reader's place", () => {
   assert.match(readSource("src/pages/index.astro"), /<PageFooter locale=\{uiLocale\} routeLanguageMap=\{routeLanguageMap\} \/>\n    <LanguageScrollRestore \/>/);
 });
 
+
+test("search aliases reach the extension's four index languages and stay off the page", () => {
+  const index = readSource("src/lib/guide-search-index.ts");
+  for (const locale of ["zh-CN", "zh-TW", "ja", "en"]) {
+    assert.ok(fs.existsSync(path.join(workspaceRoot, `src/content/guides/search/${locale}.ts`)), `aliases for ${locale}`);
+    assert.match(index, new RegExp(`from "../content/guides/search/${locale}"`));
+  }
+  assert.match(index, /\.\.\.withAliases\(slug, locale,/);
+  assert.match(index, /withAliases\(\s*"privacy",/);
+  assert.match(index, /which the page doesn't have/);
+  assert.doesNotMatch(readSource("src/components/guides/GuideArticle.astro"), /content\/guides\/search/);
+});

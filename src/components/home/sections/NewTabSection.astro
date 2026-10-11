@@ -50,6 +50,7 @@ const START_FILTER = "blocks";
             decoding="async"
           />
         </div>
+        <!-- Slides behind the first one yield to the pictures on screen on a slow connection. -->
         <div class="nt-compare__layer nt-compare__layer--fx">
           {FILTERS.map((id) => (
             <img
@@ -60,6 +61,7 @@ const START_FILTER = "blocks";
               height="1000"
               loading="lazy"
               decoding="async"
+              fetchpriority={id === START_FILTER ? undefined : "low"}
               data-nt-slide
               data-active={id === START_FILTER ? "true" : "false"}
               aria-hidden={id === START_FILTER ? undefined : "true"}

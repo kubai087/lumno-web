@@ -17,7 +17,12 @@ import { XIcon } from "lucide-react";
 
 export interface HeroParallaxProduct {
   title: string;
+  /** Full-size render, also what a tap opens on phones. */
   thumbnail: string;
+  /** Smaller copies of `thumbnail` for the cards. */
+  srcSet?: string;
+  /** Tiny inline image painted under the card until `thumbnail` arrives. */
+  preview?: string;
 }
 
 interface HeroParallaxProps {
@@ -365,10 +370,13 @@ export function ProductCard({
       // The screenshots are 1280x800, so 8/5 fills the card edge to edge. Phones get a
       // tighter radius: 12px on a 224px card cut into the bookmark bar along the top.
       className={cn(
-        "relative aspect-[8/5] w-[14rem] shrink-0 overflow-hidden rounded-[8px] bg-card md:w-[30rem] md:rounded-[var(--home-radius-md,12px)]",
+        "relative aspect-[8/5] w-[14rem] shrink-0 overflow-hidden rounded-[8px] bg-card bg-cover bg-center md:w-[30rem] md:rounded-[var(--home-radius-md,12px)]",
         onOpen && "cursor-zoom-in",
       )}
-      style={{ x: shouldReduceMotion ? 0 : translate }}
+      style={{
+        x: shouldReduceMotion ? 0 : translate,
+        backgroundImage: product.preview ? `url("${product.preview}")` : undefined,
+      }}
       aria-hidden={isLoopCopy || undefined}
       data-hero-parallax-card
       onClick={onOpen ? () => onOpen(product) : undefined}
@@ -384,7 +392,9 @@ export function ProductCard({
     >
       <img
         src={product.thumbnail}
-        className="absolute inset-0 size-full object-contain object-center"
+        srcSet={product.srcSet}
+        // A failed load would print the alt text over the preview; screen readers still get it.
+        className="absolute inset-0 size-full object-contain object-center text-transparent"
         alt={product.title}
         loading="lazy"
         decoding="async"

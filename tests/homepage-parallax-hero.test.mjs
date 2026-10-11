@@ -14,17 +14,29 @@ test("homepage second section uses the Aceternity Hero Parallax composition", ()
 
   // Fifteen real new tab renders per locale, one per card.
   assert.match(pageSource, /const FEATURE_PARALLAX_COUNT = 15;/);
-  assert.match(pageSource, /\/assets\/feature-newtab\/\$\{getScreenshotLocale\(uiLocale\)\}\/parallax-\$\{String\(index \+ 1\)\.padStart\(2, "0"\)\}\.webp/);
+  assert.match(pageSource, /const parallaxLocale = getScreenshotLocale\(uiLocale\)/);
+  assert.match(pageSource, /\/assets\/feature-newtab\/\$\{parallaxLocale\}\/parallax-\$\{String\(index \+ 1\)\.padStart\(2, "0"\)\}/);
   for (const locale of ["zh-CN", "zh-TW", "en"]) {
     for (let index = 1; index <= 15; index += 1) {
-      const file = `public/assets/feature-newtab/${locale}/parallax-${String(index).padStart(2, "0")}.webp`;
-      assert.ok(fs.existsSync(path.join(workspaceRoot, file)), `${file} is missing`);
+      for (const suffix of ["", "-480", "-960"]) {
+        const file = `public/assets/feature-newtab/${locale}/parallax-${String(index).padStart(2, "0")}${suffix}.webp`;
+        assert.ok(fs.existsSync(path.join(workspaceRoot, file)), `${file} is missing (run scripts/build-parallax-variants.mjs)`);
+      }
     }
   }
+  // Cards load the size they show and paint an inline preview until it arrives.
+  const previews = JSON.parse(readSource("src/assets/parallax-previews.json"));
+  for (const locale of ["zh-CN", "zh-TW", "en"]) {
+    assert.equal(previews[locale].length, 15);
+    for (const preview of previews[locale]) assert.match(preview, /^data:image\/webp;base64,/);
+  }
+  assert.match(pageSource, /srcSet: `\$\{base\}-480\.webp 480w, \$\{base\}-960\.webp 960w, \$\{base\}\.webp 1280w`/);
+  assert.match(componentSource, /srcSet=\{product\.srcSet\}/);
+  assert.match(componentSource, /backgroundImage: product\.preview/);
   assert.match(pageSource, /<section id="new-tab" class="feature-intro"[\s\S]*?<HeroParallax/);
   assert.match(pageSource, /products=\{newTabParallaxProducts\}/);
   assert.match(pageSource, /title: content\.newTab\.screenshotAlt/);
-  assert.match(pageSource, /client:visible/);
+  assert.match(pageSource, /<HeroParallax[\s\S]*?client:idle[\s\S]*?\/>/);
   assert.match(componentSource, /products\.slice\(0, 5\)/);
   assert.match(componentSource, /products\.slice\(5, 10\)/);
   assert.match(componentSource, /products\.slice\(10, 15\)/);

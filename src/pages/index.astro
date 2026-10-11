@@ -1,5 +1,6 @@
 ---
 import heroArtPlaceholder from "../assets/hero-art-placeholder.png?inline";
+import parallaxPreviews from "../assets/parallax-previews.json";
 import LocaleNormalizer from "../components/LocaleNormalizer.astro";
 import SeoHead from "../components/SeoHead.astro";
 import ChromeReviewMarquee from "../components/home/ChromeReviewMarquee.astro";
@@ -90,10 +91,17 @@ const heroTitleSegments = heroTitleCommaIndex >= 0
   : [content.heroTitle];
 // Accents over the italic line (ó, à, й) climb into the lead's descenders, so those locales get more leading.
 const heroSerifAccentHasMarks = Boolean(content.heroTitleSerif && /\p{M}/u.test(content.heroTitleSerif.accent.normalize("NFD")));
-const newTabParallaxProducts = Array.from({ length: FEATURE_PARALLAX_COUNT }, (_, index) => ({
-  title: content.newTab.screenshotAlt,
-  thumbnail: `/assets/feature-newtab/${getScreenshotLocale(uiLocale)}/parallax-${String(index + 1).padStart(2, "0")}.webp`,
-}));
+// Each render also ships at 480w and 960w, plus an inline 32px preview (scripts/build-parallax-variants.mjs).
+const parallaxLocale = getScreenshotLocale(uiLocale) as keyof typeof parallaxPreviews;
+const newTabParallaxProducts = Array.from({ length: FEATURE_PARALLAX_COUNT }, (_, index) => {
+  const base = `/assets/feature-newtab/${parallaxLocale}/parallax-${String(index + 1).padStart(2, "0")}`;
+  return {
+    title: content.newTab.screenshotAlt,
+    thumbnail: `${base}.webp`,
+    srcSet: `${base}-480.webp 480w, ${base}-960.webp 960w, ${base}.webp 1280w`,
+    preview: parallaxPreviews[parallaxLocale][index],
+  };
+});
 const showcaseReviews = localizeShowcaseReviews(selectShowcaseReviews(chromeStoreReviews.reviews), uiLocale);
 const alternateLinks = buildAlternateLinks(routeLanguageMap, "/");
 const ogLocale = getOpenGraphLocale(uiLocale);
@@ -379,6 +387,8 @@ import LanguageScrollRestore from "../components/LanguageScrollRestore.astro";
       </section>
 
       <section id="new-tab" class="feature-intro" aria-labelledby="new-tab-title">
+        {/* Hydrates on idle, not on approach: on a slow connection the island's code otherwise
+            queued behind this section's images, leaving the copy hidden and the tilt frozen. */}
         <HeroParallax
           products={newTabParallaxProducts}
           eyebrow={content.newTab.eyebrow}
@@ -387,7 +397,7 @@ import LanguageScrollRestore from "../components/LanguageScrollRestore.astro";
           headingId="new-tab-title"
           openLabel={content.newTab.screenshotOpenLabel}
           closeLabel={content.newTab.screenshotCloseLabel}
-          client:visible={{ rootMargin: "100% 0px" }}
+          client:idle
         />
         <NewTabSection content={content.newTab} locale={uiLocale} />
       </section>

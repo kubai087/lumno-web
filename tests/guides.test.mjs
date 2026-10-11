@@ -298,6 +298,8 @@ test("help search: question words, synonyms, typos, aliases and recommended read
   assert.equal(first("快捷键失灵了"), "/help/keyboard-shortcuts/#defaults");
   assert.equal(first("怎么设置黑色主题"), "/help/newtab-wallpaper/#dark-mode");
   assert.match(first("wallpapper"), /^\/en\/help\/newtab-wallpaper\//);
+  const pins = [{ title: "Pinned tabs", href: "/en/help/pins/", sections: [{ id: "intro", title: "About" }, { id: "pin", title: "Pin a tab" }], text: "" }];
+  assert.equal(searchIndex(pins, "pinning")[0].url, "/en/help/pins/#pin");
   assert.equal(first("wallpapers sources"), "/en/help/newtab-wallpaper/#sources");
   assert.deepEqual(searchIndex(index, "壁纸来源都有哪些", { synonyms }).map((item) => [item.url, item.recommended]), [["/help/newtab-wallpaper/#sources", true]]);
   assert.deepEqual(searchIndex(index, "天气预报", { synonyms }), []);

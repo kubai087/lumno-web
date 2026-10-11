@@ -412,7 +412,8 @@
           }
           firstVariant = firstVariant || best.variant;
         }
-        section = section ? bestSection(doc, terms, weights, section) : null;
+        // Every spelling counts here, so a title hit on one (pinn) still opens the section another names (pin).
+        section = bestSection(doc, terms, weights, section);
         score += phraseBonus(doc, terms);
         return { doc, score, order, section, detail: section ? section.title : snippet(doc.text, firstVariant) };
       })
@@ -564,9 +565,11 @@
   }
 
   // One cached index per language; a failed load is forgotten so the next query retries.
+  // parse turns the response into what is cached (normalizeSynonyms for search-synonyms.json).
   function createIndexLoader(options) {
     const config = options && typeof options === 'object' ? options : {};
     const fetchImpl = config.fetchImpl;
+    const parse = typeof config.parse === 'function' ? config.parse : normalizeIndex;
     const now = typeof config.now === 'function' ? config.now : () => Date.now();
     const ttlMs = Number.isFinite(Number(config.ttlMs)) ? Number(config.ttlMs) : INDEX_CACHE_TTL_MS;
     const timeoutMs = Number.isFinite(Number(config.timeoutMs)) ? Number(config.timeoutMs) : FETCH_TIMEOUT_MS;
@@ -590,7 +593,7 @@
           }
           return response.json();
         })
-        .then(normalizeIndex)
+        .then(parse)
         .catch((error) => {
           if (cache.get(key) && cache.get(key).promise === promise) {
             cache.delete(key);

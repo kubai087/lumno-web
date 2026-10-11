@@ -4,6 +4,7 @@ import {
   getGuideContent,
   getGuidePath,
   getGuideSource,
+  toSearchBlocks,
   toSearchText,
   type GuideLocale,
   type GuideNavKey,
@@ -75,12 +76,14 @@ export async function buildGuideSearchIndex(locale: GuideLocale): Promise<Search
       id,
       title: toSearchText(title),
     }));
-    const faq = (pages[slug].faq || []).map((item) => `${item.question} ${item.answer}`).join(" ");
+    const faq = pages[slug].faq?.length
+      ? [`## ${ui.faqTitle}`, ...pages[slug].faq.map((item) => `### ${item.question}\n\n${item.answer}`)].join("\n\n")
+      : "";
     return {
       title: pages[slug].title,
       href: getGuidePath(locale, slug),
       ...withAliases(slug, locale, faq ? [...sections, { id: "faq", title: ui.faqTitle }] : sections),
-      text: `${toSearchText(source)} ${faq}`.trim(),
+      text: toSearchBlocks(`${source}\n\n${faq}`),
     };
   });
 
@@ -97,7 +100,7 @@ export async function buildGuideSearchIndex(locale: GuideLocale): Promise<Search
         ...PRIVACY_SECTION_IDS.map((id, index) => ({ id, title: privacyTitles[index] || "" })),
       ],
     ),
-    text: toSearchText(`${privacy.summarySource}\n${privacy.policySource}`),
+    text: toSearchBlocks(`${privacy.summarySource}\n\n${privacy.policySource}`),
   });
   return docs;
 }

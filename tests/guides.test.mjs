@@ -305,6 +305,47 @@ test("help search: question words, synonyms, typos, aliases and recommended read
   assert.deepEqual(searchIndex(index, "天气预报", { synonyms }), []);
 });
 
+test("each help search result carries the passage around its match, laid out by block", async () => {
+  await import("../src/scripts/help-center-search.js");
+  const { searchIndex } = globalThis.LumnoHelpCenterSearch;
+  // The index's text: a line per block; one tab leads a heading, two a bullet, three a table row.
+  const text = [
+    "Lumno 的大部分操作都可以用键盘完成。",
+    "\t默认快捷键",
+    "\t\t\t操作\t快捷键",
+    "\t\t\t唤出命令栏\t⌘ ⇧ K",
+    "\t\t\t打开最近标签页切换器\t⌥ Q",
+    "\t修改快捷键",
+    "1. 打开 chrome://extensions/shortcuts 。",
+    "2. 点击 Lumno 对应项右侧的输入框。",
+    "\t\t表格里的 Safari 不是标题。",
+    "\tSafari",
+    "暂不支持 Safari。",
+  ].join("\n");
+  const index = [{
+    title: "快捷键",
+    href: "/help/keyboard-shortcuts/",
+    sections: [{ id: "defaults", title: "默认快捷键" }, { id: "change", title: "修改快捷键" }, { id: "safari", title: "Safari" }],
+    text,
+  }];
+  // A body match shows the heading above it, and a table row brings its header row.
+  const [defaults] = searchIndex(index, "切换器");
+  assert.deepEqual(defaults.context, [
+    { kind: "heading", text: "默认快捷键" },
+    { kind: "row", cells: ["操作", "快捷键"], header: true },
+    { kind: "row", cells: ["打开最近标签页切换器", "⌥ Q"] },
+  ]);
+  assert.deepEqual(searchIndex(index, "修改快捷键")[0].context.map((block) => [block.kind, block.marker]), [
+    ["heading", undefined], ["step", "1."], ["step", "2."], ["bullet", undefined],
+  ]);
+  // A section is found by its heading line, not by the same word earlier in the page.
+  const safari = searchIndex(index, "Safari")[0];
+  assert.equal(safari.url, "/help/keyboard-shortcuts/#safari");
+  assert.deepEqual(safari.context, [{ kind: "heading", text: "Safari" }, { kind: "text", text: "暂不支持 Safari。" }]);
+  // The row's detail still reads as one line.
+  assert.doesNotMatch(searchIndex(index, "大部分")[0].detail, /\s{2}|\t|\n/);
+});
+
 test("keys are written once, in Mac form, and each reader sees their own platform's keys", () => {
   const article = readSource("src/components/guides/GuideArticle.astro");
   assert.match(article, /<span data-key-mac>\$\{escapeHtml\(key\)\}<\/span><span data-key-other>/);

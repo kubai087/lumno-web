@@ -51,7 +51,7 @@ test("a plain-language summary opens the policy in every language", () => {
   assert.match(source, /`<h2 id="summary">\$\{headingContent\}<\/h2>\\n`/);
   assert.match(source, /marked\.parse\(content\.summarySource[\s\S]*?\+\s*marked\.parse\(content\.policySource/);
   assert.match(source, /sections=\{\[\{ id: "summary", title: summaryTitle \}, \.\.\.sections/);
-  assert.match(readSource("src/lib/guide-search-index.ts"), /toSearchText\(`\$\{privacy\.summarySource\}\\n\$\{privacy\.policySource\}`\)/);
+  assert.match(readSource("src/lib/guide-search-index.ts"), /toSearchBlocks\(`\$\{privacy\.summarySource\}\\n\\n\$\{privacy\.policySource\}`\)/);
   assert.equal((contentSource.match(/summarySource: privacySummary\w+,/g) || []).length, 10);
 
   for (const suffix of ["", ".zh-TW", ".en", ".ja", ".ko", ".de", ".fr", ".es", ".pt-BR", ".ru"]) {

@@ -76,6 +76,8 @@ const searchLibHref = `/help/help-center-search.js?v=${createHash("sha256").upda
       />
       <kbd class="guide-search__hint" aria-hidden="true">/</kbd>
       <div class="guide-search__results" id="guide-search-results" role="listbox" hidden></div>
+      <!-- The passage around a result's match, beside the list while a result is hovered or picked with the arrow keys. -->
+      <div class="guide-search__peek" id="guide-search-peek" role="tooltip" hidden></div>
       <!-- Nothing matches: the ways to ask instead, the same channels as the extension's help search. -->
       <template data-guide-search-feedback>
         <p class="guide-search__group">{ui.searchEmpty}</p>
@@ -421,11 +423,14 @@ const searchLibHref = `/help/help-center-search.js?v=${createHash("sha256").upda
     const input = box && box.querySelector("input");
     const results = box && box.querySelector(".guide-search__results");
     const feedback = box && box.querySelector("template[data-guide-search-feedback]");
-    if (!box || !input || !results || !feedback) return;
+    const peek = box && box.querySelector(".guide-search__peek");
+    if (!box || !input || !results || !feedback || !peek) return;
     let index = null;
     let synonyms = [];
     let loading = null;
     let active = -1;
+    let found = [];
+    let terms = [];
     const loadScript = (src) =>
       window.LumnoHelpCenterSearch
         ? Promise.resolve()
@@ -464,26 +469,140 @@ const searchLibHref = `/help/help-center-search.js?v=${createHash("sha256").upda
       return html;
     };
     const options = () => [...results.querySelectorAll('[role="option"]')];
-    const setActive = (next) => {
+
+    // The hover card: the result's passage laid out as the page has it (heading, paragraphs, lists,
+    // table rows), to the right of the list, else to its left, else above or below the row.
+    const peekHtml = (blocks) => {
+      const html = [];
+      blocks.forEach((block, i) => {
+        const previous = blocks[i - 1];
+        const next = blocks[i + 1];
+        const text = block.text ? highlight(block.text, terms) : "";
+        if (block.kind === "heading") html.push(`<p class="guide-search__peek-heading">${text}</p>`);
+        else if (block.kind === "text") html.push(`<p>${text}</p>`);
+        else if (block.kind === "row") {
+          if (previous?.kind !== "row") html.push("<table>");
+          const tag = block.header ? "th" : "td";
+          html.push(`<tr>${block.cells.map((cell) => `<${tag}>${highlight(cell, terms)}</${tag}>`).join("")}</tr>`);
+          if (next?.kind !== "row") html.push("</table>");
+        } else {
+          const list = block.kind === "step" ? "ol" : "ul";
+          if (previous?.kind !== block.kind) html.push(list === "ol" ? `<ol start="${parseInt(block.marker, 10) || 1}">` : "<ul>");
+          html.push(`<li>${text}</li>`);
+          if (next?.kind !== block.kind) html.push(`</${list}>`);
+        }
+      });
+      return html.join("");
+    };
+    let peekRow = null;
+    let peekTimer = 0;
+    const hidePeek = () => {
+      clearTimeout(peekTimer);
+      peekRow?.removeAttribute("aria-describedby");
+      peekRow = null;
+      peek.hidden = true;
+    };
+    const placePeek = () => {
+      if (!peekRow) return;
+      peek.hidden = false;
+      const gap = 8;
+      const list = results.getBoundingClientRect();
+      const row = peekRow.getBoundingClientRect();
+      const { innerWidth: width, innerHeight: height } = window;
+      const { offsetWidth: w, offsetHeight: h } = peek;
+      const clamp = (value, max) => Math.max(gap, Math.min(value, max - gap));
+      let placement = "right";
+      let x = list.right + gap;
+      let y = clamp(row.top, height - h);
+      if (x + w > width - gap) {
+        placement = "left";
+        x = list.left - gap - w;
+      }
+      // No room beside it: under the whole list, else over the search box, never on top of other results.
+      if (x < gap) {
+        x = clamp(list.left, width - w);
+        if (list.bottom + gap + h <= height - gap) {
+          placement = "bottom";
+          y = list.bottom + gap;
+        } else if (box.getBoundingClientRect().top - gap - h >= gap) {
+          placement = "top";
+          y = box.getBoundingClientRect().top - gap - h;
+        } else {
+          peek.hidden = true;
+          return;
+        }
+      }
+      peek.dataset.placement = placement;
+      peek.style.left = `${Math.round(x)}px`;
+      peek.style.top = `${Math.round(y)}px`;
+    };
+    const showPeek = (row) => {
+      clearTimeout(peekTimer);
+      const item = found[Number(row?.dataset.result)];
+      if (!item?.context?.length) {
+        hidePeek();
+        return;
+      }
+      if (row !== peekRow) {
+        peekRow?.removeAttribute("aria-describedby");
+        peekRow = row;
+        peek.innerHTML = peekHtml(item.context);
+        row.setAttribute("aria-describedby", peek.id);
+      }
+      placePeek();
+    };
+    // The first card waits a moment so passing over the list doesn't flash it; once one is up, the next follows at once.
+    const hoverPeek = (row) => {
+      clearTimeout(peekTimer);
+      if (!peek.hidden) showPeek(row);
+      else peekTimer = setTimeout(() => showPeek(row), 250);
+    };
+    // One row is lit at a time, as in the site's menus: the pointer and the arrow keys move the same highlight.
+    let pointerPicked = false;
+    const setActive = (next, { byPointer = false } = {}) => {
       const items = options();
       if (!items.length) return;
-      active = (next + items.length) % items.length;
+      active = next < 0 ? -1 : (next + items.length) % items.length;
+      pointerPicked = byPointer && active >= 0;
       items.forEach((item, i) => item.setAttribute("aria-selected", i === active ? "true" : "false"));
-      items[active].scrollIntoView({ block: "nearest" });
+      if (active < 0) return;
+      if (byPointer) {
+        hoverPeek(items[active]);
+      } else {
+        items[active].scrollIntoView({ block: "nearest" });
+        showPeek(items[active]);
+      }
     };
+    if (window.matchMedia("(hover: hover)").matches) {
+      // pointermove, not pointerover: rows scrolling under a still pointer don't take the highlight from the keys.
+      results.addEventListener("pointermove", (event) => {
+        const row = event.target instanceof Element ? event.target.closest('[role="option"]') : null;
+        const index = options().indexOf(row);
+        if (index >= 0 && index !== active) setActive(index, { byPointer: true });
+      });
+      results.addEventListener("pointerleave", () => {
+        if (!pointerPicked) return;
+        setActive(-1);
+        hidePeek();
+      });
+    }
+    results.addEventListener("scroll", placePeek, { passive: true });
+    window.addEventListener("resize", hidePeek);
     const render = () => {
       const query = input.value.trim();
       active = -1;
+      hidePeek();
       if (!query || !index) {
         results.hidden = true;
+        found = [];
         input.setAttribute("aria-expanded", "false");
         return;
       }
       const search = window.LumnoHelpCenterSearch;
-      const found = search.searchIndex(index, query, { synonyms });
-      const terms = search.getExactTerms(query, synonyms);
+      found = search.searchIndex(index, query, { synonyms });
+      terms = search.getExactTerms(query, synonyms);
       const row = (item) =>
-        `<a role="option" href="${escape(item.url)}"><span class="guide-search__title">${highlight(item.title, terms)}</span><span class="guide-search__detail">${highlight(item.detail, terms)}</span></a>`;
+        `<a role="option" href="${escape(item.url)}" data-result="${found.indexOf(item)}"><span class="guide-search__title">${highlight(item.title, terms)}</span><span class="guide-search__detail">${highlight(item.detail, terms)}</span></a>`;
       const exact = found.filter((item) => !item.recommended);
       const recommended = found.filter((item) => item.recommended);
       if (found.length) {
@@ -519,7 +638,9 @@ const searchLibHref = `/help/help-center-search.js?v=${createHash("sha256").upda
       }
     });
     document.addEventListener("click", (event) => {
-      if (!box.contains(event.target)) results.hidden = true;
+      if (box.contains(event.target)) return;
+      results.hidden = true;
+      hidePeek();
     });
     document.addEventListener("keydown", (event) => {
       const target = event.target;

@@ -157,6 +157,13 @@
   box-shadow: var(--home-shadow-card);
 }
 
+/* Rows stand apart, as in the site's menus, so one lit row never runs into the next. */
+.guide-search__results:not([hidden]) {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
 .guide-search__results a {
   display: grid;
   gap: 2px;
@@ -165,7 +172,6 @@
   text-decoration: none;
 }
 
-.guide-search__results [role="option"]:hover,
 .guide-search__results [role="option"][aria-selected="true"] {
   background: var(--guide-accent-soft);
 }
@@ -189,6 +195,110 @@
   background: none;
   color: var(--guide-accent);
   font-weight: 600;
+}
+
+/*
+ * The passage around a result's match, beside the list: the extension's tooltip (white fading to a
+ * faint grey, hairline border, soft shadow), with the page's own layout of headings, lists and tables.
+ */
+.guide-search__peek {
+  position: fixed;
+  z-index: 30;
+  width: max-content;
+  max-width: min(340px, calc(100vw - 16px));
+  max-height: min(360px, calc(100vh - 16px));
+  overflow: hidden;
+  padding: 10px 14px;
+  border: 1px solid rgba(214, 219, 227, 0.95);
+  border-radius: 10px;
+  background: linear-gradient(180deg, #ffffff 0%, #f7f9fc 100%);
+  box-shadow: 0 16px 36px rgba(17, 24, 39, 0.08), 0 3px 10px rgba(17, 24, 39, 0.05);
+  color: var(--guide-text);
+  font-size: 13px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+  pointer-events: none;
+  animation: guide-search-peek-in 120ms ease;
+}
+
+.guide-search__peek[data-placement="left"] {
+  --guide-search-peek-from: translateX(4px);
+}
+
+.guide-search__peek[data-placement="top"] {
+  --guide-search-peek-from: translateY(4px);
+}
+
+.guide-search__peek[data-placement="bottom"] {
+  --guide-search-peek-from: translateY(-4px);
+}
+
+@keyframes guide-search-peek-in {
+  from {
+    opacity: 0;
+    transform: var(--guide-search-peek-from, translateX(-4px));
+  }
+}
+
+.guide-search__peek > * {
+  margin: 0;
+}
+
+.guide-search__peek > * + * {
+  margin-top: 6px;
+}
+
+.guide-search__peek-heading {
+  color: var(--guide-ink);
+  font-weight: 600;
+}
+
+.guide-search__peek ul,
+.guide-search__peek ol {
+  padding-left: 1.25em;
+}
+
+.guide-search__peek li + li {
+  margin-top: 2px;
+}
+
+.guide-search__peek li::marker {
+  color: var(--guide-muted);
+}
+
+.guide-search__peek table {
+  border-collapse: collapse;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.guide-search__peek th,
+.guide-search__peek td {
+  padding: 3px 12px 3px 0;
+  border-bottom: 1px solid var(--guide-line);
+  text-align: left;
+  vertical-align: top;
+}
+
+.guide-search__peek th {
+  color: var(--guide-ink);
+  font-weight: 600;
+}
+
+.guide-search__peek tr:last-child td {
+  border-bottom: 0;
+}
+
+.guide-search__peek mark {
+  background: none;
+  color: var(--guide-accent);
+  font-weight: 600;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .guide-search__peek {
+    animation: none;
+  }
 }
 
 /* "Suggested reading" over the close pages, and the no-results line over the ways to ask. */

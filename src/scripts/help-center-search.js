@@ -44,12 +44,15 @@
   }
 
   // Index docs: { title, href, text, aliases?, sections: [{ id, title, aliases? }] }. Aliases are
-  // how people phrase a page or a section; they match like a heading but are never shown.
+  // how people phrase a page or a section; they match like a heading but are never shown. text has
+  // a line per block of the page (see parseLines); matching reads it as one run, tabs and line
+  // breaks turned to spaces so every offset stays the same.
   function normalizeIndex(payload) {
     return (Array.isArray(payload) ? payload : [])
       .filter((doc) => doc && typeof doc.title === 'string' && typeof doc.href === 'string')
       .map((doc) => {
-        const text = typeof doc.text === 'string' ? doc.text : '';
+        const source = typeof doc.text === 'string' ? doc.text : '';
+        const text = source.replace(/[\t\n]/g, ' ');
         const aliases = toStrings(doc.aliases);
         const sections = (Array.isArray(doc.sections) ? doc.sections : [])
           .filter((section) => section && typeof section.id === 'string' && typeof section.title === 'string')
@@ -69,8 +72,65 @@
           aliases: aliases.map((alias) => alias.toLowerCase())
         };
         lower.all = [lower.title, ...lower.aliases, ...sections.flatMap((s) => [s.lowerTitle, ...s.lowerAliases]), lower.text].join('\n');
-        return { title: doc.title, href: doc.href, text, aliases, sections, lower };
+        const lines = parseLines(source);
+        locateSections(lower.text, lines, sections);
+        return { title: doc.title, href: doc.href, text, lines, aliases, sections, lower };
       });
+  }
+
+  // The page's blocks, as the help center writes them into text: a line each, led by one tab for a
+  // heading, two for a bullet and three for a table row (its cells split by tabs); a numbered step
+  // keeps its "1. ". start and end are offsets into text, past the leading tabs.
+  const LINE_KINDS = ['text', 'heading', 'bullet', 'row'];
+
+  function parseLines(source) {
+    const lines = [];
+    let offset = 0;
+    let previous = '';
+    source.split('\n').forEach((raw) => {
+      const tabs = Math.min(raw.match(/^\t*/)[0].length, 3);
+      const content = raw.slice(tabs);
+      const start = offset + tabs;
+      const kind = LINE_KINDS[tabs];
+      offset += raw.length + 1;
+      if (!content.trim()) {
+        previous = '';
+        return;
+      }
+      const step = kind === 'text' ? content.match(/^(\d+)\.\s+/) : null;
+      lines.push({
+        kind: step ? 'step' : kind,
+        start: step ? start + step[0].length : start,
+        end: start + content.length,
+        marker: step ? `${step[1]}.` : '',
+        cells: kind === 'row' ? content.split('\t') : null,
+        // A table's first row is its header.
+        header: kind === 'row' && previous !== 'row'
+      });
+      previous = kind;
+    });
+    return lines;
+  }
+
+  // Where each section's body sits in the page text: from the end of its heading line (which may
+  // number it, as the privacy policy does) to the next section's heading line. A section whose
+  // heading isn't in the text gets none.
+  function locateSections(lowerText, lines, sections) {
+    let from = 0;
+    const found = sections.map((section) => {
+      const line = section.lowerTitle
+        ? lines.find((item) => item.kind === 'heading' && item.start >= from && lowerText.slice(item.start, item.end).trim().endsWith(section.lowerTitle))
+        : null;
+      if (line) {
+        from = line.end;
+      }
+      return line || null;
+    });
+    sections.forEach((section, i) => {
+      const line = found[i];
+      const next = found.slice(i + 1).find(Boolean);
+      section.body = line ? { start: line.end, end: next ? next.start : lowerText.length } : null;
+    });
   }
 
   // Synonym groups: string[][], each a set of words that mean the same thing to the reader.
@@ -304,7 +364,118 @@
   function snippet(text, term) {
     const at = text.toLowerCase().indexOf(term);
     const start = at < 0 ? 0 : Math.max(0, at - SNIPPET_LEAD);
-    return `${start > 0 ? '…' : ''}${text.slice(start, start + SNIPPET_LENGTH)}`;
+    return `${start > 0 ? '…' : ''}${text.slice(start, start + SNIPPET_LENGTH).replace(/\s+/g, ' ')}`;
+  }
+
+  // The passage a result's hover card shows, as blocks laid out like the page: the heading it sits
+  // under, then from the first block that mentions a query word (or the section's first block) on,
+  // within a budget where CJK characters count double so every language fills about the same space.
+  // Each block is { kind: 'heading' | 'text' | 'bullet' | 'step' | 'row', text, marker?, cells?, header? }.
+  const CONTEXT_BUDGET = 300;
+  const CONTEXT_LEAD = 40;
+  const SENTENCE_END = /[。！？!?.；;：:]/;
+
+  function widthOf(value) {
+    let width = 0;
+    for (const char of value) {
+      width += /[぀-ヿ㐀-鿿豈-﫿가-힯＀-￯]/.test(char) ? 2 : 1;
+    }
+    return width;
+  }
+
+  // Up to budget wide, closing on a whole sentence when one ends in the second half.
+  function clip(value, budget) {
+    if (widthOf(value) <= budget) {
+      return value;
+    }
+    let cut = 0;
+    let width = 0;
+    for (const char of value) {
+      width += widthOf(char);
+      if (width > budget) {
+        break;
+      }
+      cut += char.length;
+    }
+    const head = value.slice(0, cut);
+    const sentence = Math.max(...[...head.matchAll(/[。！？!?.；;]/g)].map((match) => match.index + 1), 0);
+    return sentence && widthOf(head.slice(0, sentence)) >= budget / 2 ? head.slice(0, sentence) : `${head.trimEnd()}…`;
+  }
+
+  function blockOf(doc, line, from) {
+    if (line.kind === 'row') {
+      return line.header ? { kind: 'row', cells: line.cells.map((cell) => cell.trim()), header: true } : { kind: 'row', cells: line.cells.map((cell) => cell.trim()) };
+    }
+    const value = doc.text.slice(from, line.end).trim();
+    const block = { kind: line.kind, text: from > line.start ? `…${value}` : value };
+    if (line.marker) {
+      block.marker = line.marker;
+    }
+    return block;
+  }
+
+  function blockWidth(block) {
+    return block.kind === 'row' ? widthOf(block.cells.join('  ')) : widthOf(block.text) + 4;
+  }
+
+  function passage(doc, section, words) {
+    const lines = doc.lines || [];
+    const range = section && section.body ? section.body : { start: 0, end: doc.text.length };
+    const body = doc.lower.text.slice(range.start, range.end);
+    const hits = words.filter(Boolean).map((word) => body.indexOf(word)).filter((at) => at >= 0);
+    const hit = hits.length ? range.start + Math.min(...hits) : range.start;
+    let at = lines.findIndex((line) => line.end > hit);
+    if (at < 0 || lines[at].start >= range.end) {
+      return [];
+    }
+    const blocks = [];
+    // The section's own heading, or the nearest one above the match.
+    let heading = section && section.body ? lines.findIndex((line) => line.end === range.start) : -1;
+    if (heading < 0) {
+      for (let i = at; i >= 0 && heading < 0; i -= 1) {
+        heading = lines[i].kind === 'heading' ? i : -1;
+      }
+    }
+    if (heading >= 0 && heading !== at) {
+      blocks.push(blockOf(doc, lines[heading], lines[heading].start));
+    }
+    // A table row brings the table's header row along.
+    if (lines[at].kind === 'row' && !lines[at].header) {
+      let first = at;
+      while (first > 0 && !lines[first].header) {
+        first -= 1;
+      }
+      blocks.push(blockOf(doc, lines[first], lines[first].start));
+    }
+    // A long block starts at the sentence holding the match, or a little before it.
+    let from = lines[at].start;
+    if (lines[at].kind !== 'row' && hit - from > CONTEXT_LEAD) {
+      from = hit;
+      while (from > lines[at].start && hit - from < CONTEXT_LEAD && !SENTENCE_END.test(doc.text[from - 1])) {
+        from -= 1;
+      }
+    }
+    let budget = CONTEXT_BUDGET - blocks.reduce((sum, block) => sum + blockWidth(block), 0);
+    for (let i = at; i < lines.length && lines[i].start < range.end && budget > 20; i += 1) {
+      if (i > at && lines[i].kind === 'heading' && !(section && section.body)) {
+        break;
+      }
+      const block = blockOf(doc, lines[i], i === at ? from : lines[i].start);
+      const width = blockWidth(block);
+      if (width > budget && i > at && (block.kind === 'row' || budget < 60)) {
+        break;
+      }
+      if (width > budget && block.kind !== 'row') {
+        block.text = clip(block.text, budget - 4);
+      }
+      blocks.push(block);
+      budget -= width;
+    }
+    // A heading with nothing under it says nothing.
+    while (blocks.length && blocks[blocks.length - 1].kind === 'heading') {
+      blocks.pop();
+    }
+    return blocks;
   }
 
   // Where one spelling of a word appears: the title, a heading, a section's aliases, the page's
@@ -415,7 +586,14 @@
         // Every spelling counts here, so a title hit on one (pinn) still opens the section another names (pin).
         section = bestSection(doc, terms, weights, section);
         score += phraseBonus(doc, terms);
-        return { doc, score, order, section, detail: section ? section.title : snippet(doc.text, firstVariant) };
+        return {
+          doc,
+          score,
+          order,
+          section,
+          detail: section ? section.title : snippet(doc.text, firstVariant),
+          context: passage(doc, section, terms.flat())
+        };
       })
       .filter(Boolean)
       .sort((a, b) => b.score - a.score || a.order - b.order);
@@ -510,6 +688,7 @@
           section,
           score: headingCoverage + bodyCoverage * 0.25,
           detail: section ? section.title : snippet(doc.text, units[0]),
+          context: passage(doc, section, units),
           recommended: true
         };
       })
@@ -555,6 +734,7 @@
       const result = {
         title: item.doc.title,
         detail: item.detail,
+        context: item.context,
         url: toUrl(origin, item.section ? `${item.doc.href}#${item.section.id}` : item.doc.href)
       };
       if (item.recommended) {

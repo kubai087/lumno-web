@@ -154,19 +154,68 @@ export function getGuideNavTitle(locale: GuideLocale, key: GuideNavKey): string 
   return key === "privacy" ? ui.privacyLabel : pages[key].navTitle;
 }
 
+// `⌃ ⇧ K | Alt K`: a key for each platform (GuideArticle); one copy when both are the same.
+const withPlatformKeys = (markdown: string) =>
+  markdown.replace(/`([^`|]+) \| ([^`|]+)`/g, (_, mac, other) => (mac === other ? mac : `${mac} / ${other}`));
+
 /** Markdown reduced to plain text for the search index. */
 export function toSearchText(markdown: string): string {
-  return markdown
-    // `⌃ ⇧ K | Alt K`: a key for each platform (GuideArticle); one copy when both are the same.
-    .replace(/`([^`|]+) \| ([^`|]+)`/g, (_, mac, other) => (mac === other ? mac : `${mac} / ${other}`))
+  return withPlatformKeys(markdown)
     .replace(/!\[[^\]]*\]\([^)]*\)/g, "")
     .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
     .replace(/\{#[a-z0-9-]+\}/g, "")
+    // Bold, italics and code drop their marks without leaving a gap (服务，**不经过**。 → 服务，不经过。).
+    .replace(/(\*\*|__|\*|`)(\S(?:.*?\S)?)\1/g, "$2")
     .replace(/^\s*\|?\s*:?-{3,}.*$/gm, "")
     .replace(/[`*_>#|]/g, " ")
     .replace(/^\s*(?:[-+]|\d+\.)\s+/gm, "")
     .replace(/\s+/g, " ")
     .trim();
+}
+
+/**
+ * Markdown reduced to the search index's page text, one line per block, so a search result's hover card can
+ * lay a passage out as the page does. Leading tabs say what a line is: one for a heading, two for a bullet,
+ * three for a table row, whose cells are split by tabs; numbered steps keep their "1. ". Older copies of the
+ * help search read the text as one run and see the tabs and line breaks as spaces.
+ */
+export function toSearchBlocks(markdown: string): string {
+  const lines: string[] = [];
+  let paragraph: string[] = [];
+  const push = (prefix: string, text: string) => {
+    const value = toSearchText(text);
+    if (value) lines.push(`${prefix}${value}`);
+  };
+  const flush = () => {
+    push("", paragraph.join(" "));
+    paragraph = [];
+  };
+  for (const raw of withPlatformKeys(markdown).split("\n")) {
+    const line = raw.trim();
+    let match: RegExpMatchArray | null;
+    if (!line || /^!\[[^\]]*\]\([^)]*\)$/.test(line)) {
+      flush();
+    } else if (/^\|?\s*:?-{3,}/.test(line)) {
+      // A table's divider row.
+    } else if ((match = line.match(/^#{1,6}\s+(.+)$/))) {
+      flush();
+      push("\t", match[1]);
+    } else if ((match = line.match(/^[-+*]\s+(.+)$/))) {
+      flush();
+      push("\t\t", match[1]);
+    } else if ((match = line.match(/^(\d+)\.\s+(.+)$/))) {
+      flush();
+      push(`${match[1]}. `, match[2]);
+    } else if (line.startsWith("|")) {
+      flush();
+      const cells = line.replace(/^\||\|$/g, "").split("|").map((cell) => toSearchText(cell) || "—");
+      lines.push(`\t\t\t${cells.join("\t")}`);
+    } else {
+      paragraph.push(line);
+    }
+  }
+  flush();
+  return lines.join("\n");
 }
 
 /** The language menu for a page: switching language keeps the reader on the same page. */

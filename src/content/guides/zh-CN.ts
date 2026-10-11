@@ -262,9 +262,9 @@ const content: GuideLocaleContent = {
       navTitle: "浏览器兼容性",
     },
     "security-open-source": {
-      pageTitle: "安全与开源：GPL-3.0 源码、权限用途和 Manifest V3｜Lumno 帮助中心",
+      pageTitle: "安全与开源：GPL-3.0 源码、权限和 Manifest V3｜Lumno 帮助中心",
       pageDescription:
-        "Lumno 基于 GPL-3.0 协议开源，源码在 GitHub 公开；采用 Manifest V3，不运行远程代码。本文列出每项浏览器权限的用途。",
+        "Lumno 基于 GPL-3.0 协议开源，源码在 GitHub 公开；采用 Manifest V3，不运行远程代码。只申请必要的浏览器权限。",
       keywords: ["Lumno 开源", "Lumno 安全", "Chrome 扩展权限", "Manifest V3"],
       title: "安全与开源",
       navTitle: "安全与开源",

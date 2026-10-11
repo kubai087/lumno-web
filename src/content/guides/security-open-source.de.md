@@ -12,21 +12,10 @@ Jede im Store veröffentlichte Version wird aus genau diesem Code erstellt. Die 
 
 - Manifest V3: Browser erlauben Manifest-V3-Erweiterungen nicht, Code aus dem Internet herunterzuladen und auszuführen. Der gesamte Code von Lumno ist daher im geprüften Paket enthalten.
 - Keine Server: Es gibt kein Kontosystem und keinen Ort, an dem deine Daten gespeichert werden.
-- Minimale Berechtigungen: Lumno fordert nur die notwendigen Berechtigungen an und keine optionalen.
 - Dein WebDAV-App-Passwort wird nur auf deinem Gerät gespeichert und nie über die Browser-Synchronisierung übertragen.
 
-## Wofür die einzelnen Berechtigungen verwendet werden {#permissions}
+## Berechtigungen {#permissions}
 
-| Berechtigung | Verwendung |
-| --- | --- |
-| `tabs`, `tabGroups` | Tabs durchsuchen, wechseln und wiederherstellen; Vorschauen für den Tab-Umschalter erstellen |
-| `history` | Deinen Verlauf auf deinem Gerät durchsuchen |
-| `bookmarks` | Lesezeichen durchsuchen, anzeigen und verwalten |
-| `topSites` | Meistbesuchte Websites im neuen Tab anzeigen |
-| `storage`, `unlimitedStorage` | Einstellungen, Symbole und Hintergründe speichern |
-| `alarms` | Den Status der WebDAV-Synchronisierung regelmäßig prüfen |
-| `search` | Suchanfragen an deine Standardsuchmaschine übergeben |
-| `favicon` | Website-Symbole anzeigen |
-| `scripting` und Zugriff auf alle Websites | Die Befehlsleiste auf Seiten anzeigen, auf Tastenkürzel reagieren sowie Textaktionen und Bild-im-Bild bereitstellen |
+Lumno fordert nur die notwendigen Berechtigungen an und keine optionalen. Der Zugriff auf alle Websites wird nur verwendet, um die Befehlsleiste und ähnliche Funktionen auf Seiten anzuzeigen. Lumno liest oder überträgt keine Seiteninhalte in großem Umfang.
 
-Der Zugriff auf alle Websites wird nur verwendet, um die Befehlsleiste und ähnliche Funktionen auf Seiten anzuzeigen. Lumno liest oder überträgt keine Seiteninhalte in großem Umfang.
+Wofür jede einzelne Berechtigung gebraucht wird, steht in der [Datenschutzerklärung](/de/privacy/#permissions).

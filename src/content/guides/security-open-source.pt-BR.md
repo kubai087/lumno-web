@@ -12,21 +12,10 @@ Cada versão publicada nas lojas é gerada a partir desse mesmo código. As alte
 
 - Manifest V3: os navegadores não permitem que extensões Manifest V3 baixem e executem código remoto, por isso todo o código do Lumno está no pacote revisado.
 - Sem servidores: não há sistema de contas nem nenhum lugar onde seus dados sejam armazenados.
-- Permissões mínimas: o Lumno solicita apenas as permissões necessárias e nenhuma permissão opcional.
 - Sua senha de app do WebDAV fica armazenada apenas no seu dispositivo e nunca é sincronizada pelo navegador.
 
-## Uso de cada permissão {#permissions}
+## Permissões {#permissions}
 
-| Permissão | Uso |
-| --- | --- |
-| `tabs`, `tabGroups` | Pesquisar, alternar e restaurar guias; capturar as prévias do alternador |
-| `history` | Pesquisar no histórico no seu dispositivo |
-| `bookmarks` | Pesquisar, exibir e gerenciar favoritos |
-| `topSites` | Mostrar os sites mais visitados na nova guia |
-| `storage`, `unlimitedStorage` | Salvar configurações, ícones e papéis de parede |
-| `alarms` | Verificar periodicamente o status da sincronização WebDAV |
-| `search` | Enviar pesquisas ao mecanismo de pesquisa padrão |
-| `favicon` | Exibir ícones de sites |
-| `scripting` e acesso a todos os sites | Exibir a barra de comandos nas páginas, responder a atalhos e oferecer as ações na seleção e o picture-in-picture |
+O Lumno solicita apenas as permissões necessárias e nenhuma permissão opcional. O acesso a todos os sites é usado apenas para exibir a barra de comandos e recursos semelhantes nas páginas. O Lumno não lê nem envia o conteúdo das páginas em massa.
 
-O acesso a todos os sites é usado apenas para exibir a barra de comandos e recursos semelhantes nas páginas. O Lumno não lê nem envia o conteúdo das páginas em massa.
+A [Política de Privacidade](/pt-br/privacy/#permissions) explica para que serve cada permissão.

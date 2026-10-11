@@ -254,7 +254,7 @@ const content: GuideLocaleContent = {
     "security-open-source": {
       pageTitle: "Segurança e código aberto: código GPL-3.0, permissões, Manifest V3 | Ajuda do Lumno",
       pageDescription:
-        "O Lumno é de código aberto sob GPL-3.0 no GitHub, feito com Manifest V3 e sem código remoto. Veja para que serve cada permissão do navegador.",
+        "O Lumno é de código aberto sob GPL-3.0 no GitHub, feito com Manifest V3 e sem código remoto. Ele solicita apenas as permissões de navegador necessárias.",
       keywords: ["Lumno código aberto", "segurança do Lumno", "permissões de extensão do Chrome", "Manifest V3"],
       title: "Segurança e código aberto",
       navTitle: "Segurança e código aberto",

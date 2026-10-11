@@ -254,7 +254,7 @@ const content: GuideLocaleContent = {
     "security-open-source": {
       pageTitle: "보안과 오픈소스: GPL-3.0 코드, 권한, Manifest V3 | Lumno 도움말",
       pageDescription:
-        "Lumno는 GitHub에 GPL-3.0으로 공개된 오픈소스이며, 원격 코드 없이 Manifest V3로 개발되었습니다. 브라우저 권한을 각각 어디에 쓰는지 정리했습니다.",
+        "Lumno는 GitHub에 GPL-3.0으로 공개된 오픈소스이며, 원격 코드 없이 Manifest V3로 개발되었습니다. 꼭 필요한 브라우저 권한만 요청합니다.",
       keywords: ["Lumno 오픈소스", "Lumno 보안", "크롬 확장 권한", "Manifest V3"],
       title: "보안과 오픈소스",
       navTitle: "보안과 오픈소스",

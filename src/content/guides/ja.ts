@@ -238,8 +238,8 @@ const content: GuideLocaleContent = {
       navTitle: "ブラウザ互換性",
     },
     "security-open-source": {
-      pageTitle: "安全性とオープンソース：GPL-3.0、権限の用途、Manifest V3｜Lumno ヘルプ",
-      pageDescription: "Lumno は GPL-3.0 のオープンソースで、コードは GitHub で公開しています。Manifest V3 を採用し、リモートのコードは実行しません。各権限の用途をまとめました。",
+      pageTitle: "安全性とオープンソース：GPL-3.0、権限、Manifest V3｜Lumno ヘルプ",
+      pageDescription: "Lumno は GPL-3.0 のオープンソースで、コードは GitHub で公開しています。Manifest V3 を採用し、リモートのコードは実行しません。必要な権限だけを要求します。",
       keywords: ["Lumno オープンソース", "Lumno 安全性", "Chrome 拡張機能 権限", "Manifest V3"],
       title: "安全性とオープンソース",
       navTitle: "安全性とオープンソース",

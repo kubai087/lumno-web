@@ -103,7 +103,14 @@ export type GuideLocaleContent = {
     privacyLabel: string;
     searchPlaceholder: string;
     searchLabel: string;
+    /** No results: the heading over the ways to ask the developer instead. */
     searchEmpty: string;
+    /** Over the close pages that follow the exact matches. */
+    searchRecommended: string;
+    /** The ways to ask when nothing matches: the WeChat group (Chinese only), a GitHub issue, the author on X. */
+    searchFeedbackGroup: string;
+    searchFeedbackIssue: string;
+    searchFeedbackAuthor: string;
     /** Above the pager: where to go when the page didn't answer it (the community panel's channels). */
     stuckText: string;
     /** Its two buttons: the group and GitHub in Chinese, GitHub and X elsewhere. */

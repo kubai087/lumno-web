@@ -59,7 +59,7 @@ export default {
   },
   "keyboard-shortcuts": {
     "": ["Keyboard shortcuts, hotkeys, key bindings, keybindings, key combos, all keys"],
-    defaults: ["What is the default shortcut? Which key opens it? Cmd Shift K, Ctrl Shift K"],
+    defaults: ["What is the default shortcut? Which key opens it? Cmd Shift K, Ctrl Shift K", "Shortcuts on Windows, Linux and Mac"],
     change: [
       "How do I change the shortcut? Change the hotkey, rebind, remap, customize keyboard shortcuts",
       "Can I set the shortcut to ⌘T, Cmd T or Ctrl T like Arc?",

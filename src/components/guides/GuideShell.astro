@@ -16,6 +16,8 @@ import { COMMUNITY_LINKS } from "../../lib/community";
 import { getHomeContent } from "../../lib/home-content";
 import { GITHUB_ISSUE_URL } from "../../lib/site-links";
 import { communityTriggerAttributes } from "../home/CommunityPanel";
+import { createHash } from "node:crypto";
+import searchLibSource from "../../scripts/help-center-search.js?raw";
 
 /*
  * The help center's frame, shared by its pages and the privacy policy: search
@@ -46,11 +48,21 @@ const displayUpdated = new Intl.DateTimeFormat(locale, {
 }).format(new Date(`${updated}T00:00:00Z`));
 // buildLocalizedPath ends paths with "/", so the file name goes after the directory.
 const searchIndexHref = `${buildLocalizedPath(locale, "/help/")}search-index.json`;
+const searchSynonymsHref = `${buildLocalizedPath(locale, "/help/")}search-synonyms.json`;
+// The matching rules, shared with the extension, load with the index on first use; the hash keeps caches honest.
+const searchLibHref = `/help/help-center-search.js?v=${createHash("sha256").update(searchLibSource).digest("hex").slice(0, 10)}`;
 ---
 
 <div class="guide">
   <aside class="guide-side">
-    <div class="guide-search" data-guide-search data-index={searchIndexHref} data-empty={ui.searchEmpty}>
+    <div
+      class="guide-search"
+      data-guide-search
+      data-index={searchIndexHref}
+      data-synonyms={searchSynonymsHref}
+      data-lib={searchLibHref}
+      data-recommended={ui.searchRecommended}
+    >
       <i class="ri-search-line" aria-hidden="true"></i>
       <input
         type="search"
@@ -64,6 +76,51 @@ const searchIndexHref = `${buildLocalizedPath(locale, "/help/")}search-index.jso
       />
       <kbd class="guide-search__hint" aria-hidden="true">/</kbd>
       <div class="guide-search__results" id="guide-search-results" role="listbox" hidden></div>
+      <!-- Nothing matches: the ways to ask instead, the same channels as the extension's help search. -->
+      <template data-guide-search-feedback>
+        <p class="guide-search__group">{ui.searchEmpty}</p>
+        {community.kind === "group" && (
+          <button
+            type="button"
+            role="option"
+            class="guide-search__option"
+            aria-haspopup="dialog"
+            data-analytics-event="open_community_panel"
+            data-analytics-category="cta"
+            data-analytics-label="guide_search_community"
+            {...communityTriggerAttributes(getCommunityPanel(locale))}
+          >
+            <i class="ri-wechat-line" aria-hidden="true"></i>
+            <span class="guide-search__title">{ui.searchFeedbackGroup}</span>
+          </button>
+        )}
+        <a
+          role="option"
+          class="guide-search__option"
+          href={GITHUB_ISSUE_URL}
+          target="_blank"
+          rel="noopener"
+          data-analytics-event="open_github_issue"
+          data-analytics-category="cta"
+          data-analytics-label="guide_search_issue"
+        >
+          <i class="ri-github-line" aria-hidden="true"></i>
+          <span class="guide-search__title">{ui.searchFeedbackIssue}</span>
+        </a>
+        <a
+          role="option"
+          class="guide-search__option"
+          href={COMMUNITY_LINKS.xUrl}
+          target="_blank"
+          rel="noopener"
+          data-analytics-event="open_author_x"
+          data-analytics-category="cta"
+          data-analytics-label="guide_search_x"
+        >
+          <i class="ri-twitter-x-line" aria-hidden="true"></i>
+          <span class="guide-search__title">{ui.searchFeedbackAuthor}</span>
+        </a>
+      </template>
     </div>
 
     <!-- The pages, wiki style; phones open the same list as a sheet from the bottom bar. -->
@@ -358,22 +415,43 @@ const searchIndexHref = `${buildLocalizedPath(locale, "/help/")}search-index.jso
       goTo(link.href);
     });
 
-    // Search: the index is fetched on first focus, then matched in the page. "/" focuses the box.
+    // Search: the index, synonyms and matching rules (src/scripts/help-center-search.js, the same file the
+    // extension's help search runs) load on first focus. "/" focuses the box.
     const box = document.querySelector("[data-guide-search]");
     const input = box && box.querySelector("input");
     const results = box && box.querySelector(".guide-search__results");
-    if (!box || !input || !results) return;
+    const feedback = box && box.querySelector("template[data-guide-search-feedback]");
+    if (!box || !input || !results || !feedback) return;
     let index = null;
+    let synonyms = [];
     let loading = null;
     let active = -1;
+    const loadScript = (src) =>
+      window.LumnoHelpCenterSearch
+        ? Promise.resolve()
+        : new Promise((resolve, reject) => {
+            const script = document.createElement("script");
+            script.src = src;
+            script.onload = resolve;
+            script.onerror = reject;
+            document.head.append(script);
+          });
+    const loadJson = (href) => fetch(href).then((response) => {
+      if (!response.ok) throw new Error(`${href}: ${response.status}`);
+      return response.json();
+    });
+    // A failed load is forgotten so the next keystroke retries; until then nothing is listed,
+    // so being offline isn't reported as missing content.
     const load = () => {
       if (!loading) {
-        loading = fetch(box.dataset.index)
-          .then((response) => response.json())
-          .then((data) => (index = data))
+        loading = Promise.all([loadJson(box.dataset.index), loadJson(box.dataset.synonyms).catch(() => []), loadScript(box.dataset.lib)])
+          .then(([data, groups]) => {
+            index = window.LumnoHelpCenterSearch.normalizeIndex(data);
+            synonyms = window.LumnoHelpCenterSearch.normalizeSynonyms(groups);
+          })
           .catch(() => (loading = null));
       }
-      return loading;
+      return loading || Promise.resolve();
     };
     const escape = (value) =>
       value.replace(/[&<>"]/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[char]);
@@ -385,43 +463,9 @@ const searchIndexHref = `${buildLocalizedPath(locale, "/help/")}search-index.jso
       });
       return html;
     };
-    const snippet = (text, term) => {
-      const at = text.toLowerCase().indexOf(term);
-      if (at < 0) return text.slice(0, 60);
-      const start = Math.max(0, at - 24);
-      return `${start > 0 ? "…" : ""}${text.slice(start, at + term.length + 36)}…`;
-    };
-    const search = (query) => {
-      const terms = query.toLowerCase().split(/\s+/).filter(Boolean);
-      if (!terms.length || !index) return [];
-      return index
-        .map((doc) => {
-          const title = doc.title.toLowerCase();
-          const text = doc.text.toLowerCase();
-          let score = 0;
-          let section = null;
-          for (const term of terms) {
-            const heading = doc.sections.find((item) => item.title.toLowerCase().includes(term));
-            if (title.includes(term)) score += 10;
-            else if (heading) score += 4;
-            else if (text.includes(term)) score += 1;
-            else return null;
-            if (heading && !section) section = heading;
-          }
-          return {
-            score,
-            href: section ? `${doc.href}#${section.id}` : doc.href,
-            title: doc.title,
-            detail: section ? section.title : snippet(doc.text, terms[0]),
-            terms,
-          };
-        })
-        .filter(Boolean)
-        .sort((a, b) => b.score - a.score)
-        .slice(0, 8);
-    };
+    const options = () => [...results.querySelectorAll('[role="option"]')];
     const setActive = (next) => {
-      const items = [...results.querySelectorAll("a")];
+      const items = options();
       if (!items.length) return;
       active = (next + items.length) % items.length;
       items.forEach((item, i) => item.setAttribute("aria-selected", i === active ? "true" : "false"));
@@ -430,20 +474,27 @@ const searchIndexHref = `${buildLocalizedPath(locale, "/help/")}search-index.jso
     const render = () => {
       const query = input.value.trim();
       active = -1;
-      if (!query) {
+      if (!query || !index) {
         results.hidden = true;
         input.setAttribute("aria-expanded", "false");
         return;
       }
-      const found = search(query);
-      results.innerHTML = found.length
-        ? found
-            .map(
-              (item) =>
-                `<a role="option" href="${item.href}"><span class="guide-search__title">${highlight(item.title, item.terms)}</span><span class="guide-search__detail">${highlight(item.detail, item.terms)}</span></a>`,
-            )
-            .join("")
-        : `<p class="guide-search__empty">${escape(box.dataset.empty)}</p>`;
+      const search = window.LumnoHelpCenterSearch;
+      const found = search.searchIndex(index, query, { synonyms });
+      const terms = search.getExactTerms(query, synonyms);
+      const row = (item) =>
+        `<a role="option" href="${escape(item.url)}"><span class="guide-search__title">${highlight(item.title, terms)}</span><span class="guide-search__detail">${highlight(item.detail, terms)}</span></a>`;
+      const exact = found.filter((item) => !item.recommended);
+      const recommended = found.filter((item) => item.recommended);
+      if (found.length) {
+        results.innerHTML = [
+          ...exact.map(row),
+          ...(recommended.length ? [`<p class="guide-search__group">${escape(box.dataset.recommended)}</p>`] : []),
+          ...recommended.map(row),
+        ].join("");
+      } else {
+        results.replaceChildren(feedback.content.cloneNode(true));
+      }
       results.hidden = false;
       input.setAttribute("aria-expanded", "true");
     };
@@ -457,9 +508,10 @@ const searchIndexHref = `${buildLocalizedPath(locale, "/help/")}search-index.jso
         event.preventDefault();
         setActive(active - 1);
       } else if (event.key === "Enter") {
-        const items = results.querySelectorAll("a");
-        const target = items[active >= 0 ? active : 0];
-        if (target) goTo(target.href);
+        const target = options()[active >= 0 ? active : 0];
+        // Help pages open in place; the ways to ask open in a new tab or the group panel.
+        if (target && target.matches("a:not([target])")) goTo(target.href);
+        else if (target) target.click();
       } else if (event.key === "Escape") {
         input.value = "";
         render();

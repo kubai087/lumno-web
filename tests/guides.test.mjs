@@ -117,7 +117,7 @@ test("pages read like a wiki: search, sidebar, keycaps, zoomable screenshots, pr
   assert.match(shell, /lightbox\.showModal\(\)/);
   assert.match(article, /class="guide__pager"/);
   // Search: the index is built at build time and fetched on first focus.
-  assert.match(shell, /data-guide-search data-index=\{searchIndexHref\}/);
+  assert.match(shell, /data-guide-search\s+data-index=\{searchIndexHref\}/);
   assert.match(shell, /const searchIndexHref = `\$\{buildLocalizedPath\(locale, "\/help\/"\)\}search-index\.json`;/);
   assert.match(shell, /input\.addEventListener\("focus", \(\) => load\(\)\.then\(render\)\)/);
   assert.match(readSource("src/pages/help/search-index.json.ts"), /buildGuideSearchIndex\(DEFAULT_LOCALE\)/);
@@ -168,7 +168,7 @@ test("moving between pages switches at once, then glides to the top", () => {
   assert.match(shell, /closest\("\.guide-nav a, \.guide__pager a:not\(\[data-guide-home\]\), \.guide-search__results a"\)/);
   // The first page's left card goes back to the website, as a normal page load.
   assert.match(readSource("src/components/guides/GuideArticle.astro"), /href: buildLocalizedPath\(locale, "\/"\), label: ui\.homeCardLabel, title: ui\.homeCardTitle/);
-  assert.match(shell, /if \(target\) goTo\(target\.href\);/);
+  assert.match(shell, /if \(target && target\.matches\("a:not\(\[target\]\)"\)\) goTo\(target\.href\);/);
   // The old offset carries over, the new page starts there and scrolls up.
   assert.match(shell, /sessionStorage\.setItem\("lumno-guide-page-scroll"/);
   assert.match(shell, /window\.scrollTo\(\{ top: start, behavior: "instant" \}\);/);
@@ -253,16 +253,54 @@ test("switching language keeps the reader's place", () => {
 });
 
 
-test("search aliases reach the extension's four index languages and stay off the page", () => {
+test("search aliases, synonyms and eval sets cover the extension's four index languages and stay off the page", () => {
   const index = readSource("src/lib/guide-search-index.ts");
   for (const locale of ["zh-CN", "zh-TW", "ja", "en"]) {
     assert.ok(fs.existsSync(path.join(workspaceRoot, `src/content/guides/search/${locale}.ts`)), `aliases for ${locale}`);
     assert.match(index, new RegExp(`from "../content/guides/search/${locale}"`));
+    assert.match(index, new RegExp(`from "../content/guides/search/synonyms/${locale}"`));
+    assert.ok(JSON.parse(readSource(`src/content/guides/search/eval/${locale}.json`)).length >= 50, `eval set for ${locale}`);
   }
   assert.match(index, /\.\.\.withAliases\(slug, locale,/);
   assert.match(index, /withAliases\(\s*"privacy",/);
   assert.match(index, /which the page doesn't have/);
+  assert.ok(fs.existsSync(path.join(workspaceRoot, "src/pages/[locale]/help/search-synonyms.json.ts")));
   assert.doesNotMatch(readSource("src/components/guides/GuideArticle.astro"), /content\/guides\/search/);
+  // The eval set runs after every build and fails it when search gets worse.
+  assert.match(JSON.parse(readSource("package.json")).scripts.build, /astro build && node scripts\/help-search-eval\.mjs/);
+});
+
+test("the search box runs the extension's matching rules and offers ways to ask when nothing matches", () => {
+  const shell = readSource("src/components/guides/GuideShell.astro");
+  assert.match(shell, /import searchLibSource from "\.\.\/\.\.\/scripts\/help-center-search\.js\?raw";/);
+  assert.match(shell, /window\.LumnoHelpCenterSearch\.normalizeIndex\(data\)/);
+  assert.match(shell, /search\.searchIndex\(index, query, \{ synonyms \}\)/);
+  assert.match(shell, /<template data-guide-search-feedback>/);
+  assert.match(shell, /community\.kind === "group" && \(\s*<button/);
+  assert.match(shell, /if \(!query \|\| !index\) \{\s*results\.hidden = true;/);
+  assert.doesNotMatch(shell, /review|rating/i);
+});
+
+test("help search: question words, synonyms, typos, aliases and recommended reading", async () => {
+  await import("../src/scripts/help-center-search.js");
+  const { searchIndex, getExactTerms } = globalThis.LumnoHelpCenterSearch;
+  const index = [
+    { title: "快捷键", href: "/help/keyboard-shortcuts/", sections: [{ id: "defaults", title: "默认快捷键" }, { id: "change", title: "修改快捷键", aliases: ["快捷键冲突"] }], text: "按下快捷键没有反应时……" },
+    { title: "更换壁纸", href: "/help/newtab-wallpaper/", sections: [{ id: "sources", title: "壁纸来源" }, { id: "dark-mode", title: "为深色模式单独设置" }], text: "内置、本地和 Bing 壁纸" },
+    { title: "Change the wallpaper", href: "/en/help/newtab-wallpaper/", sections: [{ id: "sources", title: "Wallpaper sources" }], text: "Use your own photo." },
+  ];
+  const synonyms = [["快捷键", "热键"], ["深色模式", "黑色主题"], ["没反应", "没有反应", "失灵"], ["我的最爱", "书签"]];
+  const first = (query) => searchIndex(index, query, { synonyms })[0]?.url;
+  assert.deepEqual(getExactTerms("怎么改快捷键", synonyms), ["改快捷键"]);
+  assert.deepEqual(getExactTerms("我的最爱", synonyms), ["我的最爱"]);
+  assert.equal(first("怎么改热键"), "/help/keyboard-shortcuts/#change");
+  assert.equal(first("快捷键冲突"), "/help/keyboard-shortcuts/#change");
+  assert.equal(first("快捷键失灵了"), "/help/keyboard-shortcuts/#defaults");
+  assert.equal(first("怎么设置黑色主题"), "/help/newtab-wallpaper/#dark-mode");
+  assert.match(first("wallpapper"), /^\/en\/help\/newtab-wallpaper\//);
+  assert.equal(first("wallpapers sources"), "/en/help/newtab-wallpaper/#sources");
+  assert.deepEqual(searchIndex(index, "壁纸来源都有哪些", { synonyms }).map((item) => [item.url, item.recommended]), [["/help/newtab-wallpaper/#sources", true]]);
+  assert.deepEqual(searchIndex(index, "天气预报", { synonyms }), []);
 });
 
 test("keys are written once, in Mac form, and each reader sees their own platform's keys", () => {

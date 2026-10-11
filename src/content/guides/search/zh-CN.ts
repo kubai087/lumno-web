@@ -58,7 +58,7 @@ export default {
   },
   "keyboard-shortcuts": {
     "": ["快捷键、热键、键盘快捷键、组合键、按键大全、键位"],
-    defaults: ["默认快捷键是什么？用什么键打开？Cmd Shift K、Ctrl Shift K"],
+    defaults: ["默认快捷键是什么？用什么键打开？Cmd Shift K、Ctrl Shift K", "Windows、Linux、Mac 上的快捷键"],
     change: [
       "怎么改快捷键？怎么修改热键？在哪里设置快捷键？自定义快捷键",
       "能把快捷键改成 ⌘T、Cmd T、Ctrl T 吗？像 Arc 一样按 Cmd T",
@@ -121,6 +121,7 @@ export default {
     shortcuts: [
       "怎么添加快捷方式、添加网站、添加图标？怎么删除、编辑快捷方式",
       "快捷方式图标怎么换、上传图标、自定义图标",
+      "快捷方式图标没了、图标不见了、误删了快捷方式怎么撤销",
       "图标放大效果、程序坞、Dock 效果怎么关？",
     ],
     bookmarks: ["新标签页怎么显示书签、收藏夹？书签栏放顶部、书签布局、文件夹颜色"],

@@ -165,8 +165,8 @@
   text-decoration: none;
 }
 
-.guide-search__results a:hover,
-.guide-search__results a[aria-selected="true"] {
+.guide-search__results [role="option"]:hover,
+.guide-search__results [role="option"][aria-selected="true"] {
   background: var(--guide-accent-soft);
 }
 
@@ -191,11 +191,35 @@
   font-weight: 600;
 }
 
-.guide-search__empty {
+/* "Suggested reading" over the close pages, and the no-results line over the ways to ask. */
+.guide-search__group {
   margin: 0;
-  padding: 10px;
+  padding: 8px 10px 4px;
   color: var(--guide-muted);
-  font-size: 13px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.guide-search__results .guide-search__option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  color: var(--guide-ink);
+  font: inherit;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.guide-search__option > i {
+  color: var(--guide-muted);
+  font-size: 16px;
+  line-height: 1;
 }
 
 /*

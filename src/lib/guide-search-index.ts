@@ -12,18 +12,21 @@ import searchEn from "../content/guides/search/en";
 import searchJa from "../content/guides/search/ja";
 import searchZhCN from "../content/guides/search/zh-CN";
 import searchZhTW from "../content/guides/search/zh-TW";
+import synonymsEn from "../content/guides/search/synonyms/en";
+import synonymsJa from "../content/guides/search/synonyms/ja";
+import synonymsZhCN from "../content/guides/search/synonyms/zh-CN";
+import synonymsZhTW from "../content/guides/search/synonyms/zh-TW";
 import { PRIVACY_SECTION_IDS, getPrivacyContent } from "./privacy-content";
 
-type SearchDoc = { title: string; href: string; sections: Array<{ id: string; title: string }>; text: string };
-type SearchSection = SearchDoc["sections"][number];
+type SearchSection = { id: string; title: string; aliases?: string[] };
+type SearchDoc = { title: string; href: string; aliases?: string[]; sections: SearchSection[]; text: string };
 
 /**
- * Words people type that the pages don't use (热键, 收藏夹, 浮层, "hotkey"…), written as the questions they'd ask.
- * Never shown on the page; they only reach search-index.json, which the help search box and the extension's
- * "Lumno 帮助中心" site search both match by plain substring. Keyed by page, then by section anchor: phrases become
- * extra sections, so a hit scores like a heading, links to that anchor and shows the phrase. Phrases under "" are about
- * the whole page and point at its first section, just below the intro. The extension only reads the zh-CN, zh-TW, ja
- * and en indexes, so only those carry aliases.
+ * How people phrase a page or one of its sections when they search (热键, 收藏夹, "快捷键没反应"…). Never shown on
+ * the page; they only reach search-index.json, where they match like a heading (see src/scripts/help-center-search.js,
+ * which the help search box and the extension's "Lumno 帮助中心" site search both run). Keyed by page, then by section
+ * anchor; "" is the page as a whole. Words that mean the same thing everywhere belong in the synonym list instead
+ * (search/synonyms/<locale>.ts). The extension reads the zh-CN, zh-TW, ja and en indexes, so only those carry them.
  */
 export type GuideSearchAliases = Partial<Record<GuideNavKey, Record<string, string[]>>>;
 const SEARCH_ALIASES: Partial<Record<GuideLocale, GuideSearchAliases>> = {
@@ -33,14 +36,29 @@ const SEARCH_ALIASES: Partial<Record<GuideLocale, GuideSearchAliases>> = {
   en: searchEn,
 };
 
-/** Appends a page's aliases after its real headings, so a heading still wins when both match. */
-function withAliases(key: GuideNavKey, locale: GuideLocale, sections: SearchSection[], text: string): Pick<SearchDoc, "sections" | "text"> {
+/** Groups of words that mean the same thing to a reader; the search tries each word of a group in place of the others. */
+export type GuideSearchSynonyms = string[][];
+const SEARCH_SYNONYMS: Partial<Record<GuideLocale, GuideSearchSynonyms>> = {
+  "zh-CN": synonymsZhCN,
+  "zh-TW": synonymsZhTW,
+  ja: synonymsJa,
+  en: synonymsEn,
+};
+
+export function buildGuideSearchSynonyms(locale: GuideLocale): GuideSearchSynonyms {
+  return SEARCH_SYNONYMS[locale] || [];
+}
+
+/** Puts a page's aliases on the sections they belong to, and the page-wide ones on the page. */
+function withAliases(key: GuideNavKey, locale: GuideLocale, sections: SearchSection[]): Pick<SearchDoc, "aliases" | "sections"> {
   const aliases = SEARCH_ALIASES[locale]?.[key] || {};
   for (const id of Object.keys(aliases)) {
     if (id && !sections.some((section) => section.id === id)) throw new Error(`Search aliases for ${locale}/${key} point at #${id}, which the page doesn't have`);
   }
-  const extra = Object.entries(aliases).flatMap(([id, phrases]) => phrases.map((title) => ({ id: id || sections[0].id, title })));
-  return { sections: [...sections, ...extra], text };
+  return {
+    ...(aliases[""]?.length ? { aliases: aliases[""] } : {}),
+    sections: sections.map((section) => (aliases[section.id]?.length ? { ...section, aliases: aliases[section.id] } : section)),
+  };
 }
 
 /** The help center's search index: every page and the privacy policy, as plain text. */
@@ -61,7 +79,8 @@ export async function buildGuideSearchIndex(locale: GuideLocale): Promise<Search
     return {
       title: pages[slug].title,
       href: getGuidePath(locale, slug),
-      ...withAliases(slug, locale, faq ? [...sections, { id: "faq", title: ui.faqTitle }] : sections, `${toSearchText(source)} ${faq}`.trim()),
+      ...withAliases(slug, locale, faq ? [...sections, { id: "faq", title: ui.faqTitle }] : sections),
+      text: `${toSearchText(source)} ${faq}`.trim(),
     };
   });
 
@@ -77,8 +96,8 @@ export async function buildGuideSearchIndex(locale: GuideLocale): Promise<Search
         { id: "summary", title: privacy.summarySource.match(/^##\s+(.+)$/m)?.[1].trim() || "" },
         ...PRIVACY_SECTION_IDS.map((id, index) => ({ id, title: privacyTitles[index] || "" })),
       ],
-      toSearchText(`${privacy.summarySource}\n${privacy.policySource}`),
     ),
+    text: toSearchText(`${privacy.summarySource}\n${privacy.policySource}`),
   });
   return docs;
 }

@@ -8,7 +8,8 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "npm run test && astro build",
+    "build": "npm run test && astro build && node scripts/help-search-eval.mjs",
+    "search-eval": "node scripts/help-search-eval.mjs --verbose",
     "preview": "astro preview",
     "check": "astro check",
     "test": "node --test"

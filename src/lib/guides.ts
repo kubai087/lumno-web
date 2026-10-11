@@ -67,7 +67,7 @@ export const GUIDE_SLUGS: GuideSlug[] = GUIDE_NAV_KEYS.filter((key): key is Guid
 
 /** When the pages were last checked against the extension. */
 export const GUIDES_LAST_UPDATED = "2026-10-11";
-export const GUIDES_EXTENSION_VERSION = "0.9.61";
+export const GUIDES_EXTENSION_VERSION = "1.0.0";
 
 type GuideFaqItem = { question: string; answer: string };
 

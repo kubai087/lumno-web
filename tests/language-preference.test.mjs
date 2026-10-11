@@ -80,7 +80,7 @@ test("homepage uses the shared language preference helper too", () => {
   assert.doesNotMatch(source, /function applyLanguageMode\(mode, options\)/);
 });
 
-test("privacy keeps x-default stable until a user has saved a language choice", () => {
+test("privacy keeps x-default stable until a user has saved a language choice or the extension opens it", () => {
   const source = fs.readFileSync(path.join(workspaceRoot, "src/layouts/SitePage.astro"), "utf8");
   const headSource = source.slice(0, source.indexOf("</head>"));
 
@@ -90,9 +90,16 @@ test("privacy keeps x-default stable until a user has saved a language choice", 
   assert.match(source, /window\.__lumnoLanguageRuntime\.setupLanguageRuntime\(/);
   assert.match(source, /forcedLocale: pageLocale/);
   assert.match(headSource, /!forcedLocale && \(/);
-  assert.match(headSource, /if \(!storedMode\) return;/);
+  assert.match(headSource, /if \(!storedMode && !isExtensionEntry\) return;/);
+  assert.match(headSource, /entryValues\.includes\(new URLSearchParams\(window\.location\.search\)\.get\("entry"\)\)/);
   assert.ok(
-    headSource.indexOf("if (!storedMode) return;") < headSource.indexOf("window.location.replace(`"),
-    "privacy should only redirect before paint when a preference already exists",
+    headSource.indexOf("if (!storedMode && !isExtensionEntry) return;") < headSource.indexOf("window.location.replace(`"),
+    "privacy should only redirect before paint when a preference exists or the extension opened it",
   );
+});
+
+test("the help center fills its search from ?q= so the extension's Lumno site search lands on results", () => {
+  const source = fs.readFileSync(path.join(workspaceRoot, "src/components/guides/GuideShell.astro"), "utf8");
+  assert.match(source, /new URLSearchParams\(window\.location\.search\)\.get\("q"\)/);
+  assert.match(source, /input\.value = initialQuery;/);
 });

@@ -9,6 +9,7 @@ import "../styles/site.css";
 import "../styles/locale-fonts.css";
 import { buildAlternateLinks, getOpenGraphLocale } from "../lib/seo";
 import { getLocaleScript, type SupportedLocale } from "../lib/locales";
+import { EXTENSION_ENTRY_VALUES } from "../lib/entry-context";
 
 type StructuredData = Record<string, unknown>;
 
@@ -65,10 +66,12 @@ import LanguageScrollRestore from "../components/LanguageScrollRestore.astro";
     <LocaleNormalizer />
     {
       !forcedLocale && (
-        <script is:inline define:vars={{ routeLanguageMap, redirectLocales: alternateLocales || null }}>
+        <script is:inline define:vars={{ routeLanguageMap, redirectLocales: alternateLocales || null, entryValues: EXTENSION_ENTRY_VALUES }}>
           (() => {
             // The default route stays stable for first-time visitors and crawlers; a saved
-            // language choice moves the visitor to their localized route before anything paints.
+            // language choice, or the browser language when the extension opens the page
+            // (?entry=ext, e.g. its Lumno help center search), moves the visitor to their
+            // localized route before anything paints.
             let storedMode = "";
             try {
               storedMode = String(window.localStorage.getItem("_x_extension_language_2024_unique_") || "").trim();
@@ -76,10 +79,11 @@ import LanguageScrollRestore from "../components/LanguageScrollRestore.astro";
               // Private browsing or blocked storage keeps the default route.
             }
 
-            if (!storedMode) return;
+            const isExtensionEntry = entryValues.includes(new URLSearchParams(window.location.search).get("entry"));
+            if (!storedMode && !isExtensionEntry) return;
 
             const browserLanguage = (Array.isArray(navigator.languages) && navigator.languages[0]) || navigator.language || "en";
-            const mode = storedMode.toLowerCase() !== "system" ? storedMode : browserLanguage;
+            const mode = storedMode && storedMode.toLowerCase() !== "system" ? storedMode : browserLanguage;
             const targetLocale = window.__lumnoNormalizeLocale(mode, "en");
             // A page missing in the saved language stays put rather than leaving for that language's homepage.
             if (redirectLocales && !redirectLocales.includes(targetLocale)) return;

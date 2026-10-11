@@ -477,5 +477,12 @@ const searchIndexHref = `${buildLocalizedPath(locale, "/help/")}search-index.jso
         input.focus();
       }
     });
+    // Arriving with ?q= (the extension's Lumno site search): fill the box and list what matches.
+    const initialQuery = (new URLSearchParams(window.location.search).get("q") || "").trim();
+    if (initialQuery) {
+      input.value = initialQuery;
+      input.focus({ preventScroll: true });
+      load().then(render);
+    }
   })();
 </script>

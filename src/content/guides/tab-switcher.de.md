@@ -2,7 +2,7 @@ Um zwischen den zwei oder drei zuletzt verwendeten Seiten zu wechseln, ist der T
 
 ## Den Tab-Umschalter öffnen {#open}
 
-Drücke `⌥ Q` (unter Windows `Alt + Q`). Deine zuletzt verwendeten Tabs werden in der Reihenfolge ihrer Nutzung mit einer Seitenvorschau angezeigt.
+Drücke `⌥ Q`. Deine zuletzt verwendeten Tabs werden in der Reihenfolge ihrer Nutzung mit einer Seitenvorschau angezeigt.
 
 ![Der Tab-Umschalter mit vier Tabs in der Reihenfolge ihrer Nutzung, jeweils mit Seitenvorschau](switcher "Der Tab-Umschalter")
 
@@ -11,7 +11,7 @@ Drücke `⌥ Q` (unter Windows `Alt + Q`). Deine zuletzt verwendeten Tabs werden
 1. Halte `⌥` gedrückt und drücke wiederholt `Q`, bis die gewünschte Seite ausgewählt ist. Du kannst auch `Tab` oder die Pfeiltasten verwenden.
 2. Lass `⌥` los oder drücke `↩`, um zu dieser Seite zu wechseln.
 
-Die Bedienung entspricht weitgehend `⌘ Tab` auf dem Mac oder `⌃ Tab` in [Arc](https://arc.net/).
+Die Bedienung entspricht weitgehend `⌘ Tab | Alt + Tab` auf deinem Computer oder `⌃ Tab` in [Arc](https://arc.net/).
 
 ## Tab-Umschalter oder Suche in offenen Tabs {#vs-search}
 

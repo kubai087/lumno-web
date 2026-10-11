@@ -2,7 +2,7 @@ Até agora, para pesquisar no GitHub, era preciso abrir o GitHub e depois usar a
 
 ## Como usar a pesquisa em sites {#how}
 
-1. Pressione `⌘ ⇧ K` (`Ctrl + Shift + K` no Windows) em qualquer página.
+1. Pressione `⌘ ⇧ K` em qualquer página.
 2. Digite um atalho de site, por exemplo `gh`.
 3. Pressione `Tab`. O GitHub aparece à esquerda da caixa.
 4. Digite sua pesquisa e pressione Enter.

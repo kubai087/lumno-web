@@ -34,7 +34,7 @@ Da sich die Erweiterungs-APIs von Firefox von denen in Chromium unterscheiden, s
 | Befehlsleiste auf lokalen `file://`-Seiten | Nicht verfügbar |
 | Website-Symbole | Bei noch nicht besuchten Websites wird anfangs möglicherweise ein Platzhaltersymbol angezeigt |
 
-Da Firefox `⌘ ⇧ K` bereits selbst verwendet, nutzt die Firefox-Version standardmäßig `⌃ ⇧ K` unter macOS und `Alt + K` unter Windows und Linux. `Alt + Q` bleibt unverändert.
+Da Firefox `⌘ ⇧ K` bereits selbst verwendet, nutzt die Firefox-Version standardmäßig `⌃ ⇧ K | Alt + K`. `⌥ Q` bleibt unverändert.
 
 ## Safari {#safari}
 

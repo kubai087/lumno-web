@@ -4,7 +4,7 @@ Lumno 웹사이트와 커뮤니티에서 자주 묻는 질문과 답변을 정�
 
 ### 기본 단축키는 무엇이며, 변경할 수 있나요?
 
-기본 단축키는 Mac에서 `⌘ ⇧ K`, Windows와 Linux에서 `Ctrl + Shift + K`입니다. 단축키는 `chrome://extensions/shortcuts`에서 변경할 수 있습니다. 자세한 내용은 [단축키](../keyboard-shortcuts/#change)를 참고하세요.
+기본 단축키는 Mac에서 `⌘ ⇧ K | ⌘ ⇧ K`, Windows와 Linux에서 `Ctrl + Shift + K`입니다. 단축키는 `chrome://extensions/shortcuts`에서 변경할 수 있습니다. 자세한 내용은 [단축키](../keyboard-shortcuts/#change)를 참고하세요.
 
 ### 단축키가 작동하지 않으면 어떻게 해야 하나요?
 

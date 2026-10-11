@@ -2,7 +2,7 @@ Lumno ist eine kostenlose Open-Source-Browsererweiterung mit zwei Hauptfunktione
 
 ## Die Befehlsleiste {#command-bar}
 
-Drücke auf einer beliebigen Seite `⌘ ⇧ K` (unter Windows `Strg + Umschalt + K`). Die Befehlsleiste öffnet sich in der Mitte des Bildschirms.
+Drücke auf einer beliebigen Seite `⌘ ⇧ K`. Die Befehlsleiste öffnet sich in der Mitte des Bildschirms.
 
 Wenn es sich wie in [Arc](https://arc.net/) oder [Zen](https://zen-browser.app/) anfühlen soll, lege die Befehlsleiste auf `⌘ T`. Weitere Informationen findest du unter [Ein Tastenkürzel ändern](../keyboard-shortcuts/#change).
 

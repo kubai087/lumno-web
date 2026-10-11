@@ -6,7 +6,7 @@ La capture web est désactivée par défaut. Pour l'utiliser, activez « Web Cl
 
 ## Capturer une partie de page {#how}
 
-1. Sur la page voulue, appuyez sur `⌘ ⇧ K` (`Ctrl + Shift + K` sous Windows) pour ouvrir la barre de commandes, saisissez `/clip`, puis appuyez sur Entrée.
+1. Sur la page voulue, appuyez sur `⌘ ⇧ K` pour ouvrir la barre de commandes, saisissez `/clip`, puis appuyez sur Entrée.
 
 ![Barre de commandes avec /clip saisi et le résultat « Start Web Clip »](clip-command "Saisissez /clip dans la barre de commandes")
 
@@ -19,7 +19,7 @@ La capture web est désactivée par défaut. Pour l'utiliser, activez « Web Cl
 ## La fenêtre flottante {#window}
 
 - La fenêtre affiche une copie du contenu choisi. Lorsque cette partie de la page d'origine change, la fenêtre est mise à jour.
-- Un clic sur un lien dans la fenêtre l'ouvre dans un nouvel onglet du navigateur. Pour l'ouvrir en arrière-plan, maintenez `⌘` (`Ctrl` sous Windows) en cliquant.
+- Un clic sur un lien dans la fenêtre l'ouvre dans un nouvel onglet du navigateur. Pour l'ouvrir en arrière-plan, maintenez `⌘` en cliquant.
 - Placez le pointeur en bas de la fenêtre pour afficher les boutons « Reselect » et « Close ».
 - Vous pouvez déplacer et redimensionner la fenêtre comme n'importe quelle autre.
 

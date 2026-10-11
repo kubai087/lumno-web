@@ -65,8 +65,14 @@ export default {
       "快速鍵衝突、被佔用、沒作用怎麼辦？",
       "Dia 裡快速鍵沒反應，改成全域",
     ],
-    "command-bar-keys": ["命令列裡有哪些按鍵？Enter、Tab、Esc、方向鍵是做什麼的？"],
-    "switcher-keys": ["切換器裡怎麼用鍵盤？Alt Q、Option Q 怎麼用？"],
+    "command-bar-keys": [
+      "命令列裡有哪些按鍵？Enter、Tab、Esc、方向鍵是做什麼的？",
+      "怎麼在背景開啟？Cmd 點擊、Ctrl 點擊、滑鼠中鍵、Cmd Enter，開啟後不關閉命令列、連續開啟多個",
+      "數字跳轉、按數字開啟第幾個結果、Ctrl N、Ctrl P 選擇、上一筆輸入紀錄",
+    ],
+    "newtab-keys": ["新分頁的快速鍵：復原刪除捷徑、Cmd Z、Ctrl Z 復原書籤，直接打字搜尋，在背景開啟捷徑"],
+    "switcher-keys": ["切換器裡怎麼用鍵盤？Alt Q、Option Q 怎麼用？往回切換、Shift Tab、取消切換"],
+    "web-clip-keys": ["網頁剪裁怎麼用鍵盤選擇範圍？方括號、滾輪切換外層內層"],
   },
   sync: {
     "": ["同步不了怎麼辦？怎麼同步？備份設定、換電腦、轉移設定、多台電腦"],

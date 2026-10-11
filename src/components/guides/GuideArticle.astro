@@ -51,11 +51,45 @@ const escapeHtml = (value: string) =>
 
 // `⌘ ⇧ K`, `Ctrl + Shift + K`, `Tab`: inline code made only of key names renders as keycaps.
 // Includes the names keyboards print in German (Strg, Umschalt), French (Maj) and Spanish (Mayús).
-const KEY_NAME = /^(?:[⌘⇧⌥⌃↩↑↓←→⌫]|Esc|Tab|Enter|Ctrl|Strg|Shift|Umschalt|Maj|Mayús|Alt|Space|Backspace|[A-Z0-9])$/;
-function renderKeys(text: string): string | null {
+const KEY_NAME = /^(?:[⌘⇧⌥⌃↩↑↓←→⌫[\]]|Esc|Tab|Enter|Ctrl|Strg|Shift|Umschalt|Maj|Mayús|Alt|Space|Backspace|[A-Z0-9])$/;
+// Pages are written with Mac keys; on Windows and Linux each one shows the key that does the same
+// there (`⌘ ⇧ K` reads Ctrl Shift K). The head script's html[data-platform] picks the spelling.
+const OTHER_KEY: Record<string, string> = {
+  "⌘": "Ctrl",
+  "⌃": "Ctrl",
+  "⌥": "Alt",
+  "⇧": "Shift",
+  "↩": "Enter",
+  "⌫": "Backspace",
+  ...{
+    de: { "⌘": "Strg", "⌃": "Strg", "⇧": "Umschalt" },
+    fr: { "⇧": "Maj", "↩": "Entrée" },
+    es: { "⇧": "Mayús", "↩": "Intro" },
+  }[locale as string],
+};
+const keycap = (key: string, convert: boolean) =>
+  convert && OTHER_KEY[key]
+    ? `<kbd class="home-kbd"><span data-key-mac>${escapeHtml(key)}</span><span data-key-other>${escapeHtml(OTHER_KEY[key])}</span></kbd>`
+    : `<kbd class="home-kbd">${escapeHtml(key)}</kbd>`;
+function parseKeys(text: string): string[] | null {
   const keys = text.trim().split(/\s*\+\s*|\s+/).filter(Boolean);
-  if (!keys.length || !keys.every((key) => KEY_NAME.test(key))) return null;
-  return `<span class="guide-keys">${keys.map((key) => `<kbd class="home-kbd">${escapeHtml(key)}</kbd>`).join("")}</span>`;
+  return keys.length && keys.every((key) => KEY_NAME.test(key)) ? keys : null;
+}
+// `⌃ ⇧ K | Alt K` spells out each side when the keys differ beyond their names; keys written
+// this way, or with Windows names (`Ctrl + Shift + K`), are never converted.
+function renderKeys(text: string): string | null {
+  const sides = text.split(" | ");
+  if (sides.length === 2) {
+    const [mac, other] = sides.map(parseKeys);
+    if (!mac || !other) return null;
+    return [
+      `<span class="guide-keys" data-key-mac>${mac.map((key) => keycap(key, false)).join("")}</span>`,
+      `<span class="guide-keys" data-key-other>${other.map((key) => keycap(key, false)).join("")}</span>`,
+    ].join("");
+  }
+  const keys = parseKeys(text);
+  if (!keys) return null;
+  return `<span class="guide-keys">${keys.map((key) => keycap(key, true)).join("")}</span>`;
 }
 
 // Every link opens with the site's icon: Lumno's for pages on this site, the saved

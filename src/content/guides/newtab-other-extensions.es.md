@@ -12,7 +12,7 @@ Solo una extensión puede gestionar la nueva pestaña a la vez. Si hay varias ex
 2. Instala la extensión de nueva pestaña que quieras usar. Si ya la tienes instalada, desactívala en `chrome://extensions` y vuelve a activarla.
 3. Abre una pestaña nueva. Si el navegador te pregunta si quieres conservar el cambio, elige conservarlo.
 
-A partir de ese momento, la nueva pestaña muestra la página de la otra extensión, y puedes seguir abriendo la barra de comandos de Lumno en cualquier página web con `⌘ ⇧ K` (`Ctrl + Mayús + K` en Windows).
+A partir de ese momento, la nueva pestaña muestra la página de la otra extensión, y puedes seguir abriendo la barra de comandos de Lumno en cualquier página web con `⌘ ⇧ K`.
 
 ## Cuando el navegador pregunta si quieres conservar el cambio {#keep-changes}
 

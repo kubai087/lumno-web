@@ -4,7 +4,7 @@ Hier findest du Antworten auf die Fragen, die auf unserer Website und in der Com
 
 ### Welches Tastenkürzel ist voreingestellt, und kann ich es ändern?
 
-Voreingestellt ist `⌘ ⇧ K` auf dem Mac und `Strg + Umschalt + K` unter Windows und Linux. Du kannst das Tastenkürzel unter `chrome://extensions/shortcuts` ändern. Weitere Informationen findest du unter [Tastenkürzel](../keyboard-shortcuts/#change).
+Voreingestellt ist `⌘ ⇧ K | ⌘ ⇧ K` auf dem Mac und `Strg + Umschalt + K` unter Windows und Linux. Du kannst das Tastenkürzel unter `chrome://extensions/shortcuts` ändern. Weitere Informationen findest du unter [Tastenkürzel](../keyboard-shortcuts/#change).
 
 ### Was kann ich tun, wenn das Tastenkürzel nicht funktioniert?
 

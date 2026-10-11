@@ -4,7 +4,7 @@ Retrouvez ici les réponses aux questions les plus fréquentes posées sur notre
 
 ### Quel est le raccourci par défaut ? Peut-on le modifier ?
 
-Le raccourci par défaut est `⌘ ⇧ K` sur Mac et `Ctrl + Maj + K` sous Windows et Linux. Vous pouvez le modifier dans `chrome://extensions/shortcuts`. Pour en savoir plus, consultez [Raccourcis clavier](../keyboard-shortcuts/#change).
+Le raccourci par défaut est `⌘ ⇧ K | ⌘ ⇧ K` sur Mac et `Ctrl + Maj + K` sous Windows et Linux. Vous pouvez le modifier dans `chrome://extensions/shortcuts`. Pour en savoir plus, consultez [Raccourcis clavier](../keyboard-shortcuts/#change).
 
 ### Que faire si le raccourci ne fonctionne pas ?
 

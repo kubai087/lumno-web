@@ -2,7 +2,7 @@ O Lumno é uma extensão de navegador gratuita e de código aberto com duas fun�
 
 ## A barra de comandos {#command-bar}
 
-Pressione `⌘ ⇧ K` (`Ctrl + Shift + K` no Windows) em qualquer página para abrir a barra de comandos no centro da tela.
+Pressione `⌘ ⇧ K` em qualquer página para abrir a barra de comandos no centro da tela.
 
 Para ter a experiência do [Arc](https://arc.net/) ou do [Zen](https://zen-browser.app/), atribua `⌘ T` à barra de comandos. Veja [Alterar um atalho](../keyboard-shortcuts/#change).
 

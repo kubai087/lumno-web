@@ -34,7 +34,7 @@ Les API d'extensions de Firefox étant différentes de celles de Chromium, certa
 | Barre de commande sur les pages locales `file://` | Non disponible |
 | Icônes de sites | Les sites jamais visités peuvent d'abord afficher une icône générique |
 
-Comme Firefox utilise déjà `⌘ ⇧ K`, la version Firefox utilise par défaut `⌃ ⇧ K` sur macOS et `Alt + K` sous Windows et Linux. `Alt + Q` reste inchangé.
+Comme Firefox utilise déjà `⌘ ⇧ K`, la version Firefox utilise par défaut `⌃ ⇧ K | Alt + K`. `⌥ Q` reste inchangé.
 
 ## Safari {#safari}
 

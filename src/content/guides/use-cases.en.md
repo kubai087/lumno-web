@@ -6,11 +6,11 @@ With many tabs open, the titles get squeezed and it's hard to find the one you w
 
 1. Press `⌘ ⇧ K` to open the command bar.
 2. While the search box is empty, press `Tab` once. "Search open tabs" appears on the left.
-3. Type a few letters from the page title, such as "layout", select the page you want and press Return to switch to it.
+3. Type a few letters from the page title, such as "layout", select the page you want and press `↩` to switch to it.
 
 ![The command bar in "Search open tabs" mode: typing layout lists four open MDN tabs with layout in their titles, each with Switch on the right](uc-tabs "Search only your open tabs")
 
-Open tabs also appear in a normal search, marked "Opened". Pressing Return switches to the tab instead of opening a duplicate. To move between the last two or three pages, `⌥ Q` is even faster.
+Open tabs also appear in a normal search, marked "Opened". Pressing `↩` switches to the tab instead of opening a duplicate. To move between the last two or three pages, `⌥ Q` is even faster.
 
 If your tabs are slowing down your computer, you can also use Chrome's built-in Memory Saver, or collect tabs into a list with [OneTab](https://www.one-tab.com/).
 
@@ -30,7 +30,7 @@ See [Moving from Arc](../arc-command-bar/).
 
 ## When you work with docs and GitHub {#developers}
 
-Type a site's shortcut and press `Tab` to skip the home page and search the site directly. For example, type `gh`, press `Tab`, type `command palette` and press Return to open GitHub's search results. Other common shortcuts include `mdn`, `npm` and `sf` (Stack Overflow).
+Type a site's shortcut and press `Tab` to skip the home page and search the site directly. For example, type `gh`, press `Tab`, type `command palette` and press `↩` to open GitHub's search results. Other common shortcuts include `mdn`, `npm` and `sf` (Stack Overflow).
 
 ![The search box shows GitHub on the left; typing command palette offers to search GitHub for command palette](sitesearch "Type gh and press Tab to search GitHub directly")
 
@@ -49,7 +49,7 @@ When a passage is hard to follow, use selection quick actions: select the text, 
 
 ## When you ask AI first {#ai}
 
-Type an AI's shortcut, such as `gpt` (ChatGPT), `gm` (Gemini) or `pplx` (Perplexity), and press `Tab`. Then write your question and press Return. Lumno opens that AI's web app and sends the question for you, so you don't need to open the site and paste it yourself.
+Type an AI's shortcut, such as `gpt` (ChatGPT), `gm` (Gemini) or `pplx` (Perplexity), and press `Tab`. Then write your question and press `↩`. Lumno opens that AI's web app and sends the question for you, so you don't need to open the site and paste it yourself.
 
 ![The search box shows ChatGPT on the left with a question about alternatives to Arc's command bar, ready to open ChatGPT](ai "Type gpt and press Tab to send your question to ChatGPT")
 

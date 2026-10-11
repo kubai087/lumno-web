@@ -7,7 +7,7 @@ Lumno is an independent open-source project and is not affiliated with Arc or Th
 | Arc | Lumno |
 | --- | --- |
 | `⌘ T` opens the command bar | `⌘ ⇧ K` opens the command bar; you can change it to `⌘ T` |
-| Switch to an open tab from the command bar | Select a result marked "Opened" and press Return |
+| Switch to an open tab from the command bar | Select a result marked "Opened" and press `↩` |
 | `⌃ Tab` switches between recent tabs | `⌥ Q` opens the recent tab switcher |
 | `⌘ ⇧ C` copies the URL | Assign a shortcut to "Copy Current Page URL" on the extensions page |
 | Pinned tabs come back after a restart | Turn on "Restore Pinned Tabs After Restart" in Lumno's settings |

@@ -34,7 +34,7 @@ Firefox 版尚未在 Firefox 附加组件商店上架，上架后将在本网站
 | 在本地 `file://` 页面唤出命令栏 | 不可用 |
 | 网站图标 | 未访问过的网站可能会先显示占位图标 |
 
-Firefox 自身占用了 `⌘ ⇧ K`，因此 Firefox 版在 macOS 上默认使用 `⌃ ⇧ K`，在 Windows 和 Linux 上默认使用 `Alt + K`；`Alt + Q` 保持不变。
+Firefox 自身占用了 `⌘ ⇧ K`，因此 Firefox 版默认使用 `⌃ ⇧ K | Alt + K`；`⌥ Q` 保持不变。
 
 ## Safari {#safari}
 

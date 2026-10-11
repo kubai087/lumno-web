@@ -2,7 +2,7 @@ Bei Dutzenden offenen Tabs und Hunderten Lesezeichen dauert es oft länger, eine
 
 ## Das Suchfeld öffnen {#open}
 
-Drücke auf einer beliebigen Seite `⌘ ⇧ K` (unter Windows und Linux `Strg + Umschalt + K`). Das Suchfeld erscheint in der Mitte des Bildschirms. Um es zu schließen, drücke `Esc` oder klicke außerhalb des Suchfelds.
+Drücke auf einer beliebigen Seite `⌘ ⇧ K`. Das Suchfeld erscheint in der Mitte des Bildschirms. Um es zu schließen, drücke `Esc` oder klicke außerhalb des Suchfelds.
 
 Auf eingeschränkten Seiten wie den `chrome://`-Einstellungen oder Erweiterungs-Stores erlauben Browser Erweiterungen nicht, Inhalte anzuzeigen. Auf diesen Seiten richtet sich Lumno nach der Option „Restricted page behavior“ in den Einstellungen.
 

@@ -34,7 +34,7 @@ Firefox의 확장 프로그램 API는 Chromium과 다르기 때문에 다음 기
 | 로컬 `file://` 페이지에서 명령 바 사용 | 사용할 수 없습니다 |
 | 사이트 아이콘 | 방문한 적이 없는 사이트는 처음에 기본 아이콘으로 표시될 수 있습니다 |
 
-Firefox는 이미 `⌘ ⇧ K`를 사용하므로, Firefox 버전의 기본 단축키는 macOS에서 `⌃ ⇧ K`, Windows와 Linux에서 `Alt + K`입니다. `Alt + Q`는 그대로입니다.
+Firefox는 이미 `⌘ ⇧ K`를 사용하므로, Firefox 버전의 기본 단축키는 `⌃ ⇧ K | Alt + K`입니다. `⌥ Q`는 그대로입니다.
 
 ## Safari {#safari}
 

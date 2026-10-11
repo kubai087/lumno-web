@@ -264,3 +264,25 @@ test("search aliases reach the extension's four index languages and stay off the
   assert.match(index, /which the page doesn't have/);
   assert.doesNotMatch(readSource("src/components/guides/GuideArticle.astro"), /content\/guides\/search/);
 });
+
+test("keys are written once, in Mac form, and each reader sees their own platform's keys", () => {
+  const article = readSource("src/components/guides/GuideArticle.astro");
+  assert.match(article, /<span data-key-mac>\$\{escapeHtml\(key\)\}<\/span><span data-key-other>/);
+  assert.match(article, /"⌘": "Ctrl"[\s\S]*?"⌥": "Alt"[\s\S]*?"⇧": "Shift"[\s\S]*?"↩": "Enter"/);
+  assert.match(readSource("src/layouts/SitePage.astro"), /setAttribute\("data-platform"/);
+  for (const slug of slugs) {
+    for (const locale of locales) {
+      const body = readSource(guideFile(slug, locale));
+      // "⌘ ⇧ K (Ctrl + Shift + K on Windows)" would now read the Windows keys twice.
+      assert.doesNotMatch(body, /[（(][^（）()\n]*Windows[^（）()\n]*`[^`]+`[^（）()\n]*[）)]|[（(][^（）()\n]*`[^`]+`[^（）()\n]*Windows[^（）()\n]*[）)]/, `${slug} (${locale})`);
+    }
+  }
+  // In every language the shortcuts page covers each place keys work and names the click that does the same.
+  for (const locale of locales) {
+    const body = readSource(guideFile("keyboard-shortcuts", locale));
+    for (const anchor of ["command-bar-keys", "newtab-keys", "switcher-keys", "web-clip-keys"]) {
+      assert.match(body, new RegExp(`\\{#${anchor}\\}`), `keyboard-shortcuts (${locale}) #${anchor}`);
+    }
+    assert.match(body, /`⌘ ↩`/, `keyboard-shortcuts (${locale}) background open`);
+  }
+});

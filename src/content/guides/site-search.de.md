@@ -2,7 +2,7 @@ Um auf GitHub zu suchen, musstest du bisher zuerst GitHub öffnen und dann das d
 
 ## Seitensuche verwenden {#how}
 
-1. Drücke auf einer beliebigen Seite `⌘ ⇧ K` (unter Windows `Strg + Umschalt + K`).
+1. Drücke auf einer beliebigen Seite `⌘ ⇧ K`.
 2. Gib ein Seitenkürzel ein, zum Beispiel `gh`.
 3. Drücke `Tab`. Links im Suchfeld wird GitHub angezeigt.
 4. Gib deinen Suchbegriff ein und drücke die Eingabetaste.

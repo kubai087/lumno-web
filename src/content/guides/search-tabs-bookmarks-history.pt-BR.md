@@ -2,7 +2,7 @@ Com dezenas de guias abertas e centenas de favoritos, encontrar uma página pode
 
 ## Abrir a caixa de pesquisa {#open}
 
-Pressione `⌘ ⇧ K` (`Ctrl + Shift + K` no Windows e no Linux) em qualquer página. A caixa de pesquisa aparece no centro da tela. Para fechá-la, pressione `Esc` ou clique fora da caixa.
+Pressione `⌘ ⇧ K` em qualquer página. A caixa de pesquisa aparece no centro da tela. Para fechá-la, pressione `Esc` ou clique fora da caixa.
 
 Em páginas restritas, como as configurações `chrome://` ou as lojas de extensões, os navegadores não permitem que extensões exibam conteúdo. Nessas páginas, o Lumno aplica a opção "Restricted page behavior" das configurações.
 

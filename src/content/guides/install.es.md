@@ -19,7 +19,7 @@ La primera vez que abras una nueva pestaña, Chrome puede preguntarte si quieres
 
 ## Probar la barra de comandos {#try}
 
-Abre cualquier página y pulsa `⌘ ⇧ K` (`Ctrl + Mayús + K` en Windows y Linux) para abrir la barra de comandos. Escribe unas letras para buscar en tus pestañas abiertas y marcadores, y pulsa `Esc` para cerrarla.
+Abre cualquier página y pulsa `⌘ ⇧ K` para abrir la barra de comandos. Escribe unas letras para buscar en tus pestañas abiertas y marcadores, y pulsa `Esc` para cerrarla.
 
 Si no ocurre nada, consulta las comprobaciones de [Atajos de teclado](../keyboard-shortcuts/).
 

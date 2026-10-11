@@ -1,15 +1,15 @@
-Die meisten Funktionen von Lumno kannst du mit der Tastatur bedienen. Hier findest du die Standardkürzel, die Anleitung zum Ändern sowie die Tasten, die du in der Befehlsleiste und im Tab-Umschalter verwenden kannst.
+Die meisten Funktionen von Lumno kannst du mit der Tastatur bedienen. Hier findest du die Standardkürzel, die Anleitung zum Ändern sowie die Tasten für die Befehlsleiste, den neuen Tab, den Tab-Umschalter und Web-Clip. Wo ein Klick dasselbe bewirkt, steht er direkt neben der Taste.
 
 ## Standardkürzel {#defaults}
 
-| Aktion | macOS | Windows / Linux |
-| --- | --- | --- |
-| Befehlsleiste öffnen | `⌘ ⇧ K` | `Strg + Umschalt + K` |
-| Tab-Umschalter öffnen | `⌥ Q` | `Alt + Q` |
-| Befehlsleiste mit der URL der aktuellen Seite öffnen | Nicht voreingestellt | Nicht voreingestellt |
-| URL der aktuellen Seite kopieren | Nicht voreingestellt | Nicht voreingestellt |
+| Aktion | Tastenkürzel |
+| --- | --- |
+| Befehlsleiste öffnen | `⌘ ⇧ K` |
+| Tab-Umschalter öffnen | `⌥ Q` |
+| Befehlsleiste mit der URL der aktuellen Seite öffnen | Nicht voreingestellt |
+| URL der aktuellen Seite kopieren | Nicht voreingestellt |
 
-Die letzten beiden Aktionen werden nach der Installation möglicherweise als „Nicht festgelegt“ angezeigt. Wie du ihnen ein Tastenkürzel zuweist, ist unten beschrieben.
+Die letzten beiden Aktionen werden nach der Installation möglicherweise als „Nicht festgelegt“ angezeigt. Wie du ihnen ein Tastenkürzel zuweist, ist unten beschrieben. Die Firefox-Version öffnet die Befehlsleiste mit einem anderen Standardkürzel, siehe [Browserkompatibilität](../browser-compatibility/#firefox).
 
 ## Ein Tastenkürzel ändern {#change}
 
@@ -27,20 +27,74 @@ Wenn das Tastenkürzel in Dia nicht funktioniert, ändere den Bereich daneben vo
 
 ## Tasten in der Befehlsleiste {#command-bar-keys}
 
+### Ergebnis auswählen
+
 | Taste | Funktion |
 | --- | --- |
-| `↑` `↓` | Ergebnis auswählen |
-| `↩` | Ergebnis öffnen oder zu einem offenen Tab wechseln |
-| `⌥ ↩` | Im aktuellen Tab statt in einem neuen Tab öffnen |
-| `⇧ ↩` | Wenn das Ergebnis ein offener Tab ist, ihn zusätzlich in einem neuen Tab öffnen |
-| `Tab` | Nach einem Seitenkürzel die Seitensuche starten; bei leerem Suchfeld nur offene Tabs durchsuchen |
-| `Tab` `Tab` | Bei leerem Suchfeld das Suchbereich-Panel öffnen |
-| `Esc` | Seitensuche beenden oder Befehlsleiste schließen |
+| `↑` `↓` | Auswahl nach oben oder unten verschieben |
+| `⌘` gedrückt halten, loslassen und dann `0`–`9` drücken | Neben den Ergebnissen erscheinen Nummern; mit der Zahl öffnest du das passende Ergebnis |
+
+Wenn du in den Einstellungen unter „Labs“ die Option „Single-press Command to show number jump“ aktivierst, erscheinen die Nummern schon nach einem kurzen Druck auf `⌘`. Du öffnest ein Ergebnis dann, indem du `⌘` gedrückt hältst und die Zahl drückst. `⌘` öffnet Ergebnisse dann nicht mehr im Hintergrund; ein Klick mit der mittleren Maustaste funktioniert weiterhin.
+
+Unter macOS kannst du außerdem unter „Labs“ die Option „Mac keyboard navigation“ aktivieren und mit `⌃ N | ⌃ N` und `⌃ P | ⌃ P` das nächste und das vorherige Ergebnis auswählen.
+
+### Ergebnis öffnen
+
+| Taste oder Klick | Funktion |
+| --- | --- |
+| `↩` oder Klick auf ein Ergebnis | Ergebnis öffnen oder zu einem offenen Tab wechseln |
+| `⌥ ↩` oder Klick mit gedrückter `⌥`-Taste | Im aktuellen Tab statt in einem neuen Tab öffnen |
+| `⇧ ↩` oder Klick mit gedrückter `⇧`-Taste | Wenn das Ergebnis ein offener Tab ist, ihn zusätzlich in einem neuen Tab öffnen |
+| `⌘ ↩`, Klick mit gedrückter `⌘`-Taste oder Klick mit der mittleren Maustaste | Im Hintergrund öffnen; die Befehlsleiste bleibt offen, sodass du gleich das nächste Ergebnis öffnen kannst |
+
+Solange du `⌥`, `⇧` oder `⌘` gedrückt hältst, passt sich der Hinweis rechts neben jedem Ergebnis entsprechend an.
+
+### Eingabe und Suchmodi
+
+| Taste | Funktion |
+| --- | --- |
+| `Tab` | Vorschlag vervollständigen; nach einem Seitenkürzel die Seitensuche starten; bei leerem Suchfeld nur offene Tabs durchsuchen |
+| `Tab` `Tab` | Bei leerem Suchfeld das Suchbereich-Panel öffnen; ist bereits ein Suchbereich ausgewählt, genügt ein Druck |
+| `⌥ ↑` `⌥ ↓` | Zur vorherigen oder nächsten Eingabe wechseln |
+| `⌫` | Bei leerem Suchfeld die Seitensuche, den Suchbereich oder die Suche in offenen Tabs beenden |
+| `Esc` | Seitensuche, Suchbereich oder Suche in offenen Tabs beenden |
+| `Esc` oder Klick außerhalb der Befehlsleiste | Befehlsleiste schließen |
+
+## Tasten im neuen Tab {#newtab-keys}
+
+Im Suchfeld des neuen Tabs gelten dieselben Tasten wie in der Befehlsleiste. Außerdem:
+
+| Taste oder Klick | Funktion |
+| --- | --- |
+| Einfach lostippen | Der Text landet direkt im Suchfeld, ohne dass du es vorher anklicken musst |
+| Klick auf einen Shortcut, ein Lesezeichen oder eine Website-Karte | Je nach Einstellung in einem neuen oder im aktuellen Tab öffnen |
+| Klick mit gedrückter `⌘`-Taste oder mit der mittleren Maustaste | Im Hintergrund öffnen |
+| `⌘ Z` | Die letzte Änderung an Shortcuts oder Lesezeichen rückgängig machen, etwa Entfernen, Verschieben oder das Anlegen eines Ordners |
+| `⌘ ⇧ Z` | Das gerade Rückgängiggemachte wiederherstellen |
+| `Esc` | Ziehen eines Shortcuts oder Lesezeichens abbrechen |
 
 ## Tasten im Tab-Umschalter {#switcher-keys}
 
-| Taste | Funktion |
+| Taste oder Klick | Funktion |
 | --- | --- |
 | `⌥` gedrückt halten und wiederholt `Q` drücken | Durch die letzten Tabs blättern |
-| `Tab` oder Pfeiltasten | Auswahl verschieben |
-| `⌥` loslassen oder `↩` drücken | Zum ausgewählten Tab wechseln |
+| `Tab`, `→` oder `↓` | Nächsten Tab auswählen |
+| `⇧ Tab`, `←` oder `↑` | Vorherigen Tab auswählen |
+| `⌥` loslassen, `↩` drücken oder auf einen Tab klicken | Zum ausgewählten Tab wechseln |
+| `Esc` oder Klick außerhalb des Umschalters | Umschalter schließen und im aktuellen Tab bleiben |
+
+Wenn du das Tastenkürzel des Umschalters geändert hast, hältst du stattdessen die Sondertaste aus deinem eigenen Kürzel gedrückt.
+
+## Tasten bei Web-Clip {#web-clip-keys}
+
+Während du den Inhalt auswählst:
+
+| Taste oder Aktion | Funktion |
+| --- | --- |
+| `[` oder `↑` | Äußeres Element auswählen |
+| `]` oder `↓` | Inneres Element auswählen |
+| Mausrad drehen | Zwischen äußeren und inneren Elementen wechseln |
+| `↩` oder Klick auf den markierten Inhalt | In einem schwebenden Fenster öffnen |
+| `Esc` | Auswahl abbrechen |
+
+Ein Klick auf einen Link im schwebenden Fenster öffnet ihn in einem neuen Tab; mit gedrückter `⌘`-Taste öffnet er sich im Hintergrund. Mehr dazu unter [Web-Clip](../web-clip/).

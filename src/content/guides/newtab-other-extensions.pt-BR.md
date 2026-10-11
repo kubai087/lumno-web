@@ -12,7 +12,7 @@ Apenas uma extensão por vez pode controlar a nova guia. Quando há várias exte
 2. Instale a extensão de nova guia que você quer usar. Se ela já estiver instalada, desative-a em `chrome://extensions` e ative-a novamente.
 3. Abra uma nova guia. Se o navegador perguntar se você quer manter a alteração, escolha mantê-la.
 
-A partir daí, a nova guia mostra a página da outra extensão, e você continua podendo abrir a barra de comandos do Lumno em qualquer página da web com `⌘ ⇧ K` (`Ctrl + Shift + K` no Windows).
+A partir daí, a nova guia mostra a página da outra extensão, e você continua podendo abrir a barra de comandos do Lumno em qualquer página da web com `⌘ ⇧ K`.
 
 ## Quando o navegador pergunta se você quer manter a alteração {#keep-changes}
 

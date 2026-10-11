@@ -2,7 +2,7 @@ Lumno 是一款免费、开源的浏览器扩展，主要提供两项功能：�
 
 ## 命令栏：一搜即达 {#command-bar}
 
-在任意网页按下 `⌘ ⇧ K`（Windows 上为 `Ctrl + Shift + K`），命令栏会出现在页面中央。
+在任意网页按下 `⌘ ⇧ K`，命令栏会出现在页面中央。
 
 如果想要 [Arc](https://arc.net/)、[Zen](https://zen-browser.app/) 那样的体验，可以把唤出命令栏的快捷键绑定为 `⌘ T`，详见[修改快捷键](../keyboard-shortcuts/#change)。
 

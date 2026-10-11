@@ -2,7 +2,7 @@ Con decenas de pestañas abiertas y cientos de marcadores, encontrar una página
 
 ## Abrir el cuadro de búsqueda {#open}
 
-Pulsa `⌘ ⇧ K` (`Ctrl + Mayús + K` en Windows y Linux) en cualquier página. El cuadro de búsqueda aparece en el centro de la pantalla. Para cerrarlo, pulsa `Esc` o haz clic fuera del cuadro.
+Pulsa `⌘ ⇧ K` en cualquier página. El cuadro de búsqueda aparece en el centro de la pantalla. Para cerrarlo, pulsa `Esc` o haz clic fuera del cuadro.
 
 En páginas restringidas, como la configuración `chrome://` o las tiendas de extensiones, los navegadores no permiten que las extensiones muestren contenido. En estas páginas, Lumno aplica la opción "Restricted page behavior" de sus ajustes.
 

@@ -2,7 +2,7 @@ Para alternar entre as duas ou três páginas usadas mais recentemente, o altern
 
 ## Abrir o alternador {#open}
 
-Pressione `⌥ Q` (`Alt + Q` no Windows). Suas guias recentes aparecem na ordem em que foram usadas, cada uma com uma prévia da página.
+Pressione `⌥ Q`. Suas guias recentes aparecem na ordem em que foram usadas, cada uma com uma prévia da página.
 
 ![O alternador de guias recentes, com quatro guias na ordem em que foram usadas, cada uma com uma prévia da página](switcher "O alternador de guias recentes")
 
@@ -11,7 +11,7 @@ Pressione `⌥ Q` (`Alt + Q` no Windows). Suas guias recentes aparecem na ordem 
 1. Mantenha `⌥` pressionada e pressione `Q` várias vezes até chegar à página desejada. Você também pode usar `Tab` ou as teclas de seta.
 2. Solte `⌥` ou pressione `↩` para alternar para essa página.
 
-O funcionamento é semelhante ao do `⌘ Tab` no Mac ou do `⌃ Tab` no [Arc](https://arc.net/).
+O funcionamento é semelhante ao do `⌘ Tab | Alt + Tab` no computador ou do `⌃ Tab` no [Arc](https://arc.net/).
 
 ## Alternador ou pesquisa nas guias abertas {#vs-search}
 

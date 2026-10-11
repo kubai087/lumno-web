@@ -19,7 +19,7 @@ The first time you open a new tab, Chrome may ask whether to keep the new tab pa
 
 ## Try the command bar {#try}
 
-Open any page and press `⌘ ⇧ K` (`Ctrl + Shift + K` on Windows and Linux) to open the command bar. Type a few letters to search your open tabs and bookmarks, then press `Esc` to close it.
+Open any page and press `⌘ ⇧ K` to open the command bar. Type a few letters to search your open tabs and bookmarks, then press `Esc` to close it.
 
 If nothing happens, see the troubleshooting steps in [Keyboard shortcuts](../keyboard-shortcuts/).
 

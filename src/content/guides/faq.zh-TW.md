@@ -4,7 +4,7 @@
 
 ### 預設快速鍵是什麼？可以修改嗎？
 
-在 Mac 上，預設快速鍵為 `⌘ ⇧ K`；在 Windows 和 Linux 上為 `Ctrl + Shift + K`。快速鍵可以在 `chrome://extensions/shortcuts` 中修改，詳見[快速鍵](../keyboard-shortcuts/#change)。
+在 Mac 上，預設快速鍵為 `⌘ ⇧ K | ⌘ ⇧ K`；在 Windows 和 Linux 上為 `Ctrl + Shift + K`。快速鍵可以在 `chrome://extensions/shortcuts` 中修改，詳見[快速鍵](../keyboard-shortcuts/#change)。
 
 ### 按下快速鍵沒有反應怎麼辦？
 

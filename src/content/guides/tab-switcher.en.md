@@ -2,7 +2,7 @@ To move between the two or three pages you used most recently, the switcher is t
 
 ## Open the switcher {#open}
 
-Press `⌥ Q` (`Alt + Q` on Windows). Your recent tabs appear in the order you used them, each with a page preview.
+Press `⌥ Q`. Your recent tabs appear in the order you used them, each with a page preview.
 
 ![The recent tab switcher, listing four tabs in the order they were used, each with a page preview](switcher "The recent tab switcher")
 
@@ -11,7 +11,7 @@ Press `⌥ Q` (`Alt + Q` on Windows). Your recent tabs appear in the order you u
 1. Hold `⌥` and press `Q` repeatedly until you reach the page you want. You can also use `Tab` or the arrow keys.
 2. Release `⌥`, or press `↩`, to switch to that page.
 
-It works much like `⌘ Tab` on a Mac, or `⌃ Tab` in [Arc](https://arc.net/).
+It works much like `⌘ Tab | Alt + Tab` on your computer, or `⌃ Tab` in [Arc](https://arc.net/).
 
 ## The switcher or open-tab search {#vs-search}
 

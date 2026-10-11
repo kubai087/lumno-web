@@ -34,7 +34,7 @@ Firefox の拡張機能 API は Chromium と異なるため、次の機能は使
 | ローカルの `file://` ページでのコマンドバー | 使用できません |
 | サイトのアイコン | アクセスしたことのないサイトでは、最初に仮のアイコンが表示される場合があります |
 
-Firefox 自体が `⌘ ⇧ K` を使用しているため、Firefox 版の初期設定は macOS では `⌃ ⇧ K`、Windows と Linux では `Alt + K` です。`Alt + Q` は変わりません。
+Firefox 自体が `⌘ ⇧ K` を使用しているため、Firefox 版の初期設定は `⌃ ⇧ K | Alt + K` です。`⌥ Q` は変わりません。
 
 ## Safari {#safari}
 

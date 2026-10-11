@@ -6,7 +6,7 @@ O recorte da web vem desativado por padrão. Para usá-lo, ative "Web Clip" nas 
 
 ## Recortar parte de uma página {#how}
 
-1. Na página que você quer recortar, pressione `⌘ ⇧ K` (`Ctrl + Shift + K` no Windows) para abrir a barra de comandos, digite `/clip` e pressione Enter.
+1. Na página que você quer recortar, pressione `⌘ ⇧ K` para abrir a barra de comandos, digite `/clip` e pressione Enter.
 
 ![Barra de comandos com /clip digitado e o resultado "Start Web Clip"](clip-command "Digite /clip na barra de comandos")
 
@@ -19,7 +19,7 @@ O recorte da web vem desativado por padrão. Para usá-lo, ative "Web Clip" nas 
 ## A janela flutuante {#window}
 
 - A janela mostra uma cópia do conteúdo escolhido. Quando essa parte da página original muda, a janela também é atualizada.
-- Clicar em um link na janela abre o link em uma nova guia do navegador. Para abrir em segundo plano, mantenha `⌘` (`Ctrl` no Windows) pressionado ao clicar.
+- Clicar em um link na janela abre o link em uma nova guia do navegador. Para abrir em segundo plano, mantenha `⌘` pressionado ao clicar.
 - Leve o ponteiro até a parte inferior da janela para mostrar os botões "Reselect" e "Close".
 - Você pode mover e redimensionar a janela como qualquer outra.
 

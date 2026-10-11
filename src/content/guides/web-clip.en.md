@@ -6,7 +6,7 @@ Web clip is off by default. To use it, turn on "Web Clip" in Lumno's settings.
 
 ## Clip part of a page {#how}
 
-1. On the page you want to clip from, press `⌘ ⇧ K` (`Ctrl + Shift + K` on Windows) to open the command bar, type `/clip`, then press Return.
+1. On the page you want to clip from, press `⌘ ⇧ K` to open the command bar, type `/clip`, then press `↩`.
 
 ![The command bar with /clip typed and the result "Start Web Clip"](clip-command "Type /clip in the command bar")
 
@@ -19,7 +19,7 @@ Web clip is off by default. To use it, turn on "Web Clip" in Lumno's settings.
 ## The floating window {#window}
 
 - The window shows a copy of the content you chose. When that part of the original page changes, the window updates too.
-- Clicking a link in the window opens it in a new browser tab. To open it in the background, hold `⌘` (`Ctrl` on Windows) while you click.
+- Clicking a link in the window opens it in a new browser tab. To open it in the background, hold `⌘` while you click.
 - Move the pointer to the bottom of the window to show the Reselect and Close buttons.
 - You can move and resize the window like any other window.
 

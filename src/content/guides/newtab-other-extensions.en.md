@@ -12,7 +12,7 @@ Only one extension can control the new tab at a time. If several such extensions
 2. Install the new tab extension you want to use. If it's already installed, turn it off and on again at `chrome://extensions`.
 3. Open a new tab. If the browser asks whether to keep the change, choose to keep it.
 
-Your new tab now shows the other extension's page, and you can still press `⌘ ⇧ K` (`Ctrl + Shift + K` on Windows) on any web page to open Lumno's command bar.
+Your new tab now shows the other extension's page, and you can still press `⌘ ⇧ K` on any web page to open Lumno's command bar.
 
 ## When the browser asks whether to keep the change {#keep-changes}
 

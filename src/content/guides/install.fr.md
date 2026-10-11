@@ -19,7 +19,7 @@ Lorsque vous ouvrez un nouvel onglet pour la première fois, Chrome peut vous de
 
 ## Essayer la barre de commande {#try}
 
-Ouvrez n'importe quelle page et appuyez sur `⌘ ⇧ K` (`Ctrl + Maj + K` sous Windows et Linux) pour ouvrir la barre de commande. Saisissez quelques lettres pour rechercher vos onglets ouverts et vos favoris, puis appuyez sur `Esc` pour la fermer.
+Ouvrez n'importe quelle page et appuyez sur `⌘ ⇧ K` pour ouvrir la barre de commande. Saisissez quelques lettres pour rechercher vos onglets ouverts et vos favoris, puis appuyez sur `Esc` pour la fermer.
 
 Si rien ne se passe, consultez les vérifications décrites dans [Raccourcis clavier](../keyboard-shortcuts/).
 

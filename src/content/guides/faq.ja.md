@@ -4,7 +4,7 @@ Lumno のウェブサイトやコミュニティでよく寄せられる質問�
 
 ### 初期設定のショートカットは何ですか？ 変更できますか？
 
-初期設定のショートカットは、Mac では `⌘ ⇧ K`、Windows と Linux では `Ctrl + Shift + K` です。ショートカットは `chrome://extensions/shortcuts` で変更できます。詳しくは、[キーボードショートカット](../keyboard-shortcuts/#change)を参照してください。
+初期設定のショートカットは、Mac では `⌘ ⇧ K | ⌘ ⇧ K`、Windows と Linux では `Ctrl + Shift + K` です。ショートカットは `chrome://extensions/shortcuts` で変更できます。詳しくは、[キーボードショートカット](../keyboard-shortcuts/#change)を参照してください。
 
 ### ショートカットキーが反応しない場合はどうすればよいですか？
 

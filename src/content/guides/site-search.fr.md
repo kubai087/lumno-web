@@ -2,7 +2,7 @@ Jusqu'ici, pour effectuer une recherche sur GitHub, il fallait d'abord ouvrir Gi
 
 ## Utiliser la recherche sur site {#how}
 
-1. Appuyez sur `⌘ ⇧ K` (`Ctrl + Maj + K` sous Windows) depuis n'importe quelle page.
+1. Appuyez sur `⌘ ⇧ K` depuis n'importe quelle page.
 2. Saisissez un raccourci de site, par exemple `gh`.
 3. Appuyez sur `Tab`. GitHub s'affiche à gauche du champ.
 4. Saisissez votre recherche et appuyez sur Entrée.

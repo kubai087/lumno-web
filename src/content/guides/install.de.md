@@ -19,7 +19,7 @@ Wenn du zum ersten Mal einen neuen Tab öffnest, fragt Chrome möglicherweise, o
 
 ## Die Befehlsleiste ausprobieren {#try}
 
-Öffne eine beliebige Seite und drücke `⌘ ⇧ K` (unter Windows und Linux `Strg + Umschalt + K`), um die Befehlsleiste zu öffnen. Gib ein paar Buchstaben ein, um deine offenen Tabs und Lesezeichen zu durchsuchen, und schließe sie mit `Esc`.
+Öffne eine beliebige Seite und drücke `⌘ ⇧ K`, um die Befehlsleiste zu öffnen. Gib ein paar Buchstaben ein, um deine offenen Tabs und Lesezeichen zu durchsuchen, und schließe sie mit `Esc`.
 
 Wenn nichts passiert, findest du unter [Tastenkürzel](../keyboard-shortcuts/) Hinweise zur Fehlerbehebung.
 

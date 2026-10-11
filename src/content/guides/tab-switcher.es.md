@@ -2,7 +2,7 @@ Para cambiar entre las dos o tres páginas que has usado más recientemente, el 
 
 ## Abrir el selector {#open}
 
-Pulsa `⌥ Q` (`Alt + Q` en Windows). Tus pestañas recientes aparecen en el orden en que las usaste, cada una con una vista previa de la página.
+Pulsa `⌥ Q`. Tus pestañas recientes aparecen en el orden en que las usaste, cada una con una vista previa de la página.
 
 ![El selector de pestañas recientes, con cuatro pestañas en el orden en que se usaron y una vista previa de cada página](switcher "El selector de pestañas recientes")
 
@@ -11,7 +11,7 @@ Pulsa `⌥ Q` (`Alt + Q` en Windows). Tus pestañas recientes aparecen en el ord
 1. Mantén pulsada `⌥` y pulsa `Q` varias veces hasta llegar a la página que quieres. También puedes usar `Tab` o las teclas de flecha.
 2. Suelta `⌥` o pulsa `↩` para cambiar a esa página.
 
-Funciona de forma parecida a `⌘ Tab` en el Mac o a `⌃ Tab` en [Arc](https://arc.net/).
+Funciona de forma parecida a `⌘ Tab | Alt + Tab` en tu ordenador o a `⌃ Tab` en [Arc](https://arc.net/).
 
 ## Selector o búsqueda en pestañas abiertas {#vs-search}
 

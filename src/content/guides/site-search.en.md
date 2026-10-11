@@ -1,11 +1,11 @@
-To search GitHub, you'd normally open GitHub first and then use its search box. With Lumno, you can skip the home page: type the site's shortcut, press `Tab`, type your search and press Return to go straight to the results. Asking AI works the same way.
+To search GitHub, you'd normally open GitHub first and then use its search box. With Lumno, you can skip the home page: type the site's shortcut, press `Tab`, type your search and press `↩` to go straight to the results. Asking AI works the same way.
 
 ## How to use site search {#how}
 
-1. Press `⌘ ⇧ K` (`Ctrl + Shift + K` on Windows) on any page.
+1. Press `⌘ ⇧ K` on any page.
 2. Type a site shortcut, such as `gh`.
 3. Press `Tab`. GitHub appears on the left of the search box.
-4. Type your search and press Return.
+4. Type your search and press `↩`.
 
 ![The search box shows GitHub on the left; typing command palette offers to search GitHub for command palette](sitesearch "Type gh and press Tab to search GitHub directly")
 
@@ -31,7 +31,7 @@ Lumno includes 46 built-in search shortcuts; some of them are listed below. If y
 
 ## Ask AI {#ai}
 
-Type the AI's shortcut, press `Tab`, write your question and press Return. Lumno opens that AI's web app and sends the question for you.
+Type the AI's shortcut, press `Tab`, write your question and press `↩`. Lumno opens that AI's web app and sends the question for you.
 
 | AI | Shortcut |
 | --- | --- |

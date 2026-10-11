@@ -4,7 +4,7 @@ Answers to the questions people ask most often on our website and in the communi
 
 ### What is the default shortcut? Can I change it?
 
-The default shortcut is `⌘ ⇧ K` on a Mac and `Ctrl + Shift + K` on Windows and Linux. You can change it at `chrome://extensions/shortcuts`. See [Keyboard shortcuts](../keyboard-shortcuts/#change).
+The default shortcut is `⌘ ⇧ K | ⌘ ⇧ K` on a Mac and `Ctrl + Shift + K` on Windows and Linux. You can change it at `chrome://extensions/shortcuts`. See [Keyboard shortcuts](../keyboard-shortcuts/#change).
 
 ### What if the shortcut doesn't work?
 

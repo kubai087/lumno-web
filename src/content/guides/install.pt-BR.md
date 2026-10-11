@@ -19,7 +19,7 @@ Na primeira vez que você abrir uma nova guia, o Chrome poderá perguntar se voc
 
 ## Experimentar a barra de comandos {#try}
 
-Abra qualquer página e pressione `⌘ ⇧ K` (`Ctrl + Shift + K` no Windows e no Linux) para abrir a barra de comandos. Digite algumas letras para pesquisar suas guias abertas e seus favoritos e pressione `Esc` para fechá-la.
+Abra qualquer página e pressione `⌘ ⇧ K` para abrir a barra de comandos. Digite algumas letras para pesquisar suas guias abertas e seus favoritos e pressione `Esc` para fechá-la.
 
 Se nada acontecer, consulte as verificações em [Atalhos de teclado](../keyboard-shortcuts/).
 

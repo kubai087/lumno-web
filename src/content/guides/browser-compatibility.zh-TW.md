@@ -34,7 +34,7 @@ Firefox 版尚未在 Firefox 附加元件商店上架，上架後將在本網站
 | 在本機 `file://` 頁面叫出命令列 | 無法使用 |
 | 網站圖示 | 未造訪過的網站可能會先顯示預留圖示 |
 
-Firefox 本身佔用了 `⌘ ⇧ K`，因此 Firefox 版在 macOS 上預設使用 `⌃ ⇧ K`，在 Windows 和 Linux 上預設使用 `Alt + K`；`Alt + Q` 保持不變。
+Firefox 本身佔用了 `⌘ ⇧ K`，因此 Firefox 版預設使用 `⌃ ⇧ K | Alt + K`；`⌥ Q` 保持不變。
 
 ## Safari {#safari}
 

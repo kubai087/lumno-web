@@ -11,7 +11,7 @@ You can change the time's font weight and choose whether to show seconds. Choose
 
 ## Zen mode {#zen}
 
-Type `/zen` in the new tab's search box and press Return. Everything except the search box and wallpaper is hidden. Type `/zen` again to show everything.
+Type `/zen` in the new tab's search box and press `↩`. Everything except the search box and wallpaper is hidden. Type `/zen` again to show everything.
 
 ![The new tab in Zen mode: only the search box over a Monet coastline](nt-zen "Zen mode keeps only the search box")
 

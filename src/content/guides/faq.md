@@ -4,7 +4,7 @@
 
 ### 默认快捷键是什么？可以修改吗？
 
-在 Mac 上，默认快捷键为 `⌘ ⇧ K`；在 Windows 和 Linux 上为 `Ctrl + Shift + K`。快捷键可以在 `chrome://extensions/shortcuts` 中修改，详见[快捷键](../keyboard-shortcuts/#change)。
+在 Mac 上，默认快捷键为 `⌘ ⇧ K | ⌘ ⇧ K`；在 Windows 和 Linux 上为 `Ctrl + Shift + K`。快捷键可以在 `chrome://extensions/shortcuts` 中修改，详见[快捷键](../keyboard-shortcuts/#change)。
 
 ### 按下快捷键没有反应怎么办？
 

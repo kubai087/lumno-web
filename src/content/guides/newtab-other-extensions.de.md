@@ -12,7 +12,7 @@ Es kann immer nur eine Erweiterung den neuen Tab steuern. Sind mehrere solcher E
 2. Installiere die Erweiterung für den neuen Tab, die du verwenden möchtest. Ist sie bereits installiert, deaktiviere sie unter `chrome://extensions` und aktiviere sie anschließend wieder.
 3. Öffne einen neuen Tab. Wenn der Browser fragt, ob du die Änderung beibehalten möchtest, wähle „Beibehalten“.
 
-Der neue Tab zeigt nun die Seite der anderen Erweiterung. Auf allen anderen Webseiten öffnest du Lumnos Befehlsleiste weiterhin mit `⌘ ⇧ K` (unter Windows `Strg + Umschalt + K`).
+Der neue Tab zeigt nun die Seite der anderen Erweiterung. Auf allen anderen Webseiten öffnest du Lumnos Befehlsleiste weiterhin mit `⌘ ⇧ K`.
 
 ## Wenn der Browser fragt, ob du die Änderung beibehalten möchtest {#keep-changes}
 

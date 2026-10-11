@@ -2,7 +2,7 @@ Pour passer d'une des deux ou trois dernières pages utilisées à l'autre, le s
 
 ## Ouvrir le sélecteur {#open}
 
-Appuyez sur `⌥ Q` (`Alt + Q` sous Windows). Vos onglets récents s'affichent dans l'ordre de leur utilisation, chacun avec un aperçu de la page.
+Appuyez sur `⌥ Q`. Vos onglets récents s'affichent dans l'ordre de leur utilisation, chacun avec un aperçu de la page.
 
 ![Le sélecteur d'onglets récents, avec quatre onglets dans l'ordre d'utilisation, chacun avec un aperçu de la page](switcher "Le sélecteur d'onglets récents")
 
@@ -11,7 +11,7 @@ Appuyez sur `⌥ Q` (`Alt + Q` sous Windows). Vos onglets récents s'affichent d
 1. Maintenez `⌥` enfoncée et appuyez plusieurs fois sur `Q` jusqu'à atteindre la page souhaitée. Vous pouvez aussi utiliser `Tab` ou les touches fléchées.
 2. Relâchez `⌥` ou appuyez sur `↩` pour basculer vers cette page.
 
-Le fonctionnement est semblable à celui de `⌘ Tab` sur Mac ou de `⌃ Tab` dans [Arc](https://arc.net/).
+Le fonctionnement est semblable à celui de `⌘ Tab | Alt + Tab` sur votre ordinateur ou de `⌃ Tab` dans [Arc](https://arc.net/).
 
 ## Sélecteur ou recherche dans les onglets ouverts {#vs-search}
 

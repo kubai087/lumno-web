@@ -6,7 +6,7 @@ Web-Clip ist standardmäßig deaktiviert. Aktiviere in den Einstellungen von Lum
 
 ## Einen Seitenbereich ausschneiden {#how}
 
-1. Drücke auf der gewünschten Seite `⌘ ⇧ K` (unter Windows `Ctrl + Shift + K`), um die Befehlsleiste zu öffnen. Gib `/clip` ein und drücke die Eingabetaste.
+1. Drücke auf der gewünschten Seite `⌘ ⇧ K`, um die Befehlsleiste zu öffnen. Gib `/clip` ein und drücke die Eingabetaste.
 
 ![Befehlsleiste mit der Eingabe /clip und dem Ergebnis „Start Web Clip“](clip-command "/clip in die Befehlsleiste eingeben")
 
@@ -19,7 +19,7 @@ Web-Clip ist standardmäßig deaktiviert. Aktiviere in den Einstellungen von Lum
 ## Das schwebende Fenster {#window}
 
 - Das Fenster zeigt eine Kopie des ausgewählten Inhalts. Ändert sich dieser Teil der Originalseite, wird auch das Fenster aktualisiert.
-- Klickst du im Fenster auf einen Link, öffnet er sich in einem neuen Browser-Tab. Halte beim Klicken `⌘` (unter Windows `Ctrl`) gedrückt, um ihn im Hintergrund zu öffnen.
+- Klickst du im Fenster auf einen Link, öffnet er sich in einem neuen Browser-Tab. Halte beim Klicken `⌘` gedrückt, um ihn im Hintergrund zu öffnen.
 - Bewege den Zeiger an den unteren Rand des Fensters, um die Tasten „Reselect“ und „Close“ einzublenden.
 - Du kannst das Fenster wie jedes andere verschieben und in der Größe ändern.
 

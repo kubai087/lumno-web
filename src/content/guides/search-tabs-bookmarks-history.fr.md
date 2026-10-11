@@ -2,7 +2,7 @@ Avec des dizaines d'onglets ouverts et des centaines de favoris, retrouver une p
 
 ## Ouvrir le champ de recherche {#open}
 
-Appuyez sur `⌘ ⇧ K` (`Ctrl + Maj + K` sous Windows et Linux) depuis n'importe quelle page. Le champ de recherche s'affiche au centre de l'écran. Pour le fermer, appuyez sur `Esc` ou cliquez en dehors du champ.
+Appuyez sur `⌘ ⇧ K` depuis n'importe quelle page. Le champ de recherche s'affiche au centre de l'écran. Pour le fermer, appuyez sur `Esc` ou cliquez en dehors du champ.
 
 Sur les pages restreintes, comme les paramètres `chrome://` ou les boutiques d'extensions, les navigateurs n'autorisent pas les extensions à afficher du contenu. Sur ces pages, Lumno applique l'option « Restricted page behavior » de ses réglages.
 

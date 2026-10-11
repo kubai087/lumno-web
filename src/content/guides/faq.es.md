@@ -4,7 +4,7 @@ Aquí encontrarás las respuestas a las preguntas más frecuentes que recibimos 
 
 ### ¿Cuál es el atajo predeterminado? ¿Se puede cambiar?
 
-El atajo predeterminado es `⌘ ⇧ K` en el Mac y `Ctrl + Mayús + K` en Windows y Linux. Puedes cambiarlo en `chrome://extensions/shortcuts`. Para obtener más información, consulta [Atajos de teclado](../keyboard-shortcuts/#change).
+El atajo predeterminado es `⌘ ⇧ K | ⌘ ⇧ K` en el Mac y `Ctrl + Mayús + K` en Windows y Linux. Puedes cambiarlo en `chrome://extensions/shortcuts`. Para obtener más información, consulta [Atajos de teclado](../keyboard-shortcuts/#change).
 
 ### ¿Qué hago si el atajo no funciona?
 

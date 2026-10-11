@@ -4,7 +4,7 @@ Aqui você encontra as respostas às perguntas mais frequentes que recebemos no 
 
 ### Qual é o atalho padrão? É possível alterá-lo?
 
-O atalho padrão é `⌘ ⇧ K` no Mac e `Ctrl + Shift + K` no Windows e no Linux. Você pode alterá-lo em `chrome://extensions/shortcuts`. Para saber mais, consulte [Atalhos de teclado](../keyboard-shortcuts/#change).
+O atalho padrão é `⌘ ⇧ K | ⌘ ⇧ K` no Mac e `Ctrl + Shift + K` no Windows e no Linux. Você pode alterá-lo em `chrome://extensions/shortcuts`. Para saber mais, consulte [Atalhos de teclado](../keyboard-shortcuts/#change).
 
 ### O que fazer se o atalho não funcionar?
 

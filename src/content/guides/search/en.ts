@@ -66,8 +66,14 @@ export default {
       "Shortcut conflict, already in use, not working",
       "Shortcut does nothing in Dia, set it to Global",
     ],
-    "command-bar-keys": ["Which keys work in the command bar? Enter, Tab, Esc, arrow keys"],
-    "switcher-keys": ["Using the keyboard in the switcher: Alt Q, Option Q"],
+    "command-bar-keys": [
+      "Which keys work in the command bar? Enter, Tab, Esc, arrow keys",
+      "Open in background: Cmd-click, Ctrl-click, middle-click, Cmd Enter, keep the command bar open to open several",
+      "Number jump, open a result by number, Ctrl N, Ctrl P to select, input history",
+    ],
+    "newtab-keys": ["New tab keys: undo removing a shortcut, Cmd Z, Ctrl Z, type to search, open shortcuts in background"],
+    "switcher-keys": ["Using the keyboard in the switcher: Alt Q, Option Q, go back, Shift Tab, cancel"],
+    "web-clip-keys": ["Choose the clip area with the keyboard: brackets, scroll wheel for outer and inner elements"],
   },
   sync: {
     "": ["Sync not working, how to sync, back up settings, move to a new computer, several computers"],

@@ -2,7 +2,7 @@ Lumno 是一款免費、開源的瀏覽器擴充功能，主要提供兩項功�
 
 ## 命令列：一搜就到 {#command-bar}
 
-在任何網頁按下 `⌘ ⇧ K`（Windows 上為 `Ctrl + Shift + K`），命令列會出現在畫面中央。
+在任何網頁按下 `⌘ ⇧ K`，命令列會出現在畫面中央。
 
 如果想要 [Arc](https://arc.net/)、[Zen](https://zen-browser.app/) 那樣的體驗，可以把叫出命令列的快速鍵設為 `⌘ T`，詳見[修改快速鍵](../keyboard-shortcuts/#change)。
 

@@ -150,6 +150,8 @@ export function getGuideNavTitle(locale: GuideLocale, key: GuideNavKey): string 
 /** Markdown reduced to plain text for the search index. */
 export function toSearchText(markdown: string): string {
   return markdown
+    // `⌃ ⇧ K | Alt K`: a key for each platform (GuideArticle); one copy when both are the same.
+    .replace(/`([^`|]+) \| ([^`|]+)`/g, (_, mac, other) => (mac === other ? mac : `${mac} / ${other}`))
     .replace(/!\[[^\]]*\]\([^)]*\)/g, "")
     .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
     .replace(/\{#[a-z0-9-]+\}/g, "")

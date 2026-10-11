@@ -12,7 +12,7 @@ Une seule extension à la fois peut gérer le nouvel onglet. Lorsque plusieurs e
 2. Installez l'extension de nouvel onglet que vous souhaitez utiliser. Si elle est déjà installée, désactivez-la dans `chrome://extensions`, puis réactivez-la.
 3. Ouvrez un nouvel onglet. Si le navigateur vous demande si vous souhaitez conserver la modification, choisissez de la conserver.
 
-Le nouvel onglet affiche désormais la page de l'autre extension, et vous pouvez toujours ouvrir la barre de commande de Lumno sur n'importe quelle page web avec `⌘ ⇧ K` (`Ctrl + Maj + K` sous Windows).
+Le nouvel onglet affiche désormais la page de l'autre extension, et vous pouvez toujours ouvrir la barre de commande de Lumno sur n'importe quelle page web avec `⌘ ⇧ K`.
 
 ## Lorsque le navigateur demande s'il faut conserver la modification {#keep-changes}
 

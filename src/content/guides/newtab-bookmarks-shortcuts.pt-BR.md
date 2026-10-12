@@ -17,7 +17,8 @@ A fileira de ícones abaixo da caixa de pesquisa mostra seus atalhos. Quando voc
 
 - Clique com o botão direito em um atalho para editá-lo ou removê-lo. Se você remover um atalho por engano, use o atalho de teclado indicado no aviso para desfazer.
 - Arraste os atalhos para reordená-los. Se você soltar um atalho sobre os favoritos, ele se torna um favorito.
-- O número de atalhos por fileira, o tamanho dos ícones, o espaçamento, a ampliação estilo Dock e o botão "+" são definidos nas configurações do Lumno, em Appearance → Shortcuts.
+- O número de atalhos por fileira, o tamanho dos ícones, o espaçamento, a ampliação estilo Dock e o botão "+" são definidos nas configurações do Lumno, em Appearance → New Tab.
+- Se você não precisa dos atalhos, desative Shortcuts no mesmo lugar para remover a fileira de ícones abaixo da caixa de pesquisa.
 
 ## Pastas de atalhos {#shortcut-folders}
 
@@ -33,26 +34,48 @@ Quando os atalhos se acumularem, agrupe-os em pastas, como os apps na tela inici
 
 ## Favoritos {#bookmarks}
 
-A área de favoritos mostra o conteúdo da barra de favoritos do navegador. Passe o cursor sobre uma pasta para ver as páginas que ela contém.
+A área de favoritos mostra o conteúdo da barra de favoritos do navegador. Quando você passa o cursor sobre uma pasta, o cartão dela mostra os ícones de alguns dos sites que ela contém.
 
-![A área de favoritos da nova guia: pastas como Reference, Design guidelines e Competitors, além de favoritos do ChatGPT e do GitHub](nt-bookmarks-folder "Visualização em pastas por níveis")
+![A área de favoritos da nova guia: pastas como Reference, Design guidelines e Competitors, além de favoritos do ChatGPT e do GitHub. A pasta Reference, sob o cursor, mostra os ícones dos sites que ela contém](nt-bookmarks "A área de favoritos")
 
-### Layouts de favoritos
-
-Clique em "···" no canto superior direito da área de favoritos para mudar o layout:
-
-- Visualização em pastas por níveis: as pastas aparecem como cartões e se abrem nível por nível quando você passa o cursor sobre elas.
-- Visualização em lista por níveis: o conteúdo das pastas aparece em menus aninhados.
-- Barra de favoritos no topo: os favoritos aparecem em uma fileira na parte superior da página, como a barra de favoritos do navegador.
-
-![O layout de barra de favoritos no topo, com as pastas enfileiradas no alto da nova guia](nt-bookmarks-top "Barra de favoritos no topo")
-
-Com a barra de favoritos no topo, você também pode escolher o fundo: névoa adaptável, vidro transparente, transparente ou uma cor personalizada.
-
-### Outras configurações
-
-- Se você tiver muitos favoritos, use as setas no canto superior direito para mudar de página ou altere nas configurações o número de fileiras exibidas.
 - Clique com o botão direito em uma pasta para mudar a cor dela. A pasta também aparece com essa cor nos menus.
 - Clique com o botão direito em uma pasta e escolha "Open in new tab group" para abrir todas as páginas dela de uma vez, reunidas em um mesmo grupo de guias.
 - Clique no ícone de favoritos para abrir o gerenciador de favoritos do navegador.
 - Por padrão, atalhos e favoritos abrem na guia atual. Para abri-los em uma nova guia, ative cada um nas configurações do Lumno, em General → New Tab Settings → Open in a new tab. Clicar segurando `⌘` ou com o botão do meio sempre abre em segundo plano.
+
+## Layouts de favoritos {#bookmark-layouts}
+
+Clique em "···" no canto superior direito da área de favoritos para escolher um dos três layouts.
+
+### Visualização em pastas por níveis
+
+O layout padrão. Pastas e favoritos aparecem como cartões. Clique em uma pasta para abri-la no mesmo lugar; o título mostra onde você está, por exemplo "Bookmarks / Reference". Clique em "Bookmarks" para voltar um nível.
+
+![Visualização em pastas por níveis com a pasta Reference aberta: o título mostra "Bookmarks / Reference", acima de uma subpasta CSS layout e de dois favoritos](nt-bookmarks-folder "Visualização em pastas: a pasta abre no mesmo lugar")
+
+### Visualização em lista por níveis
+
+Os cartões continuam no lugar. Clique em uma pasta para abri-la como um menu; as subpastas vão se abrindo à direita. Assim você navega por pastas com vários níveis sem sair da página.
+
+![Visualização em lista por níveis: clicar na pasta Reference abre um menu, e a subpasta CSS layout, sob o cursor, se abre à direita com web.dev e Can I use](nt-bookmarks-list "Visualização em lista: os menus se abrem nível por nível")
+
+### Barra de favoritos no topo
+
+Os favoritos aparecem em uma fileira na parte superior da página, como a barra de favoritos do navegador. As pastas da barra também se abrem como menus.
+
+![O layout de barra de favoritos no topo, com as pastas enfileiradas no alto da nova guia](nt-bookmarks-top "Barra de favoritos no topo")
+
+Com a barra de favoritos no topo, clique em "···" na ponta direita da barra para escolher o fundo: névoa adaptável, vidro transparente, transparente ou uma cor personalizada.
+
+## Fileiras e como ocultar os favoritos {#bookmark-rows}
+
+Para escolher quantas fileiras de favoritos aparecem e quantos cabem em cada fileira, acesse Appearance → New Tab nas configurações do Lumno.
+
+![Quatro configurações do Lumno: Bookmark rows, Bookmarks per row, Show Icons Inside Bookmark Folders e Site Cards](nt-layout-settings "Configurações de favoritos em Appearance → New Tab")
+
+- Bookmark rows: de 0 a 8 fileiras; o padrão é 2. Se nem todos os favoritos couberem, use as setas no canto superior direito da área de favoritos para mudar de página.
+- Ocultar os favoritos: arraste Bookmark rows até 0. A nova guia deixa de mostrar seus favoritos, e a barra de favoritos no topo também é ocultada. Os favoritos do navegador não são alterados, e você pode exibi-los de novo quando quiser.
+- Bookmarks per row: de 4 a 8; o padrão é 6. É o máximo quando a janela é larga o bastante; em janelas mais estreitas aparecem menos.
+- Show Icons Inside Bookmark Folders: desative para não mostrar os ícones dos sites ao passar o cursor sobre uma pasta.
+
+Os cartões de sites na parte de baixo da nova guia também são configurados aqui. Para saber mais, consulte [Sites frequentes e cartões de progresso](../newtab-frequent-sites/#card-rows).

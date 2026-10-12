@@ -181,16 +181,16 @@ const content: GuideLocaleContent = {
     "newtab-bookmarks-shortcuts": {
       pageTitle: "Raccourcis et favoris du nouvel onglet : ajouter des sites, trois dispositions | Aide Lumno",
       pageDescription:
-        "Ajoutez vos sites favoris en raccourcis sur le nouvel onglet Lumno, choisissez leurs icônes, regroupez-les en dossiers et parcourez vos favoris en dossiers, en liste imbriquée ou en barre en haut.",
-      keywords: ["raccourcis nouvel onglet", "favoris nouvel onglet", "barre de favoris Chrome", "dossiers de favoris"],
+        "Ajoutez vos sites favoris en raccourcis sur le nouvel onglet Lumno, choisissez leurs icônes, regroupez-les en dossiers et parcourez vos favoris en dossiers, en liste imbriquée ou en barre en haut, sur autant de rangées que vous voulez, ou pas du tout.",
+      keywords: ["raccourcis nouvel onglet", "favoris nouvel onglet", "barre de favoris Chrome", "dossiers de favoris", "masquer les favoris du nouvel onglet"],
       title: "Raccourcis et favoris",
       navTitle: "Raccourcis et favoris",
     },
     "newtab-frequent-sites": {
       pageTitle: "Sites fréquents et cartes de progression : épingler des sites, reprendre une série | Aide Lumno",
       pageDescription:
-        "Le nouvel onglet Lumno affiche vos sites les plus visités ou récents. Épinglez-en jusqu'à trois ; épinglez une série ou un roman-feuilleton et la carte vous suit jusqu'à l'épisode ou au chapitre suivant.",
-      keywords: ["sites les plus visités nouvel onglet", "suivre une série", "progression web novel", "épingler des sites"],
+        "Le nouvel onglet Lumno affiche vos sites les plus visités ou récents. Épinglez-en jusqu'à trois ; épinglez une série ou un roman-feuilleton et la carte vous suit jusqu'à l'épisode ou au chapitre suivant. Affichez une ou deux rangées de cartes, ou masquez-les.",
+      keywords: ["sites les plus visités nouvel onglet", "suivre une série", "progression web novel", "épingler des sites", "masquer les cartes du nouvel onglet"],
       title: "Sites fréquents et cartes de progression",
       navTitle: "Sites fréquents et progression",
     },

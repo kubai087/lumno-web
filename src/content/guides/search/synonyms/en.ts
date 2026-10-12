@@ -12,6 +12,8 @@ export default [
   ["history", "browsing history", "visited pages"],
   ["shortcut key", "keyboard shortcut", "hotkey", "hot key", "key binding", "keybinding", "keybind", "shortcut"],
   ["speed dial", "site icon", "top sites", "quick link"],
+  ["site cards", "bottom cards", "most visited cards"],
+  ["rows", "number of rows", "how many rows"],
   ["wallpaper", "background image", "background", "backdrop"],
   ["dark mode", "dark theme", "night mode", "black theme"],
   ["light mode", "light theme", "white theme"],

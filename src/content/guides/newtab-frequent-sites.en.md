@@ -6,7 +6,19 @@ By default, the cards at the bottom show your most visited sites. Click a card t
 
 ![Most visited cards at the bottom of the new tab: GitHub, Material, Figma and Mozilla](nt-recent "Most visited")
 
-To see recently visited sites instead, click "···" at the top right of the cards and choose "Show Recent". In Lumno's settings, under New Tab Bottom Content, you can show one row, two rows or none.
+To see recently visited sites instead, click "···" at the top right of the cards and choose "Show Recent".
+
+## Rows and turning off cards {#card-rows}
+
+To choose how many rows of site cards appear, go to Appearance → New Tab → Site Cards in Lumno's settings.
+
+![Four settings in Lumno: Bookmark rows, Bookmarks per row, Show Icons Inside Bookmark Folders and Site Cards, with Site Cards set to 1 row of most visited sites](nt-layout-settings "Site card settings under Appearance → New Tab")
+
+- Drag the slider to show one row or two. The default is one row.
+- Drag it to 0 to turn off site cards. The bottom of the new tab no longer shows these sites.
+- Next to the slider, switch between Show Recent and Show Most Visited, the same choices as in the cards' "···" menu.
+
+To hide just one site, right-click its card and choose Remove. The site comes back the next time you visit it, and a pinned card is unpinned as well. To keep a site off the new tab and out of search results for good, add it to the Blacklist in Lumno's settings.
 
 ## Pin a site {#pin}
 

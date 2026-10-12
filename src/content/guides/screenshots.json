@@ -23,9 +23,17 @@
     1440,
     900
   ],
+  "en/nt-bookmarks": [
+    1440,
+    264
+  ],
   "en/nt-bookmarks-folder": [
     1440,
     264
+  ],
+  "en/nt-bookmarks-list": [
+    1440,
+    358
   ],
   "en/nt-bookmarks-top": [
     1440,
@@ -34,6 +42,10 @@
   "en/nt-clock": [
     1440,
     900
+  ],
+  "en/nt-layout-settings": [
+    1440,
+    609
   ],
   "en/nt-recent": [
     1440,
@@ -115,9 +127,17 @@
     1440,
     900
   ],
+  "ja/nt-bookmarks": [
+    1440,
+    264
+  ],
   "ja/nt-bookmarks-folder": [
     1440,
     264
+  ],
+  "ja/nt-bookmarks-list": [
+    1440,
+    358
   ],
   "ja/nt-bookmarks-top": [
     1440,
@@ -126,6 +146,10 @@
   "ja/nt-clock": [
     1440,
     900
+  ],
+  "ja/nt-layout-settings": [
+    1440,
+    609
   ],
   "ja/nt-recent": [
     1440,
@@ -207,9 +231,17 @@
     1440,
     900
   ],
+  "zh-CN/nt-bookmarks": [
+    1440,
+    264
+  ],
   "zh-CN/nt-bookmarks-folder": [
     1440,
     264
+  ],
+  "zh-CN/nt-bookmarks-list": [
+    1440,
+    358
   ],
   "zh-CN/nt-bookmarks-top": [
     1440,
@@ -218,6 +250,10 @@
   "zh-CN/nt-clock": [
     1440,
     900
+  ],
+  "zh-CN/nt-layout-settings": [
+    1440,
+    609
   ],
   "zh-CN/nt-recent": [
     1440,
@@ -303,9 +339,17 @@
     1440,
     900
   ],
+  "zh-TW/nt-bookmarks": [
+    1440,
+    264
+  ],
   "zh-TW/nt-bookmarks-folder": [
     1440,
     264
+  ],
+  "zh-TW/nt-bookmarks-list": [
+    1440,
+    358
   ],
   "zh-TW/nt-bookmarks-top": [
     1440,
@@ -314,6 +358,10 @@
   "zh-TW/nt-clock": [
     1440,
     900
+  ],
+  "zh-TW/nt-layout-settings": [
+    1440,
+    609
   ],
   "zh-TW/nt-recent": [
     1440,

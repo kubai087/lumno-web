@@ -248,5 +248,18 @@
         "url": "https://www.perplexity.ai/"
       }
     ]
+  },
+  "bookmarkSubfolder": {
+    "title": "CSS レイアウト",
+    "children": [
+      {
+        "title": "web.dev",
+        "url": "https://web.dev/"
+      },
+      {
+        "title": "Can I use",
+        "url": "https://caniuse.com/"
+      }
+    ]
   }
 }

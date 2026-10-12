@@ -6,7 +6,19 @@ Standardmäßig zeigen die Karten unten deine meistbesuchten Websites. Klicke au
 
 ![Karten der meistbesuchten Seiten unten im neuen Tab: GitHub, Material, Figma und Mozilla](nt-recent "Meistbesucht")
 
-Um stattdessen die zuletzt besuchten Websites anzuzeigen, klicke oben rechts auf „···“ und wähle „Show Recent“. In den Einstellungen von Lumno legst du unter „New Tab Bottom Content“ fest, ob eine Reihe, zwei Reihen oder keine angezeigt werden.
+Um stattdessen die zuletzt besuchten Websites anzuzeigen, klicke oben rechts auf „···“ und wähle „Show Recent“.
+
+## Reihen und Ausblenden der Karten {#card-rows}
+
+Wie viele Reihen mit Website-Karten angezeigt werden, legst du in den Einstellungen von Lumno unter Appearance → New Tab → Site Cards fest.
+
+![Vier Einstellungen in Lumno: Bookmark rows, Bookmarks per row, Show Icons Inside Bookmark Folders und Site Cards; Site Cards steht auf einer Reihe mit den meistbesuchten Websites](nt-layout-settings "Einstellungen für Website-Karten unter Appearance → New Tab")
+
+- Ziehe den Regler auf eine oder zwei Reihen. Standardmäßig ist es eine Reihe.
+- Ziehe ihn auf 0, um die Website-Karten auszuschalten. Dann zeigt der neue Tab unten keine dieser Websites mehr an.
+- Neben dem Regler wechselst du zwischen „Show Recent“ und „Show Most Visited“, wie im Menü „···“ der Karten.
+
+Möchtest du nur eine einzelne Website ausblenden, klicke mit der rechten Maustaste auf ihre Karte und wähle „Remove“. Sobald du die Website erneut besuchst, erscheint sie wieder; eine angeheftete Karte wird dabei auch gelöst. Soll eine Website dauerhaft weder im neuen Tab noch in den Suchergebnissen auftauchen, füge sie in den Einstellungen von Lumno zur „Blacklist“ hinzu.
 
 ## Eine Website anheften {#pin}
 

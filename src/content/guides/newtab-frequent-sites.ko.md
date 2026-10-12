@@ -6,7 +6,19 @@
 
 ![새 탭 아래쪽의 자주 방문한 사이트 카드: GitHub, Material, Figma, Mozilla](nt-recent "자주 방문한 사이트")
 
-최근에 방문한 사이트를 보려면 카드 영역 오른쪽 위의 "···"를 클릭하고 "Show Recent"를 선택하세요. Lumno 설정의 New Tab Bottom Content에서 한 줄, 두 줄 또는 숨김을 선택할 수 있습니다.
+최근에 방문한 사이트를 보려면 카드 영역 오른쪽 위의 "···"를 클릭하고 "Show Recent"를 선택하세요.
+
+## 줄 수 변경과 카드 끄기 {#card-rows}
+
+사이트 카드를 몇 줄로 표시할지는 Lumno 설정의 Appearance → New Tab → Site Cards에서 변경할 수 있습니다.
+
+![Lumno 설정의 Bookmark rows, Bookmarks per row, Show Icons Inside Bookmark Folders, Site Cards 네 가지 항목. Site Cards는 1줄, Show Most Visited로 설정되어 있다](nt-layout-settings "Appearance → New Tab의 사이트 카드 설정")
+
+- 슬라이더를 끌어 한 줄 또는 두 줄을 선택하세요. 기본값은 한 줄입니다.
+- 0으로 끌어 놓으면 사이트 카드가 꺼지고, 새 탭 아래쪽에 사이트가 더 이상 표시되지 않습니다.
+- 슬라이더 오른쪽에서 Show Recent와 Show Most Visited를 전환할 수 있습니다. 카드 영역의 "···" 메뉴와 같은 설정입니다.
+
+특정 사이트 하나만 숨기려면 해당 카드를 마우스 오른쪽 버튼으로 클릭하고 Remove를 선택하세요. 다음에 그 사이트를 방문하면 다시 표시되며, 고정된 카드는 고정도 함께 해제됩니다. 새 탭과 검색 결과에 아예 표시되지 않게 하려면 Lumno 설정의 Blacklist에 추가하세요.
 
 ## 사이트 고정하기 {#pin}
 

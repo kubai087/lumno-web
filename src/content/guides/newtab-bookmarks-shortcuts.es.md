@@ -17,7 +17,8 @@ La fila de iconos situada bajo el cuadro de búsqueda muestra tus accesos direct
 
 - Haz clic con el botón derecho en un acceso directo para editarlo o eliminarlo. Si eliminas uno por error, usa el atajo que aparece en el aviso para deshacer la acción.
 - Arrastra los accesos directos para reordenarlos. Si sueltas uno sobre tus marcadores, se convierte en un marcador.
-- El número de accesos directos por fila, el tamaño de los iconos, el espaciado, la ampliación tipo Dock y el botón "+" se configuran en los ajustes de Lumno, en Appearance → Shortcuts.
+- El número de accesos directos por fila, el tamaño de los iconos, el espaciado, la ampliación tipo Dock y el botón "+" se configuran en los ajustes de Lumno, en Appearance → New Tab.
+- Si no necesitas los accesos directos, desactiva Shortcuts en ese mismo lugar y desaparecerá la fila de iconos bajo el cuadro de búsqueda.
 
 ## Carpetas de accesos directos {#shortcut-folders}
 
@@ -33,26 +34,48 @@ Cuando tengas muchos accesos directos, agrúpalos en carpetas, como las apps en 
 
 ## Marcadores {#bookmarks}
 
-La zona de marcadores muestra el contenido de la barra de marcadores de tu navegador. Pasa el puntero sobre una carpeta para ver las páginas que contiene.
+La zona de marcadores muestra el contenido de la barra de marcadores de tu navegador. Al pasar el puntero sobre una carpeta, su tarjeta muestra los iconos de algunos de los sitios que contiene.
 
-![La zona de marcadores de la nueva pestaña: carpetas como Reference, Design guidelines y Competitors, además de marcadores de ChatGPT y GitHub](nt-bookmarks-folder "Vista de carpetas por niveles")
+![La zona de marcadores de la nueva pestaña: carpetas como Reference, Design guidelines y Competitors, además de marcadores de ChatGPT y GitHub. La carpeta Reference, bajo el puntero, muestra los iconos de los sitios que contiene](nt-bookmarks "La zona de marcadores")
 
-### Diseños de marcadores
-
-Haz clic en "···", en la esquina superior derecha de la zona de marcadores, para cambiar de diseño:
-
-- Vista de carpetas por niveles: las carpetas se muestran como tarjetas que se abren nivel a nivel al pasar el puntero.
-- Vista de lista por niveles: el contenido de las carpetas se muestra como menús anidados.
-- Barra de marcadores superior: los marcadores se muestran en una fila en la parte superior de la página, como la barra de marcadores del navegador.
-
-![El diseño de barra de marcadores superior, con las carpetas en fila en la parte de arriba de la nueva pestaña](nt-bookmarks-top "Barra de marcadores superior")
-
-Con la barra de marcadores superior también puedes elegir el fondo: niebla adaptable, cristal transparente, transparente o un color personalizado.
-
-### Otros ajustes
-
-- Si tienes muchos marcadores, usa las flechas de la esquina superior derecha para pasar de página o cambia en los ajustes el número de filas que se muestran.
 - Haz clic con el botón derecho en una carpeta para cambiar su color. La carpeta también se muestra con ese color en los menús.
 - Haz clic con el botón derecho en una carpeta y elige "Open in new tab group" para abrir todas sus páginas a la vez, reunidas en un mismo grupo de pestañas.
 - Haz clic en el icono de marcadores para abrir el administrador de marcadores del navegador.
 - Los accesos directos y los marcadores se abren en la pestaña actual de forma predeterminada. Para abrirlos en una pestaña nueva, actívalos uno a uno en los ajustes de Lumno, en General → New Tab Settings → Open in a new tab. Si haces clic manteniendo pulsada `⌘` o con el botón central, siempre se abren en segundo plano.
+
+## Diseños de marcadores {#bookmark-layouts}
+
+Haz clic en "···", en la esquina superior derecha de la zona de marcadores, para elegir uno de los tres diseños.
+
+### Vista de carpetas por niveles
+
+El diseño predeterminado. Las carpetas y los marcadores se muestran como tarjetas. Al hacer clic en una carpeta, se abre en el mismo sitio y el encabezado indica dónde estás, por ejemplo "Bookmarks / Reference". Haz clic en "Bookmarks" para volver al nivel anterior.
+
+![Vista de carpetas por niveles con la carpeta Reference abierta: el encabezado indica "Bookmarks / Reference", sobre una subcarpeta CSS layout y dos marcadores](nt-bookmarks-folder "Vista de carpetas: la carpeta se abre en el mismo sitio")
+
+### Vista de lista por niveles
+
+Las tarjetas no se mueven. Al hacer clic en una carpeta, se abre como un menú, y las subcarpetas se van abriendo hacia la derecha. Así puedes recorrer carpetas con muchos niveles sin salir de la página.
+
+![Vista de lista por niveles: al hacer clic en la carpeta Reference se abre un menú, y la subcarpeta CSS layout, bajo el puntero, se abre hacia la derecha con web.dev y Can I use](nt-bookmarks-list "Vista de lista: los menús se abren nivel a nivel")
+
+### Barra de marcadores superior
+
+Los marcadores se muestran en una fila en la parte superior de la página, como la barra de marcadores del navegador. Las carpetas de la barra también se abren como menús.
+
+![El diseño de barra de marcadores superior, con las carpetas en fila en la parte de arriba de la nueva pestaña](nt-bookmarks-top "Barra de marcadores superior")
+
+Con la barra de marcadores superior, haz clic en "···", en el extremo derecho de la barra, para elegir el fondo: niebla adaptable, cristal transparente, transparente o un color personalizado.
+
+## Filas y ocultar marcadores {#bookmark-rows}
+
+Para elegir cuántas filas de marcadores se muestran y cuántos caben en cada fila, ve a Appearance → New Tab en los ajustes de Lumno.
+
+![Cuatro ajustes de Lumno: Bookmark rows, Bookmarks per row, Show Icons Inside Bookmark Folders y Site Cards](nt-layout-settings "Ajustes de marcadores en Appearance → New Tab")
+
+- Bookmark rows: de 0 a 8 filas; el valor predeterminado es 2. Si no caben todos tus marcadores, usa las flechas de la esquina superior derecha de la zona de marcadores para pasar de página.
+- Ocultar los marcadores: arrastra Bookmark rows hasta 0. La nueva pestaña deja de mostrar tus marcadores y la barra de marcadores superior también se oculta. Los marcadores del navegador no cambian, y puedes volver a mostrarlos cuando quieras.
+- Bookmarks per row: de 4 a 8; el valor predeterminado es 6. Es el máximo cuando la ventana es lo bastante ancha; en ventanas más estrechas se muestran menos.
+- Show Icons Inside Bookmark Folders: desactívalo para que no aparezcan los iconos de los sitios al pasar el puntero sobre una carpeta.
+
+Las tarjetas de sitios de la parte inferior de la nueva pestaña también se configuran aquí. Para obtener más información, consulta [Sitios frecuentes y tarjetas de progreso](../newtab-frequent-sites/#card-rows).

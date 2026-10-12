@@ -28,7 +28,7 @@
 
   { "q": "收藏夹", "expect": ["search-tabs-bookmarks-history", "newtab-bookmarks-shortcuts#bookmarks"] },
   { "q": "搜索收藏夹", "expect": ["search-tabs-bookmarks-history"] },
-  { "q": "书签栏不见了", "expect": ["newtab-bookmarks-shortcuts#bookmarks"] },
+  { "q": "书签栏不见了", "expect": ["newtab-bookmarks-shortcuts#bookmarks", "newtab-bookmarks-shortcuts#bookmark-rows", "newtab-bookmarks-shortcuts#bookmark-layouts"] },
   { "q": "书鉴", "expect": ["search-tabs-bookmarks-history", "newtab-bookmarks-shortcuts#bookmarks"] },
   { "q": "搜浏览记录", "expect": ["search-tabs-bookmarks-history"] },
   { "q": "拼音搜索", "expect": ["search-tabs-bookmarks-history#pinyin"] },
@@ -36,7 +36,7 @@
   { "q": "标签太多", "expect": ["use-cases#many-tabs"] },
   { "q": "添加快捷方式", "expect": ["newtab-bookmarks-shortcuts#shortcuts"] },
   { "q": "图标没了", "expect": ["newtab-bookmarks-shortcuts#shortcuts", "sync"] },
-  { "q": "常用网站怎么隐藏", "expect": ["newtab-frequent-sites#frequent"] },
+  { "q": "常用网站怎么隐藏", "expect": ["newtab-frequent-sites#card-rows"] },
   { "q": "追剧进度", "expect": ["newtab-frequent-sites#progress", "use-cases#series"] },
   { "q": "显示时间", "expect": ["newtab-clock-zen#clock"] },
   { "q": "每日一句", "expect": ["newtab-clock-zen#quote"] },
@@ -95,5 +95,17 @@
   { "q": "一键关闭所有标签", "expect": ["search-tabs-bookmarks-history#close-other-tabs"] },
   { "q": "快捷方式文件夹", "expect": ["newtab-bookmarks-shortcuts#shortcut-folders"] },
   { "q": "快捷方式怎么分组", "expect": ["newtab-bookmarks-shortcuts#shortcut-folders"] },
-  { "q": "在搜索框问帮助中心", "expect": ["site-search#help-center"] }
+  { "q": "在搜索框问帮助中心", "expect": ["site-search#help-center"] },
+  { "q": "隐藏书签", "expect": ["newtab-bookmarks-shortcuts#bookmark-rows"] },
+  { "q": "书签显示几行", "expect": ["newtab-bookmarks-shortcuts#bookmark-rows"] },
+  { "q": "关闭书签", "expect": ["newtab-bookmarks-shortcuts#bookmark-rows"] },
+  { "q": "书签每行几个", "expect": ["newtab-bookmarks-shortcuts#bookmark-rows"] },
+  { "q": "书签布局", "expect": ["newtab-bookmarks-shortcuts#bookmark-layouts"] },
+  { "q": "多级列表视图", "expect": ["newtab-bookmarks-shortcuts#bookmark-layouts"] },
+  { "q": "书签栏放顶部", "expect": ["newtab-bookmarks-shortcuts#bookmark-layouts"] },
+  { "q": "书签栏透明", "expect": ["newtab-bookmarks-shortcuts#bookmark-layouts"] },
+  { "q": "关闭站点卡片", "expect": ["newtab-frequent-sites#card-rows"] },
+  { "q": "卡片显示两行", "expect": ["newtab-frequent-sites#card-rows"] },
+  { "q": "移除某个网站卡片", "expect": ["newtab-frequent-sites#card-rows"] },
+  { "q": "隐藏快捷方式", "expect": ["newtab-bookmarks-shortcuts#shortcuts"] }
 ]

@@ -6,7 +6,19 @@ De forma predeterminada, las tarjetas de la parte inferior muestran tus sitios m
 
 ![Tarjetas de sitios más visitados en la parte inferior de la nueva pestaña: GitHub, Material, Figma y Mozilla](nt-recent "Más visitados")
 
-Para ver los sitios visitados recientemente, haz clic en "···", en la esquina superior derecha de las tarjetas, y elige "Show Recent". En los ajustes de Lumno, en New Tab Bottom Content, puedes mostrar una fila, dos filas o ninguna.
+Para ver los sitios visitados recientemente, haz clic en "···", en la esquina superior derecha de las tarjetas, y elige "Show Recent".
+
+## Filas y desactivar las tarjetas {#card-rows}
+
+Para elegir cuántas filas de tarjetas de sitios se muestran, ve a Appearance → New Tab → Site Cards en los ajustes de Lumno.
+
+![Cuatro ajustes de Lumno: Bookmark rows, Bookmarks per row, Show Icons Inside Bookmark Folders y Site Cards, este último con una fila de los sitios más visitados](nt-layout-settings "Ajustes de las tarjetas de sitios en Appearance → New Tab")
+
+- Arrastra el control deslizante para mostrar una fila o dos. El valor predeterminado es una fila.
+- Arrástralo hasta 0 para desactivar las tarjetas de sitios. La parte inferior de la nueva pestaña deja de mostrar estos sitios.
+- Junto al control deslizante puedes cambiar entre "Show Recent" y "Show Most Visited", las mismas opciones del menú "···" de las tarjetas.
+
+Para ocultar solo un sitio, haz clic con el botón derecho en su tarjeta y elige "Remove". El sitio vuelve a aparecer la próxima vez que lo visites, y si la tarjeta estaba fijada, también deja de estarlo. Para que un sitio no aparezca nunca en la nueva pestaña ni en los resultados de búsqueda, añádelo a la "Blacklist" en los ajustes de Lumno.
 
 ## Fijar un sitio {#pin}
 

@@ -181,16 +181,16 @@ const content: GuideLocaleContent = {
     "newtab-bookmarks-shortcuts": {
       pageTitle: "Shortcuts und Lesezeichen im neuen Tab: Websites hinzufügen, drei Layouts | Lumno-Hilfe",
       pageDescription:
-        "Lege deine Lieblingsseiten als Shortcuts auf Lumnos neuen Tab, wähle ihre Symbole aus, stapel sie in Ordnern und zeige deine Lesezeichen als Ordner, verschachtelte Liste oder Leiste oben an.",
-      keywords: ["neuer Tab Shortcuts", "neuer Tab Lesezeichen", "Chrome Lesezeichenleiste", "Lesezeichenordner"],
+        "Lege deine Lieblingsseiten als Shortcuts auf Lumnos neuen Tab, wähle ihre Symbole aus, stapel sie in Ordnern und zeige deine Lesezeichen als Ordner, verschachtelte Liste oder Leiste oben an – in beliebig vielen Reihen oder gar nicht.",
+      keywords: ["neuer Tab Shortcuts", "neuer Tab Lesezeichen", "Chrome Lesezeichenleiste", "Lesezeichenordner", "Lesezeichen im neuen Tab ausblenden"],
       title: "Shortcuts und Lesezeichen",
       navTitle: "Shortcuts & Lesezeichen",
     },
     "newtab-frequent-sites": {
       pageTitle: "Häufig besuchte Seiten und Fortschrittskarten: Seiten anheften, bei Serien dranbleiben | Lumno-Hilfe",
       pageDescription:
-        "Lumnos neuer Tab zeigt deine meistbesuchten oder zuletzt besuchten Seiten. Du kannst bis zu drei davon anheften. Bei einer Serie oder einem Fortsetzungsroman wird die Karte automatisch auf die nächste Folge oder das nächste Kapitel aktualisiert.",
-      keywords: ["neuer Tab meistbesucht", "Serienfortschritt merken", "Webnovel Fortschritt", "Seiten anheften"],
+        "Lumnos neuer Tab zeigt deine meistbesuchten oder zuletzt besuchten Seiten. Du kannst bis zu drei davon anheften. Bei einer Serie oder einem Fortsetzungsroman wird die Karte automatisch auf die nächste Folge oder das nächste Kapitel aktualisiert. Die Karten lassen sich in einer oder zwei Reihen anzeigen oder ganz ausblenden.",
+      keywords: ["neuer Tab meistbesucht", "Serienfortschritt merken", "Webnovel Fortschritt", "Seiten anheften", "Karten im neuen Tab ausblenden"],
       title: "Häufig besuchte Seiten und Fortschrittskarten",
       navTitle: "Häufige Seiten & Fortschritt",
     },

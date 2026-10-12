@@ -17,7 +17,8 @@ The row of icons under the search box shows your shortcuts. When you hover over 
 
 - Right-click a shortcut to edit or remove it. If you remove one by mistake, use the shortcut shown in the notice to undo.
 - Drag shortcuts to reorder them. Drag one onto your bookmarks to turn it into a bookmark.
-- To change how many shortcuts appear per row, icon size, spacing, Dock magnification or the "+" button, go to Appearance → Shortcuts in Lumno's settings.
+- To change how many shortcuts appear per row, icon size, spacing, Dock magnification or the "+" button, go to Appearance → New Tab in Lumno's settings.
+- If you don't need shortcuts, turn off Shortcuts in the same place to remove the row of icons under the search box.
 
 ## Shortcut folders {#shortcut-folders}
 
@@ -33,26 +34,48 @@ When your shortcuts pile up, stack them into folders, like apps on a phone's hom
 
 ## Bookmarks {#bookmarks}
 
-The bookmarks area shows the contents of your browser's bookmarks bar. Hover over a folder to see the pages in it.
+The bookmarks area shows the contents of your browser's bookmarks bar. When you hover over a folder, its card shows the icons of a few sites inside it.
 
-![The new tab's bookmarks area: folders such as Reference, Design guidelines and Competitors, plus ChatGPT and GitHub bookmarks](nt-bookmarks-folder "Multi-layer folder view")
+![The new tab's bookmarks area: folders such as Reference, Design guidelines and Competitors, plus ChatGPT and GitHub bookmarks. The Reference folder under the pointer shows the icons of the sites inside it](nt-bookmarks "The bookmarks area")
 
-### Bookmark layouts
-
-Click "···" at the top right of the bookmarks area to switch layouts:
-
-- Multi-layer folder view: folders appear as cards and open level by level when you hover over them.
-- Multi-level list view: browse folder contents as nested menus.
-- Top bookmarks bar: bookmarks appear in a row along the top of the page, like the browser's own bookmarks bar.
-
-![The top bookmarks bar layout, with bookmark folders in a row along the top of the new tab](nt-bookmarks-top "Top bookmarks bar")
-
-With the top bookmarks bar, you can also choose its background: adaptive mist, clear glass, transparent, or a color you pick.
-
-### Other settings
-
-- If you have many bookmarks, use the arrows at the top right to page through them, or change the number of rows in settings.
 - Right-click a folder to change its color. The folder also uses that color in menus.
 - Right-click a folder and choose "Open in new tab group" to open all of its pages at once, grouped together.
 - Click the bookmark icon to open the browser's bookmark manager.
 - Shortcuts and bookmarks open in the current tab by default. To open them in a new tab instead, turn each one on under General → New Tab Settings → Open in a new tab in Lumno's settings. Holding `⌘` while you click, or middle-clicking, always opens in the background.
+
+## Bookmark layouts {#bookmark-layouts}
+
+Click "···" at the top right of the bookmarks area to switch between three layouts.
+
+### Multi-layer folder view
+
+The default layout. Folders and bookmarks appear as cards. Click a folder to open it in place; the heading shows where you are, such as "Bookmarks / Reference". Click "Bookmarks" to go back up a level.
+
+![Multi-layer folder view with the Reference folder open: the heading reads "Bookmarks / Reference", above a CSS layout subfolder and two bookmarks](nt-bookmarks-folder "Multi-layer folder view: a folder opens in place")
+
+### Multi-level list view
+
+The cards stay where they are. Click a folder to open it as a menu; subfolders open to the right as you go. You can browse deeply nested folders without leaving the page you're on.
+
+![Multi-level list view: clicking the Reference folder opens a menu, and the CSS layout subfolder under the pointer opens to the right with web.dev and Can I use](nt-bookmarks-list "Multi-level list view: menus open level by level")
+
+### Top bookmarks bar
+
+Bookmarks appear in a row along the top of the page, like the browser's own bookmarks bar. Folders in the bar open as menus too.
+
+![The top bookmarks bar layout, with bookmark folders in a row along the top of the new tab](nt-bookmarks-top "Top bookmarks bar")
+
+With the top bookmarks bar, click "···" at the right end of the bar to choose its background: Adaptive mist, Clear glass, Transparent or Custom color.
+
+## Rows and hiding bookmarks {#bookmark-rows}
+
+To choose how many rows of bookmarks appear and how many fit in each row, go to Appearance → New Tab in Lumno's settings.
+
+![Four settings in Lumno: Bookmark rows, Bookmarks per row, Show Icons Inside Bookmark Folders and Site Cards](nt-layout-settings "Bookmark settings under Appearance → New Tab")
+
+- Bookmark rows: choose from 0 to 8 rows. The default is 2. When your bookmarks don't all fit, use the arrows at the top right of the bookmarks area to page through them.
+- Hide bookmarks: drag Bookmark rows to 0. The new tab no longer shows your bookmarks, and the top bookmarks bar is hidden too. Your browser's bookmarks aren't affected, and you can bring them back at any time.
+- Bookmarks per row: choose from 4 to 8. The default is 6. This is the most that appear when the window is wide enough; narrower windows show fewer.
+- Show Icons Inside Bookmark Folders: turn this off to stop showing site icons when you hover over a folder.
+
+The site cards at the bottom of the new tab are set here too. See [Frequent sites and progress cards](../newtab-frequent-sites/#card-rows).

@@ -6,7 +6,19 @@ Por padrão, os cartões na parte inferior mostram os sites mais visitados. Cliq
 
 ![Cartões dos sites mais visitados na parte de baixo da nova guia: GitHub, Material, Figma e Mozilla](nt-recent "Mais visitados")
 
-Para ver os sites visitados recentemente, clique em "···" no canto superior direito dos cartões e escolha "Show Recent". Nas configurações do Lumno, em New Tab Bottom Content, você pode exibir uma fileira, duas fileiras ou nenhuma.
+Para ver os sites visitados recentemente, clique em "···" no canto superior direito dos cartões e escolha "Show Recent".
+
+## Fileiras e como desativar os cartões {#card-rows}
+
+Para escolher quantas fileiras de cartões de sites aparecem, acesse Appearance → New Tab → Site Cards nas configurações do Lumno.
+
+![Quatro configurações do Lumno: Bookmark rows, Bookmarks per row, Show Icons Inside Bookmark Folders e Site Cards, esta última com uma fileira dos sites mais visitados](nt-layout-settings "Configurações dos cartões de sites em Appearance → New Tab")
+
+- Arraste o controle deslizante para mostrar uma ou duas fileiras. O padrão é uma fileira.
+- Arraste até 0 para desativar os cartões de sites. A parte de baixo da nova guia deixa de mostrar esses sites.
+- Ao lado do controle deslizante, alterne entre "Show Recent" e "Show Most Visited", as mesmas opções do menu "···" dos cartões.
+
+Para ocultar só um site, clique com o botão direito no cartão dele e escolha "Remove". O site volta a aparecer na próxima vez que você o visitar, e um cartão fixado também deixa de ser fixado. Para que um site nunca apareça na nova guia nem nos resultados de pesquisa, adicione-o à "Blacklist" nas configurações do Lumno.
 
 ## Fixar um site {#pin}
 

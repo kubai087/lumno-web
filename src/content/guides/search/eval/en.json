@@ -79,5 +79,12 @@
   { "q": "close other tabs", "expect": ["search-tabs-bookmarks-history#close-other-tabs"] },
   { "q": "shortcut folder", "expect": ["newtab-bookmarks-shortcuts#shortcut-folders"] },
   { "q": "group shortcuts", "expect": ["newtab-bookmarks-shortcuts#shortcut-folders"] },
-  { "q": "ask the help center", "expect": ["site-search#help-center"] }
+  { "q": "ask the help center", "expect": ["site-search#help-center"] },
+  { "q": "hide bookmarks", "expect": ["newtab-bookmarks-shortcuts#bookmark-rows"] },
+  { "q": "bookmark rows", "expect": ["newtab-bookmarks-shortcuts#bookmark-rows"] },
+  { "q": "bookmark layout", "expect": ["newtab-bookmarks-shortcuts#bookmark-layouts"] },
+  { "q": "top bookmarks bar", "expect": ["newtab-bookmarks-shortcuts#bookmark-layouts"] },
+  { "q": "hide site cards", "expect": ["newtab-frequent-sites#card-rows"] },
+  { "q": "two rows of site cards", "expect": ["newtab-frequent-sites#card-rows"] },
+  { "q": "hide shortcuts", "expect": ["newtab-bookmarks-shortcuts#shortcuts"] }
 ]

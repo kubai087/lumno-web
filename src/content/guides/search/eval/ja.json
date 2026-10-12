@@ -61,5 +61,12 @@
   { "q": "不具合の報告", "expect": ["ratings-reviews#community", "security-open-source#open-source"] },
   { "q": "他のタブを閉じる", "expect": ["search-tabs-bookmarks-history#close-other-tabs"] },
   { "q": "ショートカットをフォルダにまとめる", "expect": ["newtab-bookmarks-shortcuts#shortcut-folders"] },
-  { "q": "ヘルプセンターに質問", "expect": ["site-search#help-center"] }
+  { "q": "ヘルプセンターに質問", "expect": ["site-search#help-center"] },
+  { "q": "ブックマークを非表示", "expect": ["newtab-bookmarks-shortcuts#bookmark-rows"] },
+  { "q": "ブックマークの行数", "expect": ["newtab-bookmarks-shortcuts#bookmark-rows"] },
+  { "q": "ブックマークのレイアウト", "expect": ["newtab-bookmarks-shortcuts#bookmark-layouts"] },
+  { "q": "上部ブックマークバー", "expect": ["newtab-bookmarks-shortcuts#bookmark-layouts"] },
+  { "q": "サイトカードを非表示", "expect": ["newtab-frequent-sites#card-rows"] },
+  { "q": "サイトカードの行数", "expect": ["newtab-frequent-sites#card-rows"] },
+  { "q": "ショートカットを非表示", "expect": ["newtab-bookmarks-shortcuts#shortcuts"] }
 ]

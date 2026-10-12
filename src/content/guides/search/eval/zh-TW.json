@@ -65,5 +65,12 @@
   { "q": "回報問題", "expect": ["ratings-reviews#community", "security-open-source#open-source"] },
   { "q": "關閉其他分頁", "expect": ["search-tabs-bookmarks-history#close-other-tabs"] },
   { "q": "捷徑資料夾", "expect": ["newtab-bookmarks-shortcuts#shortcut-folders"] },
-  { "q": "在搜尋框問說明中心", "expect": ["site-search#help-center"] }
+  { "q": "在搜尋框問說明中心", "expect": ["site-search#help-center"] },
+  { "q": "隱藏書籤", "expect": ["newtab-bookmarks-shortcuts#bookmark-rows"] },
+  { "q": "書籤顯示幾行", "expect": ["newtab-bookmarks-shortcuts#bookmark-rows"] },
+  { "q": "書籤版面", "expect": ["newtab-bookmarks-shortcuts#bookmark-layouts"] },
+  { "q": "書籤列放頂部", "expect": ["newtab-bookmarks-shortcuts#bookmark-layouts"] },
+  { "q": "關閉網站卡片", "expect": ["newtab-frequent-sites#card-rows"] },
+  { "q": "卡片顯示兩行", "expect": ["newtab-frequent-sites#card-rows"] },
+  { "q": "隱藏捷徑", "expect": ["newtab-bookmarks-shortcuts#shortcuts"] }
 ]

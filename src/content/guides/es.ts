@@ -181,16 +181,16 @@ const content: GuideLocaleContent = {
     "newtab-bookmarks-shortcuts": {
       pageTitle: "Accesos directos y marcadores en la nueva pestaña: añadir sitios, tres diseños | Ayuda de Lumno",
       pageDescription:
-        "Añade tus sitios de siempre como accesos directos en la nueva pestaña de Lumno, elige sus iconos, agrúpalos en carpetas y explora tus marcadores como carpetas, lista anidada o barra superior.",
-      keywords: ["accesos directos nueva pestaña", "marcadores nueva pestaña", "barra de marcadores Chrome", "carpetas de marcadores"],
+        "Añade tus sitios de siempre como accesos directos en la nueva pestaña de Lumno, elige sus iconos, agrúpalos en carpetas y explora tus marcadores como carpetas, lista anidada o barra superior, con las filas que quieras o sin mostrarlos.",
+      keywords: ["accesos directos nueva pestaña", "marcadores nueva pestaña", "barra de marcadores Chrome", "carpetas de marcadores", "ocultar marcadores nueva pestaña"],
       title: "Accesos directos y marcadores",
       navTitle: "Accesos directos y marcadores",
     },
     "newtab-frequent-sites": {
       pageTitle: "Sitios frecuentes y tarjetas de progreso: fija sitios y no pierdas el hilo de una serie | Ayuda de Lumno",
       pageDescription:
-        "La nueva pestaña de Lumno muestra tus sitios más visitados o recientes. Fija hasta tres; fija una serie o una novela por entregas y la tarjeta te sigue al siguiente episodio o capítulo.",
-      keywords: ["sitios más visitados nueva pestaña", "seguir progreso de series", "progreso de web novel", "fijar sitios"],
+        "La nueva pestaña de Lumno muestra tus sitios más visitados o recientes. Fija hasta tres; fija una serie o una novela por entregas y la tarjeta te sigue al siguiente episodio o capítulo. Muestra una o dos filas de tarjetas, o desactívalas.",
+      keywords: ["sitios más visitados nueva pestaña", "seguir progreso de series", "progreso de web novel", "fijar sitios", "ocultar tarjetas nueva pestaña"],
       title: "Sitios frecuentes y tarjetas de progreso",
       navTitle: "Sitios frecuentes y progreso",
     },

@@ -181,16 +181,16 @@ const content: GuideLocaleContent = {
     "newtab-bookmarks-shortcuts": {
       pageTitle: "Atalhos e favoritos na nova guia: adicione sites, três layouts | Ajuda do Lumno",
       pageDescription:
-        "Adicione seus sites de sempre como atalhos na nova guia do Lumno, escolha os ícones, agrupe-os em pastas e veja seus favoritos como pastas, lista aninhada ou barra no topo.",
-      keywords: ["atalhos da nova guia", "favoritos na nova guia", "barra de favoritos do Chrome", "pastas de favoritos"],
+        "Adicione seus sites de sempre como atalhos na nova guia do Lumno, escolha os ícones, agrupe-os em pastas e veja seus favoritos como pastas, lista aninhada ou barra no topo, com quantas fileiras quiser ou sem exibi-los.",
+      keywords: ["atalhos da nova guia", "favoritos na nova guia", "barra de favoritos do Chrome", "pastas de favoritos", "ocultar favoritos na nova guia"],
       title: "Atalhos e favoritos",
       navTitle: "Atalhos e favoritos",
     },
     "newtab-frequent-sites": {
       pageTitle: "Sites frequentes e cartões de progresso: fixe sites e não perca o episódio | Ajuda do Lumno",
       pageDescription:
-        "A nova guia do Lumno mostra seus sites mais visitados ou recentes. Fixe até três; fixe uma série ou um romance em capítulos e o cartão acompanha você até o próximo episódio ou capítulo.",
-      keywords: ["sites mais visitados na nova guia", "acompanhar séries", "progresso de web novel", "fixar sites"],
+        "A nova guia do Lumno mostra seus sites mais visitados ou recentes. Fixe até três; fixe uma série ou um romance em capítulos e o cartão acompanha você até o próximo episódio ou capítulo. Mostre uma ou duas fileiras de cartões, ou desative-os.",
+      keywords: ["sites mais visitados na nova guia", "acompanhar séries", "progresso de web novel", "fixar sites", "ocultar cartões na nova guia"],
       title: "Sites frequentes e cartões de progresso",
       navTitle: "Sites frequentes e progresso",
     },

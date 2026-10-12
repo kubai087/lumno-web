@@ -413,25 +413,106 @@ const scenes = {
     await pickOption(page, "#x-nt-wallpaper-effect", 0);
     await page.close();
   },
+  // The bookmarks area at rest, then each layout with the first folder open. A folder nested in the
+  // first one, put there for the layout shots only, shows that both layouts go more than one level deep.
   async "nt-bookmarks"() {
+    const BOOKMARKS = "#_x_extension_newtab_bookmarks_2024_unique_";
+    const BOOKMARK_COUNT_KEY = "_x_extension_bookmark_count_2024_unique_";
+    const BOOKMARK_COLUMNS_KEY = "_x_extension_bookmark_columns_2024_unique_";
+    // At rest: the pointer over the first folder shows the sites inside it.
+    const overview = await openNewtab();
+    await overview.locator(`${BOOKMARKS} [class*='folder']`).first().hover().catch(() => {});
+    await sleep(900);
+    await shot("nt-bookmarks", overview, await boxOf(overview, [BOOKMARKS]));
+    await overview.close();
+    const subfolder = cfg.bookmarkSubfolder;
+    for (const child of subfolder ? subfolder.children : []) await (await visit(child.url)).close();
+    const subfolderId = subfolder
+      ? await sw.evaluate(async ({ parentTitle, title, children }) => {
+          const [bar] = (await chrome.bookmarks.getTree())[0].children;
+          const parent = (await chrome.bookmarks.getChildren(bar.id)).find((node) => node.title === parentTitle);
+          const node = await chrome.bookmarks.create({ parentId: parent.id, title, index: 0 });
+          for (const child of children) await chrome.bookmarks.create({ parentId: node.id, ...child });
+          return node.id;
+        }, { parentTitle: cfg.bookmarks[0].title, ...subfolder })
+      : null;
+    const { [BOOKMARK_COUNT_KEY]: bookmarkCount, [BOOKMARK_COLUMNS_KEY]: bookmarkColumns } = await sw.evaluate(
+      async (keys) => chrome.storage.sync.get(keys),
+      [BOOKMARK_COUNT_KEY, BOOKMARK_COLUMNS_KEY],
+    );
     for (const [index, mode] of ["folder", "list", "top"].entries()) {
+      // The list shot has one row of four: the menus open over empty space instead of half-covering a
+      // card, and the open folder keeps room for its name beside the site icons it shows while open.
+      await setPrefs(
+        mode === "list"
+          ? { [BOOKMARK_COUNT_KEY]: 4, [BOOKMARK_COLUMNS_KEY]: 4 }
+          : { [BOOKMARK_COUNT_KEY]: bookmarkCount ?? 8, [BOOKMARK_COLUMNS_KEY]: bookmarkColumns ?? 6 },
+      );
       const page = await openNewtab();
       await pickOption(page, "#_x_extension_newtab_bookmark_mode_2026_unique_", index);
       await page.mouse.move(5, 5);
       await sleep(900);
       if (mode === "top") {
         await shot(`nt-bookmarks-${mode}`, page, await boxOf(page, ["[class*='topbar']", "#_x_extension_newtab_wordmark_2026_unique_", "#_x_extension_newtab_root_2024_unique_", "#_x_extension_newtab_shortcuts_2026_unique_"]));
-      } else {
-        // Open the first folder so the layout shows what it does.
-        await page.locator("#_x_extension_newtab_bookmarks_2024_unique_ [class*='folder']").first().hover().catch(() => {});
-        await sleep(900);
-        await shot(`nt-bookmarks-${mode}`, page, await boxOf(page, ["#_x_extension_newtab_bookmarks_2024_unique_"]));
+        await page.close();
+        continue;
       }
+      await page.locator(`${BOOKMARKS} [class*='folder']`).first().click().catch(() => {});
+      await sleep(1200);
+      if (mode === "list") {
+        // The menu hangs over the site cards; hide them (not their space) so it reads on its own.
+        await page.addStyleTag({ content: "#_x_extension_newtab_bottom_dock_scroller_2024_unique_ > section:not(#_x_extension_newtab_bookmarks_2024_unique_) { visibility: hidden !important; }" });
+        if (subfolder) {
+          await page.locator(".x-nt-bookmark-cascade-level").first().getByText(subfolder.title, { exact: true }).hover().catch(() => {});
+          await sleep(1200);
+        }
+        await page.waitForFunction(() => [...document.images].every((img) => img.complete), null, { timeout: 8000 }).catch(() => {});
+      } else {
+        // Inside the folder; the pointer leaves so no tooltip covers the cards.
+        await page.mouse.move(5, 5);
+        await sleep(900);
+      }
+      await shot(`nt-bookmarks-${mode}`, page, await boxOf(page, [BOOKMARKS, ".x-nt-bookmark-cascade-level"]));
       await page.close();
     }
+    await setPrefs({ [BOOKMARK_COUNT_KEY]: bookmarkCount ?? 8, [BOOKMARK_COLUMNS_KEY]: bookmarkColumns ?? 6 });
+    if (subfolderId) await sw.evaluate((id) => chrome.bookmarks.removeTree(id), subfolderId);
     const reset = await openNewtab();
     await pickOption(reset, "#_x_extension_newtab_bookmark_mode_2026_unique_", 0);
     await reset.close();
+  },
+  // Settings → Appearance → New Tab: bookmark rows (0 hides them), bookmarks per row, folder icons, site cards.
+  async "nt-layout-settings"() {
+    const page = await ctx.newPage();
+    await page.goto(`${extBase}src/options/options.html`);
+    await sleep(2000);
+    await page.click("._x_extension_settings_tab_button_2024_unique_[data-tab='appearance']");
+    await sleep(1200);
+    await page.locator("#_x_extension_bookmark_rows_setting_row_2026_unique_").evaluate((row) => row.scrollIntoView({ block: "center" }));
+    await sleep(900);
+    // Only these rows: the ones around them are hidden, and the picture ends at the panel's own edges.
+    const box = await page.evaluate((pad) => {
+      const first = document.getElementById("_x_extension_bookmark_rows_setting_row_2026_unique_");
+      const last = document.getElementById("_x_extension_recent_count_control_2026_unique_").closest("._x_extension_setting_row_2024_unique_");
+      let inside = false;
+      for (const row of first.parentElement.children) {
+        if (row === first) inside = true;
+        if (!inside) row.style.visibility = "hidden";
+        if (row === last) inside = false;
+      }
+      let panel = first.parentElement;
+      while (panel.parentElement && getComputedStyle(panel).backgroundColor === "rgba(0, 0, 0, 0)") panel = panel.parentElement;
+      const edges = panel.getBoundingClientRect();
+      return {
+        // Two pixels in, past the panel's border.
+        left: edges.left + pad + 2,
+        top: first.getBoundingClientRect().top,
+        right: edges.right - pad - 2,
+        bottom: last.getBoundingClientRect().bottom,
+      };
+    }, PAD);
+    await shot("nt-layout-settings", page, box);
+    await page.close();
   },
   async "nt-shortcuts"() {
     const page = await openNewtab();

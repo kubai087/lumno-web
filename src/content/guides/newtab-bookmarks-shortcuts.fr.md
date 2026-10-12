@@ -17,7 +17,8 @@ La rangée d'icônes sous le champ de recherche correspond à vos raccourcis. Lo
 
 - Faites un clic droit sur un raccourci pour le modifier ou le supprimer. Si vous en supprimez un par erreur, utilisez le raccourci clavier indiqué dans la notification pour annuler.
 - Faites glisser les raccourcis pour les réorganiser. Déposez-en un sur vos favoris pour le transformer en favori.
-- Le nombre de raccourcis par rangée, la taille des icônes, l'espacement, l'effet d'agrandissement du Dock et le bouton « + » se règlent dans les réglages de Lumno, sous Appearance → Shortcuts.
+- Le nombre de raccourcis par rangée, la taille des icônes, l'espacement, l'effet d'agrandissement du Dock et le bouton « + » se règlent dans les réglages de Lumno, sous Appearance → New Tab.
+- Si vous n'utilisez pas les raccourcis, désactivez Shortcuts au même endroit : la rangée d'icônes sous le champ de recherche disparaît.
 
 ## Dossiers de raccourcis {#shortcut-folders}
 
@@ -33,26 +34,48 @@ Quand vos raccourcis s'accumulent, regroupez-les en dossiers, comme les apps sur
 
 ## Favoris {#bookmarks}
 
-La zone des favoris affiche le contenu de la barre de favoris de votre navigateur. Survolez un dossier pour afficher les pages qu'il contient.
+La zone des favoris affiche le contenu de la barre de favoris de votre navigateur. Lorsque vous survolez un dossier, sa carte affiche les icônes de quelques sites qu'il contient.
 
-![La zone des favoris du nouvel onglet : des dossiers comme Reference, Design guidelines et Competitors, plus des favoris ChatGPT et GitHub](nt-bookmarks-folder "Vue en dossiers sur plusieurs niveaux")
+![La zone des favoris du nouvel onglet : des dossiers comme Reference, Design guidelines et Competitors, plus des favoris ChatGPT et GitHub. Le dossier Reference survolé affiche les icônes des sites qu'il contient](nt-bookmarks "La zone des favoris")
 
-### Dispositions des favoris
-
-Cliquez sur « ··· » en haut à droite de la zone des favoris pour changer de disposition :
-
-- Vue en dossiers sur plusieurs niveaux : les dossiers s'affichent sous forme de cartes et s'ouvrent niveau par niveau au survol.
-- Vue en liste sur plusieurs niveaux : le contenu des dossiers s'affiche sous forme de menus imbriqués.
-- Barre de favoris en haut : les favoris s'affichent sur une rangée en haut de la page, comme la barre de favoris du navigateur.
-
-![La disposition barre de favoris en haut, avec les dossiers alignés en haut du nouvel onglet](nt-bookmarks-top "Barre de favoris en haut")
-
-Avec la barre de favoris en haut, vous pouvez également choisir l'arrière-plan : brume adaptative, verre clair, transparent ou une couleur de votre choix.
-
-### Autres réglages
-
-- Si vous avez beaucoup de favoris, faites-les défiler avec les flèches en haut à droite ou modifiez le nombre de rangées affichées dans les réglages.
 - Faites un clic droit sur un dossier pour changer sa couleur. Le dossier prend également cette couleur dans les menus.
 - Faites un clic droit sur un dossier et choisissez « Open in new tab group » pour ouvrir toutes ses pages d'un coup, réunies dans un même groupe d'onglets.
 - Cliquez sur l'icône des favoris pour ouvrir le gestionnaire de favoris du navigateur.
 - Par défaut, les raccourcis et les favoris s'ouvrent dans l'onglet actuel. Pour les ouvrir dans un nouvel onglet, activez-les un par un dans les réglages de Lumno, sous General → New Tab Settings → Open in a new tab. Un clic en maintenant `⌘` ou un clic du bouton central les ouvre toujours en arrière-plan.
+
+## Dispositions des favoris {#bookmark-layouts}
+
+Cliquez sur « ··· » en haut à droite de la zone des favoris pour choisir l'une des trois dispositions.
+
+### Vue en dossiers sur plusieurs niveaux
+
+La disposition par défaut. Les dossiers et les favoris s'affichent sous forme de cartes. Cliquez sur un dossier pour l'ouvrir sur place : le titre indique où vous vous trouvez, par exemple « Bookmarks / Reference ». Cliquez sur « Bookmarks » pour remonter d'un niveau.
+
+![Vue en dossiers sur plusieurs niveaux avec le dossier Reference ouvert : le titre indique « Bookmarks / Reference », au-dessus d'un sous-dossier CSS layout et de deux favoris](nt-bookmarks-folder "Vue en dossiers : un dossier s'ouvre sur place")
+
+### Vue en liste sur plusieurs niveaux
+
+Les cartes restent en place. Cliquez sur un dossier pour l'ouvrir sous forme de menu ; les sous-dossiers s'ouvrent ensuite vers la droite. Vous pouvez ainsi parcourir des dossiers profondément imbriqués sans quitter la page.
+
+![Vue en liste sur plusieurs niveaux : un clic sur le dossier Reference ouvre un menu, et le sous-dossier CSS layout survolé s'ouvre vers la droite avec web.dev et Can I use](nt-bookmarks-list "Vue en liste : les menus s'ouvrent niveau par niveau")
+
+### Barre de favoris en haut
+
+Les favoris s'affichent sur une rangée en haut de la page, comme la barre de favoris du navigateur. Les dossiers de la barre s'ouvrent eux aussi sous forme de menus.
+
+![La disposition barre de favoris en haut, avec les dossiers alignés en haut du nouvel onglet](nt-bookmarks-top "Barre de favoris en haut")
+
+Avec la barre de favoris en haut, cliquez sur « ··· » à l'extrémité droite de la barre pour choisir son arrière-plan : brume adaptative, verre clair, transparent ou une couleur de votre choix.
+
+## Nombre de rangées et masquage des favoris {#bookmark-rows}
+
+Pour choisir le nombre de rangées de favoris et le nombre de favoris par rangée, ouvrez les réglages de Lumno, sous Appearance → New Tab.
+
+![Quatre réglages de Lumno : Bookmark rows, Bookmarks per row, Show Icons Inside Bookmark Folders et Site Cards](nt-layout-settings "Réglages des favoris sous Appearance → New Tab")
+
+- Bookmark rows : de 0 à 8 rangées, 2 par défaut. Si tous vos favoris ne tiennent pas, faites-les défiler avec les flèches en haut à droite de la zone des favoris.
+- Masquer les favoris : faites glisser Bookmark rows sur 0. Le nouvel onglet n'affiche plus vos favoris, et la barre de favoris en haut est également masquée. Les favoris de votre navigateur ne sont pas modifiés, et vous pouvez les réafficher à tout moment.
+- Bookmarks per row : de 4 à 8, 6 par défaut. Il s'agit du maximum lorsque la fenêtre est assez large ; une fenêtre plus étroite en affiche moins.
+- Show Icons Inside Bookmark Folders : désactivez cette option pour ne plus afficher les icônes des sites au survol d'un dossier.
+
+Les cartes de sites en bas du nouvel onglet se règlent aussi à cet endroit. Pour en savoir plus, consultez [Sites fréquents et cartes de progression](../newtab-frequent-sites/#card-rows).

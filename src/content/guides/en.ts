@@ -181,16 +181,16 @@ const content: GuideLocaleContent = {
     "newtab-bookmarks-shortcuts": {
       pageTitle: "New tab shortcuts and bookmarks: add sites, three bookmark layouts | Lumno Help",
       pageDescription:
-        "Add your go-to sites as shortcuts on Lumno's new tab, pick their icons, stack them into folders, and browse your bookmarks as folders, a nested list or a top bar.",
-      keywords: ["new tab shortcuts", "new tab bookmarks", "Chrome bookmarks bar", "bookmark folders"],
+        "Add your go-to sites as shortcuts on Lumno's new tab, pick their icons, stack them into folders, and browse your bookmarks as folders, a nested list or a top bar, with as many rows as you like or none at all.",
+      keywords: ["new tab shortcuts", "new tab bookmarks", "Chrome bookmarks bar", "bookmark folders", "hide new tab bookmarks"],
       title: "Shortcuts and bookmarks",
       navTitle: "Shortcuts & bookmarks",
     },
     "newtab-frequent-sites": {
       pageTitle: "Frequent sites and progress cards: pin sites, keep your place in a show | Lumno Help",
       pageDescription:
-        "Lumno's new tab shows your most visited or recent sites. Pin up to three; pin a show or a serialized novel and the card follows you to the next episode or chapter.",
-      keywords: ["new tab most visited", "track show progress", "web novel progress", "pin sites"],
+        "Lumno's new tab shows your most visited or recent sites. Pin up to three; pin a show or a serialized novel and the card follows you to the next episode or chapter. Show one or two rows of cards, or turn them off.",
+      keywords: ["new tab most visited", "track show progress", "web novel progress", "pin sites", "hide new tab site cards"],
       title: "Frequent sites and progress cards",
       navTitle: "Frequent sites & progress cards",
     },

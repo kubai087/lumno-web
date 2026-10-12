@@ -93,29 +93,31 @@ const {
       contactItems={contactItems}
       menuLabel={content.navMoreMenuAria}
     />
-    <LanguageMenu
-      currentLabel={getLocaleLabel(locale)}
-      toggleAriaLabel={content.languageSelectAria}
-      hrefs={routeLanguageMap}
-      iconOnly
-    />
-    <div class="top-nav-install-slot">
-      <InstallMenu
-        label={content.installLabel}
-        shortLabel={content.installLabelShort}
-        ariaLabel={content.installAria}
-        chromeUrl={CHROME_STORE_URL}
-        edgeUrl={EDGE_STORE_URL}
-        firefoxUrl={FIREFOX_STORE_URL}
-        chromeLabel={content.installChromeStoreLabel}
-        edgeLabel={content.installEdgeStoreLabel}
-        firefoxLabel={content.installFirefoxStoreLabel}
-        chromeVersion={chromeStoreVersion}
-        edgeVersion={edgeStoreVersion}
-        firefoxVersion={firefoxStoreVersion}
-        chromeRecommendation={content.installChromeRecommendation}
-        chromeRecommendationNote={content.installChromeRecommendationNote}
+    <div class="top-nav-tools">
+      <LanguageMenu
+        currentLabel={getLocaleLabel(locale)}
+        toggleAriaLabel={content.languageSelectAria}
+        hrefs={routeLanguageMap}
+        iconOnly
       />
+      <div class="top-nav-install-slot">
+        <InstallMenu
+          label={content.installLabel}
+          shortLabel={content.installLabelShort}
+          ariaLabel={content.installAria}
+          chromeUrl={CHROME_STORE_URL}
+          edgeUrl={EDGE_STORE_URL}
+          firefoxUrl={FIREFOX_STORE_URL}
+          chromeLabel={content.installChromeStoreLabel}
+          edgeLabel={content.installEdgeStoreLabel}
+          firefoxLabel={content.installFirefoxStoreLabel}
+          chromeVersion={chromeStoreVersion}
+          edgeVersion={edgeStoreVersion}
+          firefoxVersion={firefoxStoreVersion}
+          chromeRecommendation={content.installChromeRecommendation}
+          chromeRecommendationNote={content.installChromeRecommendationNote}
+        />
+      </div>
     </div>
   </nav>
 </header>
@@ -502,6 +504,12 @@ const {
     margin-right: 1px;
   }
 
+  .top-nav-tools {
+    display: flex;
+    align-items: center;
+    gap: var(--top-nav-action-gap);
+  }
+
   .top-nav-ghost-links {
     --lumno-panel-text: var(--text-main);
     --lumno-panel-subtext: #68717c;
@@ -598,6 +606,50 @@ const {
 
   .lang-control .lumno-settings-select-menu {
     min-width: 180px;
+  }
+
+  /*
+   * The glass pill only needs room for what it holds, so it hugs its content
+   * instead of spanning the page column. Three columns: the wordmark and the
+   * tools sit in two equal outer tracks (each as wide as the wider of the two),
+   * so the links stay on the page's centre line, where they were while the bar
+   * rested at the top. A narrow window simply caps it at the column.
+   */
+  @media (min-width: 901px) {
+    body.has-nav-install .top-nav:not([data-nav-surface="hero"]) {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      column-gap: 40px;
+      width: fit-content;
+      max-width: min(
+        calc(100% - var(--home-gutter) * 2 - var(--removed-body-scroll-bar-size, 0px)),
+        var(--home-section-width)
+      );
+    }
+
+    body.has-nav-install .top-nav:not([data-nav-surface="hero"]) .top-nav-brand {
+      justify-self: start;
+    }
+
+    body.has-nav-install .top-nav:not([data-nav-surface="hero"]) .top-nav-actions {
+      grid-column: 2 / 4;
+      display: grid;
+      grid-template-columns: subgrid;
+      /* Take the bar's gap; the actions' own 8px would push the links off centre. */
+      column-gap: normal;
+      align-items: center;
+    }
+
+    body.has-nav-install .top-nav:not([data-nav-surface="hero"]) .top-nav-ghost-links {
+      position: static;
+      grid-column: 1;
+      transform: none;
+    }
+
+    body.has-nav-install .top-nav:not([data-nav-surface="hero"]) .top-nav-tools {
+      grid-column: 2;
+      justify-self: end;
+    }
   }
 
   /* Below this the four entries (longest in English) would run into the language and install buttons. */

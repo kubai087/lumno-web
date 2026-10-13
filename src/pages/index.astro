@@ -545,6 +545,14 @@ import LanguageScrollRestore from "../components/LanguageScrollRestore.astro";
         container-type: inline-size;
       }
 
+      /*
+       * Google renders with a viewport stretched far taller than any screen, so a
+       * screen-tall hero centred the copy below the edge of its page screenshot.
+       */
+      html[data-crawler] .hero-section {
+        min-height: auto;
+      }
+
       .hero-copy {
         position: relative;
         z-index: var(--home-z-content);

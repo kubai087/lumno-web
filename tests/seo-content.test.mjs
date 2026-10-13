@@ -228,6 +228,9 @@ test("homepage shows search crawlers the settled page instead of the intro and s
   const reveal = readSource("src/scripts/home-reveal.ts");
   assert.match(reveal, /&& !root\.hasAttribute\("data-crawler"\)/);
 
+  // Google's renderer stretches the viewport, which would push a screen-tall hero's copy off its screenshot.
+  assert.match(source, /html\[data-crawler\] \.hero-section \{\s*min-height: auto;/);
+
   // The New Tab heading fades in on view, which a crawler never scrolls to.
   const parallax = readSource("src/components/ui/hero-parallax.tsx");
   assert.match(parallax, /document\.documentElement\.hasAttribute\("data-crawler"\)\s*\|\| \(header/);

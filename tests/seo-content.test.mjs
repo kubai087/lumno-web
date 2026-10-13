@@ -215,3 +215,20 @@ test("analytics tags landings from AI assistants for GEO reporting", () => {
     assert.match(source, new RegExp(`\\["${host}",`), host);
   }
 });
+
+test("homepage shows search crawlers the settled page instead of the intro and scroll entrance", () => {
+  const source = readSource("src/pages/index.astro");
+  // Crawlers run JS with empty storage, so without this every crawl renders mid-intro with the copy hidden.
+  assert.match(source, /const isSearchCrawler = \/googlebot\|google-inspectiontool\|bingbot[^\n]*\.test\(navigator\.userAgent\)/);
+  assert.match(source, /let playHomeIntro = !isSearchCrawler;/);
+  assert.match(source, /if \(isSearchCrawler\) document\.documentElement\.setAttribute\("data-crawler", ""\)/);
+  // Speed tests should keep measuring what visitors see.
+  assert.doesNotMatch(source, /const isSearchCrawler = [^\n]*lighthouse/i);
+
+  const reveal = readSource("src/scripts/home-reveal.ts");
+  assert.match(reveal, /&& !root\.hasAttribute\("data-crawler"\)/);
+
+  // The New Tab heading fades in on view, which a crawler never scrolls to.
+  const parallax = readSource("src/components/ui/hero-parallax.tsx");
+  assert.match(parallax, /document\.documentElement\.hasAttribute\("data-crawler"\)\s*\|\| \(header/);
+});

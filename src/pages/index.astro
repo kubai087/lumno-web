@@ -221,14 +221,22 @@ import LanguageScrollRestore from "../components/LanguageScrollRestore.astro";
       // straight into the settled page. Every view restarts the window; ?intro forces a replay.
       const HOME_INTRO_SEEN_KEY = "lumno:home-intro-seen-at";
       const HOME_INTRO_QUIET_MS = 30 * 60 * 1000;
-      let playHomeIntro = true;
-      try {
-        const seenAt = Number(localStorage.getItem(HOME_INTRO_SEEN_KEY)) || 0;
-        const forced = new URLSearchParams(location.search).has("intro");
-        playHomeIntro = forced || Date.now() - seenAt > HOME_INTRO_QUIET_MS;
-        localStorage.setItem(HOME_INTRO_SEEN_KEY, String(Date.now()));
-        localStorage.removeItem("lumno:home-intro-played-at");
-      } catch {}
+      // Search crawlers run this script too, always with empty storage, so every crawl would land
+      // mid-intro with the copy hidden. They get the settled page instead, and the scroll entrance
+      // (scripts/home-reveal.ts) stays off for them. Lighthouse is left out so speed tests keep
+      // measuring what visitors see.
+      const isSearchCrawler = /googlebot|google-inspectiontool|bingbot|bingpreview|duckduckbot|applebot|yandexbot|petalbot|slurp|spider|crawler/i.test(navigator.userAgent);
+      if (isSearchCrawler) document.documentElement.setAttribute("data-crawler", "");
+      let playHomeIntro = !isSearchCrawler;
+      if (playHomeIntro) {
+        try {
+          const seenAt = Number(localStorage.getItem(HOME_INTRO_SEEN_KEY)) || 0;
+          const forced = new URLSearchParams(location.search).has("intro");
+          playHomeIntro = forced || Date.now() - seenAt > HOME_INTRO_QUIET_MS;
+          localStorage.setItem(HOME_INTRO_SEEN_KEY, String(Date.now()));
+          localStorage.removeItem("lumno:home-intro-played-at");
+        } catch {}
+      }
       document.documentElement.setAttribute(playHomeIntro ? "data-home-intro-js" : "data-home-intro-skip", "");
       // Shortcut keycaps render both spellings; show Ctrl/Shift instead of ⌘/⇧ off Apple platforms.
       const platformHint = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || "";

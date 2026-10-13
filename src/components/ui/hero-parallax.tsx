@@ -87,10 +87,14 @@ export function HeroParallax({
   const isHeaderInView = useInView(headerRef, { once: true, amount: 0.4 });
   // A late hydration (a fast fling past the section) would otherwise find the copy
   // already scrolled by, never see it enter, and leave it hidden for good.
+  // Search crawlers never scroll to it at all (html[data-crawler], set by the homepage head script).
   const [isHeaderPassed, setIsHeaderPassed] = useState(false);
   useEffect(() => {
     const header = headerRef.current;
-    if (header && header.getBoundingClientRect().top < window.innerHeight * 0.6) {
+    if (
+      document.documentElement.hasAttribute("data-crawler")
+      || (header && header.getBoundingClientRect().top < window.innerHeight * 0.6)
+    ) {
       setIsHeaderPassed(true);
     }
   }, []);

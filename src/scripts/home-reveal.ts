@@ -58,8 +58,11 @@ const start = () => {
 const introFinished = () =>
   document.body.dataset.homeIntro === "complete" || !root.hasAttribute("data-home-intro-js");
 
+// Crawlers never scroll, so anything waiting for its entrance would stay transparent for them
+// (html[data-crawler] is set by the homepage head script).
 if (
   targets.length
+  && !root.hasAttribute("data-crawler")
   && typeof IntersectionObserver === "function"
   && !window.matchMedia("(prefers-reduced-motion: reduce)").matches
 ) {

@@ -172,13 +172,15 @@ const guideHref = (id: HomeUtilityId) => {
     text-decoration: none;
   }
 
+  /* A box one line tall, centring the chevron on the line it ends, for CJK and Latin titles alike. */
   .utilities__link i {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    height: 1lh;
     margin-left: 2px;
     color: var(--text-soft, #89919a);
-    font-size: 1.05em;
     font-weight: 400;
-    vertical-align: -0.12em;
+    vertical-align: top;
     transition: transform 180ms ease, color 180ms ease;
   }
 

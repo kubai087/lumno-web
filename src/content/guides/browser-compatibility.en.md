@@ -8,7 +8,7 @@ Lumno is built for Chromium browsers and also has a Firefox version. The table b
 | Microsoft Edge | Yes | Yes | Edge Add-ons |
 | Brave, [Arc](https://arc.net/), Vivaldi, Opera | Yes | Yes | Chrome Web Store |
 | Dia | Yes | Not yet | Chrome Web Store |
-| Firefox, [Zen](https://zen-browser.app/) and others | Partly | Yes | See below |
+| Firefox, [Zen](https://zen-browser.app/) and others | Partly | Yes | Firefox Add-ons |
 | Safari | No | No | — |
 
 Browsers on phones and tablets aren't supported yet.
@@ -21,7 +21,7 @@ If the shortcut doesn't work, open the extension shortcuts page and change the s
 
 ## Firefox {#firefox}
 
-The Firefox version isn't on Firefox Add-ons yet. Once it's listed, this site will link to it. It supports Firefox 140 and later, as well as Firefox-based browsers such as Zen, LibreWolf and Floorp.
+The Firefox version is on [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/lumno-command-bar-new-tab/). It supports Firefox 140 and later, and installs the same way in Firefox-based browsers such as Zen, LibreWolf and Floorp.
 
 Because Firefox's extension APIs differ from Chromium's, some features aren't available:
 

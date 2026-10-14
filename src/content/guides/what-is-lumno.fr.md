@@ -1,4 +1,4 @@
-Lumno est une extension de navigateur gratuite et open source qui offre deux fonctions principales. Depuis n'importe quelle page, un raccourci clavier ouvre une barre de commande qui permet de rechercher dans tout votre navigateur. Lumno remplace également le nouvel onglet par une page d'accueil claire et soignée. Lumno fonctionne dans Chrome, Edge, Dia, Brave et les autres navigateurs Chromium.
+Lumno est une extension de navigateur gratuite et open source qui offre deux fonctions principales. Depuis n'importe quelle page, un raccourci clavier ouvre une barre de commande qui permet de rechercher dans tout votre navigateur. Lumno remplace également le nouvel onglet par une page d'accueil claire et soignée. Lumno fonctionne dans Chrome, Edge, Dia, Brave et les autres navigateurs Chromium, ainsi que dans Firefox et les navigateurs basés sur Firefox comme Zen.
 
 ## La barre de commande {#command-bar}
 

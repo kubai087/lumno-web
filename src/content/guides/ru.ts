@@ -43,7 +43,7 @@ const content: GuideLocaleContent = {
     "what-is-lumno": {
       pageTitle: "Что такое Lumno? Командная строка и новая вкладка с открытым кодом | Справка Lumno",
       pageDescription:
-        "Lumno — бесплатное расширение для браузера с открытым исходным кодом. Нажмите ⌘⇧K на любой странице, чтобы искать по вкладкам, закладкам и истории, искать прямо на сайтах или спросить ИИ, а новая вкладка станет спокойной и настраиваемой. Работает в Chrome, Edge, Dia и других браузерах на Chromium.",
+        "Lumno — бесплатное расширение для браузера с открытым исходным кодом. Нажмите ⌘⇧K на любой странице, чтобы искать по вкладкам, закладкам и истории, искать прямо на сайтах или спросить ИИ, а новая вкладка станет спокойной и настраиваемой. Работает в Chrome, Edge, Dia и других браузерах на Chromium, а также в Firefox.",
       keywords: ["Lumno", "командная строка браузера", "расширение палитра команд Chrome", "поиск по вкладкам", "расширение новая вкладка", "командная строка Arc"],
       title: "Что такое Lumno?",
       navTitle: "Что такое Lumno?",
@@ -51,7 +51,7 @@ const content: GuideLocaleContent = {
         { question: "Lumno бесплатный?", answer: "Да. Lumno распространяется с открытым кодом по лицензии GPL-3.0, все функции бесплатны, а аккаунт не нужен." },
         {
           question: "В каких браузерах он работает?",
-          answer: "В Chrome, Edge, Dia, Brave, Arc, Vivaldi и других браузерах на Chromium. Safari не поддерживается. Подробнее — в разделе «Совместимость с браузерами».",
+          answer: "В Chrome, Edge, Dia, Brave, Arc, Vivaldi и других браузерах на Chromium, а также в Firefox и браузерах на его основе, например Zen. Safari не поддерживается. Подробнее — в разделе «Совместимость с браузерами».",
         },
       ],
     },
@@ -80,17 +80,17 @@ const content: GuideLocaleContent = {
       navTitle: "Частые вопросы",
     },
     install: {
-      pageTitle: "Установка Lumno из Интернет-магазина Chrome или надстроек Edge | Справка Lumno",
+      pageTitle: "Установка Lumno из Интернет-магазина Chrome, надстроек Edge или дополнений Firefox | Справка Lumno",
       pageDescription:
-        "Установите Lumno из Интернет-магазина Chrome в Chrome, Dia, Brave или Arc либо из надстроек Microsoft Edge в Edge. Откроется приветственная страница, и ⌘⇧K сразу готов к работе.",
-      keywords: ["установить Lumno", "Lumno Интернет-магазин Chrome", "Lumno надстройки Edge", "установить расширение Chrome"],
+        "Установите Lumno из Интернет-магазина Chrome в Chrome, Dia, Brave или Arc, из надстроек Microsoft Edge в Edge или из дополнений Firefox в Firefox и Zen. Откроется приветственная страница, и ⌘⇧K сразу готов к работе.",
+      keywords: ["установить Lumno", "Lumno Интернет-магазин Chrome", "Lumno надстройки Edge", "Lumno дополнения Firefox", "установить расширение Chrome"],
       title: "Установка Lumno",
       navTitle: "Установка Lumno",
       faq: [
         { question: "Нужен ли аккаунт?", answer: "Нет. В Lumno нет системы аккаунтов, поэтому пользоваться им можно сразу после установки." },
         {
           question: "Как удалить Lumno?",
-          answer: "Откройте chrome://extensions (в Edge — edge://extensions), найдите Lumno и нажмите «Удалить». Настройки и изображения, которые Lumno хранил на устройстве, тоже будут удалены.",
+          answer: "Откройте chrome://extensions (в Edge — edge://extensions), найдите Lumno и нажмите «Удалить». В Firefox удалите расширение на странице about:addons. Настройки и изображения, которые Lumno хранил на устройстве, тоже будут удалены.",
         },
       ],
     },
@@ -250,7 +250,7 @@ const content: GuideLocaleContent = {
     "browser-compatibility": {
       pageTitle: "Совместимость с браузерами: Chrome, Edge, Dia, Brave, Firefox и Safari | Справка Lumno",
       pageDescription:
-        "Lumno полностью работает в Chrome, Edge, Brave, Arc, Vivaldi и других браузерах на Chromium. В Dia нет новой вкладки Lumno, в версии для Firefox не хватает нескольких функций, Safari и мобильные браузеры не поддерживаются.",
+        "Lumno полностью работает в Chrome, Edge, Brave, Arc, Vivaldi и других браузерах на Chromium. В Dia нет новой вкладки Lumno, версия для Firefox доступна в каталоге дополнений Firefox, но в ней не хватает нескольких функций, Safari и мобильные браузеры не поддерживаются.",
       keywords: ["совместимость Lumno", "расширение для Dia", "расширение для Edge", "версия для Firefox", "расширение Chromium"],
       title: "Совместимость с браузерами",
       navTitle: "Совместимость с браузерами",
@@ -265,7 +265,7 @@ const content: GuideLocaleContent = {
     },
     "ratings-reviews": {
       pageTitle: "Оценки и публикации: отзывы в Интернет-магазине Chrome и статьи | Справка Lumno",
-      pageDescription: "Оценка и отзывы о Lumno в Интернет-магазине Chrome, а также статьи о расширении.",
+      pageDescription: "Оценка и отзывы о Lumno в Интернет-магазине Chrome, страница отзывов в каталоге дополнений Firefox, а также статьи о расширении.",
       keywords: ["отзывы о Lumno", "оценка Lumno", "обзор расширения командная строка Chrome"],
       title: "Оценки и публикации",
       navTitle: "Оценки и публикации",

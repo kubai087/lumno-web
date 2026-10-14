@@ -6,8 +6,9 @@ Lumno는 무료이며 가입할 필요가 없습니다. 스토어에서 설치�
 | --- | --- |
 | Chrome, Dia, Brave, [Arc](https://arc.net/), Vivaldi, Opera | [Chrome 웹 스토어](https://chromewebstore.google.com/detail/nggfkkbmogmadfoikakkfegkoilfcfao) |
 | Microsoft Edge | [Microsoft Edge 추가 기능](https://microsoftedge.microsoft.com/addons/detail/pfbklkaefmfamjpibfiapaiihlddhchc) |
+| Firefox, [Zen](https://zen-browser.app/), LibreWolf, Floorp | [Firefox 부가 기능](https://addons.mozilla.org/firefox/addon/lumno-command-bar-new-tab/) |
 
-스토어 페이지를 열고 "Chrome에 추가" 또는 "다운로드"를 클릭한 다음, 표시되는 대화상자에서 확인하세요. Edge에서도 Chrome 웹 스토어에서 Lumno를 설치할 수 있습니다.
+스토어 페이지를 열고 "Chrome에 추가", "다운로드" 또는 "Firefox에 추가"를 클릭한 다음, 표시되는 대화상자에서 확인하세요. Edge에서도 Chrome 웹 스토어에서 Lumno를 설치할 수 있습니다.
 
 ## 설치 후 {#after-install}
 
@@ -19,10 +20,10 @@ Lumno는 무료이며 가입할 필요가 없습니다. 스토어에서 설치�
 
 ## 명령 바 사용해 보기 {#try}
 
-아무 페이지나 열고 `⌘ ⇧ K`를 누르면 명령 바가 열립니다. 몇 글자를 입력해 열린 탭과 북마크를 검색하고, `Esc`를 눌러 닫으세요.
+아무 페이지나 열고 `⌘ ⇧ K`를 누르면 명령 바가 열립니다. 몇 글자를 입력해 열린 탭과 북마크를 검색하고, `Esc`를 눌러 닫으세요. Firefox 버전의 기본 단축키는 `⌃ ⇧ K | Alt + K`입니다.
 
 단축키가 작동하지 않으면 [단축키](../keyboard-shortcuts/)의 확인 방법을 참고하세요.
 
 ## 로컬 파일에서 사용하기 {#file-access}
 
-컴퓨터에 있는 PDF 또는 HTML 파일에서 명령 바를 열려면 `chrome://extensions`에서 Lumno 세부정보를 열고 파일 URL에 대한 액세스를 허용한 다음, 파일을 새로고침하세요.
+컴퓨터에 있는 PDF 또는 HTML 파일에서 명령 바를 열려면 `chrome://extensions`에서 Lumno 세부정보를 열고 파일 URL에 대한 액세스를 허용한 다음, 파일을 새로고침하세요. Firefox는 확장 프로그램이 로컬 파일에 접근하는 것을 허용하지 않으므로, Firefox 버전에서는 이런 페이지에서 명령 바를 열 수 없습니다.

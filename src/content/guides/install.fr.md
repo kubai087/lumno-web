@@ -6,8 +6,9 @@ Lumno est gratuit, ne demande aucune inscription et peut être utilisé dès l'i
 | --- | --- |
 | Chrome, Dia, Brave, [Arc](https://arc.net/), Vivaldi, Opera | [Chrome Web Store](https://chromewebstore.google.com/detail/nggfkkbmogmadfoikakkfegkoilfcfao) |
 | Microsoft Edge | [Modules complémentaires Microsoft Edge](https://microsoftedge.microsoft.com/addons/detail/pfbklkaefmfamjpibfiapaiihlddhchc) |
+| Firefox, [Zen](https://zen-browser.app/), LibreWolf, Floorp | [Modules complémentaires Firefox](https://addons.mozilla.org/firefox/addon/lumno-command-bar-new-tab/) |
 
-Ouvrez la page de la boutique, cliquez sur « Ajouter à Chrome » ou « Obtenir », puis confirmez dans la boîte de dialogue qui s'affiche. Dans Edge, vous pouvez également installer Lumno depuis le Chrome Web Store.
+Ouvrez la page de la boutique, cliquez sur « Ajouter à Chrome », « Obtenir » ou « Ajouter à Firefox », puis confirmez dans la boîte de dialogue qui s'affiche. Dans Edge, vous pouvez également installer Lumno depuis le Chrome Web Store.
 
 ## Après l'installation {#after-install}
 
@@ -19,10 +20,10 @@ Lorsque vous ouvrez un nouvel onglet pour la première fois, Chrome peut vous de
 
 ## Essayer la barre de commande {#try}
 
-Ouvrez n'importe quelle page et appuyez sur `⌘ ⇧ K` pour ouvrir la barre de commande. Saisissez quelques lettres pour rechercher vos onglets ouverts et vos favoris, puis appuyez sur `Esc` pour la fermer.
+Ouvrez n'importe quelle page et appuyez sur `⌘ ⇧ K` pour ouvrir la barre de commande. Saisissez quelques lettres pour rechercher vos onglets ouverts et vos favoris, puis appuyez sur `Esc` pour la fermer. Dans la version Firefox, le raccourci par défaut est `⌃ ⇧ K | Alt + K`.
 
 Si rien ne se passe, consultez les vérifications décrites dans [Raccourcis clavier](../keyboard-shortcuts/).
 
 ## Utiliser Lumno dans des fichiers locaux {#file-access}
 
-Pour ouvrir la barre de commande dans des fichiers PDF ou HTML de votre ordinateur, accédez à `chrome://extensions`, ouvrez les détails de Lumno, activez « Autoriser l'accès aux URL de fichier », puis actualisez le fichier.
+Pour ouvrir la barre de commande dans des fichiers PDF ou HTML de votre ordinateur, accédez à `chrome://extensions`, ouvrez les détails de Lumno, activez « Autoriser l'accès aux URL de fichier », puis actualisez le fichier. Firefox n'autorise pas les extensions à accéder aux fichiers locaux : la version Firefox ne peut donc pas ouvrir la barre de commande sur ces pages.

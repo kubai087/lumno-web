@@ -6,6 +6,10 @@ Chrome ウェブストアでの Lumno の評価は、{{chromeRatingCount}} 件�
 
 レビューは [Chrome ウェブストアのレビューページ](https://chromewebstore.google.com/detail/nggfkkbmogmadfoikakkfegkoilfcfao/reviews)で確認できます。Lumno がお役に立った場合は、ぜひレビューをお寄せください。個人で開発している小さなプロジェクトにとって、大きな励みになります。
 
+## Firefox アドオン {#firefox-add-ons}
+
+Lumno は Firefox アドオンでも公開しています。Firefox や Zen でお使いの場合は、[Firefox アドオンのレビューページ](https://addons.mozilla.org/firefox/addon/lumno-command-bar-new-tab/reviews/)でレビューを確認したり、投稿したりできます。
+
 ## メディア掲載 {#press}
 
 いずれも中国語の記事です。

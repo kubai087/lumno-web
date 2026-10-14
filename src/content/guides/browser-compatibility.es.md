@@ -8,7 +8,7 @@ Lumno está diseñado para navegadores Chromium y también tiene una versión pa
 | Microsoft Edge | Sí | Sí | Complementos de Edge |
 | Brave, [Arc](https://arc.net/), Vivaldi, Opera | Sí | Sí | Chrome Web Store |
 | Dia | Sí | Todavía no | Chrome Web Store |
-| Firefox, [Zen](https://zen-browser.app/) y otros | En parte | Sí | Ver más abajo |
+| Firefox, [Zen](https://zen-browser.app/) y otros | En parte | Sí | Complementos de Firefox |
 | Safari | No | No | — |
 
 Los navegadores de teléfonos y tabletas todavía no son compatibles.
@@ -21,7 +21,7 @@ Si el atajo no funciona, abre la página de atajos de extensiones y cambia el á
 
 ## Firefox {#firefox}
 
-La versión para Firefox todavía no está disponible en el sitio de complementos de Firefox. Cuando se publique, este sitio incluirá el enlace. Es compatible con Firefox 140 y versiones posteriores, así como con navegadores basados en Firefox como Zen, LibreWolf y Floorp.
+La versión para Firefox está disponible en [Complementos de Firefox](https://addons.mozilla.org/firefox/addon/lumno-command-bar-new-tab/). Funciona en Firefox 140 y versiones posteriores, y también se puede instalar en navegadores basados en Firefox como Zen, LibreWolf y Floorp.
 
 Como las API de extensiones de Firefox son distintas de las de Chromium, algunas funciones no están disponibles:
 

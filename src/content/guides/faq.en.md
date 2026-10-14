@@ -4,7 +4,7 @@ Answers to the questions people ask most often on our website and in the communi
 
 ### What is the default shortcut? Can I change it?
 
-The default shortcut is `⌘ ⇧ K | ⌘ ⇧ K` on a Mac and `Ctrl + Shift + K` on Windows and Linux. You can change it at `chrome://extensions/shortcuts`. See [Keyboard shortcuts](../keyboard-shortcuts/#change).
+The default shortcut is `⌘ ⇧ K | ⌘ ⇧ K` on a Mac and `Ctrl + Shift + K` on Windows and Linux. You can change it at `chrome://extensions/shortcuts`. See [Keyboard shortcuts](../keyboard-shortcuts/#change). The Firefox version uses a different default; see [Browser compatibility](../browser-compatibility/#firefox).
 
 ### What if the shortcut doesn't work?
 
@@ -36,7 +36,7 @@ This happens when "Automatically focus input" is on: to place your cursor direct
 
 ### Which browsers are supported?
 
-Lumno supports Chromium browsers such as Chrome, Edge, Dia, Brave and Vivaldi. Safari isn't supported yet. In Dia, the command bar works, but Lumno's new tab isn't available yet. See [Browser compatibility](../browser-compatibility/).
+Lumno supports Chromium browsers such as Chrome, Edge, Dia, Brave and Vivaldi, plus Firefox 140 or later and Firefox-based browsers like Zen. Safari isn't supported yet. In Dia, the command bar works, but Lumno's new tab isn't available yet. Firefox doesn't support Web clip or Auto picture-in-picture. See [Browser compatibility](../browser-compatibility/).
 
 ## Data and sync {#data}
 

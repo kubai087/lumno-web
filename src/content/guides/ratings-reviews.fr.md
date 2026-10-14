@@ -6,6 +6,10 @@ Sur le Chrome Web Store, Lumno obtient la note de {{chromeRating}} sur 5, sur la
 
 Vous pouvez lire les avis sur la [page des avis du Chrome Web Store](https://chromewebstore.google.com/detail/nggfkkbmogmadfoikakkfegkoilfcfao/reviews). Si Lumno vous a été utile, n'hésitez pas à laisser un avis : c'est un soutien précieux pour un petit projet indépendant.
 
+## Modules complémentaires Firefox {#firefox-add-ons}
+
+Lumno est également disponible sur les modules complémentaires Firefox. Si vous utilisez Lumno dans Firefox ou Zen, vous pouvez lire ou laisser un avis sur la [page des avis des modules complémentaires Firefox](https://addons.mozilla.org/firefox/addon/lumno-command-bar-new-tab/reviews/).
+
 ## Presse {#press}
 
 Les deux articles sont rédigés en chinois.

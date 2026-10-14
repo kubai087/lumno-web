@@ -4,7 +4,7 @@
 
 ### 預設快速鍵是什麼？可以修改嗎？
 
-在 Mac 上，預設快速鍵為 `⌘ ⇧ K | ⌘ ⇧ K`；在 Windows 和 Linux 上為 `Ctrl + Shift + K`。快速鍵可以在 `chrome://extensions/shortcuts` 中修改，詳見[快速鍵](../keyboard-shortcuts/#change)。
+在 Mac 上，預設快速鍵為 `⌘ ⇧ K | ⌘ ⇧ K`；在 Windows 和 Linux 上為 `Ctrl + Shift + K`。快速鍵可以在 `chrome://extensions/shortcuts` 中修改，詳見[快速鍵](../keyboard-shortcuts/#change)。Firefox 版的預設快速鍵不同，詳見[瀏覽器相容性](../browser-compatibility/#firefox)。
 
 ### 按下快速鍵沒有反應怎麼辦？
 
@@ -36,7 +36,7 @@
 
 ### 支援哪些瀏覽器？
 
-支援 Chrome、Edge、Dia、Brave、Vivaldi 等 Chromium 核心的瀏覽器，暫不支援 Safari。在 Dia 中可以使用命令列，但新分頁暫時無法使用。詳見[瀏覽器相容性](../browser-compatibility/)。
+支援 Chrome、Edge、Dia、Brave、Vivaldi 等 Chromium 核心的瀏覽器，以及 Firefox 140 以上版本和 Zen 等以 Firefox 為基礎的瀏覽器，暫不支援 Safari。在 Dia 中可以使用命令列，但新分頁暫時無法使用；Firefox 中無法使用網頁剪裁和影片自動子母畫面。詳見[瀏覽器相容性](../browser-compatibility/)。
 
 ## 資料與同步 {#data}
 

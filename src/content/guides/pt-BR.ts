@@ -43,7 +43,7 @@ const content: GuideLocaleContent = {
     "what-is-lumno": {
       pageTitle: "O que é o Lumno? Barra de comandos e nova guia de código aberto | Ajuda do Lumno",
       pageDescription:
-        "O Lumno é uma extensão de navegador gratuita e de código aberto. Pressione ⌘⇧K em qualquer página para pesquisar suas guias, favoritos e histórico, pesquisar dentro de sites ou perguntar à IA, e tenha uma nova guia tranquila e personalizável. Funciona no Chrome, Edge, Dia e outros navegadores Chromium.",
+        "O Lumno é uma extensão de navegador gratuita e de código aberto. Pressione ⌘⇧K em qualquer página para pesquisar suas guias, favoritos e histórico, pesquisar dentro de sites ou perguntar à IA, e tenha uma nova guia tranquila e personalizável. Funciona no Chrome, Edge, Dia e outros navegadores Chromium, e no Firefox.",
       keywords: ["Lumno", "barra de comandos do navegador", "extensão paleta de comandos Chrome", "pesquisar guias", "extensão nova guia", "barra de comandos do Arc"],
       title: "O que é o Lumno?",
       navTitle: "O que é o Lumno?",
@@ -51,7 +51,7 @@ const content: GuideLocaleContent = {
         { question: "O Lumno é gratuito?", answer: "Sim. O Lumno é de código aberto sob a licença GPL-3.0, todos os recursos são gratuitos e você não precisa criar conta." },
         {
           question: "Em quais navegadores ele funciona?",
-          answer: "Chrome, Edge, Dia, Brave, Arc, Vivaldi e outros navegadores Chromium. O Safari não é compatível. Veja Compatibilidade com navegadores.",
+          answer: "Chrome, Edge, Dia, Brave, Arc, Vivaldi e outros navegadores Chromium, além do Firefox e de navegadores baseados no Firefox, como o Zen. O Safari não é compatível. Veja Compatibilidade com navegadores.",
         },
       ],
     },
@@ -80,17 +80,17 @@ const content: GuideLocaleContent = {
       navTitle: "Perguntas frequentes",
     },
     install: {
-      pageTitle: "Instale o Lumno pela Chrome Web Store ou pelos Complementos do Edge | Ajuda do Lumno",
+      pageTitle: "Instale o Lumno pela Chrome Web Store, pelos Complementos do Edge ou do Firefox | Ajuda do Lumno",
       pageDescription:
-        "Instale o Lumno pela Chrome Web Store no Chrome, Dia, Brave ou Arc, ou pelos Complementos do Microsoft Edge no Edge. Uma página de boas-vindas abre e o ⌘⇧K já está pronto para usar.",
-      keywords: ["instalar Lumno", "Lumno Chrome Web Store", "Lumno Complementos do Edge", "instalar extensão do Chrome"],
+        "Instale o Lumno pela Chrome Web Store no Chrome, Dia, Brave ou Arc, pelos Complementos do Microsoft Edge no Edge, ou pelos Complementos do Firefox no Firefox e no Zen. Uma página de boas-vindas abre e o ⌘⇧K já está pronto para usar.",
+      keywords: ["instalar Lumno", "Lumno Chrome Web Store", "Lumno Complementos do Edge", "Lumno Complementos do Firefox", "instalar extensão do Chrome"],
       title: "Instalar o Lumno",
       navTitle: "Instalar o Lumno",
       faq: [
         { question: "Preciso de uma conta?", answer: "Não. O Lumno não tem sistema de contas e pode ser usado assim que é instalado." },
         {
           question: "Como desinstalo?",
-          answer: "Abra chrome://extensions (edge://extensions no Edge), encontre o Lumno e clique em Remover. Isso também apaga as configurações e imagens que o Lumno guardou no seu dispositivo.",
+          answer: "Abra chrome://extensions (edge://extensions no Edge), encontre o Lumno e clique em Remover. No Firefox, remova-o em about:addons. Isso também apaga as configurações e imagens que o Lumno guardou no seu dispositivo.",
         },
       ],
     },
@@ -250,7 +250,7 @@ const content: GuideLocaleContent = {
     "browser-compatibility": {
       pageTitle: "Compatibilidade com navegadores: Chrome, Edge, Dia, Brave, Firefox e Safari | Ajuda do Lumno",
       pageDescription:
-        "O Lumno funciona por completo no Chrome, Edge, Brave, Arc, Vivaldi e outros navegadores Chromium. O Dia não tem a nova guia do Lumno, a versão para Firefox tem algumas lacunas, e o Safari e os navegadores de celular não são compatíveis.",
+        "O Lumno funciona por completo no Chrome, Edge, Brave, Arc, Vivaldi e outros navegadores Chromium. O Dia não tem a nova guia do Lumno, a versão para Firefox está nos Complementos do Firefox, mas tem algumas lacunas, e o Safari e os navegadores de celular não são compatíveis.",
       keywords: ["compatibilidade do Lumno", "extensão para o Dia", "extensão para o Edge", "versão para Firefox", "extensão Chromium"],
       title: "Compatibilidade com navegadores",
       navTitle: "Compatibilidade com navegadores",
@@ -265,7 +265,7 @@ const content: GuideLocaleContent = {
     },
     "ratings-reviews": {
       pageTitle: "Avaliações e imprensa: avaliações na Chrome Web Store e artigos | Ajuda do Lumno",
-      pageDescription: "A nota e as avaliações do Lumno na Chrome Web Store, e os artigos escritos sobre ele.",
+      pageDescription: "A nota e as avaliações do Lumno na Chrome Web Store, a página de avaliações nos Complementos do Firefox e os artigos escritos sobre ele.",
       keywords: ["avaliações do Lumno", "nota do Lumno", "análise de extensão de barra de comandos do Chrome"],
       title: "Avaliações e imprensa",
       navTitle: "Avaliações e imprensa",

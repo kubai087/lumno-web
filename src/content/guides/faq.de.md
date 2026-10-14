@@ -4,7 +4,7 @@ Hier findest du Antworten auf die Fragen, die auf unserer Website und in der Com
 
 ### Welches Tastenkürzel ist voreingestellt, und kann ich es ändern?
 
-Voreingestellt ist `⌘ ⇧ K | ⌘ ⇧ K` auf dem Mac und `Strg + Umschalt + K` unter Windows und Linux. Du kannst das Tastenkürzel unter `chrome://extensions/shortcuts` ändern. Weitere Informationen findest du unter [Tastenkürzel](../keyboard-shortcuts/#change).
+Voreingestellt ist `⌘ ⇧ K | ⌘ ⇧ K` auf dem Mac und `Strg + Umschalt + K` unter Windows und Linux. Du kannst das Tastenkürzel unter `chrome://extensions/shortcuts` ändern. Weitere Informationen findest du unter [Tastenkürzel](../keyboard-shortcuts/#change). In der Firefox-Version ist ein anderes Tastenkürzel voreingestellt, siehe [Browserkompatibilität](../browser-compatibility/#firefox).
 
 ### Was kann ich tun, wenn das Tastenkürzel nicht funktioniert?
 
@@ -36,7 +36,7 @@ Das liegt an der Option „Automatically focus input“: Damit der Cursor direkt
 
 ### Welche Browser werden unterstützt?
 
-Lumno unterstützt Chromium-Browser wie Chrome, Edge, Dia, Brave und Vivaldi. Safari wird derzeit nicht unterstützt. In Dia funktioniert die Befehlsleiste, Lumnos neuer Tab ist dort jedoch noch nicht verfügbar. Weitere Informationen findest du unter [Browserkompatibilität](../browser-compatibility/).
+Lumno unterstützt Chromium-Browser wie Chrome, Edge, Dia, Brave und Vivaldi sowie Firefox ab Version 140 und Firefox-basierte Browser wie Zen. Safari wird derzeit nicht unterstützt. In Dia funktioniert die Befehlsleiste, Lumnos neuer Tab ist dort jedoch noch nicht verfügbar. In Firefox sind Web-Clip und automatisches Bild-im-Bild nicht verfügbar. Weitere Informationen findest du unter [Browserkompatibilität](../browser-compatibility/).
 
 ## Daten und Synchronisierung {#data}
 

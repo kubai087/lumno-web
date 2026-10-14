@@ -72,5 +72,7 @@
   { "q": "書籤列放頂部", "expect": ["newtab-bookmarks-shortcuts#bookmark-layouts"] },
   { "q": "關閉網站卡片", "expect": ["newtab-frequent-sites#card-rows"] },
   { "q": "卡片顯示兩行", "expect": ["newtab-frequent-sites#card-rows"] },
-  { "q": "隱藏捷徑", "expect": ["newtab-bookmarks-shortcuts#shortcuts"] }
+  { "q": "隱藏捷徑", "expect": ["newtab-bookmarks-shortcuts#shortcuts"] },
+  { "q": "Firefox 怎麼安裝", "expect": ["install#store"] },
+  { "q": "火狐附加元件評論", "expect": ["ratings-reviews#firefox-add-ons"] }
 ]

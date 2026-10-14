@@ -6,8 +6,9 @@ Lumno ist kostenlos, erfordert keine Registrierung und ist direkt nach der Insta
 | --- | --- |
 | Chrome, Dia, Brave, [Arc](https://arc.net/), Vivaldi, Opera | [Chrome Web Store](https://chromewebstore.google.com/detail/nggfkkbmogmadfoikakkfegkoilfcfao) |
 | Microsoft Edge | [Microsoft Edge-Add-ons](https://microsoftedge.microsoft.com/addons/detail/pfbklkaefmfamjpibfiapaiihlddhchc) |
+| Firefox, [Zen](https://zen-browser.app/), LibreWolf, Floorp | [Firefox-Add-ons](https://addons.mozilla.org/firefox/addon/lumno-command-bar-new-tab/) |
 
-Öffne die Store-Seite, klicke auf „Hinzufügen“ bzw. „Abrufen“ und bestätige im angezeigten Dialogfenster. In Edge kannst du Lumno auch aus dem Chrome Web Store installieren.
+Öffne die Store-Seite, klicke auf „Hinzufügen“, „Abrufen“ bzw. „Zu Firefox hinzufügen“ und bestätige im angezeigten Dialogfenster. In Edge kannst du Lumno auch aus dem Chrome Web Store installieren.
 
 ## Nach der Installation {#after-install}
 
@@ -19,10 +20,10 @@ Wenn du zum ersten Mal einen neuen Tab öffnest, fragt Chrome möglicherweise, o
 
 ## Die Befehlsleiste ausprobieren {#try}
 
-Öffne eine beliebige Seite und drücke `⌘ ⇧ K`, um die Befehlsleiste zu öffnen. Gib ein paar Buchstaben ein, um deine offenen Tabs und Lesezeichen zu durchsuchen, und schließe sie mit `Esc`.
+Öffne eine beliebige Seite und drücke `⌘ ⇧ K`, um die Befehlsleiste zu öffnen. Gib ein paar Buchstaben ein, um deine offenen Tabs und Lesezeichen zu durchsuchen, und schließe sie mit `Esc`. In der Firefox-Version ist `⌃ ⇧ K | Alt + K` voreingestellt.
 
 Wenn nichts passiert, findest du unter [Tastenkürzel](../keyboard-shortcuts/) Hinweise zur Fehlerbehebung.
 
 ## In lokalen Dateien verwenden {#file-access}
 
-Um die Befehlsleiste auch in PDF- oder HTML-Dateien auf deinem Computer zu öffnen, rufe `chrome://extensions` auf, öffne die Details von Lumno, aktiviere „Zugriff auf Datei-URLs zulassen“ und lade die Datei anschließend neu.
+Um die Befehlsleiste auch in PDF- oder HTML-Dateien auf deinem Computer zu öffnen, rufe `chrome://extensions` auf, öffne die Details von Lumno, aktiviere „Zugriff auf Datei-URLs zulassen“ und lade die Datei anschließend neu. Firefox erlaubt Erweiterungen keinen Zugriff auf lokale Dateien, daher lässt sich die Befehlsleiste der Firefox-Version auf solchen Seiten nicht öffnen.

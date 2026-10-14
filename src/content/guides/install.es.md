@@ -6,8 +6,9 @@ Lumno es gratuito, no requiere registro y se puede usar en cuanto lo instalas.
 | --- | --- |
 | Chrome, Dia, Brave, [Arc](https://arc.net/), Vivaldi, Opera | [Chrome Web Store](https://chromewebstore.google.com/detail/nggfkkbmogmadfoikakkfegkoilfcfao) |
 | Microsoft Edge | [Complementos de Microsoft Edge](https://microsoftedge.microsoft.com/addons/detail/pfbklkaefmfamjpibfiapaiihlddhchc) |
+| Firefox, [Zen](https://zen-browser.app/), LibreWolf, Floorp | [Complementos de Firefox](https://addons.mozilla.org/firefox/addon/lumno-command-bar-new-tab/) |
 
-Abre la página de la tienda, haz clic en "Añadir a Chrome" u "Obtener" y confirma en el cuadro de diálogo que aparece. En Edge también puedes instalar Lumno desde Chrome Web Store.
+Abre la página de la tienda, haz clic en "Añadir a Chrome", "Obtener" o "Añadir a Firefox" y confirma en el cuadro de diálogo que aparece. En Edge también puedes instalar Lumno desde Chrome Web Store.
 
 ## Después de instalarlo {#after-install}
 
@@ -19,10 +20,10 @@ La primera vez que abras una nueva pestaña, Chrome puede preguntarte si quieres
 
 ## Probar la barra de comandos {#try}
 
-Abre cualquier página y pulsa `⌘ ⇧ K` para abrir la barra de comandos. Escribe unas letras para buscar en tus pestañas abiertas y marcadores, y pulsa `Esc` para cerrarla.
+Abre cualquier página y pulsa `⌘ ⇧ K` para abrir la barra de comandos. Escribe unas letras para buscar en tus pestañas abiertas y marcadores, y pulsa `Esc` para cerrarla. En la versión para Firefox, el atajo predeterminado es `⌃ ⇧ K | Alt + K`.
 
 Si no ocurre nada, consulta las comprobaciones de [Atajos de teclado](../keyboard-shortcuts/).
 
 ## Usar Lumno en archivos locales {#file-access}
 
-Para abrir la barra de comandos en archivos PDF o HTML de tu ordenador, ve a `chrome://extensions`, abre los detalles de Lumno, permite el acceso a las URL de archivo y vuelve a cargar el archivo.
+Para abrir la barra de comandos en archivos PDF o HTML de tu ordenador, ve a `chrome://extensions`, abre los detalles de Lumno, permite el acceso a las URL de archivo y vuelve a cargar el archivo. Firefox no permite que las extensiones accedan a archivos locales, así que la versión para Firefox no puede abrir la barra de comandos en estas páginas.

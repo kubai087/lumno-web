@@ -4,7 +4,7 @@ Lumno 웹사이트와 커뮤니티에서 자주 묻는 질문과 답변을 정�
 
 ### 기본 단축키는 무엇이며, 변경할 수 있나요?
 
-기본 단축키는 Mac에서 `⌘ ⇧ K | ⌘ ⇧ K`, Windows와 Linux에서 `Ctrl + Shift + K`입니다. 단축키는 `chrome://extensions/shortcuts`에서 변경할 수 있습니다. 자세한 내용은 [단축키](../keyboard-shortcuts/#change)를 참고하세요.
+기본 단축키는 Mac에서 `⌘ ⇧ K | ⌘ ⇧ K`, Windows와 Linux에서 `Ctrl + Shift + K`입니다. 단축키는 `chrome://extensions/shortcuts`에서 변경할 수 있습니다. 자세한 내용은 [단축키](../keyboard-shortcuts/#change)를 참고하세요. Firefox 버전은 기본 단축키가 다르며, [브라우저 호환성](../browser-compatibility/#firefox)에서 확인할 수 있습니다.
 
 ### 단축키가 작동하지 않으면 어떻게 해야 하나요?
 
@@ -36,7 +36,7 @@ Lumno 웹사이트와 커뮤니티에서 자주 묻는 질문과 답변을 정�
 
 ### 어떤 브라우저를 지원하나요?
 
-Chrome, Edge, Dia, Brave, Vivaldi 등 Chromium 기반 브라우저를 지원합니다. Safari는 아직 지원하지 않습니다. Dia에서는 명령 바를 사용할 수 있지만 Lumno 새 탭은 아직 사용할 수 없습니다. 자세한 내용은 [브라우저 호환성](../browser-compatibility/)을 참고하세요.
+Chrome, Edge, Dia, Brave, Vivaldi 등 Chromium 기반 브라우저와 Firefox 140 이상, Zen 같은 Firefox 기반 브라우저를 지원합니다. Safari는 아직 지원하지 않습니다. Dia에서는 명령 바를 사용할 수 있지만 Lumno 새 탭은 아직 사용할 수 없고, Firefox에서는 웹 클립과 자동 PIP를 사용할 수 없습니다. 자세한 내용은 [브라우저 호환성](../browser-compatibility/)을 참고하세요.
 
 ## 데이터와 동기화 {#data}
 

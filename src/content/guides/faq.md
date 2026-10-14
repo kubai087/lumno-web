@@ -4,7 +4,7 @@
 
 ### 默认快捷键是什么？可以修改吗？
 
-在 Mac 上，默认快捷键为 `⌘ ⇧ K | ⌘ ⇧ K`；在 Windows 和 Linux 上为 `Ctrl + Shift + K`。快捷键可以在 `chrome://extensions/shortcuts` 中修改，详见[快捷键](../keyboard-shortcuts/#change)。
+在 Mac 上，默认快捷键为 `⌘ ⇧ K | ⌘ ⇧ K`；在 Windows 和 Linux 上为 `Ctrl + Shift + K`。快捷键可以在 `chrome://extensions/shortcuts` 中修改，详见[快捷键](../keyboard-shortcuts/#change)。Firefox 版的默认快捷键不同，详见[浏览器兼容性](../browser-compatibility/#firefox)。
 
 ### 按下快捷键没有反应怎么办？
 
@@ -36,7 +36,7 @@
 
 ### 支持哪些浏览器？
 
-支持 Chrome、Edge、Dia、Brave、Vivaldi 等 Chromium 内核浏览器，暂不支持 Safari。在 Dia 中可以使用命令栏，但新标签页暂不可用。详见[浏览器兼容性](../browser-compatibility/)。
+支持 Chrome、Edge、Dia、Brave、Vivaldi 等 Chromium 内核浏览器，以及 Firefox 140 及以上版本和 Zen 等基于 Firefox 的浏览器，暂不支持 Safari。在 Dia 中可以使用命令栏，但新标签页暂不可用；Firefox 中无法使用网页剪裁和视频自动画中画。详见[浏览器兼容性](../browser-compatibility/)。
 
 ## 数据与同步 {#data}
 

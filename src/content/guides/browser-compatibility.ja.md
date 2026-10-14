@@ -8,7 +8,7 @@ Lumno は Chromium 系ブラウザ向けに開発されており、Firefox 版�
 | Microsoft Edge | 対応 | 対応 | Edge アドオン |
 | Brave、[Arc](https://arc.net/)、Vivaldi、Opera | 対応 | 対応 | Chrome ウェブストア |
 | Dia | 対応 | 未対応 | Chrome ウェブストア |
-| Firefox、[Zen](https://zen-browser.app/) など | 一部対応 | 対応 | 下記を参照 |
+| Firefox、[Zen](https://zen-browser.app/) など | 一部対応 | 対応 | Firefox アドオン |
 | Safari | 非対応 | 非対応 | — |
 
 スマートフォンとタブレットのブラウザには、現在対応していません。
@@ -21,7 +21,7 @@ Dia では拡張機能が新しいタブを置き換えることができない�
 
 ## Firefox {#firefox}
 
-Firefox 版は、まだ Firefox Add-ons に掲載されていません。掲載後は、このサイトからインストールできるようになります。Firefox 140 以降のほか、Zen、LibreWolf、Floorp などの Firefox ベースのブラウザに対応しています。
+Firefox 版は [Firefox アドオン](https://addons.mozilla.org/firefox/addon/lumno-command-bar-new-tab/)で公開しています。Firefox 140 以降のほか、Zen、LibreWolf、Floorp などの Firefox ベースのブラウザにも同じ方法でインストールできます。
 
 Firefox の拡張機能 API は Chromium と異なるため、次の機能は使用できません。
 

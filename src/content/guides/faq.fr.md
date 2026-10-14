@@ -4,7 +4,7 @@ Retrouvez ici les réponses aux questions les plus fréquentes posées sur notre
 
 ### Quel est le raccourci par défaut ? Peut-on le modifier ?
 
-Le raccourci par défaut est `⌘ ⇧ K | ⌘ ⇧ K` sur Mac et `Ctrl + Maj + K` sous Windows et Linux. Vous pouvez le modifier dans `chrome://extensions/shortcuts`. Pour en savoir plus, consultez [Raccourcis clavier](../keyboard-shortcuts/#change).
+Le raccourci par défaut est `⌘ ⇧ K | ⌘ ⇧ K` sur Mac et `Ctrl + Maj + K` sous Windows et Linux. Vous pouvez le modifier dans `chrome://extensions/shortcuts`. Pour en savoir plus, consultez [Raccourcis clavier](../keyboard-shortcuts/#change). La version Firefox utilise un autre raccourci par défaut : consultez [Compatibilité des navigateurs](../browser-compatibility/#firefox).
 
 ### Que faire si le raccourci ne fonctionne pas ?
 
@@ -36,7 +36,7 @@ Cela est dû à l'option « Automatically focus input » : pour placer le cur
 
 ### Quels navigateurs sont pris en charge ?
 
-Lumno prend en charge les navigateurs Chromium comme Chrome, Edge, Dia, Brave et Vivaldi. Safari n'est pas encore pris en charge. Dans Dia, la barre de commande fonctionne, mais le nouvel onglet de Lumno n'est pas encore disponible. Pour en savoir plus, consultez [Compatibilité des navigateurs](../browser-compatibility/).
+Lumno prend en charge les navigateurs Chromium comme Chrome, Edge, Dia, Brave et Vivaldi, ainsi que Firefox 140 et versions ultérieures et les navigateurs basés sur Firefox comme Zen. Safari n'est pas encore pris en charge. Dans Dia, la barre de commande fonctionne, mais le nouvel onglet de Lumno n'est pas encore disponible. Dans Firefox, la capture web et l'image dans l'image automatique ne sont pas disponibles. Pour en savoir plus, consultez [Compatibilité des navigateurs](../browser-compatibility/).
 
 ## Données et synchronisation {#data}
 

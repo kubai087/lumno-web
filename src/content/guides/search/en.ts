@@ -52,7 +52,7 @@ export default {
   },
   install: {
     "": ["How do I install it? Download link, where to get it"],
-    store: ["Chrome Web Store, Edge Add-ons, extension store. Can't install?"],
+    store: ["Chrome Web Store, Edge Add-ons, extension store. Can't install?", "How do I install it in Firefox or Zen? Firefox Add-ons, AMO"],
     "after-install": ["What happens after installing? Welcome page, onboarding", "Chrome asked whether to keep the changes to the new tab, chose wrong"],
     try: ["How do I use it after installing? Getting started, first steps"],
     "file-access": ["Use it in local PDF or HTML files, allow access to file URLs"],
@@ -206,6 +206,7 @@ export default {
   },
   "ratings-reviews": {
     "": ["Reviews, is it good, rating, recommendations"],
+    "firefox-add-ons": ["Firefox Add-ons rating and reviews, review Lumno on AMO"],
     press: ["Articles and press coverage"],
     community: ["Report a problem, suggest a feature, community, contact the developer"],
   },

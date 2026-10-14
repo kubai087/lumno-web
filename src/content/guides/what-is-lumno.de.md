@@ -1,4 +1,4 @@
-Lumno ist eine kostenlose Open-Source-Browsererweiterung mit zwei Hauptfunktionen: Mit einem Tastenkürzel öffnest du auf jeder Seite eine Befehlsleiste, die deinen gesamten Browser durchsucht. Außerdem wird der neue Tab zu einer übersichtlichen, ansprechenden Startseite. Lumno funktioniert in Chrome, Edge, Dia, Brave und anderen Chromium-Browsern.
+Lumno ist eine kostenlose Open-Source-Browsererweiterung mit zwei Hauptfunktionen: Mit einem Tastenkürzel öffnest du auf jeder Seite eine Befehlsleiste, die deinen gesamten Browser durchsucht. Außerdem wird der neue Tab zu einer übersichtlichen, ansprechenden Startseite. Lumno funktioniert in Chrome, Edge, Dia, Brave und anderen Chromium-Browsern sowie in Firefox und Firefox-basierten Browsern wie Zen.
 
 ## Die Befehlsleiste {#command-bar}
 

@@ -86,5 +86,7 @@
   { "q": "top bookmarks bar", "expect": ["newtab-bookmarks-shortcuts#bookmark-layouts"] },
   { "q": "hide site cards", "expect": ["newtab-frequent-sites#card-rows"] },
   { "q": "two rows of site cards", "expect": ["newtab-frequent-sites#card-rows"] },
-  { "q": "hide shortcuts", "expect": ["newtab-bookmarks-shortcuts#shortcuts"] }
+  { "q": "hide shortcuts", "expect": ["newtab-bookmarks-shortcuts#shortcuts"] },
+  { "q": "install on firefox", "expect": ["install#store"] },
+  { "q": "firefox add-ons reviews", "expect": ["ratings-reviews#firefox-add-ons"] }
 ]

@@ -8,7 +8,7 @@ Lumno создан для браузеров на Chromium, а также дос
 | Microsoft Edge | Да | Да | Надстройки Edge |
 | Brave, [Arc](https://arc.net/), Vivaldi, Opera | Да | Да | Интернет-магазин Chrome |
 | Dia | Да | Пока нет | Интернет-магазин Chrome |
-| Firefox, [Zen](https://zen-browser.app/) и другие | Частично | Да | См. ниже |
+| Firefox, [Zen](https://zen-browser.app/) и другие | Частично | Да | Дополнения Firefox |
 | Safari | Нет | Нет | — |
 
 Браузеры на телефонах и планшетах пока не поддерживаются.
@@ -21,7 +21,7 @@ Dia не позволяет расширениям заменять новую �
 
 ## Firefox {#firefox}
 
-Версия для Firefox пока недоступна в каталоге дополнений Firefox. После публикации на этом сайте появится ссылка на неё. Она поддерживает Firefox 140 и более поздние версии, а также браузеры на основе Firefox, например Zen, LibreWolf и Floorp.
+Версия для Firefox опубликована в [каталоге дополнений Firefox](https://addons.mozilla.org/firefox/addon/lumno-command-bar-new-tab/). Она работает в Firefox 140 и более поздних версиях, а ещё её можно установить в браузеры на основе Firefox, например Zen, LibreWolf и Floorp.
 
 API расширений в Firefox отличаются от Chromium, поэтому некоторые функции недоступны:
 

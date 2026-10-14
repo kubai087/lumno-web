@@ -107,5 +107,7 @@
   { "q": "关闭站点卡片", "expect": ["newtab-frequent-sites#card-rows"] },
   { "q": "卡片显示两行", "expect": ["newtab-frequent-sites#card-rows"] },
   { "q": "移除某个网站卡片", "expect": ["newtab-frequent-sites#card-rows"] },
-  { "q": "隐藏快捷方式", "expect": ["newtab-bookmarks-shortcuts#shortcuts"] }
+  { "q": "隐藏快捷方式", "expect": ["newtab-bookmarks-shortcuts#shortcuts"] },
+  { "q": "火狐怎么安装", "expect": ["install#store"] },
+  { "q": "Firefox 商店评价", "expect": ["ratings-reviews#firefox-add-ons"] }
 ]

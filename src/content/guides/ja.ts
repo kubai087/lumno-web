@@ -43,7 +43,7 @@ const content: GuideLocaleContent = {
     "what-is-lumno": {
       pageTitle: "Lumno とは：オープンソースのブラウザコマンドバーと新しいタブ｜Lumno ヘルプ",
       pageDescription:
-        "Lumno は無料・オープンソースのブラウザ拡張機能です。どのページでも ⌘⇧K でコマンドバーを開き、タブ・ブックマーク・履歴を検索したり、サイト内検索や AI への質問ができます。新しいタブも自由にカスタマイズ。Chrome、Edge、Dia など Chromium 系ブラウザで使えます。",
+        "Lumno は無料・オープンソースのブラウザ拡張機能です。どのページでも ⌘⇧K でコマンドバーを開き、タブ・ブックマーク・履歴を検索したり、サイト内検索や AI への質問ができます。新しいタブも自由にカスタマイズ。Chrome、Edge、Dia など Chromium 系ブラウザと Firefox で使えます。",
       keywords: ["Lumno", "ブラウザ コマンドバー", "Chrome コマンドパレット 拡張機能", "タブ検索", "新しいタブ 拡張機能", "Arc コマンドバー"],
       title: "Lumno とは",
       navTitle: "Lumno とは",
@@ -51,7 +51,7 @@ const content: GuideLocaleContent = {
         { question: "Lumno は無料ですか？", answer: "はい。GPL-3.0 のオープンソースで、すべての機能を無料で使えます。アカウント登録も不要です。" },
         {
           question: "どのブラウザで使用できますか？",
-          answer: "Chrome、Edge、Dia、Brave、Arc、Vivaldi など Chromium 系のブラウザです。Safari には対応していません。詳しくは「ブラウザ互換性」を参照してください。",
+          answer: "Chrome、Edge、Dia、Brave、Arc、Vivaldi など Chromium 系のブラウザと、Firefox や Zen などの Firefox 系ブラウザです。Safari には対応していません。詳しくは「ブラウザ互換性」を参照してください。",
         },
       ],
     },
@@ -80,17 +80,17 @@ const content: GuideLocaleContent = {
       navTitle: "よくある質問",
     },
     install: {
-      pageTitle: "Lumno のインストール：Chrome ウェブストアまたは Edge アドオンから｜Lumno ヘルプ",
+      pageTitle: "Lumno のインストール：Chrome ウェブストア、Edge アドオン、Firefox アドオンから｜Lumno ヘルプ",
       pageDescription:
-        "Chrome、Dia、Brave、Arc では Chrome ウェブストアから、Edge では Microsoft Edge アドオンから Lumno をインストールします。ようこそページが開き、⌘⇧K ですぐに使えます。",
-      keywords: ["Lumno インストール", "Lumno Chrome ウェブストア", "Lumno Edge アドオン", "Chrome 拡張機能 インストール"],
+        "Chrome、Dia、Brave、Arc では Chrome ウェブストアから、Edge では Microsoft Edge アドオンから、Firefox と Zen では Firefox アドオンから Lumno をインストールします。ようこそページが開き、⌘⇧K ですぐに使えます。",
+      keywords: ["Lumno インストール", "Lumno Chrome ウェブストア", "Lumno Edge アドオン", "Lumno Firefox アドオン", "Chrome 拡張機能 インストール"],
       title: "Lumno をインストールする",
       navTitle: "インストール",
       faq: [
         { question: "アカウントは必要ですか？", answer: "いいえ。Lumno にはアカウントの仕組みがありません。インストール後すぐに使用できます。" },
         {
           question: "アンインストールするにはどうすればよいですか？",
-          answer: "chrome://extensions（Edge では edge://extensions）で Lumno の「削除」をクリックします。この端末に保存された設定や画像も削除されます。",
+          answer: "chrome://extensions（Edge では edge://extensions）で Lumno の「削除」をクリックします。Firefox では about:addons から削除します。この端末に保存された設定や画像も削除されます。",
         },
       ],
     },
@@ -236,7 +236,7 @@ const content: GuideLocaleContent = {
     "browser-compatibility": {
       pageTitle: "ブラウザ互換性：Chrome、Edge、Dia、Brave、Firefox、Safari｜Lumno ヘルプ",
       pageDescription:
-        "Lumno は Chrome、Edge、Brave、Arc、Vivaldi など Chromium 系ブラウザですべての機能が使えます。Dia では新しいタブが使えず、Firefox 版には一部制限があります。Safari とスマートフォンのブラウザには非対応です。",
+        "Lumno は Chrome、Edge、Brave、Arc、Vivaldi など Chromium 系ブラウザですべての機能が使えます。Dia では新しいタブが使えず、Firefox 版は Firefox アドオンで公開しており、一部制限があります。Safari とスマートフォンのブラウザには非対応です。",
       keywords: ["Lumno 互換性", "Dia 拡張機能", "Edge 拡張機能", "Firefox 版", "Chromium 拡張機能"],
       title: "ブラウザ互換性",
       navTitle: "ブラウザ互換性",
@@ -250,7 +250,7 @@ const content: GuideLocaleContent = {
     },
     "ratings-reviews": {
       pageTitle: "評価とメディア掲載：Chrome ウェブストアのレビューと記事｜Lumno ヘルプ",
-      pageDescription: "Chrome ウェブストアでの Lumno の評価とレビュー、Lumno を紹介した記事。",
+      pageDescription: "Chrome ウェブストアでの Lumno の評価とレビュー、Firefox アドオンのレビュー、Lumno を紹介した記事。",
       keywords: ["Lumno レビュー", "Lumno 評価", "Chrome コマンドバー 拡張機能 おすすめ"],
       title: "評価とメディア掲載",
       navTitle: "評価とメディア掲載",

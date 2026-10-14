@@ -1,4 +1,4 @@
-Lumno 是一款免费、开源的浏览器扩展，主要提供两项功能：在任意网页按下快捷键，唤出一个能搜索整个浏览器的命令栏；把新标签页换成简洁、美观、实用的起始页。Lumno 适用于 Chrome、Edge、Dia、Brave 等 Chromium 浏览器。
+Lumno 是一款免费、开源的浏览器扩展，主要提供两项功能：在任意网页按下快捷键，唤出一个能搜索整个浏览器的命令栏；把新标签页换成简洁、美观、实用的起始页。Lumno 适用于 Chrome、Edge、Dia、Brave 等 Chromium 浏览器，以及 Firefox 和 Zen 等基于 Firefox 的浏览器。
 
 ## 命令栏：一搜即达 {#command-bar}
 

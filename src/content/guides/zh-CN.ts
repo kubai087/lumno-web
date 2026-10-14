@@ -43,7 +43,7 @@ const content: GuideLocaleContent = {
     "what-is-lumno": {
       pageTitle: "Lumno 是什么：开源的浏览器命令栏与新标签页扩展｜Lumno 帮助中心",
       pageDescription:
-        "Lumno 是免费开源的浏览器扩展，在任意网页按 ⌘⇧K 打开命令栏，搜索标签页、书签和历史记录，在网站内搜索或向 AI 提问，并提供可自定义的新标签页。支持 Chrome、Edge、Dia 等 Chromium 浏览器。",
+        "Lumno 是免费开源的浏览器扩展，在任意网页按 ⌘⇧K 打开命令栏，搜索标签页、书签和历史记录，在网站内搜索或向 AI 提问，并提供可自定义的新标签页。支持 Chrome、Edge、Dia 等 Chromium 浏览器和 Firefox。",
       keywords: ["Lumno", "浏览器命令栏", "Chrome 命令栏插件", "聚焦搜索", "新标签页插件", "Arc 命令栏"],
       title: "Lumno 是什么",
       navTitle: "Lumno 是什么",
@@ -54,7 +54,7 @@ const content: GuideLocaleContent = {
         },
         {
           question: "Lumno 支持哪些浏览器？",
-          answer: "支持 Chrome、Edge、Dia、Brave、Arc、Vivaldi 等 Chromium 内核浏览器，暂不支持 Safari。详见「浏览器兼容性」。",
+          answer: "支持 Chrome、Edge、Dia、Brave、Arc、Vivaldi 等 Chromium 内核浏览器，以及 Firefox 和 Zen 等基于 Firefox 的浏览器，暂不支持 Safari。详见「浏览器兼容性」。",
         },
       ],
     },
@@ -83,10 +83,10 @@ const content: GuideLocaleContent = {
       navTitle: "常见问题",
     },
     install: {
-      pageTitle: "安装 Lumno：从 Chrome 应用商店或 Edge 加载项安装｜Lumno 帮助中心",
+      pageTitle: "安装 Lumno：从 Chrome 应用商店、Edge 加载项或 Firefox 附加组件安装｜Lumno 帮助中心",
       pageDescription:
-        "在 Chrome、Dia、Brave、Arc 中从 Chrome 应用商店安装 Lumno，在 Edge 中从 Microsoft Edge 加载项安装。安装后会打开欢迎页，按 ⌘⇧K 即可开始使用。",
-      keywords: ["安装 Lumno", "Lumno Chrome 应用商店", "Lumno Edge 加载项", "Chrome 扩展安装"],
+        "在 Chrome、Dia、Brave、Arc 中从 Chrome 应用商店安装 Lumno，在 Edge 中从 Microsoft Edge 加载项安装，在 Firefox 和 Zen 中从 Firefox 附加组件安装。安装后会打开欢迎页，按 ⌘⇧K 即可开始使用。",
+      keywords: ["安装 Lumno", "Lumno Chrome 应用商店", "Lumno Edge 加载项", "Lumno Firefox 附加组件", "Chrome 扩展安装"],
       title: "安装 Lumno",
       navTitle: "安装 Lumno",
       faq: [
@@ -96,7 +96,7 @@ const content: GuideLocaleContent = {
         },
         {
           question: "如何卸载？",
-          answer: "在 chrome://extensions（Edge 中为 edge://extensions）找到 Lumno，点击「移除」。卸载会删除扩展保存在本机的设置和图片。",
+          answer: "在 chrome://extensions（Edge 中为 edge://extensions）找到 Lumno，点击「移除」；Firefox 中在 about:addons 里移除。卸载会删除扩展保存在本机的设置和图片。",
         },
       ],
     },
@@ -260,7 +260,7 @@ const content: GuideLocaleContent = {
     "browser-compatibility": {
       pageTitle: "浏览器兼容性：Chrome、Edge、Dia、Brave、Firefox 与 Safari｜Lumno 帮助中心",
       pageDescription:
-        "Lumno 在 Chrome、Edge、Brave、Arc、Vivaldi 等 Chromium 浏览器中可以使用全部功能；Dia 中新标签页不可用；Firefox 版有若干限制；暂不支持 Safari 和手机浏览器。",
+        "Lumno 在 Chrome、Edge、Brave、Arc、Vivaldi 等 Chromium 浏览器中可以使用全部功能；Dia 中新标签页不可用；Firefox 版已上架 Firefox 附加组件，有若干限制；暂不支持 Safari 和手机浏览器。",
       keywords: ["Lumno 兼容性", "Dia 插件", "Edge 扩展", "Firefox 版", "Chromium 浏览器扩展"],
       title: "浏览器兼容性",
       navTitle: "浏览器兼容性",
@@ -276,7 +276,7 @@ const content: GuideLocaleContent = {
     "ratings-reviews": {
       pageTitle: "评分与评测：Chrome 应用商店评分和少数派报道｜Lumno 帮助中心",
       pageDescription:
-        "Lumno 在 Chrome 应用商店的评分与评价，以及少数派对 Lumno 的介绍文章。",
+        "Lumno 在 Chrome 应用商店的评分与评价、Firefox 附加组件的评价页，以及少数派对 Lumno 的介绍文章。",
       keywords: ["Lumno 评价", "Lumno 评分", "少数派 Lumno", "Chrome 命令栏插件推荐"],
       title: "评分与评测",
       navTitle: "评分与评测",

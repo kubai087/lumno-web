@@ -43,7 +43,7 @@ const content: GuideLocaleContent = {
     "what-is-lumno": {
       pageTitle: "What is Lumno? An open-source browser command bar and new tab | Lumno Help",
       pageDescription:
-        "Lumno is a free, open-source browser extension. Press ⌘⇧K on any page to search your tabs, bookmarks and history, search inside sites or ask AI, and get a calm, customizable new tab. Works in Chrome, Edge, Dia and other Chromium browsers.",
+        "Lumno is a free, open-source browser extension. Press ⌘⇧K on any page to search your tabs, bookmarks and history, search inside sites or ask AI, and get a calm, customizable new tab. Works in Chrome, Edge, Dia and other Chromium browsers, and in Firefox.",
       keywords: ["Lumno", "browser command bar", "Chrome command palette extension", "tab search", "new tab extension", "Arc command bar"],
       title: "What is Lumno?",
       navTitle: "What is Lumno?",
@@ -51,7 +51,7 @@ const content: GuideLocaleContent = {
         { question: "Is Lumno free?", answer: "Yes. Lumno is open source under GPL-3.0, every feature is free, and there is no account to create." },
         {
           question: "Which browsers does it work in?",
-          answer: "Chrome, Edge, Dia, Brave, Arc, Vivaldi and other Chromium browsers. Safari is not supported. See Browser compatibility.",
+          answer: "Chrome, Edge, Dia, Brave, Arc, Vivaldi and other Chromium browsers, plus Firefox and Firefox-based browsers like Zen. Safari is not supported. See Browser compatibility.",
         },
       ],
     },
@@ -80,17 +80,17 @@ const content: GuideLocaleContent = {
       navTitle: "FAQ",
     },
     install: {
-      pageTitle: "Install Lumno from the Chrome Web Store or Edge Add-ons | Lumno Help",
+      pageTitle: "Install Lumno from the Chrome Web Store, Edge Add-ons or Firefox Add-ons | Lumno Help",
       pageDescription:
-        "Install Lumno from the Chrome Web Store in Chrome, Dia, Brave or Arc, or from Microsoft Edge Add-ons in Edge. A welcome page opens, and ⌘⇧K is ready to go.",
-      keywords: ["install Lumno", "Lumno Chrome Web Store", "Lumno Edge Add-ons", "install Chrome extension"],
+        "Install Lumno from the Chrome Web Store in Chrome, Dia, Brave or Arc, from Microsoft Edge Add-ons in Edge, or from Firefox Add-ons in Firefox and Zen. A welcome page opens, and ⌘⇧K is ready to go.",
+      keywords: ["install Lumno", "Lumno Chrome Web Store", "Lumno Edge Add-ons", "Lumno Firefox Add-ons", "install Chrome extension"],
       title: "Install Lumno",
       navTitle: "Install Lumno",
       faq: [
         { question: "Do I need an account?", answer: "No. Lumno has no account system, so you can start using it as soon as you install it." },
         {
           question: "How do I uninstall it?",
-          answer: "Open chrome://extensions (edge://extensions in Edge), find Lumno and click Remove. This deletes the settings and images Lumno stored on your device.",
+          answer: "Open chrome://extensions (edge://extensions in Edge), find Lumno and click Remove; in Firefox, remove it from about:addons. This deletes the settings and images Lumno stored on your device.",
         },
       ],
     },
@@ -250,7 +250,7 @@ const content: GuideLocaleContent = {
     "browser-compatibility": {
       pageTitle: "Browser compatibility: Chrome, Edge, Dia, Brave, Firefox and Safari | Lumno Help",
       pageDescription:
-        "Lumno works fully in Chrome, Edge, Brave, Arc, Vivaldi and other Chromium browsers. Dia has no Lumno new tab, the Firefox version has a few gaps, and Safari and mobile browsers aren't supported.",
+        "Lumno works fully in Chrome, Edge, Brave, Arc, Vivaldi and other Chromium browsers. Dia has no Lumno new tab, the Firefox version is on Firefox Add-ons with a few gaps, and Safari and mobile browsers aren't supported.",
       keywords: ["Lumno compatibility", "Dia extension", "Edge extension", "Firefox version", "Chromium extension"],
       title: "Browser compatibility",
       navTitle: "Browser compatibility",
@@ -265,7 +265,7 @@ const content: GuideLocaleContent = {
     },
     "ratings-reviews": {
       pageTitle: "Ratings and press: Chrome Web Store reviews and coverage | Lumno Help",
-      pageDescription: "Lumno's Chrome Web Store rating and reviews, and articles written about it.",
+      pageDescription: "Lumno's Chrome Web Store rating and reviews, its Firefox Add-ons reviews, and articles written about it.",
       keywords: ["Lumno reviews", "Lumno rating", "Chrome command bar extension review"],
       title: "Ratings and press",
       navTitle: "Ratings & press",

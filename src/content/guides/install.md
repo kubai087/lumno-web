@@ -6,8 +6,9 @@ Lumno 完全免费，无需注册，从扩展商店安装后即可使用。
 | --- | --- |
 | Chrome、Dia、Brave、[Arc](https://arc.net/)、Vivaldi、Opera | [Chrome 应用商店](https://chromewebstore.google.com/detail/nggfkkbmogmadfoikakkfegkoilfcfao) |
 | Microsoft Edge | [Microsoft Edge 加载项](https://microsoftedge.microsoft.com/addons/detail/pfbklkaefmfamjpibfiapaiihlddhchc) |
+| Firefox、[Zen](https://zen-browser.app/)、LibreWolf、Floorp | [Firefox 附加组件](https://addons.mozilla.org/firefox/addon/lumno-command-bar-new-tab/) |
 
-打开商店页面，点击「添加至 Chrome」或「获取」，然后在弹出的对话框中确认即可。Edge 用户也可以直接从 Chrome 应用商店安装。
+打开商店页面，点击「添加至 Chrome」「获取」或「添加到 Firefox」，然后在弹出的对话框中确认即可。Edge 用户也可以直接从 Chrome 应用商店安装。
 
 ## 安装之后 {#after-install}
 
@@ -19,10 +20,10 @@ Lumno 完全免费，无需注册，从扩展商店安装后即可使用。
 
 ## 开始使用命令栏 {#try}
 
-打开任意网页，按下 `⌘ ⇧ K`，即可唤出命令栏。输入几个字，可以搜索已打开的标签页和书签；按 `Esc` 关闭。
+打开任意网页，按下 `⌘ ⇧ K`，即可唤出命令栏。输入几个字，可以搜索已打开的标签页和书签；按 `Esc` 关闭。Firefox 版的默认快捷键是 `⌃ ⇧ K | Alt + K`。
 
 如果按下快捷键没有反应，请参阅[快捷键](../keyboard-shortcuts/)中的排查方法。
 
 ## 在本地文件中使用 {#file-access}
 
-如果想在电脑上的 PDF、HTML 文件中唤出命令栏，需要先打开 `chrome://extensions`，进入 Lumno 的详情页，开启「允许访问文件网址」，然后刷新该文件页面。
+如果想在电脑上的 PDF、HTML 文件中唤出命令栏，需要先打开 `chrome://extensions`，进入 Lumno 的详情页，开启「允许访问文件网址」，然后刷新该文件页面。Firefox 不允许扩展访问本地文件，因此 Firefox 版无法在这类页面中唤出命令栏。

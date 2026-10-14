@@ -43,7 +43,7 @@ const content: GuideLocaleContent = {
     "what-is-lumno": {
       pageTitle: "Lumno란? 오픈소스 브라우저 명령 바와 새 탭 | Lumno 도움말",
       pageDescription:
-        "Lumno는 무료 오픈소스 브라우저 확장 프로그램입니다. 어떤 페이지에서든 ⌘⇧K를 누르면 탭, 북마크, 방문 기록을 검색하고 사이트 안을 바로 검색하거나 AI에게 물어볼 수 있고, 새 탭도 원하는 대로 꾸밀 수 있습니다. Chrome, Edge, Dia 등 Chromium 기반 브라우저에서 작동합니다.",
+        "Lumno는 무료 오픈소스 브라우저 확장 프로그램입니다. 어떤 페이지에서든 ⌘⇧K를 누르면 탭, 북마크, 방문 기록을 검색하고 사이트 안을 바로 검색하거나 AI에게 물어볼 수 있고, 새 탭도 원하는 대로 꾸밀 수 있습니다. Chrome, Edge, Dia 등 Chromium 기반 브라우저와 Firefox에서 작동합니다.",
       keywords: ["Lumno", "브라우저 명령 바", "크롬 명령 팔레트 확장", "탭 검색", "새 탭 확장 프로그램", "Arc 명령 바"],
       title: "Lumno란?",
       navTitle: "Lumno란?",
@@ -51,7 +51,7 @@ const content: GuideLocaleContent = {
         { question: "Lumno는 무료인가요?", answer: "네. Lumno는 GPL-3.0 오픈소스이며 모든 기능을 무료로 사용할 수 있고, 계정을 만들 필요도 없습니다." },
         {
           question: "어떤 브라우저에서 사용할 수 있나요?",
-          answer: "Chrome, Edge, Dia, Brave, Arc, Vivaldi 등 Chromium 기반 브라우저에서 사용할 수 있습니다. Safari는 지원하지 않습니다. 자세한 내용은 브라우저 호환성을 참고하세요.",
+          answer: "Chrome, Edge, Dia, Brave, Arc, Vivaldi 등 Chromium 기반 브라우저와 Firefox, 그리고 Zen 같은 Firefox 기반 브라우저에서 사용할 수 있습니다. Safari는 지원하지 않습니다. 자세한 내용은 브라우저 호환성을 참고하세요.",
         },
       ],
     },
@@ -80,17 +80,17 @@ const content: GuideLocaleContent = {
       navTitle: "자주 묻는 질문",
     },
     install: {
-      pageTitle: "Chrome 웹 스토어나 Edge 추가 기능에서 Lumno 설치하기 | Lumno 도움말",
+      pageTitle: "Chrome 웹 스토어, Edge 추가 기능, Firefox 부가 기능에서 Lumno 설치하기 | Lumno 도움말",
       pageDescription:
-        "Chrome, Dia, Brave, Arc에서는 Chrome 웹 스토어에서, Edge에서는 Microsoft Edge 추가 기능에서 설치하세요. 설치하면 환영 페이지가 열리며 바로 ⌘⇧K를 사용할 수 있습니다.",
-      keywords: ["Lumno 설치", "Lumno 크롬 웹 스토어", "Lumno Edge 추가 기능", "크롬 확장 프로그램 설치"],
+        "Chrome, Dia, Brave, Arc에서는 Chrome 웹 스토어에서, Edge에서는 Microsoft Edge 추가 기능에서, Firefox와 Zen에서는 Firefox 부가 기능에서 설치하세요. 설치하면 환영 페이지가 열리며 바로 ⌘⇧K를 사용할 수 있습니다.",
+      keywords: ["Lumno 설치", "Lumno 크롬 웹 스토어", "Lumno Edge 추가 기능", "Lumno Firefox 부가 기능", "크롬 확장 프로그램 설치"],
       title: "Lumno 설치하기",
       navTitle: "Lumno 설치하기",
       faq: [
         { question: "계정이 필요한가요?", answer: "아니요. Lumno에는 계정 시스템이 없으므로 설치 후 바로 사용할 수 있습니다." },
         {
           question: "어떻게 삭제하나요?",
-          answer: "chrome://extensions(Edge는 edge://extensions)를 열고 Lumno를 찾아 삭제를 클릭하세요. Lumno가 기기에 저장한 설정과 이미지도 함께 지워집니다.",
+          answer: "chrome://extensions(Edge는 edge://extensions)를 열고 Lumno를 찾아 삭제를 클릭하세요. Firefox에서는 about:addons에서 삭제할 수 있습니다. Lumno가 기기에 저장한 설정과 이미지도 함께 지워집니다.",
         },
       ],
     },
@@ -250,7 +250,7 @@ const content: GuideLocaleContent = {
     "browser-compatibility": {
       pageTitle: "브라우저 호환성: Chrome, Edge, Dia, Brave, Firefox, Safari | Lumno 도움말",
       pageDescription:
-        "Lumno는 Chrome, Edge, Brave, Arc, Vivaldi 등 Chromium 기반 브라우저에서 모든 기능이 작동합니다. Dia에서는 새 탭을 쓸 수 없고, Firefox 버전은 일부 기능이 빠져 있으며, Safari와 모바일 브라우저는 지원하지 않습니다.",
+        "Lumno는 Chrome, Edge, Brave, Arc, Vivaldi 등 Chromium 기반 브라우저에서 모든 기능이 작동합니다. Dia에서는 새 탭을 쓸 수 없고, Firefox 버전은 Firefox 부가 기능에 등록되어 있지만 일부 기능이 빠져 있으며, Safari와 모바일 브라우저는 지원하지 않습니다.",
       keywords: ["Lumno 호환성", "Dia 확장 프로그램", "Edge 확장 프로그램", "Firefox 버전", "Chromium 확장"],
       title: "브라우저 호환성",
       navTitle: "브라우저 호환성",
@@ -265,7 +265,7 @@ const content: GuideLocaleContent = {
     },
     "ratings-reviews": {
       pageTitle: "평점과 소개 기사: Chrome 웹 스토어 리뷰와 언론 소개 | Lumno 도움말",
-      pageDescription: "Chrome 웹 스토어에서 받은 Lumno의 평점과 리뷰, 그리고 Lumno를 소개한 기사를 정리했습니다.",
+      pageDescription: "Chrome 웹 스토어에서 받은 Lumno의 평점과 리뷰, Firefox 부가 기능 리뷰 페이지, 그리고 Lumno를 소개한 기사를 정리했습니다.",
       keywords: ["Lumno 리뷰", "Lumno 평점", "크롬 명령 바 확장 리뷰"],
       title: "평점과 소개 기사",
       navTitle: "평점과 소개 기사",

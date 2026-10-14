@@ -6,6 +6,10 @@ En Chrome Web Store, Lumno tiene una valoración de {{chromeRating}} sobre 5, ba
 
 Puedes leer las reseñas en la [página de reseñas de Chrome Web Store](https://chromewebstore.google.com/detail/nggfkkbmogmadfoikakkfegkoilfcfao/reviews). Si Lumno te ha resultado útil, te agradeceremos que dejes una reseña: es una gran ayuda para un proyecto pequeño e independiente.
 
+## Complementos de Firefox {#firefox-add-ons}
+
+Lumno también está disponible en Complementos de Firefox. Si usas Lumno en Firefox o Zen, puedes leer o dejar una reseña en la [página de reseñas de Complementos de Firefox](https://addons.mozilla.org/firefox/addon/lumno-command-bar-new-tab/reviews/).
+
 ## Prensa {#press}
 
 Ambos artículos están escritos en chino.

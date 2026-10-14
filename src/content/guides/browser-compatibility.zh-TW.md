@@ -8,7 +8,7 @@ Lumno 主要針對 Chromium 瀏覽器設計，同時提供 Firefox 版。下表�
 | Microsoft Edge | 支援 | 支援 | Edge 附加元件 |
 | Brave、[Arc](https://arc.net/)、Vivaldi、Opera | 支援 | 支援 | Chrome 線上應用程式商店 |
 | Dia | 支援 | 暫不可用 | Chrome 線上應用程式商店 |
-| Firefox、[Zen](https://zen-browser.app/) 等 | 部分支援 | 支援 | 見下文 |
+| Firefox、[Zen](https://zen-browser.app/) 等 | 部分支援 | 支援 | Firefox 附加元件 |
 | Safari | 不支援 | 不支援 | — |
 
 暫不支援手機和平板上的瀏覽器。
@@ -21,7 +21,7 @@ Dia 限制了擴充功能接管新分頁，因此 Lumno 的新分頁在 Dia 中�
 
 ## Firefox {#firefox}
 
-Firefox 版尚未在 Firefox 附加元件商店上架，上架後將在本網站提供安裝入口。它適用於 Firefox 140 以上版本，也可以在 Zen、LibreWolf、Floorp 等以 Firefox 為基礎的瀏覽器中使用。
+Firefox 版已在 [Firefox 附加元件](https://addons.mozilla.org/firefox/addon/lumno-command-bar-new-tab/)上架，適用於 Firefox 140 以上版本，也可以在 Zen、LibreWolf、Floorp 等以 Firefox 為基礎的瀏覽器中安裝使用。
 
 由於 Firefox 的擴充功能介面與 Chromium 有所不同，以下功能無法使用：
 

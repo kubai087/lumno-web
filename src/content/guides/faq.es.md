@@ -4,7 +4,7 @@ Aquí encontrarás las respuestas a las preguntas más frecuentes que recibimos 
 
 ### ¿Cuál es el atajo predeterminado? ¿Se puede cambiar?
 
-El atajo predeterminado es `⌘ ⇧ K | ⌘ ⇧ K` en el Mac y `Ctrl + Mayús + K` en Windows y Linux. Puedes cambiarlo en `chrome://extensions/shortcuts`. Para obtener más información, consulta [Atajos de teclado](../keyboard-shortcuts/#change).
+El atajo predeterminado es `⌘ ⇧ K | ⌘ ⇧ K` en el Mac y `Ctrl + Mayús + K` en Windows y Linux. Puedes cambiarlo en `chrome://extensions/shortcuts`. Para obtener más información, consulta [Atajos de teclado](../keyboard-shortcuts/#change). La versión para Firefox usa otro atajo predeterminado; consulta [Compatibilidad con navegadores](../browser-compatibility/#firefox).
 
 ### ¿Qué hago si el atajo no funciona?
 
@@ -36,7 +36,7 @@ Se debe a la opción "Automatically focus input": para colocar el cursor directa
 
 ### ¿Qué navegadores son compatibles?
 
-Lumno es compatible con navegadores Chromium como Chrome, Edge, Dia, Brave y Vivaldi. Safari todavía no es compatible. En Dia, la barra de comandos funciona, pero la nueva pestaña de Lumno aún no está disponible. Para obtener más información, consulta [Compatibilidad con navegadores](../browser-compatibility/).
+Lumno es compatible con navegadores Chromium como Chrome, Edge, Dia, Brave y Vivaldi, además de Firefox 140 o posterior y navegadores basados en Firefox como Zen. Safari todavía no es compatible. En Dia, la barra de comandos funciona, pero la nueva pestaña de Lumno aún no está disponible. En Firefox no están disponibles el recorte web ni la imagen en imagen automática. Para obtener más información, consulta [Compatibilidad con navegadores](../browser-compatibility/).
 
 ## Datos y sincronización {#data}
 

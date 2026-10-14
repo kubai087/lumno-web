@@ -6,8 +6,9 @@ Lumno は無料で、登録は不要です。ストアからインストール�
 | --- | --- |
 | Chrome、Dia、Brave、[Arc](https://arc.net/)、Vivaldi、Opera | [Chrome ウェブストア](https://chromewebstore.google.com/detail/nggfkkbmogmadfoikakkfegkoilfcfao) |
 | Microsoft Edge | [Microsoft Edge アドオン](https://microsoftedge.microsoft.com/addons/detail/pfbklkaefmfamjpibfiapaiihlddhchc) |
+| Firefox、[Zen](https://zen-browser.app/)、LibreWolf、Floorp | [Firefox アドオン](https://addons.mozilla.org/firefox/addon/lumno-command-bar-new-tab/) |
 
-ストアのページで「Chrome に追加」または「インストール」をクリックし、表示されたダイアログで確認します。Edge でも Chrome ウェブストアからインストールできます。
+ストアのページで「Chrome に追加」「インストール」または「Firefox へ追加」をクリックし、表示されたダイアログで確認します。Edge でも Chrome ウェブストアからインストールできます。
 
 ## インストールしたあと {#after-install}
 
@@ -19,10 +20,10 @@ Lumno は無料で、登録は不要です。ストアからインストール�
 
 ## コマンドバーを試す {#try}
 
-任意のページを開き、`⌘ ⇧ K` を押すと、コマンドバーが開きます。数文字入力して、開いているタブやブックマークを検索します。`Esc` キーを押すと閉じます。
+任意のページを開き、`⌘ ⇧ K` を押すと、コマンドバーが開きます。数文字入力して、開いているタブやブックマークを検索します。`Esc` キーを押すと閉じます。Firefox 版の初期設定のショートカットは `⌃ ⇧ K | Alt + K` です。
 
 ショートカットキーが反応しない場合は、[キーボードショートカット](../keyboard-shortcuts/)の確認方法を参照してください。
 
 ## ローカルファイルで使用する {#file-access}
 
-パソコン上の PDF や HTML ファイルでコマンドバーを開くには、`chrome://extensions` を開いて Lumno の詳細ページに移動し、「ファイルの URL へのアクセスを許可する」をオンにしてから、ファイルを再読み込みします。
+パソコン上の PDF や HTML ファイルでコマンドバーを開くには、`chrome://extensions` を開いて Lumno の詳細ページに移動し、「ファイルの URL へのアクセスを許可する」をオンにしてから、ファイルを再読み込みします。Firefox では拡張機能がローカルファイルにアクセスできないため、Firefox 版ではこうしたページでコマンドバーを開けません。

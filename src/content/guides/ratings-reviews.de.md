@@ -6,6 +6,10 @@ Im Chrome Web Store ist Lumno auf Grundlage von {{chromeRatingCount}} Bewertunge
 
 Die Rezensionen kannst du auf der [Bewertungsseite im Chrome Web Store](https://chromewebstore.google.com/detail/nggfkkbmogmadfoikakkfegkoilfcfao/reviews) lesen. Wenn Lumno dir geholfen hat, freuen wir uns über eine Bewertung. Für ein kleines, unabhängiges Projekt ist das eine große Unterstützung.
 
+## Firefox-Add-ons {#firefox-add-ons}
+
+Lumno ist auch auf Firefox-Add-ons verfügbar. Wenn du Lumno in Firefox oder Zen nutzt, kannst du auf der [Bewertungsseite bei Firefox-Add-ons](https://addons.mozilla.org/firefox/addon/lumno-command-bar-new-tab/reviews/) Rezensionen lesen oder selbst eine schreiben.
+
 ## Presse {#press}
 
 Beide Artikel sind auf Chinesisch.

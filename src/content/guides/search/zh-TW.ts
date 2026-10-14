@@ -51,7 +51,7 @@ export default {
   },
   install: {
     "": ["怎麼安裝？在哪裡下載？下載連結"],
-    store: ["Chrome 線上應用程式商店、Google 商店、Edge 商店在哪裡下載？裝不起來怎麼辦？"],
+    store: ["Chrome 線上應用程式商店、Google 商店、Edge 商店在哪裡下載？裝不起來怎麼辦？", "Firefox、火狐、Zen 怎麼安裝？Firefox 附加元件"],
     "after-install": ["裝好之後要做什麼？安裝後跳出的歡迎頁、導覽頁", "Chrome 詢問要不要保留變更、保留新分頁，選錯了怎麼辦？"],
     try: ["裝好之後怎麼用？第一次怎麼開啟？入門、上手"],
     "file-access": ["本機 PDF、本機 HTML 檔案裡怎麼用？允許存取檔案網址在哪裡？"],
@@ -206,6 +206,7 @@ export default {
   },
   "ratings-reviews": {
     "": ["評價如何？好用嗎？評分、口碑、評測、推薦"],
+    "firefox-add-ons": ["Firefox 附加元件的評分和評論、在火狐給 Lumno 評分"],
     press: ["少數派文章、媒體報導"],
     community: ["怎麼回報問題、提建議？社群、聯絡作者"],
   },

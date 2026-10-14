@@ -6,6 +6,10 @@ Lumno 在 Chrome 線上應用程式商店的評分為 {{chromeRating}} 分（滿
 
 如果想查看使用者評論，可以前往 [Chrome 線上應用程式商店的評論頁](https://chromewebstore.google.com/detail/nggfkkbmogmadfoikakkfegkoilfcfao/reviews)。如果 Lumno 對你有幫助，歡迎留下一則評論，這對一個獨立開發的小專案十分重要。
 
+## Firefox 附加元件 {#firefox-add-ons}
+
+Lumno 也已在 Firefox 附加元件上架。如果你在 Firefox 或 Zen 中使用 Lumno，可以前往 [Firefox 附加元件的評論頁](https://addons.mozilla.org/firefox/addon/lumno-command-bar-new-tab/reviews/)查看或留下評論。
+
 ## 媒體報導 {#press}
 
 - 少數派：[Lumno：一个精致的「搜索栏」，帮你重新整理浏览器的日常入口](https://sspai.com/post/111782)

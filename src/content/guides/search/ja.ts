@@ -51,7 +51,7 @@ export default {
   },
   install: {
     "": ["インストール方法、ダウンロード、入手方法"],
-    store: ["Chrome ウェブストア、Edge アドオン、拡張機能ストアからダウンロード。インストールできない"],
+    store: ["Chrome ウェブストア、Edge アドオン、拡張機能ストアからダウンロード。インストールできない", "Firefox や Zen でのインストール方法、Firefox アドオン"],
     "after-install": ["インストール後に開くようこそページ、オンボーディング", "Chrome に変更を保持するか聞かれて間違えて選んだ"],
     try: ["インストール後の使い方、はじめ方、最初の一歩"],
     "file-access": ["ローカルの PDF、HTML ファイルで使う、ファイルの URL へのアクセスを許可"],
@@ -205,6 +205,7 @@ export default {
   },
   "ratings-reviews": {
     "": ["評判、使い心地、評価、レビュー、おすすめ"],
+    "firefox-add-ons": ["Firefox アドオンの評価とレビュー、Firefox で Lumno を評価する"],
     press: ["紹介記事、メディア掲載"],
     community: ["不具合の報告、機能のリクエスト、コミュニティ、開発者への連絡"],
   },

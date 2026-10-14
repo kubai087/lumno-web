@@ -4,7 +4,7 @@ Aqui você encontra as respostas às perguntas mais frequentes que recebemos no 
 
 ### Qual é o atalho padrão? É possível alterá-lo?
 
-O atalho padrão é `⌘ ⇧ K | ⌘ ⇧ K` no Mac e `Ctrl + Shift + K` no Windows e no Linux. Você pode alterá-lo em `chrome://extensions/shortcuts`. Para saber mais, consulte [Atalhos de teclado](../keyboard-shortcuts/#change).
+O atalho padrão é `⌘ ⇧ K | ⌘ ⇧ K` no Mac e `Ctrl + Shift + K` no Windows e no Linux. Você pode alterá-lo em `chrome://extensions/shortcuts`. Para saber mais, consulte [Atalhos de teclado](../keyboard-shortcuts/#change). A versão para Firefox usa outro atalho padrão; consulte [Compatibilidade com navegadores](../browser-compatibility/#firefox).
 
 ### O que fazer se o atalho não funcionar?
 
@@ -36,7 +36,7 @@ Isso acontece por causa da opção "Automatically focus input": para colocar o c
 
 ### Quais navegadores são compatíveis?
 
-O Lumno é compatível com navegadores Chromium, como Chrome, Edge, Dia, Brave e Vivaldi. O Safari ainda não é compatível. No Dia, a barra de comandos funciona, mas a nova guia do Lumno ainda não está disponível. Para saber mais, consulte [Compatibilidade com navegadores](../browser-compatibility/).
+O Lumno é compatível com navegadores Chromium, como Chrome, Edge, Dia, Brave e Vivaldi, além do Firefox 140 ou mais recente e de navegadores baseados no Firefox, como o Zen. O Safari ainda não é compatível. No Dia, a barra de comandos funciona, mas a nova guia do Lumno ainda não está disponível. No Firefox, o recorte da web e o picture-in-picture automático não estão disponíveis. Para saber mais, consulte [Compatibilidade com navegadores](../browser-compatibility/).
 
 ## Dados e sincronização {#data}
 

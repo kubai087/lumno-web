@@ -4,7 +4,7 @@ Lumno のウェブサイトやコミュニティでよく寄せられる質問�
 
 ### 初期設定のショートカットは何ですか？ 変更できますか？
 
-初期設定のショートカットは、Mac では `⌘ ⇧ K | ⌘ ⇧ K`、Windows と Linux では `Ctrl + Shift + K` です。ショートカットは `chrome://extensions/shortcuts` で変更できます。詳しくは、[キーボードショートカット](../keyboard-shortcuts/#change)を参照してください。
+初期設定のショートカットは、Mac では `⌘ ⇧ K | ⌘ ⇧ K`、Windows と Linux では `Ctrl + Shift + K` です。ショートカットは `chrome://extensions/shortcuts` で変更できます。詳しくは、[キーボードショートカット](../keyboard-shortcuts/#change)を参照してください。Firefox 版は初期設定が異なります。[ブラウザ互換性](../browser-compatibility/#firefox)を参照してください。
 
 ### ショートカットキーが反応しない場合はどうすればよいですか？
 
@@ -36,7 +36,7 @@ Lumno のウェブサイトやコミュニティでよく寄せられる質問�
 
 ### どのブラウザで使用できますか？
 
-Chrome、Edge、Dia、Brave、Vivaldi などの Chromium 系ブラウザで使用できます。Safari には現在対応していません。Dia ではコマンドバーを使用できますが、新しいタブは使用できません。詳しくは、[ブラウザ互換性](../browser-compatibility/)を参照してください。
+Chrome、Edge、Dia、Brave、Vivaldi などの Chromium 系ブラウザのほか、Firefox 140 以降と Zen などの Firefox 系ブラウザで使用できます。Safari には現在対応していません。Dia ではコマンドバーを使用できますが、新しいタブは使用できません。Firefox では Webクリップと動画の自動ピクチャー・イン・ピクチャーを使用できません。詳しくは、[ブラウザ互換性](../browser-compatibility/)を参照してください。
 
 ## データと同期 {#data}
 

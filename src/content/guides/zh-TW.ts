@@ -43,7 +43,7 @@ const content: GuideLocaleContent = {
     "what-is-lumno": {
       pageTitle: "Lumno 是什麼：開源的瀏覽器命令列與新分頁擴充功能｜Lumno 說明中心",
       pageDescription:
-        "Lumno 是免費開源的瀏覽器擴充功能，在任何網頁按 ⌘⇧K 叫出命令列，搜尋分頁、書籤和瀏覽紀錄，直接在網站內搜尋或問 AI，還有可自訂的新分頁。支援 Chrome、Edge、Dia 等 Chromium 瀏覽器。",
+        "Lumno 是免費開源的瀏覽器擴充功能，在任何網頁按 ⌘⇧K 叫出命令列，搜尋分頁、書籤和瀏覽紀錄，直接在網站內搜尋或問 AI，還有可自訂的新分頁。支援 Chrome、Edge、Dia 等 Chromium 瀏覽器和 Firefox。",
       keywords: ["Lumno", "瀏覽器命令列", "Chrome 命令列擴充功能", "聚焦搜尋", "新分頁擴充功能", "Arc 命令列"],
       title: "Lumno 是什麼",
       navTitle: "Lumno 是什麼",
@@ -51,7 +51,7 @@ const content: GuideLocaleContent = {
         { question: "Lumno 要付費嗎？", answer: "不需要。Lumno 以 GPL-3.0 授權開源，所有功能免費使用，也不需要註冊帳號。" },
         {
           question: "Lumno 支援哪些瀏覽器？",
-          answer: "支援 Chrome、Edge、Dia、Brave、Arc、Vivaldi 等 Chromium 核心的瀏覽器，暫不支援 Safari。詳見「瀏覽器相容性」。",
+          answer: "支援 Chrome、Edge、Dia、Brave、Arc、Vivaldi 等 Chromium 核心的瀏覽器，以及 Firefox 和 Zen 等以 Firefox 為基礎的瀏覽器，暫不支援 Safari。詳見「瀏覽器相容性」。",
         },
       ],
     },
@@ -80,17 +80,17 @@ const content: GuideLocaleContent = {
       navTitle: "常見問題",
     },
     install: {
-      pageTitle: "安裝 Lumno：從 Chrome 線上應用程式商店或 Edge 附加元件安裝｜Lumno 說明中心",
+      pageTitle: "安裝 Lumno：從 Chrome 線上應用程式商店、Edge 附加元件或 Firefox 附加元件安裝｜Lumno 說明中心",
       pageDescription:
-        "在 Chrome、Dia、Brave、Arc 中從 Chrome 線上應用程式商店安裝 Lumno，在 Edge 中從 Microsoft Edge 附加元件安裝。安裝後會開啟歡迎頁，按 ⌘⇧K 即可開始使用。",
-      keywords: ["安裝 Lumno", "Lumno Chrome 線上應用程式商店", "Lumno Edge 附加元件", "安裝 Chrome 擴充功能"],
+        "在 Chrome、Dia、Brave、Arc 中從 Chrome 線上應用程式商店安裝 Lumno，在 Edge 中從 Microsoft Edge 附加元件安裝，在 Firefox 和 Zen 中從 Firefox 附加元件安裝。安裝後會開啟歡迎頁，按 ⌘⇧K 即可開始使用。",
+      keywords: ["安裝 Lumno", "Lumno Chrome 線上應用程式商店", "Lumno Edge 附加元件", "Lumno Firefox 附加元件", "安裝 Chrome 擴充功能"],
       title: "安裝 Lumno",
       navTitle: "安裝 Lumno",
       faq: [
         { question: "需要註冊帳號嗎？", answer: "不需要。Lumno 沒有帳號系統，安裝後即可使用。" },
         {
           question: "要怎麼移除？",
-          answer: "在 chrome://extensions（Edge 為 edge://extensions）找到 Lumno，按「移除」。移除後，擴充功能存在這台電腦上的設定和圖片也會一併刪除。",
+          answer: "在 chrome://extensions（Edge 為 edge://extensions）找到 Lumno，按「移除」；Firefox 則在 about:addons 中移除。移除後，擴充功能存在這台電腦上的設定和圖片也會一併刪除。",
         },
       ],
     },
@@ -236,7 +236,7 @@ const content: GuideLocaleContent = {
     "browser-compatibility": {
       pageTitle: "瀏覽器相容性：Chrome、Edge、Dia、Brave、Firefox 與 Safari｜Lumno 說明中心",
       pageDescription:
-        "Lumno 在 Chrome、Edge、Brave、Arc、Vivaldi 等 Chromium 瀏覽器中可以使用全部功能；Dia 無法使用新分頁；Firefox 版有部分限制；暫不支援 Safari 和手機瀏覽器。",
+        "Lumno 在 Chrome、Edge、Brave、Arc、Vivaldi 等 Chromium 瀏覽器中可以使用全部功能；Dia 無法使用新分頁；Firefox 版已在 Firefox 附加元件上架，有部分限制；暫不支援 Safari 和手機瀏覽器。",
       keywords: ["Lumno 相容性", "Dia 擴充功能", "Edge 擴充功能", "Firefox 版", "Chromium 擴充功能"],
       title: "瀏覽器相容性",
       navTitle: "瀏覽器相容性",
@@ -250,7 +250,7 @@ const content: GuideLocaleContent = {
     },
     "ratings-reviews": {
       pageTitle: "評分與評測：Chrome 線上應用程式商店評分和少數派報導｜Lumno 說明中心",
-      pageDescription: "Lumno 在 Chrome 線上應用程式商店的評分與評論，以及少數派對 Lumno 的介紹文章。",
+      pageDescription: "Lumno 在 Chrome 線上應用程式商店的評分與評論、Firefox 附加元件的評論頁，以及少數派對 Lumno 的介紹文章。",
       keywords: ["Lumno 評價", "Lumno 評分", "少數派 Lumno", "Chrome 命令列擴充功能推薦"],
       title: "評分與評測",
       navTitle: "評分與評測",

@@ -8,7 +8,7 @@ Lumno는 Chromium 기반 브라우저를 위해 개발되었으며, Firefox 버�
 | Microsoft Edge | 지원 | 지원 | Edge 추가 기능 |
 | Brave, [Arc](https://arc.net/), Vivaldi, Opera | 지원 | 지원 | Chrome 웹 스토어 |
 | Dia | 지원 | 아직 미지원 | Chrome 웹 스토어 |
-| Firefox, [Zen](https://zen-browser.app/) 등 | 일부 지원 | 지원 | 아래 참고 |
+| Firefox, [Zen](https://zen-browser.app/) 등 | 일부 지원 | 지원 | Firefox 부가 기능 |
 | Safari | 미지원 | 미지원 | — |
 
 휴대전화와 태블릿의 브라우저는 아직 지원하지 않습니다.
@@ -21,7 +21,7 @@ Dia에서는 확장 프로그램이 새 탭을 바꿀 수 없으므로 Lumno 새
 
 ## Firefox {#firefox}
 
-Firefox 버전은 아직 Firefox 부가 기능 사이트에 등록되지 않았습니다. 등록되면 이 사이트에서 설치 링크를 제공할 예정입니다. Firefox 140 이상과 Zen, LibreWolf, Floorp 등 Firefox 기반 브라우저를 지원합니다.
+Firefox 버전은 [Firefox 부가 기능](https://addons.mozilla.org/firefox/addon/lumno-command-bar-new-tab/)에 등록되어 있습니다. Firefox 140 이상에서 작동하며, Zen, LibreWolf, Floorp 등 Firefox 기반 브라우저에도 설치할 수 있습니다.
 
 Firefox의 확장 프로그램 API는 Chromium과 다르기 때문에 다음 기능은 사용할 수 없습니다.
 

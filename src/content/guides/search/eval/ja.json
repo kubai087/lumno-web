@@ -68,5 +68,7 @@
   { "q": "上部ブックマークバー", "expect": ["newtab-bookmarks-shortcuts#bookmark-layouts"] },
   { "q": "サイトカードを非表示", "expect": ["newtab-frequent-sites#card-rows"] },
   { "q": "サイトカードの行数", "expect": ["newtab-frequent-sites#card-rows"] },
-  { "q": "ショートカットを非表示", "expect": ["newtab-bookmarks-shortcuts#shortcuts"] }
+  { "q": "ショートカットを非表示", "expect": ["newtab-bookmarks-shortcuts#shortcuts"] },
+  { "q": "Firefox にインストール", "expect": ["install#store"] },
+  { "q": "Firefox アドオン レビュー", "expect": ["ratings-reviews#firefox-add-ons"] }
 ]

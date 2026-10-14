@@ -1,4 +1,4 @@
-Lumno es una extensión de navegador gratuita y de código abierto con dos funciones principales. Desde cualquier página, un atajo de teclado abre una barra de comandos que permite buscar en todo el navegador. Además, la nueva pestaña se convierte en una página de inicio clara y cuidada. Lumno funciona en Chrome, Edge, Dia, Brave y otros navegadores Chromium.
+Lumno es una extensión de navegador gratuita y de código abierto con dos funciones principales. Desde cualquier página, un atajo de teclado abre una barra de comandos que permite buscar en todo el navegador. Además, la nueva pestaña se convierte en una página de inicio clara y cuidada. Lumno funciona en Chrome, Edge, Dia, Brave y otros navegadores Chromium, así como en Firefox y navegadores basados en Firefox como Zen.
 
 ## La barra de comandos {#command-bar}
 

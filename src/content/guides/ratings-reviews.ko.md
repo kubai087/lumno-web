@@ -6,6 +6,10 @@ Lumno는 Chrome 웹 스토어에서 {{chromeRatingCount}}개의 평가를 바탕
 
 리뷰는 [Chrome 웹 스토어 리뷰 페이지](https://chromewebstore.google.com/detail/nggfkkbmogmadfoikakkfegkoilfcfao/reviews)에서 확인할 수 있습니다. Lumno가 도움이 되었다면 리뷰를 남겨 주세요. 개인이 개발하는 작은 프로젝트에 큰 힘이 됩니다.
 
+## Firefox 부가 기능 {#firefox-add-ons}
+
+Lumno는 Firefox 부가 기능에도 등록되어 있습니다. Firefox나 Zen에서 Lumno를 사용한다면 [Firefox 부가 기능 리뷰 페이지](https://addons.mozilla.org/firefox/addon/lumno-command-bar-new-tab/reviews/)에서 리뷰를 확인하거나 남길 수 있습니다.
+
 ## 소개 기사 {#press}
 
 두 기사 모두 중국어로 작성되었습니다.

@@ -51,7 +51,7 @@ export default {
   },
   install: {
     "": ["怎么安装？在哪下载？下载地址、安装包"],
-    store: ["Chrome 商店、谷歌商店、Edge 商店、扩展商店在哪下载？装不上、打不开商店怎么办？"],
+    store: ["Chrome 商店、谷歌商店、Edge 商店、扩展商店在哪下载？装不上、打不开商店怎么办？", "火狐、Firefox、Zen 怎么安装？Firefox 附加组件、火狐扩展商店"],
     "after-install": ["装完之后做什么？安装后弹出的欢迎页、引导页", "Chrome 问要不要保留更改、保留新标签页，选错了怎么办？"],
     try: ["装好之后怎么用？第一次怎么打开？入门、上手"],
     "file-access": ["本地 PDF、本地 HTML 文件里怎么用？允许访问文件网址在哪？"],
@@ -208,6 +208,7 @@ export default {
   },
   "ratings-reviews": {
     "": ["评价怎么样？好用吗？评分、口碑、测评、推荐"],
+    "firefox-add-ons": ["火狐商店评价、Firefox 附加组件评分、在 Firefox 里给 Lumno 打分"],
     press: ["少数派文章、媒体报道"],
     community: ["怎么反馈问题、提建议？交流群、用户群、联系作者"],
   },

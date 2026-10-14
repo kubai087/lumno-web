@@ -6,6 +6,10 @@ Lumno постоянно улучшается благодаря отзывам 
 
 Отзывы можно прочитать на [странице отзывов в Интернет-магазине Chrome](https://chromewebstore.google.com/detail/nggfkkbmogmadfoikakkfegkoilfcfao/reviews). Если Lumno оказался вам полезен, оставьте, пожалуйста, отзыв: для небольшого независимого проекта это очень важно.
 
+## Дополнения Firefox {#firefox-add-ons}
+
+Lumno также опубликован в каталоге дополнений Firefox. Если вы пользуетесь Lumno в Firefox или Zen, прочитать отзывы или оставить свой можно на [странице отзывов в каталоге дополнений Firefox](https://addons.mozilla.org/firefox/addon/lumno-command-bar-new-tab/reviews/).
+
 ## Публикации {#press}
 
 Обе статьи написаны на китайском языке.

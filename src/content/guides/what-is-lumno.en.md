@@ -1,4 +1,4 @@
-Lumno is a free, open-source browser extension with two main parts. Press a shortcut on any page to open a command bar that searches your whole browser, and get a clean, good-looking start page on every new tab. It works in Chrome, Edge, Dia, Brave and other Chromium browsers.
+Lumno is a free, open-source browser extension with two main parts. Press a shortcut on any page to open a command bar that searches your whole browser, and get a clean, good-looking start page on every new tab. It works in Chrome, Edge, Dia, Brave and other Chromium browsers, as well as Firefox and Firefox-based browsers like Zen.
 
 ## The command bar {#command-bar}
 

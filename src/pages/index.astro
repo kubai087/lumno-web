@@ -373,6 +373,9 @@ import LanguageScrollRestore from "../components/LanguageScrollRestore.astro";
             const demo = visual.closest(".hero-safari-demo");
             if (!demo || demo.dataset.introReady || demo.dataset.homeIntro !== "pending") return;
             const rect = slot.getBoundingClientRect();
+            // The layer sits in the card's box; this offset lifts it to the screen's top-left corner.
+            visual.style.setProperty("--hero-intro-target-left", `${rect.left.toFixed(2)}px`);
+            visual.style.setProperty("--hero-intro-target-top", `${rect.top.toFixed(2)}px`);
             visual.style.setProperty("--hero-intro-art-width", `${Math.max(innerWidth, rect.right).toFixed(2)}px`);
             visual.style.setProperty("--hero-intro-art-height", `${Math.max(innerHeight, rect.bottom).toFixed(2)}px`);
           };

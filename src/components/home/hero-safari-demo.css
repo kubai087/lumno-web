@@ -16,15 +16,16 @@
   filter: none;
 }
 
+/*
+ * The intro layer stays in the card's own box (absolute, not fixed) and the
+ * transform below lifts it over the viewport; the page is held at the top while
+ * it plays, so the result is the same. iOS 26 Safari tints its toolbars with any
+ * fixed element touching the screen edges and keeps that colour after the intro
+ * ends, which left a beige band behind the address bar and the status bar.
+ */
 .hero-safari-demo[data-home-intro="pending"] .hero-safari-visual,
 .hero-safari-demo[data-home-intro="revealing"] .hero-safari-visual {
-  position: fixed;
-  inset: auto;
-  top: var(--hero-intro-target-top, 24px);
-  left: var(--hero-intro-target-left, 24px);
   z-index: var(--home-z-intro, 40);
-  width: var(--hero-intro-target-width, calc(100vw - 48px));
-  height: var(--hero-intro-target-height, calc(100dvh - 48px));
   overflow: hidden;
   border-radius: 0;
   box-shadow: none;
@@ -110,11 +111,13 @@ html[data-home-intro-skip] .hero-safari-demo[data-home-intro="pending"] .hero-sa
 @media (prefers-reduced-motion: no-preference) {
   html[data-home-intro-js] .hero-safari-demo[data-home-intro="pending"]:not([data-intro-ready]) .hero-safari-visual {
     visibility: visible;
-    top: 0;
-    left: 0;
     width: 100vw;
     height: 100vh;
-    transform: none;
+    transform: translate3d(
+      calc(-1 * var(--hero-intro-target-left, 0px)),
+      calc(-1 * var(--hero-intro-target-top, 0px)),
+      0
+    );
   }
 
   html[data-home-intro-js] .hero-safari-demo[data-home-intro="pending"]:not([data-intro-ready]) .hero-safari-mask-content {

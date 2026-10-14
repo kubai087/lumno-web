@@ -108,7 +108,10 @@ test("homepage opens with a full-screen Search All demo and can settle early on 
   assert.match(styles, /\.hero-safari-demo \{[\s\S]*?position: relative;[\s\S]*?overflow: visible;/);
   assert.match(styles, /\.hero-safari-visual \{[\s\S]*?filter: none;/);
   assert.doesNotMatch(styles, /drop-shadow\(0 28px 50px/);
-  assert.match(styles, /\.hero-safari-demo\[data-home-intro="pending"\] \.hero-safari-visual,[\s\S]*?position: fixed;[\s\S]*?width: var\(--hero-intro-target-width/);
+  // iOS 26 Safari tints its toolbars with fixed elements at the screen edges, so the
+  // full-screen intro layer stays absolute in the card and a transform lifts it.
+  assert.doesNotMatch(styles, /position: fixed/);
+  assert.match(styles, /\.hero-safari-demo\[data-home-intro="pending"\] \.hero-safari-visual,[\s\S]*?z-index: var\(--home-z-intro/);
   assert.match(styles, /\.hero-safari-demo\[data-home-intro="pending"\] \.hero-safari-visual \{[\s\S]*?scale\([\s\S]*?--hero-intro-mask-scale-x/);
   assert.match(styles, /\.hero-safari-demo\[data-home-intro="pending"\] \.hero-safari-mask-content,[\s\S]*?--hero-intro-content-scale-x/);
   assert.match(styles, /\.hero-safari-demo\[data-home-intro="complete"\] \.hero-safari-mask-content \{[\s\S]*?--hero-intro-target-left/);

@@ -130,6 +130,13 @@ test("meta keywords stay in the page's language", () => {
   assert.match(seo, /operatingSystem: "Windows, macOS, Linux, ChromeOS"/);
 });
 
+test("missing addresses get a localized 404 page that search engines skip", () => {
+  const source = readSource("src/pages/404.astro");
+  assert.match(source, /<AuthLayout /); // noindex, nofollow
+  assert.match(source, /segments\[segment\]/);
+  assert.match(source, /GUIDE_LOCALES\.map/);
+});
+
 test("llms-full.txt carries the whole English help center", () => {
   const source = readSource("src/pages/llms-full.txt.ts");
   assert.match(source, /GUIDE_SLUGS\.map/);

@@ -1,0 +1,192 @@
+---
+import AuthLayout from "../layouts/AuthLayout.astro";
+import LocaleNormalizer from "../components/LocaleNormalizer.astro";
+import { DEFAULT_LOCALE, LOCALE_CONFIG, buildLocalizedPath, type SupportedLocale } from "../lib/locales";
+import { GUIDE_LOCALES, getGuideContent, getGuideNavTitle, getGuidePath, type GuideSlug } from "../lib/guides";
+
+/*
+ * GitHub Pages serves this one file for every missing address, in every
+ * language, with a 404 status. It renders in Simplified Chinese; the inline
+ * script switches it to the language of the address (/en/…, /ja/…), else the
+ * visitor's saved or browser language, before it paints.
+ */
+const copy: Record<SupportedLocale, { title: string; body: string; home: string; popular: string }> = {
+  "zh-CN": { title: "页面不存在", body: "这个链接可能已经失效，或者地址输错了。", home: "返回首页", popular: "常看的帮助页面" },
+  "zh-TW": { title: "找不到這個頁面", body: "這個連結可能已經失效，或是網址輸入有誤。", home: "返回首頁", popular: "常看的說明頁面" },
+  en: { title: "Page not found", body: "This link may have moved, or the address has a typo.", home: "Back to home", popular: "Popular help pages" },
+  ja: { title: "ページが見つかりません", body: "リンクが変わったか、アドレスが間違っている可能性があります。", home: "ホームに戻る", popular: "よく読まれているヘルプ" },
+  ko: { title: "페이지를 찾을 수 없습니다", body: "링크가 바뀌었거나 주소를 잘못 입력했을 수 있습니다.", home: "홈으로 돌아가기", popular: "자주 찾는 도움말" },
+  de: { title: "Seite nicht gefunden", body: "Der Link hat sich vielleicht geändert, oder die Adresse enthält einen Tippfehler.", home: "Zur Startseite", popular: "Beliebte Hilfeseiten" },
+  fr: { title: "Page introuvable", body: "Ce lien a peut-être changé, ou l’adresse contient une faute de frappe.", home: "Retour à l’accueil", popular: "Pages d’aide populaires" },
+  es: { title: "Página no encontrada", body: "Puede que el enlace haya cambiado o que la dirección tenga un error.", home: "Volver al inicio", popular: "Páginas de ayuda populares" },
+  "pt-BR": { title: "Página não encontrada", body: "O link pode ter mudado, ou o endereço foi digitado errado.", home: "Voltar ao início", popular: "Páginas de ajuda mais vistas" },
+  ru: { title: "Страница не найдена", body: "Возможно, ссылка изменилась или в адресе опечатка.", home: "На главную", popular: "Популярные разделы справки" },
+};
+const POPULAR_GUIDES: GuideSlug[] = ["search-tabs-bookmarks-history", "keyboard-shortcuts", "site-search", "arc-command-bar"];
+
+const pages = Object.fromEntries(
+  GUIDE_LOCALES.map((locale) => [
+    locale,
+    {
+      ...copy[locale],
+      documentTitle: `${copy[locale].title} | Lumno`,
+      homeHref: buildLocalizedPath(locale, "/"),
+      help: getGuideContent(locale).ui.navLabel,
+      helpHref: getGuidePath(locale),
+      guides: POPULAR_GUIDES.map((slug) => ({ title: getGuideNavTitle(locale, slug), href: getGuidePath(locale, slug) })),
+    },
+  ]),
+);
+const page = pages[DEFAULT_LOCALE];
+const segments = Object.fromEntries(
+  LOCALE_CONFIG.filter((item) => item.segment).map((item) => [item.segment, item.code]),
+);
+---
+
+<AuthLayout title={page.documentTitle} description={page.body} compact>
+  <LocaleNormalizer />
+  <script is:inline define:vars={{ pages, segments }}>
+    (() => {
+      const segment = window.location.pathname.split("/")[1]?.toLowerCase() || "";
+      let stored = "";
+      try {
+        stored = String(window.localStorage.getItem("_x_extension_language_2024_unique_") || "").trim();
+      } catch (_error) {
+        // Blocked storage falls through to the browser language.
+      }
+      const browserLanguage = (navigator.languages && navigator.languages[0]) || navigator.language || "en";
+      const preferred = stored && stored.toLowerCase() !== "system" ? stored : browserLanguage;
+      const locale = segments[segment] || window.__lumnoNormalizeLocale(preferred, "en");
+      window.__lumno404 = pages[locale] ? { locale, page: pages[locale] } : null;
+    })();
+  </script>
+
+  <section class="auth-card not-found" aria-labelledby="not-found-title">
+    <p class="not-found__code" aria-hidden="true">404</p>
+    <h1 id="not-found-title" data-404="title">{page.title}</h1>
+    <p class="not-found__body" data-404="body">{page.body}</p>
+    <div class="auth-actions not-found__actions">
+      <a class="auth-button auth-button-primary" href={page.homeHref} data-404-href="homeHref" data-404="home">{page.home}</a>
+      <a class="auth-button auth-button-secondary" href={page.helpHref} data-404-href="helpHref" data-404="help">{page.help}</a>
+    </div>
+    <nav class="not-found__popular" aria-labelledby="not-found-popular">
+      <p id="not-found-popular" data-404="popular">{page.popular}</p>
+      <ul>
+        {page.guides.map((guide, index) => (
+          <li>
+            <a href={guide.href} data-404-guide={index}>
+              <span>{guide.title}</span>
+              <i class="ri-arrow-right-s-line" aria-hidden="true"></i>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </section>
+
+  <script is:inline>
+    (() => {
+      const match = window.__lumno404;
+      if (!match || match.locale === document.documentElement.lang) return;
+      const { locale, page } = match;
+      document.documentElement.lang = locale;
+      document.title = page.documentTitle;
+      document.querySelectorAll("[data-404]").forEach((node) => {
+        node.textContent = page[node.getAttribute("data-404")];
+      });
+      document.querySelectorAll("[data-404-href]").forEach((node) => {
+        node.setAttribute("href", page[node.getAttribute("data-404-href")]);
+      });
+      document.querySelectorAll("[data-404-guide]").forEach((node) => {
+        const guide = page.guides[Number(node.getAttribute("data-404-guide"))];
+        node.setAttribute("href", guide.href);
+        node.querySelector("span").textContent = guide.title;
+      });
+      document.querySelectorAll(".auth-brand").forEach((node) => {
+        node.setAttribute("href", page.homeHref);
+        node.setAttribute("aria-label", page.home);
+      });
+    })();
+  </script>
+</AuthLayout>
+
+<style>
+  .not-found {
+    padding: clamp(28px, 4vw, 40px);
+    text-align: center;
+  }
+
+  .not-found__code {
+    margin: 0;
+    color: var(--auth-green);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+  }
+
+  .not-found h1 {
+    margin: 10px 0 0;
+    font-size: clamp(28px, 3.4vw, 36px);
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+    font-weight: 640;
+    text-wrap: balance;
+  }
+
+  .not-found__body {
+    margin: 14px auto 0;
+    max-width: 30em;
+    color: var(--auth-muted);
+    font-size: 14px;
+    line-height: 1.65;
+    text-wrap: pretty;
+  }
+
+  .not-found__actions {
+    margin-top: 26px;
+  }
+
+  .not-found__popular {
+    margin-top: 28px;
+    padding-top: 22px;
+    border-top: 1px solid var(--auth-line);
+    text-align: left;
+  }
+
+  .not-found__popular p {
+    margin: 0 0 8px;
+    color: var(--auth-muted);
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .not-found__popular ul {
+    display: grid;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .not-found__popular a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 0 -10px;
+    padding: 9px 10px;
+    border-radius: 10px;
+    color: var(--auth-ink);
+    font-size: 14px;
+    text-decoration: none;
+    transition: background-color 160ms ease;
+  }
+
+  .not-found__popular a:hover {
+    background: rgba(79, 115, 92, 0.08);
+  }
+
+  .not-found__popular i {
+    color: var(--auth-soft);
+    font-size: 18px;
+  }
+</style>

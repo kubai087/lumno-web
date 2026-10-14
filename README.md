@@ -36,7 +36,7 @@ npm run preview
 
 当前会追踪的关键点击包括：
 
-- Chrome Web Store 安装入口
+- Chrome 应用商店、Microsoft Edge 加载项和 Firefox 附加组件的安装入口
 - GitHub 仓库入口
 - Discord 社区入口
 - `/release/` 页面内的 GitHub Release 外链

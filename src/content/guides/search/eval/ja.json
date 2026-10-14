@@ -69,7 +69,7 @@
   { "q": "サイトカードを非表示", "expect": ["newtab-frequent-sites#card-rows"] },
   { "q": "サイトカードの行数", "expect": ["newtab-frequent-sites#card-rows"] },
   { "q": "ショートカットを非表示", "expect": ["newtab-bookmarks-shortcuts#shortcuts"] },
-  { "q": "Firefox にインストール", "expect": ["install#store", "faq#compatibility"] },
+  { "q": "Firefox にインストール", "expect": ["install#store", "faq#compatibility", "browser-compatibility#firefox"] },
   { "q": "Firefox アドオン レビュー", "expect": ["ratings-reviews#firefox-add-ons"] },
   { "q": "Firefox 版の違い", "expect": ["faq#compatibility", "browser-compatibility#firefox"] },
   { "q": "スマホで使える", "expect": ["faq#compatibility", "browser-compatibility#support", "limitations#browsers"] }

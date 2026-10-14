@@ -51,7 +51,8 @@ Lumno 不要求注册或登录，不收集你的姓名、邮箱、电话、地�
 | `storage`、`unlimitedStorage` | 保存设置、缓存、自定义图片和 WebDAV 所需的本机配置，不受浏览器默认存储容量限制。 |
 | `alarms` | 在后台定期检查 WebDAV 同步状态。 |
 | `search` | 把你提交的查询交给浏览器默认搜索引擎。 |
-| `favicon` | 通过浏览器能力显示网站图标。 |
+| `favicon`（仅 Chromium 版） | 通过浏览器能力显示网站图标。 |
+| `sessions`（仅 Firefox 版） | 新标签页为把焦点交给搜索框而重新打开时，把被替换的标签页从「最近关闭」中移除。 |
 | `scripting` 与 `<all_urls>` 网站访问权限 | 在网页中提供命令浮层、快捷键、选中文字操作、画中画和进度追踪，把你的查询填入你选择的 AI 或搜索服务页面，获取网站图标与壁纸图片，并访问你配置的 WebDAV 地址。 |
 
 广泛的网站访问权限仅用于上述功能，不代表 Lumno 会批量读取、收集或上传网页内容。
@@ -174,7 +175,7 @@ Lumno 面向一般用户，并非专为未成年人设计，也不会有意收�
 
 Lumno 不运营存放用户数据的服务器，因此不会把你的数据传输到由 Lumno 控制的系统。浏览器厂商、你选择的搜索、AI、WebDAV 与图片服务，以及 GitHub、VibeLoft 和 Google Analytics，可能在你所在国家或地区以外处理数据，并适用各自的隐私政策和数据传输机制。
 
-## 13. Chrome 应用商店用户数据政策
+## 13. 应用商店用户数据政策
 
 Lumno 对从浏览器 API 获取的信息的使用，遵守 [Chrome Web Store User Data Policy](https://developer.chrome.com/docs/webstore/program-policies/policies)，包括其中的 **Limited Use**（有限使用）要求：
 
@@ -182,6 +183,8 @@ Lumno 对从浏览器 API 获取的信息的使用，遵守 [Chrome Web Store Us
 - 仅在完成你发起的操作时，把必需的数据发送给第 4 节所列的服务；
 - 不将这些数据出售、转让给第三方，不用于个性化广告，不用于确定信用资质或放贷；
 - 开发者无法访问你的浏览数据和配置内容。
+
+Firefox 版同样遵守 Mozilla 的[附加组件政策](https://extensionworkshop.com/documentation/publish/add-on-policies/)：只传输功能所需的数据，且只把这些数据用于传输时的用途。
 
 ## 14. 本政策的变更
 

@@ -51,7 +51,8 @@ The extension requests only the permissions these features need, and no optional
 | `storage`, `unlimitedStorage` | Store settings, caches, custom images, and the local configuration WebDAV sync needs, beyond the browser's default storage quota. |
 | `alarms` | Check WebDAV sync status periodically in the background. |
 | `search` | Hand the queries you submit to your browser's default search engine. |
-| `favicon` | Show website icons through the browser. |
+| `favicon` (Chromium only) | Show website icons through the browser. |
+| `sessions` (Firefox only) | When the new tab reopens itself to move focus into its search box, remove the replaced tab from Recently Closed. |
 | `scripting` and `<all_urls>` site access | Provide the command bar, shortcuts, selection actions, picture-in-picture, and progress tracking on web pages; fill your query into the AI or search service you choose; fetch website icons and wallpaper images; and reach the WebDAV address you configure. |
 
 Broad site access is used only for the features above. It does not mean Lumno reads, collects, or uploads page content in bulk.
@@ -174,7 +175,7 @@ Lumno is intended for a general audience, is not designed for children, and does
 
 Lumno runs no servers that store user data, so your data is never transferred to systems Lumno controls. Browser vendors, the search, AI, WebDAV, and image services you choose, and GitHub, VibeLoft, and Google Analytics may process data outside your country or region under their own privacy policies and transfer mechanisms.
 
-## 13. Chrome Web Store User Data Policy
+## 13. Store User Data Policies
 
 Lumno's use of information received from browser APIs adheres to the [Chrome Web Store User Data Policy](https://developer.chrome.com/docs/webstore/program-policies/policies), including the **Limited Use** requirements:
 
@@ -182,6 +183,8 @@ Lumno's use of information received from browser APIs adheres to the [Chrome Web
 - Data is sent to the services listed in Section 4 only as needed to complete actions you start.
 - The data is never sold or transferred to third parties, used for personalized advertising, or used to determine creditworthiness or for lending.
 - The developer cannot access your browsing data or settings.
+
+The Firefox version also follows Mozilla's [Add-on Policies](https://extensionworkshop.com/documentation/publish/add-on-policies/): it transmits only the data its features need and uses that data only for the purpose it was transmitted for.
 
 ## 14. Changes to This Policy
 

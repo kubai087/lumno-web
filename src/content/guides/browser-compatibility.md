@@ -11,7 +11,7 @@ Lumno 主要面向 Chromium 浏览器，同时提供 Firefox 版。下表列出�
 | Firefox、[Zen](https://zen-browser.app/) 等 | 部分支持 | 支持 | Firefox 附加组件 |
 | Safari | 不支持 | 不支持 | — |
 
-暂不支持手机和平板上的浏览器。
+暂不支持手机和平板上的浏览器。如果你在手机上打开了本网站，且手机已登录 Google 账号，可以先点击安装；之后打开电脑上登录同一 Google 账号并开启同步的 Chrome，Lumno 会自动同步安装。
 
 ## Dia {#dia}
 

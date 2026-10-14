@@ -19,8 +19,8 @@ Lumno 不运营存放用户数据的服务器。若重新引入账号、云端�
 
 | 政策事实 | 代码或配置来源 |
 | --- | --- |
-| 扩展权限与页面访问范围 | `lumno-extension/manifest.json` |
-| 应用商店数据披露 | `lumno-extension/docs/chrome-web-store-data-disclosure.md` |
+| 扩展权限与页面访问范围 | `lumno-extension/manifest.json`；Firefox 版在 `scripts/build-firefox.js` 中去掉 `favicon`、加上 `sessions` |
+| 应用商店数据披露 | `lumno-extension/docs/chrome-web-store-data-disclosure.md`；Firefox 附加组件按 `scripts/build-firefox.js` 中的 `data_collection_permissions` 披露 |
 | WebDAV 同步范围、凭据存储与服务器文件 | `lumno-extension/docs/webdav-sync.md`、`src/background/webdav-sync.js`、`src/shared/webdav-contract.js` |
 | 搜索建议、AI 与 favicon 网络请求 | `lumno-extension/src/background/background.js`、`ai-provider-submit.js`、`src/shared/favicon-utils.js` |
 | 更新提示与社区链接请求 | `lumno-extension/src/shared/update-notice.js`、`src/shared/community-links.js` |
@@ -38,14 +38,14 @@ Lumno 不运营存放用户数据的服务器。若重新引入账号、云端�
 4. 改变默认同意状态、账号要求、同步方式、媒体上传行为或本机 / 云端边界；
 5. 改变项目区域、服务商、保存期限、匿名汇总方式、备份或删除流程；
 6. 新增广告、变现、数据交易、画像或自动化决策；
-7. Chrome Web Store、适用法律或服务商数据条款发生实质变化；
+7. Chrome Web Store、Firefox 附加组件政策、适用法律或服务商数据条款发生实质变化；
 8. 用户请求流程、安全措施或联系人发生变化。
 
 ## 发布前检查
 
 1. 从简体中文事实源更新繁体中文和英文，不通过逐句机器直译替代法律含义复核；
 2. 对照 Manifest、WebDAV 实现、应用商店数据披露和官网脚本重新核对“收集什么、为何使用、给谁、保存多久、如何删除”；
-3. 确认 Chrome Web Store Privacy practices、商店描述、产品内显著披露和本政策完全一致；
+3. 确认 Chrome Web Store Privacy practices、Firefox 版 Manifest 的 `data_collection_permissions`、商店描述、产品内显著披露和本政策完全一致；
 4. 对新采集确认其对扩展单一用途确有必要，并在采集前提供显著披露与适用的明确同意；
 5. 更新 `src/lib/privacy-content.ts` 中的 `PRIVACY_LAST_UPDATED` 与 `PRIVACY_POLICY_VERSION`；章节增减时同步 `PRIVACY_SECTION_IDS`（三种语言的 `##` 章节数必须一致）；运行隐私页测试、完整测试和静态构建；
 6. 检查三种语言的链接、表格、移动端表格横向滚动、目录高亮和顶部导航的语言切换；

@@ -48,7 +48,7 @@ Chrome, Edge, Dia, Brave, Vivaldi 등 Chromium 기반 브라우저와 Firefox 14
 
 ### Safari나 휴대폰에서도 사용할 수 있나요?
 
-아직 지원하지 않습니다. Safari의 확장 프로그램 구조는 Chromium과 크게 달라 Safari 버전은 제공하지 않으며, 휴대폰과 태블릿 브라우저도 지원하지 않습니다. 자세한 내용은 [브라우저 호환성](../browser-compatibility/#safari)을 참고하세요.
+아직 지원하지 않습니다. Safari의 확장 프로그램 구조는 Chromium과 크게 달라 Safari 버전은 제공하지 않으며, 휴대폰과 태블릿 브라우저도 지원하지 않습니다. 휴대전화에서 이 사이트를 보고 있고 Google 계정에 로그인되어 있다면 먼저 설치를 눌러 두세요. 나중에 같은 Google 계정으로 로그인하고 동기화를 켠 컴퓨터에서 Chrome을 열면 Lumno가 자동으로 설치됩니다. 자세한 내용은 [브라우저 호환성](../browser-compatibility/#safari)을 참고하세요.
 
 ## 데이터와 동기화 {#data}
 

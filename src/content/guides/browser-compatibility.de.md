@@ -11,7 +11,7 @@ Lumno wurde für Chromium-Browser entwickelt und ist zusätzlich als Firefox-Ver
 | Firefox, [Zen](https://zen-browser.app/) und andere | Teilweise | Ja | Firefox-Add-ons |
 | Safari | Nein | Nein | — |
 
-Browser auf Smartphones und Tablets werden derzeit nicht unterstützt.
+Browser auf Smartphones und Tablets werden derzeit nicht unterstützt. Wenn du diese Seite auf einem Smartphone liest, das mit deinem Google-Konto angemeldet ist, kannst du Lumno schon jetzt installieren: Sobald du Chrome auf einem Computer öffnest, der mit demselben Konto angemeldet ist und synchronisiert, wird Lumno automatisch installiert.
 
 ## Dia {#dia}
 

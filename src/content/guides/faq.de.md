@@ -48,7 +48,7 @@ Ja. Diese Browser nutzen die Firefox-Version, die du über [Firefox-Add-ons](htt
 
 ### Funktioniert Lumno in Safari oder auf dem Smartphone?
 
-Noch nicht. Das Erweiterungssystem von Safari unterscheidet sich stark von Chromium, daher gibt es keine Safari-Version von Lumno. Browser auf Smartphones und Tablets werden ebenfalls nicht unterstützt. Weitere Informationen findest du unter [Browserkompatibilität](../browser-compatibility/#safari).
+Noch nicht. Das Erweiterungssystem von Safari unterscheidet sich stark von Chromium, daher gibt es keine Safari-Version von Lumno. Browser auf Smartphones und Tablets werden ebenfalls nicht unterstützt. Wenn du diese Seite auf einem Smartphone liest, das mit deinem Google-Konto angemeldet ist, kannst du Lumno schon jetzt installieren: Sobald du Chrome auf einem Computer öffnest, der mit demselben Konto angemeldet ist und synchronisiert, wird Lumno automatisch installiert. Weitere Informationen findest du unter [Browserkompatibilität](../browser-compatibility/#safari).
 
 ## Daten und Synchronisierung {#data}
 

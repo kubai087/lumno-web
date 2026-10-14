@@ -110,8 +110,8 @@ test("privacy policy has the same fifteen standard sections in every language", 
   assert.match(zhCn, /## 1\. 适用范围与我们的身份/);
   assert.match(zhTw, /## 1\. 適用範圍與我們的身分/);
   assert.match(en, /## 1\. Scope and Who We Are/);
-  assert.match(zhCn, /## 13\. Chrome 应用商店用户数据政策/);
-  assert.match(en, /## 13\. Chrome Web Store User Data Policy/);
+  assert.match(zhCn, /## 13\. 应用商店用户数据政策/);
+  assert.match(en, /## 13\. Store User Data Policies/);
   assert.match(zhCn, /## 15\. 联系我们/);
   assert.match(zhTw, /## 15\. 聯絡我們/);
   assert.match(en, /## 15\. Contact Us/);
@@ -135,11 +135,13 @@ test("privacy policy discloses all material data paths and maintenance-sensitive
     assert.match(policy, /sor\.html5\.qq\.com/, file);
     // No Lumno backend since 0.9.40: no hosted accounts, cloud store, or telemetry to disclose.
     assert.doesNotMatch(policy, /Supabase|reCAPTCHA|Resend|`identity`/, file);
-    for (const permission of ["tabs", "tabGroups", "history", "bookmarks", "topSites", "storage", "unlimitedStorage", "alarms", "search", "favicon", "scripting"]) {
+    // `favicon` is Chromium-only and `sessions` Firefox-only; the table covers both builds.
+    for (const permission of ["tabs", "tabGroups", "history", "bookmarks", "topSites", "storage", "unlimitedStorage", "alarms", "search", "favicon", "sessions", "scripting"]) {
       assert.match(policy, new RegExp(`\`${permission}\``), `${file} should explain ${permission}`);
     }
     assert.match(policy, /Chrome Web Store User Data Policy/, file);
     assert.match(policy, /Limited Use/, file);
+    assert.match(policy, /extensionworkshop\.com\/documentation\/publish\/add-on-policies/, file);
     assert.match(policy, /i@kubai\.design/, file);
   }
 });

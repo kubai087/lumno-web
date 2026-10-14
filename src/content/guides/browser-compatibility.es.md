@@ -11,7 +11,7 @@ Lumno está diseñado para navegadores Chromium y también tiene una versión pa
 | Firefox, [Zen](https://zen-browser.app/) y otros | En parte | Sí | Complementos de Firefox |
 | Safari | No | No | — |
 
-Los navegadores de teléfonos y tabletas todavía no son compatibles.
+Los navegadores de teléfonos y tabletas todavía no son compatibles. Si estás viendo este sitio en un móvil con tu cuenta de Google, puedes tocar instalar ya: Lumno se instalará solo la próxima vez que abras Chrome en un ordenador con la misma cuenta y la sincronización activada.
 
 ## Dia {#dia}
 

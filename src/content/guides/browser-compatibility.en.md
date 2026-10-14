@@ -11,7 +11,7 @@ Lumno is built for Chromium browsers and also has a Firefox version. The table b
 | Firefox, [Zen](https://zen-browser.app/) and others | Partly | Yes | Firefox Add-ons |
 | Safari | No | No | — |
 
-Browsers on phones and tablets aren't supported yet.
+Browsers on phones and tablets aren't supported yet. If you're reading this on a phone signed in to your Google account, you can tap install now: Lumno installs itself the next time you open Chrome on a computer signed in to the same account with sync on.
 
 ## Dia {#dia}
 

@@ -51,7 +51,8 @@ L’extension ne demande que les autorisations nécessaires à ces fonctionnalit
 | `storage`, `unlimitedStorage` | Enregistrer les réglages, les caches, les images personnalisées et la configuration locale nécessaire à la synchronisation WebDAV, au-delà du quota par défaut du navigateur. |
 | `alarms` | Vérifier périodiquement l’état de la synchronisation WebDAV en arrière-plan. |
 | `search` | Transmettre vos requêtes au moteur de recherche par défaut du navigateur. |
-| `favicon` | Afficher les icônes des sites via le navigateur. |
+| `favicon` (Chromium uniquement) | Afficher les icônes des sites via le navigateur. |
+| `sessions` (Firefox uniquement) | Lorsque le nouvel onglet se rouvre pour placer le curseur dans son champ de recherche, retirer l’onglet remplacé des onglets récemment fermés. |
 | `scripting` et accès aux sites `<all_urls>` | Fournir la barre de commande, les raccourcis, les actions sur la sélection, le picture-in-picture et le suivi de progression sur les pages web&nbsp;; saisir votre requête dans le service d’IA ou de recherche choisi&nbsp;; récupérer les icônes de sites et les images de fond&nbsp;; joindre l’adresse WebDAV que vous configurez. |
 
 L’accès étendu aux sites ne sert qu’aux fonctionnalités ci-dessus. Il ne signifie pas que Lumno lit, collecte ou envoie en masse le contenu des pages.
@@ -174,7 +175,7 @@ Lumno s’adresse au grand public, n’est pas conçu pour les enfants et ne col
 
 Lumno n’exploite aucun serveur stockant des données d’utilisateurs&nbsp;: vos données ne sont donc jamais transférées vers des systèmes contrôlés par Lumno. Les éditeurs de navigateurs, les services de recherche, d’IA, WebDAV et d’images que vous choisissez, ainsi que GitHub, VibeLoft et Google Analytics, peuvent traiter des données hors de votre pays ou région selon leurs propres politiques de confidentialité et mécanismes de transfert.
 
-## 13. Règles relatives aux données utilisateur du Chrome Web Store
+## 13. Règles des boutiques relatives aux données utilisateur
 
 L’utilisation par Lumno des informations reçues des API du navigateur respecte les [règles relatives aux données utilisateur du Chrome Web Store](https://developer.chrome.com/docs/webstore/program-policies/policies), y compris les exigences d’**utilisation limitée** (Limited Use)&nbsp;:
 
@@ -182,6 +183,8 @@ L’utilisation par Lumno des informations reçues des API du navigateur respect
 - Les données ne sont envoyées aux services listés à la section&nbsp;4 que dans la mesure nécessaire pour exécuter les actions que vous lancez.
 - Les données ne sont jamais vendues ni transférées à des tiers, ni utilisées pour de la publicité personnalisée, ni pour évaluer la solvabilité ou à des fins de prêt.
 - Le développeur n’a pas accès à vos données de navigation ni à vos réglages.
+
+La version Firefox respecte également les [règles relatives aux modules complémentaires](https://extensionworkshop.com/documentation/publish/add-on-policies/) de Mozilla&nbsp;: elle ne transmet que les données nécessaires à ses fonctionnalités et ne les utilise qu’aux fins pour lesquelles elles ont été transmises.
 
 ## 14. Modifications de la présente Politique
 

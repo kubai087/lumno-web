@@ -48,7 +48,7 @@ Yes. They use the Firefox version: install it from [Firefox Add-ons](https://add
 
 ### Does it work in Safari or on my phone?
 
-Not yet. Safari's extension system is very different from Chromium's, so there's no Safari version of Lumno, and browsers on phones and tablets aren't supported. See [Browser compatibility](../browser-compatibility/#safari).
+Not yet. Safari's extension system is very different from Chromium's, so there's no Safari version of Lumno, and browsers on phones and tablets aren't supported. If you're reading this on a phone signed in to your Google account, you can tap install now: Lumno installs itself the next time you open Chrome on a computer signed in to the same account with sync on. See [Browser compatibility](../browser-compatibility/#safari).
 
 ## Data and sync {#data}
 

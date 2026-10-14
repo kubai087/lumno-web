@@ -48,7 +48,7 @@
 
 ### Safari 和手机浏览器能用吗？
 
-暂不支持。Safari 的扩展体系与 Chromium 差异较大，Lumno 暂时没有 Safari 版，也不支持手机和平板上的浏览器。详见[浏览器兼容性](../browser-compatibility/#safari)。
+暂不支持。Safari 的扩展体系与 Chromium 差异较大，Lumno 暂时没有 Safari 版，也不支持手机和平板上的浏览器。如果你在手机上打开了本网站，且手机已登录 Google 账号，可以先点击安装；之后打开电脑上登录同一 Google 账号并开启同步的 Chrome，Lumno 会自动同步安装。详见[浏览器兼容性](../browser-compatibility/#safari)。
 
 ## 数据与同步 {#data}
 

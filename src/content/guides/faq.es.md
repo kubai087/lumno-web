@@ -48,7 +48,7 @@ Sí. Estos navegadores usan la versión para Firefox: instálala desde [Compleme
 
 ### ¿Funciona en Safari o en el móvil?
 
-Todavía no. El sistema de extensiones de Safari es muy distinto del de Chromium, así que no hay una versión de Lumno para Safari, y los navegadores de móviles y tabletas no son compatibles. Para obtener más información, consulta [Compatibilidad con navegadores](../browser-compatibility/#safari).
+Todavía no. El sistema de extensiones de Safari es muy distinto del de Chromium, así que no hay una versión de Lumno para Safari, y los navegadores de móviles y tabletas no son compatibles. Si estás viendo este sitio en un móvil con tu cuenta de Google, puedes tocar instalar ya: Lumno se instalará solo la próxima vez que abras Chrome en un ordenador con la misma cuenta y la sincronización activada. Para obtener más información, consulta [Compatibilidad con navegadores](../browser-compatibility/#safari).
 
 ## Datos y sincronización {#data}
 

@@ -11,7 +11,7 @@ Lumno는 Chromium 기반 브라우저를 위해 개발되었으며, Firefox 버�
 | Firefox, [Zen](https://zen-browser.app/) 등 | 일부 지원 | 지원 | Firefox 부가 기능 |
 | Safari | 미지원 | 미지원 | — |
 
-휴대전화와 태블릿의 브라우저는 아직 지원하지 않습니다.
+휴대전화와 태블릿의 브라우저는 아직 지원하지 않습니다. 휴대전화에서 이 사이트를 보고 있고 Google 계정에 로그인되어 있다면 먼저 설치를 눌러 두세요. 나중에 같은 Google 계정으로 로그인하고 동기화를 켠 컴퓨터에서 Chrome을 열면 Lumno가 자동으로 설치됩니다.
 
 ## Dia {#dia}
 

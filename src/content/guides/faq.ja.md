@@ -48,7 +48,7 @@ Chrome、Edge、Dia、Brave、Vivaldi などの Chromium 系ブラウザのほ�
 
 ### Safari やスマートフォンでは使えますか？
 
-現在は対応していません。Safari の拡張機能の仕組みは Chromium と大きく異なるため、Lumno の Safari 版は提供しておらず、スマートフォンやタブレットのブラウザにも対応していません。詳しくは、[ブラウザ互換性](../browser-compatibility/#safari)を参照してください。
+現在は対応していません。Safari の拡張機能の仕組みは Chromium と大きく異なるため、Lumno の Safari 版は提供しておらず、スマートフォンやタブレットのブラウザにも対応していません。スマートフォンでこのサイトを開いていて、Google アカウントにログインしている場合は、先にインストールをタップしておけます。あとで同じ Google アカウントでログインし、同期をオンにしたパソコンの Chrome を開くと、Lumno が自動的にインストールされます。詳しくは、[ブラウザ互換性](../browser-compatibility/#safari)を参照してください。
 
 ## データと同期 {#data}
 

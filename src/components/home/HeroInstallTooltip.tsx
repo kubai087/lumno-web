@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+import type { InstallStore } from "../../lib/site-links";
 import { SettingsButton } from "../extension-settings/SettingsKit";
 import {
   Tooltip,
@@ -19,6 +21,17 @@ const BROWSER_LOGOS: ReadonlyArray<{
   { name: "Opera", src: "/assets/browser-logos/opera.webp" },
 ];
 const FIREFOX_LOGO = { name: "Firefox", src: "/assets/browser-logos/firefox.webp" };
+
+const STORE_ICON_CLASSES: Record<InstallStore, string> = {
+  chrome: "ri-chrome-fill",
+  edge: "ri-edge-new-fill",
+  firefox: "ri-firefox-fill",
+};
+const STORE_ANALYTICS_EVENTS: Record<InstallStore, string> = {
+  chrome: "open_chrome_web_store",
+  edge: "open_edge_addons",
+  firefox: "open_firefox_addons",
+};
 
 const BUTTERFLY_PATH_REST =
   "M4.3248 17.7823C1.22382 14.6398 -0.116749 10.2475 0.824858 6.7097C1.02033 5.97529 1.95363 5.98287 2.27212 6.67289L4.16024 10.7637C4.38415 11.2488 4.50011 11.7767 4.50011 12.311L4.50011 16L6.24277 16C7.66705 16 9.01155 16.6576 9.88596 17.7819L11.0831 19.3211C11.5044 19.8627 11.2076 20.6668 10.5235 20.7201C8.63849 20.8671 6.85452 20.3459 4.3248 17.7823Z";
@@ -74,8 +87,8 @@ const HERO_BUTTERFLY_MARK = (
 
 interface Props {
   label: string;
-  ariaLabel: string;
-  href: string;
+  ariaLabels: Record<InstallStore, string>;
+  hrefs: Record<InstallStore, string>;
   tooltipLabel: string;
   /** The hero's button keeps the default id: the nav install pill watches it scroll away. */
   id?: string;
@@ -86,8 +99,8 @@ interface Props {
 
 export function HeroInstallTooltip({
   label,
-  ariaLabel,
-  href,
+  ariaLabels,
+  hrefs,
   tooltipLabel,
   id = "hero-install-primary",
   analyticsLabel = "home_hero_install",
@@ -96,6 +109,15 @@ export function HeroInstallTooltip({
   const browserLogos = showFirefox
     ? BROWSER_LOGOS.flatMap((logo) => (logo.name === "Edge" ? [logo, FIREFOX_LOGO] : [logo]))
     : BROWSER_LOGOS;
+  // The server HTML links the Chrome Web Store; the homepage's head script names the visitor's
+  // store on <html data-install-store> (Edge, or Firefox once listed), which the link follows here.
+  // The icon follows the same attribute in CSS, so it is right from the first paint.
+  const [store, setStore] = useState<InstallStore>("chrome");
+  useEffect(() => {
+    const picked = document.documentElement.dataset.installStore;
+    if (picked === "edge" || (picked === "firefox" && showFirefox)) setStore(picked);
+  }, [showFirefox]);
+  const stores: InstallStore[] = showFirefox ? ["chrome", "edge", "firefox"] : ["chrome", "edge"];
   return (
     <TooltipProvider delayDuration={180} skipDelayDuration={100}>
       <Tooltip>
@@ -105,14 +127,22 @@ export function HeroInstallTooltip({
             id={id}
             variant="primary"
             className="hero-actions-button"
-            href={href}
+            href={hrefs[store]}
             target="_blank"
             rel="noreferrer noopener"
-            aria-label={ariaLabel}
-            data-analytics-event="open_chrome_web_store"
+            aria-label={ariaLabels[store]}
+            data-analytics-event={STORE_ANALYTICS_EVENTS[store]}
             data-analytics-category="conversion"
             data-analytics-label={analyticsLabel}
           >
+            {stores.map((iconStore) => (
+              <i
+                className={`${STORE_ICON_CLASSES[iconStore]} hero-install-store-icon`}
+                data-store={iconStore}
+                aria-hidden="true"
+                key={iconStore}
+              />
+            ))}
             {label}
             {HERO_BUTTERFLY_MARK}
           </SettingsButton>

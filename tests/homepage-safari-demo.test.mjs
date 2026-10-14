@@ -149,7 +149,13 @@ test("homepage hero exposes install and community actions below the subtitle", (
     /<p class="hero-description">[\s\S]*?<CopyLines text=\{content\.heroDescription\} \/>[\s\S]*?<div class="hero-actions">[\s\S]*?content\.heroInstallLabel[\s\S]*?community\.kind === "group"/,
   );
   // The tooltip only matters on hover, so it hydrates once the page is idle instead of competing with the demo.
-  assert.match(source, /<HeroInstallTooltip[^/]*?href=\{CHROME_STORE_URL\}[^/]*?client:idle/);
+  assert.match(source, /<HeroInstallTooltip[^/]*?hrefs=\{installStoreUrls\}[^/]*?client:idle/);
+  // Edge goes to Edge Add-ons, Firefox and its forks to Firefox Add-ons once listed, the rest (Safari too) to Chrome.
+  assert.match(source, /const installStoreUrls = \{ chrome: CHROME_STORE_URL, edge: EDGE_STORE_URL, firefox: FIREFOX_STORE_URL \}/);
+  assert.match(source, /define:vars=\{\{ firefoxListed \}\}[\s\S]*?"data-install-store"[\s\S]*?Edg\(\?:e\|A\|iOS\)[\s\S]*?"edge"[\s\S]*?firefoxListed && [\s\S]*?Firefox\|FxiOS[\s\S]*?"firefox"[\s\S]*?"chrome"/);
+  assert.match(installTooltip, /dataset\.installStore[\s\S]*?setStore\(picked\)/);
+  assert.match(installTooltip, /aria-label=\{ariaLabels\[store\]\}[\s\S]*?data-analytics-event=\{STORE_ANALYTICS_EVENTS\[store\]\}/);
+  assert.match(installTooltip, /hero-install-store-icon[\s\S]*?\{label\}/);
   assert.match(installTooltip, /<TooltipTrigger asChild>[\s\S]*?<SettingsButton[\s\S]*?variant="primary"/);
   assert.match(installTooltip, /<SettingsButton[\s\S]*?\{label\}[\s\S]*?\{HERO_BUTTERFLY_MARK\}/);
   // Chinese: join the group (the community panel). Elsewhere: the source on GitHub.
@@ -167,7 +173,7 @@ test("homepage hero exposes install and community actions below the subtitle", (
   assert.doesNotMatch(installTooltip, /lumno-selection-mark\.png/);
   assert.doesNotMatch(installTooltip, /iconClass=|ri-arrow-right-up-line/);
   // The closing CTA is the install button alone; the hero keeps the community entry.
-  assert.match(installTooltip, /analyticsLabel = "home_hero_install"[\s\S]*?href=\{href\}[\s\S]*?data-analytics-label=\{analyticsLabel\}/);
+  assert.match(installTooltip, /analyticsLabel = "home_hero_install"[\s\S]*?href=\{hrefs\[store\]\}[\s\S]*?data-analytics-label=\{analyticsLabel\}/);
   assert.match(source, /<FinalCta[\s\S]*?<HeroInstallTooltip[\s\S]*?id="final-install-primary"[\s\S]*?analyticsLabel="home_final_install"[\s\S]*?<\/FinalCta>/);
   assert.doesNotMatch(source.slice(source.indexOf("<FinalCta"), source.indexOf("</FinalCta>")), /CommunityTrigger/);
   assert.match(source, /\.hero-actions-button \{[\s\S]*?padding: 8px 16px;[\s\S]*?font-size: 14px;/);

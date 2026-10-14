@@ -1,6 +1,8 @@
 import { getStoreVersions } from "./store-versions";
 
 export { CHROME_STORE_URL, EDGE_STORE_URL, FIREFOX_STORE_URL } from "./seo";
+/** The store an install button sends a visitor to; the homepage picks it from their browser. */
+export type InstallStore = "chrome" | "edge" | "firefox";
 export const GITHUB_URL = "https://github.com/kubai087/lumno-extension";
 export const GITHUB_ISSUE_URL = `${GITHUB_URL}/issues/new/choose`;
 export const GITHUB_PULL_REQUEST_URL = `${GITHUB_URL}/compare`;

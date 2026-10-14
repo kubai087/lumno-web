@@ -47,6 +47,8 @@ import {
 import { GITHUB_ISSUE_URL, GITHUB_URL, getSiteStoreVersions } from "../lib/site-links";
 import {
   CHROME_STORE_URL,
+  EDGE_STORE_URL,
+  FIREFOX_STORE_URL,
   buildAlternateLinks,
   buildBreadcrumbListSchema,
   buildFAQPageSchema,
@@ -75,6 +77,7 @@ const uiLocale = forcedLocale || DEFAULT_LOCALE;
 // Firefox wording stays hidden until Firefox Add-ons lists Lumno.
 const { firefox: firefoxStoreVersion } = await getSiteStoreVersions();
 const firefoxListed = Boolean(firefoxStoreVersion);
+const installStoreUrls = { chrome: CHROME_STORE_URL, edge: EDGE_STORE_URL, firefox: FIREFOX_STORE_URL };
 const content = getHomeContent(uiLocale, { firefoxListed });
 const localeScript = getLocaleScript(uiLocale);
 // Chinese pages lead to the WeChat group; every other locale to GitHub and X (lib/community-panel.ts).
@@ -258,6 +261,21 @@ import LanguageScrollRestore from "../components/LanguageScrollRestore.astro";
       };
       window.setTimeout(liftStalledHomeIntro, 8000);
     </script>
+    <script is:inline define:vars={{ firefoxListed }}>
+      // The install buttons (HeroInstallTooltip.tsx) lead Edge to Edge Add-ons, and Firefox and its
+      // forks (Zen, LibreWolf, Floorp… all keep Firefox's user agent) to Firefox Add-ons once it lists
+      // Lumno. Everyone else, Safari included, gets the Chrome Web Store. Set before the first paint
+      // so the button's browser icon never swaps.
+      const installUserAgent = navigator.userAgent;
+      document.documentElement.setAttribute(
+        "data-install-store",
+        /\bEdg(?:e|A|iOS)?\//.test(installUserAgent)
+          ? "edge"
+          : firefoxListed && /\b(?:Firefox|FxiOS)\//.test(installUserAgent)
+            ? "firefox"
+            : "chrome",
+      );
+    </script>
     {/* The hero painting is the intro's whole first frame: fetch it first, ahead of the demo's JS. */}
     <link rel="preload" as="image" href="/assets/settings-bg-light-monet-newtab.webp" type="image/webp" fetchpriority="high" />
     {/* Its 32px stand-in paints the intro's first frame with the CSS (hero-safari-demo.css). Inline style: Vite's url() rewriting chokes on long data URIs. */}
@@ -316,8 +334,8 @@ import LanguageScrollRestore from "../components/LanguageScrollRestore.astro";
           <div class="hero-actions">
             <HeroInstallTooltip
               label={content.heroInstallLabel}
-              ariaLabel={content.heroInstallAria}
-              href={CHROME_STORE_URL}
+              ariaLabels={content.heroInstallAria}
+              hrefs={installStoreUrls}
               tooltipLabel={content.heroBrowserTooltipLabel}
               showFirefox={firefoxListed}
               client:idle
@@ -445,8 +463,8 @@ import LanguageScrollRestore from "../components/LanguageScrollRestore.astro";
           id="final-install-primary"
           analyticsLabel="home_final_install"
           label={content.heroInstallLabel}
-          ariaLabel={content.heroInstallAria}
-          href={CHROME_STORE_URL}
+          ariaLabels={content.heroInstallAria}
+          hrefs={installStoreUrls}
           tooltipLabel={content.heroBrowserTooltipLabel}
           showFirefox={firefoxListed}
           client:visible

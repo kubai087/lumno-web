@@ -1,3 +1,20 @@
+/* One icon per store; <html data-install-store> (set in the homepage's head) shows the visitor's. */
+.hero-install-store-icon {
+  display: none;
+  flex: 0 0 18px;
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+  line-height: 18px;
+  text-align: center;
+}
+
+:root:not([data-install-store="edge"]):not([data-install-store="firefox"]) .hero-install-store-icon[data-store="chrome"],
+:root[data-install-store="edge"] .hero-install-store-icon[data-store="edge"],
+:root[data-install-store="firefox"] .hero-install-store-icon[data-store="firefox"] {
+  display: inline-block;
+}
+
 .hero-install-butterfly {
   position: relative;
   display: inline-block;

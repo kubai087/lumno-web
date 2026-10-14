@@ -1,4 +1,4 @@
-import { LOCALE_CONFIG, SUPPORTED_UI_LANGUAGES, type SupportedLocale } from "./locales";
+import { DEFAULT_LOCALE, LOCALE_CONFIG, SUPPORTED_UI_LANGUAGES, type SupportedLocale } from "./locales";
 
 export const SITE_URL = "https://lumno.kubai.design";
 export const SITE_NAME = "Lumno";
@@ -28,80 +28,24 @@ const OG_LOCALE_BY_LOCALE: Partial<Record<string, string>> = Object.fromEntries(
 /** Languages the extension's own interface ships in (not the website's). */
 const EXTENSION_UI_LANGUAGES = ["zh-CN", "zh-TW", "en", "ja"];
 
-const CORE_KEYWORDS = [
-  "Lumno",
-  "浏览器命令栏",
-  "浏览器快捷命令",
-  "快捷命令浮层",
-  "聚焦搜索",
-  "浏览器搜索工具",
-  "新标签页",
-  "极简新标签页",
-  "标签页搜索",
-  "书签搜索",
-  "历史记录搜索",
-  "站内搜索",
-  "Chrome 扩展",
-  "Edge 扩展",
-  "Dia 浏览器",
-  "AI 搜索",
-  "划词问 AI",
-  "新标签页壁纸",
-  "browser command bar",
-  "browser command palette",
-  "focus search",
-  "new tab extension",
-  "ask AI from command bar",
-  "new tab wallpaper",
-];
-
-const EXTENDED_DISCOVERY_KEYWORDS = [
-  "Arc 浏览器替代",
-  "Arc 浏览器迁移",
-  "Dia 浏览器搜索",
-  "Chrome 标签页搜索",
-  "Edge 标签页搜索",
-  "书签搜索工具",
-  "历史记录搜索工具",
-  "浏览器效率扩展",
-  "Chrome 效率插件",
-  "Chrome 新标签页插件",
-  "ChatGPT 快捷入口",
-  "DeepSeek 快捷搜索",
-  "拼音搜索标签页",
-  "名画壁纸",
-  "瀏覽器命令欄",
-  "瀏覽器快捷命令",
-  "聚焦搜尋",
-  "分頁搜尋",
-  "書籤搜尋",
-  "歷史紀錄搜尋",
-  "站內搜尋",
-  "極簡新分頁",
-  "AI 搜尋",
-  "新分頁桌布",
-  "arc browser alternative",
-  "arc browser migration",
-  "arc style command bar",
-  "arc inspired browser search",
-  "command palette browser extension",
-  "global browser search",
-  "tab manager extension",
-  "bookmark manager search",
-  "history search extension",
-  "site search shortcut",
-  "Chrome command palette",
-  "Edge command bar extension",
-  "Dia browser extension",
-  "minimal browser new tab",
-  "open source Chrome extension",
-  "ChatGPT shortcut extension",
-  "ask AI about selected text",
-  "Chrome new tab wallpaper",
-  "Bing wallpaper new tab",
-  "Spotlight for Chrome",
-  "privacy friendly Chrome extension",
-];
+/*
+ * The site's search intents in each language (AGENTS.md): command bar, focus
+ * search, tab/bookmark/history/site search, minimalist new tab, Arc alternatives.
+ * One language per page and about ten terms each: a long mixed-language list
+ * reads as keyword stuffing to the engines that still read the tag (Bing, Baidu).
+ */
+const LOCALE_KEYWORDS: Record<SupportedLocale, string[]> = {
+  "zh-CN": ["Lumno", "浏览器命令栏", "聚焦搜索", "标签页搜索", "书签搜索", "历史记录搜索", "站内搜索", "极简新标签页", "Arc 浏览器替代", "Chrome 扩展"],
+  "zh-TW": ["Lumno", "瀏覽器命令列", "聚焦搜尋", "分頁搜尋", "書籤搜尋", "歷史紀錄搜尋", "站內搜尋", "極簡新分頁", "Arc 瀏覽器替代", "Chrome 擴充功能"],
+  en: ["Lumno", "browser command bar", "focus search", "tab search", "bookmark search", "history search", "site search", "minimal new tab", "Arc browser alternative", "Chrome extension"],
+  ja: ["Lumno", "ブラウザ コマンドバー", "コマンドパレット 拡張機能", "タブ検索", "ブックマーク検索", "履歴検索", "サイト内検索", "シンプル 新しいタブ", "Arc 代替", "Chrome 拡張機能"],
+  ko: ["Lumno", "브라우저 커맨드 바", "커맨드 팔레트 확장 프로그램", "탭 검색", "북마크 검색", "방문 기록 검색", "사이트 내 검색", "미니멀 새 탭", "Arc 대안", "크롬 확장 프로그램"],
+  de: ["Lumno", "Befehlsleiste Browser", "Command Palette Chrome-Erweiterung", "Tabs durchsuchen", "Lesezeichen durchsuchen", "Verlauf durchsuchen", "Seitensuche", "minimalistischer neuer Tab", "Arc Alternative", "Chrome-Erweiterung"],
+  fr: ["Lumno", "barre de commande navigateur", "palette de commandes extension Chrome", "recherche d’onglets", "recherche de favoris", "recherche dans l’historique", "recherche sur un site", "nouvel onglet minimaliste", "alternative à Arc", "extension Chrome"],
+  es: ["Lumno", "barra de comandos navegador", "paleta de comandos extensión Chrome", "buscar pestañas", "buscar marcadores", "buscar en el historial", "búsqueda en sitios", "nueva pestaña minimalista", "alternativa a Arc", "extensión de Chrome"],
+  "pt-BR": ["Lumno", "barra de comandos navegador", "paleta de comandos extensão Chrome", "pesquisar abas", "pesquisar favoritos", "pesquisar histórico", "pesquisa em sites", "nova aba minimalista", "alternativa ao Arc", "extensão do Chrome"],
+  ru: ["Lumno", "командная панель браузера", "палитра команд расширение Chrome", "поиск по вкладкам", "поиск по закладкам", "поиск по истории", "поиск по сайту", "минималистичная новая вкладка", "альтернатива Arc", "расширение Chrome"],
+};
 
 const PRODUCT_ALTERNATE_NAMES = [
   "Lumno Browser Command Bar",
@@ -121,113 +65,6 @@ const PRODUCT_ALTERNATE_NAMES = [
   "Lumno barra de comandos para navegador",
   "Lumno командная панель для браузера",
 ];
-
-/*
- * The same search intents in each newer language (AGENTS.md): command bar, focus
- * search, tab/bookmark/history/site search, minimalist new tab, Arc alternatives.
- */
-const LOCALIZED_KEYWORDS: Partial<Record<SupportedLocale, string[]>> = {
-  ja: [
-    "ブラウザ コマンドバー",
-    "コマンドパレット 拡張機能",
-    "タブ検索",
-    "ブックマーク検索",
-    "履歴検索",
-    "サイト内検索",
-    "新しいタブ 拡張機能",
-    "シンプル 新しいタブ",
-    "Arc 代替",
-    "Arc ブラウザ 移行",
-    "Chrome 拡張機能 おすすめ",
-    "選択テキスト AI 質問",
-    "新しいタブ 壁紙",
-  ],
-  ko: [
-    "브라우저 커맨드 바",
-    "커맨드 팔레트 확장 프로그램",
-    "탭 검색",
-    "북마크 검색",
-    "방문 기록 검색",
-    "사이트 내 검색",
-    "새 탭 확장 프로그램",
-    "미니멀 새 탭",
-    "Arc 대안",
-    "Arc 브라우저 대체",
-    "크롬 확장 프로그램 추천",
-    "선택한 텍스트 AI 질문",
-    "새 탭 배경화면",
-  ],
-  de: [
-    "Befehlsleiste Browser",
-    "Command Palette Chrome-Erweiterung",
-    "Tabs durchsuchen",
-    "Lesezeichen durchsuchen",
-    "Verlauf durchsuchen",
-    "Seitensuche",
-    "Neuer Tab Erweiterung",
-    "minimalistischer neuer Tab",
-    "Arc Alternative",
-    "Arc Browser Alternative",
-    "KI fragen Chrome-Erweiterung",
-    "neuer Tab Hintergrundbild",
-  ],
-  fr: [
-    "barre de commande navigateur",
-    "palette de commandes extension Chrome",
-    "recherche d’onglets",
-    "recherche de favoris",
-    "recherche dans l’historique",
-    "recherche sur un site",
-    "extension nouvel onglet",
-    "nouvel onglet minimaliste",
-    "alternative à Arc",
-    "alternative Arc Browser",
-    "demander à l’IA extension Chrome",
-    "nouvel onglet fond d’écran",
-  ],
-  es: [
-    "barra de comandos navegador",
-    "paleta de comandos extensión Chrome",
-    "buscar pestañas",
-    "buscar marcadores",
-    "buscar en el historial",
-    "búsqueda en sitios",
-    "extensión nueva pestaña",
-    "nueva pestaña minimalista",
-    "alternativa a Arc",
-    "alternativa a Arc Browser",
-    "preguntar a la IA extensión Chrome",
-    "nueva pestaña con fondos de pantalla",
-  ],
-  "pt-BR": [
-    "barra de comandos navegador",
-    "paleta de comandos extensão Chrome",
-    "pesquisar abas",
-    "pesquisar favoritos",
-    "pesquisar histórico",
-    "pesquisa em sites",
-    "extensão nova aba",
-    "nova aba minimalista",
-    "alternativa ao Arc",
-    "alternativa ao Arc Browser",
-    "perguntar à IA extensão Chrome",
-    "nova aba com papel de parede",
-  ],
-  ru: [
-    "командная панель браузера",
-    "палитра команд расширение Chrome",
-    "поиск по вкладкам",
-    "поиск по закладкам",
-    "поиск по истории",
-    "поиск по сайту",
-    "расширение новая вкладка",
-    "минималистичная новая вкладка",
-    "альтернатива Arc",
-    "аналог Arc Browser",
-    "спросить ИИ расширение Chrome",
-    "обои для новой вкладки",
-  ],
-};
 
 export function buildAbsoluteUrl(path: string): string {
   return new URL(path, SITE_URL).toString();
@@ -253,9 +90,14 @@ export function getOpenGraphLocale(locale: string): string {
   return OG_LOCALE_BY_LOCALE[locale] || "en_US";
 }
 
-export function buildKeywords(extra: string[] = [], locale?: SupportedLocale): string[] {
-  const localized = (locale && LOCALIZED_KEYWORDS[locale]) || [];
-  return Array.from(new Set([...localized, ...CORE_KEYWORDS, ...EXTENDED_DISCOVERY_KEYWORDS, ...extra]));
+/** The site's keywords in one language: the homepage's, and the schema's. */
+export function buildKeywords(locale: SupportedLocale = DEFAULT_LOCALE): string[] {
+  return LOCALE_KEYWORDS[locale];
+}
+
+/** A page's own keywords, in the page's language, after the brand. */
+export function buildPageKeywords(keywords: string[]): string[] {
+  return Array.from(new Set([SITE_NAME, ...keywords]));
 }
 
 export function buildOrganizationSchema() {
@@ -293,11 +135,14 @@ export function buildWebSiteSchema() {
 
 export function buildSoftwareApplicationSchema({
   description,
+  language,
   version,
   rating,
   firefoxListed = false,
 }: {
   description: string;
+  /** The language of `description`; the keywords follow it. */
+  language?: SupportedLocale;
   version?: string;
   /** Chrome Web Store rating; only pass it where the page shows it. */
   rating?: { value: number; count: number };
@@ -316,7 +161,8 @@ export function buildSoftwareApplicationSchema({
     "@id": APP_ID,
     name: SITE_NAME,
     applicationCategory: "BrowserApplication",
-    operatingSystem: browsers,
+    // A browser extension runs wherever its browser does; the browsers themselves go in browserRequirements.
+    operatingSystem: "Windows, macOS, Linux, ChromeOS",
     browserRequirements: browsers,
     isAccessibleForFree: true,
     alternateName: PRODUCT_ALTERNATE_NAMES,
@@ -326,7 +172,7 @@ export function buildSoftwareApplicationSchema({
       priceCurrency: "USD",
     },
     description,
-    keywords: buildKeywords(),
+    keywords: buildKeywords(language),
     image: DEFAULT_OG_IMAGE,
     url: SITE_URL,
     downloadUrl: storeUrls,
@@ -385,7 +231,7 @@ export function buildWebPageSchema({
   name: string;
   description: string;
   path: string;
-  language?: string;
+  language?: SupportedLocale;
   mainEntity?: Record<string, unknown> | Array<Record<string, unknown>>;
 }) {
   return {
@@ -394,7 +240,7 @@ export function buildWebPageSchema({
     "@id": `${new URL(path, SITE_URL).toString()}#webpage`,
     name,
     description,
-    keywords: buildKeywords(),
+    keywords: buildKeywords(language),
     url: new URL(path, SITE_URL).toString(),
     inLanguage: language || SUPPORTED_UI_LANGUAGES,
     isPartOf: {

@@ -110,6 +110,33 @@ test("robots policy allows AI answer crawlers by default with an opt-out", () =>
   assert.match(source, /const aiCrawlerRule = allowAiCrawlers \? "Allow: \/" : "Disallow: \/";/);
 });
 
+test("robots lets Bytespider fetch pages for Doubao and Toutiao answers", () => {
+  const source = readSource("src/pages/robots.txt.ts");
+  const answerList = source.slice(source.indexOf("const aiAnswerCrawlers"), source.indexOf("const trainingOnlyCrawlers"));
+  assert.match(answerList, /"Bytespider"/);
+  assert.match(source, /const trainingOnlyCrawlers = \["CCBot"\];/);
+});
+
+test("meta keywords stay in the page's language", () => {
+  const seo = readSource("src/lib/seo.ts");
+  // One short list per language, no site-wide pile mixed into every page.
+  assert.match(seo, /const LOCALE_KEYWORDS: Record<SupportedLocale, string\[\]>/);
+  assert.doesNotMatch(seo, /CORE_KEYWORDS|EXTENDED_DISCOVERY_KEYWORDS/);
+  for (const file of ["src/pages/index.astro", "src/pages/release/index.astro", "src/pages/privacy/index.astro", "src/components/guides/GuideArticle.astro"]) {
+    // No Chinese terms hard-coded for every locale.
+    assert.doesNotMatch(readSource(file), /buildKeywords\(\s*\[/, file);
+  }
+  // A browser extension's operating systems, not its browsers.
+  assert.match(seo, /operatingSystem: "Windows, macOS, Linux, ChromeOS"/);
+});
+
+test("llms-full.txt carries the whole English help center", () => {
+  const source = readSource("src/pages/llms-full.txt.ts");
+  assert.match(source, /GUIDE_SLUGS\.map/);
+  assert.match(source, /getGuideSource\(slug, "en"\)/);
+  assert.match(readSource("src/pages/llms.txt.ts"), /\/llms-full\.txt/);
+});
+
 test("llms.txt endpoint summarizes Lumno for answer engines", () => {
   const source = readSource("src/pages/llms.txt.ts");
 

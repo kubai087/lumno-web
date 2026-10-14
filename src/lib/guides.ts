@@ -155,7 +155,7 @@ export function getGuideNavTitle(locale: GuideLocale, key: GuideNavKey): string 
 }
 
 // `⌃ ⇧ K | Alt K`: a key for each platform (GuideArticle); one copy when both are the same.
-const withPlatformKeys = (markdown: string) =>
+export const withPlatformKeys = (markdown: string) =>
   markdown.replace(/`([^`|]+) \| ([^`|]+)`/g, (_, mac, other) => (mac === other ? mac : `${mac} / ${other}`));
 
 /** Markdown reduced to plain text for the search index. */

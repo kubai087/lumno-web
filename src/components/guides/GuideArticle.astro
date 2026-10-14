@@ -24,7 +24,7 @@ import {
   SITE_NAME,
   buildBreadcrumbListSchema,
   buildFAQPageSchema,
-  buildKeywords,
+  buildPageKeywords,
   buildTechArticleSchema,
 } from "../../lib/seo";
 
@@ -206,7 +206,7 @@ const structuredData = [
   alternateLocales={GUIDE_LOCALES}
   title={page.pageTitle}
   description={page.pageDescription}
-  keywords={buildKeywords(page.keywords, locale)}
+  keywords={buildPageKeywords(page.keywords)}
   type="article"
   structuredData={structuredData}
   analyticsScope="guide"

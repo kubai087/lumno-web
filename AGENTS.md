@@ -26,6 +26,7 @@ Last updated: 2026-10-08
   - `/privacy` for the privacy policy (rendered inside the help center's frame in every language)
   - `/help/<slug>/` for the help center wiki (about Lumno, quick start, compatibility & trust); `/help/` redirects to the first page. It started at `/guides/`; every old `/guides/...` address redirects to its `/help/` page (src/pages/guides/)
   - `/onboarding` is retired (the extension ships its own onboarding); it redirects to `/`
+  - `/llms.txt` summarizes Lumno for answer engines; `/llms-full.txt` is the whole English help center as one Markdown document
 
 ## Multilingual SEO Workflow
 

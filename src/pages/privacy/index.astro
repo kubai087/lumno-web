@@ -9,7 +9,7 @@ import {
   PRIVACY_SECTION_IDS,
   getPrivacyContent,
 } from "../../lib/privacy-content";
-import { SITE_NAME, buildBreadcrumbListSchema, buildKeywords, buildWebPageSchema } from "../../lib/seo";
+import { SITE_NAME, buildBreadcrumbListSchema, buildPageKeywords, buildWebPageSchema } from "../../lib/seo";
 
 interface Props {
   forcedLocale?: SupportedLocale | null;
@@ -97,7 +97,7 @@ const policyHtml = (
   routeLanguageMap={routeLanguageMap}
   title={content.pageTitle}
   description={content.pageDescription}
-  keywords={buildKeywords(content.pageKeywords, uiLocale)}
+  keywords={buildPageKeywords(content.pageKeywords)}
   type="article"
   structuredData={structuredData}
   analyticsScope="privacy"

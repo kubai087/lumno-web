@@ -15,7 +15,7 @@ import {
   buildAlternateLinks,
   buildBreadcrumbListSchema,
   buildItemListSchema,
-  buildKeywords,
+  buildPageKeywords,
   buildSoftwareApplicationSchema,
   buildWebPageSchema,
   getOpenGraphLocale,
@@ -88,10 +88,19 @@ const pageDescriptionByLocale: Record<SupportedLocale, string> = {
 };
 const pageTitle = pageTitleByLocale[uiLocale];
 const pageDescription = pageDescriptionByLocale[uiLocale];
-const pageKeywords = buildKeywords(
-  ["Lumno 近期更新", "Lumno 更新日志", "Lumno changelog", "浏览器命令栏更新", "新标签页更新", "Dia 支持", "Arc 浏览器迁移"],
-  uiLocale,
-);
+const releaseKeywordsByLocale: Record<SupportedLocale, string[]> = {
+  "zh-CN": ["Lumno 更新日志", "Lumno 近期更新", "Lumno 版本", "浏览器命令栏更新", "新标签页更新"],
+  "zh-TW": ["Lumno 更新日誌", "Lumno 近期更新", "Lumno 版本", "瀏覽器命令列更新", "新分頁更新"],
+  en: ["Lumno changelog", "Lumno release notes", "Lumno version", "browser command bar updates", "new tab extension updates"],
+  ja: ["Lumno 更新履歴", "Lumno リリースノート", "Lumno バージョン", "ブラウザ コマンドバー アップデート"],
+  ko: ["Lumno 업데이트 내역", "Lumno 릴리스 노트", "Lumno 버전", "브라우저 커맨드 바 업데이트"],
+  de: ["Lumno Changelog", "Lumno Versionshinweise", "Lumno Version", "Befehlsleiste Browser Updates"],
+  fr: ["Lumno journal des modifications", "Lumno notes de version", "Lumno version", "barre de commande navigateur mises à jour"],
+  es: ["Lumno registro de cambios", "Lumno notas de la versión", "Lumno versión", "barra de comandos navegador novedades"],
+  "pt-BR": ["Lumno registro de alterações", "Lumno notas de versão", "Lumno versão", "barra de comandos navegador novidades"],
+  ru: ["Lumno список изменений", "Lumno примечания к выпуску", "Lumno версия", "командная панель браузера обновления"],
+};
+const pageKeywords = buildPageKeywords(releaseKeywordsByLocale[uiLocale]);
 
 /*
  * Interface strings for the notes. The extension can open this page in any
@@ -325,6 +334,7 @@ const {
 const structuredData = [
   buildSoftwareApplicationSchema({
     description: pageDescription,
+    language: uiLocale,
     version: latestReleaseVersion || undefined,
     firefoxListed: Boolean(firefoxStoreVersion),
   }),

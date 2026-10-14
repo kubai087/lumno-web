@@ -165,15 +165,13 @@ const pageDescriptionWithFirefoxByLocale: Record<SupportedLocale, string> = {
 };
 const pageTitle = pageTitleByLocale[uiLocale];
 const pageDescription = (firefoxListed ? pageDescriptionWithFirefoxByLocale : pageDescriptionByLocale)[uiLocale];
-const pageKeywords = buildKeywords(
-  ["浏览器快捷启动器", "Arc 浏览器迁移", "Arc 替代", "command palette", "tab search", "bookmark search", "history search"],
-  uiLocale,
-);
+const pageKeywords = buildKeywords(uiLocale);
 const structuredData = [
   buildOrganizationSchema(),
   buildWebSiteSchema(),
   buildSoftwareApplicationSchema({
     description: pageDescription,
+    language: uiLocale,
     rating: { value: chromeStoreReviews.averageRating, count: chromeStoreReviews.ratingCount },
     firefoxListed,
   }),
@@ -413,7 +411,7 @@ import LanguageScrollRestore from "../components/LanguageScrollRestore.astro";
         <NewTabSection content={content.newTab} locale={uiLocale} />
       </section>
 
-      <UtilitiesSection content={content.utilities} />
+      <UtilitiesSection content={content.utilities} locale={uiLocale} />
 
       <ChromeReviewMarquee
         eyebrow={content.reviews.eyebrow}

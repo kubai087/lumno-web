@@ -46,6 +46,8 @@ What Lumno is and isn't, step-by-step how-tos with real screenshots of the exten
 
 ${guideLines}
 
+The whole help center in English, as one Markdown document: ${SITE_URL}/llms-full.txt
+
 ## Short Description
 
 Lumno gives browser power users an Arc-inspired command bar without requiring them to switch browsers. It is useful for people moving from Arc to Dia or Chrome, and for anyone who wants one place to search open tabs, bookmarks, history, frequently visited pages, and supported site engines.

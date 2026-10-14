@@ -21,8 +21,10 @@ export const GET: APIRoute = async () => {
     "Perplexity-User",
     "Google-Extended",
     "DuckAssistBot",
+    // ByteDance's crawler also feeds Doubao and Toutiao search answers.
+    "Bytespider",
   ];
-  const trainingOnlyCrawlers = ["Bytespider", "CCBot"];
+  const trainingOnlyCrawlers = ["CCBot"];
   const body = [
     "# General crawlers",
     "User-agent: *",

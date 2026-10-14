@@ -74,5 +74,7 @@
   { "q": "卡片顯示兩行", "expect": ["newtab-frequent-sites#card-rows"] },
   { "q": "隱藏捷徑", "expect": ["newtab-bookmarks-shortcuts#shortcuts"] },
   { "q": "Firefox 怎麼安裝", "expect": ["install#store"] },
-  { "q": "火狐附加元件評論", "expect": ["ratings-reviews#firefox-add-ons"] }
+  { "q": "火狐附加元件評論", "expect": ["ratings-reviews#firefox-add-ons"] },
+  { "q": "Firefox 版有什麼差別", "expect": ["faq#compatibility", "browser-compatibility#firefox"] },
+  { "q": "手機能用嗎", "expect": ["faq#compatibility", "browser-compatibility#support", "limitations#browsers"] }
 ]

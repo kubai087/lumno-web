@@ -115,7 +115,7 @@ Third parties that may receive data:
 
 | Recipient | Data it may receive | Purpose |
 | --- | --- | --- |
-| Browser vendors (such as Google and Microsoft) | Settings in `chrome.storage.sync` and browser account metadata | Built-in sync of extension settings. |
+| Browser vendors (such as Google, Microsoft and Mozilla) | Settings in `chrome.storage.sync` and browser account metadata | Built-in sync of extension settings. |
 | Your WebDAV service (such as Jianguoyun, a NAS, or a self-hosted server) | Full configuration, icons, wallpapers, snapshots, and the username and app password used to sign in | Syncing settings and images as you configure. |
 | Search suggestion services (Section 4.1) | What you type and request metadata | Showing search suggestions. |
 | Search, AI, and website services you choose | Queries, selected text, and prompts you submit | Completing searches and AI actions you start. |

@@ -36,7 +36,19 @@ Cela est dû à l'option « Automatically focus input » : pour placer le cur
 
 ### Quels navigateurs sont pris en charge ?
 
-Lumno prend en charge les navigateurs Chromium comme Chrome, Edge, Dia, Brave et Vivaldi, ainsi que Firefox 140 et versions ultérieures et les navigateurs basés sur Firefox comme Zen. Safari n'est pas encore pris en charge. Dans Dia, la barre de commande fonctionne, mais le nouvel onglet de Lumno n'est pas encore disponible. Dans Firefox, la capture web et l'image dans l'image automatique ne sont pas disponibles. Pour en savoir plus, consultez [Compatibilité des navigateurs](../browser-compatibility/).
+Lumno prend en charge les navigateurs Chromium comme Chrome, Edge, Dia, Brave et Vivaldi, ainsi que Firefox 140 et versions ultérieures et les navigateurs basés sur Firefox comme Zen. Safari n'est pas encore pris en charge. Dans Dia, la barre de commande fonctionne, mais le nouvel onglet de Lumno n'est pas encore disponible. Pour en savoir plus, consultez [Compatibilité des navigateurs](../browser-compatibility/).
+
+### En quoi la version Firefox diffère-t-elle de la version Chrome ?
+
+Les fonctions principales sont les mêmes, à quelques limites de Firefox près : la capture web et l'image dans l'image automatique ne sont pas disponibles, la barre de commande ne s'ouvre ni sur les pages `about:`, ni sur le site des modules complémentaires, ni dans les fichiers locaux, et le raccourci par défaut est `⌃ ⇧ K | Alt + K`. Pour en savoir plus, consultez [Compatibilité des navigateurs](../browser-compatibility/#firefox).
+
+### Lumno fonctionne-t-il dans Zen, LibreWolf et les autres navigateurs basés sur Firefox ?
+
+Oui. Ces navigateurs utilisent la version Firefox, à installer depuis les [modules complémentaires Firefox](https://addons.mozilla.org/firefox/addon/lumno-command-bar-new-tab/). Le navigateur doit reposer sur Firefox 140 ou une version ultérieure.
+
+### Lumno fonctionne-t-il dans Safari ou sur mobile ?
+
+Pas encore. Le système d'extensions de Safari est très différent de celui de Chromium : il n'existe donc pas de version Safari de Lumno, et les navigateurs sur téléphone et tablette ne sont pas pris en charge. Pour en savoir plus, consultez [Compatibilité des navigateurs](../browser-compatibility/#safari).
 
 ## Données et synchronisation {#data}
 

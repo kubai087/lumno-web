@@ -46,7 +46,7 @@ export default {
       "怎么关掉这个插件的新标签页？怎么把新标签页换回 Chrome 默认、恢复默认、换回原来的",
       "新标签页地址栏显示扩展网址、chrome-extension 网址怎么办？",
     ],
-    compatibility: ["支持什么浏览器？Edge、Brave、Dia、Safari 能用吗？"],
+    compatibility: ["支持什么浏览器？Edge、Brave、Dia、Safari 能用吗？", "Firefox 版和 Chrome 版有什么区别？火狐版少了什么功能？Zen、LibreWolf 能用吗？手机能用吗？"],
     data: ["会不会上传数据、偷数据？安全吗？", "同步不了、怎么同步设置？"],
   },
   install: {

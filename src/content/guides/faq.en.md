@@ -36,7 +36,19 @@ This happens when "Automatically focus input" is on: to place your cursor direct
 
 ### Which browsers are supported?
 
-Lumno supports Chromium browsers such as Chrome, Edge, Dia, Brave and Vivaldi, plus Firefox 140 or later and Firefox-based browsers like Zen. Safari isn't supported yet. In Dia, the command bar works, but Lumno's new tab isn't available yet. Firefox doesn't support Web clip or Auto picture-in-picture. See [Browser compatibility](../browser-compatibility/).
+Lumno supports Chromium browsers such as Chrome, Edge, Dia, Brave and Vivaldi, plus Firefox 140 or later and Firefox-based browsers like Zen. Safari isn't supported yet. In Dia, the command bar works, but Lumno's new tab isn't available yet. See [Browser compatibility](../browser-compatibility/).
+
+### How is the Firefox version different from the Chrome version?
+
+The main features are the same, with a few Firefox limits: Web clip and Auto picture-in-picture aren't available, the command bar can't open on `about:` pages, the add-ons site or local files, and the default shortcut is `⌃ ⇧ K | Alt + K`. See [Browser compatibility](../browser-compatibility/#firefox).
+
+### Does it work in Zen, LibreWolf and other Firefox-based browsers?
+
+Yes. They use the Firefox version: install it from [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/lumno-command-bar-new-tab/). The browser needs a Firefox 140 or later engine.
+
+### Does it work in Safari or on my phone?
+
+Not yet. Safari's extension system is very different from Chromium's, so there's no Safari version of Lumno, and browsers on phones and tablets aren't supported. See [Browser compatibility](../browser-compatibility/#safari).
 
 ## Data and sync {#data}
 

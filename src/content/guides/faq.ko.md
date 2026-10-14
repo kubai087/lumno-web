@@ -36,7 +36,19 @@ Lumno 웹사이트와 커뮤니티에서 자주 묻는 질문과 답변을 정�
 
 ### 어떤 브라우저를 지원하나요?
 
-Chrome, Edge, Dia, Brave, Vivaldi 등 Chromium 기반 브라우저와 Firefox 140 이상, Zen 같은 Firefox 기반 브라우저를 지원합니다. Safari는 아직 지원하지 않습니다. Dia에서는 명령 바를 사용할 수 있지만 Lumno 새 탭은 아직 사용할 수 없고, Firefox에서는 웹 클립과 자동 PIP를 사용할 수 없습니다. 자세한 내용은 [브라우저 호환성](../browser-compatibility/)을 참고하세요.
+Chrome, Edge, Dia, Brave, Vivaldi 등 Chromium 기반 브라우저와 Firefox 140 이상, Zen 같은 Firefox 기반 브라우저를 지원합니다. Safari는 아직 지원하지 않습니다. Dia에서는 명령 바를 사용할 수 있지만 Lumno 새 탭은 아직 사용할 수 없습니다. 자세한 내용은 [브라우저 호환성](../browser-compatibility/)을 참고하세요.
+
+### Firefox 버전은 Chrome 버전과 무엇이 다른가요?
+
+주요 기능은 같고, Firefox의 제약으로 몇 가지만 다릅니다. 웹 클립과 자동 PIP를 사용할 수 없고, `about:` 페이지, 부가 기능 사이트, 로컬 파일에서는 명령 바를 열 수 없으며, 기본 단축키는 `⌃ ⇧ K | Alt + K`입니다. 자세한 내용은 [브라우저 호환성](../browser-compatibility/#firefox)을 참고하세요.
+
+### Zen, LibreWolf 등 Firefox 기반 브라우저에서도 사용할 수 있나요?
+
+네. 이런 브라우저에서는 Firefox 버전을 사용하며, [Firefox 부가 기능](https://addons.mozilla.org/firefox/addon/lumno-command-bar-new-tab/)에서 설치하면 됩니다. Firefox 140 이상 엔진이 필요합니다.
+
+### Safari나 휴대폰에서도 사용할 수 있나요?
+
+아직 지원하지 않습니다. Safari의 확장 프로그램 구조는 Chromium과 크게 달라 Safari 버전은 제공하지 않으며, 휴대폰과 태블릿 브라우저도 지원하지 않습니다. 자세한 내용은 [브라우저 호환성](../browser-compatibility/#safari)을 참고하세요.
 
 ## 데이터와 동기화 {#data}
 

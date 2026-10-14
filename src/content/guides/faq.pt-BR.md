@@ -36,7 +36,19 @@ Isso acontece por causa da opção "Automatically focus input": para colocar o c
 
 ### Quais navegadores são compatíveis?
 
-O Lumno é compatível com navegadores Chromium, como Chrome, Edge, Dia, Brave e Vivaldi, além do Firefox 140 ou mais recente e de navegadores baseados no Firefox, como o Zen. O Safari ainda não é compatível. No Dia, a barra de comandos funciona, mas a nova guia do Lumno ainda não está disponível. No Firefox, o recorte da web e o picture-in-picture automático não estão disponíveis. Para saber mais, consulte [Compatibilidade com navegadores](../browser-compatibility/).
+O Lumno é compatível com navegadores Chromium, como Chrome, Edge, Dia, Brave e Vivaldi, além do Firefox 140 ou mais recente e de navegadores baseados no Firefox, como o Zen. O Safari ainda não é compatível. No Dia, a barra de comandos funciona, mas a nova guia do Lumno ainda não está disponível. Para saber mais, consulte [Compatibilidade com navegadores](../browser-compatibility/).
+
+### Qual é a diferença entre a versão para Firefox e a versão para Chrome?
+
+Os principais recursos são os mesmos, com algumas limitações do Firefox: o recorte da web e o picture-in-picture automático não estão disponíveis, a barra de comandos não abre em páginas `about:`, no site de complementos nem em arquivos locais, e o atalho padrão é `⌃ ⇧ K | Alt + K`. Para saber mais, consulte [Compatibilidade com navegadores](../browser-compatibility/#firefox).
+
+### Funciona no Zen, no LibreWolf e em outros navegadores baseados no Firefox?
+
+Sim. Esses navegadores usam a versão para Firefox: instale-a pelos [Complementos do Firefox](https://addons.mozilla.org/firefox/addon/lumno-command-bar-new-tab/). O navegador precisa usar o motor do Firefox 140 ou mais recente.
+
+### Funciona no Safari ou no celular?
+
+Ainda não. O sistema de extensões do Safari é muito diferente do Chromium, por isso não existe uma versão do Lumno para Safari, e navegadores de celulares e tablets não são compatíveis. Para saber mais, consulte [Compatibilidade com navegadores](../browser-compatibility/#safari).
 
 ## Dados e sincronização {#data}
 

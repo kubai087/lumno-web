@@ -36,7 +36,19 @@
 
 ### 支持哪些浏览器？
 
-支持 Chrome、Edge、Dia、Brave、Vivaldi 等 Chromium 内核浏览器，以及 Firefox 140 及以上版本和 Zen 等基于 Firefox 的浏览器，暂不支持 Safari。在 Dia 中可以使用命令栏，但新标签页暂不可用；Firefox 中无法使用网页剪裁和视频自动画中画。详见[浏览器兼容性](../browser-compatibility/)。
+支持 Chrome、Edge、Dia、Brave、Vivaldi 等 Chromium 内核浏览器，以及 Firefox 140 及以上版本和 Zen 等基于 Firefox 的浏览器，暂不支持 Safari。在 Dia 中可以使用命令栏，但新标签页暂不可用。详见[浏览器兼容性](../browser-compatibility/)。
+
+### Firefox 版和 Chrome 版有什么不同？
+
+主要功能相同，只有几处受 Firefox 的限制：无法使用网页剪裁和视频自动画中画；不能在 `about:` 页面、附加组件网站和本地文件中唤出命令栏；默认快捷键改为 `⌃ ⇧ K | Alt + K`。详见[浏览器兼容性](../browser-compatibility/#firefox)。
+
+### Zen、LibreWolf 等基于 Firefox 的浏览器能用吗？
+
+可以。这些浏览器使用 Firefox 版，从 [Firefox 附加组件](https://addons.mozilla.org/firefox/addon/lumno-command-bar-new-tab/)安装即可，内核需要 Firefox 140 及以上版本。
+
+### Safari 和手机浏览器能用吗？
+
+暂不支持。Safari 的扩展体系与 Chromium 差异较大，Lumno 暂时没有 Safari 版，也不支持手机和平板上的浏览器。详见[浏览器兼容性](../browser-compatibility/#safari)。
 
 ## 数据与同步 {#data}
 

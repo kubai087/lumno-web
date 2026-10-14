@@ -88,5 +88,7 @@
   { "q": "two rows of site cards", "expect": ["newtab-frequent-sites#card-rows"] },
   { "q": "hide shortcuts", "expect": ["newtab-bookmarks-shortcuts#shortcuts"] },
   { "q": "install on firefox", "expect": ["install#store"] },
-  { "q": "firefox add-ons reviews", "expect": ["ratings-reviews#firefox-add-ons"] }
+  { "q": "firefox add-ons reviews", "expect": ["ratings-reviews#firefox-add-ons"] },
+  { "q": "firefox version differences", "expect": ["faq#compatibility", "browser-compatibility#firefox"] },
+  { "q": "does it work on my phone", "expect": ["faq#compatibility", "browser-compatibility#support", "limitations#browsers"] }
 ]

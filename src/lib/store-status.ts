@@ -7,8 +7,8 @@ import type { SupportedLocale } from "./locales";
 export type StoreStatus = "published" | "reviewing";
 export type StoreId = "chrome" | "edge" | "firefox";
 
-/** The first release on Firefox Add-ons: older releases get no Firefox status. */
-export const FIREFOX_FIRST_RELEASE = "0.9.61";
+/** The first release Firefox Add-ons published (0.9.61 was never listed): older releases get no Firefox status. */
+export const FIREFOX_FIRST_RELEASE = "1.0.0";
 
 /** The short status each store chip reads, per language. */
 export const STORE_STATUS_LABELS: Record<SupportedLocale, Record<StoreStatus, string>> = {

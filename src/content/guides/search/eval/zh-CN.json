@@ -109,5 +109,7 @@
   { "q": "移除某个网站卡片", "expect": ["newtab-frequent-sites#card-rows"] },
   { "q": "隐藏快捷方式", "expect": ["newtab-bookmarks-shortcuts#shortcuts"] },
   { "q": "火狐怎么安装", "expect": ["install#store"] },
-  { "q": "Firefox 商店评价", "expect": ["ratings-reviews#firefox-add-ons"] }
+  { "q": "Firefox 商店评价", "expect": ["ratings-reviews#firefox-add-ons"] },
+  { "q": "火狐版有什么区别", "expect": ["faq#compatibility", "browser-compatibility#firefox"] },
+  { "q": "手机能用吗", "expect": ["faq#compatibility", "browser-compatibility#support", "limitations#browsers"] }
 ]

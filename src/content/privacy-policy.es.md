@@ -115,7 +115,7 @@ Terceros que pueden recibir datos:
 
 | Destinatario | Datos que puede recibir | Finalidad |
 | --- | --- | --- |
-| Fabricantes de navegadores (como Google y Microsoft) | Ajustes en `chrome.storage.sync` y metadatos de la cuenta del navegador | Sincronización integrada de los ajustes de la extensión. |
+| Fabricantes de navegadores (como Google, Microsoft y Mozilla) | Ajustes en `chrome.storage.sync` y metadatos de la cuenta del navegador | Sincronización integrada de los ajustes de la extensión. |
 | Tu servicio WebDAV (como Jianguoyun, un NAS o un servidor propio) | Configuración completa, iconos, fondos, instantáneas y el nombre de usuario y la contraseña de aplicación usados para iniciar sesión | Sincronizar ajustes e imágenes según tu configuración. |
 | Servicios de sugerencias de búsqueda (sección 4.1) | Lo que escribes y los metadatos de la solicitud | Mostrar sugerencias de búsqueda. |
 | Servicios de búsqueda, IA y sitios web que eliges | Consultas, texto seleccionado e instrucciones que envías | Completar las búsquedas y acciones de IA que inicias. |

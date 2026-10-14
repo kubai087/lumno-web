@@ -34,7 +34,7 @@ Como as APIs de extensões do Firefox são diferentes das do Chromium, alguns re
 | Barra de comandos em páginas locais `file://` | Indisponível |
 | Ícones de sites | Sites que você nunca visitou podem mostrar inicialmente um ícone genérico |
 
-Como o Firefox já usa `⌘ ⇧ K`, a versão para Firefox usa por padrão `⌃ ⇧ K | Alt + K`. O `⌥ Q` não muda.
+Como o Firefox já usa `⌘ ⇧ K`, a versão para Firefox usa por padrão `⌃ ⇧ K | Alt + K`. O `⌥ Q` não muda. Para alterar os atalhos, abra `about:addons`, clique no botão de engrenagem no canto superior direito e escolha "Gerenciar atalhos de extensões".
 
 ## Safari {#safari}
 

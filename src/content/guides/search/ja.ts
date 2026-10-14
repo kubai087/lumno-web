@@ -46,7 +46,7 @@ export default {
       "この拡張機能の新しいタブをオフにするには？Chrome のデフォルトの新しいタブに戻す、元に戻す",
       "新しいタブのアドレスバーに chrome-extension の URL が表示される",
     ],
-    compatibility: ["対応ブラウザは？Edge、Brave、Dia、Safari で使える？"],
+    compatibility: ["対応ブラウザは？Edge、Brave、Dia、Safari で使える？", "Firefox 版と Chrome 版の違いは？Firefox でできないこと、Zen や LibreWolf、スマホで使える？"],
     data: ["データをアップロード、収集する？安全？", "同期できない、設定を同期するには？"],
   },
   install: {

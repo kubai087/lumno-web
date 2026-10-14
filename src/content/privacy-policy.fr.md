@@ -115,7 +115,7 @@ Tiers susceptibles de recevoir des données&nbsp;:
 
 | Destinataire | Données susceptibles d’être reçues | Finalité |
 | --- | --- | --- |
-| Éditeurs de navigateurs (comme Google et Microsoft) | Réglages dans `chrome.storage.sync` et métadonnées du compte du navigateur | Synchronisation intégrée des réglages de l’extension. |
+| Éditeurs de navigateurs (comme Google, Microsoft et Mozilla) | Réglages dans `chrome.storage.sync` et métadonnées du compte du navigateur | Synchronisation intégrée des réglages de l’extension. |
 | Votre service WebDAV (comme Jianguoyun, un NAS ou un serveur auto-hébergé) | Configuration complète, icônes, fonds d’écran, instantanés, ainsi que le nom d’utilisateur et le mot de passe d’application utilisés pour la connexion | Synchronisation des réglages et des images selon votre configuration. |
 | Services de suggestions de recherche (section&nbsp;4.1) | Ce que vous tapez et les métadonnées de la requête | Affichage des suggestions de recherche. |
 | Services de recherche, d’IA et sites que vous choisissez | Requêtes, texte sélectionné et consignes que vous envoyez | Exécution des recherches et actions d’IA que vous lancez. |

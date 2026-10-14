@@ -47,7 +47,7 @@ export default {
       "How do I turn off this extension's new tab? Get the default Chrome new tab back, restore the original new tab",
       "Why does the address bar show a chrome-extension URL on the new tab?",
     ],
-    compatibility: ["Which browsers does it support? Does it work in Edge, Brave, Dia or Safari?"],
+    compatibility: ["Which browsers does it support? Does it work in Edge, Brave, Dia or Safari?", "Firefox version differences: how is it different from Chrome? What's missing in Firefox? Does it work in Zen, LibreWolf or on my phone?"],
     data: ["Does it upload or collect my data? Is it safe?", "Sync not working, how do I sync my settings?"],
   },
   install: {

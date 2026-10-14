@@ -34,7 +34,7 @@ Da sich die Erweiterungs-APIs von Firefox von denen in Chromium unterscheiden, s
 | Befehlsleiste auf lokalen `file://`-Seiten | Nicht verfügbar |
 | Website-Symbole | Bei noch nicht besuchten Websites wird anfangs möglicherweise ein Platzhaltersymbol angezeigt |
 
-Da Firefox `⌘ ⇧ K` bereits selbst verwendet, nutzt die Firefox-Version standardmäßig `⌃ ⇧ K | Alt + K`. `⌥ Q` bleibt unverändert.
+Da Firefox `⌘ ⇧ K` bereits selbst verwendet, nutzt die Firefox-Version standardmäßig `⌃ ⇧ K | Alt + K`. `⌥ Q` bleibt unverändert. Um die Tastenkürzel zu ändern, öffne `about:addons`, klicke oben rechts auf das Zahnrad und wähle „Tastenkombinationen von Erweiterungen verwalten“.
 
 ## Safari {#safari}
 

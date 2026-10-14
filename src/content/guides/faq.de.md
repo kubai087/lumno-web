@@ -36,7 +36,19 @@ Das liegt an der Option „Automatically focus input“: Damit der Cursor direkt
 
 ### Welche Browser werden unterstützt?
 
-Lumno unterstützt Chromium-Browser wie Chrome, Edge, Dia, Brave und Vivaldi sowie Firefox ab Version 140 und Firefox-basierte Browser wie Zen. Safari wird derzeit nicht unterstützt. In Dia funktioniert die Befehlsleiste, Lumnos neuer Tab ist dort jedoch noch nicht verfügbar. In Firefox sind Web-Clip und automatisches Bild-im-Bild nicht verfügbar. Weitere Informationen findest du unter [Browserkompatibilität](../browser-compatibility/).
+Lumno unterstützt Chromium-Browser wie Chrome, Edge, Dia, Brave und Vivaldi sowie Firefox ab Version 140 und Firefox-basierte Browser wie Zen. Safari wird derzeit nicht unterstützt. In Dia funktioniert die Befehlsleiste, Lumnos neuer Tab ist dort jedoch noch nicht verfügbar. Weitere Informationen findest du unter [Browserkompatibilität](../browser-compatibility/).
+
+### Was unterscheidet die Firefox-Version von der Chrome-Version?
+
+Die wichtigsten Funktionen sind gleich, nur Firefox setzt ein paar Grenzen: Web-Clip und automatisches Bild-im-Bild sind nicht verfügbar, auf `about:`-Seiten, der Add-ons-Website und lokalen Dateien lässt sich die Befehlsleiste nicht öffnen, und das voreingestellte Tastenkürzel ist `⌃ ⇧ K | Alt + K`. Weitere Informationen findest du unter [Browserkompatibilität](../browser-compatibility/#firefox).
+
+### Funktioniert Lumno in Zen, LibreWolf und anderen Firefox-basierten Browsern?
+
+Ja. Diese Browser nutzen die Firefox-Version, die du über [Firefox-Add-ons](https://addons.mozilla.org/firefox/addon/lumno-command-bar-new-tab/) installierst. Der Browser muss auf Firefox 140 oder neuer basieren.
+
+### Funktioniert Lumno in Safari oder auf dem Smartphone?
+
+Noch nicht. Das Erweiterungssystem von Safari unterscheidet sich stark von Chromium, daher gibt es keine Safari-Version von Lumno. Browser auf Smartphones und Tablets werden ebenfalls nicht unterstützt. Weitere Informationen findest du unter [Browserkompatibilität](../browser-compatibility/#safari).
 
 ## Daten und Synchronisierung {#data}
 

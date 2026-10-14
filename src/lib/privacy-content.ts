@@ -20,7 +20,7 @@ import privacySummaryPtBr from "../content/privacy-summary.pt-BR.md?raw";
 import privacySummaryRu from "../content/privacy-summary.ru.md?raw";
 import type { SupportedLocale } from "./locales";
 
-export const PRIVACY_LAST_UPDATED = "2026-10-11";
+export const PRIVACY_LAST_UPDATED = "2026-10-14";
 /** The extension version the policy text was checked against. */
 export const PRIVACY_POLICY_VERSION = "0.9.58";
 

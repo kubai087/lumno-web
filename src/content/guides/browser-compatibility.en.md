@@ -34,7 +34,7 @@ Because Firefox's extension APIs differ from Chromium's, some features aren't av
 | Command bar on local `file://` pages | Not available |
 | Site icons | Sites you haven't visited may show a placeholder icon at first |
 
-Firefox already uses `⌘ ⇧ K`, so the Firefox version uses `⌃ ⇧ K | Alt + K` by default. `⌥ Q` stays the same.
+Firefox already uses `⌘ ⇧ K`, so the Firefox version uses `⌃ ⇧ K | Alt + K` by default. `⌥ Q` stays the same. To change them, open `about:addons`, click the gear button at the top right and choose "Manage Extension Shortcuts".
 
 ## Safari {#safari}
 

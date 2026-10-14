@@ -34,7 +34,7 @@ Firefox 版已在 [Firefox 附加组件](https://addons.mozilla.org/firefox/addo
 | 在本地 `file://` 页面唤出命令栏 | 不可用 |
 | 网站图标 | 未访问过的网站可能会先显示占位图标 |
 
-Firefox 自身占用了 `⌘ ⇧ K`，因此 Firefox 版默认使用 `⌃ ⇧ K | Alt + K`；`⌥ Q` 保持不变。
+Firefox 自身占用了 `⌘ ⇧ K`，因此 Firefox 版默认使用 `⌃ ⇧ K | Alt + K`；`⌥ Q` 保持不变。如需修改，打开 `about:addons`，点击右上角的齿轮按钮，选择「管理扩展快捷键」。
 
 ## Safari {#safari}
 

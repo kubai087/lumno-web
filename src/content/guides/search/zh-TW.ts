@@ -46,7 +46,7 @@ export default {
       "怎麼關掉這個擴充功能的新分頁？新分頁怎麼換回 Chrome 預設、恢復預設、換回原本的",
       "新分頁網址列顯示擴充功能網址、chrome-extension 網址怎麼辦？",
     ],
-    compatibility: ["支援什麼瀏覽器？Edge、Brave、Dia、Safari 能用嗎？"],
+    compatibility: ["支援什麼瀏覽器？Edge、Brave、Dia、Safari 能用嗎？", "Firefox 版和 Chrome 版有什麼差別？火狐版少了哪些功能？Zen、LibreWolf 能用嗎？手機能用嗎？"],
     data: ["會不會上傳資料、偷資料？安全嗎？", "同步不了、怎麼同步設定？"],
   },
   install: {

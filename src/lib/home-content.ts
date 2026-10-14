@@ -8,6 +8,8 @@ export type HomeFaqItem = {
   answer: string;
   /** Replaces `answer` once Firefox Add-ons lists Lumno. */
   firefoxAnswer?: string;
+  /** Shown only once Firefox Add-ons lists Lumno. */
+  firefoxOnly?: boolean;
 };
 /** `icon` is a provider key from lumno-extension/assets/data/site-search.json. */
 export type HomeOverlayRow = {
@@ -493,7 +495,13 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         answer:
           "支持 Chrome、Edge、Dia、Brave、Vivaldi 等 Chromium 内核浏览器，暂不支持 Safari 和 Firefox。在 Dia 中可使用命令栏，新标签页暂不可用。",
         firefoxAnswer:
-          "支持 Chrome、Edge、Dia、Brave、Vivaldi 等 Chromium 内核浏览器，以及 Firefox 140 及以上版本和 Zen 等基于 Firefox 的浏览器，暂不支持 Safari。在 Dia 中可使用命令栏，新标签页暂不可用；Firefox 中无法使用网页剪裁和视频自动画中画。",
+          "支持 Chrome、Edge、Dia、Brave、Vivaldi 等 Chromium 内核浏览器，以及 Firefox 140 及以上版本和 Zen 等基于 Firefox 的浏览器，暂不支持 Safari。在 Dia 中可使用命令栏，新标签页暂不可用。",
+      },
+      {
+        question: "Firefox 版有什么不同？",
+        answer:
+          "主要功能和 Chrome 版相同，从 Firefox 附加组件安装，Zen、LibreWolf 等基于 Firefox 的浏览器也能使用。受 Firefox 限制，网页剪裁和视频自动画中画无法使用，`about:` 页面、附加组件网站和本地文件中也无法唤出命令栏。",
+        firefoxOnly: true,
       },
       {
         question: "从 Arc 换过来，还能用上熟悉的命令栏吗？",
@@ -800,7 +808,13 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         answer:
           "支援 Chrome、Edge、Dia、Brave、Vivaldi 等 Chromium 核心瀏覽器，目前不支援 Safari 與 Firefox。在 Dia 中可使用命令列，新分頁暫時無法使用。",
         firefoxAnswer:
-          "支援 Chrome、Edge、Dia、Brave、Vivaldi 等 Chromium 核心瀏覽器，以及 Firefox 140 以上版本與 Zen 等以 Firefox 為基礎的瀏覽器，目前不支援 Safari。在 Dia 中可使用命令列，新分頁暫時無法使用；Firefox 無法使用網頁剪裁與影片自動子母畫面。",
+          "支援 Chrome、Edge、Dia、Brave、Vivaldi 等 Chromium 核心瀏覽器，以及 Firefox 140 以上版本與 Zen 等以 Firefox 為基礎的瀏覽器，目前不支援 Safari。在 Dia 中可使用命令列，新分頁暫時無法使用。",
+      },
+      {
+        question: "Firefox 版有什麼不同？",
+        answer:
+          "主要功能和 Chrome 版相同，從 Firefox 附加元件安裝，Zen、LibreWolf 等以 Firefox 為基礎的瀏覽器也能使用。受 Firefox 限制，網頁剪裁與影片自動子母畫面無法使用，`about:` 頁面、附加元件網站和本機檔案中也無法叫出命令列。",
+        firefoxOnly: true,
       },
       {
         question: "從 Arc 換過來，還能用到熟悉的命令列嗎？",
@@ -1101,7 +1115,13 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         answer:
           "Chromium browsers that install Chrome extensions, including Chrome, Edge, Dia, Brave, and Vivaldi. Safari and Firefox aren’t supported yet. In Dia, you get the command bar but not Lumno’s new tab.",
         firefoxAnswer:
-          "Chromium browsers that install Chrome extensions, including Chrome, Edge, Dia, Brave, and Vivaldi, plus Firefox 140 or later and Firefox-based browsers like Zen. Safari isn’t supported yet. In Dia, you get the command bar but not Lumno’s new tab. Firefox doesn’t support Web Clip or Auto Picture-in-Picture.",
+          "Chromium browsers that install Chrome extensions, including Chrome, Edge, Dia, Brave, and Vivaldi, plus Firefox 140 or later and Firefox-based browsers like Zen. Safari isn’t supported yet. In Dia, you get the command bar but not Lumno’s new tab.",
+      },
+      {
+        question: "How is the Firefox version different?",
+        answer:
+          "The main features match the Chrome version. Install it from Firefox Add-ons, including in Firefox-based browsers like Zen and LibreWolf. Firefox’s limits mean Web Clip and Auto Picture-in-Picture aren’t available, and the command bar can’t open on `about:` pages, the add-ons site, or local files.",
+        firefoxOnly: true,
       },
       {
         question: "I’m moving from Arc. Will this feel familiar?",
@@ -1399,7 +1419,13 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         answer:
           "Chrome、Edge、Dia、Brave、Vivaldi など、Chrome 拡張機能を入れられる Chromium 系ブラウザで使えます。Safari と Firefox には未対応です。Dia ではコマンドバーは使えますが、Lumno の新しいタブは使えません。",
         firefoxAnswer:
-          "Chrome、Edge、Dia、Brave、Vivaldi など、Chrome 拡張機能を入れられる Chromium 系ブラウザに加え、Firefox 140 以降と Zen などの Firefox 系ブラウザで使えます。Safari には未対応です。Dia ではコマンドバーは使えますが、Lumno の新しいタブは使えません。Firefox では Webクリップと自動ピクチャー・イン・ピクチャーは使えません。",
+          "Chrome、Edge、Dia、Brave、Vivaldi など、Chrome 拡張機能を入れられる Chromium 系ブラウザに加え、Firefox 140 以降と Zen などの Firefox 系ブラウザで使えます。Safari には未対応です。Dia ではコマンドバーは使えますが、Lumno の新しいタブは使えません。",
+      },
+      {
+        question: "Firefox 版は何が違いますか？",
+        answer:
+          "主な機能は Chrome 版と同じで、Firefox アドオンからインストールできます。Zen や LibreWolf などの Firefox 系ブラウザでも使えます。Firefox の制限により、Webクリップと自動ピクチャー・イン・ピクチャーは使えず、`about:` ページ、アドオンサイト、ローカルファイルではコマンドバーを開けません。",
+        firefoxOnly: true,
       },
       {
         question: "Arc から乗り換えても、いつものコマンドバーは使えますか？",
@@ -1697,7 +1723,13 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         answer:
           "Chrome, Edge, Dia, Brave, Vivaldi 등 Chrome 확장 프로그램을 설치할 수 있는 Chromium 기반 브라우저를 지원합니다. Safari와 Firefox는 아직 지원하지 않습니다. Dia에서는 커맨드 바만 쓸 수 있고 Lumno 새 탭은 쓸 수 없습니다.",
         firefoxAnswer:
-          "Chrome, Edge, Dia, Brave, Vivaldi 등 Chrome 확장 프로그램을 설치할 수 있는 Chromium 기반 브라우저와 Firefox 140 이상, Zen 같은 Firefox 기반 브라우저를 지원합니다. Safari는 아직 지원하지 않습니다. Dia에서는 커맨드 바만 쓸 수 있고 Lumno 새 탭은 쓸 수 없습니다. Firefox에서는 웹 클립과 자동 PIP를 쓸 수 없습니다.",
+          "Chrome, Edge, Dia, Brave, Vivaldi 등 Chrome 확장 프로그램을 설치할 수 있는 Chromium 기반 브라우저와 Firefox 140 이상, Zen 같은 Firefox 기반 브라우저를 지원합니다. Safari는 아직 지원하지 않습니다. Dia에서는 커맨드 바만 쓸 수 있고 Lumno 새 탭은 쓸 수 없습니다.",
+      },
+      {
+        question: "Firefox 버전은 무엇이 다른가요?",
+        answer:
+          "주요 기능은 Chrome 버전과 같습니다. Firefox 부가 기능에서 설치할 수 있고, Zen, LibreWolf 같은 Firefox 기반 브라우저에서도 쓸 수 있습니다. Firefox의 제약으로 웹 클립과 자동 PIP는 쓸 수 없고, `about:` 페이지, 부가 기능 사이트, 로컬 파일에서는 커맨드 바를 열 수 없습니다.",
+        firefoxOnly: true,
       },
       {
         question: "Arc에서 넘어와도 익숙한 커맨드 바를 쓸 수 있나요?",
@@ -1997,7 +2029,13 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         answer:
           "Chromium-Browser, die Chrome-Erweiterungen installieren können, etwa Chrome, Edge, Dia, Brave und Vivaldi. Safari und Firefox werden noch nicht unterstützt. In Dia gibt es die Befehlsleiste, aber nicht den neuen Tab von Lumno.",
         firefoxAnswer:
-          "Chromium-Browser, die Chrome-Erweiterungen installieren können, etwa Chrome, Edge, Dia, Brave und Vivaldi, dazu Firefox ab Version 140 und Firefox-basierte Browser wie Zen. Safari wird noch nicht unterstützt. In Dia gibt es die Befehlsleiste, aber nicht den neuen Tab von Lumno. In Firefox fehlen Web Clip und automatisches Bild-in-Bild.",
+          "Chromium-Browser, die Chrome-Erweiterungen installieren können, etwa Chrome, Edge, Dia, Brave und Vivaldi, dazu Firefox ab Version 140 und Firefox-basierte Browser wie Zen. Safari wird noch nicht unterstützt. In Dia gibt es die Befehlsleiste, aber nicht den neuen Tab von Lumno.",
+      },
+      {
+        question: "Was ist bei der Firefox-Version anders?",
+        answer:
+          "Die wichtigsten Funktionen sind dieselben wie in der Chrome-Version. Du installierst sie über Firefox-Add-ons, auch in Firefox-basierten Browsern wie Zen und LibreWolf. Wegen der Grenzen von Firefox fehlen Web Clip und automatisches Bild-in-Bild, und auf `about:`-Seiten, der Add-ons-Website und lokalen Dateien lässt sich die Befehlsleiste nicht öffnen.",
+        firefoxOnly: true,
       },
       {
         question: "Ich komme von Arc. Fühlt sich das vertraut an?",
@@ -2297,7 +2335,13 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         answer:
           "Les navigateurs Chromium qui acceptent les extensions Chrome, dont Chrome, Edge, Dia, Brave et Vivaldi. Safari et Firefox ne sont pas encore pris en charge. Dans Dia, vous avez la barre de commande, mais pas le nouvel onglet de Lumno.",
         firefoxAnswer:
-          "Les navigateurs Chromium qui acceptent les extensions Chrome, dont Chrome, Edge, Dia, Brave et Vivaldi, ainsi que Firefox 140 ou plus récent et les navigateurs basés sur Firefox comme Zen. Safari n’est pas encore pris en charge. Dans Dia, vous avez la barre de commande, mais pas le nouvel onglet de Lumno. Dans Firefox, Web Clip et le picture-in-picture automatique ne sont pas disponibles.",
+          "Les navigateurs Chromium qui acceptent les extensions Chrome, dont Chrome, Edge, Dia, Brave et Vivaldi, ainsi que Firefox 140 ou plus récent et les navigateurs basés sur Firefox comme Zen. Safari n’est pas encore pris en charge. Dans Dia, vous avez la barre de commande, mais pas le nouvel onglet de Lumno.",
+      },
+      {
+        question: "Qu’est-ce qui change avec la version Firefox ?",
+        answer:
+          "Les fonctions principales sont les mêmes que dans la version Chrome. Installez-la depuis les modules complémentaires Firefox, y compris dans les navigateurs basés sur Firefox comme Zen et LibreWolf. En raison des limites de Firefox, Web Clip et le picture-in-picture automatique ne sont pas disponibles, et la barre de commande ne s’ouvre ni sur les pages `about:`, ni sur le site des modules complémentaires, ni dans les fichiers locaux.",
+        firefoxOnly: true,
       },
       {
         question: "Je viens d’Arc. Vais-je m’y retrouver ?",
@@ -2597,7 +2641,13 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         answer:
           "Los navegadores Chromium que instalan extensiones de Chrome, como Chrome, Edge, Dia, Brave y Vivaldi. Safari y Firefox aún no son compatibles. En Dia tienes la barra de comandos, pero no la nueva pestaña de Lumno.",
         firefoxAnswer:
-          "Los navegadores Chromium que instalan extensiones de Chrome, como Chrome, Edge, Dia, Brave y Vivaldi, además de Firefox 140 o posterior y navegadores basados en Firefox como Zen. Safari aún no es compatible. En Dia tienes la barra de comandos, pero no la nueva pestaña de Lumno. En Firefox no están disponibles Web Clip ni la imagen en imagen automática.",
+          "Los navegadores Chromium que instalan extensiones de Chrome, como Chrome, Edge, Dia, Brave y Vivaldi, además de Firefox 140 o posterior y navegadores basados en Firefox como Zen. Safari aún no es compatible. En Dia tienes la barra de comandos, pero no la nueva pestaña de Lumno.",
+      },
+      {
+        question: "¿Qué cambia en la versión para Firefox?",
+        answer:
+          "Las funciones principales son las mismas que en la versión para Chrome. Instálala desde Complementos de Firefox, también en navegadores basados en Firefox como Zen y LibreWolf. Por las limitaciones de Firefox, Web Clip y la imagen en imagen automática no están disponibles, y la barra de comandos no se abre en páginas `about:`, en el sitio de complementos ni en archivos locales.",
+        firefoxOnly: true,
       },
       {
         question: "Vengo de Arc. ¿Me resultará familiar?",
@@ -2897,7 +2947,13 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         answer:
           "Navegadores Chromium que instalam extensões do Chrome, como Chrome, Edge, Dia, Brave e Vivaldi. Safari e Firefox ainda não são compatíveis. No Dia, você usa a barra de comandos, mas não a nova aba do Lumno.",
         firefoxAnswer:
-          "Navegadores Chromium que instalam extensões do Chrome, como Chrome, Edge, Dia, Brave e Vivaldi, além do Firefox 140 ou mais recente e navegadores baseados no Firefox, como o Zen. Safari ainda não é compatível. No Dia, você usa a barra de comandos, mas não a nova aba do Lumno. No Firefox, Web Clip e o picture-in-picture automático não estão disponíveis.",
+          "Navegadores Chromium que instalam extensões do Chrome, como Chrome, Edge, Dia, Brave e Vivaldi, além do Firefox 140 ou mais recente e navegadores baseados no Firefox, como o Zen. Safari ainda não é compatível. No Dia, você usa a barra de comandos, mas não a nova aba do Lumno.",
+      },
+      {
+        question: "O que muda na versão para Firefox?",
+        answer:
+          "Os principais recursos são os mesmos da versão para Chrome. Instale pelos Complementos do Firefox, inclusive em navegadores baseados no Firefox, como Zen e LibreWolf. Por limitações do Firefox, Web Clip e o picture-in-picture automático não estão disponíveis, e a barra de comandos não abre em páginas `about:`, no site de complementos nem em arquivos locais.",
+        firefoxOnly: true,
       },
       {
         question: "Estou vindo do Arc. Vou me sentir em casa?",
@@ -3197,7 +3253,13 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         answer:
           "Браузеры на Chromium, в которые можно ставить расширения Chrome: Chrome, Edge, Dia, Brave, Vivaldi и другие. Safari и Firefox пока не поддерживаются. В Dia доступна командная панель, но не новая вкладка Lumno.",
         firefoxAnswer:
-          "Браузеры на Chromium, в которые можно ставить расширения Chrome: Chrome, Edge, Dia, Brave, Vivaldi и другие, а также Firefox 140 и новее и браузеры на основе Firefox, например Zen. Safari пока не поддерживается. В Dia доступна командная панель, но не новая вкладка Lumno. В Firefox недоступны Web Clip и авто «картинка в картинке».",
+          "Браузеры на Chromium, в которые можно ставить расширения Chrome: Chrome, Edge, Dia, Brave, Vivaldi и другие, а также Firefox 140 и новее и браузеры на основе Firefox, например Zen. Safari пока не поддерживается. В Dia доступна командная панель, но не новая вкладка Lumno.",
+      },
+      {
+        question: "Чем отличается версия для Firefox?",
+        answer:
+          "Основные функции те же, что и в версии для Chrome. Установите её из дополнений Firefox — в том числе в браузеры на основе Firefox, например Zen и LibreWolf. Из-за ограничений Firefox недоступны Web Clip и авто «картинка в картинке», а командную панель нельзя открыть на страницах `about:`, на сайте дополнений и в локальных файлах.",
+        firefoxOnly: true,
       },
       {
         question: "Я перехожу с Arc. Всё будет привычно?",
@@ -3263,7 +3325,7 @@ export function getHomeContent(
   { firefoxListed = false }: { firefoxListed?: boolean } = {},
 ): HomeContent {
   const content = HOME_CONTENT[locale] || HOME_CONTENT["zh-CN"];
-  if (!firefoxListed) return content;
+  if (!firefoxListed) return { ...content, faqItems: content.faqItems.filter((item) => !item.firefoxOnly) };
   return {
     ...content,
     heroBrowserTooltipLabel: content.firefoxCopy.heroBrowserTooltipLabel,

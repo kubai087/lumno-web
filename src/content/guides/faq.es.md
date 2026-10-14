@@ -36,7 +36,19 @@ Se debe a la opción "Automatically focus input": para colocar el cursor directa
 
 ### ¿Qué navegadores son compatibles?
 
-Lumno es compatible con navegadores Chromium como Chrome, Edge, Dia, Brave y Vivaldi, además de Firefox 140 o posterior y navegadores basados en Firefox como Zen. Safari todavía no es compatible. En Dia, la barra de comandos funciona, pero la nueva pestaña de Lumno aún no está disponible. En Firefox no están disponibles el recorte web ni la imagen en imagen automática. Para obtener más información, consulta [Compatibilidad con navegadores](../browser-compatibility/).
+Lumno es compatible con navegadores Chromium como Chrome, Edge, Dia, Brave y Vivaldi, además de Firefox 140 o posterior y navegadores basados en Firefox como Zen. Safari todavía no es compatible. En Dia, la barra de comandos funciona, pero la nueva pestaña de Lumno aún no está disponible. Para obtener más información, consulta [Compatibilidad con navegadores](../browser-compatibility/).
+
+### ¿En qué se diferencia la versión para Firefox de la versión para Chrome?
+
+Las funciones principales son las mismas, con algunas limitaciones de Firefox: el recorte web y la imagen en imagen automática no están disponibles, la barra de comandos no se abre en páginas `about:`, en el sitio de complementos ni en archivos locales, y el atajo predeterminado es `⌃ ⇧ K | Alt + K`. Para obtener más información, consulta [Compatibilidad con navegadores](../browser-compatibility/#firefox).
+
+### ¿Funciona en Zen, LibreWolf y otros navegadores basados en Firefox?
+
+Sí. Estos navegadores usan la versión para Firefox: instálala desde [Complementos de Firefox](https://addons.mozilla.org/firefox/addon/lumno-command-bar-new-tab/). El navegador necesita un motor de Firefox 140 o posterior.
+
+### ¿Funciona en Safari o en el móvil?
+
+Todavía no. El sistema de extensiones de Safari es muy distinto del de Chromium, así que no hay una versión de Lumno para Safari, y los navegadores de móviles y tabletas no son compatibles. Para obtener más información, consulta [Compatibilidad con navegadores](../browser-compatibility/#safari).
 
 ## Datos y sincronización {#data}
 

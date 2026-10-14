@@ -36,7 +36,19 @@ Lumno のウェブサイトやコミュニティでよく寄せられる質問�
 
 ### どのブラウザで使用できますか？
 
-Chrome、Edge、Dia、Brave、Vivaldi などの Chromium 系ブラウザのほか、Firefox 140 以降と Zen などの Firefox 系ブラウザで使用できます。Safari には現在対応していません。Dia ではコマンドバーを使用できますが、新しいタブは使用できません。Firefox では Webクリップと動画の自動ピクチャー・イン・ピクチャーを使用できません。詳しくは、[ブラウザ互換性](../browser-compatibility/)を参照してください。
+Chrome、Edge、Dia、Brave、Vivaldi などの Chromium 系ブラウザのほか、Firefox 140 以降と Zen などの Firefox 系ブラウザで使用できます。Safari には現在対応していません。Dia ではコマンドバーを使用できますが、新しいタブは使用できません。詳しくは、[ブラウザ互換性](../browser-compatibility/)を参照してください。
+
+### Firefox 版と Chrome 版の違いは？
+
+主な機能は同じですが、Firefox の制限により次の点が異なります。Webクリップと動画の自動ピクチャー・イン・ピクチャーは使用できず、`about:` ページ、アドオンサイト、ローカルファイルではコマンドバーを開けません。また、初期設定のショートカットは `⌃ ⇧ K | Alt + K` です。詳しくは、[ブラウザ互換性](../browser-compatibility/#firefox)を参照してください。
+
+### Zen や LibreWolf などの Firefox 系ブラウザでも使えますか？
+
+はい。これらのブラウザでは Firefox 版を使います。[Firefox アドオン](https://addons.mozilla.org/firefox/addon/lumno-command-bar-new-tab/)からインストールしてください。Firefox 140 以降のエンジンが必要です。
+
+### Safari やスマートフォンでは使えますか？
+
+現在は対応していません。Safari の拡張機能の仕組みは Chromium と大きく異なるため、Lumno の Safari 版は提供しておらず、スマートフォンやタブレットのブラウザにも対応していません。詳しくは、[ブラウザ互換性](../browser-compatibility/#safari)を参照してください。
 
 ## データと同期 {#data}
 

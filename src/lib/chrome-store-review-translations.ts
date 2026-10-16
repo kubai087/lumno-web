@@ -10,6 +10,17 @@ type ReviewTranslations = Record<Exclude<SupportedLocale, "zh-CN">, string>;
  * only; the build logs it so it can be translated.
  */
 const REVIEW_TRANSLATIONS: Record<string, ReviewTranslations> = {
+  "作者审美超级好，是一款很精美的产品，满足了很多需求，体验也很棒。期待有更多好的设计和产品！": {
+    "zh-TW": "作者的審美超級好，是一款很精緻的產品，滿足了很多需求，用起來也很棒。期待有更多好設計、好產品！",
+    en: "The developer has fantastic taste. A beautifully crafted product that covers so many of my needs and feels great to use. Looking forward to more great designs and products!",
+    ja: "作者さんのセンスが抜群。とても丁寧に作られたプロダクトで、いろいろなニーズを満たしてくれて、使い心地も最高です。これからのデザインや作品も楽しみにしています！",
+    ko: "개발자분의 미적 감각이 정말 뛰어나요. 정성껏 만든 제품이라 필요한 게 많이 채워지고 사용감도 훌륭해요. 앞으로 나올 멋진 디자인과 제품도 기대할게요!",
+    de: "Ein unglaublich gutes Gespür für Design. Ein liebevoll gestaltetes Produkt, das viele meiner Wünsche erfüllt und sich großartig anfühlt. Ich freue mich auf weitere schöne Designs und Produkte!",
+    fr: "Un sens esthétique remarquable. Un produit soigné qui répond à beaucoup de mes besoins et qu’on prend plaisir à utiliser. Vivement d’autres beaux designs et produits !",
+    es: "Quien lo creó tiene un gusto estupendo. Un producto muy cuidado que cubre muchas de mis necesidades y se siente genial al usarlo. ¡Con ganas de ver más diseños y productos así!",
+    "pt-BR": "Quem criou tem um senso estético incrível. Um produto muito caprichado, que atende a várias das minhas necessidades e é ótimo de usar. Fico no aguardo de mais designs e produtos assim!",
+    ru: "У автора отличный вкус. Очень аккуратно сделанный продукт: закрывает многие мои потребности, и пользоваться им — одно удовольствие. Жду новых красивых решений и продуктов!",
+  },
   "优秀，不知道作者还有没有其他的作品，也想用一用": {
     "zh-TW": "優秀！不知道作者還有沒有其他作品，也想用用看",
     en: "Excellent. Has the developer made anything else? I’d love to try it too.",

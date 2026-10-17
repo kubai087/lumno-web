@@ -30,6 +30,9 @@ const taglinePhrases = tagline.split(/(?<=、)/);
 ---
 
 <footer class="site-footer">
+  <div class="site-footer__art" aria-hidden="true">
+    <img src="/assets/footer-seurat-coast.webp" width="2048" height="569" alt="" loading="lazy" decoding="async" />
+  </div>
   <div class="site-footer__main">
     <div class="site-footer__brand">
       <a class="site-footer__logo" href={homeHref} aria-label="Lumno">
@@ -132,8 +135,51 @@ const taglinePhrases = tagline.split(/(?<=、)/);
 
 <style>
   .site-footer {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
     border-top: 1px solid var(--home-card-border);
-    background: rgba(255, 255, 255, 0.6);
+    background: #fff;
+  }
+
+  /*
+   * A 3.6:1 band (sea and shore) of the extension's built-in "seurat-coast-white"
+   * wallpaper under a white veil: near-solid behind the links, thinnest across
+   * the sea, thicker again so the copyright row stays legible.
+   */
+  .site-footer__art {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  .site-footer__art img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center bottom;
+    /*
+     * The page reserves a scrollbar gutter (site.css) that always shows the
+     * white page background, so the painting fades out at both sides rather
+     * than stopping in a hard edge beside the scrollbar.
+     */
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 72px, #000 calc(100% - 72px), transparent);
+    mask-image: linear-gradient(to right, transparent, #000 72px, #000 calc(100% - 72px), transparent);
+  }
+
+  .site-footer__art::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.96) 0%,
+      rgba(255, 255, 255, 0.86) 40%,
+      rgba(255, 255, 255, 0.6) 72%,
+      rgba(255, 255, 255, 0.8) 100%
+    );
   }
 
   .site-footer__main,

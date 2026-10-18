@@ -117,7 +117,7 @@ export default {
     ],
     "dark-mode": ["深色模式、暗黑模式、夜間模式用另一張桌布"],
     effects: ["桌布太花、看不清搜尋框怎麼辦？模糊、毛玻璃、遮罩、濾鏡"],
-    glass: ["液態玻璃、霧面玻璃、玻璃效果、玻璃質感、Liquid Glass、iOS 風格、半透明搜尋框、透明卡片、材質、風格"],
+    glass: ["液態玻璃、壓克力、霧面玻璃、玻璃效果、玻璃質感、Liquid Glass、iOS 風格、半透明搜尋框、透明卡片、材質、風格"],
     sync: ["桌布能同步到別台電腦嗎？"],
   },
   "newtab-bookmarks-shortcuts": {

@@ -116,6 +116,7 @@
   { "q": "怎么删除分组", "expect": ["newtab-bookmarks-shortcuts#shortcut-groups"] },
   { "q": "液态玻璃", "expect": ["newtab-wallpaper#glass"] },
   { "q": "磨砂玻璃效果", "expect": ["newtab-wallpaper#glass"] },
+  { "q": "亚克力", "expect": ["newtab-wallpaper#glass"] },
   { "q": "导入自己的名言", "expect": ["newtab-clock-zen#custom-quotes"] },
   { "q": "搜索引擎排序", "expect": ["site-search#order"] },
   { "q": "书签添加到快捷方式", "expect": ["newtab-bookmarks-shortcuts#bookmarks"] },

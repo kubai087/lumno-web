@@ -173,7 +173,7 @@ const content: GuideLocaleContent = {
     "newtab-wallpaper": {
       pageTitle: "Fonds d'écran du nouvel onglet : tableaux, photo du jour Bing, vos photos et filtres | Aide Lumno",
       pageDescription:
-        "Changez le fond d'écran du nouvel onglet Lumno dans les réglages Appearance : tableaux intégrés, photo du jour de Bing, photos sélectionnées, vos propres images ou un lien d'image, avec voile, filtres, choix séparés pour les modes clair et sombre et un aspect de verre (Frosted glass ou Liquid glass).",
+        "Changez le fond d'écran du nouvel onglet Lumno dans les réglages Appearance : tableaux intégrés, photo du jour de Bing, photos sélectionnées, vos propres images ou un lien d'image, avec voile, filtres, choix séparés pour les modes clair et sombre et un aspect de verre (Acrylic ou Liquid glass).",
       keywords: ["fond d'écran nouvel onglet", "arrière-plan nouvel onglet Chrome", "fond d'écran Bing du jour", "extension nouvel onglet"],
       title: "Changer le fond d'écran",
       navTitle: "Changer le fond d'écran",

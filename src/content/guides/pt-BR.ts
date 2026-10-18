@@ -173,7 +173,7 @@ const content: GuideLocaleContent = {
     "newtab-wallpaper": {
       pageTitle: "Papéis de parede da nova guia: pinturas clássicas, foto do dia do Bing, suas fotos e filtros | Ajuda do Lumno",
       pageDescription:
-        "Mude o papel de parede da nova guia do Lumno nas configurações de Appearance: pinturas incluídas, a foto do dia do Bing, fotos selecionadas, suas próprias imagens ou um link de imagem, com véu, filtros, escolhas separadas para os modos claro e escuro e um acabamento de vidro (Frosted glass ou Liquid glass).",
+        "Mude o papel de parede da nova guia do Lumno nas configurações de Appearance: pinturas incluídas, a foto do dia do Bing, fotos selecionadas, suas próprias imagens ou um link de imagem, com véu, filtros, escolhas separadas para os modos claro e escuro e um acabamento de vidro (Acrylic ou Liquid glass).",
       keywords: ["papel de parede da nova guia", "fundo da nova guia do Chrome", "papel de parede diário do Bing", "extensão nova guia"],
       title: "Mudar o papel de parede",
       navTitle: "Mudar o papel de parede",

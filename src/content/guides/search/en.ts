@@ -118,7 +118,7 @@ export default {
     ],
     "dark-mode": ["A different wallpaper for dark mode or night mode"],
     effects: ["Wallpaper too busy, can't read the search box: blur, frosted glass, dim, overlay, filters"],
-    glass: ["Liquid glass, frosted glass material, glass effect, glassmorphism, iOS style, translucent search box, see-through cards, style, material"],
+    glass: ["Liquid glass, acrylic, frosted glass material, glass effect, glassmorphism, iOS style, translucent search box, see-through cards, style, material"],
     sync: ["Does the wallpaper sync to my other computers?"],
   },
   "newtab-bookmarks-shortcuts": {

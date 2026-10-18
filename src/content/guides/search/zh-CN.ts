@@ -118,7 +118,7 @@ export default {
     ],
     "dark-mode": ["深色模式、暗黑模式、夜间模式用另一张壁纸"],
     effects: ["壁纸太花、看不清搜索框怎么办？模糊、毛玻璃、蒙版、遮罩、滤镜"],
-    glass: ["液态玻璃、磨砂玻璃、玻璃效果、玻璃质感、Liquid Glass、iOS 风格、半透明搜索框、透明卡片、材质、风格"],
+    glass: ["液态玻璃、亚克力、磨砂玻璃、玻璃效果、玻璃质感、Liquid Glass、iOS 风格、半透明搜索框、透明卡片、材质、风格"],
     sync: ["壁纸能同步到别的电脑吗？"],
   },
   "newtab-bookmarks-shortcuts": {

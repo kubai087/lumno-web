@@ -75,6 +75,7 @@
   { "q": "スマホで使える", "expect": ["faq#compatibility", "browser-compatibility#support", "limitations#browsers"] },
   { "q": "ショートカットをグループ分け", "expect": ["newtab-bookmarks-shortcuts#shortcut-groups"] },
   { "q": "リキッドグラス", "expect": ["newtab-wallpaper#glass"] },
+  { "q": "アクリル", "expect": ["newtab-wallpaper#glass"] },
   { "q": "今日の一言", "expect": ["newtab-clock-zen#quote"] },
   { "q": "検索エンジンの並び替え", "expect": ["site-search#order"] },
   { "q": "ブックマークをショートカットに追加", "expect": ["newtab-bookmarks-shortcuts#bookmarks"] },

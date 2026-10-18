@@ -173,7 +173,7 @@ const content: GuideLocaleContent = {
     "newtab-wallpaper": {
       pageTitle: "Fondos de la nueva pestaña: cuadros clásicos, foto del día de Bing, tus fotos y filtros | Ayuda de Lumno",
       pageDescription:
-        "Cambia el fondo de la nueva pestaña de Lumno en los ajustes de Appearance: cuadros incluidos, la foto del día de Bing, fotos seleccionadas, tus propias imágenes o un enlace de imagen, con velo, filtros, fondos distintos para los modos claro y oscuro y un acabado de cristal (Frosted glass o Liquid glass).",
+        "Cambia el fondo de la nueva pestaña de Lumno en los ajustes de Appearance: cuadros incluidos, la foto del día de Bing, fotos seleccionadas, tus propias imágenes o un enlace de imagen, con velo, filtros, fondos distintos para los modos claro y oscuro y un acabado de cristal (Acrylic o Liquid glass).",
       keywords: ["fondo de nueva pestaña", "fondo nueva pestaña Chrome", "fondo diario de Bing", "extensión nueva pestaña"],
       title: "Cambiar el fondo",
       navTitle: "Cambiar el fondo",

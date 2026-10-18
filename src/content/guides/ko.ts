@@ -173,7 +173,7 @@ const content: GuideLocaleContent = {
     "newtab-wallpaper": {
       pageTitle: "새 탭 배경화면: 명화, Bing 오늘의 사진, 내 사진과 필터 | Lumno 도움말",
       pageDescription:
-        "Appearance 설정에서 Lumno 새 탭의 배경화면을 바꾸세요. 기본 명화, Bing 오늘의 사진, 엄선한 사진, 내 이미지나 이미지 링크를 쓸 수 있고, 마스크와 필터, 라이트·다크 모드별 배경화면도 설정할 수 있습니다. 검색창과 카드에 Frosted glass나 Liquid glass 재질을 입힐 수도 있습니다.",
+        "Appearance 설정에서 Lumno 새 탭의 배경화면을 바꾸세요. 기본 명화, Bing 오늘의 사진, 엄선한 사진, 내 이미지나 이미지 링크를 쓸 수 있고, 마스크와 필터, 라이트·다크 모드별 배경화면도 설정할 수 있습니다. 검색창과 카드에 Acrylic나 Liquid glass 재질을 입힐 수도 있습니다.",
       keywords: ["새 탭 배경화면", "크롬 새 탭 배경", "Bing 오늘의 배경화면", "새 탭 확장 프로그램"],
       title: "배경화면 바꾸기",
       navTitle: "배경화면 바꾸기",

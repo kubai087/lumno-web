@@ -42,14 +42,14 @@ Den hellen oder dunklen Modus selbst legst du oben im Panel fest: wie im System,
 
 ## Glasmaterial {#glass}
 
-Ändere im Abschnitt „Style“ der Appearance-Einstellungen „Material“ von „Default“ zu „Frosted glass“ oder „Liquid glass“. Suchfeld, Karten, Schaltflächen, Menüs und das Appearance-Panel erhalten dann eine Glasoptik, durch die der Hintergrund scheint, und das Glas passt seine Tönung an den Hintergrund an.
+Ändere im Abschnitt „Style“ der Appearance-Einstellungen „Material“ von „Default“ zu „Acrylic“ oder „Liquid glass“. Suchfeld, Karten, Schaltflächen, Menüs und das Appearance-Panel erhalten dann eine Glasoptik, durch die der Hintergrund scheint, und das Glas passt seine Tönung an den Hintergrund an.
 
 ![Der neue Tab in Liquid glass: Uhr, Suchfeld, Shortcuts, Lesezeichen und Website-Karten lassen den impressionistischen Obstgarten im Hintergrund durchscheinen](nt-glass "Liquid glass")
 
 | Material | Wirkung |
 | --- | --- |
 | Default | Das bisherige Aussehen von Lumno |
-| Frosted glass | Eine weiche Unschärfe über einer durchscheinenden Tönung |
+| Acrylic | Eine weiche Unschärfe über einer durchscheinenden Tönung |
 | Liquid glass | Klareres Glas; die Ränder des Suchfelds und seiner Ergebnisse brechen den Hintergrund wie eine Linse |
 
 Beide Glasmaterialien sind in der Betaphase und wirken am besten über einem Hintergrundbild. Firefox zeigt die Glasoptik ohne die Lichtbrechung an den Rändern.

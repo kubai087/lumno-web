@@ -42,14 +42,14 @@
 
 ## 유리 재질 {#glass}
 
-Appearance 설정의 Style 섹션에서 Material을 Default에서 Frosted glass 또는 Liquid glass로 바꿀 수 있습니다. 검색창, 카드, 버튼, 메뉴, Appearance 패널이 유리 같은 질감으로 바뀌어 뒤쪽 배경화면이 비쳐 보이고, 유리의 색조도 배경화면에 맞춰 자동으로 조정됩니다.
+Appearance 설정의 Style 섹션에서 Material을 Default에서 Acrylic 또는 Liquid glass로 바꿀 수 있습니다. 검색창, 카드, 버튼, 메뉴, Appearance 패널이 유리 같은 질감으로 바뀌어 뒤쪽 배경화면이 비쳐 보이고, 유리의 색조도 배경화면에 맞춰 자동으로 조정됩니다.
 
 ![Liquid glass를 적용한 새 탭. 시계, 검색창, 바로가기, 북마크, 사이트 카드 뒤로 인상파 과수원 배경화면이 비쳐 보인다](nt-glass "Liquid glass")
 
 | 재질 | 효과 |
 | --- | --- |
 | Default | Lumno의 기존 모습 |
-| Frosted glass | 부드럽게 흐려진 반투명 바탕 |
+| Acrylic | 부드럽게 흐려진 반투명 바탕 |
 | Liquid glass | 더 투명한 유리. 검색창과 검색 결과의 가장자리가 렌즈처럼 뒤쪽 배경화면을 굴절시킵니다 |
 
 두 가지 유리 재질은 모두 베타 기능이며, 배경화면과 함께 쓸 때 가장 잘 어울립니다. Firefox에서는 Liquid glass의 굴절 효과 없이 유리 질감만 표시됩니다.

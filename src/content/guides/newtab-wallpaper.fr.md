@@ -42,14 +42,14 @@ Le mode clair ou sombre se règle en haut du panneau : suivre le système, touj
 
 ## Matière en verre {#glass}
 
-Dans la section Style des réglages Appearance, remplacez Material « Default » par « Frosted glass » ou « Liquid glass ». Le champ de recherche, les cartes, les boutons, les menus et le panneau Appearance prennent un aspect de verre qui laisse transparaître le fond d'écran, et le verre adapte sa teinte au fond d'écran.
+Dans la section Style des réglages Appearance, remplacez Material « Default » par « Acrylic » ou « Liquid glass ». Le champ de recherche, les cartes, les boutons, les menus et le panneau Appearance prennent un aspect de verre qui laisse transparaître le fond d'écran, et le verre adapte sa teinte au fond d'écran.
 
 ![Le nouvel onglet en Liquid glass : l'horloge, le champ de recherche, les raccourcis, les favoris et les cartes de sites laissent transparaître le verger impressionniste du fond d'écran](nt-glass "Liquid glass")
 
 | Matière | Effet |
 | --- | --- |
 | Default | L'apparence habituelle de Lumno |
-| Frosted glass | Un flou doux sur une teinte translucide |
+| Acrylic | Un flou doux sur une teinte translucide |
 | Liquid glass | Un verre plus limpide ; les bords du champ de recherche et de ses résultats courbent le fond d'écran comme une lentille |
 
 Les deux matières en verre sont en version bêta et rendent mieux sur un fond d'écran. Firefox affiche l'aspect de verre, sans la déformation sur les bords.

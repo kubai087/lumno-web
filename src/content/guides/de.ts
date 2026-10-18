@@ -173,7 +173,7 @@ const content: GuideLocaleContent = {
     "newtab-wallpaper": {
       pageTitle: "Hintergründe für den neuen Tab: Gemälde, Bing-Bild des Tages, eigene Fotos und Filter | Lumno-Hilfe",
       pageDescription:
-        "Ändere den Hintergrund von Lumnos neuem Tab in den Appearance-Einstellungen: eingebaute Gemälde, Bings Bild des Tages, kuratierte Fotos, eigene Bilder oder ein Bildlink, mit Abdunkelung, Filtern, getrennter Auswahl für den hellen und dunklen Modus und einer Glasoptik (Frosted glass oder Liquid glass).",
+        "Ändere den Hintergrund von Lumnos neuem Tab in den Appearance-Einstellungen: eingebaute Gemälde, Bings Bild des Tages, kuratierte Fotos, eigene Bilder oder ein Bildlink, mit Abdunkelung, Filtern, getrennter Auswahl für den hellen und dunklen Modus und einer Glasoptik (Acrylic oder Liquid glass).",
       keywords: ["Neuer-Tab-Hintergrund", "Chrome neuer Tab Hintergrund", "Bing Bild des Tages", "Neuer-Tab-Erweiterung"],
       title: "Hintergrund ändern",
       navTitle: "Hintergrund ändern",

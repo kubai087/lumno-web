@@ -79,6 +79,7 @@
   { "q": "手機能用嗎", "expect": ["faq#compatibility", "browser-compatibility#support", "limitations#browsers"] },
   { "q": "捷徑分組", "expect": ["newtab-bookmarks-shortcuts#shortcut-groups"] },
   { "q": "液態玻璃", "expect": ["newtab-wallpaper#glass"] },
+  { "q": "壓克力", "expect": ["newtab-wallpaper#glass"] },
   { "q": "匯入自己的名言", "expect": ["newtab-clock-zen#custom-quotes"] },
   { "q": "搜尋引擎排序", "expect": ["site-search#order"] },
   { "q": "書籤加入捷徑", "expect": ["newtab-bookmarks-shortcuts#bookmarks"] },

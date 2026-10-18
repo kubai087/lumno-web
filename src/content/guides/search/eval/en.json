@@ -93,6 +93,7 @@
   { "q": "does it work on my phone", "expect": ["faq#compatibility", "browser-compatibility#support", "limitations#browsers"] },
   { "q": "group shortcuts", "expect": ["newtab-bookmarks-shortcuts#shortcut-groups"] },
   { "q": "liquid glass", "expect": ["newtab-wallpaper#glass"] },
+  { "q": "acrylic material", "expect": ["newtab-wallpaper#glass"] },
   { "q": "import my own quotes", "expect": ["newtab-clock-zen#quote"] },
   { "q": "daily quote", "expect": ["newtab-clock-zen#quote"] },
   { "q": "reorder search engines", "expect": ["site-search#order"] },

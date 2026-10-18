@@ -42,14 +42,14 @@ O modo claro ou escuro é definido na parte superior do painel: seguir o sistema
 
 ## Material de vidro {#glass}
 
-Na seção Style das configurações de Appearance, mude Material de Default para Frosted glass ou Liquid glass. A caixa de pesquisa, os cartões, os botões, os menus e o painel Appearance ganham um acabamento de vidro que deixa o papel de parede aparecer, e o vidro ajusta a tonalidade ao papel de parede.
+Na seção Style das configurações de Appearance, mude Material de Default para Acrylic ou Liquid glass. A caixa de pesquisa, os cartões, os botões, os menus e o painel Appearance ganham um acabamento de vidro que deixa o papel de parede aparecer, e o vidro ajusta a tonalidade ao papel de parede.
 
 ![A nova guia com Liquid glass: o relógio, a caixa de pesquisa, os atalhos, os favoritos e os cartões de sites deixam aparecer o pomar impressionista do papel de parede](nt-glass "Liquid glass")
 
 | Material | Efeito |
 | --- | --- |
 | Default | A aparência de sempre do Lumno |
-| Frosted glass | Um desfoque suave sobre uma tonalidade translúcida |
+| Acrylic | Um desfoque suave sobre uma tonalidade translúcida |
 | Liquid glass | Um vidro mais límpido; as bordas da caixa de pesquisa e dos resultados curvam o papel de parede como uma lente |
 
 Os dois materiais de vidro estão em versão beta e ficam melhores sobre um papel de parede. O Firefox mostra o acabamento de vidro, mas sem a curvatura nas bordas.

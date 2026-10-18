@@ -42,14 +42,14 @@ You can set light and dark mode itself at the top of the panel: follow the syste
 
 ## Glass material {#glass}
 
-In the Style section of Appearance settings, change Material from Default to Frosted glass or Liquid glass. The search box, cards, buttons, menus and the Appearance panel take on a glass finish that lets the wallpaper show through, and the glass adjusts its tint to the wallpaper.
+In the Style section of Appearance settings, change Material from Default to Acrylic or Liquid glass. The search box, cards, buttons, menus and the Appearance panel take on a glass finish that lets the wallpaper show through, and the glass adjusts its tint to the wallpaper.
 
 ![The new tab in Liquid glass: the clock, search box, shortcuts, bookmarks and site cards all let the impressionist orchard wallpaper show through](nt-glass "Liquid glass")
 
 | Material | Effect |
 | --- | --- |
 | Default | Lumno's original look |
-| Frosted glass | A soft blur over a translucent tint |
+| Acrylic | A soft blur over a translucent tint |
 | Liquid glass | Clearer glass; the edges of the search box and its results bend the wallpaper behind them like a lens |
 
 Both glass materials are in beta and look best over a wallpaper. Firefox shows the glass finish without the bending at the edges.

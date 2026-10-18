@@ -173,7 +173,7 @@ const content: GuideLocaleContent = {
     "newtab-wallpaper": {
       pageTitle: "New tab wallpapers: classic paintings, Bing daily, your photos and filters | Lumno Help",
       pageDescription:
-        "Change Lumno's new tab wallpaper in Appearance settings: built-in paintings, Bing's photo of the day, curated photos, your own images or an image link, with a mask, filters, separate light and dark picks, and a frosted or liquid glass finish.",
+        "Change Lumno's new tab wallpaper in Appearance settings: built-in paintings, Bing's photo of the day, curated photos, your own images or an image link, with a mask, filters, separate light and dark picks, and an acrylic or liquid glass finish.",
       keywords: ["new tab wallpaper", "Chrome new tab background", "Bing daily wallpaper", "new tab extension", "liquid glass new tab"],
       title: "Change the wallpaper",
       navTitle: "Change the wallpaper",

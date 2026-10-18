@@ -2,12 +2,17 @@ Lumno es una extensión de navegador, no un navegador propio, por lo que algunas
 
 ## Páginas en las que la barra de comandos no se abre {#restricted-pages}
 
-Por motivos de seguridad, los navegadores no permiten que las extensiones muestren contenido en estas páginas:
+Por seguridad, los navegadores no permiten que ninguna extensión ejecute scripts ni muestre su propia interfaz en estas páginas, y Lumno no puede saltarse esa restricción:
 
-- Las páginas del navegador que empiezan por `chrome://` o `edge://`
+- Las páginas del navegador que empiezan por `chrome://` o `edge://`, como la configuración y la página de extensiones
 - Chrome Web Store y el sitio de complementos de Edge
+- En Firefox, las páginas que empiezan por `about:` y el sitio Firefox Add-ons
 
-Si pulsas el atajo en una de estas páginas, Lumno aplica la opción "Restricted page behavior" de sus ajustes.
+Si pulsas el atajo en una de estas páginas, la barra de comandos no puede aparecer encima, así que Lumno abre una pestaña nueva con el cursor en el cuadro de búsqueda para que sigas buscando allí. No es un fallo: en las páginas web normales, la barra de comandos sigue abriéndose directamente en la página.
+
+Si prefieres que se abra la nueva pestaña de tu navegador, ve a General → Shortcut Settings → Restricted page behavior en los ajustes de Lumno y elige "Follow browser setting". Si otra extensión proporciona tu nueva pestaña, Lumno elige esta opción automáticamente.
+
+Solo está bloqueado abrir la barra de comandos en estas páginas. Abrir una página del navegador como `chrome://inspect/#devices` desde un acceso directo o la barra de comandos funciona con normalidad.
 
 En los archivos locales (PDF o HTML cuya dirección empieza por `file://`), puedes usar la barra de comandos después de permitir el acceso a las URL de archivo en la página de detalles de la extensión.
 

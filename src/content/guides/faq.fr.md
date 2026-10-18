@@ -10,9 +10,9 @@ Le raccourci par défaut est `⌘ ⇧ K | ⌘ ⇧ K` sur Mac et `Ctrl + Maj + K`
 
 Vérifiez d'abord que vous ne vous trouvez pas sur une page restreinte, comme les paramètres `chrome://` ou une boutique d'extensions. Vérifiez ensuite dans `chrome://extensions/shortcuts` qu'aucune autre extension n'utilise le même raccourci. Dans Dia, vous devez également régler la portée indiquée à côté du raccourci sur « Global ».
 
-### Pourquoi la barre de commande ne s'ouvre-t-elle pas sur certaines pages ?
+### Pourquoi un nouvel onglet s'ouvre-t-il à la place de la barre de commande sur certaines pages ?
 
-Les navigateurs n'autorisent pas les extensions à s'exécuter sur les pages restreintes, comme les paramètres `chrome://` ou les boutiques d'extensions. Si vous appuyez sur le raccourci sur l'une de ces pages, Lumno applique l'option « Restricted page behavior » de ses réglages et ouvre par défaut la recherche dans un nouvel onglet. Pour utiliser Lumno dans des fichiers PDF ou HTML locaux, activez « Autoriser l'accès aux URL de fichier » sur la page de détails de l'extension. Pour en savoir plus, consultez [Ce que Lumno ne fait pas](../limitations/#restricted-pages).
+Pour des raisons de sécurité, les navigateurs n'autorisent aucune extension à s'exécuter ou à afficher une interface sur les pages restreintes, comme les paramètres `chrome://`, la page des extensions, le Chrome Web Store ou le site des modules complémentaires Edge, et Lumno ne peut pas le contourner. Si vous appuyez sur le raccourci sur l'une de ces pages, Lumno ouvre à la place un nouvel onglet avec le champ de recherche. Ce n'est pas un bug : sur les pages web ordinaires, la barre de commande s'affiche toujours directement sur la page. Ouvrir une page comme `chrome://inspect/#devices` depuis un raccourci n'est pas concerné. Pour utiliser Lumno dans des fichiers PDF ou HTML locaux, activez « Autoriser l'accès aux URL de fichier » sur la page de détails de l'extension. Pour en savoir plus, consultez [Ce que Lumno ne fait pas](../limitations/#restricted-pages).
 
 ### Pourquoi le mode clair ou sombre de la barre de commande ne correspond-il pas à celui de mon système ?
 

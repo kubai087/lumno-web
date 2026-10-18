@@ -2,12 +2,17 @@ Lumno is a browser extension, not a browser of its own, so some things are outsi
 
 ## Pages where the command bar can't open {#restricted-pages}
 
-For security reasons, browsers don't allow extensions to show anything on these pages:
+For security, browsers don't let any extension run scripts or show its own interface on these pages, and Lumno can't work around it:
 
-- Browser pages that start with `chrome://` or `edge://`
+- Browser pages that start with `chrome://` or `edge://`, such as Settings and Extensions
 - The Chrome Web Store and the Edge Add-ons site
+- In Firefox, pages that start with `about:` and the Firefox Add-ons site
 
-If you press the shortcut on one of these pages, Lumno follows the "Restricted page behavior" option in its settings.
+If you press the shortcut on one of these pages, the command bar can't appear on top of it, so Lumno opens a new tab with the cursor in the search box instead, and you can keep searching there. This isn't a bug: on regular web pages, the command bar still opens right on the page.
+
+To open your browser's own new tab instead, go to General → Shortcut Settings → Restricted page behavior in Lumno's settings and choose "Follow browser setting". If another extension provides your new tab, Lumno chooses this for you.
+
+Only opening the command bar on these pages is blocked. Opening a browser page such as `chrome://inspect/#devices` from a shortcut or the command bar works as usual.
 
 Local files (PDF or HTML files starting with `file://`) are supported once you turn on "Allow access to file URLs" on Lumno's extension details page.
 

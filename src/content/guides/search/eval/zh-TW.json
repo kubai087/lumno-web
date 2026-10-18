@@ -82,5 +82,6 @@
   { "q": "匯入自己的名言", "expect": ["newtab-clock-zen#custom-quotes"] },
   { "q": "搜尋引擎排序", "expect": ["site-search#order"] },
   { "q": "書籤加入捷徑", "expect": ["newtab-bookmarks-shortcuts#bookmarks"] },
-  { "q": "在切換器裡關閉分頁", "expect": ["tab-switcher#switch", "keyboard-shortcuts#switcher-keys"] }
+  { "q": "在切換器裡關閉分頁", "expect": ["tab-switcher#switch", "keyboard-shortcuts#switcher-keys"] },
+  { "q": "按快速鍵開了新分頁", "expect": ["limitations#restricted-pages", "faq#using"] }
 ]

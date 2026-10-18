@@ -78,5 +78,6 @@
   { "q": "今日の一言", "expect": ["newtab-clock-zen#quote"] },
   { "q": "検索エンジンの並び替え", "expect": ["site-search#order"] },
   { "q": "ブックマークをショートカットに追加", "expect": ["newtab-bookmarks-shortcuts#bookmarks"] },
-  { "q": "切り替え画面でタブを閉じる", "expect": ["tab-switcher#switch", "keyboard-shortcuts#switcher-keys"] }
+  { "q": "切り替え画面でタブを閉じる", "expect": ["tab-switcher#switch", "keyboard-shortcuts#switcher-keys"] },
+  { "q": "ショートカットキーで新しいタブが開く", "expect": ["limitations#restricted-pages", "faq#using"] }
 ]

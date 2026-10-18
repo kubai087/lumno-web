@@ -19,6 +19,7 @@ export default {
       "一部のページでコマンドバーが開かないのはなぜ？設定ページでショートカットが効かない",
       "chrome:// ページ、Chrome ウェブストア、拡張機能ストアで使えない",
       "PDF やローカルファイルで使えない",
+      "ショートカットキーで新しいタブが開いてしまう、Edge の設定ページやアドオン サイトで使えない",
     ],
     "outside-browser": ["パソコンのファイルやアプリも検索できる？Spotlight、Raycast、Alfred の代わりになる？"],
     browsers: ["Safari で使える？スマホ、iPhone、iPad、Android で使える？"],

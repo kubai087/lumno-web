@@ -97,5 +97,6 @@
   { "q": "daily quote", "expect": ["newtab-clock-zen#quote"] },
   { "q": "reorder search engines", "expect": ["site-search#order"] },
   { "q": "add a bookmark to shortcuts", "expect": ["newtab-bookmarks-shortcuts#bookmarks"] },
-  { "q": "close a tab from the switcher", "expect": ["tab-switcher#switch", "keyboard-shortcuts#switcher-keys"] }
+  { "q": "close a tab from the switcher", "expect": ["tab-switcher#switch", "keyboard-shortcuts#switcher-keys"] },
+  { "q": "shortcut opens a new tab instead", "expect": ["limitations#restricted-pages", "faq#using"] }
 ]

@@ -10,9 +10,9 @@ Voreingestellt ist `⌘ ⇧ K | ⌘ ⇧ K` auf dem Mac und `Strg + Umschalt + K`
 
 Prüfe zuerst, ob du dich auf einer eingeschränkten Seite befindest, etwa in den `chrome://`-Einstellungen oder einem Erweiterungs-Store. Prüfe dann unter `chrome://extensions/shortcuts`, ob eine andere Erweiterung dasselbe Tastenkürzel verwendet. In Dia musst du außerdem den Bereich neben dem Tastenkürzel auf „Global“ stellen.
 
-### Warum öffnet sich die Befehlsleiste auf manchen Seiten nicht?
+### Warum öffnet sich auf manchen Seiten ein neuer Tab statt der Befehlsleiste?
 
-Browser erlauben Erweiterungen nicht, auf eingeschränkten Seiten wie den `chrome://`-Einstellungen oder Erweiterungs-Stores zu laufen. Wenn du auf einer solchen Seite das Tastenkürzel drückst, richtet sich Lumno nach der Option „Restricted page behavior“ in den Einstellungen und öffnet die Suche standardmäßig in einem neuen Tab. Um Lumno in lokalen PDF- oder HTML-Dateien zu verwenden, aktiviere auf der Detailseite der Erweiterung „Zugriff auf Datei-URLs zulassen“. Weitere Informationen findest du unter [Was Lumno nicht kann](../limitations/#restricted-pages).
+Aus Sicherheitsgründen erlauben Browser keiner Erweiterung, auf eingeschränkten Seiten wie den `chrome://`-Einstellungen, der Erweiterungsseite, dem Chrome Web Store oder der Website der Edge-Add-ons zu laufen oder eine Oberfläche anzuzeigen, und auch Lumno kann das nicht umgehen. Drückst du dort das Tastenkürzel, öffnet Lumno stattdessen einen neuen Tab mit dem Suchfeld. Das ist kein Fehler: Auf normalen Webseiten erscheint die Befehlsleiste weiterhin direkt auf der Seite. Eine Seite wie `chrome://inspect/#devices` über einen Shortcut zu öffnen, ist davon nicht betroffen. Um Lumno in lokalen PDF- oder HTML-Dateien zu verwenden, aktiviere auf der Detailseite der Erweiterung „Zugriff auf Datei-URLs zulassen“. Mehr dazu unter [Was Lumno nicht kann](../limitations/#restricted-pages).
 
 ### Warum entspricht der helle oder dunkle Modus der Befehlsleiste nicht meinem System?
 

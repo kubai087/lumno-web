@@ -10,9 +10,9 @@ O atalho padrão é `⌘ ⇧ K | ⌘ ⇧ K` no Mac e `Ctrl + Shift + K` no Windo
 
 Primeiro, verifique se você não está em uma página restrita, como as configurações `chrome://` ou uma loja de extensões. Depois, verifique em `chrome://extensions/shortcuts` se nenhuma outra extensão usa o mesmo atalho. No Dia, também é preciso alterar para "Global" o escopo exibido ao lado do atalho.
 
-### Por que a barra de comandos não abre em algumas páginas?
+### Por que em algumas páginas abre uma nova guia em vez da barra de comandos?
 
-Os navegadores não permitem que extensões sejam executadas em páginas restritas, como as configurações `chrome://` ou as lojas de extensões. Se você pressionar o atalho em uma dessas páginas, o Lumno aplica a opção "Restricted page behavior" das configurações e, por padrão, abre a pesquisa em uma nova guia. Para usar o Lumno em arquivos PDF ou HTML locais, permita o acesso a URLs de arquivo na página de detalhes da extensão. Para saber mais, consulte [O que o Lumno não faz](../limitations/#restricted-pages).
+Por segurança, os navegadores não permitem que nenhuma extensão seja executada ou mostre sua interface em páginas restritas, como as configurações `chrome://`, a página de extensões, a Chrome Web Store ou o site de complementos do Edge, e o Lumno não consegue contornar isso. Se você pressionar o atalho em uma dessas páginas, o Lumno abre uma nova guia com a caixa de pesquisa. Não é um erro: em páginas da web comuns, a barra de comandos continua aparecendo diretamente na página. Abrir uma página como `chrome://inspect/#devices` por um atalho não é afetado. Para usar o Lumno em arquivos PDF ou HTML locais, permita o acesso a URLs de arquivo na página de detalhes da extensão. Veja [O que o Lumno não faz](../limitations/#restricted-pages).
 
 ### Por que o modo claro ou escuro da barra de comandos não corresponde ao do meu sistema?
 

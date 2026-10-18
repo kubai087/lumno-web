@@ -10,9 +10,9 @@ The default shortcut is `⌘ ⇧ K | ⌘ ⇧ K` on a Mac and `Ctrl + Shift + K` 
 
 First, make sure you're not on a restricted page, such as `chrome://` settings or an extension store. Then go to `chrome://extensions/shortcuts` and check whether another extension uses the same shortcut. In Dia, also change the scope next to the shortcut to "Global".
 
-### Why doesn't the command bar open on some pages?
+### Why does the command bar open in a new tab on some pages?
 
-Browsers don't allow extensions to run on restricted pages, such as `chrome://` settings and extension stores. If you press the shortcut on one of these pages, Lumno follows the "Restricted page behavior" option in its settings, which by default opens search in a new tab. To use Lumno in local PDF or HTML files, turn on "Allow access to file URLs" on the extension's details page. See [What Lumno can't do](../limitations/#restricted-pages).
+For security, browsers don't let any extension run or show its interface on restricted pages, such as `chrome://` settings, the Extensions page, the Chrome Web Store and the Edge Add-ons site, and Lumno can't work around it. If you press the shortcut on one of these pages, Lumno opens a new tab with the search box instead. This isn't a bug: on regular web pages, the command bar still opens right on the page. Opening a page such as `chrome://inspect/#devices` from a shortcut isn't affected. To use Lumno in local PDF or HTML files, turn on "Allow access to file URLs" on the extension's details page. See [What Lumno can't do](../limitations/#restricted-pages).
 
 ### Why doesn't the command bar match my system's light or dark mode?
 

@@ -19,6 +19,7 @@ export default {
       "为什么有些网页打不开命令栏？快捷键在设置页没反应",
       "chrome:// 页面、扩展商店、应用商店里呼不出浮层",
       "PDF 里用不了、本地文件用不了",
+      "按快捷键却打开了新标签页、跳到新标签页、Edge 设置页和加载项商店里用不了",
     ],
     "outside-browser": ["能搜索电脑上的文件、应用吗？能代替 Spotlight、Raycast、Alfred 吗？"],
     browsers: ["支持 Safari 吗？支持手机吗？iPhone、安卓能用吗？"],

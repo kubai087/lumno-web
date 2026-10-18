@@ -20,6 +20,7 @@ export default {
       "Why won't the command bar open on some pages? Shortcut not working on settings pages",
       "Doesn't work on chrome:// pages, the Chrome Web Store or the extension store",
       "Doesn't work in PDFs or local files",
+      "Shortcut opens a new tab instead, jumps to a new tab, Edge settings and Edge Add-ons",
     ],
     "outside-browser": ["Can it search files and apps on my computer? Spotlight, Raycast or Alfred replacement?"],
     browsers: ["Does it work on Safari? On mobile, iPhone, iPad or Android?"],

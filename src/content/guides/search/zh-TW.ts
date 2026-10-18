@@ -19,6 +19,7 @@ export default {
       "為什麼有些網頁叫不出命令列？快速鍵在設定頁沒反應",
       "chrome:// 頁面、擴充功能商店、應用程式商店裡叫不出浮層",
       "PDF 裡不能用、本機檔案不能用",
+      "按快速鍵卻開了新分頁、跳到新分頁、Edge 設定頁和附加元件商店裡不能用",
     ],
     "outside-browser": ["能搜尋電腦上的檔案、應用程式嗎？能取代 Spotlight、Raycast、Alfred 嗎？"],
     browsers: ["支援 Safari 嗎？支援手機嗎？iPhone、Android 能用嗎？"],

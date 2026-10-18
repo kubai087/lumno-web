@@ -121,5 +121,7 @@
   { "q": "书签添加到快捷方式", "expect": ["newtab-bookmarks-shortcuts#bookmarks"] },
   { "q": "在切换器里关闭标签页", "expect": ["tab-switcher#switch", "keyboard-shortcuts#switcher-keys"] },
   { "q": "悬浮书签栏", "expect": ["newtab-bookmarks-shortcuts#bookmark-layouts"] },
-  { "q": "快捷方式同步不了", "expect": ["sync#browser-sync"] }
+  { "q": "快捷方式同步不了", "expect": ["sync#browser-sync"] },
+  { "q": "按快捷键打开了新标签页", "expect": ["limitations#restricted-pages", "faq#using"] },
+  { "q": "扩展程序页打不开命令栏", "expect": ["limitations#restricted-pages", "faq#using"] }
 ]

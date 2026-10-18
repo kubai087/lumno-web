@@ -10,9 +10,9 @@ El atajo predeterminado es `⌘ ⇧ K | ⌘ ⇧ K` en el Mac y `Ctrl + Mayús + 
 
 Primero, comprueba que no estás en una página restringida, como la configuración `chrome://` o una tienda de extensiones. Después, comprueba en `chrome://extensions/shortcuts` que ninguna otra extensión usa el mismo atajo. En Dia, también debes cambiar a "Global" el ámbito que aparece junto al atajo.
 
-### ¿Por qué la barra de comandos no se abre en algunas páginas?
+### ¿Por qué en algunas páginas se abre una pestaña nueva en lugar de la barra de comandos?
 
-Los navegadores no permiten que las extensiones se ejecuten en páginas restringidas, como la configuración `chrome://` o las tiendas de extensiones. Si pulsas el atajo en una de estas páginas, Lumno aplica la opción "Restricted page behavior" de sus ajustes y, de forma predeterminada, abre la búsqueda en una pestaña nueva. Para usar Lumno en archivos PDF o HTML locales, permite el acceso a las URL de archivo en la página de detalles de la extensión. Para obtener más información, consulta [Lo que Lumno no hace](../limitations/#restricted-pages).
+Por seguridad, los navegadores no permiten que ninguna extensión se ejecute ni muestre su interfaz en páginas restringidas, como la configuración `chrome://`, la página de extensiones, Chrome Web Store o el sitio de complementos de Edge, y Lumno no puede saltárselo. Si pulsas el atajo en una de estas páginas, Lumno abre en su lugar una pestaña nueva con el cuadro de búsqueda. No es un fallo: en las páginas web normales, la barra de comandos sigue apareciendo directamente en la página. Abrir una página como `chrome://inspect/#devices` desde un acceso directo no se ve afectado. Para usar Lumno en archivos PDF o HTML locales, permite el acceso a las URL de archivo en la página de detalles de la extensión. Consulta [Lo que Lumno no hace](../limitations/#restricted-pages).
 
 ### ¿Por qué el modo claro u oscuro de la barra de comandos no coincide con el de mi sistema?
 

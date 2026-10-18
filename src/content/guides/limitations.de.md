@@ -2,12 +2,17 @@ Lumno ist eine Browsererweiterung und kein eigener Browser. Deshalb sind einige 
 
 ## Seiten, auf denen sich die Befehlsleiste nicht öffnet {#restricted-pages}
 
-Aus Sicherheitsgründen erlauben Browser Erweiterungen nicht, auf diesen Seiten Inhalte anzuzeigen:
+Aus Sicherheitsgründen erlauben Browser keiner Erweiterung, auf diesen Seiten Skripte auszuführen oder eine eigene Oberfläche anzuzeigen, und auch Lumno kann das nicht umgehen:
 
-- Browserseiten, die mit `chrome://` oder `edge://` beginnen
+- Browserseiten, die mit `chrome://` oder `edge://` beginnen, etwa die Einstellungen und die Erweiterungsseite
 - Der Chrome Web Store und die Website der Edge-Add-ons
+- In Firefox Seiten, die mit `about:` beginnen, und die Website von Firefox Add-ons
 
-Wenn du auf einer dieser Seiten das Tastenkürzel drückst, richtet sich Lumno nach der Option „Restricted page behavior“ in den Einstellungen.
+Drückst du auf einer dieser Seiten das Tastenkürzel, kann die Befehlsleiste nicht darüber erscheinen. Lumno öffnet stattdessen einen neuen Tab mit dem Cursor im Suchfeld, sodass du dort weitersuchen kannst. Das ist kein Fehler: Auf normalen Webseiten öffnet sich die Befehlsleiste weiterhin direkt auf der Seite.
+
+Wenn stattdessen der neue Tab deines Browsers geöffnet werden soll, wähle in den Einstellungen von Lumno unter General → Shortcut Settings → Restricted page behavior die Option „Follow browser setting“. Stellt eine andere Erweiterung deinen neuen Tab bereit, wählt Lumno diese Option automatisch.
+
+Blockiert ist nur das Öffnen der Befehlsleiste auf diesen Seiten. Eine Browserseite wie `chrome://inspect/#devices` über einen Shortcut oder die Befehlsleiste zu öffnen, funktioniert wie gewohnt.
 
 In lokalen Dateien (PDF- oder HTML-Dateien, die mit `file://` beginnen) kannst du die Befehlsleiste verwenden, nachdem du auf der Detailseite der Erweiterung „Zugriff auf Datei-URLs zulassen“ aktiviert hast.
 

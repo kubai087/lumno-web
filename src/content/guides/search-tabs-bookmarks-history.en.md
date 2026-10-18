@@ -30,4 +30,6 @@ To search only bookmarks, history or top sites, press `Tab` twice while the sear
 
 ## Close other tabs {#close-other-tabs}
 
-When tabs pile up, click the brush icon on the right of the search box to close the other tabs in the current window. The current tab, pinned tabs and tabs in tab groups stay open. The button is in both the command bar and the new tab's search box.
+When tabs pile up, click the brush icon on the right of the search box, then click Close in the prompt that appears, to close the other tabs in the current window. The current tab, pinned tabs and tabs in tab groups stay open. The button is in both the command bar and the new tab's search box.
+
+If you change your mind, click the brush icon again, press `Esc` or click outside the prompt.

@@ -112,7 +112,7 @@ const content: GuideLocaleContent = {
     sync: {
       pageTitle: "Sincroniza Lumno entre ordenadores con la sincronización del navegador y WebDAV | Ayuda de Lumno",
       pageDescription:
-        "Los ajustes de Lumno viajan con la sincronización de tu navegador. Activa la sincronización WebDAV para llevarte también los iconos de accesos directos y los fondos, con Nextcloud, un NAS o cualquier servidor WebDAV que controles.",
+        "Los ajustes de Lumno viajan con la sincronización de tu navegador. Activa la sincronización WebDAV para llevarte también los iconos de accesos directos, los fondos y las citas, con Nextcloud, un NAS o cualquier servidor WebDAV que controles.",
       keywords: ["sincronización Lumno", "sincronización WebDAV", "Nextcloud WebDAV", "sincronizar ajustes de extensión Chrome", "sincronizar nueva pestaña"],
       title: "Sincronización",
       navTitle: "Sincronización",
@@ -165,7 +165,7 @@ const content: GuideLocaleContent = {
     "tab-switcher": {
       pageTitle: "Selector de pestañas recientes: pulsa ⌥Q para saltar entre pestañas recientes | Ayuda de Lumno",
       pageDescription:
-        "Pulsa ⌥Q (Alt+Q en Windows) para abrir el selector de pestañas recientes de Lumno, con tus pestañas en el orden en que las usaste y una vista previa de cada una. Mantén pulsada ⌥, pulsa Q varias veces y suelta ⌥ para cambiar de pestaña.",
+        "Pulsa ⌥Q (Alt+Q en Windows) para abrir el selector de pestañas recientes de Lumno, con tus pestañas en el orden en que las usaste y una vista previa de cada una. Mantén pulsada ⌥, pulsa Q varias veces y suelta ⌥ para cambiar de pestaña. También puedes cerrar pestañas desde el propio selector.",
       keywords: ["selector de pestañas Chrome", "pestañas recientes", "Alt Tab para el navegador", "Arc Ctrl Tab"],
       title: "Saltar entre pestañas recientes",
       navTitle: "Pestañas recientes",
@@ -173,16 +173,16 @@ const content: GuideLocaleContent = {
     "newtab-wallpaper": {
       pageTitle: "Fondos de la nueva pestaña: cuadros clásicos, foto del día de Bing, tus fotos y filtros | Ayuda de Lumno",
       pageDescription:
-        "Cambia el fondo de la nueva pestaña de Lumno en los ajustes de Appearance: cuadros incluidos, la foto del día de Bing, fotos seleccionadas, tus propias imágenes o un enlace de imagen, con velo, filtros y fondos distintos para los modos claro y oscuro.",
+        "Cambia el fondo de la nueva pestaña de Lumno en los ajustes de Appearance: cuadros incluidos, la foto del día de Bing, fotos seleccionadas, tus propias imágenes o un enlace de imagen, con velo, filtros, fondos distintos para los modos claro y oscuro y un acabado de cristal (Frosted glass o Liquid glass).",
       keywords: ["fondo de nueva pestaña", "fondo nueva pestaña Chrome", "fondo diario de Bing", "extensión nueva pestaña"],
       title: "Cambiar el fondo",
       navTitle: "Cambiar el fondo",
     },
     "newtab-bookmarks-shortcuts": {
-      pageTitle: "Accesos directos y marcadores en la nueva pestaña: añadir sitios, tres diseños | Ayuda de Lumno",
+      pageTitle: "Accesos directos y marcadores en la nueva pestaña: añadir y agrupar sitios, tres diseños | Ayuda de Lumno",
       pageDescription:
-        "Añade tus sitios de siempre como accesos directos en la nueva pestaña de Lumno, elige sus iconos, agrúpalos en carpetas y explora tus marcadores como carpetas, lista anidada o barra superior, con las filas que quieras o sin mostrarlos.",
-      keywords: ["accesos directos nueva pestaña", "marcadores nueva pestaña", "barra de marcadores Chrome", "carpetas de marcadores", "ocultar marcadores nueva pestaña"],
+        "Añade tus sitios de siempre como accesos directos en la nueva pestaña de Lumno, elige sus iconos, repártelos en grupos o carpetas y explora tus marcadores como carpetas, lista anidada o barra superior, con las filas que quieras o sin mostrarlos.",
+      keywords: ["accesos directos nueva pestaña", "grupos de accesos directos", "marcadores nueva pestaña", "barra de marcadores Chrome", "carpetas de marcadores", "ocultar marcadores nueva pestaña"],
       title: "Accesos directos y marcadores",
       navTitle: "Accesos directos y marcadores",
     },
@@ -195,11 +195,11 @@ const content: GuideLocaleContent = {
       navTitle: "Sitios frecuentes y progreso",
     },
     "newtab-clock-zen": {
-      pageTitle: "Reloj y modo Zen: una nueva pestaña con solo el cuadro de búsqueda | Ayuda de Lumno",
-      pageDescription: "Muestra un reloj en la nueva pestaña de Lumno o escribe /zen para ocultar todo excepto el cuadro de búsqueda.",
-      keywords: ["reloj nueva pestaña", "nueva pestaña minimalista", "modo Zen", "nueva pestaña para concentrarse"],
-      title: "Reloj y modo Zen",
-      navTitle: "Reloj y modo Zen",
+      pageTitle: "Reloj, cita diaria y modo Zen: una nueva pestaña con solo el cuadro de búsqueda | Ayuda de Lumno",
+      pageDescription: "Muestra un reloj y una cita diaria de tu propio archivo TXT o Markdown en la nueva pestaña de Lumno, o escribe /zen para ocultar todo excepto el cuadro de búsqueda.",
+      keywords: ["reloj nueva pestaña", "cita diaria nueva pestaña", "nueva pestaña minimalista", "modo Zen", "nueva pestaña para concentrarse"],
+      title: "Reloj, citas y modo Zen",
+      navTitle: "Reloj, citas y modo Zen",
     },
     "newtab-other-extensions": {
       pageTitle: "Usar otra extensión de nueva pestaña con la barra de comandos de Lumno | Ayuda de Lumno",

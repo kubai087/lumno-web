@@ -8,7 +8,7 @@ La fila de iconos situada bajo el cuadro de búsqueda muestra tus accesos direct
 
 ### Añadir un acceso directo
 
-1. Haz clic en "+" al final de tus accesos directos.
+1. Haz clic en "+" al final de tus accesos directos y elige "Add site".
 2. Escribe un nombre y una URL. También se admiten páginas del navegador como `chrome://inspect/#devices`.
 3. Elige un icono: un icono incluido, un icono en línea o tu propia imagen (se recomienda una imagen cuadrada de al menos 128 × 128 px).
 4. Haz clic en Guardar.
@@ -16,9 +16,24 @@ La fila de iconos situada bajo el cuadro de búsqueda muestra tus accesos direct
 ### Organizar los accesos directos
 
 - Haz clic con el botón derecho en un acceso directo para editarlo o eliminarlo. Si eliminas uno por error, usa el atajo que aparece en el aviso para deshacer la acción.
-- Arrastra los accesos directos para reordenarlos. Si sueltas uno sobre tus marcadores, se convierte en un marcador.
-- El número de accesos directos por fila, el tamaño de los iconos, el espaciado, la ampliación tipo Dock y el botón "+" se configuran en los ajustes de Lumno, en Appearance → New Tab.
+- Arrastra los accesos directos para reordenarlos. Si sueltas uno sobre tus marcadores, se convierte en un marcador. También puedes seleccionar un acceso directo con `Tab` y pulsar `⌥ ←` o `⌥ →` para moverlo una posición.
+- El número de accesos directos por fila, el tamaño de los iconos, el espaciado, la ampliación tipo Dock y el botón "+" se configuran en la sección Shortcuts de los ajustes de Appearance de la nueva pestaña, o en los ajustes de Lumno, en Appearance → New Tab. Para ocultar "+" directamente, haz clic en él y elige "Hide".
+- Puedes añadir hasta 200 accesos directos.
 - Si no necesitas los accesos directos, desactiva Shortcuts en ese mismo lugar y desaparecerá la fila de iconos bajo el cuadro de búsqueda.
+
+## Grupos de accesos directos {#shortcut-groups}
+
+Cuando tengas muchos accesos directos, repártelos en grupos según su uso, como Trabajo, IA y Ocio, cada uno con su propio título.
+
+![Los accesos directos bajo el cuadro de búsqueda en tres grupos, Work, AI y Everyday; el puntero está sobre el título Work, junto al que aparece "···"](nt-shortcut-groups "Accesos directos repartidos en grupos")
+
+1. Haz clic en "+" al final de tus accesos directos y elige "New group".
+2. Escribe un nombre para el grupo y haz clic en Guardar. El nombre es opcional: un grupo sin nombre solo sirve para empezar una fila nueva.
+
+- Coloca el puntero sobre el título de un grupo y haz clic en "···", a su derecha, para cambiarle el nombre, añadirle un sitio o moverlo hacia arriba o hacia abajo. También puedes hacer doble clic en un título para cambiarle el nombre.
+- Arrastra el título de un grupo para cambiar el orden de los grupos. Arrastra un acceso directo a otro grupo para moverlo allí.
+- "Delete group" pasa los sitios del grupo al grupo de arriba. "Delete group and sites" te pide confirmación y después elimina ambos. Pulsa `⌘ Z` para deshacer cualquiera de las dos acciones.
+- Puedes crear hasta 20 grupos.
 
 ## Carpetas de accesos directos {#shortcut-folders}
 
@@ -40,6 +55,7 @@ La zona de marcadores muestra el contenido de la barra de marcadores de tu naveg
 
 - Haz clic con el botón derecho en una carpeta para cambiar su color. La carpeta también se muestra con ese color en los menús.
 - Haz clic con el botón derecho en una carpeta y elige "Open in new tab group" para abrir todas sus páginas a la vez, reunidas en un mismo grupo de pestañas.
+- Haz clic con el botón derecho en un marcador o una carpeta y elige "Add to shortcuts" para añadirlo al final de tu último grupo de accesos directos. El marcador se queda donde está. Si ya está entre tus accesos directos, el menú muestra "Already in shortcuts".
 - Haz clic en el icono de marcadores para abrir el administrador de marcadores del navegador.
 - Los accesos directos y los marcadores se abren en la pestaña actual de forma predeterminada. Para abrirlos en una pestaña nueva, actívalos uno a uno en los ajustes de Lumno, en General → New Tab Settings → Open in a new tab. Si haces clic manteniendo pulsada `⌘` o con el botón central, siempre se abren en segundo plano.
 
@@ -65,11 +81,14 @@ Los marcadores se muestran en una fila en la parte superior de la página, como 
 
 ![El diseño de barra de marcadores superior, con las carpetas en fila en la parte de arriba de la nueva pestaña](nt-bookmarks-top "Barra de marcadores superior")
 
-Con la barra de marcadores superior, haz clic en "···", en el extremo derecho de la barra, para elegir el fondo: niebla adaptable, cristal transparente, transparente o un color personalizado.
+Con la barra de marcadores superior, haz clic en "···", en el extremo derecho de la barra, para elegir su forma y su fondo:
+
+- "Bar style": "Docked to top" la pega al borde superior del navegador; "Floating" muestra una barra redondeada, algo separada del borde.
+- "Bar background": "Match style", "Transparent" o "Custom color". Con "Match style", la barra usa el mismo [material](../newtab-wallpaper/#glass) que el resto de la nueva pestaña.
 
 ## Filas y ocultar marcadores {#bookmark-rows}
 
-Para elegir cuántas filas de marcadores se muestran y cuántos caben en cada fila, ve a Appearance → New Tab en los ajustes de Lumno.
+Para elegir cuántas filas de marcadores se muestran y cuántos caben en cada fila, usa la sección Bookmarks de los ajustes de Appearance de la nueva pestaña, o ve a Appearance → New Tab en los ajustes de Lumno.
 
 ![Cuatro ajustes de Lumno: Bookmark rows, Bookmarks per row, Show Icons Inside Bookmark Folders y Site Cards](nt-layout-settings "Ajustes de marcadores en Appearance → New Tab")
 

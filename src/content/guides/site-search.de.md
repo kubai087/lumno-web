@@ -55,6 +55,15 @@ Drücke bei leerem Suchfeld zweimal `Tab`, um das Suchbereich-Panel zu öffnen. 
 
 ![Das Suchbereich-Panel mit gruppierten Suchmaschinen und Seitensuchen](modemenu "Das Suchbereich-Panel")
 
+## Suchquellen anordnen {#order}
+
+Die Suchquellen, die du am häufigsten nutzt, kannst du nach vorne holen:
+
+- Ziehe im Suchbereich-Panel ein Symbol, um es innerhalb seiner Gruppe zu verschieben. Bewege den Mauszeiger auf die Überschrift einer Gruppe und klicke auf die Schaltfläche zum Verschieben nach oben oder unten, um die ganze Gruppe zu verschieben.
+- Ziehe in den Einstellungen von Lumno unter „Search sources“ die Schlagwörter oben, um die Reihenfolge der Gruppen im Panel zu ändern, und die Einträge in den Listen darunter, um die Reihenfolge innerhalb jeder Gruppe zu ändern. Auch die Optionen unter „Visible Result Types“ lassen sich ziehen, um die Reihenfolge von offenen Tabs, Lesezeichen, Verlauf und anderen Ergebnissen zu ändern.
+
+Wenn du dich verschoben hast, drücke `⌘ Z` zum Rückgängigmachen und `⌘ ⇧ Z` zum Wiederherstellen. Die Reihenfolge wird über deinen Browser synchronisiert.
+
 ## Eigene Suche hinzufügen {#custom}
 
 Das Intranet deines Unternehmens oder häufig genutzte Dokumentationsseiten kannst du in den Einstellungen von Lumno als eigene Suche hinzufügen und ihnen ein leicht zu merkendes Kürzel geben.

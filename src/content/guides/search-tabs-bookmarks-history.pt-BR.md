@@ -30,4 +30,6 @@ Para pesquisar apenas em favoritos, no histórico ou nos sites frequentes, press
 
 ## Fechar as outras guias {#close-other-tabs}
 
-Quando as guias se acumularem, clique no ícone de pincel à direita da caixa de pesquisa para fechar as outras guias da janela atual. A guia atual, as guias fixadas e as que estão em um grupo de guias continuam abertas. O botão fica tanto na barra de comandos quanto na caixa de pesquisa da nova guia.
+Quando as guias se acumularem, clique no ícone de pincel à direita da caixa de pesquisa e, no aviso que aparece, clique em "Close" para fechar as outras guias da janela atual. A guia atual, as guias fixadas e as que estão em um grupo de guias continuam abertas. O botão fica tanto na barra de comandos quanto na caixa de pesquisa da nova guia.
+
+Se mudar de ideia, clique de novo no ícone de pincel, pressione `Esc` ou clique fora do aviso.

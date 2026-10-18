@@ -30,4 +30,6 @@ Para buscar solo en marcadores, historial o sitios frecuentes, pulsa `Tab` dos v
 
 ## Cerrar las demás pestañas {#close-other-tabs}
 
-Cuando se acumulen las pestañas, haz clic en el icono del pincel a la derecha del cuadro de búsqueda para cerrar las demás pestañas de la ventana actual. La pestaña actual, las pestañas fijadas y las que están en un grupo de pestañas se quedan abiertas. El botón está tanto en la barra de comandos como en el cuadro de búsqueda de la nueva pestaña.
+Cuando se acumulen las pestañas, haz clic en el icono del pincel a la derecha del cuadro de búsqueda y, en el aviso que aparece, haz clic en "Close" para cerrar las demás pestañas de la ventana actual. La pestaña actual, las pestañas fijadas y las que están en un grupo de pestañas se quedan abiertas. El botón está tanto en la barra de comandos como en el cuadro de búsqueda de la nueva pestaña.
+
+Si cambias de idea, vuelve a hacer clic en el icono del pincel, pulsa `Esc` o haz clic fuera del aviso.

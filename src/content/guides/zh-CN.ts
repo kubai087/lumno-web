@@ -118,7 +118,7 @@ const content: GuideLocaleContent = {
     sync: {
       pageTitle: "同步设置：用浏览器同步和 WebDAV 在多台电脑间同步 Lumno｜Lumno 帮助中心",
       pageDescription:
-        "Lumno 的设置会跟着浏览器自带的同步走；开启 WebDAV 同步后，上传的快捷方式图标和自定义壁纸也能同步，支持坚果云、NAS 和自建服务器。附坚果云的填写方法。",
+        "Lumno 的设置会跟着浏览器自带的同步走；开启 WebDAV 同步后，上传的快捷方式图标、自定义壁纸和导入的名句库也能同步，支持坚果云、NAS 和自建服务器。附坚果云的填写方法。",
       keywords: ["Lumno 同步", "WebDAV 同步", "坚果云 WebDAV", "Chrome 扩展同步设置", "新标签页同步"],
       title: "同步设置",
       navTitle: "同步设置",
@@ -156,7 +156,7 @@ const content: GuideLocaleContent = {
       pageTitle: "站内搜索：输入简称按 Tab，在 GitHub、B 站、知乎中直接搜索｜Lumno 帮助中心",
       pageDescription:
         "Lumno 内置 47 个搜索入口：输入 gh、bb、zh 等简称后按 Tab，可以直接在 GitHub、Bilibili、知乎中搜索，也可以把问题直接发给 ChatGPT、DeepSeek、Kimi、豆包。包含简称列表。",
-      keywords: ["Chrome 站内搜索", "Tab 键站内搜索", "浏览器搜索快捷方式", "快速搜索 GitHub", "DeepSeek 快捷提问", "自定义搜索引擎"],
+      keywords: ["Chrome 站内搜索", "Tab 键站内搜索", "浏览器搜索快捷方式", "快速搜索 GitHub", "DeepSeek 快捷提问", "自定义搜索引擎", "搜索源排序"],
       title: "站内搜索和 AI 提问",
       navTitle: "站内搜索和 AI 提问",
       faq: [
@@ -174,31 +174,31 @@ const content: GuideLocaleContent = {
     "tab-switcher": {
       pageTitle: "最近标签页切换器：按 ⌥Q 在最近的标签页之间切换｜Lumno 帮助中心",
       pageDescription:
-        "按 ⌥Q（Windows 为 Alt+Q）打开 Lumno 的最近标签页切换器，标签页按最近使用的顺序排列并显示页面预览。按住 ⌥ 连按 Q 选择，松开即切换。",
+        "按 ⌥Q（Windows 为 Alt+Q）打开 Lumno 的最近标签页切换器，标签页按最近使用的顺序排列并显示页面预览。按住 ⌥ 连按 Q 选择，松开即切换，也可以在切换器中直接关闭标签页。",
       keywords: ["Chrome 标签页切换", "最近标签页", "Alt Tab 浏览器", "Arc Ctrl Tab"],
       title: "切换最近的标签页",
       navTitle: "切换最近的标签页",
     },
     "newtab-wallpaper": {
-      pageTitle: "新标签页壁纸：内置名画、Bing 每日壁纸、本地图片和滤镜｜Lumno 帮助中心",
+      pageTitle: "新标签页壁纸：内置名画、Bing 每日壁纸、本地图片、滤镜和玻璃材质｜Lumno 帮助中心",
       pageDescription:
-        "在 Lumno 新标签页的外观设置中更换壁纸：内置名画与插画、Bing 每日壁纸、精选摄影、本地图片或图片链接，并可调整遮罩和滤镜，为浅色和深色模式分别设置。",
-      keywords: ["新标签页壁纸", "Chrome 新标签页壁纸", "Bing 每日壁纸", "新标签页插件"],
+        "在 Lumno 新标签页的外观设置中更换壁纸：内置名画与插画、Bing 每日壁纸、精选摄影、本地图片或图片链接，并可调整遮罩和滤镜，为浅色和深色模式分别设置，还可以给搜索框和卡片换上磨砂玻璃或液态玻璃材质。",
+      keywords: ["新标签页壁纸", "Chrome 新标签页壁纸", "Bing 每日壁纸", "新标签页插件", "液态玻璃", "磨砂玻璃"],
       title: "更换壁纸",
       navTitle: "更换壁纸",
     },
     "newtab-bookmarks-shortcuts": {
-      pageTitle: "新标签页的快捷方式和书签：添加、排列与三种书签布局｜Lumno 帮助中心",
+      pageTitle: "新标签页的快捷方式和书签：添加、分组与三种书签布局｜Lumno 帮助中心",
       pageDescription:
-        "在 Lumno 新标签页添加常用网站快捷方式、自定义图标、把快捷方式叠成文件夹，并在多层文件夹、多级列表和顶部书签栏三种布局中查看浏览器书签，还可以调整显示行数或隐藏书签。",
-      keywords: ["新标签页快捷方式", "新标签页书签", "Chrome 书签栏", "书签文件夹", "隐藏新标签页书签"],
+        "在 Lumno 新标签页添加常用网站快捷方式、自定义图标、按用途分组、把快捷方式叠成文件夹，并在多层文件夹、多级列表和顶部书签栏三种布局中查看浏览器书签，还可以调整显示行数或隐藏书签。",
+      keywords: ["新标签页快捷方式", "快捷方式分组", "新标签页书签", "Chrome 书签栏", "书签文件夹", "隐藏新标签页书签"],
       title: "快捷方式和书签",
       navTitle: "快捷方式和书签",
     },
     "newtab-frequent-sites": {
       pageTitle: "常访网站和追更卡片：置顶网站，自动记住看到哪一集｜Lumno 帮助中心",
       pageDescription:
-        "Lumno 新标签页底部显示最常访问或最近访问的网站，可以置顶最多 3 个卡片；置顶剧集或连载小说后，卡片会自动更新到最新一集或一章。卡片可以显示 1 至 2 行，也可以关闭。",
+        "Lumno 新标签页底部显示最常访问或最近访问的网站，可以置顶最多 3 个卡片，也可以拖到快捷方式或书签中；置顶剧集或连载小说后，卡片会自动更新到最新一集或一章。卡片可以显示 1 至 2 行，也可以关闭。",
       keywords: ["新标签页常用网站", "追剧进度", "连载小说进度", "置顶网站", "关闭新标签页卡片"],
       title: "常访网站和追更卡片",
       navTitle: "常访网站和追更卡片",
@@ -206,8 +206,8 @@ const content: GuideLocaleContent = {
     "newtab-clock-zen": {
       pageTitle: "时钟、每日名句和 Zen 模式：让新标签页只留搜索框｜Lumno 帮助中心",
       pageDescription:
-        "在 Lumno 新标签页显示时钟和每日名句（文学或诗词），或在搜索框输入 /zen 进入 Zen 模式，只保留搜索框。",
-      keywords: ["新标签页时钟", "每日一句", "极简新标签页", "Zen 模式"],
+        "在 Lumno 新标签页显示时钟和每日名句：来自一言的文学和诗词，或者导入自己的 TXT、Markdown 句库。在搜索框输入 /zen 进入 Zen 模式，只保留搜索框。",
+      keywords: ["新标签页时钟", "每日一句", "自定义名言", "极简新标签页", "Zen 模式"],
       title: "时钟、名句和 Zen 模式",
       navTitle: "时钟、名句和 Zen 模式",
     },

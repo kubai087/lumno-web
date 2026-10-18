@@ -56,6 +56,7 @@ While you hold `⌥`, `⇧` or `⌘`, the hint on the right of each result chang
 | `Tab` | Complete a suggestion; after a site shortcut, start site search; in an empty search box, search open tabs only |
 | `Tab` `Tab` | In an empty search box, open the search scope panel; with a scope already selected, one press is enough |
 | `⌥ ↑` `⌥ ↓` | Bring back the previous or next thing you typed |
+| `⌘ Z` `⌘ ⇧ Z` | While the search scope panel is open, undo or redo a change to the order of search sources |
 | `⌫` | In an empty search box, leave site search, a search scope or open-tab search |
 | `Esc` | Leave site search, a search scope or open-tab search |
 | `Esc`, or click outside the command bar | Close the command bar |
@@ -69,7 +70,8 @@ The search box on the new tab page uses the same keys as the command bar. On top
 | Start typing | Your text goes straight into the search box; no need to click it first |
 | Click a search result, shortcut, bookmark or site card | Open it in the current tab by default, or in a new tab once you turn it on under General → New Tab Settings → Open in a new tab |
 | Hold `⌘` and click, or middle-click | Open in a background tab |
-| `⌘ Z` | Undo your last change to shortcuts or bookmarks, such as removing, moving or creating a folder |
+| `⌥ ←` `⌥ →` | After selecting a shortcut with `Tab`, move it one place back or forward |
+| `⌘ Z` | Undo your last change to shortcuts or bookmarks, such as removing, moving, creating a folder or deleting a group |
 | `⌘ ⇧ Z` | Redo what you just undid |
 | `Esc` | Cancel while dragging a shortcut or bookmark |
 
@@ -81,6 +83,7 @@ The search box on the new tab page uses the same keys as the command bar. On top
 | `Tab`, `→` or `↓` | Select the next tab |
 | `⇧ Tab`, `←` or `↑` | Select the previous tab |
 | Release `⌥`, press `↩`, or click a tab | Switch to the selected tab |
+| Click the close button in a page preview's corner | Close that tab; the switcher stays open |
 | `Esc`, or click outside the switcher | Close the switcher and stay on the current tab |
 
 If you've changed the switcher's shortcut, hold the modifier key from your own shortcut instead.

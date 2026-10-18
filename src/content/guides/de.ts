@@ -112,7 +112,7 @@ const content: GuideLocaleContent = {
     sync: {
       pageTitle: "Lumno auf mehreren Computern: mit Browser-Synchronisierung und WebDAV | Lumno-Hilfe",
       pageDescription:
-        "Lumnos Einstellungen werden über die Synchronisierung deines Browsers abgeglichen. Mit der WebDAV-Synchronisierung werden auch eigene Shortcut-Symbole und Hintergründe synchronisiert, über Nextcloud, ein NAS oder einen anderen WebDAV-Server, den du selbst betreibst.",
+        "Lumnos Einstellungen werden über die Synchronisierung deines Browsers abgeglichen. Mit der WebDAV-Synchronisierung werden auch eigene Shortcut-Symbole, Hintergründe und Zitate synchronisiert, über Nextcloud, ein NAS oder einen anderen WebDAV-Server, den du selbst betreibst.",
       keywords: ["Lumno Synchronisierung", "WebDAV Sync", "Nextcloud WebDAV", "Chrome-Erweiterung Einstellungen synchronisieren", "neuer Tab synchronisieren"],
       title: "Synchronisierung",
       navTitle: "Synchronisierung",
@@ -165,7 +165,7 @@ const content: GuideLocaleContent = {
     "tab-switcher": {
       pageTitle: "Tab-Umschalter: mit ⌥Q zwischen den letzten Tabs wechseln | Lumno-Hilfe",
       pageDescription:
-        "Drücke ⌥Q (unter Windows Alt+Q), um Lumnos Tab-Umschalter zu öffnen. Er zeigt deine Tabs in der Reihenfolge ihrer Nutzung, jeweils mit Vorschau. Halte ⌥ gedrückt, drücke wiederholt Q und lass ⌥ los, um zu wechseln.",
+        "Drücke ⌥Q (unter Windows Alt+Q), um Lumnos Tab-Umschalter zu öffnen. Er zeigt deine Tabs in der Reihenfolge ihrer Nutzung, jeweils mit Vorschau. Halte ⌥ gedrückt, drücke wiederholt Q und lass ⌥ los, um zu wechseln. Tabs lassen sich auch direkt im Umschalter schließen.",
       keywords: ["Chrome Tab-Umschalter", "zuletzt genutzte Tabs", "Alt Tab für den Browser", "Arc Ctrl Tab"],
       title: "Zwischen den letzten Tabs wechseln",
       navTitle: "Zwischen Tabs wechseln",
@@ -173,16 +173,16 @@ const content: GuideLocaleContent = {
     "newtab-wallpaper": {
       pageTitle: "Hintergründe für den neuen Tab: Gemälde, Bing-Bild des Tages, eigene Fotos und Filter | Lumno-Hilfe",
       pageDescription:
-        "Ändere den Hintergrund von Lumnos neuem Tab in den Appearance-Einstellungen: eingebaute Gemälde, Bings Bild des Tages, kuratierte Fotos, eigene Bilder oder ein Bildlink, mit Abdunkelung, Filtern und getrennter Auswahl für den hellen und dunklen Modus.",
+        "Ändere den Hintergrund von Lumnos neuem Tab in den Appearance-Einstellungen: eingebaute Gemälde, Bings Bild des Tages, kuratierte Fotos, eigene Bilder oder ein Bildlink, mit Abdunkelung, Filtern, getrennter Auswahl für den hellen und dunklen Modus und einer Glasoptik (Frosted glass oder Liquid glass).",
       keywords: ["Neuer-Tab-Hintergrund", "Chrome neuer Tab Hintergrund", "Bing Bild des Tages", "Neuer-Tab-Erweiterung"],
       title: "Hintergrund ändern",
       navTitle: "Hintergrund ändern",
     },
     "newtab-bookmarks-shortcuts": {
-      pageTitle: "Shortcuts und Lesezeichen im neuen Tab: Websites hinzufügen, drei Layouts | Lumno-Hilfe",
+      pageTitle: "Shortcuts und Lesezeichen im neuen Tab: Websites hinzufügen und gruppieren, drei Layouts | Lumno-Hilfe",
       pageDescription:
-        "Lege deine Lieblingsseiten als Shortcuts auf Lumnos neuen Tab, wähle ihre Symbole aus, stapel sie in Ordnern und zeige deine Lesezeichen als Ordner, verschachtelte Liste oder Leiste oben an – in beliebig vielen Reihen oder gar nicht.",
-      keywords: ["neuer Tab Shortcuts", "neuer Tab Lesezeichen", "Chrome Lesezeichenleiste", "Lesezeichenordner", "Lesezeichen im neuen Tab ausblenden"],
+        "Lege deine Lieblingsseiten als Shortcuts auf Lumnos neuen Tab, wähle ihre Symbole aus, teile sie in Gruppen ein, stapel sie in Ordnern und zeige deine Lesezeichen als Ordner, verschachtelte Liste oder Leiste oben an – in beliebig vielen Reihen oder gar nicht.",
+      keywords: ["neuer Tab Shortcuts", "Shortcut-Gruppen", "neuer Tab Lesezeichen", "Chrome Lesezeichenleiste", "Lesezeichenordner", "Lesezeichen im neuen Tab ausblenden"],
       title: "Shortcuts und Lesezeichen",
       navTitle: "Shortcuts & Lesezeichen",
     },
@@ -195,11 +195,11 @@ const content: GuideLocaleContent = {
       navTitle: "Häufige Seiten & Fortschritt",
     },
     "newtab-clock-zen": {
-      pageTitle: "Uhr und Zen-Modus: ein neuer Tab nur mit dem Suchfeld | Lumno-Hilfe",
-      pageDescription: "Zeige eine Uhr in Lumnos neuem Tab an oder gib /zen ein, damit nur noch das Suchfeld sichtbar ist.",
-      keywords: ["neuer Tab Uhr", "minimalistischer neuer Tab", "Zen-Modus", "neuer Tab fokussiert"],
-      title: "Uhr und Zen-Modus",
-      navTitle: "Uhr & Zen-Modus",
+      pageTitle: "Uhr, tägliches Zitat und Zen-Modus: ein neuer Tab nur mit dem Suchfeld | Lumno-Hilfe",
+      pageDescription: "Zeige in Lumnos neuem Tab eine Uhr und ein tägliches Zitat aus deiner eigenen TXT- oder Markdown-Datei an, oder gib /zen ein, damit nur noch das Suchfeld sichtbar ist.",
+      keywords: ["neuer Tab Uhr", "neuer Tab Zitat", "minimalistischer neuer Tab", "Zen-Modus", "neuer Tab fokussiert"],
+      title: "Uhr, Zitate und Zen-Modus",
+      navTitle: "Uhr, Zitate & Zen-Modus",
     },
     "newtab-other-extensions": {
       pageTitle: "Mit einer anderen Erweiterung für den neuen Tab verwenden: nur Lumnos Befehlsleiste nutzen | Lumno-Hilfe",

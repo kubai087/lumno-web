@@ -6,19 +6,26 @@ De forma predeterminada, las tarjetas de la parte inferior muestran tus sitios m
 
 ![Tarjetas de sitios más visitados en la parte inferior de la nueva pestaña: GitHub, Material, Figma y Mozilla](nt-recent "Más visitados")
 
-Para ver los sitios visitados recientemente, haz clic en "···", en la esquina superior derecha de las tarjetas, y elige "Show Recent".
+Para ver los sitios visitados recientemente, coloca el puntero sobre "Most Visited", en la esquina superior izquierda de las tarjetas, y haz clic en "Recent" cuando aparezca a su lado.
 
 ## Filas y desactivar las tarjetas {#card-rows}
 
-Para elegir cuántas filas de tarjetas de sitios se muestran, ve a Appearance → New Tab → Site Cards en los ajustes de Lumno.
+Para elegir cuántas filas de tarjetas de sitios se muestran, usa la sección Site Cards de los ajustes de Appearance de la nueva pestaña, o ve a Appearance → New Tab → Site Cards en los ajustes de Lumno.
 
 ![Cuatro ajustes de Lumno: Bookmark rows, Bookmarks per row, Show Icons Inside Bookmark Folders y Site Cards, este último con una fila de los sitios más visitados](nt-layout-settings "Ajustes de las tarjetas de sitios en Appearance → New Tab")
 
 - Arrastra el control deslizante para mostrar una fila o dos. El valor predeterminado es una fila.
 - Arrástralo hasta 0 para desactivar las tarjetas de sitios. La parte inferior de la nueva pestaña deja de mostrar estos sitios.
-- Junto al control deslizante puedes cambiar entre "Show Recent" y "Show Most Visited", las mismas opciones del menú "···" de las tarjetas.
+- Junto al control deslizante puedes cambiar entre "Show Recent" y "Show Most Visited", las mismas opciones del título de las tarjetas.
 
 Para ocultar solo un sitio, haz clic con el botón derecho en su tarjeta y elige "Remove". El sitio vuelve a aparecer la próxima vez que lo visites, y si la tarjeta estaba fijada, también deja de estarlo. Para que un sitio no aparezca nunca en la nueva pestaña ni en los resultados de búsqueda, añádelo a la "Blacklist" en los ajustes de Lumno.
+
+## Añadir a accesos directos y marcadores {#add}
+
+Un sitio que abres a menudo puede pasar directamente de una tarjeta a tus accesos directos o marcadores:
+
+- Arrastra una tarjeta a tus accesos directos para añadirla como acceso directo. Suéltala en la zona de marcadores, en el menú de una carpeta de marcadores abierta o en una carpeta de accesos directos para añadirla como marcador. Pulsa `⌘ Z` para deshacer.
+- También puedes hacer clic con el botón derecho en una tarjeta y elegir "Add to shortcuts".
 
 ## Fijar un sitio {#pin}
 

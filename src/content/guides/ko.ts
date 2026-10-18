@@ -112,7 +112,7 @@ const content: GuideLocaleContent = {
     sync: {
       pageTitle: "브라우저 동기화와 WebDAV로 여러 컴퓨터에서 Lumno 쓰기 | Lumno 도움말",
       pageDescription:
-        "Lumno 설정은 브라우저 동기화를 따라 함께 옮겨 갑니다. 직접 올린 아이콘과 배경화면까지 옮기려면 WebDAV 동기화를 켜세요. Nextcloud, NAS 등 직접 관리하는 WebDAV 서버를 사용할 수 있습니다.",
+        "Lumno 설정은 브라우저 동기화를 따라 함께 옮겨 갑니다. 직접 올린 아이콘, 배경화면, 문구 모음까지 옮기려면 WebDAV 동기화를 켜세요. Nextcloud, NAS 등 직접 관리하는 WebDAV 서버를 사용할 수 있습니다.",
       keywords: ["Lumno 동기화", "WebDAV 동기화", "Nextcloud WebDAV", "크롬 확장 설정 동기화", "새 탭 동기화"],
       title: "동기화",
       navTitle: "동기화",
@@ -165,7 +165,7 @@ const content: GuideLocaleContent = {
     "tab-switcher": {
       pageTitle: "최근 탭 전환기: ⌥Q로 최근 탭 사이를 오가기 | Lumno 도움말",
       pageDescription:
-        "⌥Q(Windows는 Alt+Q)를 누르면 Lumno의 최근 탭 전환기가 열리고, 사용한 순서대로 탭이 미리보기와 함께 표시됩니다. ⌥를 누른 채 Q를 반복해서 눌러 선택하고, ⌥에서 손을 떼면 전환됩니다.",
+        "⌥Q(Windows는 Alt+Q)를 누르면 Lumno의 최근 탭 전환기가 열리고, 사용한 순서대로 탭이 미리보기와 함께 표시됩니다. ⌥를 누른 채 Q를 반복해서 눌러 선택하고, ⌥에서 손을 떼면 전환됩니다. 전환기에서 바로 탭을 닫을 수도 있습니다.",
       keywords: ["크롬 탭 전환", "최근 탭", "브라우저 Alt Tab", "Arc Ctrl Tab"],
       title: "최근 탭 사이 전환",
       navTitle: "최근 탭 전환",
@@ -173,16 +173,16 @@ const content: GuideLocaleContent = {
     "newtab-wallpaper": {
       pageTitle: "새 탭 배경화면: 명화, Bing 오늘의 사진, 내 사진과 필터 | Lumno 도움말",
       pageDescription:
-        "Appearance 설정에서 Lumno 새 탭의 배경화면을 바꾸세요. 기본 명화, Bing 오늘의 사진, 엄선한 사진, 내 이미지나 이미지 링크를 쓸 수 있고, 마스크와 필터, 라이트·다크 모드별 배경화면도 설정할 수 있습니다.",
+        "Appearance 설정에서 Lumno 새 탭의 배경화면을 바꾸세요. 기본 명화, Bing 오늘의 사진, 엄선한 사진, 내 이미지나 이미지 링크를 쓸 수 있고, 마스크와 필터, 라이트·다크 모드별 배경화면도 설정할 수 있습니다. 검색창과 카드에 Frosted glass나 Liquid glass 재질을 입힐 수도 있습니다.",
       keywords: ["새 탭 배경화면", "크롬 새 탭 배경", "Bing 오늘의 배경화면", "새 탭 확장 프로그램"],
       title: "배경화면 바꾸기",
       navTitle: "배경화면 바꾸기",
     },
     "newtab-bookmarks-shortcuts": {
-      pageTitle: "새 탭 바로가기와 북마크: 사이트 추가, 북마크 레이아웃 세 가지 | Lumno 도움말",
+      pageTitle: "새 탭 바로가기와 북마크: 사이트 추가와 그룹, 북마크 레이아웃 세 가지 | Lumno 도움말",
       pageDescription:
-        "자주 가는 사이트를 Lumno 새 탭에 바로가기로 추가하고 아이콘을 고르고 폴더로 묶어 보세요. 북마크는 폴더, 다단계 목록, 상단 바 중 원하는 방식으로 볼 수 있고, 표시할 줄 수를 바꾸거나 숨길 수도 있습니다.",
-      keywords: ["새 탭 바로가기", "새 탭 북마크", "크롬 북마크바", "북마크 폴더", "새 탭 북마크 숨기기"],
+        "자주 가는 사이트를 Lumno 새 탭에 바로가기로 추가하고 아이콘을 고르고 그룹이나 폴더로 묶어 보세요. 북마크는 폴더, 다단계 목록, 상단 바 중 원하는 방식으로 볼 수 있고, 표시할 줄 수를 바꾸거나 숨길 수도 있습니다.",
+      keywords: ["새 탭 바로가기", "바로가기 그룹", "새 탭 북마크", "크롬 북마크바", "북마크 폴더", "새 탭 북마크 숨기기"],
       title: "바로가기와 북마크",
       navTitle: "바로가기와 북마크",
     },
@@ -195,11 +195,11 @@ const content: GuideLocaleContent = {
       navTitle: "자주 가는 사이트·진행 카드",
     },
     "newtab-clock-zen": {
-      pageTitle: "시계와 Zen 모드: 검색창만 남긴 새 탭 | Lumno 도움말",
-      pageDescription: "Lumno 새 탭에 시계를 표시하거나, /zen을 입력해 검색창만 남길 수 있습니다.",
-      keywords: ["새 탭 시계", "미니멀 새 탭", "Zen 모드", "집중 새 탭"],
-      title: "시계와 Zen 모드",
-      navTitle: "시계와 Zen 모드",
+      pageTitle: "시계, 오늘의 문구, Zen 모드: 검색창만 남긴 새 탭 | Lumno 도움말",
+      pageDescription: "Lumno 새 탭에 시계와 내 TXT·Markdown 파일에서 고른 오늘의 문구를 표시하거나, /zen을 입력해 검색창만 남길 수 있습니다.",
+      keywords: ["새 탭 시계", "새 탭 명언", "미니멀 새 탭", "Zen 모드", "집중 새 탭"],
+      title: "시계, 문구, Zen 모드",
+      navTitle: "시계·문구·Zen 모드",
     },
     "newtab-other-extensions": {
       pageTitle: "다른 새 탭 확장 프로그램과 함께 사용하기: Lumno 명령 바만 사용 | Lumno 도움말",

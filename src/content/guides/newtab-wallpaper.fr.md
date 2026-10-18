@@ -40,6 +40,20 @@ Le mode clair ou sombre se règle en haut du panneau : suivre le système, touj
 | ASCII | Redessine les zones sombres ou claires avec des caractères |
 | CRT | Ajoute des lignes de balayage, un halo et une courbure d'écran |
 
+## Matière en verre {#glass}
+
+Dans la section Style des réglages Appearance, remplacez Material « Default » par « Frosted glass » ou « Liquid glass ». Le champ de recherche, les cartes, les boutons, les menus et le panneau Appearance prennent un aspect de verre qui laisse transparaître le fond d'écran, et le verre adapte sa teinte au fond d'écran.
+
+![Le nouvel onglet en Liquid glass : l'horloge, le champ de recherche, les raccourcis, les favoris et les cartes de sites laissent transparaître le verger impressionniste du fond d'écran](nt-glass "Liquid glass")
+
+| Matière | Effet |
+| --- | --- |
+| Default | L'apparence habituelle de Lumno |
+| Frosted glass | Un flou doux sur une teinte translucide |
+| Liquid glass | Un verre plus limpide ; les bords du champ de recherche et de ses résultats courbent le fond d'écran comme une lentille |
+
+Les deux matières en verre sont en version bêta et rendent mieux sur un fond d'écran. Firefox affiche l'aspect de verre, sans la déformation sur les bords.
+
 ## Utiliser sur d'autres appareils {#sync}
 
 Votre choix de fond d'écran intégré, Bing ou sélectionné, ainsi que vos liens d'images, sont synchronisés par votre navigateur. Les images locales importées restent sur l'ordinateur où vous les avez ajoutées. Pour les utiliser sur d'autres appareils, activez la [synchronisation WebDAV](../sync/#webdav).

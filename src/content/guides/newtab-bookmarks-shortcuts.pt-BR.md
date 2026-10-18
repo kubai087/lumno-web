@@ -8,7 +8,7 @@ A fileira de ícones abaixo da caixa de pesquisa mostra seus atalhos. Quando voc
 
 ### Adicionar um atalho
 
-1. Clique em "+" no fim dos seus atalhos.
+1. Clique em "+" no fim dos seus atalhos e escolha "Add site".
 2. Digite um nome e uma URL. Páginas do navegador, como `chrome://inspect/#devices`, também são aceitas.
 3. Escolha um ícone: um ícone incluído, um ícone on-line ou uma imagem sua (recomenda-se uma imagem quadrada de pelo menos 128 × 128 px).
 4. Clique em Salvar.
@@ -16,9 +16,24 @@ A fileira de ícones abaixo da caixa de pesquisa mostra seus atalhos. Quando voc
 ### Organizar os atalhos
 
 - Clique com o botão direito em um atalho para editá-lo ou removê-lo. Se você remover um atalho por engano, use o atalho de teclado indicado no aviso para desfazer.
-- Arraste os atalhos para reordená-los. Se você soltar um atalho sobre os favoritos, ele se torna um favorito.
-- O número de atalhos por fileira, o tamanho dos ícones, o espaçamento, a ampliação estilo Dock e o botão "+" são definidos nas configurações do Lumno, em Appearance → New Tab.
+- Arraste os atalhos para reordená-los. Se você soltar um atalho sobre os favoritos, ele se torna um favorito. Você também pode selecionar um atalho com `Tab` e pressionar `⌥ ←` ou `⌥ →` para movê-lo uma posição.
+- O número de atalhos por fileira, o tamanho dos ícones, o espaçamento, a ampliação estilo Dock e o botão "+" são definidos na seção Shortcuts das configurações de Appearance da nova guia, ou nas configurações do Lumno, em Appearance → New Tab. Para ocultar o "+" diretamente, clique nele e escolha "Hide".
+- Você pode adicionar até 200 atalhos.
 - Se você não precisa dos atalhos, desative Shortcuts no mesmo lugar para remover a fileira de ícones abaixo da caixa de pesquisa.
+
+## Grupos de atalhos {#shortcut-groups}
+
+Quando os atalhos forem muitos, separe-os em grupos por uso, como Trabalho, IA e Lazer, cada um com seu próprio título.
+
+![Os atalhos abaixo da caixa de pesquisa em três grupos, Work, AI e Everyday; o ponteiro está sobre o título Work, ao lado do qual aparece "···"](nt-shortcut-groups "Atalhos separados em grupos")
+
+1. Clique em "+" no fim dos seus atalhos e escolha "New group".
+2. Digite um nome para o grupo e clique em Salvar. O nome é opcional: um grupo sem nome serve apenas para começar uma nova fileira.
+
+- Passe o ponteiro sobre o título de um grupo e clique em "···", à direita, para renomear o grupo, adicionar um site a ele ou movê-lo para cima ou para baixo. Você também pode clicar duas vezes em um título para renomeá-lo.
+- Arraste o título de um grupo para mudar a ordem dos grupos. Arraste um atalho para outro grupo para movê-lo para lá.
+- "Delete group" passa os sites do grupo para o grupo de cima. "Delete group and sites" pede confirmação e depois exclui os dois. Pressione `⌘ Z` para desfazer qualquer uma das ações.
+- Você pode criar até 20 grupos.
 
 ## Pastas de atalhos {#shortcut-folders}
 
@@ -40,6 +55,7 @@ A área de favoritos mostra o conteúdo da barra de favoritos do navegador. Quan
 
 - Clique com o botão direito em uma pasta para mudar a cor dela. A pasta também aparece com essa cor nos menus.
 - Clique com o botão direito em uma pasta e escolha "Open in new tab group" para abrir todas as páginas dela de uma vez, reunidas em um mesmo grupo de guias.
+- Clique com o botão direito em um favorito ou uma pasta e escolha "Add to shortcuts" para adicioná-lo ao fim do seu último grupo de atalhos. O favorito continua onde está. Se ele já estiver entre os seus atalhos, o menu mostra "Already in shortcuts".
 - Clique no ícone de favoritos para abrir o gerenciador de favoritos do navegador.
 - Por padrão, atalhos e favoritos abrem na guia atual. Para abri-los em uma nova guia, ative cada um nas configurações do Lumno, em General → New Tab Settings → Open in a new tab. Clicar segurando `⌘` ou com o botão do meio sempre abre em segundo plano.
 
@@ -65,11 +81,14 @@ Os favoritos aparecem em uma fileira na parte superior da página, como a barra 
 
 ![O layout de barra de favoritos no topo, com as pastas enfileiradas no alto da nova guia](nt-bookmarks-top "Barra de favoritos no topo")
 
-Com a barra de favoritos no topo, clique em "···" na ponta direita da barra para escolher o fundo: névoa adaptável, vidro transparente, transparente ou uma cor personalizada.
+Com a barra de favoritos no topo, clique em "···" na ponta direita da barra para escolher o formato e o fundo:
+
+- "Bar style": "Docked to top" encosta a barra na borda superior do navegador; "Floating" mostra uma barra arredondada, um pouco afastada do topo.
+- "Bar background": "Match style", "Transparent" ou "Custom color". Com "Match style", a barra usa o mesmo [material](../newtab-wallpaper/#glass) do resto da nova guia.
 
 ## Fileiras e como ocultar os favoritos {#bookmark-rows}
 
-Para escolher quantas fileiras de favoritos aparecem e quantos cabem em cada fileira, acesse Appearance → New Tab nas configurações do Lumno.
+Para escolher quantas fileiras de favoritos aparecem e quantos cabem em cada fileira, use a seção Bookmarks das configurações de Appearance da nova guia, ou acesse Appearance → New Tab nas configurações do Lumno.
 
 ![Quatro configurações do Lumno: Bookmark rows, Bookmarks per row, Show Icons Inside Bookmark Folders e Site Cards](nt-layout-settings "Configurações de favoritos em Appearance → New Tab")
 

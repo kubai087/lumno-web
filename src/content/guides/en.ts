@@ -112,7 +112,7 @@ const content: GuideLocaleContent = {
     sync: {
       pageTitle: "Sync Lumno across computers with browser sync and WebDAV | Lumno Help",
       pageDescription:
-        "Lumno's settings travel with your browser's own sync. Turn on WebDAV sync to bring custom shortcut icons and wallpapers too, using Nextcloud, a NAS or any WebDAV server you control.",
+        "Lumno's settings travel with your browser's own sync. Turn on WebDAV sync to bring custom shortcut icons, wallpapers and quotes too, using Nextcloud, a NAS or any WebDAV server you control.",
       keywords: ["Lumno sync", "WebDAV sync", "Nextcloud WebDAV", "sync Chrome extension settings", "new tab sync"],
       title: "Sync",
       navTitle: "Sync",
@@ -165,7 +165,7 @@ const content: GuideLocaleContent = {
     "tab-switcher": {
       pageTitle: "Recent tab switcher: press ⌥Q to jump between recent tabs | Lumno Help",
       pageDescription:
-        "Press ⌥Q (Alt+Q on Windows) to open Lumno's recent tab switcher, with your tabs in the order you used them and a preview of each. Hold ⌥ and press Q to choose a tab, then release ⌥ to switch.",
+        "Press ⌥Q (Alt+Q on Windows) to open Lumno's recent tab switcher, with your tabs in the order you used them and a preview of each. Hold ⌥ and press Q to choose a tab, then release ⌥ to switch. You can also close tabs right from the switcher.",
       keywords: ["Chrome tab switcher", "recent tabs", "Alt Tab for browser", "Arc Ctrl Tab"],
       title: "Switch between recent tabs",
       navTitle: "Switch between recent tabs",
@@ -173,16 +173,16 @@ const content: GuideLocaleContent = {
     "newtab-wallpaper": {
       pageTitle: "New tab wallpapers: classic paintings, Bing daily, your photos and filters | Lumno Help",
       pageDescription:
-        "Change Lumno's new tab wallpaper in Appearance settings: built-in paintings, Bing's photo of the day, curated photos, your own images or an image link, with a mask, filters, and separate light and dark picks.",
-      keywords: ["new tab wallpaper", "Chrome new tab background", "Bing daily wallpaper", "new tab extension"],
+        "Change Lumno's new tab wallpaper in Appearance settings: built-in paintings, Bing's photo of the day, curated photos, your own images or an image link, with a mask, filters, separate light and dark picks, and a frosted or liquid glass finish.",
+      keywords: ["new tab wallpaper", "Chrome new tab background", "Bing daily wallpaper", "new tab extension", "liquid glass new tab"],
       title: "Change the wallpaper",
       navTitle: "Change the wallpaper",
     },
     "newtab-bookmarks-shortcuts": {
-      pageTitle: "New tab shortcuts and bookmarks: add sites, three bookmark layouts | Lumno Help",
+      pageTitle: "New tab shortcuts and bookmarks: add and group sites, three bookmark layouts | Lumno Help",
       pageDescription:
-        "Add your go-to sites as shortcuts on Lumno's new tab, pick their icons, stack them into folders, and browse your bookmarks as folders, a nested list or a top bar, with as many rows as you like or none at all.",
-      keywords: ["new tab shortcuts", "new tab bookmarks", "Chrome bookmarks bar", "bookmark folders", "hide new tab bookmarks"],
+        "Add your go-to sites as shortcuts on Lumno's new tab, pick their icons, sort them into groups, stack them into folders, and browse your bookmarks as folders, a nested list or a top bar, with as many rows as you like or none at all.",
+      keywords: ["new tab shortcuts", "shortcut groups", "new tab bookmarks", "Chrome bookmarks bar", "bookmark folders", "hide new tab bookmarks"],
       title: "Shortcuts and bookmarks",
       navTitle: "Shortcuts & bookmarks",
     },
@@ -195,11 +195,11 @@ const content: GuideLocaleContent = {
       navTitle: "Frequent sites & progress cards",
     },
     "newtab-clock-zen": {
-      pageTitle: "Clock and Zen mode: a new tab with just the search box | Lumno Help",
-      pageDescription: "Show a clock on Lumno's new tab, or type /zen to hide everything but the search box.",
-      keywords: ["new tab clock", "minimal new tab", "Zen mode", "focus new tab"],
-      title: "Clock and Zen mode",
-      navTitle: "Clock & Zen mode",
+      pageTitle: "Clock, daily quote and Zen mode: a new tab with just the search box | Lumno Help",
+      pageDescription: "Show a clock and a daily quote from your own TXT or Markdown file on Lumno's new tab, or type /zen to hide everything but the search box.",
+      keywords: ["new tab clock", "new tab daily quote", "minimal new tab", "Zen mode", "focus new tab"],
+      title: "Clock, quotes and Zen mode",
+      navTitle: "Clock, quotes & Zen mode",
     },
     "newtab-other-extensions": {
       pageTitle: "Use another new tab extension with Lumno's command bar | Lumno Help",

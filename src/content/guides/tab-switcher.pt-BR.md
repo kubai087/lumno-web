@@ -11,6 +11,8 @@ Pressione `⌥ Q`. Suas guias recentes aparecem na ordem em que foram usadas, ca
 1. Mantenha `⌥` pressionada e pressione `Q` várias vezes até chegar à página desejada. Você também pode usar `Tab` ou as teclas de seta.
 2. Solte `⌥` ou pressione `↩` para alternar para essa página.
 
+Você também pode fechar pelo alternador as guias de que não precisa mais: passe o ponteiro sobre a prévia de uma página e clique no botão de fechar que aparece no canto dela.
+
 O funcionamento é semelhante ao do `⌘ Tab | Alt + Tab` no computador ou do `⌃ Tab` no [Arc](https://arc.net/).
 
 ## Alternador ou pesquisa nas guias abertas {#vs-search}

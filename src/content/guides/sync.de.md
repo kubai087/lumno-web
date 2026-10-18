@@ -4,17 +4,19 @@ Wenn du mehrere Computer oder Browser verwendest, können deine Shortcuts, Hinte
 
 Wenn du in deinem Browser angemeldet bist und die Synchronisierung aktiviert ist, werden Lumnos Einstellungen automatisch synchronisiert. Dazu gehören Design, Suchmaschinen, Shortcuts, angeheftete Websitekarten, die Sperrliste sowie deine Hintergrundauswahl und Bildlinks.
 
-Hochgeladene Symbole und lokale Hintergründe sind für die Browser-Synchronisierung zu groß. Um auch diese zu synchronisieren, verwende WebDAV.
+Hochgeladene Symbole, lokale Hintergründe und importierte Zitatsammlungen sind für die Browser-Synchronisierung zu groß. Um auch diese zu synchronisieren, verwende WebDAV.
+
+Browser stellen jeder Erweiterung nur begrenzten Speicher für die Synchronisierung bereit. Du kannst bis zu 200 Shortcuts hinzufügen; was nicht in die Browser-Synchronisierung passt, bleibt nur auf diesem Computer gespeichert und wird über WebDAV synchronisiert, sobald du es aktivierst. Wie viele deiner Shortcuts mit dem Browser synchronisiert werden, siehst du in den Einstellungen von Lumno unter „Account & sync“.
 
 ## WebDAV-Synchronisierung: auch Symbole und Hintergründe {#webdav}
 
-Die WebDAV-Synchronisierung befindet sich in der Betaphase und ist standardmäßig deaktiviert. Wenn sie aktiviert ist, werden deine vollständigen Einstellungen, hochgeladenen Shortcut-Symbole und eigenen Hintergründe auf einem Server deiner Wahl gespeichert.
+Die WebDAV-Synchronisierung befindet sich in der Betaphase und ist standardmäßig deaktiviert. Wenn sie aktiviert ist, werden deine vollständigen Einstellungen, hochgeladenen Shortcut-Symbole, eigenen Hintergründe und importierten Zitate auf einem Server deiner Wahl gespeichert.
 
 1. Öffne die Einstellungen von Lumno und gehe zu „Account & sync“ → WebDAV.
 2. Klicke auf „Add WebDAV“ und gib Serveradresse, Sync-Ordner, Benutzernamen und App-Passwort ein.
 3. Klicke optional auf „Test connectivity“ und anschließend auf „Save and turn on sync“.
 
-Füge die Verbindung auf jedem Gerät separat hinzu. Benutzername und Passwort werden nur auf dem jeweiligen Computer gespeichert und nie über die Browser-Synchronisierung übertragen.
+Das App-Passwort wird nur auf dem jeweiligen Computer gespeichert und nie über die Browser-Synchronisierung übertragen. Serveradresse, Sync-Ordner und Benutzername werden dagegen mit deinen anderen Geräten synchronisiert, damit du die Einrichtung dort abschließen kannst.
 
 ## Einen Server auswählen {#hosts}
 
@@ -24,14 +26,16 @@ Wenn dein Dienst App-Passwörter anbietet, erstelle ein eigenes App-Passwort fü
 
 ## Einen weiteren Computer einrichten {#second-device}
 
-Füge eine Verbindung mit demselben Server, demselben Ordner und demselben Konto hinzu. Wenn sich bereits Daten auf dem Server befinden, fragt Lumno, welche Version verwendet werden soll; in den meisten Fällen wählst du „Use server version“. Bevor Daten ersetzt werden, erstellt Lumno eine vollständige Sicherung der Einstellungen dieses Computers.
+Wenn beide Computer mit demselben Browserkonto angemeldet sind, öffne auf dem anderen Computer in den Einstellungen von Lumno „Account & sync“ → WebDAV. Dort findest du eine Verbindung mit dem Hinweis „From another device“, in der Serveradresse, Ordner und Benutzername bereits ausgefüllt sind. Gib nur noch einmal das App-Passwort ein. Wenn du sie auf diesem Computer nicht verwenden möchtest, klicke auf „Dismiss“. Nutzen die Computer kein gemeinsames Browserkonto, füge eine Verbindung mit demselben Server, demselben Ordner und demselben Konto hinzu.
 
-Danach werden Änderungen auf beiden Computern automatisch zusammengeführt. Wenn beide Computer dieselbe Einstellung ändern, zum Beispiel die Shortcuts, zeigt die Karte einen Konflikt an. Klicke auf „Show differences“, um die Änderungen beider Seiten zu vergleichen, und wähle dann die Version aus, die du behalten möchtest.
+Wenn sich bereits Daten auf dem Server befinden, fragt Lumno, welche Version verwendet werden soll; in den meisten Fällen wählst du „Use server version“. Bevor Daten ersetzt werden, erstellt Lumno eine vollständige Sicherung der Einstellungen dieses Computers.
+
+Danach werden Änderungen auf beiden Computern automatisch zusammengeführt. Wenn beide Computer vor der Synchronisierung dasselbe ändern, zum Beispiel die Shortcuts oder eine einzelne Einstellung, zeigt die Karte einen Konflikt an, statt eine Seite die andere überschreiben zu lassen. Klicke auf „Show differences“, um die Änderungen beider Seiten zu vergleichen, und wähle dann die Version aus, die du behalten möchtest.
 
 ## Was nicht synchronisiert wird {#not-synced}
 
 - Verlauf, Lesezeichen und offene Tabs: Diese synchronisiert dein Browser wie gewohnt.
-- Dein WebDAV-Benutzername und -Passwort: Jedes Gerät speichert eigene Zugangsdaten.
+- Dein WebDAV-App-Passwort: Jedes Gerät speichert sein eigenes.
 
 Wenn du WebDAV deaktivierst oder die Verbindung entfernst, bleiben die Dateien auf deinem Server erhalten. Bei Bedarf kannst du sie dort löschen. Die WebDAV-Synchronisierung ist nicht Ende-zu-Ende-verschlüsselt, daher kann der Administrator des Servers die Dateien lesen.
 

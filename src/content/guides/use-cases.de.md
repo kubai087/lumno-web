@@ -71,7 +71,7 @@ Weitere Informationen findest du unter [Hintergrund ändern](../newtab-wallpaper
 
 Wenn du eine Serie schaust oder einen Fortsetzungsroman liest, kann sich Lumno im neuen Tab merken, bei welcher Folge oder welchem Kapitel du bist:
 
-1. Öffne die Folge oder das Kapitel, bei dem du gerade bist. Die Seite erscheint anschließend unter den Websitekarten unten im neuen Tab. Falls nicht, klicke oben rechts bei den Karten auf „···“ und wähle „Show Recent“.
+1. Öffne die Folge oder das Kapitel, bei dem du gerade bist. Die Seite erscheint anschließend unter den Websitekarten unten im neuen Tab. Falls nicht, bewege den Mauszeiger oben links bei den Karten auf „Most Visited“ und wechsle zu „Recent“.
 2. Fahre mit dem Mauszeiger über die Karte und klicke auf das Pinnadelsymbol. Erkennt Lumno eine Folgen- oder Kapitelseite, beginnt die Verfolgung automatisch, und die Karte zeigt ein Radarsymbol. Falls die Verfolgung nicht startet, klicke mit der rechten Maustaste auf die Karte und wähle „Track progress“.
 3. Sobald du die nächste Folge oder das nächste Kapitel desselben Titels öffnest, wird die Karte automatisch aktualisiert. Beim nächsten Mal klickst du auf die Karte und setzt dort fort, wo du aufgehört hast.
 

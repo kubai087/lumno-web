@@ -33,6 +33,7 @@ Firefox 版已在 [Firefox 附加元件](https://addons.mozilla.org/firefox/addo
 | 從捷徑或命令列開啟 `about:` 頁面 | 無法使用 |
 | 在本機 `file://` 頁面叫出命令列 | 無法使用 |
 | 網站圖示 | 未造訪過的網站可能會先顯示預留圖示 |
+| 新分頁的液態玻璃 | 只顯示玻璃質感，邊緣沒有折射效果 |
 
 Firefox 本身佔用了 `⌘ ⇧ K`，因此 Firefox 版預設使用 `⌃ ⇧ K | Alt + K`；`⌥ Q` 保持不變。如需修改，請開啟 `about:addons`，按一下右上角的齒輪按鈕，選擇「管理擴充套件快速鍵」。
 

@@ -112,7 +112,7 @@ const content: GuideLocaleContent = {
     sync: {
       pageTitle: "同步設定：用瀏覽器同步和 WebDAV 在多台電腦間同步 Lumno｜Lumno 說明中心",
       pageDescription:
-        "Lumno 的設定會跟著瀏覽器內建的同步走；開啟 WebDAV 同步後，上傳的捷徑圖示和自訂桌布也能同步，支援堅果雲、NAS 和自架伺服器。附堅果雲的填寫方式。",
+        "Lumno 的設定會跟著瀏覽器內建的同步走；開啟 WebDAV 同步後，上傳的捷徑圖示、自訂桌布和匯入的名句庫也能同步，支援堅果雲、NAS 和自架伺服器。附堅果雲的填寫方式。",
       keywords: ["Lumno 同步", "WebDAV 同步", "堅果雲 WebDAV", "Chrome 擴充功能同步設定", "新分頁同步"],
       title: "同步設定",
       navTitle: "同步設定",
@@ -155,7 +155,7 @@ const content: GuideLocaleContent = {
     "tab-switcher": {
       pageTitle: "最近分頁切換器：按 ⌥Q 在最近的分頁之間切換｜Lumno 說明中心",
       pageDescription:
-        "按 ⌥Q（Windows 為 Alt+Q）開啟 Lumno 的最近分頁切換器，分頁依最近使用的順序排列並顯示預覽。按住 ⌥ 連按 Q 選擇，放開即可切換。",
+        "按 ⌥Q（Windows 為 Alt+Q）開啟 Lumno 的最近分頁切換器，分頁依最近使用的順序排列並顯示預覽。按住 ⌥ 連按 Q 選擇，放開即可切換，也可以在切換器中直接關閉分頁。",
       keywords: ["Chrome 分頁切換", "最近分頁", "瀏覽器 Alt Tab", "Arc Ctrl Tab"],
       title: "切換最近的分頁",
       navTitle: "切換最近的分頁",
@@ -163,15 +163,15 @@ const content: GuideLocaleContent = {
     "newtab-wallpaper": {
       pageTitle: "新分頁桌布：內建名畫、Bing 每日桌布、本機圖片和濾鏡｜Lumno 說明中心",
       pageDescription:
-        "在 Lumno 新分頁的外觀設定中更換桌布：內建名畫與插畫、Bing 每日桌布、精選攝影、本機圖片或圖片連結，還能調整遮罩和濾鏡，深色、淺色模式分開設定。",
-      keywords: ["新分頁桌布", "Chrome 新分頁背景", "Bing 每日桌布", "新分頁擴充功能"],
+        "在 Lumno 新分頁的外觀設定中更換桌布：內建名畫與插畫、Bing 每日桌布、精選攝影、本機圖片或圖片連結，還能調整遮罩和濾鏡，深色、淺色模式分開設定，也能給搜尋框和卡片換上霧面玻璃或液態玻璃材質。",
+      keywords: ["新分頁桌布", "Chrome 新分頁背景", "Bing 每日桌布", "新分頁擴充功能", "液態玻璃", "霧面玻璃"],
       title: "更換桌布",
       navTitle: "更換桌布",
     },
     "newtab-bookmarks-shortcuts": {
-      pageTitle: "新分頁的捷徑和書籤：新增網站、三種書籤版面｜Lumno 說明中心",
-      pageDescription: "在 Lumno 新分頁加入常用網站的捷徑、自訂圖示、把捷徑疊成資料夾，並以多層資料夾、多層級列表或頂端書籤列三種版面瀏覽書籤，也可以調整顯示行數或隱藏書籤。",
-      keywords: ["新分頁捷徑", "新分頁書籤", "Chrome 書籤列", "書籤資料夾", "隱藏新分頁書籤"],
+      pageTitle: "新分頁的捷徑和書籤：新增網站、分組與三種書籤版面｜Lumno 說明中心",
+      pageDescription: "在 Lumno 新分頁加入常用網站的捷徑、自訂圖示、依用途分成群組、把捷徑疊成資料夾，並以多層資料夾、多層級列表或頂端書籤列三種版面瀏覽書籤，也可以調整顯示行數或隱藏書籤。",
+      keywords: ["新分頁捷徑", "捷徑群組", "新分頁書籤", "Chrome 書籤列", "書籤資料夾", "隱藏新分頁書籤"],
       title: "捷徑和書籤",
       navTitle: "捷徑和書籤",
     },
@@ -185,8 +185,8 @@ const content: GuideLocaleContent = {
     },
     "newtab-clock-zen": {
       pageTitle: "時鐘、每日名句和 Zen 模式：讓新分頁只留搜尋框｜Lumno 說明中心",
-      pageDescription: "在 Lumno 新分頁顯示時鐘和每日名句（文學或詩詞），或在搜尋框輸入 /zen 進入 Zen 模式，只留下搜尋框。",
-      keywords: ["新分頁時鐘", "每日一句", "極簡新分頁", "Zen 模式"],
+      pageDescription: "在 Lumno 新分頁顯示時鐘和每日名句：來自一言的文學和詩詞，或者匯入自己的 TXT、Markdown 句庫。在搜尋框輸入 /zen 進入 Zen 模式，只留下搜尋框。",
+      keywords: ["新分頁時鐘", "每日一句", "自訂名言", "極簡新分頁", "Zen 模式"],
       title: "時鐘、名句和 Zen 模式",
       navTitle: "時鐘、名句和 Zen 模式",
     },

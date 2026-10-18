@@ -71,7 +71,7 @@ Para obtener más información, consulta [Cambiar el fondo](../newtab-wallpaper/
 
 Cuando ves una serie o lees una novela por entregas, Lumno puede recordar en la nueva pestaña por qué episodio o capítulo vas:
 
-1. Abre el episodio o capítulo por el que vas. Después aparecerá entre las tarjetas de sitios de la parte inferior de la nueva pestaña. Si no aparece, haz clic en "···", en la esquina superior derecha de las tarjetas, y elige "Show Recent".
+1. Abre el episodio o capítulo por el que vas. Después aparecerá entre las tarjetas de sitios de la parte inferior de la nueva pestaña. Si no aparece, coloca el puntero sobre "Most Visited", en la esquina superior izquierda de las tarjetas, y cambia a "Recent".
 2. Pasa el puntero sobre la tarjeta y haz clic en el icono de la chincheta. Cuando Lumno reconoce una página de episodio o capítulo, empieza a seguir tu progreso automáticamente y la tarjeta muestra un icono de radar. Si el seguimiento no se inicia, haz clic con el botón derecho en la tarjeta y elige "Track progress".
 3. Cuando pases al siguiente episodio o capítulo del mismo título, la tarjeta se actualizará automáticamente. La próxima vez, haz clic en la tarjeta para continuar donde lo dejaste.
 

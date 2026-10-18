@@ -55,6 +55,15 @@ Press `Tab` twice while the search box is empty to open the search scope panel. 
 
 ![The search scope panel, with search engines and site search grouped](modemenu "The search scope panel")
 
+## Reorder search sources {#order}
+
+You can put the sources you use most first:
+
+- In the search scope panel, drag an icon to move it within its group. Hover over a group's title and click the move up or move down button to move the whole group.
+- In Search sources in Lumno's settings, drag the tags at the top to change the order of the groups in the panel, and drag the items in the lists below to change the order within each group. You can also drag the options under Visible Result Types to change the order of open tabs, bookmarks, history and other results.
+
+If you move something by mistake, press `⌘ Z` to undo and `⌘ ⇧ Z` to redo. The order syncs through your browser.
+
 ## Add a custom search {#custom}
 
 You can add your company intranet, documentation sites you use often and other sites as custom searches in Lumno's settings, each with a shortcut that's easy to remember.

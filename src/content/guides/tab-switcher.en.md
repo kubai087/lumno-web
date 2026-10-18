@@ -11,6 +11,8 @@ Press `⌥ Q`. Your recent tabs appear in the order you used them, each with a p
 1. Hold `⌥` and press `Q` repeatedly until you reach the page you want. You can also use `Tab` or the arrow keys.
 2. Release `⌥`, or press `↩`, to switch to that page.
 
+You can also close tabs you no longer need right from the switcher: hover over a page preview and click the close button that appears in its corner.
+
 It works much like `⌘ Tab | Alt + Tab` on your computer, or `⌃ Tab` in [Arc](https://arc.net/).
 
 ## The switcher or open-tab search {#vs-search}

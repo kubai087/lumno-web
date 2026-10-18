@@ -272,5 +272,31 @@
         "url": "https://caniuse.com/"
       }
     ]
-  }
+  },
+  "shortcutGroups": [
+    {
+      "title": "工作",
+      "urls": [
+        "https://github.com/",
+        "https://www.notion.so/",
+        "https://dribbble.com/"
+      ]
+    },
+    {
+      "title": "AI",
+      "urls": [
+        "https://claude.ai/",
+        "https://chatgpt.com/"
+      ]
+    },
+    {
+      "title": "娱乐",
+      "urls": [
+        "https://www.youtube.com/",
+        "https://www.bilibili.com/",
+        "https://www.douban.com/",
+        "https://www.zhihu.com/"
+      ]
+    }
+  ]
 }

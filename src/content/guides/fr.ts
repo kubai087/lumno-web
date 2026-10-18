@@ -112,7 +112,7 @@ const content: GuideLocaleContent = {
     sync: {
       pageTitle: "Synchroniser Lumno entre ordinateurs : synchro du navigateur et WebDAV | Aide Lumno",
       pageDescription:
-        "Les réglages de Lumno suivent la synchronisation de votre navigateur. Activez la synchro WebDAV pour emporter aussi vos icônes de raccourcis et fonds d'écran, via Nextcloud, un NAS ou tout serveur WebDAV que vous gérez.",
+        "Les réglages de Lumno suivent la synchronisation de votre navigateur. Activez la synchro WebDAV pour emporter aussi vos icônes de raccourcis, fonds d'écran et citations, via Nextcloud, un NAS ou tout serveur WebDAV que vous gérez.",
       keywords: ["synchronisation Lumno", "synchro WebDAV", "Nextcloud WebDAV", "synchroniser les réglages d'une extension Chrome", "synchroniser le nouvel onglet"],
       title: "Synchronisation",
       navTitle: "Synchronisation",
@@ -165,7 +165,7 @@ const content: GuideLocaleContent = {
     "tab-switcher": {
       pageTitle: "Sélecteur d'onglets récents : ⌥Q pour passer d'un onglet récent à l'autre | Aide Lumno",
       pageDescription:
-        "Appuyez sur ⌥Q (Alt+Q sous Windows) pour ouvrir le sélecteur d'onglets récents de Lumno : vos onglets s'affichent dans l'ordre de leur utilisation, chacun avec un aperçu. Maintenez ⌥ enfoncée, appuyez plusieurs fois sur Q, puis relâchez ⌥ pour basculer.",
+        "Appuyez sur ⌥Q (Alt+Q sous Windows) pour ouvrir le sélecteur d'onglets récents de Lumno : vos onglets s'affichent dans l'ordre de leur utilisation, chacun avec un aperçu. Maintenez ⌥ enfoncée, appuyez plusieurs fois sur Q, puis relâchez ⌥ pour basculer. Vous pouvez aussi fermer des onglets directement depuis le sélecteur.",
       keywords: ["sélecteur d'onglets Chrome", "onglets récents", "Alt Tab pour navigateur", "Arc Ctrl Tab"],
       title: "Passer d'un onglet récent à l'autre",
       navTitle: "Onglets récents",
@@ -173,16 +173,16 @@ const content: GuideLocaleContent = {
     "newtab-wallpaper": {
       pageTitle: "Fonds d'écran du nouvel onglet : tableaux, photo du jour Bing, vos photos et filtres | Aide Lumno",
       pageDescription:
-        "Changez le fond d'écran du nouvel onglet Lumno dans les réglages Appearance : tableaux intégrés, photo du jour de Bing, photos sélectionnées, vos propres images ou un lien d'image, avec voile, filtres et choix séparés pour les modes clair et sombre.",
+        "Changez le fond d'écran du nouvel onglet Lumno dans les réglages Appearance : tableaux intégrés, photo du jour de Bing, photos sélectionnées, vos propres images ou un lien d'image, avec voile, filtres, choix séparés pour les modes clair et sombre et un aspect de verre (Frosted glass ou Liquid glass).",
       keywords: ["fond d'écran nouvel onglet", "arrière-plan nouvel onglet Chrome", "fond d'écran Bing du jour", "extension nouvel onglet"],
       title: "Changer le fond d'écran",
       navTitle: "Changer le fond d'écran",
     },
     "newtab-bookmarks-shortcuts": {
-      pageTitle: "Raccourcis et favoris du nouvel onglet : ajouter des sites, trois dispositions | Aide Lumno",
+      pageTitle: "Raccourcis et favoris du nouvel onglet : ajouter et grouper des sites, trois dispositions | Aide Lumno",
       pageDescription:
-        "Ajoutez vos sites favoris en raccourcis sur le nouvel onglet Lumno, choisissez leurs icônes, regroupez-les en dossiers et parcourez vos favoris en dossiers, en liste imbriquée ou en barre en haut, sur autant de rangées que vous voulez, ou pas du tout.",
-      keywords: ["raccourcis nouvel onglet", "favoris nouvel onglet", "barre de favoris Chrome", "dossiers de favoris", "masquer les favoris du nouvel onglet"],
+        "Ajoutez vos sites favoris en raccourcis sur le nouvel onglet Lumno, choisissez leurs icônes, répartissez-les en groupes ou en dossiers et parcourez vos favoris en dossiers, en liste imbriquée ou en barre en haut, sur autant de rangées que vous voulez, ou pas du tout.",
+      keywords: ["raccourcis nouvel onglet", "groupes de raccourcis", "favoris nouvel onglet", "barre de favoris Chrome", "dossiers de favoris", "masquer les favoris du nouvel onglet"],
       title: "Raccourcis et favoris",
       navTitle: "Raccourcis et favoris",
     },
@@ -195,11 +195,11 @@ const content: GuideLocaleContent = {
       navTitle: "Sites fréquents et progression",
     },
     "newtab-clock-zen": {
-      pageTitle: "Horloge et mode Zen : un nouvel onglet réduit au champ de recherche | Aide Lumno",
-      pageDescription: "Affichez une horloge dans le nouvel onglet de Lumno, ou saisissez /zen pour ne garder que le champ de recherche.",
-      keywords: ["horloge nouvel onglet", "nouvel onglet minimaliste", "mode Zen", "nouvel onglet concentration"],
-      title: "Horloge et mode Zen",
-      navTitle: "Horloge et mode Zen",
+      pageTitle: "Horloge, citation du jour et mode Zen : un nouvel onglet réduit au champ de recherche | Aide Lumno",
+      pageDescription: "Affichez une horloge et une citation du jour tirée de votre propre fichier TXT ou Markdown dans le nouvel onglet de Lumno, ou saisissez /zen pour ne garder que le champ de recherche.",
+      keywords: ["horloge nouvel onglet", "citation du jour nouvel onglet", "nouvel onglet minimaliste", "mode Zen", "nouvel onglet concentration"],
+      title: "Horloge, citations et mode Zen",
+      navTitle: "Horloge, citations et Zen",
     },
     "newtab-other-extensions": {
       pageTitle: "Utiliser une autre extension de nouvel onglet avec la barre de commande de Lumno | Aide Lumno",

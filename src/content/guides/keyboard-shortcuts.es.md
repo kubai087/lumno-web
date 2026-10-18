@@ -56,6 +56,7 @@ Mientras mantienes pulsada `⌥`, `⇧` o `⌘`, la indicación a la derecha de 
 | `Tab` | Completar una sugerencia; después de un atajo de sitio, iniciar la búsqueda en el sitio; con el cuadro vacío, buscar solo en las pestañas abiertas |
 | `Tab` `Tab` | Con el cuadro vacío, abrir el panel de ámbitos de búsqueda; si ya hay un ámbito elegido, basta con pulsar una vez |
 | `⌥ ↑` `⌥ ↓` | Volver a lo que escribiste antes o después |
+| `⌘ Z` `⌘ ⇧ Z` | Con el panel de ámbitos de búsqueda abierto, deshacer o rehacer un cambio en el orden de las fuentes de búsqueda |
 | `⌫` | Con el cuadro vacío, salir de la búsqueda en el sitio, del ámbito de búsqueda o de la búsqueda en pestañas abiertas |
 | `Esc` | Salir de la búsqueda en el sitio, del ámbito de búsqueda o de la búsqueda en pestañas abiertas |
 | `Esc` o clic fuera de la barra de comandos | Cerrar la barra de comandos |
@@ -69,7 +70,8 @@ El cuadro de búsqueda de la nueva pestaña usa las mismas teclas que la barra d
 | Empezar a escribir | El texto va directamente al cuadro de búsqueda, sin necesidad de hacer clic antes |
 | Clic en un resultado, un acceso directo, un marcador o una tarjeta de sitio | Abrirlo en la pestaña actual de forma predeterminada, o en una nueva si lo activas en General → New Tab Settings → Open in a new tab |
 | Clic manteniendo pulsada `⌘` o clic central | Abrir en una pestaña en segundo plano |
-| `⌘ Z` | Deshacer tu último cambio en los accesos directos o marcadores, como quitar, mover o crear una carpeta |
+| `⌥ ←` `⌥ →` | Mover una posición hacia delante o hacia atrás un acceso directo seleccionado con `Tab` |
+| `⌘ Z` | Deshacer tu último cambio en los accesos directos o marcadores, como quitar, mover, crear una carpeta o eliminar un grupo |
 | `⌘ ⇧ Z` | Rehacer lo que acabas de deshacer |
 | `Esc` | Cancelar mientras arrastras un acceso directo o un marcador |
 
@@ -81,6 +83,7 @@ El cuadro de búsqueda de la nueva pestaña usa las mismas teclas que la barra d
 | `Tab`, `→` o `↓` | Seleccionar la pestaña siguiente |
 | `⇧ Tab`, `←` o `↑` | Seleccionar la pestaña anterior |
 | Soltar `⌥`, pulsar `↩` o hacer clic en una pestaña | Cambiar a la pestaña seleccionada |
+| Clic en el botón de cerrar de la esquina de una vista previa | Cerrar esa pestaña; el selector sigue abierto |
 | `Esc` o clic fuera del selector | Cerrar el selector y seguir en la pestaña actual |
 
 Si has cambiado el atajo del selector, mantén pulsada la tecla modificadora de tu propio atajo.

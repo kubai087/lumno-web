@@ -8,7 +8,7 @@ The row of icons under the search box shows your shortcuts. When you hover over 
 
 ### Add a shortcut
 
-1. Click "+" at the end of your shortcuts.
+1. Click "+" at the end of your shortcuts and choose Add site.
 2. Enter a name and URL. Browser pages such as `chrome://inspect/#devices` are also supported.
 3. Choose an icon: a built-in icon, an online icon, or your own image (a square image of at least 128×128 px works best).
 4. Click Save.
@@ -16,9 +16,24 @@ The row of icons under the search box shows your shortcuts. When you hover over 
 ### Organize shortcuts
 
 - Right-click a shortcut to edit or remove it. If you remove one by mistake, use the shortcut shown in the notice to undo.
-- Drag shortcuts to reorder them. Drag one onto your bookmarks to turn it into a bookmark.
-- To change how many shortcuts appear per row, icon size, spacing, Dock magnification or the "+" button, go to Appearance → New Tab in Lumno's settings.
+- Drag shortcuts to reorder them. Drag one onto your bookmarks to turn it into a bookmark. You can also select a shortcut with `Tab` and press `⌥ ←` or `⌥ →` to move it one place.
+- To change how many shortcuts appear per row, icon size, spacing, Dock magnification or the "+" button, use the Shortcuts section of the new tab's Appearance settings, or Appearance → New Tab in Lumno's settings. You can also hide "+" by clicking it and choosing Hide.
+- You can add up to 200 shortcuts.
 - If you don't need shortcuts, turn off Shortcuts in the same place to remove the row of icons under the search box.
+
+## Shortcut groups {#shortcut-groups}
+
+When you have a lot of shortcuts, sort them into groups such as Work, AI and Everyday, each with its own title.
+
+![Shortcuts under the search box in three groups, Work, AI and Everyday; the pointer rests on the Work title, which shows its "···" button](nt-shortcut-groups "Shortcuts sorted into groups")
+
+1. Click "+" at the end of your shortcuts and choose New group.
+2. Enter a name for the group and click Save. The name is optional; a group without one just starts a new row.
+
+- Hover over a group's title and click "···" on its right to rename the group, add a site to it, or move it up or down. You can also double-click a title to rename it.
+- Drag a group's title to reorder your groups. Drag a shortcut into another group to move it there.
+- Delete group moves its sites into the group above. Delete group and sites asks first, then removes both. Press `⌘ Z` to undo either one.
+- You can create up to 20 groups.
 
 ## Shortcut folders {#shortcut-folders}
 
@@ -40,6 +55,7 @@ The bookmarks area shows the contents of your browser's bookmarks bar. When you 
 
 - Right-click a folder to change its color. The folder also uses that color in menus.
 - Right-click a folder and choose "Open in new tab group" to open all of its pages at once, grouped together.
+- Right-click a bookmark or folder and choose "Add to shortcuts" to add it to the end of your last shortcut group. The bookmark stays where it is. If it's already among your shortcuts, the menu says "Already in shortcuts".
 - Click the bookmark icon to open the browser's bookmark manager.
 - Shortcuts and bookmarks open in the current tab by default. To open them in a new tab instead, turn each one on under General → New Tab Settings → Open in a new tab in Lumno's settings. Holding `⌘` while you click, or middle-clicking, always opens in the background.
 
@@ -65,11 +81,14 @@ Bookmarks appear in a row along the top of the page, like the browser's own book
 
 ![The top bookmarks bar layout, with bookmark folders in a row along the top of the new tab](nt-bookmarks-top "Top bookmarks bar")
 
-With the top bookmarks bar, click "···" at the right end of the bar to choose its background: Adaptive mist, Clear glass, Transparent or Custom color.
+With the top bookmarks bar, click "···" at the right end of the bar to choose its style and background:
+
+- Bar style: Docked to top sits flush against the top of the browser; Floating is a rounded bar set slightly below it.
+- Bar background: Match style, Transparent or Custom color. Match style gives the bar the same [material](../newtab-wallpaper/#glass) as the rest of the new tab.
 
 ## Rows and hiding bookmarks {#bookmark-rows}
 
-To choose how many rows of bookmarks appear and how many fit in each row, go to Appearance → New Tab in Lumno's settings.
+To choose how many rows of bookmarks appear and how many fit in each row, use the Bookmarks section of the new tab's Appearance settings, or Appearance → New Tab in Lumno's settings.
 
 ![Four settings in Lumno: Bookmark rows, Bookmarks per row, Show Icons Inside Bookmark Folders and Site Cards](nt-layout-settings "Bookmark settings under Appearance → New Tab")
 

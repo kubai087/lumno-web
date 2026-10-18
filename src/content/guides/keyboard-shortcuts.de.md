@@ -56,6 +56,7 @@ Solange du `⌥`, `⇧` oder `⌘` gedrückt hältst, passt sich der Hinweis rec
 | `Tab` | Vorschlag vervollständigen; nach einem Seitenkürzel die Seitensuche starten; bei leerem Suchfeld nur offene Tabs durchsuchen |
 | `Tab` `Tab` | Bei leerem Suchfeld das Suchbereich-Panel öffnen; ist bereits ein Suchbereich ausgewählt, genügt ein Druck |
 | `⌥ ↑` `⌥ ↓` | Zur vorherigen oder nächsten Eingabe wechseln |
+| `⌘ Z` `⌘ ⇧ Z` | Bei geöffnetem Suchbereich-Panel eine Änderung an der Reihenfolge der Suchquellen rückgängig machen oder wiederherstellen |
 | `⌫` | Bei leerem Suchfeld die Seitensuche, den Suchbereich oder die Suche in offenen Tabs beenden |
 | `Esc` | Seitensuche, Suchbereich oder Suche in offenen Tabs beenden |
 | `Esc` oder Klick außerhalb der Befehlsleiste | Befehlsleiste schließen |
@@ -69,7 +70,8 @@ Im Suchfeld des neuen Tabs gelten dieselben Tasten wie in der Befehlsleiste. Au�
 | Einfach lostippen | Der Text landet direkt im Suchfeld, ohne dass du es vorher anklicken musst |
 | Klick auf ein Suchergebnis, einen Shortcut, ein Lesezeichen oder eine Website-Karte | Standardmäßig im aktuellen Tab öffnen, in einem neuen Tab, wenn du es unter General → New Tab Settings → Open in a new tab aktivierst |
 | Klick mit gedrückter `⌘`-Taste oder mit der mittleren Maustaste | Im Hintergrund öffnen |
-| `⌘ Z` | Die letzte Änderung an Shortcuts oder Lesezeichen rückgängig machen, etwa Entfernen, Verschieben oder das Anlegen eines Ordners |
+| `⌥ ←` `⌥ →` | Einen mit `Tab` ausgewählten Shortcut um eine Position nach vorne oder hinten verschieben |
+| `⌘ Z` | Die letzte Änderung an Shortcuts oder Lesezeichen rückgängig machen, etwa Entfernen, Verschieben, das Anlegen eines Ordners oder das Löschen einer Gruppe |
 | `⌘ ⇧ Z` | Das gerade Rückgängiggemachte wiederherstellen |
 | `Esc` | Ziehen eines Shortcuts oder Lesezeichens abbrechen |
 
@@ -81,6 +83,7 @@ Im Suchfeld des neuen Tabs gelten dieselben Tasten wie in der Befehlsleiste. Au�
 | `Tab`, `→` oder `↓` | Nächsten Tab auswählen |
 | `⇧ Tab`, `←` oder `↑` | Vorherigen Tab auswählen |
 | `⌥` loslassen, `↩` drücken oder auf einen Tab klicken | Zum ausgewählten Tab wechseln |
+| Klick auf die Schließen-Schaltfläche in der Ecke einer Seitenvorschau | Diesen Tab schließen; der Umschalter bleibt offen |
 | `Esc` oder Klick außerhalb des Umschalters | Umschalter schließen und im aktuellen Tab bleiben |
 
 Wenn du das Tastenkürzel des Umschalters geändert hast, hältst du stattdessen die Sondertaste aus deinem eigenen Kürzel gedrückt.

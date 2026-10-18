@@ -55,6 +55,15 @@ Lorsque le champ est vide, appuyez deux fois sur `Tab` pour ouvrir le panneau de
 
 ![Le panneau de portée de recherche, avec les moteurs de recherche et la recherche sur site regroupés](modemenu "Le panneau de portée de recherche")
 
+## Réorganiser les sources de recherche {#order}
+
+Vous pouvez placer en tête les sources que vous utilisez le plus :
+
+- Dans le panneau de portée de recherche, faites glisser une icône pour la déplacer dans son groupe. Placez le pointeur sur le titre d'un groupe et cliquez sur le bouton monter ou descendre pour déplacer tout le groupe.
+- Dans les réglages de Lumno, sous Search sources, faites glisser les étiquettes en haut pour changer l'ordre des groupes dans le panneau, et les éléments des listes en dessous pour changer l'ordre dans chaque groupe. Les options de Visible Result Types se font aussi glisser, pour changer l'ordre des onglets ouverts, des favoris, de l'historique et des autres résultats.
+
+En cas d'erreur, appuyez sur `⌘ Z` pour annuler et sur `⌘ ⇧ Z` pour rétablir. L'ordre est synchronisé par votre navigateur.
+
 ## Ajouter une recherche personnalisée {#custom}
 
 Vous pouvez ajouter l'intranet de votre entreprise ou des sites de documentation que vous consultez souvent comme recherches personnalisées dans les réglages de Lumno, avec un raccourci facile à retenir.

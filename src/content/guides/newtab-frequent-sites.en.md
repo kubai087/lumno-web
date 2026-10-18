@@ -6,19 +6,26 @@ By default, the cards at the bottom show your most visited sites. Click a card t
 
 ![Most visited cards at the bottom of the new tab: GitHub, Material, Figma and Mozilla](nt-recent "Most visited")
 
-To see recently visited sites instead, click "···" at the top right of the cards and choose "Show Recent".
+To see recently visited sites instead, hover over "Most Visited" at the top left of the cards and click "Recent" when it appears beside it.
 
 ## Rows and turning off cards {#card-rows}
 
-To choose how many rows of site cards appear, go to Appearance → New Tab → Site Cards in Lumno's settings.
+To choose how many rows of site cards appear, use the Site Cards section of the new tab's Appearance settings, or Appearance → New Tab → Site Cards in Lumno's settings.
 
 ![Four settings in Lumno: Bookmark rows, Bookmarks per row, Show Icons Inside Bookmark Folders and Site Cards, with Site Cards set to 1 row of most visited sites](nt-layout-settings "Site card settings under Appearance → New Tab")
 
 - Drag the slider to show one row or two. The default is one row.
 - Drag it to 0 to turn off site cards. The bottom of the new tab no longer shows these sites.
-- Next to the slider, switch between Show Recent and Show Most Visited, the same choices as in the cards' "···" menu.
+- Next to the slider, switch between Show Recent and Show Most Visited, the same choices as in the cards' heading.
 
 To hide just one site, right-click its card and choose Remove. The site comes back the next time you visit it, and a pinned card is unpinned as well. To keep a site off the new tab and out of search results for good, add it to the Blacklist in Lumno's settings.
+
+## Add to shortcuts and bookmarks {#add}
+
+You can put a site you open often straight into your shortcuts or bookmarks:
+
+- Drag a card into your shortcuts to add it as a shortcut. Drop it on the bookmarks area, an open bookmark folder menu or a shortcut folder to add it as a bookmark. Press `⌘ Z` to undo.
+- You can also right-click a card and choose "Add to shortcuts".
 
 ## Pin a site {#pin}
 

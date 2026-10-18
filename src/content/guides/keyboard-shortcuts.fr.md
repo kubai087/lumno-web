@@ -56,6 +56,7 @@ Tant que vous maintenez `⌥`, `⇧` ou `⌘`, l'indication affichée à droite 
 | `Tab` | Compléter une suggestion ; après un raccourci de site, lancer la recherche sur le site ; si le champ est vide, rechercher uniquement dans les onglets ouverts |
 | `Tab` `Tab` | Si le champ est vide, ouvrir le panneau de portée de recherche ; si une portée est déjà choisie, une seule pression suffit |
 | `⌥ ↑` `⌥ ↓` | Revenir à la saisie précédente ou suivante |
+| `⌘ Z` `⌘ ⇧ Z` | Panneau de portée de recherche ouvert, annuler ou rétablir un changement d'ordre des sources de recherche |
 | `⌫` | Si le champ est vide, quitter la recherche sur le site, la portée de recherche ou la recherche dans les onglets ouverts |
 | `Esc` | Quitter la recherche sur le site, la portée de recherche ou la recherche dans les onglets ouverts |
 | `Esc` ou clic en dehors de la barre de commande | Fermer la barre de commande |
@@ -69,7 +70,8 @@ Le champ de recherche du nouvel onglet utilise les mêmes touches que la barre d
 | Commencer à taper | Le texte va directement dans le champ de recherche, sans avoir à cliquer dessus |
 | Clic sur un résultat, un raccourci, un favori ou une carte de site | Ouvrir dans l'onglet actuel par défaut, ou dans un nouvel onglet si vous l'activez sous General → New Tab Settings → Open in a new tab |
 | Clic en maintenant `⌘` ou clic du milieu | Ouvrir dans un onglet en arrière-plan |
-| `⌘ Z` | Annuler votre dernière modification des raccourcis ou des favoris : suppression, déplacement, création de dossier, etc. |
+| `⌥ ←` `⌥ →` | Déplacer d'une position vers l'avant ou l'arrière un raccourci sélectionné avec `Tab` |
+| `⌘ Z` | Annuler votre dernière modification des raccourcis ou des favoris : suppression, déplacement, création de dossier, suppression de groupe, etc. |
 | `⌘ ⇧ Z` | Rétablir ce que vous venez d'annuler |
 | `Esc` | Annuler le glisser-déposer d'un raccourci ou d'un favori |
 
@@ -81,6 +83,7 @@ Le champ de recherche du nouvel onglet utilise les mêmes touches que la barre d
 | `Tab`, `→` ou `↓` | Sélectionner l'onglet suivant |
 | `⇧ Tab`, `←` ou `↑` | Sélectionner l'onglet précédent |
 | Relâcher `⌥`, appuyer sur `↩` ou cliquer sur un onglet | Basculer vers l'onglet sélectionné |
+| Clic sur le bouton de fermeture dans le coin d'un aperçu | Fermer cet onglet ; le sélecteur reste ouvert |
 | `Esc` ou clic en dehors du sélecteur | Fermer le sélecteur et rester sur l'onglet actuel |
 
 Si vous avez modifié le raccourci du sélecteur, maintenez plutôt la touche de modification de votre propre raccourci.

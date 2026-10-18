@@ -71,7 +71,7 @@ See [Change the wallpaper](../newtab-wallpaper/) and [Clock and Zen mode](../new
 
 When you watch a show or read a serialized novel, Lumno can remember which episode or chapter you're on, right on your new tab:
 
-1. Open the episode or chapter you're on. It then appears among the site cards at the bottom of the new tab. If you don't see it, click "···" at the top right of the cards and choose "Show Recent".
+1. Open the episode or chapter you're on. It then appears among the site cards at the bottom of the new tab. If you don't see it, hover over "Most Visited" at the top left of the cards and switch to "Recent".
 2. Hover over the card and click the pin icon. When Lumno recognizes an episode or chapter page, it starts tracking your progress automatically, and the card shows a radar icon. If tracking doesn't start, right-click the card and choose "Track progress".
 3. When you reach the next episode or chapter of the same title, the card updates automatically. Next time, click the card to continue where you left off.
 

@@ -567,6 +567,53 @@ const scenes = {
     await sw.evaluate((id) => chrome.bookmarks.removeTree(id), folderId);
     await setPrefs({ [BOOKMARK_COUNT_KEY]: bookmarkCount ?? 8 });
   },
+  // Shortcuts sorted into titled groups (cfg.shortcutGroups names each group and the sites in it),
+  // the pointer on the first group's title. The ungrouped list is put back afterwards.
+  async "nt-shortcut-groups"() {
+    const groups = cfg.shortcutGroups;
+    if (!groups) return;
+    const shortcuts = cfg.shortcuts || [];
+    const state = {
+      groups: groups.map((group, index) => ({ id: `guide-group-${index}`, title: group.title })),
+      items: groups.flatMap((group, index) =>
+        group.urls.map((url) => ({ ...shortcuts.find((item) => item.url === url), groupId: `guide-group-${index}` })),
+      ),
+    };
+    const save = (page, { groups, items }) => page.evaluate(async ({ groups, items }) => {
+      await globalThis.LumnoNewtabShortcutsStore.saveShortcuts(chrome.storage.sync, items, groups ? { groups } : {});
+    }, { groups, items });
+    const BOOKMARK_COUNT_KEY = "_x_extension_bookmark_count_2024_unique_";
+    const bookmarkCount = await sw.evaluate(async (key) => (await chrome.storage.sync.get(key))[key], BOOKMARK_COUNT_KEY);
+    await setPrefs({ [BOOKMARK_COUNT_KEY]: 0 });
+    const setup = await openNewtab();
+    await save(setup, state);
+    await setup.close();
+    const page = await openNewtab();
+    // Three groups need more height than 800px leaves above the site cards, where the shortcuts would scroll.
+    await page.setViewportSize({ width: 1280, height: 1000 });
+    await sleep(1200);
+    // The pointer rests on the first group's title, so its "···" menu button shows.
+    await page.locator(".x-nt-shortcut-group-header").first().hover().catch(() => {});
+    await sleep(800);
+    // The site cards are hidden, so the shortcuts may use their room instead of scrolling above them.
+    await page.addStyleTag({ content: "#_x_extension_newtab_bottom_dock_scroller_2024_unique_ > section:not(#_x_extension_newtab_bookmarks_2024_unique_) { visibility: hidden !important; } .x-nt-shortcuts-section[data-shortcuts-scrollable='true'] { max-height: none !important; overflow: visible !important; mask-image: none !important; }" });
+    await sleep(600);
+    await shot("nt-shortcut-groups", page, await boxOf(page, ["#_x_extension_newtab_root_2024_unique_", ".x-nt-shortcut-group-header", ".x-nt-shortcut-tile"]));
+    await save(page, { groups: [{ id: "g0", title: "" }], items: shortcuts.map(({ groupId, ...item }) => item) });
+    await page.close();
+    await setPrefs({ [BOOKMARK_COUNT_KEY]: bookmarkCount ?? 8 });
+  },
+  // The whole new tab in the Liquid glass material, over the full new tab's wallpaper.
+  async "nt-glass"() {
+    await stageFullNewtab();
+    await setPrefs({ _x_extension_newtab_glass_style_2026_unique_: "liquid" });
+    const page = await openNewtab();
+    await sleep(1500);
+    await shot("nt-glass", page);
+    await page.close();
+    await setPrefs({ _x_extension_newtab_glass_style_2026_unique_: "none" });
+    await unstageFullNewtab();
+  },
   async "nt-recent"() {
     const page = await openNewtab();
     await shot("nt-recent", page, await boxOf(page, ["#_x_extension_newtab_bottom_dock_scroller_2024_unique_ > section:not(#_x_extension_newtab_bookmarks_2024_unique_)"]));

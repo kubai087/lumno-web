@@ -11,6 +11,8 @@ Drücke `⌥ Q`. Deine zuletzt verwendeten Tabs werden in der Reihenfolge ihrer 
 1. Halte `⌥` gedrückt und drücke wiederholt `Q`, bis die gewünschte Seite ausgewählt ist. Du kannst auch `Tab` oder die Pfeiltasten verwenden.
 2. Lass `⌥` los oder drücke `↩`, um zu dieser Seite zu wechseln.
 
+Tabs, die du nicht mehr brauchst, kannst du direkt im Umschalter schließen: Bewege den Mauszeiger auf eine Seitenvorschau und klicke auf die Schließen-Schaltfläche, die in ihrer Ecke erscheint.
+
 Die Bedienung entspricht weitgehend `⌘ Tab | Alt + Tab` auf deinem Computer oder `⌃ Tab` in [Arc](https://arc.net/).
 
 ## Tab-Umschalter oder Suche in offenen Tabs {#vs-search}

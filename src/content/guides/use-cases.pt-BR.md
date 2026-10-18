@@ -71,7 +71,7 @@ Para saber mais, consulte [Mudar o papel de parede](../newtab-wallpaper/) e [Rel
 
 Quando você assiste a uma série ou lê um romance publicado em capítulos, o Lumno pode lembrar, na nova guia, em qual episódio ou capítulo você está:
 
-1. Abra o episódio ou capítulo em que você está. Ele passará a aparecer entre os cartões de sites na parte inferior da nova guia. Se não aparecer, clique em "···" no canto superior direito dos cartões e escolha "Show Recent".
+1. Abra o episódio ou capítulo em que você está. Ele passará a aparecer entre os cartões de sites na parte inferior da nova guia. Se não aparecer, passe o ponteiro sobre "Most Visited", no canto superior esquerdo dos cartões, e mude para "Recent".
 2. Passe o cursor sobre o cartão e clique no ícone de alfinete. Quando o Lumno reconhece uma página de episódio ou capítulo, ele começa a acompanhar seu progresso automaticamente, e o cartão mostra um ícone de radar. Se o acompanhamento não começar, clique com o botão direito no cartão e escolha "Track progress".
 3. Quando você passar para o próximo episódio ou capítulo do mesmo título, o cartão será atualizado automaticamente. Na próxima vez, clique no cartão para continuar de onde parou.
 

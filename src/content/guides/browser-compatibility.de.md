@@ -33,6 +33,7 @@ Da sich die Erweiterungs-APIs von Firefox von denen in Chromium unterscheiden, s
 | `about:`-Seiten über Shortcuts oder die Befehlsleiste öffnen | Nicht verfügbar |
 | Befehlsleiste auf lokalen `file://`-Seiten | Nicht verfügbar |
 | Website-Symbole | Bei noch nicht besuchten Websites wird anfangs möglicherweise ein Platzhaltersymbol angezeigt |
+| Liquid glass im neuen Tab | Nur die Glasoptik, ohne Lichtbrechung an den Rändern |
 
 Da Firefox `⌘ ⇧ K` bereits selbst verwendet, nutzt die Firefox-Version standardmäßig `⌃ ⇧ K | Alt + K`. `⌥ Q` bleibt unverändert. Um die Tastenkürzel zu ändern, öffne `about:addons`, klicke oben rechts auf das Zahnrad und wähle „Tastenkombinationen von Erweiterungen verwalten“.
 

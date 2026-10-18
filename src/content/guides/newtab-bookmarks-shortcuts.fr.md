@@ -8,7 +8,7 @@ La rangée d'icônes sous le champ de recherche correspond à vos raccourcis. Lo
 
 ### Ajouter un raccourci
 
-1. Cliquez sur « + » à la fin de vos raccourcis.
+1. Cliquez sur « + » à la fin de vos raccourcis et choisissez « Add site ».
 2. Saisissez un nom et une URL. Les pages du navigateur comme `chrome://inspect/#devices` sont également acceptées.
 3. Choisissez une icône : une icône intégrée, une icône en ligne ou votre propre image (de préférence une image carrée d'au moins 128 × 128 px).
 4. Cliquez sur Enregistrer.
@@ -16,9 +16,24 @@ La rangée d'icônes sous le champ de recherche correspond à vos raccourcis. Lo
 ### Organiser les raccourcis
 
 - Faites un clic droit sur un raccourci pour le modifier ou le supprimer. Si vous en supprimez un par erreur, utilisez le raccourci clavier indiqué dans la notification pour annuler.
-- Faites glisser les raccourcis pour les réorganiser. Déposez-en un sur vos favoris pour le transformer en favori.
-- Le nombre de raccourcis par rangée, la taille des icônes, l'espacement, l'effet d'agrandissement du Dock et le bouton « + » se règlent dans les réglages de Lumno, sous Appearance → New Tab.
+- Faites glisser les raccourcis pour les réorganiser. Déposez-en un sur vos favoris pour le transformer en favori. Vous pouvez aussi sélectionner un raccourci avec `Tab` et appuyer sur `⌥ ←` ou `⌥ →` pour le déplacer d'une position.
+- Le nombre de raccourcis par rangée, la taille des icônes, l'espacement, l'effet d'agrandissement du Dock et le bouton « + » se règlent dans la section Shortcuts des réglages Appearance du nouvel onglet, ou dans les réglages de Lumno, sous Appearance → New Tab. Pour masquer directement « + », cliquez dessus et choisissez « Hide ».
+- Vous pouvez ajouter jusqu'à 200 raccourcis.
 - Si vous n'utilisez pas les raccourcis, désactivez Shortcuts au même endroit : la rangée d'icônes sous le champ de recherche disparaît.
+
+## Groupes de raccourcis {#shortcut-groups}
+
+Quand vos raccourcis se multiplient, répartissez-les en groupes selon leur usage, par exemple Travail, IA et Loisirs, chacun avec son propre titre.
+
+![Les raccourcis sous le champ de recherche, répartis en trois groupes, Work, AI et Everyday ; le pointeur est sur le titre Work, à côté duquel apparaît « ··· »](nt-shortcut-groups "Des raccourcis répartis en groupes")
+
+1. Cliquez sur « + » à la fin de vos raccourcis et choisissez « New group ».
+2. Saisissez un nom pour le groupe, puis cliquez sur Enregistrer. Le nom est facultatif : un groupe sans nom sert simplement à commencer une nouvelle rangée.
+
+- Placez le pointeur sur le titre d'un groupe et cliquez sur « ··· » à sa droite pour renommer le groupe, y ajouter un site ou le déplacer vers le haut ou vers le bas. Vous pouvez aussi double-cliquer sur un titre pour le renommer.
+- Faites glisser le titre d'un groupe pour réorganiser vos groupes. Faites glisser un raccourci dans un autre groupe pour l'y déplacer.
+- « Delete group » déplace les sites du groupe dans le groupe situé au-dessus. « Delete group and sites » demande d'abord une confirmation, puis supprime les deux. Appuyez sur `⌘ Z` pour annuler l'une ou l'autre.
+- Vous pouvez créer jusqu'à 20 groupes.
 
 ## Dossiers de raccourcis {#shortcut-folders}
 
@@ -40,6 +55,7 @@ La zone des favoris affiche le contenu de la barre de favoris de votre navigateu
 
 - Faites un clic droit sur un dossier pour changer sa couleur. Le dossier prend également cette couleur dans les menus.
 - Faites un clic droit sur un dossier et choisissez « Open in new tab group » pour ouvrir toutes ses pages d'un coup, réunies dans un même groupe d'onglets.
+- Faites un clic droit sur un favori ou un dossier et choisissez « Add to shortcuts » pour l'ajouter à la fin de votre dernier groupe de raccourcis. Le favori reste à sa place. S'il figure déjà parmi vos raccourcis, le menu indique « Already in shortcuts ».
 - Cliquez sur l'icône des favoris pour ouvrir le gestionnaire de favoris du navigateur.
 - Par défaut, les raccourcis et les favoris s'ouvrent dans l'onglet actuel. Pour les ouvrir dans un nouvel onglet, activez-les un par un dans les réglages de Lumno, sous General → New Tab Settings → Open in a new tab. Un clic en maintenant `⌘` ou un clic du bouton central les ouvre toujours en arrière-plan.
 
@@ -65,11 +81,14 @@ Les favoris s'affichent sur une rangée en haut de la page, comme la barre de fa
 
 ![La disposition barre de favoris en haut, avec les dossiers alignés en haut du nouvel onglet](nt-bookmarks-top "Barre de favoris en haut")
 
-Avec la barre de favoris en haut, cliquez sur « ··· » à l'extrémité droite de la barre pour choisir son arrière-plan : brume adaptative, verre clair, transparent ou une couleur de votre choix.
+Avec la barre de favoris en haut, cliquez sur « ··· » à l'extrémité droite de la barre pour choisir sa forme et son arrière-plan :
+
+- « Bar style » : « Docked to top » colle la barre au bord supérieur du navigateur ; « Floating » affiche une barre arrondie, légèrement détachée du haut.
+- « Bar background » : « Match style », « Transparent » ou « Custom color ». Avec « Match style », la barre prend la même [matière](../newtab-wallpaper/#glass) que le reste du nouvel onglet.
 
 ## Nombre de rangées et masquage des favoris {#bookmark-rows}
 
-Pour choisir le nombre de rangées de favoris et le nombre de favoris par rangée, ouvrez les réglages de Lumno, sous Appearance → New Tab.
+Pour choisir le nombre de rangées de favoris et le nombre de favoris par rangée, utilisez la section Bookmarks des réglages Appearance du nouvel onglet, ou les réglages de Lumno, sous Appearance → New Tab.
 
 ![Quatre réglages de Lumno : Bookmark rows, Bookmarks per row, Show Icons Inside Bookmark Folders et Site Cards](nt-layout-settings "Réglages des favoris sous Appearance → New Tab")
 

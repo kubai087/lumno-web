@@ -112,7 +112,7 @@ const content: GuideLocaleContent = {
     sync: {
       pageTitle: "Sincronize o Lumno entre computadores com a sincronização do navegador e WebDAV | Ajuda do Lumno",
       pageDescription:
-        "As configurações do Lumno acompanham a sincronização do seu navegador. Ative a sincronização WebDAV para levar também os ícones de atalhos e os papéis de parede, usando Nextcloud, um NAS ou qualquer servidor WebDAV que você controle.",
+        "As configurações do Lumno acompanham a sincronização do seu navegador. Ative a sincronização WebDAV para levar também os ícones de atalhos, os papéis de parede e as citações, usando Nextcloud, um NAS ou qualquer servidor WebDAV que você controle.",
       keywords: ["sincronização do Lumno", "sincronização WebDAV", "Nextcloud WebDAV", "sincronizar configurações de extensão do Chrome", "sincronizar nova guia"],
       title: "Sincronização",
       navTitle: "Sincronização",
@@ -165,7 +165,7 @@ const content: GuideLocaleContent = {
     "tab-switcher": {
       pageTitle: "Alternador de guias recentes: pressione ⌥Q para alternar entre guias recentes | Ajuda do Lumno",
       pageDescription:
-        "Pressione ⌥Q (Alt+Q no Windows) para abrir o alternador de guias recentes do Lumno, com suas guias na ordem em que foram usadas e uma prévia de cada uma. Mantenha ⌥ pressionada, pressione Q várias vezes e solte ⌥ para alternar.",
+        "Pressione ⌥Q (Alt+Q no Windows) para abrir o alternador de guias recentes do Lumno, com suas guias na ordem em que foram usadas e uma prévia de cada uma. Mantenha ⌥ pressionada, pressione Q várias vezes e solte ⌥ para alternar. Também é possível fechar guias diretamente no alternador.",
       keywords: ["alternador de guias do Chrome", "guias recentes", "Alt Tab para o navegador", "Arc Ctrl Tab"],
       title: "Alternar entre guias recentes",
       navTitle: "Guias recentes",
@@ -173,16 +173,16 @@ const content: GuideLocaleContent = {
     "newtab-wallpaper": {
       pageTitle: "Papéis de parede da nova guia: pinturas clássicas, foto do dia do Bing, suas fotos e filtros | Ajuda do Lumno",
       pageDescription:
-        "Mude o papel de parede da nova guia do Lumno nas configurações de Appearance: pinturas incluídas, a foto do dia do Bing, fotos selecionadas, suas próprias imagens ou um link de imagem, com véu, filtros e escolhas separadas para os modos claro e escuro.",
+        "Mude o papel de parede da nova guia do Lumno nas configurações de Appearance: pinturas incluídas, a foto do dia do Bing, fotos selecionadas, suas próprias imagens ou um link de imagem, com véu, filtros, escolhas separadas para os modos claro e escuro e um acabamento de vidro (Frosted glass ou Liquid glass).",
       keywords: ["papel de parede da nova guia", "fundo da nova guia do Chrome", "papel de parede diário do Bing", "extensão nova guia"],
       title: "Mudar o papel de parede",
       navTitle: "Mudar o papel de parede",
     },
     "newtab-bookmarks-shortcuts": {
-      pageTitle: "Atalhos e favoritos na nova guia: adicione sites, três layouts | Ajuda do Lumno",
+      pageTitle: "Atalhos e favoritos na nova guia: adicione e agrupe sites, três layouts | Ajuda do Lumno",
       pageDescription:
-        "Adicione seus sites de sempre como atalhos na nova guia do Lumno, escolha os ícones, agrupe-os em pastas e veja seus favoritos como pastas, lista aninhada ou barra no topo, com quantas fileiras quiser ou sem exibi-los.",
-      keywords: ["atalhos da nova guia", "favoritos na nova guia", "barra de favoritos do Chrome", "pastas de favoritos", "ocultar favoritos na nova guia"],
+        "Adicione seus sites de sempre como atalhos na nova guia do Lumno, escolha os ícones, separe-os em grupos ou pastas e veja seus favoritos como pastas, lista aninhada ou barra no topo, com quantas fileiras quiser ou sem exibi-los.",
+      keywords: ["atalhos da nova guia", "grupos de atalhos", "favoritos na nova guia", "barra de favoritos do Chrome", "pastas de favoritos", "ocultar favoritos na nova guia"],
       title: "Atalhos e favoritos",
       navTitle: "Atalhos e favoritos",
     },
@@ -195,11 +195,11 @@ const content: GuideLocaleContent = {
       navTitle: "Sites frequentes e progresso",
     },
     "newtab-clock-zen": {
-      pageTitle: "Relógio e modo Zen: uma nova guia só com a caixa de pesquisa | Ajuda do Lumno",
-      pageDescription: "Mostre um relógio na nova guia do Lumno, ou digite /zen para esconder tudo menos a caixa de pesquisa.",
-      keywords: ["relógio na nova guia", "nova guia minimalista", "modo Zen", "nova guia para foco"],
-      title: "Relógio e modo Zen",
-      navTitle: "Relógio e modo Zen",
+      pageTitle: "Relógio, citação diária e modo Zen: uma nova guia só com a caixa de pesquisa | Ajuda do Lumno",
+      pageDescription: "Mostre um relógio e uma citação diária do seu próprio arquivo TXT ou Markdown na nova guia do Lumno, ou digite /zen para esconder tudo menos a caixa de pesquisa.",
+      keywords: ["relógio na nova guia", "citação diária na nova guia", "nova guia minimalista", "modo Zen", "nova guia para foco"],
+      title: "Relógio, citações e modo Zen",
+      navTitle: "Relógio, citações e Zen",
     },
     "newtab-other-extensions": {
       pageTitle: "Usar outra extensão de nova guia com a barra de comandos do Lumno | Ajuda do Lumno",

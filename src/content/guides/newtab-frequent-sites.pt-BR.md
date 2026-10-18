@@ -6,19 +6,26 @@ Por padrão, os cartões na parte inferior mostram os sites mais visitados. Cliq
 
 ![Cartões dos sites mais visitados na parte de baixo da nova guia: GitHub, Material, Figma e Mozilla](nt-recent "Mais visitados")
 
-Para ver os sites visitados recentemente, clique em "···" no canto superior direito dos cartões e escolha "Show Recent".
+Para ver os sites visitados recentemente, passe o ponteiro sobre "Most Visited", no canto superior esquerdo dos cartões, e clique em "Recent" quando aparecer ao lado.
 
 ## Fileiras e como desativar os cartões {#card-rows}
 
-Para escolher quantas fileiras de cartões de sites aparecem, acesse Appearance → New Tab → Site Cards nas configurações do Lumno.
+Para escolher quantas fileiras de cartões de sites aparecem, use a seção Site Cards das configurações de Appearance da nova guia, ou acesse Appearance → New Tab → Site Cards nas configurações do Lumno.
 
 ![Quatro configurações do Lumno: Bookmark rows, Bookmarks per row, Show Icons Inside Bookmark Folders e Site Cards, esta última com uma fileira dos sites mais visitados](nt-layout-settings "Configurações dos cartões de sites em Appearance → New Tab")
 
 - Arraste o controle deslizante para mostrar uma ou duas fileiras. O padrão é uma fileira.
 - Arraste até 0 para desativar os cartões de sites. A parte de baixo da nova guia deixa de mostrar esses sites.
-- Ao lado do controle deslizante, alterne entre "Show Recent" e "Show Most Visited", as mesmas opções do menu "···" dos cartões.
+- Ao lado do controle deslizante, alterne entre "Show Recent" e "Show Most Visited", as mesmas opções do título dos cartões.
 
 Para ocultar só um site, clique com o botão direito no cartão dele e escolha "Remove". O site volta a aparecer na próxima vez que você o visitar, e um cartão fixado também deixa de ser fixado. Para que um site nunca apareça na nova guia nem nos resultados de pesquisa, adicione-o à "Blacklist" nas configurações do Lumno.
+
+## Adicionar aos atalhos e favoritos {#add}
+
+Um site que você abre com frequência pode ir direto de um cartão para os seus atalhos ou favoritos:
+
+- Arraste um cartão para os seus atalhos para adicioná-lo como atalho. Solte-o na área de favoritos, no menu de uma pasta de favoritos aberta ou em uma pasta de atalhos para adicioná-lo como favorito. Pressione `⌘ Z` para desfazer.
+- Você também pode clicar com o botão direito em um cartão e escolher "Add to shortcuts".
 
 ## Fixar um site {#pin}
 

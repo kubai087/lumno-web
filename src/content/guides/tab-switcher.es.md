@@ -11,6 +11,8 @@ Pulsa `⌥ Q`. Tus pestañas recientes aparecen en el orden en que las usaste, c
 1. Mantén pulsada `⌥` y pulsa `Q` varias veces hasta llegar a la página que quieres. También puedes usar `Tab` o las teclas de flecha.
 2. Suelta `⌥` o pulsa `↩` para cambiar a esa página.
 
+También puedes cerrar desde el selector las pestañas que ya no necesites: coloca el puntero sobre la vista previa de una página y haz clic en el botón de cerrar que aparece en su esquina.
+
 Funciona de forma parecida a `⌘ Tab | Alt + Tab` en tu ordenador o a `⌃ Tab` en [Arc](https://arc.net/).
 
 ## Selector o búsqueda en pestañas abiertas {#vs-search}

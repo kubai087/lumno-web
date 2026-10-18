@@ -6,19 +6,26 @@ Par défaut, les cartes en bas de la page affichent vos sites les plus visités.
 
 ![Les cartes des sites les plus visités en bas du nouvel onglet : GitHub, Material, Figma et Mozilla](nt-recent "Les plus visités")
 
-Pour afficher plutôt les sites visités récemment, cliquez sur « ··· » en haut à droite des cartes et choisissez « Show Recent ».
+Pour afficher plutôt les sites visités récemment, placez le pointeur sur « Most Visited » en haut à gauche des cartes, puis cliquez sur « Recent » lorsqu'il apparaît à côté.
 
 ## Nombre de rangées et désactivation des cartes {#card-rows}
 
-Pour choisir le nombre de rangées de cartes de sites, ouvrez les réglages de Lumno, sous Appearance → New Tab → Site Cards.
+Pour choisir le nombre de rangées de cartes de sites, utilisez la section Site Cards des réglages Appearance du nouvel onglet, ou les réglages de Lumno, sous Appearance → New Tab → Site Cards.
 
 ![Quatre réglages de Lumno : Bookmark rows, Bookmarks per row, Show Icons Inside Bookmark Folders et Site Cards, ce dernier réglé sur une rangée de sites les plus visités](nt-layout-settings "Réglages des cartes de sites sous Appearance → New Tab")
 
 - Faites glisser le curseur pour afficher une ou deux rangées. Par défaut, une seule rangée s'affiche.
 - Faites-le glisser sur 0 pour désactiver les cartes de sites. Le bas du nouvel onglet n'affiche plus ces sites.
-- À côté du curseur, passez de « Show Recent » à « Show Most Visited », comme dans le menu « ··· » des cartes.
+- À côté du curseur, passez de « Show Recent » à « Show Most Visited », comme dans le titre des cartes.
 
 Pour masquer un seul site, faites un clic droit sur sa carte et choisissez « Remove ». Le site réapparaît la prochaine fois que vous le consultez, et une carte épinglée est également désépinglée. Pour qu'un site n'apparaisse plus jamais dans le nouvel onglet ni dans les résultats de recherche, ajoutez-le à la « Blacklist » dans les réglages de Lumno.
+
+## Ajouter aux raccourcis et aux favoris {#add}
+
+Un site que vous ouvrez souvent peut passer directement d'une carte à vos raccourcis ou à vos favoris :
+
+- Faites glisser une carte dans vos raccourcis pour l'ajouter en raccourci. Déposez-la sur la zone des favoris, dans le menu d'un dossier de favoris ouvert ou dans un dossier de raccourcis pour l'ajouter en favori. Appuyez sur `⌘ Z` pour annuler.
+- Vous pouvez aussi faire un clic droit sur une carte et choisir « Add to shortcuts ».
 
 ## Épingler un site {#pin}
 

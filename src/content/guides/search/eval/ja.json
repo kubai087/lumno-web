@@ -72,5 +72,11 @@
   { "q": "Firefox にインストール", "expect": ["install#store", "faq#compatibility", "browser-compatibility#firefox"] },
   { "q": "Firefox アドオン レビュー", "expect": ["ratings-reviews#firefox-add-ons"] },
   { "q": "Firefox 版の違い", "expect": ["faq#compatibility", "browser-compatibility#firefox"] },
-  { "q": "スマホで使える", "expect": ["faq#compatibility", "browser-compatibility#support", "limitations#browsers"] }
+  { "q": "スマホで使える", "expect": ["faq#compatibility", "browser-compatibility#support", "limitations#browsers"] },
+  { "q": "ショートカットをグループ分け", "expect": ["newtab-bookmarks-shortcuts#shortcut-groups"] },
+  { "q": "リキッドグラス", "expect": ["newtab-wallpaper#glass"] },
+  { "q": "今日の一言", "expect": ["newtab-clock-zen#quote"] },
+  { "q": "検索エンジンの並び替え", "expect": ["site-search#order"] },
+  { "q": "ブックマークをショートカットに追加", "expect": ["newtab-bookmarks-shortcuts#bookmarks"] },
+  { "q": "切り替え画面でタブを閉じる", "expect": ["tab-switcher#switch", "keyboard-shortcuts#switcher-keys"] }
 ]

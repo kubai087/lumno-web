@@ -40,6 +40,20 @@ El modo claro u oscuro se configura en la parte superior del panel: seguir al si
 | ASCII | Redibuja las zonas oscuras o claras con caracteres |
 | CRT | Añade líneas de barrido, brillo y curvatura de pantalla |
 
+## Material de cristal {#glass}
+
+En la sección Style de los ajustes de Appearance, cambia Material de Default a Frosted glass o Liquid glass. El cuadro de búsqueda, las tarjetas, los botones, los menús y el panel Appearance adoptan un acabado de cristal que deja ver el fondo, y el cristal ajusta su tono al fondo.
+
+![La nueva pestaña con Liquid glass: el reloj, el cuadro de búsqueda, los accesos directos, los marcadores y las tarjetas de sitios dejan ver el huerto impresionista del fondo](nt-glass "Liquid glass")
+
+| Material | Efecto |
+| --- | --- |
+| Default | El aspecto de siempre de Lumno |
+| Frosted glass | Un desenfoque suave sobre un tono translúcido |
+| Liquid glass | Un cristal más limpio; los bordes del cuadro de búsqueda y de sus resultados curvan el fondo como una lente |
+
+Los dos materiales de cristal están en fase beta y lucen mejor sobre un fondo. Firefox muestra el acabado de cristal, pero sin la curvatura de los bordes.
+
 ## Usar en otros dispositivos {#sync}
 
 Tu elección de fondo incluido, de Bing o seleccionado, así como tus enlaces de imagen, se sincronizan a través de tu navegador. Las imágenes locales que subes se guardan solo en el ordenador donde las añadiste. Para usarlas en otros dispositivos, activa la [sincronización WebDAV](../sync/#webdav).

@@ -112,7 +112,7 @@ const content: GuideLocaleContent = {
     sync: {
       pageTitle: "同期：ブラウザの同期と WebDAV で Lumno を複数のパソコンに｜Lumno ヘルプ",
       pageDescription:
-        "Lumno の設定はブラウザの同期でそのまま引き継がれます。WebDAV 同期をオンにすれば、アップロードしたアイコンや壁紙も同期できます。Nextcloud、NAS など自分の WebDAV サーバーを使います。",
+        "Lumno の設定はブラウザの同期でそのまま引き継がれます。WebDAV 同期をオンにすれば、アップロードしたアイコンや壁紙、名言リストも同期できます。Nextcloud、NAS など自分の WebDAV サーバーを使います。",
       keywords: ["Lumno 同期", "WebDAV 同期", "Nextcloud WebDAV", "Chrome 拡張機能 設定 同期", "新しいタブ 同期"],
       title: "同期",
       navTitle: "同期",
@@ -155,7 +155,7 @@ const content: GuideLocaleContent = {
     "tab-switcher": {
       pageTitle: "最近のタブ切り替え：⌥Q で直前のタブへ｜Lumno ヘルプ",
       pageDescription:
-        "⌥Q（Windows では Alt+Q）で Lumno の最近のタブ切り替えを開くと、使った順にタブがプレビュー付きで並びます。⌥ を押したまま Q を押して、離せば切り替わります。",
+        "⌥Q（Windows では Alt+Q）で Lumno の最近のタブ切り替えを開くと、使った順にタブがプレビュー付きで並びます。⌥ を押したまま Q を押して、離せば切り替わります。切り替え画面からタブを閉じることもできます。",
       keywords: ["Chrome タブ 切り替え", "最近のタブ", "ブラウザ Alt Tab", "Arc Ctrl Tab"],
       title: "最近のタブを切り替える",
       navTitle: "最近のタブを切り替える",
@@ -163,15 +163,15 @@ const content: GuideLocaleContent = {
     "newtab-wallpaper": {
       pageTitle: "新しいタブの壁紙：名画、Bing の今日の一枚、自分の写真とフィルター｜Lumno ヘルプ",
       pageDescription:
-        "Lumno の新しいタブの壁紙を外観設定で変更できます。内蔵の名画やイラスト、Bing の今日の一枚、厳選写真、自分の画像や画像リンクから選び、オーバーレイやフィルター、ライトとダークで別々の壁紙も設定できます。",
-      keywords: ["新しいタブ 壁紙", "Chrome 新しいタブ 背景", "Bing 壁紙 毎日", "新しいタブ 拡張機能"],
+        "Lumno の新しいタブの壁紙を外観設定で変更できます。内蔵の名画やイラスト、Bing の今日の一枚、厳選写真、自分の画像や画像リンクから選び、オーバーレイやフィルター、ライトとダークで別々の壁紙も設定できます。検索ボックスやカードをフロストガラスやリキッドグラスの質感にすることもできます。",
+      keywords: ["新しいタブ 壁紙", "Chrome 新しいタブ 背景", "Bing 壁紙 毎日", "新しいタブ 拡張機能", "リキッドグラス"],
       title: "壁紙を変える",
       navTitle: "壁紙を変える",
     },
     "newtab-bookmarks-shortcuts": {
-      pageTitle: "新しいタブのショートカットとブックマーク：サイトの追加と 3 つのレイアウト｜Lumno ヘルプ",
-      pageDescription: "よく使うサイトを Lumno の新しいタブにショートカットとして追加し、アイコンを選んでフォルダにまとめ、ブックマークをフォルダ・階層リスト・上部バーの 3 つのレイアウトで表示できます。表示する行数の変更や非表示にも対応しています。",
-      keywords: ["新しいタブ ショートカット", "新しいタブ ブックマーク", "Chrome ブックマークバー", "ブックマーク フォルダ", "新しいタブ ブックマーク 非表示"],
+      pageTitle: "新しいタブのショートカットとブックマーク：サイトの追加、グループ分け、3 つのレイアウト｜Lumno ヘルプ",
+      pageDescription: "よく使うサイトを Lumno の新しいタブにショートカットとして追加し、アイコンを選んでグループやフォルダにまとめ、ブックマークをフォルダ・階層リスト・上部バーの 3 つのレイアウトで表示できます。表示する行数の変更や非表示にも対応しています。",
+      keywords: ["新しいタブ ショートカット", "ショートカット グループ", "新しいタブ ブックマーク", "Chrome ブックマークバー", "ブックマーク フォルダ", "新しいタブ ブックマーク 非表示"],
       title: "ショートカットとブックマーク",
       navTitle: "ショートカットとブックマーク",
     },
@@ -184,11 +184,11 @@ const content: GuideLocaleContent = {
       navTitle: "よくアクセスするサイト",
     },
     "newtab-clock-zen": {
-      pageTitle: "時計と Zen モード：検索ボックスだけの新しいタブ｜Lumno ヘルプ",
-      pageDescription: "Lumno の新しいタブに時計を表示したり、/zen と入力して検索ボックス以外を隠したりできます。",
-      keywords: ["新しいタブ 時計", "ミニマル 新しいタブ", "Zen モード", "集中 新しいタブ"],
-      title: "時計と Zen モード",
-      navTitle: "時計と Zen モード",
+      pageTitle: "時計、今日の一言、Zen モード：検索ボックスだけの新しいタブ｜Lumno ヘルプ",
+      pageDescription: "Lumno の新しいタブに時計や、自分の TXT・Markdown ファイルから選んだ今日の一言を表示したり、/zen と入力して検索ボックス以外を隠したりできます。",
+      keywords: ["新しいタブ 時計", "新しいタブ 名言", "ミニマル 新しいタブ", "Zen モード", "集中 新しいタブ"],
+      title: "時計、一言、Zen モード",
+      navTitle: "時計、一言、Zen モード",
     },
     "newtab-other-extensions": {
       pageTitle: "ほかの新しいタブ拡張機能と併用する：Lumno のコマンドバーだけを使う｜Lumno ヘルプ",

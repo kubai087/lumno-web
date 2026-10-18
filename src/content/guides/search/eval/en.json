@@ -78,7 +78,7 @@
   { "q": "report a bug", "expect": ["ratings-reviews#community", "security-open-source#open-source"] },
   { "q": "close other tabs", "expect": ["search-tabs-bookmarks-history#close-other-tabs"] },
   { "q": "shortcut folder", "expect": ["newtab-bookmarks-shortcuts#shortcut-folders"] },
-  { "q": "group shortcuts", "expect": ["newtab-bookmarks-shortcuts#shortcut-folders"] },
+  { "q": "group shortcuts", "expect": ["newtab-bookmarks-shortcuts#shortcut-groups"] },
   { "q": "ask the help center", "expect": ["site-search#help-center"] },
   { "q": "hide bookmarks", "expect": ["newtab-bookmarks-shortcuts#bookmark-rows"] },
   { "q": "bookmark rows", "expect": ["newtab-bookmarks-shortcuts#bookmark-rows"] },
@@ -90,5 +90,12 @@
   { "q": "install on firefox", "expect": ["install#store"] },
   { "q": "firefox add-ons reviews", "expect": ["ratings-reviews#firefox-add-ons"] },
   { "q": "firefox version differences", "expect": ["faq#compatibility", "browser-compatibility#firefox"] },
-  { "q": "does it work on my phone", "expect": ["faq#compatibility", "browser-compatibility#support", "limitations#browsers"] }
+  { "q": "does it work on my phone", "expect": ["faq#compatibility", "browser-compatibility#support", "limitations#browsers"] },
+  { "q": "group shortcuts", "expect": ["newtab-bookmarks-shortcuts#shortcut-groups"] },
+  { "q": "liquid glass", "expect": ["newtab-wallpaper#glass"] },
+  { "q": "import my own quotes", "expect": ["newtab-clock-zen#quote"] },
+  { "q": "daily quote", "expect": ["newtab-clock-zen#quote"] },
+  { "q": "reorder search engines", "expect": ["site-search#order"] },
+  { "q": "add a bookmark to shortcuts", "expect": ["newtab-bookmarks-shortcuts#bookmarks"] },
+  { "q": "close a tab from the switcher", "expect": ["tab-switcher#switch", "keyboard-shortcuts#switcher-keys"] }
 ]

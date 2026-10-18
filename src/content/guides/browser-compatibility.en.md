@@ -33,6 +33,7 @@ Because Firefox's extension APIs differ from Chromium's, some features aren't av
 | Opening `about:` pages from shortcuts or the command bar | Not available |
 | Command bar on local `file://` pages | Not available |
 | Site icons | Sites you haven't visited may show a placeholder icon at first |
+| Liquid glass on the new tab | Glass finish only; the edges don't bend the wallpaper |
 
 Firefox already uses `⌘ ⇧ K`, so the Firefox version uses `⌃ ⇧ K | Alt + K` by default. `⌥ Q` stays the same. To change them, open `about:addons`, click the gear button at the top right and choose "Manage Extension Shortcuts".
 

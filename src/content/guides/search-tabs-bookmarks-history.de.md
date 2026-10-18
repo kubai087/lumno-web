@@ -30,4 +30,6 @@ Um nur Lesezeichen, den Verlauf oder die meistbesuchten Seiten zu durchsuchen, d
 
 ## Andere Tabs schließen {#close-other-tabs}
 
-Wenn sich die Tabs stapeln, klicke auf das Pinselsymbol rechts im Suchfeld, um die anderen Tabs im aktuellen Fenster zu schließen. Der aktuelle Tab, angeheftete Tabs und Tabs in Tabgruppen bleiben offen. Die Schaltfläche gibt es in der Befehlsleiste und im Suchfeld des neuen Tabs.
+Wenn sich die Tabs stapeln, klicke auf das Pinselsymbol rechts im Suchfeld und dann in der Rückfrage auf „Close“, um die anderen Tabs im aktuellen Fenster zu schließen. Der aktuelle Tab, angeheftete Tabs und Tabs in Tabgruppen bleiben offen. Die Schaltfläche gibt es in der Befehlsleiste und im Suchfeld des neuen Tabs.
+
+Wenn du es dir anders überlegst, klicke erneut auf das Pinselsymbol, drücke `Esc` oder klicke außerhalb der Rückfrage.

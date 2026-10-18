@@ -30,4 +30,6 @@ Pour rechercher uniquement dans les favoris, l'historique ou les sites fréquent
 
 ## Fermer les autres onglets {#close-other-tabs}
 
-Quand les onglets s'accumulent, cliquez sur l'icône de pinceau à droite du champ de recherche pour fermer les autres onglets de la fenêtre actuelle. L'onglet actuel, les onglets épinglés et ceux qui appartiennent à un groupe d'onglets restent ouverts. Ce bouton se trouve à la fois dans la barre de commande et dans le champ de recherche du nouvel onglet.
+Quand les onglets s'accumulent, cliquez sur l'icône de pinceau à droite du champ de recherche, puis sur « Close » dans la demande de confirmation, pour fermer les autres onglets de la fenêtre actuelle. L'onglet actuel, les onglets épinglés et ceux qui appartiennent à un groupe d'onglets restent ouverts. Ce bouton se trouve à la fois dans la barre de commande et dans le champ de recherche du nouvel onglet.
+
+Si vous changez d'avis, cliquez à nouveau sur l'icône de pinceau, appuyez sur `Esc` ou cliquez en dehors de la demande.

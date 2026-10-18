@@ -266,5 +266,31 @@
         "url": "https://caniuse.com/"
       }
     ]
-  }
+  },
+  "shortcutGroups": [
+    {
+      "title": "工作",
+      "urls": [
+        "https://github.com/",
+        "https://www.notion.so/",
+        "https://linear.app/",
+        "https://dribbble.com/"
+      ]
+    },
+    {
+      "title": "AI",
+      "urls": [
+        "https://claude.ai/",
+        "https://chatgpt.com/"
+      ]
+    },
+    {
+      "title": "日常",
+      "urls": [
+        "https://www.youtube.com/",
+        "https://open.spotify.com/",
+        "https://web.telegram.org/"
+      ]
+    }
+  ]
 }

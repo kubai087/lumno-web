@@ -40,6 +40,20 @@ Den hellen oder dunklen Modus selbst legst du oben im Panel fest: wie im System,
 | ASCII | Zeichnet dunkle oder helle Bereiche mit Zeichen nach |
 | CRT | Fügt Scanlines, Leuchten und Bildschirmwölbung hinzu |
 
+## Glasmaterial {#glass}
+
+Ändere im Abschnitt „Style“ der Appearance-Einstellungen „Material“ von „Default“ zu „Frosted glass“ oder „Liquid glass“. Suchfeld, Karten, Schaltflächen, Menüs und das Appearance-Panel erhalten dann eine Glasoptik, durch die der Hintergrund scheint, und das Glas passt seine Tönung an den Hintergrund an.
+
+![Der neue Tab in Liquid glass: Uhr, Suchfeld, Shortcuts, Lesezeichen und Website-Karten lassen den impressionistischen Obstgarten im Hintergrund durchscheinen](nt-glass "Liquid glass")
+
+| Material | Wirkung |
+| --- | --- |
+| Default | Das bisherige Aussehen von Lumno |
+| Frosted glass | Eine weiche Unschärfe über einer durchscheinenden Tönung |
+| Liquid glass | Klareres Glas; die Ränder des Suchfelds und seiner Ergebnisse brechen den Hintergrund wie eine Linse |
+
+Beide Glasmaterialien sind in der Betaphase und wirken am besten über einem Hintergrundbild. Firefox zeigt die Glasoptik ohne die Lichtbrechung an den Rändern.
+
 ## Auf anderen Geräten verwenden {#sync}
 
 Deine Auswahl an integrierten, Bing- oder kuratierten Hintergründen sowie deine Bildlinks werden über deinen Browser synchronisiert. Hochgeladene lokale Bilder werden nur auf dem Computer gespeichert, auf dem du sie hinzugefügt hast. Um sie auch auf anderen Geräten zu verwenden, aktiviere die [WebDAV-Synchronisierung](../sync/#webdav).

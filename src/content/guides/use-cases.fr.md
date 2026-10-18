@@ -71,7 +71,7 @@ Pour en savoir plus, consultez [Changer le fond d'écran](../newtab-wallpaper/) 
 
 Lorsque vous regardez une série ou lisez un roman-feuilleton, Lumno peut mémoriser, dans le nouvel onglet, l'épisode ou le chapitre où vous en êtes :
 
-1. Ouvrez l'épisode ou le chapitre en cours. Il apparaît ensuite parmi les cartes de sites en bas du nouvel onglet. S'il n'apparaît pas, cliquez sur « ··· » en haut à droite des cartes et choisissez « Show Recent ».
+1. Ouvrez l'épisode ou le chapitre en cours. Il apparaît ensuite parmi les cartes de sites en bas du nouvel onglet. S'il n'apparaît pas, placez le pointeur sur « Most Visited » en haut à gauche des cartes et passez à « Recent ».
 2. Survolez la carte et cliquez sur l'icône en forme d'épingle. Lorsque Lumno reconnaît une page d'épisode ou de chapitre, il commence automatiquement à suivre votre progression, et la carte affiche une icône radar. Si le suivi ne démarre pas, faites un clic droit sur la carte et choisissez « Track progress ».
 3. Lorsque vous passez à l'épisode ou au chapitre suivant du même titre, la carte est mise à jour automatiquement. La prochaine fois, cliquez sur la carte pour reprendre là où vous vous étiez arrêté.
 

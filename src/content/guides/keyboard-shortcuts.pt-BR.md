@@ -56,6 +56,7 @@ Enquanto você mantém `⌥`, `⇧` ou `⌘` pressionada, a dica à direita de c
 | `Tab` | Completar uma sugestão; depois de um atalho de site, iniciar a pesquisa no site; com a caixa vazia, pesquisar apenas nas guias abertas |
 | `Tab` `Tab` | Com a caixa vazia, abrir o painel de escopo de pesquisa; se um escopo já estiver selecionado, basta pressionar uma vez |
 | `⌥ ↑` `⌥ ↓` | Voltar ao que você digitou antes ou depois |
+| `⌘ Z` `⌘ ⇧ Z` | Com o painel de escopo de pesquisa aberto, desfazer ou refazer uma mudança na ordem das fontes de pesquisa |
 | `⌫` | Com a caixa vazia, sair da pesquisa no site, do escopo de pesquisa ou da pesquisa nas guias abertas |
 | `Esc` | Sair da pesquisa no site, do escopo de pesquisa ou da pesquisa nas guias abertas |
 | `Esc` ou clique fora da barra de comandos | Fechar a barra de comandos |
@@ -69,7 +70,8 @@ A caixa de pesquisa da nova guia usa as mesmas teclas da barra de comandos. Alé
 | Começar a digitar | O texto vai direto para a caixa de pesquisa, sem precisar clicar nela antes |
 | Clique em um resultado, atalho, favorito ou cartão de site | Abrir na guia atual por padrão, ou em uma nova guia se você ativar em General → New Tab Settings → Open in a new tab |
 | Clique com `⌘` pressionada ou clique do meio | Abrir em uma guia em segundo plano |
-| `⌘ Z` | Desfazer sua última alteração em atalhos ou favoritos, como remover, mover ou criar uma pasta |
+| `⌥ ←` `⌥ →` | Mover uma posição para a frente ou para trás um atalho selecionado com `Tab` |
+| `⌘ Z` | Desfazer sua última alteração em atalhos ou favoritos, como remover, mover, criar uma pasta ou excluir um grupo |
 | `⌘ ⇧ Z` | Refazer o que você acabou de desfazer |
 | `Esc` | Cancelar enquanto arrasta um atalho ou favorito |
 
@@ -81,6 +83,7 @@ A caixa de pesquisa da nova guia usa as mesmas teclas da barra de comandos. Alé
 | `Tab`, `→` ou `↓` | Selecionar a próxima guia |
 | `⇧ Tab`, `←` ou `↑` | Selecionar a guia anterior |
 | Soltar `⌥`, pressionar `↩` ou clicar em uma guia | Alternar para a guia selecionada |
+| Clique no botão de fechar no canto de uma prévia | Fechar essa guia; o alternador continua aberto |
 | `Esc` ou clique fora do alternador | Fechar o alternador e continuar na guia atual |
 
 Se você alterou o atalho do alternador, mantenha pressionada a tecla modificadora do seu próprio atalho.

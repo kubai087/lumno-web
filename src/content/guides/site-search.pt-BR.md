@@ -55,6 +55,15 @@ Com a caixa vazia, pressione `Tab` duas vezes para abrir o painel de escopo de p
 
 ![O painel de escopo de pesquisa, com mecanismos de pesquisa e pesquisa em sites agrupados](modemenu "O painel de escopo de pesquisa")
 
+## Reordenar as fontes de pesquisa {#order}
+
+Você pode colocar primeiro as fontes que mais usa:
+
+- No painel de escopo de pesquisa, arraste um ícone para movê-lo dentro do grupo. Passe o ponteiro sobre o título de um grupo e clique no botão de mover para cima ou para baixo para mover o grupo inteiro.
+- Nas configurações do Lumno, em Search sources, arraste as etiquetas no topo para mudar a ordem dos grupos no painel, e os itens das listas abaixo para mudar a ordem dentro de cada grupo. As opções de Visible Result Types também podem ser arrastadas para ordenar guias abertas, favoritos, histórico e outros resultados.
+
+Se errar, pressione `⌘ Z` para desfazer e `⌘ ⇧ Z` para refazer. A ordem é sincronizada pelo navegador.
+
 ## Adicionar uma pesquisa personalizada {#custom}
 
 Você pode adicionar a intranet da sua empresa ou sites de documentação que consulta com frequência como pesquisas personalizadas nas configurações do Lumno, cada uma com um atalho fácil de lembrar.

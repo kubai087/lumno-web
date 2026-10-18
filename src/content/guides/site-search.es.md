@@ -55,6 +55,15 @@ Con el cuadro vacío, pulsa `Tab` dos veces para abrir el panel de ámbitos de b
 
 ![El panel de ámbitos de búsqueda, con buscadores y búsqueda en sitios agrupados](modemenu "El panel de ámbitos de búsqueda")
 
+## Ordenar las fuentes de búsqueda {#order}
+
+Puedes poner primero las fuentes que más usas:
+
+- En el panel de ámbitos de búsqueda, arrastra un icono para moverlo dentro de su grupo. Coloca el puntero sobre el título de un grupo y haz clic en el botón de subir o bajar para mover el grupo entero.
+- En los ajustes de Lumno, en Search sources, arrastra las etiquetas de arriba para cambiar el orden de los grupos del panel, y los elementos de las listas de abajo para cambiar el orden dentro de cada grupo. Las opciones de Visible Result Types también se pueden arrastrar para ordenar las pestañas abiertas, los marcadores, el historial y los demás resultados.
+
+Si te equivocas, pulsa `⌘ Z` para deshacer y `⌘ ⇧ Z` para rehacer. El orden se sincroniza a través del navegador.
+
 ## Añadir una búsqueda personalizada {#custom}
 
 Puedes añadir la intranet de tu empresa o los sitios de documentación que consultas con frecuencia como búsquedas personalizadas en los ajustes de Lumno, cada una con un atajo fácil de recordar.

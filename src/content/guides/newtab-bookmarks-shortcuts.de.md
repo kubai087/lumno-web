@@ -8,7 +8,7 @@ Die Symbolreihe unter dem Suchfeld zeigt deine Shortcuts. Wenn du mit dem Mausze
 
 ### Einen Shortcut hinzufügen
 
-1. Klicke auf „+“ am Ende deiner Shortcuts.
+1. Klicke auf „+“ am Ende deiner Shortcuts und wähle „Add site“.
 2. Gib einen Namen und eine URL ein. Auch Browserseiten wie `chrome://inspect/#devices` sind möglich.
 3. Wähle ein Symbol aus: ein integriertes Symbol, ein Online-Symbol oder ein eigenes Bild (empfohlen ist ein quadratisches Bild ab 128 × 128 px).
 4. Klicke auf „Speichern“.
@@ -16,9 +16,24 @@ Die Symbolreihe unter dem Suchfeld zeigt deine Shortcuts. Wenn du mit dem Mausze
 ### Shortcuts organisieren
 
 - Klicke mit der rechten Maustaste auf einen Shortcut, um ihn zu bearbeiten oder zu entfernen. Wenn du versehentlich einen Shortcut entfernt hast, kannst du dies mit dem in der Meldung angezeigten Tastenkürzel rückgängig machen.
-- Ziehe Shortcuts, um ihre Reihenfolge zu ändern. Wenn du einen Shortcut auf deine Lesezeichen ziehst, wird daraus ein Lesezeichen.
-- Anzahl pro Reihe, Symbolgröße, Abstände, Dock-Vergrößerung und die Schaltfläche „+“ legst du in den Einstellungen von Lumno unter Appearance → New Tab fest.
+- Ziehe Shortcuts, um ihre Reihenfolge zu ändern. Wenn du einen Shortcut auf deine Lesezeichen ziehst, wird daraus ein Lesezeichen. Du kannst einen Shortcut auch mit `Tab` auswählen und mit `⌥ ←` oder `⌥ →` um eine Position verschieben.
+- Anzahl pro Reihe, Symbolgröße, Abstände, Dock-Vergrößerung und die Schaltfläche „+“ legst du im Abschnitt „Shortcuts“ der Appearance-Einstellungen im neuen Tab oder in den Einstellungen von Lumno unter Appearance → New Tab fest. Um „+“ direkt auszublenden, klicke darauf und wähle „Hide“.
+- Du kannst bis zu 200 Shortcuts hinzufügen.
 - Brauchst du keine Shortcuts, schalte an derselben Stelle „Shortcuts“ aus. Dann verschwindet die Symbolreihe unter dem Suchfeld.
+
+## Shortcut-Gruppen {#shortcut-groups}
+
+Wenn du viele Shortcuts hast, kannst du sie nach Zweck in Gruppen wie Arbeit, KI oder Freizeit einteilen. Jede Gruppe hat eine eigene Überschrift.
+
+![Shortcuts unter dem Suchfeld in drei Gruppen – Work, AI und Everyday –; neben der Überschrift Work, auf der der Mauszeiger liegt, erscheint „···“](nt-shortcut-groups "Nach Zweck gruppierte Shortcuts")
+
+1. Klicke auf „+“ am Ende deiner Shortcuts und wähle „New group“.
+2. Gib einen Namen für die Gruppe ein und klicke auf „Speichern“. Der Name ist optional; eine Gruppe ohne Namen beginnt nur eine neue Reihe.
+
+- Bewege den Mauszeiger auf die Überschrift einer Gruppe und klicke rechts auf „···“, um die Gruppe umzubenennen, ihr eine Website hinzuzufügen oder sie nach oben oder unten zu verschieben. Du kannst eine Überschrift auch doppelt anklicken, um sie umzubenennen.
+- Ziehe die Überschrift einer Gruppe, um die Reihenfolge der Gruppen zu ändern. Ziehe einen Shortcut in eine andere Gruppe, um ihn dorthin zu verschieben.
+- „Delete group“ verschiebt die Websites der Gruppe in die Gruppe darüber. „Delete group and sites“ fragt zuerst nach und löscht dann beides. Beides kannst du mit `⌘ Z` rückgängig machen.
+- Du kannst bis zu 20 Gruppen anlegen.
 
 ## Shortcut-Ordner {#shortcut-folders}
 
@@ -40,6 +55,7 @@ Der Lesezeichenbereich zeigt den Inhalt der Lesezeichenleiste deines Browsers. W
 
 - Klicke mit der rechten Maustaste auf einen Ordner, um seine Farbe zu ändern. Der Ordner erscheint auch in Menüs in dieser Farbe.
 - Klicke mit der rechten Maustaste auf einen Ordner und wähle „Open in new tab group“, um alle seine Seiten auf einmal in einer gemeinsamen Tabgruppe zu öffnen.
+- Klicke mit der rechten Maustaste auf ein Lesezeichen oder einen Ordner und wähle „Add to shortcuts“, um es am Ende deiner letzten Shortcut-Gruppe hinzuzufügen. Das Lesezeichen bleibt, wo es ist. Ist es bereits unter deinen Shortcuts, steht im Menü „Already in shortcuts“.
 - Klicke auf das Lesezeichensymbol, um den Lesezeichen-Manager des Browsers zu öffnen.
 - Shortcuts und Lesezeichen öffnen sich standardmäßig im aktuellen Tab. Sollen sie sich in einem neuen Tab öffnen, aktiviere sie einzeln in den Einstellungen von Lumno unter General → New Tab Settings → Open in a new tab. Klickst du mit gedrückter `⌘` oder mit der mittleren Maustaste, öffnen sie sich immer im Hintergrund.
 
@@ -65,11 +81,14 @@ Lesezeichen werden wie in der Lesezeichenleiste des Browsers in einer Reihe am o
 
 ![Das Layout mit Lesezeichenleiste oben: Lesezeichenordner in einer Reihe am oberen Rand des neuen Tabs](nt-bookmarks-top "Lesezeichenleiste oben")
 
-Wenn du die Lesezeichenleiste oben verwendest, klicke auf „···“ am rechten Ende der Leiste, um ihren Hintergrund zu wählen: adaptiver Nebel, klares Glas, transparent oder eine eigene Farbe.
+Wenn du die Lesezeichenleiste oben verwendest, klicke auf „···“ am rechten Ende der Leiste, um ihre Form und ihren Hintergrund zu wählen:
+
+- „Bar style“: „Docked to top“ liegt direkt am oberen Rand des Browsers an, „Floating“ ist eine abgerundete Leiste mit etwas Abstand zum oberen Rand.
+- „Bar background“: „Match style“, „Transparent“ oder „Custom color“. Mit „Match style“ verwendet die Leiste dasselbe [Material](../newtab-wallpaper/#glass) wie der Rest des neuen Tabs.
 
 ## Reihen und Ausblenden von Lesezeichen {#bookmark-rows}
 
-Wie viele Reihen mit Lesezeichen angezeigt werden und wie viele in eine Reihe passen, legst du in den Einstellungen von Lumno unter Appearance → New Tab fest.
+Wie viele Reihen mit Lesezeichen angezeigt werden und wie viele in eine Reihe passen, legst du im Abschnitt „Bookmarks“ der Appearance-Einstellungen im neuen Tab oder in den Einstellungen von Lumno unter Appearance → New Tab fest.
 
 ![Vier Einstellungen in Lumno: Bookmark rows, Bookmarks per row, Show Icons Inside Bookmark Folders und Site Cards](nt-layout-settings "Lesezeichen-Einstellungen unter Appearance → New Tab")
 

@@ -1,11 +1,11 @@
 {
   "en/ai": [
     1440,
-    486
+    485
   ],
   "en/clip-command": [
     1440,
-    486
+    485
   ],
   "en/clip-picker": [
     1440,
@@ -37,9 +37,13 @@
   ],
   "en/nt-bookmarks-top": [
     1440,
-    477
+    483
   ],
   "en/nt-clock": [
+    1440,
+    900
+  ],
+  "en/nt-glass": [
     1440,
     900
   ],
@@ -49,11 +53,15 @@
   ],
   "en/nt-recent": [
     1440,
-    310
+    299
   ],
   "en/nt-shortcut-folder": [
     1440,
     768
+  ],
+  "en/nt-shortcut-groups": [
+    1440,
+    990
   ],
   "en/nt-shortcuts": [
     1440,
@@ -69,7 +77,7 @@
   ],
   "en/opentabs": [
     1440,
-    740
+    742
   ],
   "en/search": [
     1440,
@@ -81,7 +89,7 @@
   ],
   "en/sitesearch": [
     1440,
-    486
+    485
   ],
   "en/switcher": [
     1440,
@@ -89,7 +97,7 @@
   ],
   "en/uc-research": [
     1440,
-    651
+    652
   ],
   "en/uc-selection": [
     1440,
@@ -97,7 +105,7 @@
   ],
   "en/uc-series": [
     1440,
-    310
+    299
   ],
   "en/uc-tabs": [
     1440,
@@ -117,7 +125,7 @@
   ],
   "ja/modemenu": [
     1440,
-    939
+    937
   ],
   "ja/newtab": [
     1440,
@@ -141,9 +149,13 @@
   ],
   "ja/nt-bookmarks-top": [
     1440,
-    477
+    483
   ],
   "ja/nt-clock": [
+    1440,
+    900
+  ],
+  "ja/nt-glass": [
     1440,
     900
   ],
@@ -153,11 +165,15 @@
   ],
   "ja/nt-recent": [
     1440,
-    310
+    299
   ],
   "ja/nt-shortcut-folder": [
     1440,
     768
+  ],
+  "ja/nt-shortcut-groups": [
+    1440,
+    990
   ],
   "ja/nt-shortcuts": [
     1440,
@@ -173,11 +189,11 @@
   ],
   "ja/opentabs": [
     1440,
-    740
+    742
   ],
   "ja/search": [
     1440,
-    1008
+    1005
   ],
   "ja/shortcuts": [
     1440,
@@ -193,7 +209,7 @@
   ],
   "ja/uc-research": [
     1440,
-    740
+    827
   ],
   "ja/uc-selection": [
     1440,
@@ -201,7 +217,7 @@
   ],
   "ja/uc-series": [
     1440,
-    310
+    299
   ],
   "ja/uc-tabs": [
     1440,
@@ -245,23 +261,31 @@
   ],
   "zh-CN/nt-bookmarks-top": [
     1440,
-    477
+    483
   ],
   "zh-CN/nt-clock": [
     1440,
     900
   ],
+  "zh-CN/nt-glass": [
+    1440,
+    900
+  ],
   "zh-CN/nt-layout-settings": [
     1440,
-    609
+    611
   ],
   "zh-CN/nt-recent": [
     1440,
-    310
+    299
   ],
   "zh-CN/nt-shortcut-folder": [
     1440,
     768
+  ],
+  "zh-CN/nt-shortcut-groups": [
+    1440,
+    990
   ],
   "zh-CN/nt-shortcuts": [
     1440,
@@ -277,7 +301,7 @@
   ],
   "zh-CN/opentabs": [
     1440,
-    740
+    742
   ],
   "zh-CN/pinyin": [
     1440,
@@ -293,7 +317,7 @@
   ],
   "zh-CN/sitesearch": [
     1440,
-    485
+    486
   ],
   "zh-CN/switcher": [
     1440,
@@ -309,7 +333,7 @@
   ],
   "zh-CN/uc-series": [
     1440,
-    310
+    299
   ],
   "zh-CN/uc-tabs": [
     1440,
@@ -353,23 +377,31 @@
   ],
   "zh-TW/nt-bookmarks-top": [
     1440,
-    477
+    483
   ],
   "zh-TW/nt-clock": [
     1440,
     900
   ],
+  "zh-TW/nt-glass": [
+    1440,
+    900
+  ],
   "zh-TW/nt-layout-settings": [
     1440,
-    609
+    611
   ],
   "zh-TW/nt-recent": [
     1440,
-    310
+    299
   ],
   "zh-TW/nt-shortcut-folder": [
     1440,
     768
+  ],
+  "zh-TW/nt-shortcut-groups": [
+    1440,
+    990
   ],
   "zh-TW/nt-shortcuts": [
     1440,
@@ -405,7 +437,7 @@
   ],
   "zh-TW/uc-research": [
     1440,
-    651
+    652
   ],
   "zh-TW/uc-selection": [
     1440,
@@ -413,10 +445,10 @@
   ],
   "zh-TW/uc-series": [
     1440,
-    310
+    299
   ],
   "zh-TW/uc-tabs": [
     1440,
-    740
+    742
   ]
 }

@@ -134,22 +134,39 @@ const taglinePhrases = tagline.split(/(?<=、)/);
 </footer>
 
 <style>
+  /*
+   * The painting's sea (below the horizon) is 45% of its 2048x569 height,
+   * so 12.5% of the footer width. The footer grows by that much under the
+   * copyright row, and the sea sits in that strip rather than behind the text.
+   * Phones keep at least 160px of painting so the strip still reads as sea.
+   */
   .site-footer {
+    --site-footer-art-height: max(calc(100cqw * 569 / 2048), 160px);
+    --site-footer-sea-height: calc(var(--site-footer-art-height) * 0.45);
     position: relative;
     isolation: isolate;
     overflow: hidden;
+    container-type: inline-size;
     border-top: 1px solid var(--home-card-border);
     background: #fff;
   }
 
+  /* A child, so its 100cqw is the footer's own width. */
+  .site-footer::after {
+    content: "";
+    display: block;
+    height: var(--site-footer-sea-height);
+  }
+
   /*
    * A 3.6:1 band (sea and shore) of the extension's built-in "seurat-coast-white"
-   * wallpaper under a white veil: near-solid behind the links, thinnest across
-   * the sea, thicker again so the copyright row stays legible.
+   * wallpaper, pinned to the footer's bottom: its pale sky lies behind the links
+   * under a near-solid white veil, and the veil thins over the sea below them.
    */
   .site-footer__art {
     position: absolute;
-    inset: 0;
+    inset: auto 0 0;
+    height: var(--site-footer-art-height);
     z-index: -1;
     pointer-events: none;
   }
@@ -176,9 +193,9 @@ const taglinePhrases = tagline.split(/(?<=、)/);
     background: linear-gradient(
       to bottom,
       rgba(255, 255, 255, 0.96) 0%,
-      rgba(255, 255, 255, 0.86) 40%,
-      rgba(255, 255, 255, 0.6) 72%,
-      rgba(255, 255, 255, 0.8) 100%
+      rgba(255, 255, 255, 0.88) 50%,
+      rgba(255, 255, 255, 0.55) 60%,
+      rgba(255, 255, 255, 0.5) 100%
     );
   }
 
@@ -395,22 +412,18 @@ const taglinePhrases = tagline.split(/(?<=、)/);
     font-weight: 650;
   }
 
-  @media (max-width: 860px) {
+  /*
+   * Below the two-column width: with five links, two short headed columns left
+   * a lopsided gap, and the languages, pushed right of the copyright, wrapped
+   * into a ragged block with one language stranded on its own line. Like
+   * product footers with few links (Zen, The Browser Company), everything
+   * centres in a single column instead: brand, socials, the links as one
+   * wrapping block (headings kept for screen readers only), then languages and
+   * copyright on their own lines.
+   */
+  @media (max-width: 1080px) {
     .site-footer__main {
       grid-template-columns: minmax(0, 1fr);
-      gap: var(--home-space-10);
-    }
-  }
-
-  /*
-   * Phones: with five links, two short headed columns left a lopsided gap and
-   * crowded the copyright and languages onto one row. Like product footers
-   * with few links (Zen, The Browser Company), everything centres in a single
-   * column: brand, socials, the links as one wrapping block (headings kept for
-   * screen readers only), then languages and copyright on their own lines.
-   */
-  @media (max-width: 600px) {
-    .site-footer__main {
       justify-items: center;
       gap: var(--home-space-8);
       padding: var(--home-space-12) 0 var(--home-space-8);
@@ -423,44 +436,26 @@ const taglinePhrases = tagline.split(/(?<=、)/);
     }
 
     .site-footer__brand p {
-      max-width: 300px;
       margin-top: var(--home-space-3);
       text-wrap: balance;
     }
 
-
-    /* Stacked at one shared width rather than wrapping into two odd lengths. */
     .site-footer__stores {
-      display: grid;
-      width: min(100%, 260px);
-    }
-
-    .site-footer .site-footer__stores a {
       justify-content: center;
-      width: 100%;
-      box-sizing: border-box;
     }
 
     .site-footer__socials {
+      justify-content: center;
       gap: 8px;
       margin: var(--home-space-5) 0 0;
     }
 
-    .site-footer .site-footer__socials a {
-      width: 40px;
-      height: 40px;
-      border-radius: var(--home-radius-pill);
-      --lumno-corner-shape: round;
-      background: rgba(47, 42, 34, 0.04);
-    }
-
-    /* One wrapping block of links; the width breaks five links into 3 + 2. */
+    /* One wrapping block of links. */
     .site-footer__columns {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
       gap: 12px 24px;
-      max-width: 290px;
     }
 
     .site-footer__columns > div,
@@ -477,12 +472,6 @@ const taglinePhrases = tagline.split(/(?<=、)/);
       white-space: nowrap;
     }
 
-    .site-footer__columns a,
-    .site-footer__columns :global(.community-footer-trigger) {
-      font-size: 15px;
-      line-height: 1.6;
-    }
-
     .site-footer__meta {
       flex-direction: column;
       gap: var(--home-space-4);
@@ -493,13 +482,16 @@ const taglinePhrases = tagline.split(/(?<=、)/);
       justify-content: center;
     }
 
-    /* The languages wrap as one centred block of small pills, the current one filled. */
+    /*
+     * The languages wrap as one centred block of small pills, the current one
+     * filled; the width splits the ten into two even rows.
+     */
     .site-footer__languages {
       order: -1;
       justify-content: center;
       margin-left: 0;
       gap: 4px;
-      max-width: 340px;
+      max-width: 480px;
     }
 
     .site-footer__languages a {
@@ -511,6 +503,44 @@ const taglinePhrases = tagline.split(/(?<=、)/);
 
     .site-footer__languages a[aria-current="page"] {
       background: rgba(47, 42, 34, 0.06);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .site-footer__brand p {
+      max-width: 300px;
+    }
+
+    /* Stacked at one shared width rather than wrapping into two odd lengths. */
+    .site-footer__stores {
+      display: grid;
+      width: min(100%, 260px);
+    }
+
+    .site-footer .site-footer__stores a {
+      justify-content: center;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .site-footer .site-footer__socials a {
+      width: 40px;
+      height: 40px;
+    }
+
+    /* The width breaks five links into 3 + 2. */
+    .site-footer__columns {
+      max-width: 290px;
+    }
+
+    .site-footer__columns a,
+    .site-footer__columns :global(.community-footer-trigger) {
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .site-footer__languages {
+      max-width: 340px;
     }
   }
 </style>

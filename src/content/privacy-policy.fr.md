@@ -32,7 +32,7 @@ Les fonctionnalités principales de Lumno s’exécutent dans votre navigateur. 
 ### 2.3 Recherche et réglages
 
 - **Historique de recherche&nbsp;:** ce que vous tapez, ainsi que les URL et titres des résultats choisis, pour améliorer le classement sur votre appareil.
-- **Réglages et médias&nbsp;:** thème, langue, mise en page, raccourcis, fournisseurs de recherche, listes de blocage, interrupteurs de fonctionnalités, ainsi que les icônes de raccourcis importées, les fonds d’écran personnalisés et les caches nécessaires à ces fonctionnalités.
+- **Réglages et médias&nbsp;:** thème, langue, mise en page, raccourcis, fournisseurs de recherche, listes de blocage, interrupteurs de fonctionnalités, ainsi que les icônes de raccourcis importées, les fonds d’écran personnalisés, les recueils de citations importés et les caches nécessaires à ces fonctionnalités.
 
 ### 2.4 Ce que nous ne collectons pas
 
@@ -63,7 +63,7 @@ Les requêtes ci-dessous sont envoyées par l’extension directement au service
 
 ### 4.1 Suggestions de recherche en ligne
 
-Pendant que vous tapez dans le champ de recherche de Lumno (dans le nouvel onglet ou la barre de commande), votre saisie est envoyée en temps réel au service de suggestions de votre moteur de recherche actuel afin d’afficher des suggestions. Les services pris en charge sont Google, Bing, Baidu, Sogou (fourni par Tencent sur `sor.html5.qq.com`), DuckDuckGo, Yandex, Quark et Shenma (`sugs.m.sm.cn`), et Yahoo. Vous choisissez le destinataire de ces requêtes en changeant de moteur dans les réglages.
+Pendant que vous tapez dans le champ de recherche de Lumno (dans le nouvel onglet ou la barre de commande), votre saisie est envoyée en temps réel au service de suggestions de votre moteur de recherche actuel afin d’afficher des suggestions. Les services pris en charge sont Google, Bing, Baidu, Sogou (fourni par Tencent sur `sor.html5.qq.com`), DuckDuckGo, Yandex, Quark et Shenma (`sugs.m.sm.cn`), et Yahoo. Vous choisissez le destinataire de ces requêtes en changeant de moteur dans les réglages. Depuis la version 1.0.1, toute saisie qui ressemble à une URL, un domaine, une adresse IP ou un chemin de fichier (y compris l’adresse de la page actuelle que le raccourci de préremplissage insère) est comparée uniquement sur votre appareil et n’est jamais envoyée à un service de suggestions&nbsp;; les requêtes de suggestions ne transportent ni cookies ni référent.
 
 ### 4.2 Recherche web, recherche sur les sites et IA
 
@@ -74,11 +74,11 @@ Cela revient à consulter vous-même ces sites&nbsp;: le site reçoit ce que vou
 
 ### 4.3 Icônes des sites
 
-Pour récupérer l’icône d’un site, le service de favicons de Google (`www.google.com` / `gstatic`) reçoit l’URL de la page&nbsp;; si vous choisissez Favicon.is, seul le domaine est envoyé. Ces requêtes ne transportent ni cookies ni référent, et les icônes sont mises en cache sur votre appareil. Les adresses d’icônes personnalisées que vous définissez pour vos raccourcis sont chargées directement par le navigateur depuis cette adresse.
+Pour récupérer l’icône d’un site, le service de favicons de Google (`www.google.com` / `gstatic`) ne reçoit que l’adresse du site (protocole et domaine), sans le chemin ni les paramètres de la page (les versions antérieures à 1.0.1 envoyaient l’URL complète de la page)&nbsp;; si vous choisissez Favicon.is, seul le domaine est envoyé. Ces requêtes ne transportent ni cookies ni référent, et les icônes sont mises en cache sur votre appareil. Les adresses d’icônes personnalisées que vous définissez pour vos raccourcis sont chargées directement par le navigateur depuis cette adresse.
 
 ### 4.4 Fonds d’écran en ligne et citations du jour
 
-- **Citations du jour&nbsp;:** désactivées par défaut. Une fois activées, l’extension récupère des citations de la catégorie choisie sur Hitokoto (`v1.hitokoto.cn`) et les met en cache pour la journée.
+- **Citations du jour&nbsp;:** désactivées par défaut. Une fois activées, l’extension récupère des citations de la catégorie choisie sur Hitokoto (`v1.hitokoto.cn`) et les met en cache pour la journée. Si vous choisissez plutôt un recueil personnalisé, l’extension n’envoie aucune requête à Hitokoto&nbsp;; le fichier TXT ou Markdown que vous importez reste sur votre appareil.
 - **Fonds d’écran Bing&nbsp;:** récupérés depuis `www.bing.com`&nbsp;; la requête ne contient que le marché et l’identifiant de l’image.
 - **Fonds d’écran sélectionnés et artistiques&nbsp;:** les photos proviennent de Lorem Picsum (`picsum.photos`, issues d’Unsplash) et les œuvres de la collection Open Access du Cleveland Museum of Art (`openaccess-cdn.clevelandart.org`)&nbsp;; les requêtes ne contiennent que l’identifiant et la taille de l’image.
 - **Fonds d’écran par lien d’image&nbsp;:** les liens que vous collez sont synchronisés avec vos réglages&nbsp;; chaque appareil demande l’image une fois à cette adresse, puis la compresse et la met en cache localement.
@@ -98,8 +98,8 @@ Le site est hébergé sur GitHub Pages, et GitHub, en tant qu’hébergeur, peut
 
 Lumno ne propose pas de synchronisation dans le cloud. Vos réglages ne passent d’un appareil à l’autre que par les moyens que vous choisissez&nbsp;:
 
-- **Synchronisation intégrée du navigateur&nbsp;:** le thème, les fournisseurs de recherche, les raccourcis (titres et URL), les cartes de sites épinglées ou masquées (URL et titres), les règles de blocage, les choix de fonds d’écran et liens d’images, les préférences de citations du jour, ainsi que l’adresse, le dossier et le nom d’utilisateur de votre serveur WebDAV sont enregistrés dans `chrome.storage.sync` et synchronisés entre appareils par l’éditeur de votre navigateur, selon votre compte et vos réglages de synchronisation. Les icônes importées, les fonds d’écran personnalisés et les mots de passe d’application WebDAV ne font jamais partie de la synchronisation du navigateur.
-- **Synchronisation WebDAV (facultative)&nbsp;:** désactivée par défaut, elle ne s’active que si vous ajoutez vous-même un serveur. Une fois activée, votre configuration complète, vos icônes de raccourcis importées, vos fonds d’écran personnalisés et les instantanés de configuration pris avant écrasement sont enregistrés via HTTPS sur le serveur et dans le dossier que vous indiquez. L’historique, les favoris, les onglets ouverts et les caches d’icônes ne sont jamais envoyés. WebDAV n’offre pas de chiffrement de bout en bout&nbsp;: les administrateurs de ce serveur peuvent donc lire ces fichiers.
+- **Synchronisation intégrée du navigateur&nbsp;:** le thème, les fournisseurs de recherche, les raccourcis (titres et URL), les cartes de sites épinglées ou masquées (URL et titres), les règles de blocage, les choix de fonds d’écran et liens d’images, les préférences de citations du jour, ainsi que l’adresse, le dossier et le nom d’utilisateur de votre serveur WebDAV sont enregistrés dans `chrome.storage.sync` et synchronisés entre appareils par l’éditeur de votre navigateur, selon votre compte et vos réglages de synchronisation. Les icônes importées, les fonds d’écran personnalisés, les recueils de citations importés et les mots de passe d’application WebDAV ne font jamais partie de la synchronisation du navigateur.
+- **Synchronisation WebDAV (facultative)&nbsp;:** désactivée par défaut, elle ne s’active que si vous ajoutez vous-même un serveur. Une fois activée, votre configuration complète, vos icônes de raccourcis importées, vos fonds d’écran personnalisés, vos recueils de citations importés et les instantanés de configuration pris avant écrasement sont enregistrés via HTTPS sur le serveur et dans le dossier que vous indiquez. L’historique, les favoris, les onglets ouverts et les caches d’icônes ne sont jamais envoyés. WebDAV n’offre pas de chiffrement de bout en bout&nbsp;: les administrateurs de ce serveur peuvent donc lire ces fichiers.
 - **Export et import&nbsp;:** vous pouvez exporter vos réglages dans un fichier JSON pour les conserver ou les importer sur un autre appareil. Les exports n’incluent pas les images.
 
 ## 6. Mesure d’audience du site et cookies
@@ -120,7 +120,7 @@ Tiers susceptibles de recevoir des données&nbsp;:
 | Votre service WebDAV (comme Jianguoyun, un NAS ou un serveur auto-hébergé) | Configuration complète, icônes, fonds d’écran, instantanés, ainsi que le nom d’utilisateur et le mot de passe d’application utilisés pour la connexion | Synchronisation des réglages et des images selon votre configuration. |
 | Services de suggestions de recherche (section&nbsp;4.1) | Ce que vous tapez et les métadonnées de la requête | Affichage des suggestions de recherche. |
 | Services de recherche, d’IA et sites que vous choisissez | Requêtes, texte sélectionné et consignes que vous envoyez | Exécution des recherches et actions d’IA que vous lancez. |
-| Service de favicons de Google, Favicon.is | URL de la page ou domaine | Affichage des icônes des sites. |
+| Service de favicons de Google, Favicon.is | Adresse du site ou domaine | Affichage des icônes des sites. |
 | Hitokoto, Bing, Lorem Picsum, Cleveland Museum of Art | Catégorie, marché, identifiant et taille de l’image | Citations du jour et fonds d’écran en ligne que vous activez. |
 | GitHub | Version de l’extension et journaux d’accès des requêtes vers le site et les versions | Avis de mise à jour et hébergement du site. |
 | [VibeLoft](https://vibeloft.ai/privacy), Google Analytics (si activé) | Informations de visite et informations techniques du site | Analyse de la fréquentation, des sources et des performances du site. |

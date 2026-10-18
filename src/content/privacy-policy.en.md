@@ -32,7 +32,7 @@ Lumno's core features run inside your browser. To provide the features you see a
 ### 2.3 Search and settings
 
 - **Search history:** what you type and the URLs and titles of results you pick, to improve ranking on your device.
-- **Settings and media:** theme, language, layout, shortcuts, search providers, blocklists, feature toggles, plus shortcut icons you upload, custom wallpapers, and the caches these features need.
+- **Settings and media:** theme, language, layout, shortcuts, search providers, blocklists, feature toggles, plus shortcut icons you upload, custom wallpapers, quote collections you import, and the caches these features need.
 
 ### 2.4 What we do not collect
 
@@ -63,7 +63,7 @@ The requests below are sent by the extension directly to the third-party service
 
 ### 4.1 Online search suggestions
 
-As you type in Lumno's search box (on the new tab page or in the command bar), your input is sent in real time to the suggestion endpoint of your current search engine to show suggestions. Supported services are Google, Bing, Baidu, Sogou (served by Tencent at `sor.html5.qq.com`), DuckDuckGo, Yandex, Quark and Shenma (`sugs.m.sm.cn`), and Yahoo. You can change who receives these requests by switching search engines in settings.
+As you type in Lumno's search box (on the new tab page or in the command bar), your input is sent in real time to the suggestion endpoint of your current search engine to show suggestions. Supported services are Google, Bing, Baidu, Sogou (served by Tencent at `sor.html5.qq.com`), DuckDuckGo, Yandex, Quark and Shenma (`sugs.m.sm.cn`), and Yahoo. You can change who receives these requests by switching search engines in settings. From version 1.0.1, input that looks like a URL, domain, IP address or file path (including the current page address that the prefill shortcut puts in the box) is matched on your device only and never sent to a suggestion endpoint, and suggestion requests carry no cookies or referrer.
 
 ### 4.2 Web search, site search, and AI
 
@@ -74,11 +74,11 @@ These are the same as visiting those sites yourself: the site receives what you 
 
 ### 4.3 Website icons
 
-To fetch a site's icon, Google's favicon service (`www.google.com` / `gstatic`) receives the page URL; if you choose Favicon.is, only the domain is sent. These requests carry no cookies or referrer, and icons are cached on your device. Custom icon addresses you set for shortcuts are loaded by the browser directly from that address.
+To fetch a site's icon, Google's favicon service (`www.google.com` / `gstatic`) receives only the site's address (scheme and domain), not the path or parameters of the page (versions before 1.0.1 sent the full page URL); if you choose Favicon.is, only the domain is sent. These requests carry no cookies or referrer, and icons are cached on your device. Custom icon addresses you set for shortcuts are loaded by the browser directly from that address.
 
 ### 4.4 Online wallpapers and daily quotes
 
-- **Daily quotes:** off by default. When on, the extension fetches quotes in your chosen category from Hitokoto (`v1.hitokoto.cn`) and caches them for the day.
+- **Daily quotes:** off by default. When on, the extension fetches quotes in your chosen category from Hitokoto (`v1.hitokoto.cn`) and caches them for the day. If you choose a custom collection instead, the extension makes no request to Hitokoto; the TXT or Markdown file you import stays on your device.
 - **Bing wallpapers:** fetched from `www.bing.com`; the request includes only the market and image identifier.
 - **Curated and art wallpapers:** photos come from Lorem Picsum (`picsum.photos`, sourced from Unsplash) and artworks from the Cleveland Museum of Art Open Access collection (`openaccess-cdn.clevelandart.org`); requests include only the image ID and size.
 - **Image link wallpapers:** links you paste sync with your settings; each device requests the image once from that address, then compresses and caches it locally.
@@ -98,8 +98,8 @@ The website is hosted on GitHub Pages, and GitHub, as the host, may log requests
 
 Lumno does not provide cloud sync. Your settings move between devices only in the ways you choose:
 
-- **Built-in browser sync:** theme, search providers, shortcuts (titles and URLs), pinned or hidden site cards (URLs and titles), blocklist rules, wallpaper choices and image links, daily quote preferences, and your WebDAV server address, folder, and username are stored in `chrome.storage.sync` and synced across devices by your browser vendor under your browser account and sync settings. Uploaded icons, custom wallpapers, and WebDAV app passwords are never part of browser sync.
-- **WebDAV sync (optional):** off by default, and on only after you add a server yourself. Once on, your full configuration, uploaded shortcut icons, custom wallpapers, and configuration snapshots taken before overwrites are stored over HTTPS on the server and folder you specify. History, bookmarks, open tabs, and icon caches are never uploaded. WebDAV offers no end-to-end encryption, so that server's administrators can read these files.
+- **Built-in browser sync:** theme, search providers, shortcuts (titles and URLs), pinned or hidden site cards (URLs and titles), blocklist rules, wallpaper choices and image links, daily quote preferences, and your WebDAV server address, folder, and username are stored in `chrome.storage.sync` and synced across devices by your browser vendor under your browser account and sync settings. Uploaded icons, custom wallpapers, imported quote collections, and WebDAV app passwords are never part of browser sync.
+- **WebDAV sync (optional):** off by default, and on only after you add a server yourself. Once on, your full configuration, uploaded shortcut icons, custom wallpapers, imported quote collections, and configuration snapshots taken before overwrites are stored over HTTPS on the server and folder you specify. History, bookmarks, open tabs, and icon caches are never uploaded. WebDAV offers no end-to-end encryption, so that server's administrators can read these files.
 - **Export and import:** you can export your settings as a JSON file to keep or import on another device. Exports do not include images.
 
 ## 6. Website Analytics and Cookies
@@ -120,7 +120,7 @@ Third parties that may receive data:
 | Your WebDAV service (such as Jianguoyun, a NAS, or a self-hosted server) | Full configuration, icons, wallpapers, snapshots, and the username and app password used to sign in | Syncing settings and images as you configure. |
 | Search suggestion services (Section 4.1) | What you type and request metadata | Showing search suggestions. |
 | Search, AI, and website services you choose | Queries, selected text, and prompts you submit | Completing searches and AI actions you start. |
-| Google favicon service, Favicon.is | Page URL or domain | Showing website icons. |
+| Google favicon service, Favicon.is | Site address or domain | Showing website icons. |
 | Hitokoto, Bing, Lorem Picsum, Cleveland Museum of Art | Category, market, image ID, and size | Daily quotes and online wallpapers you turn on. |
 | GitHub | Extension version, and access logs for website and release requests | Update notices and website hosting. |
 | [VibeLoft](https://vibeloft.ai/privacy), Google Analytics (if enabled) | Website visit and technical information | Website traffic, source, and performance analysis. |

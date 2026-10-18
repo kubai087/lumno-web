@@ -32,7 +32,7 @@ Las funciones principales de Lumno se ejecutan en tu navegador. Para ofrecer las
 ### 2.3 Búsqueda y ajustes
 
 - **Historial de búsqueda:** lo que escribes y las URL y títulos de los resultados que eliges, para mejorar el orden en tu dispositivo.
-- **Ajustes y archivos multimedia:** tema, idioma, diseño, accesos directos, proveedores de búsqueda, listas de bloqueo, interruptores de funciones, además de los iconos de accesos directos que subes, los fondos personalizados y las cachés que necesitan estas funciones.
+- **Ajustes y archivos multimedia:** tema, idioma, diseño, accesos directos, proveedores de búsqueda, listas de bloqueo, interruptores de funciones, además de los iconos de accesos directos que subes, los fondos personalizados, las colecciones de citas que importas y las cachés que necesitan estas funciones.
 
 ### 2.4 Lo que no recopilamos
 
@@ -63,7 +63,7 @@ Las solicitudes siguientes las envía la extensión directamente al servicio de 
 
 ### 4.1 Sugerencias de búsqueda en línea
 
-Mientras escribes en el buscador de Lumno (en la nueva pestaña o en la barra de comandos), lo que escribes se envía en tiempo real al servicio de sugerencias de tu motor de búsqueda actual para mostrar sugerencias. Los servicios compatibles son Google, Bing, Baidu, Sogou (ofrecido por Tencent en `sor.html5.qq.com`), DuckDuckGo, Yandex, Quark y Shenma (`sugs.m.sm.cn`), y Yahoo. Puedes cambiar quién recibe estas solicitudes cambiando de motor de búsqueda en los ajustes.
+Mientras escribes en el buscador de Lumno (en la nueva pestaña o en la barra de comandos), lo que escribes se envía en tiempo real al servicio de sugerencias de tu motor de búsqueda actual para mostrar sugerencias. Los servicios compatibles son Google, Bing, Baidu, Sogou (ofrecido por Tencent en `sor.html5.qq.com`), DuckDuckGo, Yandex, Quark y Shenma (`sugs.m.sm.cn`), y Yahoo. Puedes cambiar quién recibe estas solicitudes cambiando de motor de búsqueda en los ajustes. Desde la versión 1.0.1, lo que parezca una URL, un dominio, una dirección IP o una ruta de archivo (incluida la dirección de la página actual que inserta el atajo de rellenado previo) se compara solo en tu dispositivo y nunca se envía a un servicio de sugerencias; además, las solicitudes de sugerencias no llevan cookies ni referente.
 
 ### 4.2 Búsqueda web, búsqueda en sitios e IA
 
@@ -74,11 +74,11 @@ Equivale a visitar tú mismo esos sitios: el sitio recibe lo que envías y puede
 
 ### 4.3 Iconos de sitios
 
-Para obtener el icono de un sitio, el servicio de favicons de Google (`www.google.com` / `gstatic`) recibe la URL de la página; si eliges Favicon.is, solo se envía el dominio. Estas solicitudes no llevan cookies ni referente, y los iconos se guardan en caché en tu dispositivo. Las direcciones de iconos personalizados que defines para accesos directos las carga el navegador directamente desde esa dirección.
+Para obtener el icono de un sitio, el servicio de favicons de Google (`www.google.com` / `gstatic`) recibe solo la dirección del sitio (esquema y dominio), sin la ruta ni los parámetros de la página (las versiones anteriores a la 1.0.1 enviaban la URL completa de la página); si eliges Favicon.is, solo se envía el dominio. Estas solicitudes no llevan cookies ni referente, y los iconos se guardan en caché en tu dispositivo. Las direcciones de iconos personalizados que defines para accesos directos las carga el navegador directamente desde esa dirección.
 
 ### 4.4 Fondos en línea y citas del día
 
-- **Citas del día:** desactivadas por defecto. Si las activas, la extensión obtiene citas de la categoría elegida desde Hitokoto (`v1.hitokoto.cn`) y las guarda en caché durante el día.
+- **Citas del día:** desactivadas por defecto. Si las activas, la extensión obtiene citas de la categoría elegida desde Hitokoto (`v1.hitokoto.cn`) y las guarda en caché durante el día. Si eliges una colección personalizada, la extensión no hace ninguna solicitud a Hitokoto; el archivo TXT o Markdown que importas se queda en tu dispositivo.
 - **Fondos de Bing:** se obtienen de `www.bing.com`; la solicitud solo incluye el mercado y el identificador de la imagen.
 - **Fondos seleccionados y artísticos:** las fotos proceden de Lorem Picsum (`picsum.photos`, con origen en Unsplash) y las obras de la colección Open Access del Cleveland Museum of Art (`openaccess-cdn.clevelandart.org`); las solicitudes solo incluyen el ID y el tamaño de la imagen.
 - **Fondos por enlace de imagen:** los enlaces que pegas se sincronizan con tus ajustes; cada dispositivo solicita la imagen una vez a esa dirección y luego la comprime y la guarda en caché en local.
@@ -98,8 +98,8 @@ El sitio web está alojado en GitHub Pages, y GitHub, como proveedor de alojamie
 
 Lumno no ofrece sincronización en la nube. Tus ajustes solo pasan de un dispositivo a otro por las vías que elijas:
 
-- **Sincronización integrada del navegador:** el tema, los proveedores de búsqueda, los accesos directos (títulos y URL), las tarjetas de sitios fijadas u ocultas (URL y títulos), las reglas de bloqueo, la elección de fondos y los enlaces de imágenes, las preferencias de citas del día y la dirección, carpeta y nombre de usuario de tu servidor WebDAV se guardan en `chrome.storage.sync` y el fabricante de tu navegador los sincroniza entre dispositivos según tu cuenta y tus ajustes de sincronización. Los iconos subidos, los fondos personalizados y las contraseñas de aplicación de WebDAV nunca forman parte de la sincronización del navegador.
-- **Sincronización WebDAV (opcional):** desactivada por defecto; solo se activa si añades tú mismo un servidor. Una vez activada, tu configuración completa, los iconos de accesos directos subidos, los fondos personalizados y las instantáneas de configuración tomadas antes de sobrescribir se guardan mediante HTTPS en el servidor y la carpeta que indiques. El historial, los marcadores, las pestañas abiertas y las cachés de iconos nunca se suben. WebDAV no ofrece cifrado de extremo a extremo, por lo que los administradores de ese servidor pueden leer estos archivos.
+- **Sincronización integrada del navegador:** el tema, los proveedores de búsqueda, los accesos directos (títulos y URL), las tarjetas de sitios fijadas u ocultas (URL y títulos), las reglas de bloqueo, la elección de fondos y los enlaces de imágenes, las preferencias de citas del día y la dirección, carpeta y nombre de usuario de tu servidor WebDAV se guardan en `chrome.storage.sync` y el fabricante de tu navegador los sincroniza entre dispositivos según tu cuenta y tus ajustes de sincronización. Los iconos subidos, los fondos personalizados, las colecciones de citas importadas y las contraseñas de aplicación de WebDAV nunca forman parte de la sincronización del navegador.
+- **Sincronización WebDAV (opcional):** desactivada por defecto; solo se activa si añades tú mismo un servidor. Una vez activada, tu configuración completa, los iconos de accesos directos subidos, los fondos personalizados, las colecciones de citas importadas y las instantáneas de configuración tomadas antes de sobrescribir se guardan mediante HTTPS en el servidor y la carpeta que indiques. El historial, los marcadores, las pestañas abiertas y las cachés de iconos nunca se suben. WebDAV no ofrece cifrado de extremo a extremo, por lo que los administradores de ese servidor pueden leer estos archivos.
 - **Exportar e importar:** puedes exportar tus ajustes a un archivo JSON para conservarlos o importarlos en otro dispositivo. Las exportaciones no incluyen imágenes.
 
 ## 6. Analítica del sitio web y cookies
@@ -120,7 +120,7 @@ Terceros que pueden recibir datos:
 | Tu servicio WebDAV (como Jianguoyun, un NAS o un servidor propio) | Configuración completa, iconos, fondos, instantáneas y el nombre de usuario y la contraseña de aplicación usados para iniciar sesión | Sincronizar ajustes e imágenes según tu configuración. |
 | Servicios de sugerencias de búsqueda (sección 4.1) | Lo que escribes y los metadatos de la solicitud | Mostrar sugerencias de búsqueda. |
 | Servicios de búsqueda, IA y sitios web que eliges | Consultas, texto seleccionado e instrucciones que envías | Completar las búsquedas y acciones de IA que inicias. |
-| Servicio de favicons de Google, Favicon.is | URL de la página o dominio | Mostrar los iconos de los sitios. |
+| Servicio de favicons de Google, Favicon.is | Dirección del sitio o dominio | Mostrar los iconos de los sitios. |
 | Hitokoto, Bing, Lorem Picsum, Cleveland Museum of Art | Categoría, mercado, ID y tamaño de la imagen | Citas del día y fondos en línea que activas. |
 | GitHub | Versión de la extensión y registros de acceso de las solicitudes al sitio web y a las versiones | Avisos de actualización y alojamiento del sitio web. |
 | [VibeLoft](https://vibeloft.ai/privacy), Google Analytics (si está activado) | Información de visitas y técnica del sitio web | Analizar el tráfico, las fuentes y el rendimiento del sitio web. |

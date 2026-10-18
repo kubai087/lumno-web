@@ -32,7 +32,7 @@ Os principais recursos do Lumno rodam no seu navegador. Para oferecer os recurso
 ### 2.3 Pesquisa e configurações
 
 - **Histórico de pesquisa:** o que você digita e as URLs e títulos dos resultados que escolhe, para melhorar a ordenação no seu dispositivo.
-- **Configurações e mídia:** tema, idioma, layout, atalhos, provedores de pesquisa, listas de bloqueio, chaves de recursos, além dos ícones de atalho que você envia, papéis de parede personalizados e os caches de que esses recursos precisam.
+- **Configurações e mídia:** tema, idioma, layout, atalhos, provedores de pesquisa, listas de bloqueio, chaves de recursos, além dos ícones de atalho que você envia, papéis de parede personalizados, coleções de citações importadas e os caches de que esses recursos precisam.
 
 ### 2.4 O que não coletamos
 
@@ -63,7 +63,7 @@ As solicitações abaixo são enviadas pela extensão diretamente ao serviço de
 
 ### 4.1 Sugestões de pesquisa online
 
-Enquanto você digita na caixa de pesquisa do Lumno (na nova aba ou na barra de comandos), o que você digita é enviado em tempo real ao serviço de sugestões do seu mecanismo de pesquisa atual para mostrar sugestões. Os serviços compatíveis são Google, Bing, Baidu, Sogou (fornecido pela Tencent em `sor.html5.qq.com`), DuckDuckGo, Yandex, Quark e Shenma (`sugs.m.sm.cn`) e Yahoo. Você muda quem recebe essas solicitações trocando o mecanismo de pesquisa nas configurações.
+Enquanto você digita na caixa de pesquisa do Lumno (na nova aba ou na barra de comandos), o que você digita é enviado em tempo real ao serviço de sugestões do seu mecanismo de pesquisa atual para mostrar sugestões. Os serviços compatíveis são Google, Bing, Baidu, Sogou (fornecido pela Tencent em `sor.html5.qq.com`), DuckDuckGo, Yandex, Quark e Shenma (`sugs.m.sm.cn`) e Yahoo. Você muda quem recebe essas solicitações trocando o mecanismo de pesquisa nas configurações. A partir da versão 1.0.1, o que parecer uma URL, um domínio, um endereço IP ou um caminho de arquivo (inclusive o endereço da página atual que o atalho de preenchimento insere) é comparado apenas no seu dispositivo e nunca é enviado a um serviço de sugestões; além disso, as solicitações de sugestões não levam cookies nem referenciador.
 
 ### 4.2 Pesquisa na web, pesquisa em sites e IA
 
@@ -74,11 +74,11 @@ Enquanto você digita na caixa de pesquisa do Lumno (na nova aba ou na barra de 
 
 ### 4.3 Ícones de sites
 
-Para buscar o ícone de um site, o serviço de favicons do Google (`www.google.com` / `gstatic`) recebe a URL da página; se você escolher o Favicon.is, apenas o domínio é enviado. Essas solicitações não levam cookies nem referenciador, e os ícones ficam em cache no seu dispositivo. Endereços de ícones personalizados que você define para atalhos são carregados pelo navegador diretamente desse endereço.
+Para buscar o ícone de um site, o serviço de favicons do Google (`www.google.com` / `gstatic`) recebe apenas o endereço do site (esquema e domínio), sem o caminho nem os parâmetros da página (versões anteriores à 1.0.1 enviavam a URL completa da página); se você escolher o Favicon.is, apenas o domínio é enviado. Essas solicitações não levam cookies nem referenciador, e os ícones ficam em cache no seu dispositivo. Endereços de ícones personalizados que você define para atalhos são carregados pelo navegador diretamente desse endereço.
 
 ### 4.4 Papéis de parede online e citações do dia
 
-- **Citações do dia:** desativadas por padrão. Quando ativadas, a extensão busca citações da categoria escolhida no Hitokoto (`v1.hitokoto.cn`) e as mantém em cache durante o dia.
+- **Citações do dia:** desativadas por padrão. Quando ativadas, a extensão busca citações da categoria escolhida no Hitokoto (`v1.hitokoto.cn`) e as mantém em cache durante o dia. Se você escolher uma coleção personalizada, a extensão não faz nenhuma solicitação ao Hitokoto; o arquivo TXT ou Markdown que você importar fica no seu dispositivo.
 - **Papéis de parede do Bing:** buscados em `www.bing.com`; a solicitação inclui apenas o mercado e o identificador da imagem.
 - **Papéis de parede selecionados e artísticos:** as fotos vêm do Lorem Picsum (`picsum.photos`, com origem no Unsplash) e as obras, da coleção Open Access do Cleveland Museum of Art (`openaccess-cdn.clevelandart.org`); as solicitações incluem apenas o ID e o tamanho da imagem.
 - **Papéis de parede por link de imagem:** os links que você cola são sincronizados com suas configurações; cada dispositivo solicita a imagem uma vez a esse endereço e depois a comprime e a guarda em cache localmente.
@@ -98,8 +98,8 @@ O site é hospedado no GitHub Pages, e o GitHub, como hospedeiro, pode registrar
 
 O Lumno não oferece sincronização em nuvem. Suas configurações só passam de um dispositivo para outro pelos meios que você escolher:
 
-- **Sincronização integrada do navegador:** tema, provedores de pesquisa, atalhos (títulos e URLs), cartões de sites fixados ou ocultos (URLs e títulos), regras da lista de bloqueio, escolhas de papel de parede e links de imagem, preferências de citações do dia, além do endereço, pasta e nome de usuário do seu servidor WebDAV, ficam em `chrome.storage.sync` e são sincronizados entre dispositivos pelo fabricante do navegador, conforme sua conta e suas configurações de sincronização. Ícones enviados, papéis de parede personalizados e senhas de app do WebDAV nunca fazem parte da sincronização do navegador.
-- **Sincronização WebDAV (opcional):** desativada por padrão e só ativada quando você mesmo adiciona um servidor. Depois de ativada, sua configuração completa, os ícones de atalho enviados, os papéis de parede personalizados e os snapshots de configuração feitos antes de sobrescrever são armazenados via HTTPS no servidor e na pasta que você indicar. Histórico, favoritos, abas abertas e caches de ícones nunca são enviados. O WebDAV não oferece criptografia de ponta a ponta, então os administradores desse servidor podem ler esses arquivos.
+- **Sincronização integrada do navegador:** tema, provedores de pesquisa, atalhos (títulos e URLs), cartões de sites fixados ou ocultos (URLs e títulos), regras da lista de bloqueio, escolhas de papel de parede e links de imagem, preferências de citações do dia, além do endereço, pasta e nome de usuário do seu servidor WebDAV, ficam em `chrome.storage.sync` e são sincronizados entre dispositivos pelo fabricante do navegador, conforme sua conta e suas configurações de sincronização. Ícones enviados, papéis de parede personalizados, coleções de citações importadas e senhas de app do WebDAV nunca fazem parte da sincronização do navegador.
+- **Sincronização WebDAV (opcional):** desativada por padrão e só ativada quando você mesmo adiciona um servidor. Depois de ativada, sua configuração completa, os ícones de atalho enviados, os papéis de parede personalizados, as coleções de citações importadas e os snapshots de configuração feitos antes de sobrescrever são armazenados via HTTPS no servidor e na pasta que você indicar. Histórico, favoritos, abas abertas e caches de ícones nunca são enviados. O WebDAV não oferece criptografia de ponta a ponta, então os administradores desse servidor podem ler esses arquivos.
 - **Exportar e importar:** você pode exportar suas configurações como um arquivo JSON para guardar ou importar em outro dispositivo. As exportações não incluem imagens.
 
 ## 6. Análise do site e cookies
@@ -120,7 +120,7 @@ Terceiros que podem receber dados:
 | Seu serviço WebDAV (como Jianguoyun, um NAS ou um servidor próprio) | Configuração completa, ícones, papéis de parede, snapshots e o nome de usuário e senha de app usados no login | Sincronizar configurações e imagens conforme você configurar. |
 | Serviços de sugestões de pesquisa (Seção 4.1) | O que você digita e os metadados da solicitação | Mostrar sugestões de pesquisa. |
 | Serviços de pesquisa, IA e sites que você escolher | Pesquisas, texto selecionado e prompts que você envia | Concluir as pesquisas e ações de IA que você inicia. |
-| Serviço de favicons do Google, Favicon.is | URL da página ou domínio | Exibir ícones de sites. |
+| Serviço de favicons do Google, Favicon.is | Endereço do site ou domínio | Exibir ícones de sites. |
 | Hitokoto, Bing, Lorem Picsum, Cleveland Museum of Art | Categoria, mercado, ID e tamanho da imagem | Citações do dia e papéis de parede online que você ativa. |
 | GitHub | Versão da extensão e registros de acesso das solicitações ao site e às versões | Avisos de atualização e hospedagem do site. |
 | [VibeLoft](https://vibeloft.ai/privacy), Google Analytics (se ativado) | Informações de visita e técnicas do site | Análise de tráfego, origens e desempenho do site. |

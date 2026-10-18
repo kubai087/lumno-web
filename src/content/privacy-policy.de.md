@@ -32,7 +32,7 @@ Die Kernfunktionen von Lumno laufen in deinem Browser. Um die Funktionen bereitz
 ### 2.3 Suche und Einstellungen
 
 - **Suchverlauf:** Deine Eingaben sowie URLs und Titel der gewählten Ergebnisse, um die Sortierung auf deinem Gerät zu verbessern.
-- **Einstellungen und Medien:** Design, Sprache, Layout, Verknüpfungen, Suchanbieter, Sperrlisten, Funktionsschalter sowie hochgeladene Verknüpfungssymbole, eigene Hintergründe und die Caches, die diese Funktionen benötigen.
+- **Einstellungen und Medien:** Design, Sprache, Layout, Verknüpfungen, Suchanbieter, Sperrlisten, Funktionsschalter sowie hochgeladene Verknüpfungssymbole, eigene Hintergründe, importierte Zitatsammlungen und die Caches, die diese Funktionen benötigen.
 
 ### 2.4 Was wir nicht erheben
 
@@ -63,7 +63,7 @@ Die folgenden Anfragen sendet die Erweiterung direkt an den jeweiligen Drittanbi
 
 ### 4.1 Online-Suchvorschläge
 
-Während du im Suchfeld von Lumno tippst (im neuen Tab oder in der Befehlsleiste), wird deine Eingabe in Echtzeit an den Vorschlagsdienst deiner aktuellen Suchmaschine gesendet, um Vorschläge anzuzeigen. Unterstützt werden Google, Bing, Baidu, Sogou (bereitgestellt von Tencent unter `sor.html5.qq.com`), DuckDuckGo, Yandex, Quark und Shenma (`sugs.m.sm.cn`) sowie Yahoo. Durch einen Wechsel der Suchmaschine in den Einstellungen bestimmst du, wer diese Anfragen erhält.
+Während du im Suchfeld von Lumno tippst (im neuen Tab oder in der Befehlsleiste), wird deine Eingabe in Echtzeit an den Vorschlagsdienst deiner aktuellen Suchmaschine gesendet, um Vorschläge anzuzeigen. Unterstützt werden Google, Bing, Baidu, Sogou (bereitgestellt von Tencent unter `sor.html5.qq.com`), DuckDuckGo, Yandex, Quark und Shenma (`sugs.m.sm.cn`) sowie Yahoo. Durch einen Wechsel der Suchmaschine in den Einstellungen bestimmst du, wer diese Anfragen erhält. Ab Version 1.0.1 werden Eingaben, die wie eine URL, Domain, IP-Adresse oder ein Dateipfad aussehen (auch die aktuelle Seitenadresse, die das Tastenkürzel zum Vorausfüllen einsetzt), nur auf deinem Gerät abgeglichen und nie an einen Vorschlagsdienst gesendet; Vorschlagsanfragen enthalten zudem weder Cookies noch Referrer.
 
 ### 4.2 Websuche, Seitensuche und KI
 
@@ -74,11 +74,11 @@ Das entspricht einem direkten Besuch dieser Websites: Die Website erhält, was d
 
 ### 4.3 Website-Symbole
 
-Um das Symbol einer Website zu laden, erhält der Favicon-Dienst von Google (`www.google.com` / `gstatic`) die Seiten-URL; wählst du Favicon.is, wird nur die Domain gesendet. Diese Anfragen enthalten weder Cookies noch Referrer, und die Symbole werden auf deinem Gerät zwischengespeichert. Eigene Symboladressen für Verknüpfungen lädt der Browser direkt von dieser Adresse.
+Um das Symbol einer Website zu laden, erhält der Favicon-Dienst von Google (`www.google.com` / `gstatic`) nur die Adresse der Website (Schema und Domain), nicht Pfad oder Parameter der Seite (Versionen vor 1.0.1 haben die vollständige Seiten-URL gesendet); wählst du Favicon.is, wird nur die Domain gesendet. Diese Anfragen enthalten weder Cookies noch Referrer, und die Symbole werden auf deinem Gerät zwischengespeichert. Eigene Symboladressen für Verknüpfungen lädt der Browser direkt von dieser Adresse.
 
 ### 4.4 Online-Hintergründe und Zitate des Tages
 
-- **Zitat des Tages:** Standardmäßig aus. Wenn aktiviert, lädt die Erweiterung Zitate der gewählten Kategorie von Hitokoto (`v1.hitokoto.cn`) und speichert sie für den Tag zwischen.
+- **Zitat des Tages:** Standardmäßig aus. Wenn aktiviert, lädt die Erweiterung Zitate der gewählten Kategorie von Hitokoto (`v1.hitokoto.cn`) und speichert sie für den Tag zwischen. Wählst du stattdessen eine eigene Sammlung, stellt die Erweiterung keine Anfrage an Hitokoto; die importierte TXT- oder Markdown-Datei bleibt auf deinem Gerät.
 - **Bing-Hintergründe:** Werden von `www.bing.com` geladen; die Anfrage enthält nur Markt und Bildkennung.
 - **Kuratierte und Kunst-Hintergründe:** Fotos stammen von Lorem Picsum (`picsum.photos`, Quelle Unsplash), Kunstwerke aus der Open-Access-Sammlung des Cleveland Museum of Art (`openaccess-cdn.clevelandart.org`); die Anfragen enthalten nur Bild-ID und Größe.
 - **Hintergründe per Bildlink:** Eingefügte Links werden mit deinen Einstellungen synchronisiert; jedes Gerät lädt das Bild einmal von dieser Adresse, komprimiert es und speichert es lokal zwischen.
@@ -98,8 +98,8 @@ Die Website wird auf GitHub Pages gehostet; GitHub kann als Hoster Anfragen eins
 
 Lumno bietet keine Cloud-Synchronisierung. Deine Einstellungen wandern nur auf den Wegen zwischen Geräten, die du wählst:
 
-- **Integrierte Browsersynchronisierung:** Design, Suchanbieter, Verknüpfungen (Titel und URLs), angeheftete oder ausgeblendete Websitekarten (URLs und Titel), Sperrlistenregeln, Hintergrundauswahl und Bildlinks, Einstellungen für das Zitat des Tages sowie Adresse, Ordner und Benutzername deines WebDAV-Servers werden in `chrome.storage.sync` gespeichert und vom Browserhersteller entsprechend deinem Browserkonto und deinen Synchronisierungseinstellungen zwischen Geräten abgeglichen. Hochgeladene Symbole, eigene Hintergründe und WebDAV-App-Passwörter sind nie Teil der Browsersynchronisierung.
-- **WebDAV-Synchronisierung (optional):** Standardmäßig aus und erst aktiv, wenn du selbst einen Server hinzufügst. Danach werden deine gesamte Konfiguration, hochgeladene Verknüpfungssymbole, eigene Hintergründe und Konfigurationssnapshots vor dem Überschreiben per HTTPS auf dem von dir angegebenen Server und Ordner gespeichert. Verlauf, Lesezeichen, offene Tabs und Symbol-Caches werden nie hochgeladen. WebDAV bietet keine Ende-zu-Ende-Verschlüsselung; die Administratoren dieses Servers können die Dateien also lesen.
+- **Integrierte Browsersynchronisierung:** Design, Suchanbieter, Verknüpfungen (Titel und URLs), angeheftete oder ausgeblendete Websitekarten (URLs und Titel), Sperrlistenregeln, Hintergrundauswahl und Bildlinks, Einstellungen für das Zitat des Tages sowie Adresse, Ordner und Benutzername deines WebDAV-Servers werden in `chrome.storage.sync` gespeichert und vom Browserhersteller entsprechend deinem Browserkonto und deinen Synchronisierungseinstellungen zwischen Geräten abgeglichen. Hochgeladene Symbole, eigene Hintergründe, importierte Zitatsammlungen und WebDAV-App-Passwörter sind nie Teil der Browsersynchronisierung.
+- **WebDAV-Synchronisierung (optional):** Standardmäßig aus und erst aktiv, wenn du selbst einen Server hinzufügst. Danach werden deine gesamte Konfiguration, hochgeladene Verknüpfungssymbole, eigene Hintergründe, importierte Zitatsammlungen und Konfigurationssnapshots vor dem Überschreiben per HTTPS auf dem von dir angegebenen Server und Ordner gespeichert. Verlauf, Lesezeichen, offene Tabs und Symbol-Caches werden nie hochgeladen. WebDAV bietet keine Ende-zu-Ende-Verschlüsselung; die Administratoren dieses Servers können die Dateien also lesen.
 - **Export und Import:** Du kannst deine Einstellungen als JSON-Datei exportieren, um sie aufzubewahren oder auf einem anderen Gerät zu importieren. Exporte enthalten keine Bilder.
 
 ## 6. Website-Analyse und Cookies
@@ -120,7 +120,7 @@ Dritte, die Daten erhalten können:
 | Dein WebDAV-Dienst (etwa Jianguoyun, ein NAS oder ein eigener Server) | Gesamte Konfiguration, Symbole, Hintergründe, Snapshots sowie Benutzername und App-Passwort für die Anmeldung | Synchronisierung von Einstellungen und Bildern nach deiner Konfiguration. |
 | Suchvorschlagsdienste (Abschnitt 4.1) | Deine Eingaben und Metadaten der Anfrage | Anzeige von Suchvorschlägen. |
 | Von dir gewählte Such-, KI- und Webdienste | Abgeschickte Anfragen, markierter Text und Prompts | Ausführen der Suchen und KI-Aktionen, die du startest. |
-| Favicon-Dienst von Google, Favicon.is | Seiten-URL oder Domain | Anzeige von Website-Symbolen. |
+| Favicon-Dienst von Google, Favicon.is | Adresse der Website oder Domain | Anzeige von Website-Symbolen. |
 | Hitokoto, Bing, Lorem Picsum, Cleveland Museum of Art | Kategorie, Markt, Bild-ID und Größe | Zitate des Tages und Online-Hintergründe, die du aktivierst. |
 | GitHub | Erweiterungsversion sowie Zugriffsprotokolle für Website- und Release-Anfragen | Update-Hinweise und Hosting der Website. |
 | [VibeLoft](https://vibeloft.ai/privacy), Google Analytics (falls aktiviert) | Informationen zu Website-Besuchen und technische Informationen | Analyse von Zugriffen, Herkunft und Leistung der Website. |

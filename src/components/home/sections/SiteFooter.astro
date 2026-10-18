@@ -420,8 +420,12 @@ const taglinePhrases = tagline.split(/(?<=、)/);
    * centres in a single column instead: brand, socials, the links as one
    * wrapping block (headings kept for screen readers only), then languages and
    * copyright on their own lines.
+   *
+   * The two columns need the store buttons on one row beside the links;
+   * French has the longest labels and fits from about 1310px, so every
+   * language switches at the same width rather than some wrapping 2 + 1.
    */
-  @media (max-width: 1080px) {
+  @media (max-width: 1320px) {
     .site-footer__main {
       grid-template-columns: minmax(0, 1fr);
       justify-items: center;

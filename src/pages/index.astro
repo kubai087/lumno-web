@@ -242,24 +242,47 @@ import LanguageScrollRestore from "../components/LanguageScrollRestore.astro";
       // Shortcut keycaps render both spellings; show Ctrl/Shift instead of ⌘/⇧ off Apple platforms.
       const platformHint = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || "";
       document.documentElement.setAttribute("data-platform", /mac|iphone|ipad|ios/i.test(platformHint) ? "mac" : "other");
+      // Only a demo that has not hydrated yet: once it has, HeroSafariDemo plays and skips the intro itself.
+      const isHomeIntroWaitingForDemo = () => Boolean(
+        document.body
+        && document.body.dataset.homeIntro === "pending"
+        && document.documentElement.hasAttribute("data-home-intro-js")
+        && !document.querySelector(".hero-safari-demo[data-intro-ready]")
+      );
+      const settleHomeIntro = () => {
+        // Settle into the page as a skipped intro would, so the hero card shows from the server HTML.
+        document.documentElement.removeAttribute("data-home-intro-js");
+        document.documentElement.setAttribute("data-home-intro-skip", "");
+      };
       const liftStalledHomeIntro = () => {
         // Background tabs legitimately pause the intro; only intervene once the page is visible.
         if (document.visibilityState !== "visible") {
           document.addEventListener("visibilitychange", () => window.setTimeout(liftStalledHomeIntro, 8000), { once: true });
           return;
         }
-        // Only a demo that never hydrated is stalled; a playing one finishes on its own timers.
-        if (
-          document.body
-          && document.body.dataset.homeIntro === "pending"
-          && !document.querySelector(".hero-safari-demo[data-intro-ready]")
-        ) {
-          // Settle into the page as a skipped intro would, so the hero card shows from the server HTML.
-          document.documentElement.removeAttribute("data-home-intro-js");
-          document.documentElement.setAttribute("data-home-intro-skip", "");
-        }
+        if (isHomeIntroWaitingForDemo()) settleHomeIntro();
       };
       window.setTimeout(liftStalledHomeIntro, 8000);
+      if (playHomeIntro) {
+        // The full-screen artwork paints before the demo's JS arrives. Honour the skip gestures
+        // HeroSafariDemo listens for (a click anywhere, scrolling down, navigation keys) in that
+        // window too, instead of dropping them and then playing the whole intro.
+        const skipKeys = new Set(["ArrowDown", "End", "Enter", "Escape", "PageDown", " "]);
+        const skipEvents = ["click", "wheel", "touchmove", "keydown"];
+        const stopEarlySkip = () => skipEvents.forEach((type) => window.removeEventListener(type, skipHomeIntroEarly, true));
+        const skipHomeIntroEarly = (event) => {
+          if (!isHomeIntroWaitingForDemo()) {
+            // The demo took over, or the intro already settled: these listeners are done.
+            if (document.body) stopEarlySkip();
+            return;
+          }
+          if (event.type === "wheel" && !(event.deltaY > 0)) return;
+          if (event.type === "keydown" && !skipKeys.has(event.key)) return;
+          stopEarlySkip();
+          settleHomeIntro();
+        };
+        skipEvents.forEach((type) => window.addEventListener(type, skipHomeIntroEarly, { capture: true, passive: true }));
+      }
     </script>
     <script is:inline define:vars={{ firefoxListed }}>
       // The install buttons (HeroInstallTooltip.tsx) lead Edge to Edge Add-ons, and Firefox and its

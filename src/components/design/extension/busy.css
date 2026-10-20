@@ -1,0 +1,55 @@
+/* Generated from lumno-extension/src/shared/busy.css by scripts/sync-extension-ui.mjs. Do not edit; rerun the script. */
+
+[aria-busy="true"] .x-lumno-busy-spin {
+  animation: x-lumno-busy-spin 900ms linear 240ms infinite;
+}
+
+.x-lumno-busy-label {
+  display: inline-flex;
+  align-items: center;
+  gap: inherit;
+}
+
+[aria-busy="true"] > .x-lumno-busy-label {
+  animation: x-lumno-busy-hide 0s linear 240ms forwards;
+}
+
+.x-lumno-spinner {
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  width: 12px;
+  height: 12px;
+  margin: auto;
+  border: 1.5px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  opacity: 0;
+  pointer-events: none;
+  animation:
+    x-lumno-busy-show 0s linear 240ms forwards,
+    x-lumno-busy-spin 900ms linear infinite;
+}
+
+@keyframes x-lumno-busy-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes x-lumno-busy-hide {
+  to { opacity: 0; }
+}
+
+@keyframes x-lumno-busy-show {
+  to { opacity: 0.8; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+[aria-busy="true"] .x-lumno-busy-spin {
+    animation: none;
+  }
+
+.x-lumno-spinner {
+    border-right-color: currentColor;
+    animation: x-lumno-busy-show 0s linear 240ms forwards;
+  }
+}

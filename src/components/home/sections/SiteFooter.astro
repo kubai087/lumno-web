@@ -37,7 +37,9 @@ const taglinePhrases = tagline.split(/(?<=、)/);
     <div class="site-footer__brand">
       <a class="site-footer__logo" href={homeHref} aria-label="Lumno">
         <span class="site-footer__icon" aria-hidden="true" set:html={logoIconSvg}></span>
-        <img src="/assets/textlogo.svg" width="165" height="43" alt="Lumno" loading="lazy" />
+        <img class="site-footer__wordmark" src="/assets/textlogo.svg" width="165" height="43" alt="Lumno" loading="lazy" />
+        {/* Light ink for pages in dark mode (/design); hidden otherwise. */}
+        <img class="site-footer__wordmark site-footer__wordmark--dark" src="/assets/textlogo-dark.svg" width="165" height="43" alt="" loading="lazy" />
       </a>
       <p>{taglinePhrases.map((phrase) => <span class="site-footer__phrase">{phrase}</span>)}</p>
       <ul class="site-footer__stores" aria-label={storesLabel}>
@@ -546,5 +548,67 @@ const taglinePhrases = tagline.split(/(?<=、)/);
     .site-footer__languages {
       max-width: 340px;
     }
+  }
+
+  /*
+   * Dark: pages that offer a dark mode (/design) set html[data-design-theme="dark"].
+   * The painted sea dims under a dark veil instead of the white one.
+   */
+  .site-footer__wordmark--dark {
+    display: none;
+  }
+
+  :global(html[data-design-theme="dark"]) .site-footer {
+    --text-sub: #a1a1aa;
+    --text-soft: #71717a;
+    --home-ink: #f3f4f6;
+    --home-card: #1c1d20;
+    --home-card-border: rgba(255, 255, 255, 0.08);
+    --home-hairline-control: rgba(255, 255, 255, 0.1);
+    border-top-color: rgba(255, 255, 255, 0.08);
+    background: #0e0e10;
+  }
+
+  :global(html[data-design-theme="dark"]) .site-footer__wordmark {
+    display: none;
+  }
+
+  :global(html[data-design-theme="dark"]) .site-footer__wordmark--dark {
+    display: block;
+  }
+
+  :global(html[data-design-theme="dark"]) .site-footer__art img {
+    filter: invert(1) hue-rotate(180deg) brightness(0.6) saturate(0.7);
+  }
+
+  :global(html[data-design-theme="dark"]) .site-footer__art::after {
+    background: linear-gradient(
+      to bottom,
+      rgba(14, 14, 16, 0.96) 0%,
+      rgba(14, 14, 16, 0.9) 50%,
+      rgba(14, 14, 16, 0.62) 60%,
+      rgba(14, 14, 16, 0.55) 100%
+    );
+  }
+
+  :global(html[data-design-theme="dark"]) .site-footer .site-footer__stores a {
+    box-shadow: none;
+  }
+
+  :global(html[data-design-theme="dark"]) .site-footer .site-footer__stores a:hover {
+    border-color: rgba(255, 255, 255, 0.16);
+    background: #26272b;
+  }
+
+  :global(html[data-design-theme="dark"]) .site-footer .site-footer__socials a {
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  :global(html[data-design-theme="dark"]) .site-footer .site-footer__socials a:hover {
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  :global(html[data-design-theme="dark"]) .site-footer .site-footer__languages a[aria-current="page"] {
+    background: rgba(255, 255, 255, 0.08);
   }
 </style>

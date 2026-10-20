@@ -92,7 +92,7 @@ type HomeCommunityCopy = {
     }
 );
 
-type HomeContent = {
+export type HomeContent = {
   navigationAria: string;
   navFeatures: string;
   navRelease: string;

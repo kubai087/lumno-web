@@ -29,6 +29,7 @@
     "opencc-js": "^1.0.5",
     "radix-ui": "^1.6.7",
     "react": "^19.0.0",
+    "react-colorful": "^5.8.1",
     "react-dom": "^19.0.0",
     "shadcn": "^4.16.1",
     "tailwind-merge": "^3.6.0",

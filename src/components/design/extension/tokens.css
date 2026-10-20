@@ -1,0 +1,188 @@
+/* Generated from lumno-extension/src/shared/tokens.css by scripts/sync-extension-ui.mjs. Do not edit; rerun the script. */
+
+.dg-ext {
+  /* Radius */
+  --lumno-radius-xs: 4px;
+  --lumno-radius-sm: 6px;
+  --lumno-radius-md: 8px;
+  --lumno-radius-lg: 10px;
+  --lumno-radius-xl: 12px;
+  --lumno-radius-2xl: 14px;
+  /* Floating surfaces: menus stay compact; dialogs are the largest radius in the system. */
+  --lumno-radius-menu: 16px;
+  --lumno-radius-dialog: 18px;
+  --lumno-radius-pill: 999px;
+
+  /* Type */
+  --lumno-font-size-2xs: 10px;
+  --lumno-font-size-xs: 11px;
+  --lumno-font-size-sm: 12px;
+  --lumno-font-size-md: 13px;
+  --lumno-font-size-lg: 14px;
+  --lumno-font-size-xl: 16px;
+
+  /*
+   * Motion. Prefer 2xs for press feedback, sm for color and opacity, xl for moving
+   * indicators and 3xl for spring-driven knobs; the in-between steps exist for
+   * values already shipped and should not gain new uses.
+   */
+  --lumno-duration-2xs: 120ms;
+  --lumno-duration-xs: 140ms;
+  --lumno-duration-sm: 160ms;
+  --lumno-duration-md: 180ms;
+  --lumno-duration-lg: 200ms;
+  --lumno-duration-xl: 220ms;
+  --lumno-duration-2xl: 240ms;
+  --lumno-duration-3xl: 280ms;
+  --lumno-ease-emphasized: cubic-bezier(0.2, 0.9, 0.2, 1);
+  --lumno-ease-spring: cubic-bezier(0.32, 0.72, 0, 1);
+  --lumno-ease-overshoot: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --lumno-ease-menu: cubic-bezier(0.2, 1.45, 0.35, 1);
+  /*
+   * Accordion height, taken from the WebDAV card: opening, the box is there almost at
+   * once and its content fades in; closing, the content fades first and the box follows.
+   */
+  --lumno-accordion-open: 50ms cubic-bezier(0.41, 0.1, 0.67, 0.52);
+  --lumno-accordion-close: 135ms cubic-bezier(0.2, 0.55, 0.5, 1) 85ms;
+
+  /*
+   * Layers, in the order they cover each other: in-flow stacking first, then page
+   * chrome, then floating surfaces. A surface that must sit just above a layer
+   * adds to that layer's token in calc() rather than inventing a new number.
+   */
+  --lumno-z-raised: 1;
+  --lumno-z-overlay: 2;
+  --lumno-z-sticky: 30;
+  /* Options' confirm mask stays under the dropdowns a confirm may open. */
+  --lumno-z-modal: 9998;
+  /* New Tab's top bookmarks bar. */
+  --lumno-z-topbar: 10000;
+  --lumno-z-dropdown: 10000;
+  --lumno-z-tooltip: 10000;
+  /* A shortcut being dragged, with the area it moves in: over the bars, under menus. */
+  --lumno-z-drag-lift: 10001;
+  /* Bookmark folder menus, which a drag may open and drop into. */
+  --lumno-z-menu: 10002;
+  --lumno-z-context-menu: 10040;
+  --lumno-z-dialog: 10040;
+  /* Tooltips and menus that open from inside a dialog. */
+  --lumno-z-dialog-menu: 10060;
+  --lumno-z-toast: 10080;
+  /* What follows the pointer during a drag: previews, ghosts and drop lines. */
+  --lumno-z-drag-ghost: 2147483645;
+  --lumno-z-max: 2147483647;
+
+  /* Color: text */
+  --lumno-color-text: #111827;
+  --lumno-color-text-muted: #6b7280;
+
+  /* Color: lines, fills and states */
+  --lumno-color-border: rgba(15, 23, 42, 0.08);
+  --lumno-color-fill-subtle: rgba(15, 23, 42, 0.1);
+  --lumno-color-fill-subtle-hover: rgba(15, 23, 42, 0.15);
+  --lumno-color-hover: rgba(15, 23, 42, 0.08);
+  --lumno-color-selected: #111827;
+  --lumno-color-selected-text: #f9fafb;
+  --lumno-color-focus-ring: rgba(59, 130, 246, 0.65);
+  /* Accent: Lumno blue, for switches. */
+  --lumno-color-accent: linear-gradient(180deg, #4d7dcb 0%, #3462ad 100%);
+  /* Primary: near-black slate for primary buttons. */
+  --lumno-color-primary: linear-gradient(180deg, #404859 0%, #273042 100%);
+  --lumno-color-primary-hover: linear-gradient(180deg, #4a5467 0%, #2f3a4f 100%);
+  --lumno-color-primary-border: #12161f;
+  --lumno-color-on-primary: #ffffff;
+  /* Toast: the tooltip's soft top-to-bottom gradient, so floating notes share one surface. */
+  --lumno-color-toast-bg-top: #ffffff;
+  --lumno-color-toast-bg-bottom: #f7f9fc;
+  --lumno-color-toast-border: rgba(214, 219, 227, 0.95);
+  --lumno-color-toast-text: #1f2937;
+  /* Error toast: one red surface in both themes, always with light text. */
+  --lumno-color-toast-error-bg: #991b1b;
+  --lumno-color-toast-error-border: rgba(255, 255, 255, 0.16);
+  --lumno-color-toast-error-text: #ffffff;
+  --lumno-color-selection-outline: #6b7280;
+  /* Lumno link blue as channels, for tints: rgb(var(--lumno-color-accent-rgb) / 0.12). */
+  --lumno-color-accent-rgb: 37 99 235;
+
+  /* Color: control parts */
+  --lumno-color-knob: #ffffff;
+
+  /* Elevation */
+  --lumno-shadow-control: 0 1px 3px rgba(15, 23, 42, 0.12);
+  --lumno-shadow-menu: 0 10px 24px rgba(15, 23, 42, 0.12);
+  --lumno-shadow-popover: 0 14px 36px rgba(15, 23, 42, 0.15);
+  --lumno-shadow-toast: 0 16px 36px rgba(17, 24, 39, 0.08), 0 3px 10px rgba(17, 24, 39, 0.05);
+  --lumno-shadow-knob:
+    0 0 0 0.5px rgba(15, 23, 42, 0.06),
+    0 1px 1px rgba(15, 23, 42, 0.06),
+    0 2px 5px rgba(15, 23, 42, 0.14);
+  --lumno-shadow-track-inset:
+    inset 0 0 0 0.5px rgba(15, 23, 42, 0.06),
+    inset 0 1px 2px rgba(15, 23, 42, 0.08);
+  --lumno-shadow-track-on: inset 0 1px 2px rgba(12, 32, 72, 0.3);
+  /* Primary controls: a soft two-step drop, plus a sheen that sits inside the border. */
+  --lumno-shadow-primary:
+    0 1px 2px rgba(15, 23, 42, 0.18),
+    0 3px 6px -2px rgba(15, 23, 42, 0.24);
+  --lumno-shadow-primary-hover:
+    0 2px 3px rgba(15, 23, 42, 0.2),
+    0 6px 12px -4px rgba(15, 23, 42, 0.3);
+  --lumno-shadow-primary-pressed: 0 1px 1px rgba(15, 23, 42, 0.14);
+  --lumno-shadow-primary-sheen:
+    inset 0 1px 0 rgba(255, 255, 255, 0.18),
+    inset 0 1px 3px rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.22);
+  --lumno-shadow-primary-sheen-pressed: inset 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+:where(button, a[href], summary, [role="button"], [role="link"], [role="tab"], [role="switch"],
+  [role="menuitem"], [role="menuitemradio"], [role="menuitemcheckbox"], [role="option"],
+  [tabindex]:not([tabindex="-1"])):not(input, textarea, select):focus-visible {
+  outline: 2px solid var(--lumno-color-focus-ring);
+  outline-offset: 2px;
+}
+
+.dg-ext[data-theme="dark"],
+.dg-ext [data-glass-ink-theme="dark"] {
+  --lumno-color-text: #e5e7eb;
+  --lumno-color-text-muted: #9ca3af;
+  --lumno-color-border: rgba(255, 255, 255, 0.12);
+  --lumno-color-fill-subtle: rgba(255, 255, 255, 0.14);
+  --lumno-color-fill-subtle-hover: rgba(255, 255, 255, 0.2);
+  --lumno-color-hover: rgba(255, 255, 255, 0.09);
+  --lumno-color-selected: #3f3f3f;
+  --lumno-color-selected-text: #f8fafc;
+  --lumno-color-focus-ring: rgba(191, 219, 254, 0.7);
+  --lumno-color-accent: linear-gradient(180deg, #5f8ad4 0%, #4470ba 100%);
+  --lumno-color-primary: linear-gradient(180deg, #4a566c 0%, #334157 100%);
+  --lumno-color-primary-hover: linear-gradient(180deg, #56647c 0%, #3a4b66 100%);
+  --lumno-color-primary-border: #0b0e14;
+  --lumno-color-on-primary: #f8fafc;
+  --lumno-color-toast-bg-top: #111827;
+  --lumno-color-toast-bg-bottom: #0f172a;
+  --lumno-color-toast-border: rgba(255, 255, 255, 0.2);
+  --lumno-color-toast-text: #f8fafc;
+  --lumno-color-selection-outline: #9ca3af;
+  --lumno-color-knob: #f4f4f4;
+  --lumno-shadow-toast: 0 14px 30px rgba(0, 0, 0, 0.45);
+  --lumno-shadow-knob:
+    0 0 0 0.5px rgba(0, 0, 0, 0.2),
+    0 1px 1px rgba(0, 0, 0, 0.2),
+    0 2px 5px rgba(0, 0, 0, 0.32);
+  --lumno-shadow-track-inset:
+    inset 0 0 0 0.5px rgba(255, 255, 255, 0.04),
+    inset 0 1px 2px rgba(0, 0, 0, 0.24);
+  --lumno-shadow-track-on: inset 0 1px 2px rgba(0, 0, 0, 0.32);
+  --lumno-shadow-primary:
+    0 1px 2px rgba(0, 0, 0, 0.32),
+    0 3px 6px -2px rgba(0, 0, 0, 0.4);
+  --lumno-shadow-primary-hover:
+    0 2px 3px rgba(0, 0, 0, 0.34),
+    0 6px 12px -4px rgba(0, 0, 0, 0.46);
+  --lumno-shadow-primary-pressed: 0 1px 1px rgba(0, 0, 0, 0.28);
+  --lumno-shadow-primary-sheen:
+    inset 0 1px 0 rgba(255, 255, 255, 0.16),
+    inset 0 1px 3px rgba(255, 255, 255, 0.08),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+  --lumno-shadow-primary-sheen-pressed: inset 0 1px 2px rgba(0, 0, 0, 0.42);
+}

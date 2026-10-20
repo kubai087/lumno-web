@@ -1,0 +1,234 @@
+/* Generated from lumno-extension/src/shared/range-slider.css by scripts/sync-extension-ui.mjs. Do not edit; rerun the script. */
+
+._x_extension_range_slider_reset_button_2026_unique_ {
+  all: unset;
+  box-sizing: border-box;
+  flex: 0 0 auto;
+  padding: 4px;
+  border-radius: var(--lumno-radius-md);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  color: var(--panel-subtext, var(--x-nt-subtext, #64748b));
+  cursor: pointer;
+  transition:
+    background-color var(--lumno-duration-xs) ease,
+    color var(--lumno-duration-xs) ease,
+    opacity var(--lumno-duration-xs) ease;
+}
+
+._x_extension_range_slider_reset_button_2026_unique_:hover:not(:disabled) {
+  background: rgba(148, 163, 184, 0.2);
+}
+
+._x_extension_range_slider_reset_button_2026_unique_:focus-visible {
+  outline: 2px solid var(--input-focus-color, var(--lumno-color-focus-ring));
+  outline-offset: 2px;
+}
+
+._x_extension_range_slider_reset_button_2026_unique_:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+}
+
+._x_extension_range_slider_reset_button_2026_unique_ .ri-icon {
+  pointer-events: none;
+}
+
+.x-range-slider {
+  --x-range-slider-thumb-size: 16px;
+  --x-range-slider-track-height: 4px;
+  --x-range-slider-fill: var(--panel-text, var(--lumno-color-text));
+  --x-range-slider-rail: var(--lumno-color-fill-subtle);
+  --x-range-slider-surface: var(--panel-bg, #ffffff);
+  --x-range-slider-mark-color: var(--x-range-slider-surface);
+  --x-range-slider-thumb-bg: #ffffff;
+  --x-range-slider-thumb-shadow:
+    0 0 0 0.5px rgba(15, 23, 42, 0.14),
+    0 1px 3px rgba(15, 23, 42, 0.22);
+  --x-range-slider-ring: var(--lumno-color-fill-subtle);
+  position: relative;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+}
+
+.x-range-slider-input {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  height: 24px;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.x-range-slider-input:focus-visible {
+  outline: none;
+}
+
+.x-range-slider-input::-webkit-slider-runnable-track {
+  height: var(--x-range-slider-track-height);
+  border-radius: var(--lumno-radius-pill);
+  background:
+    var(--x-range-slider-marks, linear-gradient(transparent, transparent)),
+    linear-gradient(
+      90deg,
+      var(--x-range-slider-fill) 0 var(--x-range-slider-percent, 50%),
+      var(--x-range-slider-rail) var(--x-range-slider-percent, 50%) 100%
+    );
+}
+
+.x-range-slider-input::-moz-range-track {
+  height: var(--x-range-slider-track-height);
+  border: 0;
+  border-radius: var(--lumno-radius-pill);
+  background:
+    var(--x-range-slider-marks, linear-gradient(transparent, transparent)),
+    linear-gradient(
+      90deg,
+      var(--x-range-slider-fill) 0 var(--x-range-slider-percent, 50%),
+      var(--x-range-slider-rail) var(--x-range-slider-percent, 50%) 100%
+    );
+}
+
+.x-range-slider-input::-moz-range-thumb {
+  box-sizing: border-box;
+  width: var(--x-range-slider-thumb-size);
+  height: var(--x-range-slider-thumb-size);
+  border: 0;
+  border-radius: var(--lumno-radius-pill);
+  background: var(--x-range-slider-thumb-bg);
+  box-shadow: var(--x-range-slider-thumb-shadow);
+  transition:
+    box-shadow 150ms ease,
+    transform 150ms ease;
+}
+
+.x-range-slider-input:not(:disabled):hover::-moz-range-thumb,
+.x-range-slider-input:not(:disabled):focus-visible::-moz-range-thumb {
+  box-shadow: var(--x-range-slider-thumb-shadow), 0 0 0 4px var(--x-range-slider-ring);
+}
+
+.x-range-slider-input:not(:disabled):focus-visible::-moz-range-thumb {
+  box-shadow: var(--x-range-slider-thumb-shadow), 0 0 0 2px var(--lumno-color-focus-ring);
+}
+
+.x-range-slider-input:not(:disabled):active::-moz-range-thumb {
+  transform: scale(1.12);
+}
+
+.x-range-slider-input::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  box-sizing: border-box;
+  width: var(--x-range-slider-thumb-size);
+  height: var(--x-range-slider-thumb-size);
+  margin-top: calc((var(--x-range-slider-track-height) - var(--x-range-slider-thumb-size)) / 2);
+  border: 0;
+  border-radius: var(--lumno-radius-pill);
+  background: var(--x-range-slider-thumb-bg);
+  box-shadow: var(--x-range-slider-thumb-shadow);
+  transition:
+    box-shadow 150ms ease,
+    transform 150ms ease;
+}
+
+.x-range-slider-input:not(:disabled):hover::-webkit-slider-thumb,
+.x-range-slider-input:not(:disabled):focus-visible::-webkit-slider-thumb {
+  box-shadow: var(--x-range-slider-thumb-shadow), 0 0 0 4px var(--x-range-slider-ring);
+}
+
+.x-range-slider-input:not(:disabled):focus-visible::-webkit-slider-thumb {
+  box-shadow: var(--x-range-slider-thumb-shadow), 0 0 0 2px var(--lumno-color-focus-ring);
+}
+
+.x-range-slider-input:not(:disabled):active::-webkit-slider-thumb {
+  transform: scale(1.12);
+}
+
+.x-range-slider-input:disabled {
+  cursor: not-allowed;
+  opacity: 0.46;
+}
+
+.x-range-slider-field {
+  position: relative;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.x-range-slider-field-label {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.x-range-slider-reset {
+  transition:
+    background-color var(--lumno-duration-xs) ease,
+    color var(--lumno-duration-xs) ease,
+    opacity var(--lumno-duration-xs) ease,
+    visibility 0s linear 0s;
+}
+
+.x-range-slider > .x-range-slider-reset {
+  position: absolute;
+  top: 50%;
+  right: calc(100% + 6px);
+  transform: translateY(-50%);
+}
+
+.x-range-slider-reset:disabled {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity var(--lumno-duration-xs) ease,
+    visibility 0s linear var(--lumno-duration-xs);
+}
+
+.x-range-slider-reset:not(:disabled):hover {
+  color: var(--panel-text, var(--x-nt-text, var(--lumno-color-text)));
+}
+
+.x-range-slider-field-controls {
+  position: relative;
+  flex: 0 0 var(--x-range-slider-controls-width, 60%);
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.x-range-slider-field-controls > .x-range-slider {
+  flex: 1 1 auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+.x-range-slider-input::-webkit-slider-thumb {
+    transition: none;
+  }
+
+.x-range-slider-input::-moz-range-thumb {
+    transition: none;
+  }
+
+.x-range-slider-reset,
+  .x-range-slider-reset:disabled {
+    transition: none;
+  }
+}
+
+@supports (corner-shape: superellipse(1.25)) {
+._x_extension_range_slider_reset_button_2026_unique_ {
+    corner-shape: superellipse(1.25);
+  }
+}

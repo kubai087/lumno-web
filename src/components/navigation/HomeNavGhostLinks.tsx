@@ -16,7 +16,7 @@ import "./home-nav-ghost-links.css";
  * the glass pill.
  */
 
-type NavGhostLinkValue = "community" | "release" | "help" | "contact";
+type NavGhostLinkValue = "community" | "release" | "help" | "design" | "contact";
 
 /** One of the author's profiles in the contact entry. */
 export type NavContactItem = { value: string; label: string; href: string; iconClass: string; analyticsEvent: string };
@@ -35,6 +35,8 @@ interface Props {
   releaseLabel: string;
   helpHref: string;
   helpLabel: string;
+  designHref: string;
+  designLabel: string;
   communityLabel: string;
   /** Every community entry opens this panel (lib/community-panel.ts). */
   communityPanel: CommunityPanel;
@@ -50,6 +52,8 @@ export default function HomeNavGhostLinks({
   releaseLabel,
   helpHref,
   helpLabel,
+  designHref,
+  designLabel,
   communityLabel,
   communityPanel,
   contactLabel,
@@ -94,6 +98,14 @@ export default function HomeNavGhostLinks({
       analyticsEvent: "open_help_center",
       analyticsCategory: "navigation",
       analyticsLabel: "home_header_help",
+    },
+    {
+      value: "design",
+      label: designLabel,
+      href: designHref,
+      analyticsEvent: "open_design_page",
+      analyticsCategory: "navigation",
+      analyticsLabel: "home_header_design",
     },
     {
       value: "contact",

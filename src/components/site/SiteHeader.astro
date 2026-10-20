@@ -1,4 +1,5 @@
 ---
+import { getDesignPageContent } from "../../lib/design-content";
 import { getGuideContent, getGuidePath } from "../../lib/guides";
 import HomeNavGhostLinks from "../navigation/HomeNavGhostLinks";
 import InstallMenu from "../navigation/InstallMenu";
@@ -49,6 +50,8 @@ const homeHref = buildLocalizedPath(locale, "/");
 const releaseHref = buildLocalizedPath(locale, "/release/");
 const helpHref = getGuidePath(locale);
 const helpLabel = getGuideContent(locale).ui.navLabel;
+const designHref = buildLocalizedPath(locale, "/design/");
+const designLabel = getDesignPageContent(locale).navLabel;
 // The author's profiles: Xiaohongshu first for Chinese readers, X everywhere.
 const { community } = content;
 const contactItems = [
@@ -86,6 +89,8 @@ const {
       releaseLabel={content.navRelease}
       helpHref={helpHref}
       helpLabel={helpLabel}
+      designHref={designHref}
+      designLabel={designLabel}
       communityLabel={content.community.label}
       communityPanel={getCommunityPanel(locale)}
       contactLabel={content.community.contactLabel}
@@ -615,7 +620,7 @@ const {
    * so the links stay on the page's centre line, where they were while the bar
    * rested at the top. A narrow window simply caps it at the column.
    */
-  @media (min-width: 901px) {
+  @media (min-width: 981px) {
     body.has-nav-install .top-nav:not([data-nav-surface="hero"]) {
       display: grid;
       grid-template-columns: 1fr auto 1fr;
@@ -652,8 +657,8 @@ const {
     }
   }
 
-  /* Below this the four entries (longest in English) would run into the language and install buttons. */
-  @media (min-width: 761px) and (max-width: 900px) {
+  /* Below this the five entries (longest in English) would run into the language and install buttons. */
+  @media (min-width: 761px) and (max-width: 980px) {
     body.has-nav-install .top-nav-ghost-links {
       display: none;
     }

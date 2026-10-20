@@ -1,0 +1,1130 @@
+/* Generated from lumno-extension/src/newtab/glass-style.css by scripts/sync-extension-ui.mjs. Do not edit; rerun the script. */
+
+.dg-nt[data-glass-style="frosted"] {
+  --x-nt-glass-tint-rgb: 255 255 255;
+  --x-nt-glass-tint-thin: 0.42;
+  --x-nt-glass-tint-dense: 0.68;
+  --x-nt-glass-sheen: rgba(255, 255, 255, 0.22);
+  --x-nt-glass-float-rgb: 250 250 251;
+  --x-nt-glass-float-thin: 0.66;
+  --x-nt-glass-float-dense: 0.86;
+  --x-nt-glass-inset: rgba(255, 255, 255, 0.48);
+  --x-nt-glass-edge:
+    inset 0 1px 0 rgba(255, 255, 255, 0.42),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.16),
+    inset 0 0 18px rgba(255, 255, 255, 0.16),
+    0 0 0 0.5px rgba(0, 0, 0, 0.08);
+  --x-nt-glass-inset-edge: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  --x-nt-glass-float-shadow: 0 16px 48px rgba(0, 0, 0, 0.12);
+}
+
+.dg-nt[data-glass-style="frosted"][data-theme="dark"] {
+  --x-nt-glass-tint-rgb: 40 40 44;
+  --x-nt-glass-tint-thin: 0.24;
+  --x-nt-glass-tint-dense: 0.48;
+  --x-nt-glass-sheen: transparent;
+  --x-nt-glass-float-rgb: 36 36 40;
+  --x-nt-glass-float-thin: 0.62;
+  --x-nt-glass-float-dense: 0.84;
+  --x-nt-glass-inset: rgba(255, 255, 255, 0.06);
+  --x-nt-glass-edge:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 0 0 0.5px rgba(0, 0, 0, 0.32);
+  --x-nt-glass-inset-edge: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  --x-nt-glass-float-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
+}
+
+.dg-nt[data-glass-style="liquid"] {
+  --x-nt-glass-tint-rgb: 255 255 255;
+  --x-nt-glass-tint-thin: 0.14;
+  --x-nt-glass-tint-dense: 0.44;
+  --x-nt-glass-sheen: transparent;
+  --x-nt-glass-float-rgb: 250 250 252;
+  --x-nt-glass-float-thin: 0.26;
+  --x-nt-glass-float-dense: 0.48;
+  --x-nt-glass-inset: rgba(255, 255, 255, 0.3);
+  --x-nt-glass-edge:
+    inset 1px 1px 0.5px -0.5px rgba(255, 255, 255, 0.62),
+    inset -1px -1px 0.5px -0.5px rgba(255, 255, 255, 0.26),
+    inset 0 0 0 0.5px rgba(255, 255, 255, 0.1),
+    0 0 0 0.5px rgba(0, 0, 0, 0.07),
+    0 4px 14px rgba(0, 0, 0, 0.08);
+  --x-nt-glass-inset-edge: inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  --x-nt-glass-float-shadow: 0 16px 48px rgba(0, 0, 0, 0.14);
+}
+
+.dg-nt[data-glass-style="liquid"][data-theme="dark"] {
+  --x-nt-glass-tint-rgb: 30 30 34;
+  --x-nt-glass-tint-thin: 0.28;
+  --x-nt-glass-tint-dense: 0.56;
+  --x-nt-glass-sheen: transparent;
+  --x-nt-glass-float-rgb: 30 30 34;
+  --x-nt-glass-float-thin: 0.32;
+  --x-nt-glass-float-dense: 0.54;
+  --x-nt-glass-inset: rgba(255, 255, 255, 0.07);
+  --x-nt-glass-edge:
+    inset 1px 1px 0.5px -0.5px rgba(255, 255, 255, 0.4),
+    inset -1px -1px 0.5px -0.5px rgba(255, 255, 255, 0.15),
+    inset 0 0 0 0.5px rgba(255, 255, 255, 0.06),
+    0 0 0 0.5px rgba(0, 0, 0, 0.28),
+    0 4px 14px rgba(0, 0, 0, 0.22);
+  --x-nt-glass-inset-edge: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  --x-nt-glass-float-shadow: 0 16px 48px rgba(0, 0, 0, 0.34);
+}
+
+.dg-nt[data-glass-style] {
+  --x-nt-glass-filter: none;
+  --x-nt-glass-float-filter: none;
+}
+
+.dg-nt[data-glass-style="frosted"][data-nt-ready="1"] {
+  --x-nt-glass-filter: blur(30px) saturate(170%) contrast(0.6) brightness(1.18);
+  --x-nt-glass-float-filter: var(--x-nt-glass-filter);
+}
+
+.dg-nt[data-glass-style="frosted"][data-nt-ready="1"][data-theme="dark"] {
+  --x-nt-glass-filter: blur(30px) saturate(150%) contrast(0.82) brightness(0.7);
+  --x-nt-glass-float-filter: var(--x-nt-glass-filter);
+}
+
+.dg-nt[data-glass-style="liquid"][data-nt-ready="1"] {
+  --x-nt-glass-filter: blur(2px) saturate(120%) contrast(0.86) brightness(1.075);
+  --x-nt-glass-float-filter: blur(10px) saturate(130%) contrast(0.82) brightness(1.1);
+}
+
+.dg-nt[data-glass-style="liquid"][data-nt-ready="1"][data-theme="dark"] {
+  --x-nt-glass-filter: blur(1px) saturate(120%) brightness(0.78);
+  --x-nt-glass-float-filter: blur(10px) saturate(130%) brightness(0.76);
+}
+
+.dg-nt[data-glass-style] :is(
+  .dg-nt:not(#dg-root),
+  .x-nt-shortcut-icon,
+  .x-nt-bookmark-card,
+  .x-nt-recent-card-visual,
+  .x-nt-wallpaper-button,
+  .x-nt-feedback-button,
+  .x-nt-bookmark-cascade-debug-button,
+  .x-nt-bookmarks-pager-btn,
+  .x-nt-section-mode-select ._x_extension_select_trigger_2024_unique_,
+  ._x_extension_newtab_suggestions_surface_2026_unique_:not(#dg_x_extension_newtab_suggestions_surface_2026_unique_),
+  ._x_extension_menu_surface_2024_unique_,
+  .x-nt-wallpaper-panel,
+  .x-nt-bookmarks-topbar,
+  .x-nt-feedback-popover,
+  .x-lumno-toast
+) {
+  --x-nt-glass-tint-alpha: calc(
+    var(--x-nt-glass-tint-thin) +
+    (var(--x-nt-glass-tint-dense) - var(--x-nt-glass-tint-thin)) * var(--x-nt-glass-density, 0.35)
+  );
+  --x-nt-glass-tint: rgb(var(--x-nt-glass-tint-rgb) / var(--x-nt-glass-tint-alpha));
+  --x-nt-glass-tint-hover: rgb(var(--x-nt-glass-tint-rgb) / calc(var(--x-nt-glass-tint-alpha) + 0.14));
+  --x-nt-glass-fill:
+    linear-gradient(180deg, var(--x-nt-glass-sheen), transparent 60%),
+    linear-gradient(var(--x-nt-glass-tint), var(--x-nt-glass-tint));
+  --x-nt-glass-fill-hover:
+    linear-gradient(180deg, var(--x-nt-glass-sheen), transparent 60%),
+    linear-gradient(var(--x-nt-glass-tint-hover), var(--x-nt-glass-tint-hover));
+}
+
+.dg-nt[data-glass-style] {
+  --x-nt-glass-tint-alpha: calc(
+    var(--x-nt-glass-tint-thin) +
+    (var(--x-nt-glass-tint-dense) - var(--x-nt-glass-tint-thin)) * var(--x-nt-glass-density, 0.35)
+  );
+  --x-nt-glass-tint: rgb(var(--x-nt-glass-tint-rgb) / var(--x-nt-glass-tint-alpha));
+  --x-nt-glass-tint-hover: rgb(var(--x-nt-glass-tint-rgb) / calc(var(--x-nt-glass-tint-alpha) + 0.14));
+  --x-nt-glass-fill:
+    linear-gradient(180deg, var(--x-nt-glass-sheen), transparent 60%),
+    linear-gradient(var(--x-nt-glass-tint), var(--x-nt-glass-tint));
+  --x-nt-glass-fill-hover:
+    linear-gradient(180deg, var(--x-nt-glass-sheen), transparent 60%),
+    linear-gradient(var(--x-nt-glass-tint-hover), var(--x-nt-glass-tint-hover));
+}
+
+.dg-nt[data-glass-style] {
+  --x-nt-glass-ink: rgba(0, 0, 0, 0.86);
+  --x-nt-glass-ink-secondary: rgba(60, 60, 67, 0.7);
+  --x-nt-glass-ink-blend: multiply;
+  --x-nt-placeholder: rgba(60, 60, 67, 0.62);
+  --x-nt-glass-row-hover: rgba(0, 0, 0, 0.045);
+  --x-nt-glass-chip: rgba(0, 0, 0, 0.06);
+  --x-nt-glass-row-active: rgba(0, 0, 0, 0.09);
+  --x-nt-glass-chip-strong: rgba(0, 0, 0, 0.11);
+  --x-nt-glass-well: rgba(0, 0, 0, 0.15);
+  --x-nt-glass-hairline: rgba(0, 0, 0, 0.1);
+  --x-nt-glass-divider: rgba(0, 0, 0, 0.08);
+  --x-nt-glass-raised: rgba(255, 255, 255, 0.72);
+  --x-nt-glass-raised-edge: inset 0 0.5px 0 rgba(255, 255, 255, 0.8), 0 0 0 0.5px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.08);
+  --x-nt-bookmark-card-hover-underlay: transparent;
+}
+
+.dg-nt[data-glass-style][data-theme="dark"] {
+  --x-nt-glass-ink: rgba(255, 255, 255, 0.94);
+  --x-nt-glass-ink-secondary: rgba(235, 235, 245, 0.64);
+  --x-nt-glass-ink-blend: plus-lighter;
+  --x-nt-placeholder: rgba(235, 235, 245, 0.6);
+  --x-nt-glass-row-hover: rgba(255, 255, 255, 0.07);
+  --x-nt-glass-chip: rgba(255, 255, 255, 0.1);
+  --x-nt-glass-row-active: rgba(255, 255, 255, 0.13);
+  --x-nt-glass-chip-strong: rgba(255, 255, 255, 0.17);
+  --x-nt-glass-well: rgba(255, 255, 255, 0.22);
+  --x-nt-glass-hairline: rgba(255, 255, 255, 0.06);
+  --x-nt-glass-divider: rgba(255, 255, 255, 0.1);
+  --x-nt-glass-raised: rgba(255, 255, 255, 0.18);
+  --x-nt-glass-raised-edge: inset 0 0.5px 0 rgba(255, 255, 255, 0.24), 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.dg-nt[data-glass-style]:not([data-nt-suggestions-open="true"])
+  .dg-nt:not(#dg-root) {
+  background: var(--x-nt-glass-fill);
+  border-color: transparent;
+  box-shadow: var(--x-nt-glass-edge);
+  backdrop-filter: var(--x-nt-glass-filter) saturate(var(--x-nt-glass-saturate, 1)) brightness(var(--x-nt-glass-backdrop-brightness, 1)) var(--x-nt-glass-refraction,);
+  -webkit-backdrop-filter: var(--x-nt-glass-filter) saturate(var(--x-nt-glass-saturate, 1)) brightness(var(--x-nt-glass-backdrop-brightness, 1)) var(--x-nt-glass-refraction,);
+}
+
+.dg-nt[data-glass-style] .dg-nt:not(#dg-root) {
+  --x-ext-input-icon: var(--x-nt-placeholder);
+  transition: none;
+}
+
+.dg-nt[data-glass-style] .dg-nt:not(#dg-root) .x-nt-close-other-tabs:not(:hover) {
+  color: var(--x-nt-placeholder);
+}
+
+.dg-nt[data-glass-style] ._x_extension_newtab_search_layer_2024_unique_:not(#dg_x_extension_newtab_search_layer_2024_unique_) {
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.dg-nt[data-glass-style]:not([data-glass-style="liquid"]) ._x_extension_newtab_suggestions_surface_2026_unique_:not(#dg_x_extension_newtab_suggestions_surface_2026_unique_),
+.dg-nt[data-glass-style] ._x_extension_menu_surface_2024_unique_:is(*, [data-glass-ink]),
+.dg-nt[data-glass-style] .x-nt-wallpaper-panel,
+.dg-nt[data-glass-style] .x-nt-feedback-popover,
+.dg-nt[data-glass-style] .x-lumno-toast:not([data-tone="error"]) {
+  --x-nt-glass-tint-rgb: var(--x-nt-glass-float-rgb);
+  --x-nt-glass-tint-thin: var(--x-nt-glass-float-thin);
+  --x-nt-glass-tint-dense: var(--x-nt-glass-float-dense);
+  background: var(--x-nt-glass-fill);
+  border-color: transparent;
+  box-shadow: var(--x-nt-glass-edge), var(--x-nt-glass-float-shadow);
+}
+
+.dg-nt[data-glass-style][data-nt-suggestions-open="true"] ._x_extension_newtab_suggestions_surface_2026_unique_:not(#dg_x_extension_newtab_suggestions_surface_2026_unique_),
+.dg-nt[data-glass-style] ._x_extension_menu_surface_2024_unique_:is([data-open="true"], [data-open="true"] > :not([data-open])),
+.dg-nt[data-glass-style] .x-nt-wallpaper-panel[data-open="true"],
+.dg-nt[data-glass-style] .x-lumno-toast[data-show="true"]:not([data-tone="error"]),
+.dg-nt[data-glass-style] .x-nt-feedback-popover {
+  backdrop-filter: var(--x-nt-glass-float-filter) saturate(var(--x-nt-glass-saturate, 1)) brightness(var(--x-nt-glass-backdrop-brightness, 1)) var(--x-nt-glass-refraction,);
+  -webkit-backdrop-filter: var(--x-nt-glass-float-filter) saturate(var(--x-nt-glass-saturate, 1)) brightness(var(--x-nt-glass-backdrop-brightness, 1)) var(--x-nt-glass-refraction,);
+}
+
+.dg-nt[data-glass-style="liquid"] :is(
+  .dg-nt:not(#dg-root),
+  ._x_extension_newtab_suggestions_surface_2026_unique_:not(#dg_x_extension_newtab_suggestions_surface_2026_unique_)
+) {
+  --x-nt-glass-rim: 30px;
+  --x-nt-glass-refraction-strength: 1.6;
+}
+
+.dg-nt[data-glass-style="liquid"] ._x_extension_newtab_suggestions_surface_2026_unique_:not(#dg_x_extension_newtab_suggestions_surface_2026_unique_) {
+  background: var(--x-nt-glass-fill);
+  border-color: transparent;
+  box-shadow: var(--x-nt-glass-edge), var(--x-nt-glass-float-shadow);
+  /* Never the default style's heavy blur, even for a frame outside the open state. */
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.dg-nt[data-glass-style="liquid"][data-nt-suggestions-open="true"] ._x_extension_newtab_suggestions_surface_2026_unique_:not(#dg_x_extension_newtab_suggestions_surface_2026_unique_) {
+  backdrop-filter: var(--x-nt-glass-filter) saturate(var(--x-nt-glass-saturate, 1)) brightness(var(--x-nt-glass-backdrop-brightness, 1)) var(--x-nt-glass-refraction,);
+  -webkit-backdrop-filter: var(--x-nt-glass-filter) saturate(var(--x-nt-glass-saturate, 1)) brightness(var(--x-nt-glass-backdrop-brightness, 1)) var(--x-nt-glass-refraction,);
+}
+
+.dg-nt[data-glass-style] ._x_extension_newtab_suggestions_outline_2026_unique_:not(#dg_x_extension_newtab_suggestions_outline_2026_unique_) {
+  border-color: transparent;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+.dg-nt[data-glass-style] ._x_extension_menu_surface_2024_unique_ {
+    transition: opacity 170ms ease, transform 360ms var(--lumno-ease-menu, cubic-bezier(0.2, 1.45, 0.35, 1)),
+      backdrop-filter 0s linear 170ms allow-discrete, -webkit-backdrop-filter 0s linear 170ms allow-discrete;
+  }
+
+.dg-nt[data-glass-style] ._x_extension_menu_surface_2024_unique_:is([data-open="true"], [data-open="true"] > :not([data-open])) {
+    transition: opacity 170ms ease, transform 360ms var(--lumno-ease-menu, cubic-bezier(0.2, 1.45, 0.35, 1));
+  }
+
+.dg-nt[data-glass-style] .x-nt-wallpaper-panel {
+    transition: opacity var(--lumno-duration-sm) ease, visibility var(--lumno-duration-sm) ease,
+      transform var(--lumno-duration-lg) cubic-bezier(0.22, 1, 0.36, 1),
+      backdrop-filter 0s linear var(--lumno-duration-sm) allow-discrete,
+      -webkit-backdrop-filter 0s linear var(--lumno-duration-sm) allow-discrete;
+  }
+
+.dg-nt[data-glass-style] .x-nt-wallpaper-panel[data-open="true"] {
+    transition: opacity var(--lumno-duration-sm) ease, visibility var(--lumno-duration-sm) ease,
+      transform var(--lumno-duration-lg) cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+.dg-nt[data-glass-style] .x-lumno-toast {
+    transition: opacity var(--lumno-duration-sm) ease, transform var(--lumno-duration-lg) ease,
+      top var(--lumno-duration-md) ease,
+      backdrop-filter 0s linear var(--lumno-duration-sm) allow-discrete,
+      -webkit-backdrop-filter 0s linear var(--lumno-duration-sm) allow-discrete;
+  }
+
+.dg-nt[data-glass-style] .x-lumno-toast[data-show="true"] {
+    transition: opacity var(--lumno-duration-sm) ease, transform var(--lumno-duration-lg) ease,
+      top var(--lumno-duration-md) ease;
+  }
+
+.dg-nt[data-glass-style][data-nt-ready="1"] .x-lumno-feature-hint {
+    transition: opacity var(--lumno-duration-md, 0.18s) ease, transform var(--lumno-duration-md, 0.18s) ease,
+      visibility var(--lumno-duration-md, 0.18s) ease,
+      --x-lumno-feature-hint-shown var(--lumno-duration-md, 0.18s) ease,
+      backdrop-filter 0s linear var(--lumno-duration-md, 0.18s) allow-discrete,
+      -webkit-backdrop-filter 0s linear var(--lumno-duration-md, 0.18s) allow-discrete;
+  }
+
+.dg-nt[data-glass-style][data-nt-ready="1"] .x-lumno-feature-hint[data-visible="true"] {
+    transition: opacity var(--lumno-duration-md, 0.18s) ease, transform var(--lumno-duration-md, 0.18s) ease,
+      visibility var(--lumno-duration-md, 0.18s) ease,
+      --x-lumno-feature-hint-shown var(--lumno-duration-md, 0.18s) ease;
+  }
+
+.dg-nt[data-glass-style][data-nt-ready="1"] .x-lumno-feature-hint:not(.x-lumno-feature-hint--update-notice, .x-lumno-feature-hint--engagement-notice)::before,
+.dg-nt[data-glass-style][data-nt-ready="1"] .x-lumno-feature-hint:not(.x-lumno-feature-hint--update-notice, .x-lumno-feature-hint--engagement-notice)::after {
+    transition: backdrop-filter 0s linear var(--lumno-duration-md, 0.18s) allow-discrete,
+      -webkit-backdrop-filter 0s linear var(--lumno-duration-md, 0.18s) allow-discrete;
+  }
+
+.dg-nt[data-glass-style][data-nt-ready="1"] .x-lumno-feature-hint[data-visible="true"]::before,
+.dg-nt[data-glass-style][data-nt-ready="1"] .x-lumno-feature-hint[data-visible="true"]::after {
+    transition: none;
+  }
+}
+
+.dg-nt[data-glass-style] .x-nt-appearance-header {
+  background: transparent;
+}
+
+.dg-nt[data-glass-style] .x-nt-suggestion-item[data-row-state="hover"] {
+  background: var(--x-nt-glass-row-hover);
+}
+
+.dg-nt[data-glass-style] .x-nt-suggestion-item[data-row-state="active"] {
+  background: var(--x-nt-glass-row-active);
+}
+
+.dg-nt[data-glass-style] .x-nt-suggestion-mark {
+  background: var(--x-nt-glass-chip);
+  color: inherit;
+}
+
+.dg-nt[data-glass-style] :is(.x-nt-suggestion-url-line, .x-nt-suggestion-bookmark-path) {
+  color: var(--x-nt-glass-ink-secondary);
+}
+
+.dg-nt[data-glass-style] .x-nt-suggestion-tag {
+  background: var(--x-nt-glass-chip);
+  border-color: transparent;
+  color: var(--x-nt-subtext);
+}
+
+.dg-nt[data-glass-style] .x-nt-suggestion-action-tag {
+  background: var(--x-nt-glass-chip);
+  color: var(--x-nt-text);
+}
+
+.dg-nt[data-glass-style] .x-nt-suggestion-action-button {
+  background: transparent;
+  border-color: transparent;
+  color: var(--x-nt-subtext);
+}
+
+.dg-nt[data-glass-style] .x-nt-suggestion-item:is([data-row-state="hover"], [data-row-state="active"]) .x-nt-suggestion-action-button {
+  color: var(--x-nt-text);
+}
+
+.dg-nt[data-glass-style] .x-nt-suggestion-item[data-row-state="active"]:not([data-simple-mode="false"]) .x-nt-suggestion-action-button {
+  background: var(--x-nt-glass-chip-strong);
+}
+
+.dg-nt[data-glass-style] .x-nt-suggestion-item .x-nt-suggestion-icon-slot[data-emphasis="true"][data-favicon="false"],
+.dg-nt[data-glass-style] .x-nt-suggestion-item[data-row-state="active"]:is(*, [data-glass-ink-theme]) .x-nt-suggestion-icon-slot[data-favicon="true"]:has(> .x-nt-favicon-fallback[data-visible="true"]):is(*, [data-glass-ink-theme]) {
+  background-color: var(--x-nt-glass-raised);
+  box-shadow: var(--x-nt-glass-raised-edge);
+}
+
+.dg-nt[data-glass-style] .x-nt-suggestion-utility-button[data-visible="true"] {
+  background: transparent;
+  border-color: transparent;
+  color: var(--x-nt-subtext);
+}
+
+.dg-nt[data-glass-style] .x-nt-suggestion-utility-button[data-hover="true"] {
+  background: var(--x-nt-glass-chip);
+  border-color: transparent;
+  color: var(--x-nt-text);
+}
+
+.dg-nt[data-glass-style] .x-nt-shortcut-icon,
+.dg-nt[data-glass-style] .x-nt-shortcut-group-header {
+  transition:
+    transform var(--x-nt-shortcut-dock-duration, 300ms) var(--x-nt-shortcut-dock-ease, cubic-bezier(0.22, 1, 0.36, 1)),
+    background-color var(--lumno-duration-sm) ease,
+    color var(--lumno-duration-sm) ease,
+    filter var(--lumno-duration-sm) ease,
+    opacity var(--lumno-duration-sm) ease;
+}
+
+.dg-nt[data-glass-style]:not([data-nt-enter="done"]) :is(.x-nt-shortcut-icon, .x-nt-shortcut-group-header) {
+  transition: none;
+}
+
+.dg-nt[data-glass-style][data-nt-suggestions-open="true"] :is(.x-nt-shortcut-icon, .x-nt-shortcut-group-header),
+.dg-nt[data-glass-style]:has(.x-lumno-search-input-mode__menu[data-surface="newtab"]:not([hidden])) :is(.x-nt-shortcut-icon, .x-nt-shortcut-group-header) {
+  opacity: 0;
+  transition-duration: var(--x-nt-shortcut-dock-duration, 300ms), var(--lumno-duration-sm), var(--lumno-duration-sm), var(--lumno-duration-sm), 0s;
+}
+
+.dg-nt[data-glass-style="liquid"][data-nt-ready="1"]:not([data-theme="dark"]) :is(
+  .dg-nt:not(#dg-root),
+  ._x_extension_newtab_suggestions_surface_2026_unique_:not(#dg_x_extension_newtab_suggestions_surface_2026_unique_),
+  .x-nt-recent-card-visual,
+  .x-nt-bookmark-card,
+  ._x_extension_menu_surface_2024_unique_,
+  .x-nt-wallpaper-panel,
+  .x-nt-feedback-popover,
+  .x-lumno-toast
+)[data-glass-ink="dark"] {
+  /* brightness is 1 / (0.5 + contrast / 2): whites stay white, the darks lift toward them, so the
+     veil lightens the scene instead of graying it. */
+  --x-nt-glass-filter: blur(2px) saturate(115%) contrast(0.74) brightness(1.15);
+  --x-nt-glass-float-filter: blur(10px) saturate(125%) contrast(0.76) brightness(1.14);
+}
+
+.dg-nt[data-glass-style="liquid"][data-nt-ready="1"]:not([data-theme="dark"]) :is(.x-nt-recent-card-visual, .x-nt-bookmark-card, .x-nt-shortcut-icon)[data-glass-ink="dark"] {
+  --x-nt-glass-filter: blur(3px) saturate(115%) contrast(0.7) brightness(1.18);
+}
+
+.dg-nt[data-glass-style="liquid"][data-nt-ready="1"]:not([data-theme="dark"]) :is(
+  .dg-nt:not(#dg-root),
+  ._x_extension_newtab_suggestions_surface_2026_unique_:not(#dg_x_extension_newtab_suggestions_surface_2026_unique_)
+)[data-glass-ink="dark"] {
+  --x-nt-glass-filter: blur(3px) saturate(115%) contrast(0.7) brightness(1.18);
+}
+
+.dg-nt[data-glass-style="liquid"]:not([data-theme="dark"]) :is(
+  .dg-nt:not(#dg-root),
+  ._x_extension_newtab_suggestions_surface_2026_unique_:not(#dg_x_extension_newtab_suggestions_surface_2026_unique_)
+)[data-glass-ink="dark"] {
+  --x-nt-glass-tint-thin: 0.6;
+  --x-nt-glass-tint-dense: 0.74;
+  --x-nt-glass-edge:
+    inset 1.5px 1.5px 1px -1px rgba(255, 255, 255, 1),
+    inset -1px -1px 0.5px -0.5px rgba(255, 255, 255, 0.6),
+    inset 0 0 0 0.5px rgba(255, 255, 255, 0.25),
+    0 0 0 0.5px rgba(0, 0, 0, 0.12),
+    0 4px 16px rgba(0, 0, 0, 0.1);
+  --x-nt-glass-float-shadow: 0 18px 52px rgba(0, 0, 0, 0.16);
+}
+
+.dg-nt[data-glass-style="liquid"]:not([data-theme="dark"]) :is(
+  .x-nt-bookmark-card,
+  .x-nt-recent-card-visual,
+  .x-nt-shortcut-icon,
+  ._x_extension_menu_surface_2024_unique_,
+  .x-nt-wallpaper-panel,
+  .x-nt-feedback-popover,
+  .x-lumno-toast
+)[data-glass-ink="dark"] {
+  --x-nt-glass-edge:
+    inset 1.5px 1.5px 1px -1px rgba(255, 255, 255, 1),
+    inset -1px -1px 0.5px -0.5px rgba(255, 255, 255, 0.6),
+    inset 0 0 0 0.5px rgba(255, 255, 255, 0.25),
+    0 0 0 0.5px rgba(0, 0, 0, 0.12),
+    0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.dg-nt[data-glass-style="liquid"]:not([data-theme="dark"]) :is(
+  .x-nt-wallpaper-button,
+  .x-nt-feedback-button,
+  .x-nt-bookmark-cascade-debug-button,
+  .x-nt-bookmarks-pager-btn,
+  .x-nt-section-mode-select ._x_extension_select_trigger_2024_unique_
+)[data-glass-ink="dark"] {
+  --x-nt-glass-edge:
+    inset 1px 1px 0.5px -0.5px rgba(255, 255, 255, 1),
+    inset -1px -1px 0.5px -0.5px rgba(255, 255, 255, 0.55),
+    0 0 0 0.5px rgba(0, 0, 0, 0.12),
+    0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.dg-nt[data-glass-style="liquid"] :is(.x-nt-bookmark-card, .x-nt-recent-card-visual) {
+  --x-nt-glass-refraction-strength: 1.6;
+}
+
+.dg-nt[data-glass-style="liquid"] .x-nt-bookmarks-topbar[data-surface-mode="clear"] {
+  --x-nt-bookmarks-topbar-saturate: 120%;
+}
+
+.dg-nt[data-glass-style="liquid"]:not([data-theme="dark"]) .x-nt-bookmarks-topbar[data-surface-mode="clear"][data-glass-ink="dark"] {
+  --x-nt-glass-tint-thin: 0.38;
+  --x-nt-glass-tint-dense: 0.58;
+  /* The bar's own backdrop chain ends in this tone step: the same veil as the plates. */
+  --x-nt-bookmarks-topbar-liquid-tone: contrast(0.8) brightness(1.11);
+}
+
+.dg-nt[data-glass-style="frosted"]:not([data-theme="dark"]) .dg-nt:not(#dg-root)[data-glass-ink="dark"] {
+  --x-nt-glass-tint-thin: var(--x-nt-glass-float-thin);
+  --x-nt-glass-tint-dense: var(--x-nt-glass-float-dense);
+}
+
+.dg-nt[data-glass-style="frosted"]:not([data-theme="dark"]) .x-nt-bookmarks-topbar[data-surface-mode="frosted"][data-glass-ink="dark"] {
+  --x-nt-glass-tint-thin: 0.52;
+  --x-nt-glass-tint-dense: 0.76;
+}
+
+.dg-nt[data-glass-style="liquid"]:not([data-theme="dark"]) :is(.x-nt-recent-card-visual, .x-nt-bookmark-card)[data-glass-ink="dark"] {
+  --x-nt-glass-tint-thin: 0.6;
+  --x-nt-glass-tint-dense: 0.74;
+  /* The recent card's inner sheet stays a lighter layer of the denser plate. */
+  --x-nt-glass-inset: rgba(255, 255, 255, 0.5);
+}
+
+.dg-nt[data-glass-style="liquid"]:not([data-theme="dark"]) .x-nt-shortcut-icon[data-glass-ink="dark"] {
+  --x-nt-glass-tint-thin: 0.6;
+  --x-nt-glass-tint-dense: 0.74;
+}
+
+.dg-nt[data-glass-style="liquid"]:not([data-theme="dark"]) :is(
+  ._x_extension_menu_surface_2024_unique_,
+  .x-nt-wallpaper-panel,
+  .x-nt-feedback-popover,
+  .x-lumno-toast
+)[data-glass-ink="dark"] {
+  --x-nt-glass-tint-thin: 0.42;
+  --x-nt-glass-tint-dense: 0.62;
+}
+
+.dg-nt[data-glass-style="liquid"]:not([data-theme="dark"]) :is(
+  ._x_extension_newtab_suggestions_container_2024_unique_:not(#dg_x_extension_newtab_suggestions_container_2024_unique_),
+  ._x_extension_menu_surface_2024_unique_
+)[data-glass-ink="dark"] {
+  --x-nt-glass-row-hover: rgba(255, 255, 255, 0.42);
+  --x-nt-glass-row-active: rgba(255, 255, 255, 0.76);
+  --select-hover-bg: rgba(255, 255, 255, 0.42);
+  --select-selected-bg: rgba(255, 255, 255, 0.76);
+}
+
+.dg-nt[data-glass-style="liquid"]:not([data-theme="dark"]) ._x_extension_newtab_suggestions_container_2024_unique_:not(#dg_x_extension_newtab_suggestions_container_2024_unique_)[data-glass-ink="dark"] .x-nt-suggestion-item[data-row-state="hover"] {
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.dg-nt[data-glass-style="liquid"]:not([data-theme="dark"]) ._x_extension_newtab_suggestions_container_2024_unique_:not(#dg_x_extension_newtab_suggestions_container_2024_unique_)[data-glass-ink="dark"] .x-nt-suggestion-item[data-row-state="active"] {
+  border-color: rgba(255, 255, 255, 0.9);
+}
+
+.dg-nt[data-glass-style="liquid"]:not([data-theme="dark"]) ._x_extension_newtab_suggestions_container_2024_unique_:not(#dg_x_extension_newtab_suggestions_container_2024_unique_)[data-glass-ink="dark"] {
+  --x-nt-glass-row-hover: rgba(255, 255, 255, 0.64);
+  --x-nt-glass-row-active: rgba(255, 255, 255, 0.94);
+}
+
+.dg-nt[data-glass-style="liquid"]:not([data-theme="dark"]) ._x_extension_newtab_suggestions_container_2024_unique_:not(#dg_x_extension_newtab_suggestions_container_2024_unique_)[data-glass-ink="dark"] .x-nt-suggestion-item[data-row-state="hover"] {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.dg-nt[data-glass-style="liquid"]:not([data-theme="dark"]) ._x_extension_newtab_suggestions_container_2024_unique_:not(#dg_x_extension_newtab_suggestions_container_2024_unique_)[data-glass-ink="dark"] .x-nt-suggestion-item[data-row-state="active"] {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 3px 12px rgba(0, 0, 0, 0.06);
+}
+
+.dg-nt[data-glass-style][data-nt-ready="1"] .x-nt-bookmarks-topbar[data-surface-mode="frosted"] {
+  --x-nt-bookmarks-topbar-ink: var(--x-nt-glass-ink);
+  background: var(--x-nt-glass-fill);
+  border-bottom-color: transparent;
+  box-shadow: inset 0 -0.5px 0 rgba(255, 255, 255, 0.35), 0 0.5px 0 rgba(0, 0, 0, 0.1);
+  backdrop-filter: var(--x-nt-glass-filter) saturate(var(--x-nt-glass-saturate, 1)) brightness(var(--x-nt-glass-backdrop-brightness, 1));
+  -webkit-backdrop-filter: var(--x-nt-glass-filter) saturate(var(--x-nt-glass-saturate, 1)) brightness(var(--x-nt-glass-backdrop-brightness, 1));
+}
+
+.dg-nt[data-glass-style][data-nt-ready="1"] .x-nt-bookmarks-topbar[data-surface-mode="frosted"][data-layout="floating"] {
+  box-shadow: var(--x-nt-glass-edge), var(--x-nt-bookmarks-topbar-floating-shadow);
+}
+
+.dg-nt[data-glass-style][data-nt-ready="1"] .x-nt-bookmarks-topbar[data-surface-mode="clear"][data-glass-ink] {
+  --x-nt-bookmarks-topbar-ink: var(--x-nt-glass-ink);
+  background: var(--x-nt-glass-fill);
+}
+
+.dg-nt[data-glass-style] :is(._x_extension_menu_surface_2024_unique_) {
+  --select-hover-bg: var(--x-nt-glass-row-hover);
+  --select-selected-bg: var(--x-nt-glass-row-active);
+  --select-selected-text: var(--x-nt-text);
+}
+
+.dg-nt[data-glass-style] .x-lumno-search-input-mode__menu[data-surface="newtab"] {
+  /* It sits inside the search bar: until its own lens is ready, none, rather than the bar's, which
+     is sized to the bar. */
+  --x-nt-glass-refraction: initial;
+  --x-nt-glass-rim: 30px;
+  --x-nt-glass-refraction-strength: 1.6;
+  background: var(--x-nt-glass-fill) !important;
+  border-color: transparent !important;
+  box-shadow: var(--x-nt-glass-edge), var(--x-nt-glass-float-shadow) !important;
+}
+
+.dg-nt[data-glass-style] .x-lumno-search-input-mode__menu[data-surface="newtab"]:not([hidden]) {
+  backdrop-filter: var(--x-nt-glass-float-filter) saturate(var(--x-nt-glass-saturate, 1)) brightness(var(--x-nt-glass-backdrop-brightness, 1)) var(--x-nt-glass-refraction,) !important;
+  -webkit-backdrop-filter: var(--x-nt-glass-float-filter) saturate(var(--x-nt-glass-saturate, 1)) brightness(var(--x-nt-glass-backdrop-brightness, 1)) var(--x-nt-glass-refraction,) !important;
+}
+
+.dg-nt[data-glass-style="liquid"] .x-lumno-search-input-mode__menu[data-surface="newtab"]:is(*, [data-glass-ink]) {
+  --x-nt-glass-tint-rgb: inherit;
+  --x-nt-glass-tint-thin: inherit;
+  --x-nt-glass-tint-dense: inherit;
+}
+
+.dg-nt[data-glass-style="liquid"] .x-lumno-search-input-mode__menu[data-surface="newtab"]:not([hidden]) {
+  backdrop-filter: var(--x-nt-glass-filter) saturate(var(--x-nt-glass-saturate, 1)) brightness(var(--x-nt-glass-backdrop-brightness, 1)) var(--x-nt-glass-refraction,) !important;
+  -webkit-backdrop-filter: var(--x-nt-glass-filter) saturate(var(--x-nt-glass-saturate, 1)) brightness(var(--x-nt-glass-backdrop-brightness, 1)) var(--x-nt-glass-refraction,) !important;
+}
+
+.dg-nt[data-glass-style]:not([data-nt-suggestions-open="true"])
+  .dg-nt:not(#dg-root):has(.x-lumno-search-input-mode__menu[data-surface="newtab"]:not([hidden])) {
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.dg-nt[data-glass-style]:not([data-nt-suggestions-open="true"])
+  .dg-nt:not(#dg-root):has(.x-lumno-search-input-mode__menu[data-surface="newtab"]:not([hidden]))::before {
+  content: "";
+  position: absolute;
+  inset: calc(-1 * var(--x-nt-search-shell-border-width, 1px));
+  border: var(--x-nt-search-shell-border-width, 1px) solid transparent;
+  z-index: -1;
+  border-radius: inherit;
+  corner-shape: inherit;
+  pointer-events: none;
+  background: var(--x-nt-glass-fill);
+  box-shadow: var(--x-nt-glass-edge);
+  backdrop-filter: var(--x-nt-glass-filter) saturate(var(--x-nt-glass-saturate, 1)) brightness(var(--x-nt-glass-backdrop-brightness, 1)) var(--x-nt-glass-refraction,);
+  -webkit-backdrop-filter: var(--x-nt-glass-filter) saturate(var(--x-nt-glass-saturate, 1)) brightness(var(--x-nt-glass-backdrop-brightness, 1)) var(--x-nt-glass-refraction,);
+}
+
+.dg-nt[data-glass-style] .x-lumno-search-input-mode__menu[data-surface="newtab"] .x-lumno-search-input-mode__menu-footer {
+  background: transparent !important;
+  border-top-color: var(--x-nt-glass-divider) !important;
+}
+
+.dg-nt[data-glass-style] .x-lumno-search-input-mode__menu[data-surface="newtab"] .x-lumno-search-input-mode__menu-footer-key {
+  background: var(--x-nt-glass-chip) !important;
+  border-color: transparent !important;
+  color: var(--x-nt-subtext) !important;
+}
+
+.dg-nt[data-glass-style] .x-lumno-search-input-mode__menu[data-surface="newtab"] .x-lumno-search-input-mode__menu-item[aria-checked="true"] {
+  background: var(--x-nt-glass-row-active) !important;
+}
+
+.dg-nt[data-glass-style] .x-lumno-search-input-mode__menu[data-surface="newtab"] .x-lumno-search-input-mode__menu-match {
+  background: var(--x-nt-glass-chip) !important;
+  color: inherit !important;
+}
+
+.dg-nt[data-glass-style] :is(.x-nt-wallpaper-panel, ._x_extension_menu_surface_2024_unique_),
+.dg-nt[data-glass-style] :is(.x-nt-wallpaper-panel, ._x_extension_menu_surface_2024_unique_) :is(
+  .x-nt-row-select,
+  ._x_extension_select_wrap_2024_unique_,
+  .x-nt-range-slider-row,
+  .x-range-slider,
+  .x-nt-segmented-tabs
+) {
+  --control-bg: var(--x-nt-glass-chip);
+  --tab-border: transparent;
+  --x-nt-segmented-bg: var(--x-nt-glass-chip);
+  --x-nt-segmented-border: transparent;
+  --x-nt-segmented-indicator-bg: var(--x-nt-glass-raised);
+  --x-nt-segmented-indicator-shadow: var(--x-nt-glass-raised-edge);
+  --x-nt-segmented-hover-bg: var(--x-nt-glass-row-hover);
+}
+
+.dg-nt[data-glass-style] ._x_extension_menu_surface_2024_unique_ ._x_extension_select_divider_2026_unique_ {
+  background: var(--x-nt-glass-divider);
+}
+
+.dg-nt[data-glass-style] .x-nt-wallpaper-panel ._x_extension_select_wrap_2024_unique_:is(:hover, [data-open="true"]) ._x_extension_select_trigger_2024_unique_ {
+  background: var(--x-nt-glass-chip-strong);
+}
+
+.dg-nt[data-glass-style] .x-nt-wallpaper-panel .x-nt-wallpaper-switch:is(*, [data-glass-ink-theme]) {
+  --switch-track-bg: var(--x-nt-glass-well);
+  --switch-track-hover-bg: var(--x-nt-glass-well);
+}
+
+.dg-nt[data-glass-style] .x-nt-wallpaper-panel .x-nt-range-slider-row .x-range-slider:is(*, [data-glass-ink-theme]) {
+  --x-range-slider-rail: var(--x-nt-glass-well);
+  --x-range-slider-ring: var(--x-nt-glass-chip-strong);
+}
+
+.dg-nt[data-glass-style] :is(.x-nt-wallpaper-panel, ._x_extension_menu_surface_2024_unique_, ._x_extension_newtab_suggestions_surface_2026_unique_:not(#dg_x_extension_newtab_suggestions_surface_2026_unique_)) .x-lumno-link-button {
+  --x-lumno-link-button-color: var(--x-nt-glass-ink-secondary);
+  --x-lumno-link-button-hover-color: var(--x-nt-glass-ink);
+}
+
+.dg-nt[data-glass-style][data-nt-ready="1"] .x-lumno-feature-hint {
+  --x-lumno-feature-hint-bg-top: rgb(var(--x-nt-glass-float-rgb) / var(--x-nt-glass-float-dense));
+  --x-lumno-feature-hint-bg-bottom: rgb(var(--x-nt-glass-float-rgb) / var(--x-nt-glass-float-dense));
+  --x-lumno-feature-hint-border: transparent;
+  box-shadow: var(--x-nt-glass-edge), var(--x-nt-glass-float-shadow);
+}
+
+.dg-nt[data-glass-style][data-nt-ready="1"] .x-lumno-feature-hint[data-visible="true"] {
+  backdrop-filter: var(--x-nt-glass-float-filter);
+  -webkit-backdrop-filter: var(--x-nt-glass-float-filter);
+}
+
+.dg-nt[data-glass-style][data-nt-ready="1"] .x-lumno-feature-hint:not(.x-lumno-feature-hint--update-notice, .x-lumno-feature-hint--engagement-notice) {
+  --x-lumno-feature-hint-tail-at: calc(50% - var(--x-lumno-feature-hint-arrow-fill-size));
+  opacity: 1;
+  background: none;
+  box-shadow: none;
+}
+
+.dg-nt[data-glass-style][data-nt-ready="1"] .x-lumno-feature-hint:not(.x-lumno-feature-hint--update-notice, .x-lumno-feature-hint--engagement-notice)[data-arrow-align="start"] {
+  --x-lumno-feature-hint-tail-at: calc(var(--x-lumno-feature-hint-arrow-fill-inset) + 1px);
+}
+
+.dg-nt[data-glass-style][data-nt-ready="1"] .x-lumno-feature-hint:not(.x-lumno-feature-hint--update-notice, .x-lumno-feature-hint--engagement-notice)[data-arrow-align="end"] {
+  --x-lumno-feature-hint-tail-at: calc(100% - var(--x-lumno-feature-hint-arrow-fill-inset) - 1px - 2 * var(--x-lumno-feature-hint-arrow-fill-size));
+}
+
+.dg-nt[data-glass-style][data-nt-ready="1"] .x-lumno-feature-hint:not(.x-lumno-feature-hint--update-notice, .x-lumno-feature-hint--engagement-notice)[data-visible="true"] {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.dg-nt[data-glass-style][data-nt-ready="1"] .x-lumno-feature-hint:not(.x-lumno-feature-hint--update-notice, .x-lumno-feature-hint--engagement-notice)::before,
+.dg-nt[data-glass-style][data-nt-ready="1"] .x-lumno-feature-hint:not(.x-lumno-feature-hint--update-notice, .x-lumno-feature-hint--engagement-notice)::after {
+  z-index: -1;
+  border: 0;
+  background: rgb(var(--x-nt-glass-float-rgb) / var(--x-nt-glass-float-dense));
+  opacity: var(--x-lumno-feature-hint-shown);
+}
+
+.dg-nt[data-glass-style][data-nt-ready="1"] .x-lumno-feature-hint:not(.x-lumno-feature-hint--update-notice, .x-lumno-feature-hint--engagement-notice)[data-visible="true"]::before,
+.dg-nt[data-glass-style][data-nt-ready="1"] .x-lumno-feature-hint:not(.x-lumno-feature-hint--update-notice, .x-lumno-feature-hint--engagement-notice)[data-visible="true"]::after {
+  backdrop-filter: var(--x-nt-glass-float-filter);
+  -webkit-backdrop-filter: var(--x-nt-glass-float-filter);
+}
+
+.dg-nt[data-glass-style][data-nt-ready="1"] .x-lumno-feature-hint:not(.x-lumno-feature-hint--update-notice, .x-lumno-feature-hint--engagement-notice) > :not(.x-lumno-feature-hint__arrow-tip) {
+  /* A filter, not opacity, so it multiplies with the links' own opacity. */
+  filter: opacity(var(--x-lumno-feature-hint-shown));
+}
+
+.dg-nt[data-glass-style][data-nt-ready="1"] .x-lumno-feature-hint:not(.x-lumno-feature-hint--update-notice, .x-lumno-feature-hint--engagement-notice) > .x-lumno-feature-hint__arrow-tip {
+  display: none;
+}
+
+.dg-nt[data-glass-style][data-nt-ready="1"] .x-lumno-feature-hint:not(.x-lumno-feature-hint--update-notice, .x-lumno-feature-hint--engagement-notice)::before {
+  inset: -1px;
+  width: auto;
+  height: auto;
+  border-radius: inherit;
+  transform: none;
+  box-shadow: var(--x-nt-glass-edge), var(--x-nt-glass-float-shadow);
+}
+
+.dg-nt[data-glass-style][data-nt-ready="1"] .x-lumno-feature-hint:not(.x-lumno-feature-hint--update-notice, .x-lumno-feature-hint--engagement-notice):is([data-arrow-side="top"], [data-arrow-side="bottom"])::after {
+  width: calc(2 * var(--x-lumno-feature-hint-arrow-fill-size));
+  height: var(--x-lumno-feature-hint-arrow-fill-size);
+}
+
+.dg-nt[data-glass-style][data-nt-ready="1"] .x-lumno-feature-hint:not(.x-lumno-feature-hint--update-notice, .x-lumno-feature-hint--engagement-notice):is([data-arrow-side="left"], [data-arrow-side="right"])::after {
+  width: var(--x-lumno-feature-hint-arrow-fill-size);
+  height: calc(2 * var(--x-lumno-feature-hint-arrow-fill-size));
+}
+
+.dg-nt[data-glass-style][data-nt-ready="1"] .x-lumno-feature-hint:not(.x-lumno-feature-hint--update-notice, .x-lumno-feature-hint--engagement-notice)[data-arrow-side="bottom"]::after {
+  bottom: calc(-1px - var(--x-lumno-feature-hint-arrow-fill-size));
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  clip-path: shape(from 0 0, line to 100% 0, line to calc(50% + 1.6px) calc(100% - 1.6px),
+    curve to calc(50% - 1.6px) calc(100% - 1.6px) with 50% 100%, close);
+}
+
+.dg-nt[data-glass-style][data-nt-ready="1"] .x-lumno-feature-hint:not(.x-lumno-feature-hint--update-notice, .x-lumno-feature-hint--engagement-notice)[data-arrow-side="top"]::after {
+  top: calc(-1px - var(--x-lumno-feature-hint-arrow-fill-size));
+  clip-path: polygon(0 100%, 100% 100%, 50% 0);
+  clip-path: shape(from 0 100%, line to 100% 100%, line to calc(50% + 1.6px) 1.6px,
+    curve to calc(50% - 1.6px) 1.6px with 50% 0, close);
+}
+
+.dg-nt[data-glass-style][data-nt-ready="1"] .x-lumno-feature-hint:not(.x-lumno-feature-hint--update-notice, .x-lumno-feature-hint--engagement-notice)[data-arrow-side="right"]::after {
+  right: calc(-1px - var(--x-lumno-feature-hint-arrow-fill-size));
+  clip-path: polygon(0 0, 0 100%, 100% 50%);
+  clip-path: shape(from 0 0, line to 0 100%, line to calc(100% - 1.6px) calc(50% + 1.6px),
+    curve to calc(100% - 1.6px) calc(50% - 1.6px) with 100% 50%, close);
+}
+
+.dg-nt[data-glass-style][data-nt-ready="1"] .x-lumno-feature-hint:not(.x-lumno-feature-hint--update-notice, .x-lumno-feature-hint--engagement-notice)[data-arrow-side="left"]::after {
+  left: calc(-1px - var(--x-lumno-feature-hint-arrow-fill-size));
+  clip-path: polygon(100% 0, 100% 100%, 0 50%);
+  clip-path: shape(from 100% 0, line to 100% 100%, line to 1.6px calc(50% + 1.6px),
+    curve to 1.6px calc(50% - 1.6px) with 0 50%, close);
+}
+
+.dg-nt[data-glass-style][data-nt-ready="1"] .x-lumno-feature-hint:not(.x-lumno-feature-hint--update-notice, .x-lumno-feature-hint--engagement-notice)[data-arrow-side="bottom"]::before {
+  clip-path: polygon(evenodd, -80px -80px, calc(100% + 80px) -80px, calc(100% + 80px) calc(100% + 80px), -80px calc(100% + 80px), -80px -80px,
+    calc(var(--x-lumno-feature-hint-tail-at) + 0.5px) 100%,
+    calc(var(--x-lumno-feature-hint-tail-at) + 2 * var(--x-lumno-feature-hint-arrow-fill-size) - 0.5px) 100%,
+    calc(var(--x-lumno-feature-hint-tail-at) + var(--x-lumno-feature-hint-arrow-fill-size)) calc(100% + var(--x-lumno-feature-hint-arrow-fill-size) - 1.5px),
+    calc(var(--x-lumno-feature-hint-tail-at) + 0.5px) 100%);
+}
+
+.dg-nt[data-glass-style][data-nt-ready="1"] .x-lumno-feature-hint:not(.x-lumno-feature-hint--update-notice, .x-lumno-feature-hint--engagement-notice)[data-arrow-side="top"]::before {
+  clip-path: polygon(evenodd, -80px -80px, calc(100% + 80px) -80px, calc(100% + 80px) calc(100% + 80px), -80px calc(100% + 80px), -80px -80px,
+    calc(var(--x-lumno-feature-hint-tail-at) + 0.5px) 0,
+    calc(var(--x-lumno-feature-hint-tail-at) + 2 * var(--x-lumno-feature-hint-arrow-fill-size) - 0.5px) 0,
+    calc(var(--x-lumno-feature-hint-tail-at) + var(--x-lumno-feature-hint-arrow-fill-size)) calc(1.5px - var(--x-lumno-feature-hint-arrow-fill-size)),
+    calc(var(--x-lumno-feature-hint-tail-at) + 0.5px) 0);
+}
+
+.dg-nt[data-glass-style][data-nt-ready="1"] .x-lumno-feature-hint:not(.x-lumno-feature-hint--update-notice, .x-lumno-feature-hint--engagement-notice)[data-arrow-side="right"]::before {
+  clip-path: polygon(evenodd, -80px -80px, calc(100% + 80px) -80px, calc(100% + 80px) calc(100% + 80px), -80px calc(100% + 80px), -80px -80px,
+    100% calc(var(--x-lumno-feature-hint-tail-at) + 0.5px),
+    100% calc(var(--x-lumno-feature-hint-tail-at) + 2 * var(--x-lumno-feature-hint-arrow-fill-size) - 0.5px),
+    calc(100% + var(--x-lumno-feature-hint-arrow-fill-size) - 1.5px) calc(var(--x-lumno-feature-hint-tail-at) + var(--x-lumno-feature-hint-arrow-fill-size)),
+    100% calc(var(--x-lumno-feature-hint-tail-at) + 0.5px));
+}
+
+.dg-nt[data-glass-style][data-nt-ready="1"] .x-lumno-feature-hint:not(.x-lumno-feature-hint--update-notice, .x-lumno-feature-hint--engagement-notice)[data-arrow-side="left"]::before {
+  clip-path: polygon(evenodd, -80px -80px, calc(100% + 80px) -80px, calc(100% + 80px) calc(100% + 80px), -80px calc(100% + 80px), -80px -80px,
+    0 calc(var(--x-lumno-feature-hint-tail-at) + 0.5px),
+    0 calc(var(--x-lumno-feature-hint-tail-at) + 2 * var(--x-lumno-feature-hint-arrow-fill-size) - 0.5px),
+    calc(1.5px - var(--x-lumno-feature-hint-arrow-fill-size)) calc(var(--x-lumno-feature-hint-tail-at) + var(--x-lumno-feature-hint-arrow-fill-size)),
+    0 calc(var(--x-lumno-feature-hint-tail-at) + 0.5px));
+}
+
+.dg-nt[data-glass-style] :is(.x-nt-feedback-popover, .x-nt-feedback-popover *) {
+  --x-nt-feedback-ink: var(--x-nt-text);
+  --x-nt-feedback-detail-ink: var(--x-nt-text);
+  --x-nt-feedback-action-ink: var(--x-nt-text);
+  --x-nt-feedback-action-face: var(--x-nt-glass-raised);
+  --x-nt-feedback-action-edge: var(--x-nt-glass-raised-edge);
+  --x-nt-feedback-action-hover-face:
+    linear-gradient(var(--x-nt-glass-row-hover), var(--x-nt-glass-row-hover)), var(--x-nt-glass-raised);
+  --x-nt-feedback-action-hover-edge: var(--x-nt-glass-raised-edge);
+  --x-nt-feedback-action-press-edge: var(--x-nt-glass-raised-edge);
+  --x-nt-feedback-detail-action-ink: var(--x-nt-glass-ink-secondary);
+  --x-nt-feedback-detail-action-hover-ink: var(--x-nt-text);
+  --x-nt-feedback-detail-action-hover-bg: var(--x-nt-glass-chip);
+  --x-nt-feedback-detail-action-press-bg: var(--x-nt-glass-chip-strong);
+  --x-nt-feedback-qr-bg: var(--x-nt-glass-chip);
+}
+
+.dg-nt[data-glass-style] .x-lumno-toast:not([data-tone="error"]) {
+  color: var(--x-nt-text);
+}
+
+.dg-nt[data-glass-style] :is(.x-nt-shortcut-dialog, .x-nt-recent-history-dialog) {
+  background: rgb(var(--x-nt-glass-float-rgb) / var(--x-nt-glass-modal-alpha));
+  box-shadow: var(--x-nt-glass-edge), var(--x-nt-glass-float-shadow);
+  backdrop-filter: var(--x-nt-glass-modal-filter);
+  -webkit-backdrop-filter: var(--x-nt-glass-modal-filter);
+}
+
+.dg-nt[data-glass-style] :is(.x-nt-shortcut-dialog-backdrop, .x-nt-recent-history-backdrop, ._x_extension_community_qr_dialog_2026_unique_:not(#dg_x_extension_community_qr_dialog_2026_unique_)) {
+  --x-nt-glass-modal-alpha: calc(0.74 + 0.12 * var(--x-nt-glass-density, 0.35));
+  --x-nt-glass-modal-filter: blur(40px) saturate(150%) brightness(var(--x-nt-glass-backdrop-brightness, 1));
+}
+
+.dg-nt[data-glass-style] :is(.x-nt-shortcut-dialog-backdrop, .x-nt-recent-history-backdrop) {
+  background: none;
+  opacity: 1;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.dg-nt[data-glass-style] :is(.x-nt-shortcut-dialog-backdrop, .x-nt-recent-history-backdrop)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgba(15, 23, 42, 0.22);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--lumno-duration-sm) ease;
+}
+
+.dg-nt[data-glass-style][data-theme="dark"] :is(.x-nt-shortcut-dialog-backdrop, .x-nt-recent-history-backdrop)::before {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.dg-nt[data-glass-style] :is(.x-nt-shortcut-dialog-backdrop, .x-nt-recent-history-backdrop)[data-open="true"]::before {
+  opacity: 1;
+}
+
+.dg-nt[data-glass-style] .x-nt-shortcut-dialog {
+  --x-nt-shortcut-dialog-bg: rgb(var(--x-nt-glass-float-rgb));
+  color: var(--panel-text);
+}
+
+.dg-nt[data-glass-style] :is(.x-nt-shortcut-dialog, .x-nt-shortcut-dialog *) {
+  --control-bg: var(--x-nt-glass-chip);
+  --control-hover-bg: var(--x-nt-glass-chip-strong);
+  --control-open-bg: var(--x-nt-glass-chip-strong);
+  --tab-border: transparent;
+  --input-focus-bg: var(--x-nt-glass-chip-strong);
+  --input-placeholder: var(--x-nt-placeholder);
+}
+
+.dg-nt[data-glass-style] :is(.x-nt-shortcut-dialog-description, .x-nt-shortcut-icon-source-hint) {
+  color: var(--x-nt-glass-ink-secondary);
+}
+
+.dg-nt[data-glass-style] .x-nt-folder-color-stage {
+  --x-nt-folder-color-dot: var(--x-nt-glass-well);
+}
+
+.dg-nt[data-glass-style] .x-nt-folder-color-actions {
+  border-top-color: var(--x-nt-glass-divider);
+}
+
+.dg-nt[data-glass-style] :is(.x-nt-shortcut-dialog, .x-nt-recent-history-dialog, .x-nt-wallpaper-panel) .x-lumno-action-button--secondary {
+  --x-lumno-action-border-color: transparent;
+  --x-lumno-action-bg: var(--x-nt-glass-raised);
+  --x-lumno-action-color: var(--x-nt-text);
+  --x-lumno-action-shadow: var(--x-nt-glass-raised-edge);
+  --x-lumno-action-hover-bg:
+    linear-gradient(var(--x-nt-glass-row-hover), var(--x-nt-glass-row-hover)), var(--x-nt-glass-raised);
+  --x-lumno-action-hover-border-color: transparent;
+  --x-lumno-action-hover-shadow: var(--x-nt-glass-raised-edge);
+}
+
+.dg-nt[data-glass-style] [data-glass-ink-theme="dark"] .x-nt-shortcut-dialog {
+  --input-focus-color: rgba(191, 219, 254, 0.7);
+  --input-focus-shadow: rgba(59, 130, 246, 0.3);
+  --panel-text: #f8fafc;
+}
+
+.dg-nt[data-glass-style] [data-glass-ink-theme="dark"] :is(.x-nt-shortcut-error, .x-nt-shortcut-icon-error) {
+  color: #fca5a5;
+}
+
+.dg-nt[data-glass-style] [data-glass-ink-theme="dark"] .x-nt-shortcut-online-icon-preview[data-builtin-monochrome="true"] img {
+  filter: invert(1);
+}
+
+.dg-nt[data-glass-style] :is(
+  .x-nt-bookmark-card:not(.x-nt-bookmarks-topbar .x-nt-bookmark-card) .x-nt-bookmark-title,
+  .x-nt-recent-name
+) {
+  color: var(--x-nt-glass-ink);
+  mix-blend-mode: var(--x-nt-glass-ink-blend);
+}
+
+.dg-nt[data-glass-style] :is(.x-nt-recent-url-text, .x-nt-recent-action) {
+  color: var(--x-nt-glass-ink-secondary);
+  mix-blend-mode: var(--x-nt-glass-ink-blend);
+}
+
+.dg-nt[data-glass-style] .x-nt-bookmark-card:not(.x-nt-bookmarks-topbar .x-nt-bookmark-card):not(.x-nt-bookmark-card-drag-preview) {
+  background: var(--x-nt-glass-fill);
+  box-shadow: var(--x-nt-glass-edge);
+  backdrop-filter: var(--x-nt-glass-filter) saturate(var(--x-nt-glass-saturate, 1)) brightness(var(--x-nt-glass-backdrop-brightness, 1)) var(--x-nt-glass-refraction,);
+  -webkit-backdrop-filter: var(--x-nt-glass-filter) saturate(var(--x-nt-glass-saturate, 1)) brightness(var(--x-nt-glass-backdrop-brightness, 1)) var(--x-nt-glass-refraction,);
+}
+
+.dg-nt[data-glass-style] .x-nt-bookmark-card:not(.x-nt-bookmarks-topbar .x-nt-bookmark-card):not([data-bookmark-drop-target="true"]):not([data-bookmark-context-menu-open="true"]) {
+  border-color: transparent;
+}
+
+.dg-nt[data-glass-style] .x-nt-bookmark-card:not(.x-nt-bookmarks-topbar .x-nt-bookmark-card):not([data-bookmark-drop-target="true"])::before {
+  background: var(--x-nt-glass-tint-hover);
+}
+
+.dg-nt[data-glass-style] .x-nt-bookmark-icon {
+  background: transparent;
+}
+
+.dg-nt[data-glass-style] .x-nt-folder-preview-favicon {
+  background: var(--x-nt-glass-inset);
+  border-color: transparent;
+}
+
+.dg-nt[data-glass-style="liquid"] .x-nt-recent-card-visual {
+  will-change: auto;
+}
+
+.dg-nt[data-glass-style] .x-nt-recent-card-visual,
+.dg-nt[data-glass-style] .x-nt-recent-card:hover .x-nt-recent-card-visual,
+.dg-nt[data-glass-style] .x-nt-recent-card[data-recent-context-menu-open="true"] .x-nt-recent-card-visual {
+  background: var(--x-nt-glass-fill);
+  border-color: transparent;
+  box-shadow: var(--x-nt-glass-edge);
+  backdrop-filter: var(--x-nt-glass-filter) saturate(var(--x-nt-glass-saturate, 1)) brightness(var(--x-nt-glass-backdrop-brightness, 1)) var(--x-nt-glass-refraction,);
+  -webkit-backdrop-filter: var(--x-nt-glass-filter) saturate(var(--x-nt-glass-saturate, 1)) brightness(var(--x-nt-glass-backdrop-brightness, 1)) var(--x-nt-glass-refraction,);
+}
+
+.dg-nt[data-glass-style] .x-nt-recent-inner {
+  background: none;
+  background-color: var(--x-nt-glass-inset);
+  border-color: transparent;
+  box-shadow: var(--x-nt-glass-inset-edge);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  transition: height var(--lumno-duration-xl) ease, transform var(--lumno-duration-xl) ease,
+    margin-bottom var(--lumno-duration-xl) ease, background-color var(--lumno-duration-xl) ease;
+}
+
+.dg-nt[data-glass-style] .x-nt-recent-card:hover .x-nt-recent-inner,
+.dg-nt[data-glass-style] .x-nt-recent-card[data-recent-context-menu-open="true"] .x-nt-recent-inner {
+  background-color: rgb(var(--x-nt-glass-tint-rgb) / min(0.9, calc(var(--x-nt-glass-tint-dense) + 0.24)));
+  box-shadow: var(--x-nt-glass-edge);
+  backdrop-filter: blur(24px) saturate(var(--x-nt-glass-saturate, 1)) brightness(var(--x-nt-glass-backdrop-brightness, 1));
+  -webkit-backdrop-filter: blur(24px) saturate(var(--x-nt-glass-saturate, 1)) brightness(var(--x-nt-glass-backdrop-brightness, 1));
+}
+
+.dg-nt[data-glass-style] .x-nt-recent-card.x-nt-recent-card--rollback:hover .x-nt-recent-inner {
+  background-color: var(--x-nt-glass-inset);
+}
+
+.dg-nt[data-glass-style][data-theme="dark"] .x-nt-recent-inner::before {
+  display: none;
+}
+
+.dg-nt[data-glass-style] .x-nt-shortcut-icon {
+  background: var(--x-nt-glass-fill);
+  box-shadow: var(--x-nt-glass-edge), inset 0 0 0 0.5px var(--x-nt-glass-hairline);
+  backdrop-filter: var(--x-nt-glass-filter) saturate(var(--x-nt-glass-saturate, 1)) brightness(var(--x-nt-glass-backdrop-brightness, 1)) var(--x-nt-glass-refraction,);
+  -webkit-backdrop-filter: var(--x-nt-glass-filter) saturate(var(--x-nt-glass-saturate, 1)) brightness(var(--x-nt-glass-backdrop-brightness, 1)) var(--x-nt-glass-refraction,);
+  color: var(--x-nt-text);
+}
+
+.dg-nt[data-glass-style] .x-nt-shortcut-favicon-mask {
+  color: var(--x-nt-text);
+}
+
+.dg-nt[data-glass-style] .x-nt-shortcut-icon {
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+.dg-nt[data-glass-style][data-nt-ready="1"] :is(
+  .x-nt-wallpaper-button,
+  .x-nt-feedback-button,
+  .x-nt-bookmark-cascade-debug-button,
+  .x-nt-bookmarks-pager-btn,
+  .x-nt-section-mode-select ._x_extension_select_trigger_2024_unique_
+):not([data-wallpaper-overlay-cover="true"]):not(.x-nt-bookmarks-topbar *) {
+  --x-nt-wallpaper-icon-solid-bg: var(--x-nt-glass-tint);
+  --x-nt-wallpaper-icon-solid-bg-hover: var(--x-nt-glass-tint-hover);
+  --x-nt-wallpaper-icon-solid-bg-press: var(--x-nt-glass-tint-hover);
+  --x-nt-wallpaper-icon-solid-ink: var(--x-nt-text);
+  --x-nt-wallpaper-icon-solid-ink-hover: var(--x-nt-text);
+  background: var(--x-nt-glass-fill);
+  border-color: transparent;
+  box-shadow: var(--x-nt-glass-edge);
+  backdrop-filter: var(--x-nt-glass-filter) saturate(var(--x-nt-glass-saturate, 1)) brightness(var(--x-nt-glass-backdrop-brightness, 1)) var(--x-nt-glass-refraction,);
+  -webkit-backdrop-filter: var(--x-nt-glass-filter) saturate(var(--x-nt-glass-saturate, 1)) brightness(var(--x-nt-glass-backdrop-brightness, 1)) var(--x-nt-glass-refraction,);
+  color: var(--x-nt-text);
+  filter: none;
+  text-shadow: none;
+}
+
+.dg-nt[data-glass-style][data-nt-ready="1"] :is(
+  .x-nt-wallpaper-button,
+  .x-nt-feedback-button,
+  .x-nt-bookmark-cascade-debug-button,
+  .x-nt-bookmarks-pager-btn,
+  .x-nt-section-mode-select ._x_extension_select_trigger_2024_unique_
+):not([data-wallpaper-overlay-cover="true"]):not(.x-nt-bookmarks-topbar *):hover {
+  background: var(--x-nt-glass-fill-hover);
+}
+
+.dg-nt[data-glass-style] :is(.x-nt-recent-pin, .x-nt-recent-track) {
+  color: var(--x-nt-glass-ink-secondary);
+}
+
+.dg-nt[data-glass-style] :is(.x-nt-recent-pin, .x-nt-recent-track):is(:hover, :focus-visible) {
+  background: var(--x-nt-glass-chip);
+  color: var(--x-nt-glass-ink);
+}
+
+.dg-nt[data-glass-style] :is(.x-nt-recent-pin, .x-nt-recent-track):is(.x-nt-recent-pin--active, .x-nt-recent-track--active) {
+  background: var(--x-nt-glass-chip);
+  color: rgb(var(--lumno-color-accent-rgb));
+}
+
+.dg-nt[data-glass-style][data-nt-enter="run"] :is(
+  ._x_extension_newtab_bookmarks_2024_unique_:not(#dg_x_extension_newtab_bookmarks_2024_unique_),
+  ._x_extension_newtab_recent_sites_2024_unique_:not(#dg_x_extension_newtab_recent_sites_2024_unique_)
+)[data-visible="true"],
+.dg-nt[data-glass-style][data-nt-enter="run"] .x-nt-shortcuts-section[data-visible="true"] .x-nt-shortcut-tile,
+.dg-nt[data-glass-style][data-nt-enter="run"] :is(
+  .x-nt-wallpaper-control,
+  .x-nt-feedback-control,
+  .x-nt-bookmark-cascade-debug-control
+) {
+  animation: none;
+}
+
+.dg-nt[data-glass-style][data-nt-enter="run"] :is(
+  ._x_extension_newtab_bookmarks_2024_unique_:not(#dg_x_extension_newtab_bookmarks_2024_unique_),
+  ._x_extension_newtab_recent_sites_2024_unique_:not(#dg_x_extension_newtab_recent_sites_2024_unique_)
+)[data-visible="true"] :is(
+  .x-nt-bookmark-card,
+  .x-nt-recent-card-visual,
+  .x-nt-bookmarks-heading,
+  .x-nt-bookmarks-crumb,
+  .x-nt-bookmarks-crumb-sep,
+  .x-nt-bookmarks-pager-btn,
+  .x-nt-section-mode-select ._x_extension_select_trigger_2024_unique_,
+  .x-nt-recent-heading,
+  .x-nt-recent-mode-switch
+) {
+  animation: _x_nt_content_section_entry_2026_unique_ var(--lumno-duration-sm) cubic-bezier(0.16, 1, 0.3, 1) 40ms both;
+}
+
+.dg-nt[data-glass-style][data-nt-enter="run"] .x-nt-shortcuts-section[data-visible="true"] .x-nt-shortcut-icon {
+  animation: _x_nt_shortcut_entry_2026_unique_ var(--lumno-duration-sm) cubic-bezier(0.16, 1, 0.3, 1)
+    calc(20ms + (var(--x-nt-shortcut-enter-index) * 10ms)) both;
+}
+
+.dg-nt[data-glass-style][data-nt-enter="run"] :is(
+  .x-nt-wallpaper-button,
+  .x-nt-feedback-button,
+  .x-nt-bookmark-cascade-debug-button
+) {
+  animation: _x_nt_corner_control_entry_2026_unique_ var(--lumno-duration-sm) cubic-bezier(0.16, 1, 0.3, 1) 90ms both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+.dg-nt[data-glass-style][data-nt-enter] :is(
+    .x-nt-bookmark-card,
+    .x-nt-recent-card-visual,
+    .x-nt-bookmarks-heading,
+    .x-nt-bookmarks-crumb,
+    .x-nt-bookmarks-crumb-sep,
+    .x-nt-bookmarks-pager-btn,
+    .x-nt-section-mode-select ._x_extension_select_trigger_2024_unique_,
+    .x-nt-recent-heading,
+    .x-nt-recent-mode-switch,
+    .x-nt-shortcut-icon,
+    .x-nt-wallpaper-button,
+    .x-nt-feedback-button,
+    .x-nt-bookmark-cascade-debug-button
+  ) {
+    animation: none;
+  }
+}

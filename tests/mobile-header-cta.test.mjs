@@ -285,7 +285,7 @@ test("homepage navbar animates in the community action and opens the community p
   assert.doesNotMatch(source, /\.top-nav-more-dropdown[^{]*\{[^}]*backdrop-filter:/);
   assert.match(
     source,
-    /@media \(min-width:\s*761px\) and \(max-width:\s*900px\)[\s\S]*?body\.has-nav-install \.top-nav-ghost-links\s*\{[\s\S]*?display:\s*none;[\s\S]*?body\.has-nav-install \.top-nav-more-menu\s*\{[\s\S]*?display:\s*block;/,
+    /@media \(min-width:\s*761px\) and \(max-width:\s*980px\)[\s\S]*?body\.has-nav-install \.top-nav-ghost-links\s*\{[\s\S]*?display:\s*none;[\s\S]*?body\.has-nav-install \.top-nav-more-menu\s*\{[\s\S]*?display:\s*block;/,
     "the primary install state should collapse the centered links before they overlap the right actions",
   );
   assert.match(

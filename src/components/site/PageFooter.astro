@@ -3,6 +3,7 @@ import SiteFooter from "../home/sections/SiteFooter.astro";
 import xiaohongshuIconSvg from "../../assets/home-icons/xiaohongshu-line.svg?raw";
 import { COMMUNITY_LINKS } from "../../lib/community";
 import { getCommunityPanel } from "../../lib/community-panel";
+import { getDesignPageContent } from "../../lib/design-content";
 import { getGuideContent, getGuidePath } from "../../lib/guides";
 import { getHomeContent } from "../../lib/home-content";
 import { LOCALE_CONFIG, buildLocalizedPath, type SupportedLocale } from "../../lib/locales";
@@ -98,6 +99,7 @@ const { firefox: firefoxStoreVersion } = await getSiteStoreVersions();
       links: [
         { label: content.footerRelease, href: buildLocalizedPath(locale, "/release/") },
         { label: getGuideContent(locale).ui.navLabel, href: getGuidePath(locale) },
+        { label: getDesignPageContent(locale).navLabel, href: buildLocalizedPath(locale, "/design/") },
       ],
     },
     {

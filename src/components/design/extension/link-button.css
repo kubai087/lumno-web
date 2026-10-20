@@ -1,0 +1,76 @@
+/* Generated from lumno-extension/src/shared/link-button.css by scripts/sync-extension-ui.mjs. Do not edit; rerun the script. */
+
+.x-lumno-link-button {
+  --x-lumno-link-button-color: rgba(107, 114, 128, 0.86);
+  --x-lumno-link-button-hover-color: var(--lumno-color-text);
+  --x-lumno-link-button-focus-ring: var(--lumno-color-focus-ring);
+  --x-lumno-link-button-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-sizing: border-box;
+  flex: 0 0 auto;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--lumno-radius-xs);
+  background: transparent;
+  color: var(--x-lumno-link-button-color);
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-family: inherit;
+  font-size: var(--lumno-font-size-sm);
+  font-weight: 400;
+  line-height: 1.2;
+  white-space: nowrap;
+  text-decoration: none;
+  cursor: pointer;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: color var(--lumno-duration-sm) ease;
+}
+
+.x-lumno-link-button:hover {
+  color: var(--x-lumno-link-button-hover-color);
+}
+
+.x-lumno-link-button:focus-visible {
+  outline: 2px solid var(--x-lumno-link-button-focus-ring);
+  outline-offset: 2px;
+}
+
+.x-lumno-link-button__label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.x-lumno-link-button__leading-icon {
+  --ri-size: 14px;
+  margin-right: 1px;
+  color: inherit;
+}
+
+.x-lumno-link-button__icon {
+  --ri-size: 14px;
+  color: inherit;
+  transition: transform var(--lumno-duration-xl) var(--x-lumno-link-button-spring);
+}
+
+.x-lumno-link-button:hover .x-lumno-link-button__icon {
+  transform: translate(2px, -2px);
+}
+
+.dg-ext[data-theme="dark"] .x-lumno-link-button {
+  --x-lumno-link-button-color: var(--lumno-color-text-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+.x-lumno-link-button,
+  .x-lumno-link-button__icon {
+    transition: none;
+  }
+
+.x-lumno-link-button:hover .x-lumno-link-button__icon {
+    transform: none;
+  }
+}

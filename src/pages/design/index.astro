@@ -1,0 +1,83 @@
+---
+import SitePage from "../../layouts/SitePage.astro";
+import DesignGallery from "../../components/design/DesignGallery";
+import DesignHero from "../../components/design/DesignHero.astro";
+import { getDesignDemoCopy, getDesignExtensionStrings, getDesignPageContent } from "../../lib/design-content";
+import { getHomeContent } from "../../lib/home-content";
+import { DEFAULT_LOCALE, buildLocalizedPath, buildRouteLanguageMap, type SupportedLocale } from "../../lib/locales";
+import { fetchReleases } from "../../lib/releases";
+import { SITE_NAME, buildBreadcrumbListSchema, buildPageKeywords, buildWebPageSchema } from "../../lib/seo";
+
+interface Props {
+  forcedLocale?: SupportedLocale | null;
+  seoPath?: string;
+  routeLanguageMap?: Record<string, string>;
+}
+
+/*
+ * /design: Lumno's interface components, each live in its own card (a gallery
+ * in the spirit of component showcases). One React island renders the whole
+ * grid; its server HTML already shows every card at rest.
+ */
+const forcedLocale = Astro.props.forcedLocale ?? null;
+const seoPath = Astro.props.seoPath || "/design/";
+const routeLanguageMap = Astro.props.routeLanguageMap || buildRouteLanguageMap("/design/");
+const uiLocale: SupportedLocale = forcedLocale || DEFAULT_LOCALE;
+const content = getDesignPageContent(uiLocale);
+const home = getHomeContent(uiLocale);
+const homeHref = buildLocalizedPath(uiLocale, "/");
+const [latest] = (await fetchReleases()).filter((item) => !item.prerelease);
+const version = latest ? (/^v/i.test(latest.tag) ? latest.tag : `v${latest.tag}`) : "v1.1.0";
+const structuredData = [
+  buildWebPageSchema({ name: content.seoTitle, description: content.seoDescription, path: seoPath, language: uiLocale }),
+  buildBreadcrumbListSchema({
+    items: [
+      { name: SITE_NAME, path: homeHref },
+      { name: content.navLabel, path: seoPath },
+    ],
+  }),
+];
+---
+
+<SitePage
+  locale={uiLocale}
+  forcedLocale={forcedLocale}
+  basePath="/design/"
+  seoPath={seoPath}
+  routeLanguageMap={routeLanguageMap}
+  title={content.seoTitle}
+  description={content.seoDescription}
+  keywords={buildPageKeywords(content.keywords)}
+  structuredData={structuredData}
+  analyticsScope="design"
+  navHandoff=".design-hero"
+>
+  <script is:inline slot="head">
+    // Applies the saved light / dark choice (components/design/theme.ts) before first paint.
+    (() => {
+      let mode = "system";
+      try {
+        mode = window.localStorage.getItem("lumno-design-theme") || "system";
+      } catch (_error) {
+        // Storage blocked: follow the system.
+      }
+      const dark = mode === "dark" || (mode !== "light" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+      document.documentElement.dataset.designTheme = dark ? "dark" : "light";
+    })();
+  </script>
+  <div class="design-page">
+    <DesignHero title={content.title} lead={content.lead} you={content.cursorYou} />
+    <DesignGallery
+      client:load
+      page={{ filters: content.filters, filtersLabel: content.filtersLabel, cards: content.cards, sections: content.sections, theme: content.theme, replay: content.replay }}
+      demo={getDesignDemoCopy(uiLocale)}
+      commandBar={home.commandBar}
+      searchPlaceholder={home.newTab.filters.searchPlaceholder}
+      version={version}
+      releaseTitle={latest?.name || ""}
+      extensionStrings={getDesignExtensionStrings(uiLocale)}
+      zh={uiLocale.startsWith("zh")}
+      releaseHref={buildLocalizedPath(uiLocale, "/release/")}
+    />
+  </div>
+</SitePage>

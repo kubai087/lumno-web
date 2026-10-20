@@ -1,0 +1,95 @@
+/* Generated from lumno-extension/src/shared/choice-card.css by scripts/sync-extension-ui.mjs. Do not edit; rerun the script. */
+
+:is(._x_extension_theme_preview_2026_unique_, .x-nt-appearance-preview) {
+  --choice-card-radius: var(--lumno-radius-md);
+  position: relative;
+  border-radius: var(--choice-card-radius);
+  overflow: hidden;
+  background: transparent;
+  box-sizing: border-box;
+  transition: transform var(--lumno-duration-xs) ease;
+}
+
+:is(._x_extension_theme_preview_2026_unique_, .x-nt-appearance-preview)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 2px solid transparent;
+  border-radius: var(--choice-card-radius);
+  pointer-events: none;
+  box-sizing: border-box;
+  transition: border-color 170ms ease;
+}
+
+:is(._x_extension_theme_gallery_2026_unique_ ._x_extension_theme_option_2024_unique_, .x-nt-appearance-option):active
+  :is(._x_extension_theme_preview_2026_unique_, .x-nt-appearance-preview) {
+  transform: scale(0.97);
+}
+
+:is(
+  ._x_extension_theme_gallery_2026_unique_ ._x_extension_theme_option_2024_unique_[data-active="true"],
+  .x-nt-appearance-option[data-selected="true"]
+) :is(._x_extension_theme_preview_2026_unique_, .x-nt-appearance-preview)::after {
+  border-color: var(--lumno-color-selection-outline);
+}
+
+:is(._x_extension_theme_check_2026_unique_, .x-nt-appearance-check) {
+  --choice-card-check-size: 16px;
+  --choice-card-check-offset: 5px;
+  --choice-card-check-icon-size: 11px;
+  position: absolute;
+  right: var(--choice-card-check-offset);
+  bottom: var(--choice-card-check-offset);
+  z-index: 2;
+  width: var(--choice-card-check-size);
+  height: var(--choice-card-check-size);
+  border-radius: var(--lumno-radius-pill);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  background: linear-gradient(180deg, #404859 0%, #273042 100%);
+  border: 1px solid #040404;
+  box-shadow:
+    0 3px 2px rgba(0, 0, 0, 0.05),
+    0 2px 2px rgba(0, 0, 0, 0.09),
+    0 0 1px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transform: scale(0.82);
+  transition:
+    opacity var(--lumno-duration-sm) ease,
+    transform var(--lumno-duration-lg) cubic-bezier(0.2, 0.85, 0.2, 1.2);
+  pointer-events: none;
+}
+
+:is(._x_extension_theme_check_2026_unique_, .x-nt-appearance-check)::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  box-shadow: inset 0 1px 1.6px rgba(255, 255, 255, 0.34);
+  pointer-events: none;
+}
+
+:is(._x_extension_theme_check_2026_unique_, .x-nt-appearance-check) .ri-icon {
+  width: var(--choice-card-check-icon-size);
+  height: var(--choice-card-check-icon-size);
+  line-height: var(--choice-card-check-icon-size);
+}
+
+:is(
+  ._x_extension_theme_gallery_2026_unique_ ._x_extension_theme_option_2024_unique_[data-active="true"],
+  .x-nt-appearance-option[data-selected="true"]
+) :is(._x_extension_theme_check_2026_unique_, .x-nt-appearance-check) {
+  display: inline-flex;
+  opacity: 1;
+  transform: scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+:is(._x_extension_theme_preview_2026_unique_, .x-nt-appearance-preview),
+  :is(._x_extension_theme_preview_2026_unique_, .x-nt-appearance-preview)::after,
+  :is(._x_extension_theme_check_2026_unique_, .x-nt-appearance-check) {
+    transition: none;
+  }
+}

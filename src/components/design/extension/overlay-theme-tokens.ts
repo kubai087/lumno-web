@@ -1,0 +1,48 @@
+// Generated from lumno-extension/src/overlay/search-panel.js by scripts/sync-extension-ui.mjs. Do not edit; rerun the script.
+export const OVERLAY_THEME_TOKENS = {
+  "light": {
+    "bg": "linear-gradient(135deg, rgba(255, 255, 255, 0.97) 0%, rgba(255, 255, 255, 0.95) 100%)",
+    "modeMenuBg": "#FFFFFF",
+    "border": "var(--x-lumno-search-shell-border-light, rgba(0, 0, 0, 0.14))",
+    "shadow": "inset 0 1px 0 rgba(255, 255, 255, 0.72), 0 2px 5px -2px rgba(15, 23, 42, 0.11), 0 16px 42px -12px rgba(15, 23, 42, 0.17), 0 48px 112px -30px rgba(15, 23, 42, 0.19)",
+    "text": "#111827",
+    "subtext": "#6B7280",
+    "link": "#2563EB",
+    "placeholder": "#9CA3AF",
+    "hoverBg": "rgba(200, 208, 218, 0.45)",
+    "neutralMarkBg": "#E5E7EB",
+    "neutralMarkText": "#111827",
+    "tagBg": "#F3F4F6",
+    "tagText": "#667085",
+    "bookmarkTagBg": "#F3F4F6",
+    "bookmarkTagText": "#667085",
+    "underline": "#E5E7EB",
+    "dividerOpacity": "0.5",
+    "dividerInset": "24px",
+    "blur": "14px",
+    "saturate": "175%"
+  },
+  "dark": {
+    "bg": "rgba(20, 20, 20, 0.62)",
+    "lightPageBg": "rgba(20, 20, 20, 0.82)",
+    "modeMenuBg": "#141414",
+    "border": "var(--x-lumno-search-shell-border-dark, rgba(255, 255, 255, 0.16))",
+    "shadow": "inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 2px 6px -2px rgba(0, 0, 0, 0.28), 0 18px 48px -14px rgba(0, 0, 0, 0.42), 0 52px 124px -34px rgba(0, 0, 0, 0.52)",
+    "text": "#E5E7EB",
+    "subtext": "#9CA3AF",
+    "link": "#D1D5DB",
+    "placeholder": "#9CA3AF",
+    "hoverBg": "rgba(255, 255, 255, 0.08)",
+    "neutralMarkBg": "rgba(148, 163, 184, 0.28)",
+    "neutralMarkText": "#F8FAFC",
+    "tagBg": "rgba(255, 255, 255, 0.12)",
+    "tagText": "#E5E7EB",
+    "bookmarkTagBg": "rgba(255, 255, 255, 0.12)",
+    "bookmarkTagText": "#E5E7EB",
+    "underline": "rgba(255, 255, 255, 0.18)",
+    "dividerOpacity": "0.35",
+    "dividerInset": "24px",
+    "blur": "28px",
+    "saturate": "145%"
+  }
+} as const;

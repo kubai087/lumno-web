@@ -1,0 +1,26 @@
+// The sites the /design gallery's new tab pieces show. scripts/capture-extension-newtab.mjs
+// loads them into the real extension to record their favicons and colors.
+export const NEWTAB_SITES = [
+  { id: "github", title: "GitHub", url: "https://github.com/" },
+  { id: "youtube", title: "YouTube", url: "https://www.youtube.com/" },
+  { id: "figma", title: "Figma", url: "https://www.figma.com/" },
+  { id: "dribbble", title: "Dribbble", url: "https://dribbble.com/" },
+  { id: "twitch", title: "Twitch", url: "https://www.twitch.tv/" },
+  { id: "chatgpt", title: "ChatGPT", url: "https://chatgpt.com/" },
+  { id: "claude", title: "Claude", url: "https://claude.ai/" },
+  { id: "google", title: "Google", url: "https://www.google.com/" },
+  { id: "vercel", title: "Vercel", url: "https://vercel.com/" },
+  { id: "nextjs", title: "Next.js", url: "https://nextjs.org/" },
+  { id: "react", title: "React", url: "https://react.dev/" },
+  { id: "tailwind", title: "Tailwind CSS", url: "https://tailwindcss.com/" },
+  { id: "supabase", title: "Supabase", url: "https://supabase.com/" },
+  { id: "npm", title: "npm", url: "https://www.npmjs.com/" },
+  { id: "stackoverflow", title: "Stack Overflow", url: "https://stackoverflow.com/" },
+  { id: "medium", title: "Medium", url: "https://medium.com/" },
+  { id: "fonts", title: "Google Fonts", url: "https://fonts.google.com/" },
+  { id: "apple-hig", title: "Apple HIG", url: "https://developer.apple.com/design/" },
+  { id: "material", title: "Material 3", url: "https://m3.material.io/" },
+  { id: "sf-symbols", title: "SF Symbols", url: "https://developer.apple.com/sf-symbols/" },
+  { id: "material-symbols", title: "Material Symbols", url: "https://fonts.google.com/icons" },
+  { id: "remixicon", title: "Remix Icon", url: "https://remixicon.com/" },
+];

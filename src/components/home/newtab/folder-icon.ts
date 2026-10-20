@@ -1,8 +1,8 @@
 /*
  * The extension's bookmark folder icon (src/newtab/bookmark-folder-icon.js),
  * ported as-is: the same Figma SVG, closed ("base") and open ("hover") shapes,
- * and the same 460ms path + gradient morph between them. Only the default
- * blue is kept; the scenes never recolor folders.
+ * and the same 460ms path + gradient morph between them, plus the folder
+ * color picker's recolor (applyFolderColor).
  */
 
 /** The SVG markup for one icon. `idSuffix` keeps its filter/gradient ids unique on the page. */
@@ -605,4 +605,81 @@ export function playFolderOpen(icon: Element, open: boolean) {
     }
     animatePart(part, fromD, toD);
   });
+}
+
+const DEFAULT_FOLDER_COLOR = "#5393FF";
+const tintedSources = new WeakMap<GradientMorph, Pick<GradientMorph, "baseMain" | "hoverMain" | "baseOverlay" | "hoverOverlay">>();
+
+/**
+ * The extension's tint (bookmark-folder-icon.js tintFolderColor): each shade keeps
+ * its distance from the default blue, measured toward white or black, around the
+ * new color, so highlights and shaded edges survive the recolor.
+ */
+function tintFolderColor(source: string, color: string) {
+  if (color.toUpperCase() === DEFAULT_FOLDER_COLOR) return source;
+  const sourceRgb = hexToRgb(source);
+  const selected = hexToRgb(color);
+  if (!sourceRgb || !selected) return source;
+  const reference = { r: 83, g: 147, b: 255 };
+  const tinted = { r: 0, g: 0, b: 0 };
+  (["r", "g", "b"] as const).forEach((channel) => {
+    const amount =
+      channel === "b"
+        ? (sourceRgb.r - reference.r) / (255 - reference.r)
+        : (sourceRgb[channel] - reference[channel]) / (255 - reference[channel]);
+    tinted[channel] = amount >= 0 ? selected[channel] + (255 - selected[channel]) * amount : selected[channel] * (1 + amount);
+  });
+  return rgbToHex(tinted);
+}
+
+const tintConfig = (config: GradientConfig, color: string): GradientConfig => ({
+  ...config,
+  stops: config.stops.map((stop) => ({ ...stop, color: tintFolderColor(stop.color, color) })),
+});
+
+/** Recolors an icon as the folder color picker does (bookmark-folder-icon.js applyFolderColor). */
+export function applyFolderColor(icon: Element, value: string) {
+  const svg = icon.querySelector("svg");
+  const selected = hexToRgb(value);
+  if (!svg || !selected) return;
+  const color = rgbToHex(selected).toUpperCase();
+  svg.setAttribute("data-folder-color", color);
+  svg.querySelectorAll('[data-folder-part$="-outline"], [data-folder-part-hover$="-outline"]').forEach((path) => {
+    path.setAttribute("stroke", color);
+  });
+  svg.querySelectorAll("linearGradient:not([data-folder-gradient-morph]) stop").forEach((stop) => {
+    const source = stop.getAttribute("data-folder-base-color") || stop.getAttribute("stop-color") || "";
+    stop.setAttribute("data-folder-base-color", source);
+    stop.setAttribute("stop-color", tintFolderColor(source, color));
+  });
+  svg.querySelectorAll("feColorMatrix").forEach((matrix) => {
+    const original = matrix.getAttribute("data-folder-base-shadow") || matrix.getAttribute("values") || "";
+    if (!original.includes("0.541176")) return;
+    matrix.setAttribute("data-folder-base-shadow", original);
+    const shadow = hexToRgb(tintFolderColor("#8AB6FF", color));
+    matrix.setAttribute(
+      "values",
+      color === DEFAULT_FOLDER_COLOR || !shadow
+        ? original
+        : `0 0 0 0 ${shadow.r / 255} 0 0 0 0 ${shadow.g / 255} 0 0 0 0 ${shadow.b / 255} 0 0 0 0.21 0`,
+    );
+  });
+  const morph = init(icon)?.gradient;
+  if (!morph) return;
+  const source = tintedSources.get(morph) || {
+    baseMain: morph.baseMain,
+    hoverMain: morph.hoverMain,
+    baseOverlay: morph.baseOverlay,
+    hoverOverlay: morph.hoverOverlay,
+  };
+  tintedSources.set(morph, source);
+  morph.baseMain = tintConfig(source.baseMain, color);
+  morph.hoverMain = tintConfig(source.hoverMain, color);
+  morph.baseOverlay = tintConfig(source.baseOverlay, color);
+  morph.hoverOverlay = tintConfig(source.hoverOverlay, color);
+  if (morph.rafId) cancelAnimationFrame(morph.rafId);
+  morph.rafId = 0;
+  const open = morph.state === "hover";
+  applyGradient(morph.mainGradientEl, open ? morph.hoverMain : morph.baseMain);
+  applyGradient(morph.overlayGradientEl, open ? morph.hoverOverlay : morph.baseOverlay);
 }

@@ -1,0 +1,1732 @@
+/*
+ * /design gallery: flat pale cards, each holding one live component. The
+ * components are drawn by the extension's own CSS (extension/, copied by
+ * scripts/sync-extension-ui.mjs); this sheet lays out the page and the cards
+ * and places the components in them. A few surfaces not yet synced (the
+ * command bar, menus, hints) are ported here with the extension's numbers.
+ */
+
+/* ---------- Page ---------- */
+
+.design-page {
+  width: var(--home-column);
+  margin: 0 auto;
+  padding: clamp(112px, 12vw, 148px) 0 var(--home-section-space);
+}
+
+/* ---------- Filters ---------- */
+
+.dg-filters {
+  display: flex;
+  justify-content: center;
+  margin: 0 0 clamp(32px, 4vw, 44px);
+}
+
+/*
+ * One frame of the options page's tab strip (options.css, drawn by
+ * extension/options.css): the filters, a divider, then the two theme icons.
+ * The filters scroll inside the frame when they run out of room, as the
+ * options page's tabs do; the theme icons stay put.
+ */
+
+/*
+ * The options page's strip is drawn for a wallpaper, where its faint frame and
+ * white pill read; on this plain page it gets a solid frame, a lifted pill and
+ * darker labels so the filters stand out.
+ */
+.dg-filterbar {
+  align-items: center;
+}
+
+.dg-filters ._x_extension_settings_tabs_frame_2026_unique_.dg-filterbar {
+  background: #eceef1;
+  border-color: transparent;
+  box-shadow: inset 0 1px 1px rgba(15, 23, 42, 0.04);
+}
+
+.dg-filterbar ._x_extension_tabs_indicator_2024_unique_,
+.dg-filterbar .dg-theme-toggle [data-active="true"] {
+  box-shadow:
+    0 1px 2px rgba(15, 23, 42, 0.1),
+    0 2px 8px -2px rgba(15, 23, 42, 0.12);
+}
+
+.dg-filterbar ._x_extension_settings_tab_button_2024_unique_ {
+  --tab-inactive-text: #4b5563;
+}
+
+.dg-filters[data-theme="dark"]
+  ._x_extension_settings_tabs_frame_2026_unique_.dg-filterbar {
+  background: #1f2023;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+
+.dg-filters[data-theme="dark"]
+  .dg-filterbar
+  ._x_extension_settings_tab_button_2024_unique_ {
+  --tab-inactive-text: #b4b9c2;
+}
+
+.dg-filterbar > ._x_extension_settings_tabs_2024_unique_:first-child {
+  flex: 0 1 auto;
+}
+
+.dg-filterbar > .dg-theme-toggle {
+  flex: none;
+}
+
+.dg-filterbar__divider {
+  flex: none;
+  width: 1px;
+  height: 16px;
+  background: rgba(15, 23, 42, 0.12);
+}
+
+.dg-filters[data-theme="dark"] .dg-filterbar__divider {
+  background: rgba(148, 163, 184, 0.24);
+}
+
+/* ---------- Sections ---------- */
+
+.dg-section + .dg-section {
+  margin-top: clamp(48px, 6vw, 72px);
+}
+
+.dg-section[hidden] {
+  display: none;
+}
+
+.dg-section__head {
+  display: grid;
+  gap: 6px;
+  margin: 0 0 20px;
+}
+
+.dg-section__head h2 {
+  margin: 0;
+  color: var(--home-ink, #2f2a22);
+  font-size: 22px;
+  font-weight: 620;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.dg-section__head p {
+  margin: 0;
+  color: var(--text-sub, #626870);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ---------- Grid ---------- */
+
+/*
+ * A masonry of shots. Twelve columns; a card is a third, half, two thirds or
+ * the whole row wide (data-w s / m / l / xl). Rows are 4px units with no row
+ * gap: each card spans its stage height, its caption and the gap below it
+ * (--dg-rows, worked out in DesignGallery.tsx), and dense packing fills holes.
+ */
+
+.dg-grid {
+  --dg-gap: 24px;
+  --dg-unit: 4px;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-auto-rows: var(--dg-unit);
+  grid-auto-flow: row dense;
+  column-gap: var(--dg-gap);
+}
+
+.dg-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  margin: 0 0 var(--dg-gap);
+  grid-row: span var(--dg-rows);
+  color: #111827;
+  animation: dg-card-in 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.dg-card[data-w="s"] {
+  grid-column: span 4;
+}
+
+.dg-card[data-w="m"] {
+  grid-column: span 6;
+}
+
+.dg-card[data-w="l"] {
+  grid-column: span 8;
+}
+
+.dg-card[data-w="xl"] {
+  grid-column: 1 / -1;
+}
+
+.dg-card[hidden] {
+  display: none;
+}
+
+@keyframes dg-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+/* An open menu or tooltip in one card lies over its neighbours. */
+
+.dg-card:has(:is([data-open="true"], [aria-expanded="true"])) {
+  z-index: 2;
+}
+
+/*
+ * The shot: a pale surface of its own height with room on every side. The
+ * component sits on the canvas inside it, centred at its own size; pieces that
+ * place themselves (menus, the command bar) are positioned against the canvas,
+ * so they keep the same margins.
+ */
+
+.dg-card__stage {
+  --dg-pad: clamp(28px, 4vw, 44px);
+  --dg-strip: 52px;
+  position: relative;
+  isolation: isolate;
+  height: var(--dg-stage);
+  border-radius: 28px;
+  background: #f4f5f7;
+  font-family:
+    "Open Sans",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    var(--font-cjk, "PingFang SC", "Microsoft YaHei"),
+    sans-serif;
+}
+
+/* New tab pieces on a wallpaper, as in the new tab. */
+.dg-card[data-wallpaper] .dg-card__stage {
+  background: var(--dg-wall-light) center / cover no-repeat;
+  box-shadow: none;
+}
+
+html[data-design-theme="dark"] .dg-card[data-wallpaper] .dg-card__stage {
+  background-image: var(--dg-wall-dark);
+}
+
+/* The bottom strip holds the card's name and replay; the component never reaches into it. */
+.dg-card__canvas {
+  position: absolute;
+  inset: var(--dg-pad) var(--dg-pad) var(--dg-strip) var(--dg-pad);
+  display: grid;
+  place-items: center;
+}
+
+/* The caption sits under the shot, never on it: the name, then replay on the right. */
+
+.dg-card__caption {
+  position: absolute;
+  inset: auto 0 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: var(--dg-strip);
+  padding: 0 12px 0 22px;
+  pointer-events: none;
+}
+
+.dg-card__caption > * {
+  pointer-events: auto;
+}
+
+.dg-card__name {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  color: #6b7280;
+  font-size: 13px;
+  font-weight: 560;
+  line-height: 1.4;
+  letter-spacing: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Replay: a quiet pill in the caption, there once the demo has played. */
+
+.dg-replay {
+  all: unset;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 12px 0 10px;
+  border-radius: 999px;
+  --lumno-corner-shape: round;
+  background: rgba(15, 23, 42, 0.05);
+  color: #4b5563;
+  font-size: 12px;
+  font-weight: 560;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    opacity 160ms ease,
+    background-color 160ms ease,
+    color 160ms ease;
+}
+
+.dg-replay i {
+  font-size: 14px;
+}
+
+.dg-replay[data-visible="false"] {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.dg-replay:hover {
+  background: rgba(15, 23, 42, 0.09);
+  color: #111827;
+}
+
+.dg-replay:focus-visible {
+  outline: 2px solid rgba(59, 130, 246, 0.65);
+  outline-offset: 2px;
+}
+
+/* Tablet: two columns; thirds and halves take one, anything wider the whole row. */
+
+@media (max-width: 1080px) {
+  .dg-card[data-w="s"],
+  .dg-card[data-w="m"] {
+    grid-column: span 6;
+  }
+
+  .dg-card[data-w="l"] {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 680px) {
+  .dg-grid {
+    --dg-gap: 16px;
+  }
+
+  .dg-card[data-w] {
+    grid-column: 1 / -1;
+    grid-row: span var(--dg-rows-phone, var(--dg-rows));
+  }
+
+  .dg-card__stage {
+    --dg-pad: 20px;
+    height: var(--dg-stage-phone, var(--dg-stage));
+    border-radius: 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dg-card {
+    animation: none;
+  }
+}
+
+/* ---------- Extension components (extension/*.css) ---------- */
+
+/*
+ * The components are drawn by the extension's own CSS, copied by
+ * scripts/sync-extension-ui.mjs. What follows is only what the extension's
+ * pages set around them: the page font and icon sizing (options.css body and
+ * .ri-icon), and where each one sits in a card.
+ */
+
+/* The options page's body: 12px Open Sans at normal line height, black, default smoothing. */
+.dg-ext {
+  font-family:
+    "Open Sans",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    var(--font-cjk, "PingFang SC", "Microsoft YaHei"),
+    sans-serif;
+  font-size: 12px;
+  line-height: normal;
+}
+
+.dg-ext .dg-card__stage {
+  color: #000;
+}
+
+/* The size classes the options page gets from its icon sheet (.ri-icon itself is in options.css). */
+.dg-ext .ri-size-10 {
+  --ri-size: 10px;
+}
+
+.dg-ext .ri-size-12 {
+  --ri-size: 12px;
+}
+
+.dg-ext .ri-size-14 {
+  --ri-size: 14px;
+}
+
+.dg-ext .ri-size-16 {
+  --ri-size: 16px;
+}
+
+/* An ⓘ's tooltip (shared/tooltip.css) shows above it, inside the card. */
+.dg-ext-info {
+  position: relative;
+}
+
+.dg-ext-info__tooltip._x_extension_tooltip_2026_unique_ {
+  top: auto;
+  left: 50%;
+  bottom: calc(100% + 8px);
+  width: max-content;
+  max-width: 240px;
+  translate: -50% 0;
+}
+
+/* One settings panel per card, at about the width a row has on the options page. */
+
+.dg-ext-panel-host {
+  container: dg-panel / inline-size;
+  width: min(440px, 100%);
+}
+
+/* The WebDAV fields line up with the row titles above them. */
+.dg-ext-form.lumno-webdav-form-grid {
+  padding: 0 var(--settings-content-edge-space);
+}
+
+.dg-ext-panel--fit.dg-ext-panel {
+  width: auto;
+}
+
+.dg-ext-tabs {
+  display: grid;
+  justify-items: center;
+  gap: 24px;
+  max-width: 100%;
+}
+
+/* Options buttons align to the start of their column there; on a card they sit in the middle. */
+
+.dg-feedback > ._x_extension_shortcut_submit_2024_unique_ {
+  align-self: center;
+}
+
+/*
+ * Hints (extension/feature-hints.css). In the extension the wallpaper hint
+ * hangs off its button and the update notice spans the search bar; here the
+ * hint sits in a row beside its button and the notice takes the card's
+ * width, up to the search bar's.
+ */
+.dg-hint-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  width: 100%;
+  min-width: 0;
+}
+
+/* The stage never grows to fit a one-line hint; the hint's text ellipsizes, as the extension's does when short of room. */
+.dg-feedback:has(> .dg-hint-row, > .x-lumno-feature-hint) {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.dg-card .x-lumno-feature-hint--newtab-wallpaper {
+  position: relative;
+  top: auto;
+  right: auto;
+  min-width: 0;
+  max-width: 100%;
+  transform: scale(0.98);
+}
+
+.dg-card .x-lumno-feature-hint--newtab-wallpaper[data-visible="true"] {
+  transform: scale(1);
+}
+
+.dg-card .x-lumno-feature-hint--update-notice {
+  width: min(100%, 640px);
+  max-width: 100%;
+}
+
+/* Its arrow points up at the search bar it hangs under, which the card leaves out. */
+.dg-card .x-lumno-feature-hint--update-notice::before,
+.dg-card .x-lumno-feature-hint--update-notice::after {
+  display: none;
+}
+
+/* busy-label.tsx: the button holds the spinner in place of its label. */
+.dg-busy-button {
+  position: relative;
+}
+
+.dg-ext .ri-size-10 {
+  --ri-size: 10px;
+}
+
+.dg-ext .ri-size-12 {
+  --ri-size: 12px;
+}
+
+/* The toast drops in at the top of its card rather than the window. */
+
+.dg-card .x-lumno-toast {
+  position: absolute;
+  top: 20px;
+  max-width: calc(100% - 32px);
+}
+
+/* Each tooltip shows above its own button. */
+
+@media (max-width: 680px) {
+  /* The options page's own narrow panel (its max-width: 560px rule). */
+
+  .dg-card ._x_extension_settings_panel_2024_unique_ {
+    --settings-content-edge-space: 8px;
+    padding: 12px;
+  }
+}
+
+/* ---------- Buttons (the new tab's pill action buttons) ---------- */
+
+.dg-buttons {
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+}
+
+.dg-buttons__row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* A press the demo makes looks like the button's :active state. */
+.dg-card .x-lumno-action-button[data-dg-pressed="true"] {
+  transform: translateY(1px) scale(0.98);
+  filter: brightness(0.96);
+}
+
+/* ---------- Tooltip on the command bar ---------- */
+
+.dg-tip-host {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* shared/tooltip.css fixes the tooltip to the window; here it sits over the button it names. */
+.dg-tip-host ._x_extension_tooltip_2026_unique_.dg-tip {
+  position: absolute;
+  z-index: 50;
+  translate: -50% calc(-100% - 8px);
+  pointer-events: none;
+}
+
+/* ---------- Slider (shared/range-slider.css) ---------- */
+
+.dg-slider {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+/* Room for the clock as the demo sizes it; dragged larger, it grows past the box. */
+
+.dg-slider__clock {
+  display: grid;
+  place-items: center;
+  height: 64px;
+}
+
+.dg-slider .nts-clock {
+  transition:
+    font-size 120ms ease,
+    opacity 120ms ease;
+}
+
+/* ---------- Command bar (extension/suggestions-view.css and search-input.css, under .dg-ovl) ---------- */
+
+/* The card holds the panel where the page would: centred, near the top, the menu free to hang below. */
+.dg-ovl-stage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+}
+
+/* The overlay and anything under it, scaled down as one in a card narrower than the overlay can be. */
+.dg-ovl-fit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  flex: none;
+  transform-origin: top center;
+}
+
+/* Site search grows its rows downward from the middle of a tall card. */
+.dg-ovl-stage--middle {
+  padding-top: 48px;
+}
+
+@media (max-width: 680px) {
+  .dg-ovl-stage--middle {
+    padding-top: 8px;
+  }
+}
+
+/*
+ * The panel: the styles search-panel.js pins on #_x_extension_overlay_2024_unique_
+ * (its theme variables come inline from OverlayPanel). Width follows the
+ * standard overlay size, down to the card.
+ */
+.dg-ovl {
+  position: relative;
+  width: min(760px, 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  background: var(--x-ov-bg, rgba(255, 255, 255, 0.95));
+  backdrop-filter: blur(var(--x-ov-blur, 24px))
+    saturate(var(--x-ov-saturate, 165%));
+  border: 1px solid
+    var(
+      --x-ov-border,
+      var(--x-lumno-search-shell-border-light, rgba(0, 0, 0, 0.14))
+    );
+  border-radius: var(--x-ov-panel-radius, 26px);
+  corner-shape: superellipse(1.25);
+  box-shadow: var(--x-ov-shadow);
+  color: var(--x-ov-text, #111827);
+  font-family:
+    "Lumno Open Sans",
+    "Open Sans",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    var(--font-cjk, "PingFang SC", "Microsoft YaHei"),
+    sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: normal;
+  line-height: 1;
+  text-align: left;
+  text-transform: none;
+  -webkit-font-smoothing: auto;
+  contain: layout style;
+}
+
+/* A tile the demo moves to shows the ring the extension gives the keyboard-focused tile (:focus-visible). */
+.dg-ovl .x-lumno-search-input-mode__menu-item[data-dg-focus="true"] {
+  border-color: var(
+    --x-lumno-search-mode-item-focus-ring,
+    var(--x-lumno-search-mode-accent, var(--x-ext-input-caret, #2563eb))
+  ) !important;
+}
+
+/* Site search grows rows downward from the middle of its tall card. */
+
+/* Scope chip: 32px tall, 10px radius, the accent at 7.5%. */
+
+@keyframes dg-chip-in {
+  from {
+    opacity: 0;
+    transform: translateX(-4px) scaleX(0.92);
+  }
+}
+
+/* "Tab  Search with GitHub", at the input's right end. */
+
+/* Rows: 52px, 12px 16px padding, 13px radius. */
+
+@keyframes dg-row-in {
+  from {
+    opacity: 0;
+    filter: blur(3px);
+    transform: translateY(8px) scale(0.992);
+  }
+}
+
+/* A flat label tag, no border and no key cap. */
+
+@keyframes dg-fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Search-scope menu: 52px tiles, 36px icons. */
+
+/* A tint marks the current scope; arrow keys and the pointer move a solid ring. */
+
+/* ---------- Selection toolbar (content/selection-quick-actions.js) ---------- */
+
+.dg-selection {
+  position: relative;
+  align-self: stretch;
+  justify-self: stretch;
+  display: grid;
+  align-items: center;
+}
+
+.dg-selection__text {
+  margin: 0 auto;
+  max-width: 340px;
+  padding: 22px 24px;
+  border: 1px solid rgba(var(--home-edge, 32, 38, 46), 0.08);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  color: #374151;
+  font-size: 15px;
+  line-height: 1.75;
+  cursor: text;
+}
+
+.dg-selection__text::selection,
+.dg-selection__text *::selection {
+  background: #b4d5fe;
+}
+
+.dg-selection__seed[data-seeded="true"] {
+  background: #b4d5fe;
+}
+
+/* The toolbar's host is fixed to the window in a page; here it is placed in the card. */
+.dg-selection .dg-sqa-host {
+  position: absolute;
+  z-index: 3;
+}
+
+/* ---------- Shortcut dock ---------- */
+
+.dg-dock {
+  width: 100%;
+}
+
+/* Wider than some cards: the ends fade out instead of being cut. */
+
+.dg-dock__row {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding: 24px 0 40px;
+  -webkit-mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 10%,
+    #000 90%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    90deg,
+    transparent,
+    #000 10%,
+    #000 90%,
+    transparent
+  );
+}
+
+.dg-dock .nts-shortcuts {
+  --nts-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.dg-dock .nts-shortcut {
+  border-radius: 16px;
+  outline: none;
+}
+
+.dg-dock .nts-shortcut:focus-visible .nts-shortcut__icon {
+  box-shadow:
+    0 0 0 2px #fff,
+    0 0 0 4px rgba(59, 130, 246, 0.65);
+}
+
+.dg-dock__tip {
+  top: 0;
+  left: 0;
+  z-index: 4;
+  opacity: 0;
+  transform: translate(var(--x, 0px), calc(var(--y, 0px) + 4px))
+    translateX(-50%);
+  transition:
+    opacity 120ms ease,
+    transform 120ms ease;
+}
+
+.dg-dock__tip[data-visible="true"] {
+  opacity: 1;
+  transform: translate(var(--x, 0px), var(--y, 0px)) translateX(-50%);
+}
+
+/* ---------- Bookmark menu ---------- */
+
+.dg-bookmarks {
+  --nts-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --nts-ease-menu: cubic-bezier(0.2, 1.45, 0.35, 1);
+  position: relative;
+  align-self: start;
+  justify-self: center;
+  /* Room on the right for the nested folder's menu, so the group sits centred. */
+  width: min(380px, 100%);
+  margin-top: 12px;
+  color: #111827;
+}
+
+.dg-bookmarks__card {
+  appearance: none;
+  width: max-content;
+  min-width: 184px;
+  max-width: 100%;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.dg-bookmarks__card:focus-visible {
+  outline: 2px solid rgba(59, 130, 246, 0.65);
+  outline-offset: 2px;
+}
+
+.dg-bookmarks__menu {
+  top: calc(100% + 8px);
+  left: 0;
+  pointer-events: none;
+}
+
+.dg-bookmarks__menu[data-open="true"] {
+  pointer-events: auto;
+}
+
+.dg-bookmarks .nts-menu__item {
+  color: #263140;
+  text-decoration: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.dg-bookmarks__sub {
+  position: relative;
+}
+
+.dg-bookmarks__side {
+  top: -7px;
+  left: calc(100% + 6px);
+  pointer-events: none;
+}
+
+.dg-bookmarks__side[data-open="true"] {
+  pointer-events: auto;
+}
+
+/* No room beside the menu on a phone: the nested folder opens below its row. */
+
+@media (max-width: 680px) {
+  .dg-bookmarks__side {
+    top: calc(100% + 4px);
+    left: 32px;
+    transform: translateY(-6px) scale(0.96, 0.86);
+    transform-origin: top left;
+  }
+}
+
+/* ---------- Folder color ---------- */
+
+.dg-folder-color {
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+  width: min(320px, 100%);
+}
+
+/* The picker's stage: a dotted field behind the preview (folder-color-picker.css). */
+
+.dg-folder-color__stage {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 20px 16px 16px;
+  border-radius: 16px;
+  background-color: rgba(255, 255, 255, 0.55);
+  background-image: radial-gradient(
+    circle,
+    rgb(15 23 42 / 0.13) 0.8px,
+    transparent 1px
+  );
+  background-size: 16px 16px;
+  background-position: center;
+}
+
+.nts-folder.dg-folder-color__preview {
+  width: 96px;
+  height: 96px;
+}
+
+.dg-folder-color__name {
+  color: #111827;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.dg-folder-color__swatches {
+  display: grid;
+  grid-template-columns: repeat(8, 24px);
+  gap: 10px;
+}
+
+.dg-folder-color__swatch {
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid rgb(0 0 0 / 0.08);
+  border-radius: 50%;
+  --lumno-corner-shape: round;
+  cursor: pointer;
+  transition:
+    box-shadow 140ms ease,
+    transform 140ms ease;
+}
+
+.dg-folder-color__swatch:hover {
+  transform: scale(1.08);
+}
+
+.dg-folder-color__swatch[aria-pressed="true"] {
+  box-shadow:
+    0 0 0 2px #f1f2f5,
+    0 0 0 4px #111827;
+}
+
+.dg-folder-color__swatch:focus-visible {
+  outline: 2px solid rgba(59, 130, 246, 0.65);
+  outline-offset: 4px;
+}
+
+/* ---------- Feedback stages ---------- */
+
+.dg-feedback {
+  position: relative;
+  align-self: stretch;
+  justify-self: stretch;
+  display: grid;
+  place-items: center;
+}
+
+/* ---------- Shortcut tiles as controls ---------- */
+
+.dg-tile {
+  appearance: none;
+  isolation: isolate;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 16px;
+  background: transparent;
+  cursor: pointer;
+  touch-action: none;
+  transition:
+    width 280ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 200ms ease,
+    margin 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.dg-tile:focus-visible {
+  outline: none;
+}
+
+.dg-tile:focus-visible .nts-shortcut__icon {
+  box-shadow:
+    0 0 0 2px #fff,
+    0 0 0 4px rgba(59, 130, 246, 0.65);
+}
+
+.dg-tile[data-removed="true"] {
+  width: 0;
+  margin-inline: -2px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.dg-tile[data-removed="true"] .nts-shortcut__icon {
+  transform: scale(0.6);
+}
+
+/* ---------- Context menu (x-nt-shortcut-context-menu) ---------- */
+
+/* The tiles sit centred with the menu's height kept free below them. */
+
+.dg-context-stage .nts-shortcuts {
+  gap: 4px;
+  margin-bottom: 136px;
+}
+
+.dg-context {
+  position: absolute;
+  z-index: 5;
+  display: grid;
+  min-width: 188px;
+  padding: 5px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow:
+    0 18px 34px rgba(15, 23, 42, 0.12),
+    0 2px 4px rgba(15, 23, 42, 0.05);
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.96, 0.86);
+  transform-origin: top left;
+  transition:
+    opacity 170ms ease,
+    transform 360ms cubic-bezier(0.2, 1.45, 0.35, 1);
+}
+
+.dg-context[data-open="true"] {
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+}
+
+.dg-context__item {
+  all: unset;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 34px;
+  padding: 0 10px;
+  border-radius: 10px;
+  color: #111827;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 120ms ease;
+}
+
+.dg-context__item i {
+  color: #6b7280;
+  font-size: 15px;
+}
+
+.dg-context__item:hover,
+.dg-context__item:focus-visible {
+  background: rgba(15, 23, 42, 0.06);
+}
+
+.dg-context__item[data-danger] {
+  color: #dc2626;
+}
+
+.dg-context__item[data-danger] i {
+  color: inherit;
+}
+
+@supports (corner-shape: superellipse(1.25)) {
+  .dg-context,
+  .dg-context__item {
+    corner-shape: superellipse(1.25);
+  }
+}
+
+/* ---------- Drag to group (newtab.css drop target) ---------- */
+
+.dg-drag {
+  position: relative;
+  padding: 28px 0 12px;
+}
+
+.dg-drag .dg-tile {
+  cursor: grab;
+}
+
+.dg-drag .dg-tile[data-dragging="true"] {
+  z-index: 3;
+  cursor: grabbing;
+}
+
+/* The lifted icon follows the pointer at 1.2x. */
+
+.dg-drag .dg-tile[data-dragging="true"] .nts-shortcut__icon {
+  box-shadow: 0 14px 28px rgba(15, 23, 42, 0.18);
+  transform: translate3d(var(--drag-x, 0px), var(--drag-y, 0px), 0) scale(1.2);
+  transition: box-shadow 160ms ease;
+}
+
+/* A drop target grows an opaque backdrop behind its icon, wide enough to show around the lifted one. */
+
+.dg-drag .dg-tile::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: -1;
+  width: calc(48px * 1.42);
+  height: calc(48px * 1.42);
+  border-radius: calc(48px * 0.51);
+  background: rgb(222 224 228);
+  box-shadow: 0 1px 2px rgb(0 0 0 / 0.06);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.7);
+  transition:
+    opacity 160ms ease,
+    transform 280ms cubic-bezier(0.32, 0.72, 0, 1);
+  pointer-events: none;
+}
+
+.dg-drag .dg-tile[data-drop-target="true"]::before {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.dg-tile__folder .nts-folder {
+  width: 32px;
+  height: 32px;
+}
+
+.dg-drag__hint {
+  top: 0;
+  left: 0;
+  z-index: 4;
+  opacity: 0;
+  transform: translate(var(--x, 0px), calc(var(--y, 0px) + 4px))
+    translate(-50%, -100%);
+  transition:
+    opacity 120ms ease,
+    transform 120ms ease;
+}
+
+.dg-drag__hint[data-visible="true"] {
+  opacity: 1;
+  transform: translate(var(--x, 0px), var(--y, 0px)) translate(-50%, -100%);
+}
+
+/* ---------- Tab switcher (extension/tab-switcher.css) ---------- */
+
+/* The window the switcher centres in and sizes its cards against. */
+.dg-ts-stage {
+  position: absolute;
+  inset: 0;
+  container: dg-ts / size;
+}
+
+.dg-ts-stage .dg-ts-panel:not(#dg-ts) {
+  position: absolute;
+}
+
+/* Picking a tab: the panel lets go, as it does when the browser switches. */
+
+@keyframes dg-switch {
+  35% {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  36% {
+    opacity: 0;
+    transform: scale(1.01);
+  }
+}
+
+/* ---------- Feature hint anchor (newtab.css wallpaper button) ---------- */
+
+/* The new tab's round appearance button the hint points at. */
+
+.dg-hint__target {
+  all: unset;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 999px;
+  --lumno-corner-shape: round;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 6px 16px rgba(15, 23, 42, 0.08);
+  color: #374151;
+  font-size: 17px;
+  cursor: pointer;
+  transition:
+    background-color 160ms ease,
+    transform 120ms ease;
+}
+
+.dg-hint__target:hover {
+  background: #fff;
+}
+
+.dg-hint__target:active {
+  transform: scale(0.95);
+}
+
+.dg-hint__target:focus-visible {
+  outline: 2px solid rgba(59, 130, 246, 0.65);
+  outline-offset: 2px;
+}
+
+/* ---------- New tab pieces (extension/newtab.css, scoped to .dg-nt) ---------- */
+
+/*
+ * The new tab's body: 12px Open Sans at normal line height in its ink. Its
+ * fixed layers (the cascade menu, a dialog's backdrop) sit in the card here,
+ * and its bookmarks bar runs along the card's top as it runs along the page's.
+ */
+.dg-nt {
+  font-family:
+    "Open Sans",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    "Helvetica Neue",
+    Arial,
+    var(--font-cjk, "PingFang SC", "Microsoft YaHei"),
+    sans-serif;
+  font-size: 12px;
+  line-height: normal;
+  color: var(--x-nt-text, #111827);
+}
+
+.dg-nt-stage {
+  position: relative;
+  width: 100%;
+}
+
+.dg-nt-dock {
+  position: relative;
+}
+
+/* The context menu hangs from the card's stage, centered under its tile. */
+.dg-nt-menu-anchor {
+  position: absolute;
+  z-index: 20;
+  width: max-content;
+  transform: translateX(-50%);
+}
+
+.dg-context-stage .dg-nt-stage {
+  position: static;
+}
+
+.dg-nt-tip._x_extension_tooltip_2026_unique_ {
+  translate: -50% 0;
+}
+
+/* The bookmarks bar docks to the top of the shot, over the wallpaper, as it does across the top of the new tab. */
+.dg-nt-bookmarks-bar {
+  align-self: stretch;
+  justify-self: stretch;
+  margin: calc(var(--dg-pad) * -1) calc(var(--dg-pad) * -1) 0;
+}
+
+.dg-card .x-nt-bookmarks-topbar {
+  border-radius: 28px 28px 0 0;
+}
+
+.dg-card .x-nt-bookmark-cascade-menu {
+  position: absolute;
+  inset: 0;
+  width: auto;
+  height: auto;
+}
+
+.dg-card .x-nt-bookmark-cascade-level {
+  position: absolute;
+}
+
+.dg-card .x-nt-bookmark-cascade-level[data-open="false"] {
+  visibility: hidden;
+}
+
+.dg-card:has(.dg-nt-dialog-host) .dg-card__stage {
+  padding: 12px;
+}
+
+/* The acrylic panel holding the tab bar: the glass and its padding, none of the panel's page placement. */
+.dg-card .x-nt-wallpaper-panel.dg-acrylic-panel {
+  position: relative;
+  inset: auto;
+  width: 240px;
+  max-height: none;
+  padding: 12px;
+}
+
+/* The refresh button's dialog context, without the dialog's frame. */
+/* One panel of the dialog, in its frame, as wide as its content. */
+.dg-pat-dialog-piece .x-nt-shortcut-dialog {
+  width: auto;
+  min-width: 260px;
+}
+
+.dg-button-dialog .x-nt-shortcut-dialog {
+  width: min(360px, 100%);
+}
+
+.dg-pat-dialog-piece .x-nt-shortcut-dialog {
+  padding: 20px 22px 22px;
+  overflow: visible;
+}
+
+.dg-pat-dialog-bare .x-nt-shortcut-dialog {
+  width: auto;
+  overflow: visible;
+  background: none;
+  box-shadow: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.dg-card .x-nt-shortcut-dialog-backdrop {
+  position: relative;
+  inset: auto;
+  z-index: auto;
+  padding: 0;
+  background: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+/* ---------- Patterns (extension/newtab-patterns.css, action-button.css) ---------- */
+
+/*
+ * A bookmark section (bookmarks.tsx in newtab.css): header over a grid of
+ * cards, three to a row here, two on phones as the new tab shows them when
+ * narrow. Its lifted card is the extension's drag preview, held in the card.
+ */
+.dg-pat-stage {
+  padding-inline: 8px;
+}
+
+.dg-pat-bookmarks {
+  width: min(620px, 100%);
+  -webkit-user-select: none;
+  user-select: none;
+  touch-action: none;
+}
+
+.dg-pat-bookmarks__inner {
+  position: relative;
+  display: grid;
+  gap: var(--x-nt-section-inner-gap, 10px);
+}
+
+.dg-pat-bookmarks__grid {
+  --x-nt-bookmark-columns: 3;
+}
+
+/* Held in the card and carried over everything in it, the pager included, as the extension's drag image is. */
+.dg-card .x-nt-bookmark-card-drag-preview {
+  position: absolute;
+  z-index: 5 !important;
+}
+
+.dg-pat-bookmarks__inner[data-dragging],
+.dg-pat-bookmarks__inner[data-dragging] * {
+  cursor: grabbing;
+}
+
+/* The recent sites section (recent-sites.tsx): its heading, which is also the mode switch, over two cards. */
+.dg-pat-recent {
+  display: grid;
+  gap: var(--x-nt-section-inner-gap, 10px);
+  width: min(440px, 100%);
+}
+
+.dg-pat-recent__grid {
+  --x-nt-recent-columns: 2;
+}
+
+/* The appearance panel (newtab.css .x-nt-wallpaper-panel) open in place, at the top of its card so sections fold downward. */
+.dg-pat-panel-host {
+  align-self: start;
+  width: min(424px, 100%);
+  margin-top: 4px;
+}
+
+/* An open menu is drawn outside the panel in the extension (a portal); here the panel lets it out while it is open. */
+.dg-card
+  .x-nt-wallpaper-panel.dg-pat-panel:has(
+    ._x_extension_custom_select_2024_unique_[data-open="true"]
+  ),
+.dg-pat-panel:has(._x_extension_custom_select_2024_unique_[data-open="true"])
+  .x-nt-wallpaper-panel-scroll,
+.dg-pat-panel:has(._x_extension_custom_select_2024_unique_[data-open="true"])
+  .x-nt-panel-collapsible[data-visible="true"] {
+  overflow: visible;
+}
+
+.dg-card .x-nt-wallpaper-panel.dg-pat-panel {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  max-height: none;
+  padding-bottom: var(--x-nt-panel-padding);
+}
+
+/* Number keys: the command bar's results, with the held key shown beside the query. */
+
+/* Result icons are bare 16px marks, not the bookmark cards' chips. */
+
+.dg-pat-modifier {
+  flex: none;
+  display: grid;
+  place-items: center;
+  min-width: 24px;
+  height: 22px;
+  padding: 0 6px;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  border-radius: 6px;
+  background: rgba(15, 23, 42, 0.04);
+  color: #6b7280;
+  font:
+    600 12px/1 "Open Sans",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  box-sizing: border-box;
+  transition:
+    background-color 120ms ease,
+    color 120ms ease,
+    transform 120ms ease;
+}
+
+/* The held key sits under the command bar, outside the panel. */
+.dg-ovl-fit > .dg-pat-modifier {
+  margin-top: 20px;
+}
+
+.dg-pat-modifier[data-held="true"] {
+  background: #111827;
+  border-color: #111827;
+  color: #fff;
+  transform: translateY(1px);
+}
+
+.dg-card[data-theme="dark"] .dg-pat-modifier {
+  border-color: rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+  color: #a1a1aa;
+}
+
+.dg-card[data-theme="dark"] .dg-pat-modifier[data-held="true"] {
+  background: #f8fafc;
+  border-color: #f8fafc;
+  color: #0f172a;
+}
+
+@media (max-width: 680px) {
+  .dg-pat-bookmarks__grid {
+    --x-nt-bookmark-columns: 2;
+  }
+}
+
+/* ---------- Dark mode ---------- */
+
+/*
+ * html[data-design-theme] is set before first paint (pages/design/index.astro),
+ * so these rules hold from the first frame; SettingsKit's own dark rules follow
+ * each card's data-theme once React is running. Colors are the extension's dark
+ * tokens: overlay theme (search-panel.js), tooltip/toast/feature-hint dark,
+ * the tab switcher's dark panel and the new tab's dark menus.
+ */
+
+html[data-design-theme="dark"] {
+  --bg: #0e0e10;
+  color-scheme: dark;
+}
+
+html[data-design-theme="dark"] body,
+html[data-design-theme="dark"] main.site-page {
+  background: #0e0e10;
+}
+
+html[data-design-theme="dark"] .dg-section__head p {
+  color: #a1a1aa;
+}
+
+html[data-design-theme="dark"] .dg-section__head h2 {
+  color: #f3f4f6;
+}
+
+/* The top bar: light ink while it rests on the page, a dark glass pill once it floats. */
+
+/* The bar and its menus take SettingsKit's dark tokens (menus read these variables). */
+
+html[data-design-theme="dark"] .top-nav {
+  --lumno-panel-text: #e5e7eb;
+  --lumno-panel-subtext: #9ca3af;
+  --lumno-control-bg: #2f2f2f;
+  --lumno-control-hover-bg: #363636;
+  --lumno-control-open-bg: #3b3b3b;
+  --lumno-menu-bg: #252525;
+  --lumno-selected-bg: #e5e7eb;
+  --lumno-selected-text: #111827;
+  --lumno-focus: rgba(148, 163, 184, 0.72);
+  --lumno-focus-bg: rgba(255, 255, 255, 0.08);
+  --lumno-icon-bg: rgba(255, 255, 255, 0.08);
+}
+
+html[data-design-theme="dark"] .top-nav .lumno-settings-select-menu {
+  --lumno-settings-menu-border-color: rgba(255, 255, 255, 0.16);
+}
+
+html[data-design-theme="dark"] .top-nav .install-menu-store-icon {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+html[data-design-theme="dark"]
+  .top-nav
+  .install-menu
+  .lumno-settings-select-option:is(:hover, :focus-visible)
+  .install-menu-store-icon {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+html[data-design-theme="dark"]
+  .top-nav
+  .install-menu
+  .lumno-settings-badge-accent {
+  background: rgba(96, 165, 250, 0.16);
+  color: #bfdbfe;
+  animation: none;
+}
+
+html[data-design-theme="dark"] .top-nav-brand img {
+  filter: invert(1) brightness(1.1);
+}
+
+html[data-design-theme="dark"] .top-nav .lumno-settings-button-secondary {
+  border-color: rgba(255, 255, 255, 0.1);
+  background: #2a2a2d;
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  color: #e5e7eb;
+}
+
+html[data-design-theme="dark"]
+  .top-nav
+  .lumno-settings-button-secondary:hover:not(:disabled) {
+  background: #333336;
+}
+
+html[data-design-theme="dark"]
+  body.has-nav-install
+  .top-nav:not([data-nav-surface="hero"]) {
+  border-color: rgba(255, 255, 255, 0.1);
+  background: rgba(24, 24, 27, 0.78);
+  box-shadow:
+    0 10px 32px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+html[data-design-theme="dark"] .dg-card__stage {
+  background-color: #1a1b1e;
+}
+
+html[data-design-theme="dark"] .dg-card__name {
+  color: #9ca3af;
+}
+
+/* On a wallpaper the name and replay sit on a soft frost so they read on any picture. */
+.dg-card[data-wallpaper] .dg-card__name {
+  flex: none;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(12px);
+  color: #374151;
+}
+
+html[data-design-theme="dark"] .dg-card[data-wallpaper] .dg-card__name {
+  background: rgba(17, 18, 20, 0.6);
+  color: #d1d5db;
+}
+
+.dg-card[data-wallpaper] .dg-replay {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(12px);
+}
+
+html[data-design-theme="dark"] .dg-card[data-wallpaper] .dg-replay {
+  background: rgba(17, 18, 20, 0.6);
+}
+
+.dg-card[data-wallpaper] .dg-card__caption {
+  justify-content: space-between;
+  padding-left: 14px;
+}
+
+html[data-design-theme="dark"] .dg-replay {
+  background: rgba(255, 255, 255, 0.07);
+  color: #d1d5db;
+}
+
+html[data-design-theme="dark"] .dg-replay:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #f9fafb;
+}
+
+/* Command bar (overlay dark theme). */
+
+/* Selection toolbar (its light-dark() pairs). */
+
+html[data-design-theme="dark"] .dg-selection__text {
+  border-color: rgba(255, 255, 255, 0.08);
+  background: #202124;
+  color: #d1d5db;
+}
+
+html[data-design-theme="dark"] .dg-selection__seed[data-seeded="true"],
+html[data-design-theme="dark"] .dg-selection__text::selection,
+html[data-design-theme="dark"] .dg-selection__text *::selection {
+  background: rgba(59, 130, 246, 0.45);
+}
+
+/* Tooltip, toast, feature hint and update notice: one dark material. */
+
+html[data-design-theme="dark"] .nts-tooltip {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: linear-gradient(180deg, #111827 0%, #0f172a 100%);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.45);
+  color: #f8fafc;
+}
+
+html[data-design-theme="dark"] .dg-hint__target {
+  border-color: rgba(255, 255, 255, 0.16);
+  background: rgba(32, 33, 36, 0.78);
+  color: #e5e7eb;
+}
+
+html[data-design-theme="dark"] .dg-context {
+  border-color: rgba(255, 255, 255, 0.1);
+  background: rgb(31 31 31);
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.45);
+}
+
+html[data-design-theme="dark"] .dg-context__item {
+  color: #e5e7eb;
+}
+
+html[data-design-theme="dark"] .dg-context__item i {
+  color: #9ca3af;
+}
+
+html[data-design-theme="dark"] .dg-context__item:hover,
+html[data-design-theme="dark"] .dg-context__item:focus-visible {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+html[data-design-theme="dark"] .dg-context__item[data-danger],
+html[data-design-theme="dark"] .dg-context__item[data-danger] i {
+  color: #f87171;
+}
+
+/* New tab: bookmark card and cascade menu, shortcut tiles, drop backdrop, clock. */
+
+html[data-design-theme="dark"] .nts-card {
+  border-color: rgba(255, 255, 255, 0.12);
+  background: rgba(32, 33, 36, 0.72);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+html[data-design-theme="dark"] .nts-card[data-hover="true"] {
+  background: rgba(40, 41, 45, 0.9);
+}
+
+html[data-design-theme="dark"] .nts-card__title {
+  color: #f3f4f6;
+}
+
+html[data-design-theme="dark"] .nts-menu {
+  border-color: rgba(255, 255, 255, 0.14);
+  background: rgba(32, 33, 36, 0.92);
+  box-shadow:
+    0 18px 34px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+html[data-design-theme="dark"] .dg-bookmarks .nts-menu__item {
+  color: #e5e7eb;
+}
+
+html[data-design-theme="dark"] .nts-menu__item[data-active="true"] {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* newtab.css dark --x-nt-bookmark-icon-bg: a faint chip, so monochrome marks turned white still show. */
+html[data-design-theme="dark"] .nts-fav {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+html[data-design-theme="dark"] .nts-fav[data-mono] svg {
+  filter: invert(1);
+}
+
+html[data-design-theme="dark"] .nts-shortcut__icon {
+  background: rgba(255, 255, 255, 0.09);
+}
+
+html[data-design-theme="dark"] .nts-shortcut[data-mono] img {
+  filter: invert(1);
+}
+
+html[data-design-theme="dark"] .nts-shortcut[data-bare][data-mono] img {
+  mix-blend-mode: screen;
+}
+
+html[data-design-theme="dark"] .dg-drag .dg-tile::before {
+  background: rgb(78 79 83);
+}
+
+html[data-design-theme="dark"] .nts-clock {
+  color: rgba(243, 244, 246, 0.88);
+}
+
+/* Tab switcher (its own dark panel). */
+
+html[data-design-theme="dark"] .dg-folder-color__stage {
+  background-color: rgba(255, 255, 255, 0.04);
+  background-image: radial-gradient(
+    circle,
+    rgb(255 255 255 / 0.18) 0.8px,
+    transparent 1px
+  );
+}
+
+html[data-design-theme="dark"] .dg-folder-color__name {
+  color: #f3f4f6;
+}
+
+html[data-design-theme="dark"] .dg-folder-color__swatch[aria-pressed="true"] {
+  box-shadow:
+    0 0 0 2px #1a1b1e,
+    0 0 0 4px #f3f4f6;
+}

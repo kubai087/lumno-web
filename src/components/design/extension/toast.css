@@ -1,0 +1,84 @@
+/* Generated from lumno-extension/src/shared/toast.css by scripts/sync-extension-ui.mjs. Do not edit; rerun the script. */
+
+.x-lumno-toast {
+  all: unset;
+  position: fixed;
+  top: var(--x-lumno-toast-top, 24px);
+  left: 50%;
+  z-index: var(--x-lumno-toast-z-index, var(--lumno-z-toast, 10080));
+  display: block;
+  max-width: calc(100vw - 32px);
+  box-sizing: border-box;
+  padding: 10px 16px;
+  border: 1px solid var(--lumno-color-toast-border, rgba(214, 219, 227, 0.95));
+  border-radius: var(--lumno-radius-pill, 999px);
+  background: linear-gradient(
+    180deg,
+    var(--lumno-color-toast-bg-top, #ffffff) 0%,
+    var(--lumno-color-toast-bg-bottom, #f7f9fc) 100%
+  );
+  color: var(--lumno-color-toast-text, #1f2937);
+  box-shadow: var(
+    --lumno-shadow-toast,
+    0 16px 36px rgba(17, 24, 39, 0.08), 0 3px 10px rgba(17, 24, 39, 0.05)
+  );
+  font-family: "Lumno Open Sans", "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  font-size: var(--lumno-font-size-sm, 12px);
+  font-weight: 500;
+  line-height: 18px;
+  text-align: center;
+  white-space: normal;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(-10px);
+  transition:
+    opacity var(--lumno-duration-sm, 160ms) ease,
+    transform var(--lumno-duration-lg, 200ms) ease,
+    top var(--lumno-duration-md, 180ms) ease;
+}
+
+.x-lumno-toast[data-show="true"] {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.x-lumno-toast[data-tone="error"] {
+  background: var(--lumno-color-toast-error-bg, #991b1b);
+  color: var(--lumno-color-toast-error-text, #ffffff);
+  border-color: var(--lumno-color-toast-error-border, rgba(255, 255, 255, 0.16));
+}
+
+.x-lumno-toast-spinner {
+  all: unset;
+  display: inline-block;
+  box-sizing: border-box;
+  width: 12px;
+  height: 12px;
+  margin-inline-end: 8px;
+  vertical-align: -2px;
+  border: 1.5px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  opacity: 0.72;
+  animation: x-lumno-toast-spin 900ms linear infinite;
+}
+
+@keyframes x-lumno-toast-spin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+.x-lumno-toast-spinner {
+    animation: none;
+    border-right-color: currentColor;
+    opacity: 0.4;
+  }
+}
+
+.x-lumno-toast[data-theme="dark"]:not([data-tone="error"]) {
+  background: linear-gradient(180deg, #111827 0%, #0f172a 100%);
+  color: #f8fafc;
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.45);
+}

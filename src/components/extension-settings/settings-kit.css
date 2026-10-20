@@ -14,6 +14,7 @@
   --lumno-tab-active-bg: #fff;
   --lumno-tab-active-text: #0f172a;
   --lumno-tab-inactive-text: #8b94a4;
+  --lumno-segment-active-bg: #fff;
   --lumno-selected-bg: #111827;
   --lumno-selected-text: #f9fafb;
   --lumno-control-border: rgba(15, 23, 42, 0.08);
@@ -30,17 +31,18 @@
   --lumno-panel-border: rgba(255, 255, 255, 0.1);
   --lumno-panel-text: #e5e7eb;
   --lumno-panel-subtext: #9ca3af;
-  --lumno-divider: rgba(255, 255, 255, 0.1);
+  --lumno-divider: rgba(255, 255, 255, 0.14);
   --lumno-focus: rgba(148, 163, 184, 0.72);
-  --lumno-focus-bg: rgba(255, 255, 255, 0.08);
+  --lumno-focus-bg: #383838;
   --lumno-control-bg: #2f2f2f;
   --lumno-control-hover-bg: #363636;
-  --lumno-control-open-bg: #3b3b3b;
+  --lumno-control-open-bg: #404040;
   --lumno-menu-bg: #252525;
   --lumno-tab-bg: #2f2f2f;
   --lumno-tab-active-bg: #475569;
   --lumno-tab-active-text: #f8fafc;
-  --lumno-tab-inactive-text: #9ca3af;
+  --lumno-tab-inactive-text: #7f8898;
+  --lumno-segment-active-bg: #3f3f46;
   --lumno-selected-bg: #e5e7eb;
   --lumno-selected-text: #111827;
   --lumno-control-border: rgba(255, 255, 255, 0.12);
@@ -157,7 +159,15 @@
 
 .lumno-settings-segmented > .lumno-tabs-indicator {
   border-radius: var(--lumno-settings-segment-radius);
+  background: var(--lumno-segment-active-bg);
   box-shadow: 0 1px 3px rgba(15, 23, 42, 0.12);
+}
+
+/* options.css: the dark tab pill is a slate gradient with its own edge, not a flat fill. */
+.lumno-settings-kit[data-theme="dark"] .lumno-settings-tabs > .lumno-tabs-indicator {
+  border: 1px solid #5e779d;
+  background: linear-gradient(180deg, #475569 0%, #4e6382 100%);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
 }
 
 .lumno-settings-tab,
@@ -253,7 +263,7 @@
 .lumno-settings-row-title {
   color: var(--lumno-panel-text);
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 400;
   line-height: 1.45;
 }
 
@@ -262,7 +272,7 @@
   margin: 4px 0 0;
   color: var(--lumno-panel-subtext);
   font-size: 13px;
-  line-height: 1.65;
+  line-height: 1.5;
 }
 
 .lumno-settings-row-control {
@@ -394,53 +404,108 @@
   font-size: 16px;
 }
 
+/*
+ * lumno-extension shared/switch.css: a flat 10% track, Lumno blue when on
+ * (its own layer, so the gradient fades in), a 20px knob on a spring that
+ * stretches while pressed.
+ */
 .lumno-settings-switch {
+  --switch-width: 44px;
+  --switch-height: 24px;
+  --switch-inset: 2px;
+  --switch-knob-size: 20px;
+  --switch-knob-width: var(--switch-knob-size);
+  --switch-track-bg: rgba(15, 23, 42, 0.1);
+  --switch-track-hover-bg: rgba(15, 23, 42, 0.15);
+  --switch-track-shadow: inset 0 0 0 0.5px rgba(15, 23, 42, 0.06), inset 0 1px 2px rgba(15, 23, 42, 0.08);
+  --switch-track-on-bg: linear-gradient(180deg, #4d7dcb 0%, #3462ad 100%);
+  --switch-track-on-shadow: inset 0 1px 2px rgba(12, 32, 72, 0.3);
+  --switch-knob-bg: #fff;
+  --switch-knob-shadow: 0 0 0 0.5px rgba(15, 23, 42, 0.06), 0 1px 1px rgba(15, 23, 42, 0.06), 0 2px 5px rgba(15, 23, 42, 0.14);
   position: relative;
   display: inline-flex;
   flex: 0 0 auto;
-  width: 44px;
-  height: 24px;
+  width: var(--switch-width);
+  height: var(--switch-height);
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.lumno-settings-kit[data-theme="dark"] .lumno-settings-switch {
+  --switch-track-bg: rgba(255, 255, 255, 0.14);
+  --switch-track-hover-bg: rgba(255, 255, 255, 0.2);
+  --switch-track-shadow: inset 0 0 0 0.5px rgba(255, 255, 255, 0.04), inset 0 1px 2px rgba(0, 0, 0, 0.24);
+  --switch-track-on-bg: linear-gradient(180deg, #5f8ad4 0%, #4470ba 100%);
+  --switch-track-on-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.32);
+  --switch-knob-bg: #f4f4f4;
+  --switch-knob-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.2), 0 1px 1px rgba(0, 0, 0, 0.2), 0 2px 5px rgba(0, 0, 0, 0.32);
 }
 
 .lumno-settings-switch input {
   position: absolute;
   width: 1px;
   height: 1px;
+  margin: 0;
   opacity: 0;
 }
 
 .lumno-settings-switch-track {
   position: absolute;
   inset: 0;
-  border: 1px solid rgba(15, 23, 42, 0.1);
+  overflow: hidden;
+  isolation: isolate;
   border-radius: 999px;
   --lumno-corner-shape: round;
-  background: linear-gradient(180deg, #e7eaf0 0%, #d8dce5 100%);
-  box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.12);
-  transition: background 180ms ease, border-color 180ms ease;
+  background: var(--switch-track-bg);
+  box-shadow: var(--switch-track-shadow);
+  transition: background-color 200ms ease, opacity 200ms ease;
+}
+
+.lumno-settings-switch-track::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  background: var(--switch-track-on-bg);
+  box-shadow: var(--switch-track-on-shadow);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 240ms ease;
 }
 
 .lumno-settings-switch-knob {
   position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
+  top: var(--switch-inset);
+  left: var(--switch-inset);
+  z-index: 2;
+  width: var(--switch-knob-width);
+  height: var(--switch-knob-size);
+  border-radius: 999px;
   --lumno-corner-shape: round;
-  background: #fff;
-  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.95);
-  transition: transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  background: var(--switch-knob-bg);
+  box-shadow: var(--switch-knob-shadow);
+  transition:
+    transform 280ms cubic-bezier(0.32, 0.72, 0, 1),
+    width 280ms cubic-bezier(0.32, 0.72, 0, 1),
+    background-color 200ms ease;
 }
 
-.lumno-settings-switch input:checked + .lumno-settings-switch-track {
-  border-color: #111827;
-  background: linear-gradient(180deg, #3e4759 0%, #202838 100%);
+.lumno-settings-switch:hover input:not(:disabled):not(:checked) + .lumno-settings-switch-track {
+  background-color: var(--switch-track-hover-bg);
+}
+
+/* Pressed: the knob stretches; the checked transform keeps it right-anchored. */
+.lumno-settings-switch:active input:not(:disabled) + .lumno-settings-switch-track {
+  --switch-knob-width: calc(var(--switch-knob-size) + 4px);
+}
+
+.lumno-settings-switch input:checked + .lumno-settings-switch-track::after {
+  opacity: 1;
 }
 
 .lumno-settings-switch input:checked + .lumno-settings-switch-track .lumno-settings-switch-knob {
-  transform: translateX(20px);
+  transform: translateX(calc(var(--switch-width) - var(--switch-knob-width) - var(--switch-inset) * 2));
 }
 
 .lumno-settings-switch input:focus-visible + .lumno-settings-switch-track {
@@ -449,24 +514,27 @@
 }
 
 .lumno-settings-switch input:disabled + .lumno-settings-switch-track {
-  opacity: 0.5;
+  cursor: not-allowed;
+  opacity: 0.45;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .lumno-settings-switch-track,
+  .lumno-settings-switch-track::after,
+  .lumno-settings-switch-knob {
+    transition: none;
+  }
+}
+
+/* lumno-extension options.css theme picker: 1px inset, 8px radius, no gaps. */
 .lumno-settings-segmented {
-  --lumno-settings-segmented-radius: 10px;
+  --lumno-settings-segmented-radius: 8px;
   --lumno-settings-segmented-border-width: 1px;
-  --lumno-settings-segmented-padding: 2px;
-  --lumno-settings-segment-radius: max(
-    0px,
-    calc(
-      var(--lumno-settings-segmented-radius) -
-      var(--lumno-settings-segmented-border-width) -
-      var(--lumno-settings-segmented-padding)
-    )
-  );
+  --lumno-settings-segmented-padding: 1px;
+  --lumno-settings-segment-radius: 6px;
   display: inline-flex;
-  align-items: stretch;
-  gap: 4px;
+  align-items: center;
+  gap: 0;
   min-height: 32px;
   padding: var(--lumno-settings-segmented-padding);
   border: var(--lumno-settings-segmented-border-width) solid var(--lumno-control-border);
@@ -474,20 +542,22 @@
   background: var(--lumno-control-bg);
 }
 
+/* options.css theme option: 28px tall, 0 12px, 13px text (500 when active). */
 .lumno-settings-segment {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 5px;
-  min-width: 36px;
-  padding: 6px 8px;
+  height: 28px;
+  padding: 0 12px;
   border-radius: var(--lumno-settings-segment-radius);
   background: transparent;
-  color: var(--lumno-panel-subtext);
-  font-size: 12px;
-  font-weight: 500;
+  color: var(--lumno-tab-inactive-text);
+  font-size: 13px;
+  font-weight: 400;
   white-space: nowrap;
   cursor: pointer;
+  transition: color 150ms ease;
 }
 
 .lumno-settings-segment:hover {
@@ -495,7 +565,7 @@
 }
 
 .lumno-settings-segment[data-active="true"] {
-  background: var(--lumno-tab-active-bg);
+  background: var(--lumno-segment-active-bg);
   color: var(--lumno-tab-active-text);
   box-shadow: 0 1px 3px rgba(15, 23, 42, 0.12);
 }
@@ -697,17 +767,19 @@
   color: var(--lumno-selected-text, #f9fafb);
 }
 
+/* lumno-extension options.css shortcut input: 32px, 6px 10px, 8px radius. */
 .lumno-settings-input {
+  box-sizing: border-box;
   width: min(260px, 100%);
-  min-height: 36px;
-  padding: 8px 10px;
+  min-height: 32px;
+  padding: 6px 10px;
   border: 1px solid var(--lumno-control-border);
-  border-radius: 10px;
+  border-radius: 8px;
   background: var(--lumno-control-bg);
   color: var(--lumno-panel-text);
   font: inherit;
   font-size: 13px;
-  transition: background 160ms ease, border-color 160ms ease;
+  transition: background-color 200ms ease, border-color 180ms ease;
 }
 
 .lumno-settings-input:hover,

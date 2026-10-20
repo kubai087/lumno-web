@@ -46,6 +46,10 @@ export const GET: APIRoute = async () => {
     ],
     now,
   );
+  const designLastmod = readLastCommitIso(
+    ["src/pages/design/", "src/pages/[locale]/design/", "src/components/design/", "src/lib/design-content.ts"],
+    now,
+  );
   const guidesLastmod = readLastCommitIso(
     ["src/content/guides/", "src/lib/guides.ts", "src/components/guides/", "public/assets/guides/"],
     now,
@@ -83,6 +87,14 @@ export const GET: APIRoute = async () => {
     priority: "0.5",
   }));
 
+  const localizedDesignUrls = getNonDefaultLocales().map((locale) => ({
+    locale,
+    loc: `${SITE_URL}${buildLocalizedPath(locale, "/design/")}`,
+    lastmod: designLastmod,
+    changefreq: "monthly",
+    priority: "0.6",
+  }));
+
   const urls = [
     { locale: "zh-CN", loc: `${SITE_URL}/`, lastmod: homeLastmod, changefreq: "weekly", priority: "1.0" },
     ...localizedHomeUrls,
@@ -102,6 +114,14 @@ export const GET: APIRoute = async () => {
       priority: "0.5",
     },
     ...localizedPrivacyUrls,
+    {
+      locale: "zh-CN",
+      loc: `${SITE_URL}/design/`,
+      lastmod: designLastmod,
+      changefreq: "monthly",
+      priority: "0.6",
+    },
+    ...localizedDesignUrls,
     ...guideUrls,
   ];
 

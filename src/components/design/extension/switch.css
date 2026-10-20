@@ -1,0 +1,118 @@
+/* Generated from lumno-extension/src/shared/switch.css by scripts/sync-extension-ui.mjs. Do not edit; rerun the script. */
+
+:is(._x_extension_switch_2024_unique_, .x-nt-wallpaper-switch) {
+  --switch-width: 44px;
+  --switch-height: 24px;
+  --switch-inset: 2px;
+  --switch-knob-size: 20px;
+  --switch-knob-width: var(--switch-knob-size);
+  --switch-knob-stretch: 4px;
+  --switch-track-bg: var(--lumno-color-fill-subtle);
+  --switch-track-hover-bg: var(--lumno-color-fill-subtle-hover);
+  --switch-track-shadow: var(--lumno-shadow-track-inset);
+  --switch-track-on-bg: var(--lumno-color-accent);
+  --switch-track-on-shadow: var(--lumno-shadow-track-on);
+  --switch-knob-bg: var(--lumno-color-knob);
+  --switch-knob-shadow: var(--lumno-shadow-knob);
+  --switch-focus-ring: var(--lumno-color-focus-ring);
+  --switch-ease: var(--lumno-ease-spring);
+  position: relative;
+  display: inline-block;
+  width: var(--switch-width);
+  height: var(--switch-height);
+  flex: 0 0 auto;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:is(._x_extension_switch_2024_unique_, .x-nt-wallpaper-switch) input {
+  position: absolute;
+  margin: 0;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+:is(._x_extension_switch_slider_2024_unique_, .x-nt-wallpaper-switch-slider) {
+  position: absolute;
+  inset: 0;
+  cursor: pointer;
+  border-radius: var(--lumno-radius-pill);
+  background: var(--switch-track-bg);
+  box-shadow: var(--switch-track-shadow);
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    background-color var(--lumno-duration-lg) ease,
+    opacity var(--lumno-duration-lg) ease;
+}
+
+:is(._x_extension_switch_slider_2024_unique_, .x-nt-wallpaper-switch-slider)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  background: var(--switch-track-on-bg);
+  box-shadow: var(--switch-track-on-shadow);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--lumno-duration-2xl) ease;
+}
+
+:is(._x_extension_switch_slider_2024_unique_, .x-nt-wallpaper-switch-slider)::before {
+  content: "";
+  position: absolute;
+  top: var(--switch-inset);
+  left: var(--switch-inset);
+  z-index: 2;
+  width: var(--switch-knob-width);
+  height: var(--switch-knob-size);
+  border-radius: var(--lumno-radius-pill);
+  background: var(--switch-knob-bg);
+  box-shadow: var(--switch-knob-shadow);
+  transition:
+    transform var(--lumno-duration-3xl) var(--switch-ease),
+    width var(--lumno-duration-3xl) var(--switch-ease),
+    background-color var(--lumno-duration-lg) ease;
+}
+
+:is(._x_extension_switch_2024_unique_, .x-nt-wallpaper-switch):hover
+  input:not(:disabled):not(:checked) + :is(._x_extension_switch_slider_2024_unique_, .x-nt-wallpaper-switch-slider) {
+  background-color: var(--switch-track-hover-bg);
+}
+
+:is(._x_extension_switch_2024_unique_, .x-nt-wallpaper-switch):active
+  input:not(:disabled) + :is(._x_extension_switch_slider_2024_unique_, .x-nt-wallpaper-switch-slider) {
+  /* Stretch the knob while pressed; the checked transform keeps it right-anchored. */
+  --switch-knob-width: calc(var(--switch-knob-size) + var(--switch-knob-stretch));
+}
+
+:is(._x_extension_switch_2024_unique_, .x-nt-wallpaper-switch)
+  input:checked + :is(._x_extension_switch_slider_2024_unique_, .x-nt-wallpaper-switch-slider)::after {
+  opacity: 1;
+}
+
+:is(._x_extension_switch_2024_unique_, .x-nt-wallpaper-switch)
+  input:checked + :is(._x_extension_switch_slider_2024_unique_, .x-nt-wallpaper-switch-slider)::before {
+  transform: translateX(calc(var(--switch-width) - var(--switch-knob-width) - var(--switch-inset) * 2));
+}
+
+:is(._x_extension_switch_2024_unique_, .x-nt-wallpaper-switch)
+  input:disabled + :is(._x_extension_switch_slider_2024_unique_, .x-nt-wallpaper-switch-slider) {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+:is(._x_extension_switch_2024_unique_, .x-nt-wallpaper-switch)
+  input:focus-visible + :is(._x_extension_switch_slider_2024_unique_, .x-nt-wallpaper-switch-slider) {
+  outline: 2px solid var(--switch-focus-ring);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+:is(._x_extension_switch_slider_2024_unique_, .x-nt-wallpaper-switch-slider),
+  :is(._x_extension_switch_slider_2024_unique_, .x-nt-wallpaper-switch-slider)::before,
+  :is(._x_extension_switch_slider_2024_unique_, .x-nt-wallpaper-switch-slider)::after {
+    transition: none;
+  }
+}

@@ -1,0 +1,211 @@
+/* Generated from lumno-extension/src/options/webdav-options.css by scripts/sync-extension-ui.mjs. Do not edit; rerun the script. */
+
+.dg-ext .lumno-webdav-settings {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: var(--settings-row-block-space) var(--settings-content-edge-space);
+}
+
+.dg-ext .lumno-webdav-settings > ._x_extension_setting_desc_2024_unique_ { margin: 0; }
+
+.dg-ext .lumno-webdav-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--settings-content-gap);
+  min-height: var(--settings-section-header-height);
+}
+
+.dg-ext .lumno-webdav-title { gap: 6px; min-width: 0; }
+
+.dg-ext .lumno-webdav-editor { margin-top: var(--settings-content-gap); }
+
+.dg-ext .lumno-webdav-card ._x_extension_shortcut_item_info_2024_unique_ { flex: 1; }
+
+.dg-ext .lumno-webdav-card ._x_extension_shortcut_item_title_2024_unique_ { gap: 8px; }
+
+.dg-ext .lumno-webdav-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+
+.dg-ext .lumno-webdav-card ._x_extension_sync_status_2024_unique_ { flex: 0 0 auto; white-space: nowrap; }
+
+.dg-ext ._x_extension_sync_status_2024_unique_[data-status="warning"] {
+  color: #b45309;
+  border-color: rgba(245, 158, 11, 0.38);
+  background: rgba(245, 158, 11, 0.14);
+}
+
+.dg-ext ._x_extension_settings_panel_2024_unique_:not(#dg_x_extension_settings_panel_2024_unique_)[data-theme="dark"] ._x_extension_sync_status_2024_unique_[data-status="warning"] {
+  color: #fcd34d;
+  border-color: rgba(251, 191, 36, 0.36);
+  background: rgba(245, 158, 11, 0.16);
+}
+
+.dg-ext .lumno-webdav-notice {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--tab-border);
+}
+
+.dg-ext .lumno-webdav-notice ._x_extension_setting_desc_2024_unique_ { margin: 0; overflow-wrap: anywhere; }
+
+.dg-ext .lumno-webdav-notice .lumno-webdav-error { color: var(--duplicate-badge-text); }
+
+.dg-ext .lumno-webdav-notice-error { margin: 0; }
+
+.dg-ext .lumno-webdav-actions { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; margin-top: 8px; }
+
+.dg-ext .lumno-webdav-actions > .lumno-webdav-diff-toggle { margin-right: auto; }
+
+.dg-ext .lumno-webdav-diff {
+  display: flex;
+  flex-direction: column;
+  margin-top: 6px;
+  border: 1px solid var(--tab-border);
+  border-radius: var(--lumno-radius-lg);
+  background: var(--control-bg);
+  overflow: hidden;
+}
+
+.dg-ext .lumno-webdav-diff-row {
+  display: grid;
+  grid-template-columns: minmax(88px, 0.8fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: 12px;
+  padding: 8px 12px;
+  font-size: var(--lumno-font-size-sm);
+  line-height: 1.6;
+  color: var(--panel-text);
+}
+
+.dg-ext .lumno-webdav-diff-row + .lumno-webdav-diff-row { border-top: 1px solid var(--tab-border); }
+
+.dg-ext .lumno-webdav-diff-head { color: var(--panel-subtext); font-weight: 500; }
+
+.dg-ext .lumno-webdav-diff-label { color: var(--panel-subtext); }
+
+.dg-ext .lumno-webdav-diff-row [role="cell"] { display: flex; flex-direction: column; min-width: 0; overflow-wrap: anywhere; }
+
+.dg-ext .lumno-webdav-settings form { text-align: left; }
+
+.dg-ext .lumno-webdav-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 16px;
+  margin: 6px 0;
+}
+
+.dg-ext .lumno-webdav-form-grid ._x_extension_shortcut_field_2024_unique_ { min-width: 0; }
+
+.dg-ext .lumno-webdav-form-grid input { width: 100%; box-sizing: border-box; }
+
+.dg-ext .lumno-webdav-form-grid > .lumno-webdav-password-hint { grid-column: 1 / -1; margin: -6px 0 0; }
+
+.dg-ext .lumno-webdav-editor-actions { flex-wrap: wrap; }
+
+.dg-ext .lumno-webdav-editor-actions > .lumno-webdav-test { margin-right: auto; }
+
+.dg-ext .lumno-webdav-editor-buttons { display: flex; gap: 10px; margin-left: auto; }
+
+.dg-ext .lumno-webdav-editor-actions button { white-space: nowrap; }
+
+.dg-ext .lumno-webdav-card ._x_extension_shortcut_item_title_2024_unique_ > .lumno-webdav-local-only { margin-left: -4px; flex: 0 0 auto; }
+
+.dg-ext .lumno-webdav-form-feedback {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--lumno-font-size-sm);
+  line-height: 1.5;
+  color: var(--duplicate-badge-text);
+}
+
+.dg-ext .lumno-webdav-form-feedback[data-tone="success"] { color: #15803d; }
+
+.dg-ext ._x_extension_settings_panel_2024_unique_:not(#dg_x_extension_settings_panel_2024_unique_)[data-theme="dark"] .lumno-webdav-form-feedback[data-tone="success"] { color: #86efac; }
+
+.dg-ext .lumno-webdav-form-feedback > .ri-icon { flex: 0 0 auto; }
+
+.dg-ext .lumno-webdav-form-feedback-text { flex: 1; min-width: 0; overflow-wrap: anywhere; }
+
+.dg-ext .lumno-webdav-form-feedback > button { margin: -6px 0; }
+
+.dg-ext .lumno-webdav-feedback { margin-top: 12px; overflow-wrap: anywhere; }
+
+.dg-ext .lumno-webdav-feedback[data-error="true"] { color: var(--duplicate-badge-text); }
+
+.dg-ext .lumno-webdav-settings [hidden] { display: none !important; }
+
+@container dg-panel (max-width: 480px) {
+.dg-ext .lumno-webdav-form-grid { grid-template-columns: minmax(0, 1fr); }
+
+.dg-ext .lumno-webdav-diff-row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+
+.dg-ext .lumno-webdav-diff-label { grid-column: 1 / -1; }
+
+.dg-ext .lumno-webdav-diff-head > :first-child { display: none; }
+
+.dg-ext .lumno-webdav-suggestion ._x_extension_shortcut_item_header_2024_unique_ { flex-wrap: wrap; }
+
+.dg-ext .lumno-webdav-suggestion ._x_extension_shortcut_item_actions_2024_unique_ { flex: 1 0 100%; justify-content: flex-end; }
+}
+
+.dg-ext .lumno-webdav-password-saved {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 0 4px 0 10px;
+  box-sizing: border-box;
+  border-radius: var(--lumno-radius-lg);
+  border: 1px solid var(--tab-border);
+  background: var(--control-bg);
+  font-size: var(--lumno-font-size-md);
+}
+
+.dg-ext .lumno-webdav-password-saved[data-disabled="true"] { opacity: .6; }
+
+.dg-ext .lumno-webdav-password-mask { flex: 1; min-width: 0; overflow: hidden; color: var(--panel-text); letter-spacing: 1px; white-space: nowrap; }
+
+.dg-ext .lumno-webdav-password-status { flex: 0 1 auto; min-width: 0; color: var(--panel-subtext); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.dg-ext .lumno-webdav-password-change,
+.dg-ext .lumno-webdav-password-icon {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  border-radius: var(--lumno-radius-md);
+  color: var(--panel-subtext);
+  cursor: pointer;
+  transition: color var(--lumno-duration-sm) ease, background-color var(--lumno-duration-sm) ease;
+}
+
+.dg-ext .lumno-webdav-password-change { height: 28px; padding: 0 10px; font-size: 12px; color: var(--panel-text); }
+
+.dg-ext .lumno-webdav-password-icon { width: 28px; height: 28px; }
+
+.dg-ext .lumno-webdav-password-icon:last-child { margin-right: 4px; }
+
+.dg-ext .lumno-webdav-password-change:hover,
+.dg-ext .lumno-webdav-password-icon:hover { color: var(--panel-text); background: var(--tab-bg); }
+
+.dg-ext .lumno-webdav-password-change:focus-visible,
+.dg-ext .lumno-webdav-password-icon:focus-visible { outline: 2px solid var(--input-focus-color); outline-offset: -2px; }
+
+.dg-ext .lumno-webdav-password-change:disabled,
+.dg-ext .lumno-webdav-password-icon:disabled { cursor: not-allowed; opacity: .5; background: none; }
+
+.dg-ext .lumno-webdav-form-grid .lumno-webdav-password input { width: auto; }
+
+@supports (corner-shape: superellipse(1.25)) {
+.dg-ext .lumno-webdav-diff,
+.dg-ext .lumno-webdav-password-saved,
+.dg-ext .lumno-webdav-password-change,
+.dg-ext .lumno-webdav-password-icon {
+    corner-shape: superellipse(1.25);
+  }
+}

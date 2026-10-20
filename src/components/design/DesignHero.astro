@@ -1,0 +1,420 @@
+---
+import { WING_OPEN, WING_REST } from "../../lib/butterfly-wing";
+
+interface Props {
+  title: string;
+  lead: string;
+  you: string;
+}
+
+/*
+ * The /design hero: the headline as a page still being built. Kevin's cursor
+ * drags a selection frame around it, a second cursor (the visitor) drifts in
+ * beside the lead, and the Lumno butterfly lands on the frame's corner handle.
+ * It plays once on load and rests; the resting state is the server HTML, so
+ * without script or with reduced motion the scene is simply there, still.
+ */
+const { title, lead, you } = Astro.props;
+const BEAT = `${WING_REST};${WING_OPEN};${WING_REST}`;
+const SPLINES = "0.42 0 0.58 1;0.42 0 0.58 1";
+const arrow = "M3 2.5 L3 19.5 L7.6 15.2 L10.6 22 L13.6 20.7 L10.7 14.1 L17 14.1 Z";
+---
+
+<header class="design-hero" data-hero>
+  <script is:inline>
+    // Hides the scene's moving parts before first paint, until the intro takes them (below).
+    if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      document.currentScript.parentElement.dataset.heroIntro = "pending";
+    }
+  </script>
+  <div class="design-hero__frame">
+    <h1>{title}</h1>
+    <span class="design-hero__selection" aria-hidden="true" data-hero-selection>
+      <i data-handle="nw"></i><i data-handle="ne"></i><i data-handle="sw"></i><i data-handle="se"></i>
+      <span class="design-hero__size" data-hero-size></span>
+      <span class="design-hero__fly" data-hero-fly>
+        {["back", "front"].map((wing) => (
+          <span class={`design-hero__wing design-hero__wing--${wing}`}>
+            <svg viewBox="0 0 23 25" fill="none" focusable="false">
+              <path fill="currentColor" d={WING_REST}>
+                <animate data-beat="fly" attributeName="d" begin="indefinite" dur="380ms" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines={SPLINES} values={BEAT} />
+                <animate data-beat="rest" attributeName="d" begin="indefinite" dur="2200ms" calcMode="spline" keyTimes="0;0.5;1" keySplines={SPLINES} values={BEAT} />
+              </path>
+            </svg>
+          </span>
+        ))}
+      </span>
+    </span>
+    <span class="design-hero__cursor design-hero__cursor--author" aria-hidden="true" data-hero-cursor="author">
+      <svg viewBox="0 0 24 24" focusable="false"><path d={arrow}></path></svg>
+      <span class="design-hero__tag">Kevin</span>
+    </span>
+  </div>
+  <p class="design-hero__lead">
+    {lead}
+    <span class="design-hero__cursor design-hero__cursor--you" aria-hidden="true" data-hero-cursor="you">
+      <svg viewBox="0 0 24 24" focusable="false"><path d={arrow}></path></svg>
+      <span class="design-hero__tag">{you}</span>
+    </span>
+  </p>
+</header>
+
+<style>
+  /* A plain statement, not a banner: one sans line and a short, quiet lead. */
+  .design-hero {
+    --hero-select: #16a0fd;
+    --hero-you: #8b5cf6;
+    position: relative;
+    margin: 0 auto clamp(40px, 5vw, 56px);
+    padding-top: 12px;
+    text-align: center;
+    overflow-x: clip;
+    overflow-clip-margin: 0;
+  }
+
+  .design-hero__frame {
+    position: relative;
+    display: inline-block;
+    max-width: min(640px, calc(100% - 40px));
+  }
+
+  .design-hero h1 {
+    margin: 0;
+    color: var(--home-ink, #2f2a22);
+    font-size: clamp(26px, 2.6vw, 34px);
+    font-weight: 620;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  .design-hero__lead {
+    position: relative;
+    /* Room under the frame for its size tag. */
+    margin: 40px auto 0;
+    max-width: 560px;
+    color: var(--text-sub, #626870);
+    font-size: 15px;
+    line-height: 1.7;
+    text-wrap: pretty;
+  }
+
+  :global([data-script="cjk"]) .design-hero h1,
+  :global([data-script="cjk"]) .design-hero__lead {
+    word-break: var(--cjk-word-break);
+    overflow-wrap: anywhere;
+    letter-spacing: 0;
+  }
+
+  /* A design tool's selection: a 1px frame a little off the text, square handles on its corners. */
+  .design-hero__selection {
+    position: absolute;
+    inset: -8px -14px;
+    border: 1px solid var(--hero-select);
+    pointer-events: none;
+  }
+
+  .design-hero__selection i {
+    position: absolute;
+    width: 7px;
+    height: 7px;
+    box-sizing: border-box;
+    border: 1px solid var(--hero-select);
+    background: #fff;
+  }
+
+  .design-hero__selection [data-handle="nw"] { top: -4px; left: -4px; }
+  .design-hero__selection [data-handle="ne"] { top: -4px; right: -4px; }
+  .design-hero__selection [data-handle="sw"] { bottom: -4px; left: -4px; }
+  .design-hero__selection [data-handle="se"] { bottom: -4px; right: -4px; }
+
+  /* The frame's size, under it, as the tool shows while it is selected. */
+  .design-hero__size {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    padding: 1px 5px;
+    border-radius: 3px;
+    background: var(--hero-select);
+    color: #fff;
+    font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 16px;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    transform: translateX(-50%);
+  }
+
+  .design-hero__size:empty {
+    display: none;
+  }
+
+  /* The butterfly, perched on the top right handle. */
+  .design-hero__fly {
+    position: absolute;
+    top: -30px;
+    right: -23px;
+    width: 28px;
+    height: 31px;
+    color: var(--hero-select);
+  }
+
+  .design-hero__wing {
+    position: absolute;
+    inset: 0;
+    transform-origin: 24% 77%;
+  }
+
+  .design-hero__wing svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    shape-rendering: geometricPrecision;
+  }
+
+  .design-hero__wing--back {
+    opacity: 0.38;
+    transform: rotate(14deg) scale(0.97);
+  }
+
+  .design-hero__wing--front {
+    transform: rotate(-8deg);
+  }
+
+  /*
+   * Collaborator cursors: the arrow's tip is the element's top left corner,
+   * with the name in a tag of the same color just below and right of it.
+   */
+  .design-hero__cursor {
+    --cursor: var(--hero-select);
+    position: absolute;
+    z-index: 1;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+  }
+
+  .design-hero__cursor svg {
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    width: 22px;
+    height: 22px;
+    overflow: visible;
+    filter: drop-shadow(0 1px 1.5px rgba(15, 23, 42, 0.22));
+  }
+
+  .design-hero__cursor path {
+    fill: var(--cursor);
+    stroke: #fff;
+    stroke-width: 1.5;
+    stroke-linejoin: round;
+  }
+
+  .design-hero__tag {
+    position: absolute;
+    top: 17px;
+    left: 13px;
+    padding: 2px 7px;
+    border-radius: 6px 10px 10px 10px;
+    background: var(--cursor);
+    color: #fff;
+    font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", var(--font-cjk, "PingFang SC"), sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 17px;
+    white-space: nowrap;
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.16);
+  }
+
+  /* Kevin rests just past the bottom right handle, as if he had just let go of it. */
+  .design-hero__cursor--author {
+    left: calc(100% + 18px);
+    top: calc(100% + 12px);
+  }
+
+  /* The visitor rests at the start of the lead's second line, opposite Kevin, the name hanging left. */
+  .design-hero__cursor--you {
+    --cursor: var(--hero-you);
+    left: 22px;
+    top: 40px;
+  }
+
+  .design-hero__cursor--you .design-hero__tag {
+    left: auto;
+    right: 4px;
+    border-radius: 10px 6px 10px 10px;
+  }
+
+  /* Before the intro starts, its moving parts are out of sight. */
+  .design-hero[data-hero-intro="pending"] :is(.design-hero__selection, .design-hero__cursor, .design-hero__fly) {
+    visibility: hidden;
+  }
+
+  :global(html[data-design-theme="dark"]) .design-hero {
+    --hero-select: #38b0ff;
+    --hero-you: #a78bfa;
+  }
+
+  :global(html[data-design-theme="dark"]) .design-hero h1 {
+    color: #f3f4f6;
+  }
+
+  :global(html[data-design-theme="dark"]) .design-hero__lead {
+    color: #a1a1aa;
+  }
+
+  :global(html[data-design-theme="dark"]) .design-hero__selection i {
+    background: #0e0e10;
+  }
+
+  @media (max-width: 680px) {
+    .design-hero__frame {
+      max-width: calc(100% - 32px);
+    }
+
+    .design-hero__selection {
+      inset: -6px -8px;
+    }
+
+    .design-hero__lead {
+      margin-top: 48px;
+    }
+
+    /* Near the screen's edge the name sits to the left of the arrow, clear of the lead. */
+    .design-hero__cursor--author {
+      left: calc(100% + 2px);
+      top: calc(100% + 10px);
+    }
+
+    .design-hero__cursor--author .design-hero__tag {
+      top: 2px;
+      left: auto;
+      right: 8px;
+      border-radius: 10px;
+    }
+
+    /* One cursor is enough on a phone; the lead has no room beside it. */
+    .design-hero__cursor--you {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  /*
+   * The intro, once: Kevin's cursor glides to the headline's top left corner,
+   * presses and drags the selection open to the bottom right (the frame grows
+   * under the pointer), lets go and the size shows; the visitor drifts in by the
+   * lead; then the butterfly flies down onto the top right handle and opens its
+   * wings once. Web Animations from offsets to each part's resting place, so
+   * the end state is the CSS one at any width.
+   */
+  const hero = document.querySelector<HTMLElement>("[data-hero]");
+  const selection = hero?.querySelector<HTMLElement>("[data-hero-selection]");
+  const size = hero?.querySelector<HTMLElement>("[data-hero-size]");
+  const author = hero?.querySelector<HTMLElement>('[data-hero-cursor="author"]');
+  const you = hero?.querySelector<HTMLElement>('[data-hero-cursor="you"]');
+  const fly = hero?.querySelector<HTMLElement>("[data-hero-fly]");
+
+  if (hero && selection && size && author && you && fly) {
+    // The size label reads the frame as drawn, and keeps up when the headline rewraps.
+    const showSize = () => {
+      const box = selection.getBoundingClientRect();
+      size.textContent = `${Math.round(box.width)} × ${Math.round(box.height)}`;
+    };
+    new ResizeObserver(showSize).observe(selection);
+
+    const beats = (name: string) => Array.from(fly.querySelectorAll<SVGAnimateElement>(`[data-beat="${name}"]`));
+    const beat = (name: string) => beats(name).forEach((item, index) => item.beginElementAt(index * 0.04));
+    const still = (name: string) => beats(name).forEach((item) => item.endElement());
+
+    const play = () => {
+      const ease = "cubic-bezier(0.22, 1, 0.36, 1)";
+      const glide = "cubic-bezier(0.45, 0, 0.2, 1)";
+      const box = selection.getBoundingClientRect();
+      const frame = author.parentElement!.getBoundingClientRect();
+      const rest = author.getBoundingClientRect();
+      // From the author's resting place to the selection's corners.
+      const toEnd = { x: box.right - rest.left, y: box.bottom - rest.top };
+      const toStart = { x: box.left - rest.left, y: box.top - rest.top };
+      const enterFrom = { x: toStart.x - Math.min(140, frame.width * 0.3), y: toStart.y + 90 };
+      const at = (point: { x: number; y: number }, extra = "") => `translate(${point.x}px, ${point.y}px)${extra}`;
+
+      const TO_CORNER = 700;
+      const PRESS = 140;
+      const DRAG = 900;
+      const dragStart = TO_CORNER + PRESS;
+      const dragEnd = dragStart + DRAG;
+      const total = dragEnd + 520;
+
+      author.animate(
+        [
+          { transform: at(enterFrom), opacity: 0, offset: 0 },
+          { transform: at(toStart), opacity: 1, offset: TO_CORNER / total, easing: "linear" },
+          { transform: at(toStart, " scale(0.88)"), offset: (TO_CORNER + PRESS * 0.5) / total, easing: "linear" },
+          { transform: at(toStart), offset: dragStart / total, easing: glide },
+          { transform: at(toEnd), offset: dragEnd / total, easing: ease },
+          { transform: "translate(0, 0)", opacity: 1, offset: 1 },
+        ],
+        { duration: total, delay: 200, easing: "linear", fill: "backwards" },
+      );
+
+      // The marquee: the frame is revealed from its top left as the pointer drags.
+      const corner = "-8px";
+      selection.animate(
+        [
+          { clipPath: `inset(${corner} 100% 100% ${corner})`, offset: 0 },
+          { clipPath: `inset(${corner} 100% 100% ${corner})`, offset: dragStart / dragEnd, easing: glide },
+          { clipPath: `inset(${corner} ${corner} ${corner} ${corner})`, offset: 1 },
+        ],
+        { duration: dragEnd, delay: 200, fill: "backwards" },
+      );
+      size.animate([{ opacity: 0, transform: "translate(-50%, -3px)" }, { opacity: 1, transform: "translate(-50%, 0)" }], {
+        duration: 260,
+        delay: 200 + dragEnd + 60,
+        easing: ease,
+        fill: "backwards",
+      });
+
+      if (getComputedStyle(you).display !== "none") {
+        you.animate(
+          [
+            { transform: "translate(-140px, 80px)", opacity: 0 },
+            { transform: "translate(-36px, 20px)", opacity: 1, offset: 0.55 },
+            { transform: "translate(0, 0)", opacity: 1 },
+          ],
+          { duration: 1300, delay: 1100, easing: "cubic-bezier(0.33, 1, 0.68, 1)", fill: "backwards" },
+        );
+      }
+
+      // The butterfly comes down from above right once the frame is drawn, beating fast, then settles.
+      const landing = fly.animate(
+        [
+          { transform: "translate(70px, -80px) rotate(-14deg)", opacity: 0 },
+          { transform: "translate(34px, -46px) rotate(6deg)", opacity: 1, offset: 0.4 },
+          { transform: "translate(10px, -14px) rotate(-4deg)", opacity: 1, offset: 0.78 },
+          { transform: "translate(0, 0) rotate(0deg)", opacity: 1 },
+        ],
+        { duration: 1100, delay: 200 + dragEnd + 200, easing: "cubic-bezier(0.25, 0.8, 0.3, 1)", fill: "backwards" },
+      );
+      window.setTimeout(() => beat("fly"), 200 + dragEnd + 200);
+      landing.onfinish = () => {
+        still("fly");
+        beat("rest");
+      };
+
+      delete hero.dataset.heroIntro;
+    };
+
+    if (hero.dataset.heroIntro === "pending") {
+      // Wait for the fonts, so the frame is measured around the headline as it will stay.
+      const fontsReady = document.fonts?.ready ?? Promise.resolve();
+      Promise.race([fontsReady, new Promise((resolve) => window.setTimeout(resolve, 1200))]).then(() =>
+        requestAnimationFrame(play),
+      );
+    }
+  }
+</script>

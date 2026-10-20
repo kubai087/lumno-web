@@ -24,6 +24,7 @@ Last updated: 2026-10-08
   - `/` for product homepage and feature intro
   - `/release` for changelog/release notes
   - `/privacy` for the privacy policy (rendered inside the help center's frame in every language)
+  - `/design` for the component gallery: the extension's own components, live, one per card (src/components/design/, copy in src/lib/design-content.ts). Text inside a component follows the extension's language for that reader (`getExtensionLocale`) and comes from lumno-extension/_locales where the extension has the string; numbers come from the extension's CSS
   - `/help/<slug>/` for the help center wiki (about Lumno, quick start, compatibility & trust); `/help/` redirects to the first page. It started at `/guides/`; every old `/guides/...` address redirects to its `/help/` page (src/pages/guides/)
   - `/onboarding` is retired (the extension ships its own onboarding); it redirects to `/`
   - `/404.html` (src/pages/404.astro) is the one page GitHub Pages serves for every missing address; it switches to the address's language (`/en/…`) or the visitor's in an inline script, and stays noindex

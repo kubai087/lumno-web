@@ -1,0 +1,205 @@
+/* Generated from lumno-extension/src/shared/tooltip.css by scripts/sync-extension-ui.mjs. Do not edit; rerun the script. */
+
+._x_extension_tooltip_2026_unique_ {
+  all: unset;
+  --x-extension-tooltip-bg-top: #ffffff;
+  --x-extension-tooltip-bg-bottom: #f7f9fc;
+  --x-extension-tooltip-text: #556070;
+  --x-extension-tooltip-border: rgba(214, 219, 227, 0.95);
+  --x-extension-tooltip-shadow: 0 16px 36px rgba(17, 24, 39, 0.08), 0 3px 10px rgba(17, 24, 39, 0.05);
+  --x-extension-tooltip-divider: rgba(70, 78, 92, 0.12);
+  --x-extension-tooltip-font-size: 12px;
+  position: fixed;
+  left: 8px;
+  top: 8px;
+  display: block;
+  visibility: hidden;
+  width: max-content;
+  max-width: min(420px, calc(100vw - 16px));
+  padding: 8px 12px;
+  border-radius: var(--lumno-radius-lg, 10px);
+  background: linear-gradient(
+    180deg,
+    var(--x-extension-tooltip-bg-top, #ffffff) 0%,
+    var(--x-extension-tooltip-bg-bottom, #f7f9fc) 100%
+  );
+  color: var(--x-extension-tooltip-text, #556070);
+  border: 1px solid var(--x-extension-tooltip-border, rgba(214, 219, 227, 0.95));
+  font-size: var(--x-extension-tooltip-font-size, 12px);
+  font-family: "Lumno Open Sans", "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  font-weight: 500;
+  line-height: 1.35;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-align: left;
+  box-sizing: border-box;
+  pointer-events: none;
+  z-index: var(--x-extension-tooltip-z-index, var(--lumno-z-tooltip, 10000));
+  box-shadow: var(
+    --x-extension-tooltip-shadow,
+    0 16px 36px rgba(17, 24, 39, 0.08), 0 3px 10px rgba(17, 24, 39, 0.05)
+  );
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity var(--lumno-duration-2xs, 120ms) ease, transform var(--lumno-duration-2xs, 120ms) ease, visibility var(--lumno-duration-2xs, 120ms) ease;
+}
+
+._x_extension_tooltip_2026_unique_[data-tooltip-position="absolute"] {
+  position: absolute;
+}
+
+._x_extension_tooltip_2026_unique_[data-visible="true"] {
+  visibility: visible;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+._x_extension_tooltip_line_2026_unique_ {
+  display: block;
+  width: 100%;
+}
+
+._x_extension_tooltip_line_2026_unique_ + ._x_extension_tooltip_line_2026_unique_ {
+  margin-top: 6px;
+}
+
+._x_extension_tooltip_divider_2026_unique_ {
+  display: block;
+  width: 100%;
+  height: 1px;
+  margin: 6px 0 5px;
+  background: var(--x-extension-tooltip-divider, rgba(15, 23, 42, 0.14));
+}
+
+._x_extension_tooltip_host_2026_unique_[data-tooltip]::after,
+._x_extension_tooltip_host_2024_unique_[data-tooltip]::after {
+  content: none;
+}
+
+.dg-ext[data-theme="dark"] ._x_extension_tooltip_2026_unique_,
+[data-theme="dark"] ._x_extension_tooltip_2026_unique_ {
+  --x-extension-tooltip-bg-top: #111827;
+  --x-extension-tooltip-bg-bottom: #0f172a;
+  --x-extension-tooltip-text: #f8fafc;
+  --x-extension-tooltip-border: rgba(255, 255, 255, 0.2);
+  --x-extension-tooltip-shadow: 0 14px 30px rgba(0, 0, 0, 0.45);
+  --x-extension-tooltip-divider: rgba(255, 255, 255, 0.14);
+}
+
+._x_extension_tooltip_2026_unique_._x_extension_help_passage_2026_unique_ {
+  --x-extension-tooltip-z-index: var(--lumno-z-max, 2147483647);
+  --x-extension-help-passage-ink: #1f2328;
+  --x-extension-help-passage-accent: #0a78c2;
+  position: fixed;
+  max-width: min(340px, calc(100vw - 16px));
+  max-height: min(360px, calc(100vh - 16px));
+  overflow: hidden;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.6;
+  transform: translateX(-4px);
+}
+
+._x_extension_help_passage_2026_unique_[data-placement="left"] {
+  transform: translateX(4px);
+}
+
+._x_extension_help_passage_2026_unique_[data-placement="bottom"] {
+  transform: translateY(-4px);
+}
+
+._x_extension_tooltip_2026_unique_._x_extension_help_passage_2026_unique_[data-visible="true"] {
+  transform: none;
+}
+
+.dg-ext[data-theme="dark"] ._x_extension_help_passage_2026_unique_,
+[data-theme="dark"] ._x_extension_help_passage_2026_unique_ {
+  --x-extension-help-passage-ink: #f8fafc;
+  --x-extension-help-passage-accent: #60b8f5;
+}
+
+._x_extension_help_passage_heading_2026_unique_,
+._x_extension_help_passage_text_2026_unique_,
+._x_extension_help_passage_list_2026_unique_,
+._x_extension_help_passage_table_2026_unique_ {
+  display: block;
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+}
+
+._x_extension_help_passage_2026_unique_ > * + * {
+  margin-top: 6px;
+}
+
+._x_extension_help_passage_heading_2026_unique_ {
+  color: var(--x-extension-help-passage-ink);
+  font-weight: 600;
+}
+
+._x_extension_help_passage_list_2026_unique_ {
+  padding-left: 1.25em;
+  list-style-position: outside;
+}
+
+ul._x_extension_help_passage_list_2026_unique_ {
+  list-style-type: disc;
+}
+
+ol._x_extension_help_passage_list_2026_unique_ {
+  list-style-type: decimal;
+}
+
+._x_extension_help_passage_item_2026_unique_ {
+  display: list-item;
+  margin: 0;
+}
+
+._x_extension_help_passage_item_2026_unique_ + ._x_extension_help_passage_item_2026_unique_ {
+  margin-top: 2px;
+}
+
+._x_extension_help_passage_table_2026_unique_ {
+  display: table;
+  border-collapse: collapse;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+._x_extension_help_passage_th_2026_unique_,
+._x_extension_help_passage_td_2026_unique_ {
+  padding: 3px 12px 3px 0;
+  border-bottom: 1px solid var(--x-extension-tooltip-divider, rgba(70, 78, 92, 0.12));
+  text-align: left;
+  vertical-align: top;
+}
+
+._x_extension_help_passage_th_2026_unique_ {
+  color: var(--x-extension-help-passage-ink);
+  font-weight: 600;
+}
+
+tr:last-child > ._x_extension_help_passage_td_2026_unique_ {
+  border-bottom: 0;
+}
+
+._x_extension_help_passage_mark_2026_unique_ {
+  background: none;
+  color: var(--x-extension-help-passage-accent);
+  font-weight: 600;
+}
+
+@media (prefers-reduced-motion: reduce) {
+._x_extension_tooltip_2026_unique_ {
+    transition: none;
+  }
+}
+
+@supports (corner-shape: superellipse(1.25)) {
+._x_extension_tooltip_2026_unique_ {
+    corner-shape: superellipse(1.25);
+  }
+}

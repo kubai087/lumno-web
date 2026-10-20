@@ -1,5 +1,5 @@
 ---
-import { LUMNO_SITE_SEARCH_ICON_ROOT } from "../../../lib/lumno-search-providers";
+import { glyph, highlight, themeStyle, tile } from "../../../lib/overlay-theme";
 import type { HOME_CONTENT } from "../../../lib/home-content";
 import TitlePair from "../TitlePair.astro";
 import CopyLines from "../CopyLines.astro";
@@ -17,91 +17,9 @@ const { content } = Astro.props;
  * Illustrations are drawn here rather than imported from the onboarding demo, but
  * every number follows lumno-extension's own overlay styles: the 26px panel, 56px
  * input, 52px rows with a 13px radius, bare 16px favicons, flat 8px-radius action
- * tags and the 52px scope-menu tiles.
+ * tags and the 52px scope-menu tiles. Glyphs, accents and highlighting come from
+ * lib/overlay-theme.ts (the /design gallery uses its glyph paths too).
  */
-
-// Same glyphs the extension ships for its site-search providers.
-const GLYPH_EXT: Record<string, string> = {
-  dbai: "png",
-  gs: "png",
-  jd: "png",
-  mx: "png",
-  qw: "png",
-  rd: "png",
-  tb: "png",
-  xhs: "png",
-  zh: "png",
-};
-const glyph = (key: string) => `${LUMNO_SITE_SEARCH_ICON_ROOT}/glyph-${key}.${GLYPH_EXT[key] || "svg"}`;
-const tile = (key: string) => `${LUMNO_SITE_SEARCH_ICON_ROOT}/tile-${key}.png`;
-
-// Brand accents the extension samples from each favicon; null keeps the neutral theme.
-const ACCENT: Record<string, [number, number, number] | null> = {
-  bb: [251, 114, 153],
-  dbai: [56, 132, 255],
-  ds: [77, 107, 254],
-  gg: [66, 133, 244],
-  gh: null,
-  gm: [66, 133, 244],
-  gpt: null,
-  gs: [66, 133, 244],
-  jd: [225, 37, 27],
-  kimi: null,
-  mx: [234, 70, 93],
-  pplx: [32, 128, 141],
-  qw: [97, 92, 237],
-  rd: [255, 69, 0],
-  tb: [255, 80, 0],
-  wk: null,
-  xhs: [255, 36, 66],
-  yt: [255, 0, 0],
-  zh: [5, 109, 232],
-  zw: null,
-};
-
-/**
- * Mirrors the extension's favicon theme builder: each surface is the accent
- * blended into white at a fixed strength. Neutral sites reuse its GitHub theme.
- */
-const themeStyle = (key: string, fallback: [number, number, number] = [66, 133, 244]) => {
-  const accent = key in ACCENT ? ACCENT[key] : fallback;
-  if (!accent) {
-    return [
-      "--accent: 111, 115, 122",
-      "--row-bg: rgb(236, 236, 237)",
-      "--tag-bg: rgb(229, 230, 231)",
-      "--tag-border: rgb(194, 196, 197)",
-      "--mark-bg: rgb(200, 201, 203)",
-    ].join(";");
-  }
-  const mix = (amount: number) =>
-    `rgb(${accent.map((channel) => Math.round(255 + (channel - 255) * amount)).join(", ")})`;
-  return [
-    `--accent: ${accent.join(", ")}`,
-    `--row-bg: ${mix(0.145)}`,
-    `--tag-bg: ${mix(0.24)}`,
-    `--tag-border: ${mix(0.49)}`,
-    `--mark-bg: ${mix(0.41)}`,
-  ].join(";");
-};
-
-/** Splits a title around every case-insensitive occurrence of `mark`. */
-const highlight = (text: string, mark: string) => {
-  const parts: Array<{ text: string; hit: boolean }> = [];
-  const lower = text.toLowerCase();
-  const needle = mark.toLowerCase();
-  let cursor = 0;
-  let index = needle ? lower.indexOf(needle) : -1;
-  while (index >= 0) {
-    if (index > cursor) parts.push({ text: text.slice(cursor, index), hit: false });
-    parts.push({ text: text.slice(index, index + needle.length), hit: true });
-    cursor = index + needle.length;
-    index = lower.indexOf(needle, cursor);
-  }
-  if (cursor < text.length) parts.push({ text: text.slice(cursor), hit: false });
-  return parts;
-};
-
 
 const { search, siteSearch, ai } = content;
 const pickedProvider = ai.providers[ai.pick] || ai.providers[0];

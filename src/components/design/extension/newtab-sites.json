@@ -1,0 +1,709 @@
+{
+  "generatedBy": "scripts/capture-extension-newtab.mjs",
+  "sites": {
+    "github": {
+      "title": "GitHub",
+      "url": "https://github.com/",
+      "favicon": "/assets/design/favicons/github.png",
+      "faviconOffset": "translate(0px, 0px)",
+      "tile": {
+        "light": {
+          "bg": "rgb(237, 238, 238)",
+          "color": "#111827"
+        },
+        "dark": {
+          "bg": "rgb(60, 60, 61)",
+          "color": "#F8FAFC"
+        }
+      },
+      "card": {
+        "light": {
+          "--x-nt-bookmark-card-color": "rgb(249, 249, 249)",
+          "--x-nt-bookmark-card-hover-color": "rgba(245, 245, 246, 0.86)",
+          "--x-nt-bookmark-card-border-color": "rgb(232, 232, 232)",
+          "--x-nt-bookmark-icon-color": "rgb(251, 251, 251)",
+          "--x-nt-bookmark-shadow-rgb": "148, 153, 161"
+        },
+        "dark": {
+          "--x-nt-bookmark-card-color": "rgb(37, 38, 38)",
+          "--x-nt-bookmark-card-hover-color": "rgba(45, 46, 46, 0.78)",
+          "--x-nt-bookmark-card-border-color": "rgb(63, 64, 64)",
+          "--x-nt-bookmark-icon-color": "rgb(35, 35, 35)",
+          "--x-nt-bookmark-shadow-rgb": "70, 77, 86"
+        }
+      }
+    },
+    "youtube": {
+      "title": "YouTube",
+      "url": "https://www.youtube.com/",
+      "favicon": "/assets/design/favicons/youtube.png",
+      "faviconOffset": "translate(0px, 0px)",
+      "tile": {
+        "light": {
+          "bg": "rgb(255, 209, 209)",
+          "color": "#111827"
+        },
+        "dark": {
+          "bg": "rgb(87, 16, 16)",
+          "color": "#F8FAFC"
+        }
+      },
+      "card": {
+        "light": {
+          "--x-nt-bookmark-card-color": "rgb(255, 240, 240)",
+          "--x-nt-bookmark-card-hover-color": "rgba(255, 230, 230, 0.86)",
+          "--x-nt-bookmark-card-border-color": "rgb(237, 223, 223)",
+          "--x-nt-bookmark-icon-color": "rgb(255, 245, 245)",
+          "--x-nt-bookmark-shadow-rgb": "201, 67, 74"
+        },
+        "dark": {
+          "--x-nt-bookmark-card-color": "rgb(47, 22, 22)",
+          "--x-nt-bookmark-card-hover-color": "rgba(61, 20, 20, 0.78)",
+          "--x-nt-bookmark-card-border-color": "rgb(72, 50, 50)",
+          "--x-nt-bookmark-icon-color": "rgb(42, 22, 22)",
+          "--x-nt-bookmark-shadow-rgb": "108, 16, 25"
+        }
+      }
+    },
+    "figma": {
+      "title": "Figma",
+      "url": "https://www.figma.com/",
+      "favicon": "/assets/design/favicons/figma.png",
+      "faviconOffset": "translate(0px, 0px)",
+      "tile": {
+        "light": {
+          "bg": "rgb(237, 237, 237)",
+          "color": "#111827"
+        },
+        "dark": {
+          "bg": "rgb(59, 59, 60)",
+          "color": "#F8FAFC"
+        }
+      },
+      "card": {
+        "light": {
+          "--x-nt-bookmark-card-color": "rgb(249, 249, 249)",
+          "--x-nt-bookmark-card-hover-color": "rgba(245, 245, 245, 0.86)",
+          "--x-nt-bookmark-card-border-color": "rgb(232, 232, 232)",
+          "--x-nt-bookmark-icon-color": "rgb(251, 251, 251)",
+          "--x-nt-bookmark-shadow-rgb": "147, 150, 158"
+        },
+        "dark": {
+          "--x-nt-bookmark-card-color": "rgb(37, 37, 37)",
+          "--x-nt-bookmark-card-hover-color": "rgba(45, 45, 45, 0.78)",
+          "--x-nt-bookmark-card-border-color": "rgb(63, 63, 63)",
+          "--x-nt-bookmark-icon-color": "rgb(34, 34, 35)",
+          "--x-nt-bookmark-shadow-rgb": "70, 74, 84"
+        }
+      }
+    },
+    "dribbble": {
+      "title": "Dribbble",
+      "url": "https://dribbble.com/",
+      "favicon": "/assets/design/favicons/dribbble.png",
+      "faviconOffset": "translate(0px, 0px)",
+      "tile": {
+        "light": {
+          "bg": "rgb(251, 227, 248)",
+          "color": "#111827"
+        },
+        "dark": {
+          "bg": "rgb(81, 44, 77)",
+          "color": "#F8FAFC"
+        }
+      },
+      "card": {
+        "light": {
+          "--x-nt-bookmark-card-color": "rgb(254, 246, 253)",
+          "--x-nt-bookmark-card-hover-color": "rgba(253, 240, 251, 0.86)",
+          "--x-nt-bookmark-card-border-color": "rgb(236, 229, 235)",
+          "--x-nt-bookmark-icon-color": "rgb(254, 249, 253)",
+          "--x-nt-bookmark-shadow-rgb": "190, 121, 191"
+        },
+        "dark": {
+          "--x-nt-bookmark-card-color": "rgb(45, 32, 43)",
+          "--x-nt-bookmark-card-hover-color": "rgba(58, 36, 55, 0.78)",
+          "--x-nt-bookmark-card-border-color": "rgb(70, 59, 68)",
+          "--x-nt-bookmark-icon-color": "rgb(41, 30, 39)",
+          "--x-nt-bookmark-shadow-rgb": "100, 54, 107"
+        }
+      }
+    },
+    "twitch": {
+      "title": "Twitch",
+      "url": "https://www.twitch.tv/",
+      "favicon": "/assets/design/favicons/twitch.png",
+      "faviconOffset": "translate(0px, 1.47774px)",
+      "tile": {
+        "light": {
+          "bg": "rgb(236, 223, 255)",
+          "color": "#111827"
+        },
+        "dark": {
+          "bg": "rgb(58, 38, 87)",
+          "color": "#F8FAFC"
+        }
+      },
+      "card": {
+        "light": {
+          "--x-nt-bookmark-card-color": "rgb(249, 244, 255)",
+          "--x-nt-bookmark-card-hover-color": "rgba(245, 237, 255, 0.86)",
+          "--x-nt-bookmark-card-border-color": "rgb(232, 227, 237)",
+          "--x-nt-bookmark-icon-color": "rgb(251, 248, 255)",
+          "--x-nt-bookmark-shadow-rgb": "144, 109, 211"
+        },
+        "dark": {
+          "--x-nt-bookmark-card-color": "rgb(37, 29, 47)",
+          "--x-nt-bookmark-card-hover-color": "rgba(44, 33, 61, 0.78)",
+          "--x-nt-bookmark-card-border-color": "rgb(63, 56, 72)",
+          "--x-nt-bookmark-icon-color": "rgb(34, 28, 42)",
+          "--x-nt-bookmark-shadow-rgb": "68, 46, 122"
+        }
+      }
+    },
+    "chatgpt": {
+      "title": "ChatGPT",
+      "url": "https://chatgpt.com/",
+      "favicon": "/assets/design/favicons/chatgpt.png",
+      "faviconOffset": "translate(0px, 0px)",
+      "tile": {
+        "light": {
+          "bg": "rgb(212, 238, 232)",
+          "color": "#111827"
+        },
+        "dark": {
+          "bg": "rgb(20, 61, 51)",
+          "color": "#F8FAFC"
+        }
+      },
+      "card": {
+        "light": {
+          "--x-nt-bookmark-card-color": "rgb(241, 249, 247)",
+          "--x-nt-bookmark-card-hover-color": "rgba(231, 246, 242, 0.86)",
+          "--x-nt-bookmark-card-border-color": "rgb(224, 232, 230)",
+          "--x-nt-bookmark-icon-color": "rgb(245, 251, 250)",
+          "--x-nt-bookmark-shadow-rgb": "72, 155, 142"
+        },
+        "dark": {
+          "--x-nt-bookmark-card-color": "rgb(23, 38, 34)",
+          "--x-nt-bookmark-card-hover-color": "rgba(23, 46, 40, 0.78)",
+          "--x-nt-bookmark-card-border-color": "rgb(51, 64, 61)",
+          "--x-nt-bookmark-icon-color": "rgb(23, 35, 32)",
+          "--x-nt-bookmark-shadow-rgb": "17, 78, 73"
+        }
+      }
+    },
+    "claude": {
+      "title": "Claude",
+      "url": "https://claude.ai/",
+      "favicon": "/assets/design/favicons/claude.png",
+      "faviconOffset": "translate(0px, 0px)",
+      "tile": {
+        "light": {
+          "bg": "rgb(249, 234, 229)",
+          "color": "#111827"
+        },
+        "dark": {
+          "bg": "rgb(78, 54, 46)",
+          "color": "#F8FAFC"
+        }
+      },
+      "card": {
+        "light": {
+          "--x-nt-bookmark-card-color": "rgb(253, 248, 246)",
+          "--x-nt-bookmark-card-hover-color": "rgba(252, 243, 240, 0.86)",
+          "--x-nt-bookmark-card-border-color": "rgb(235, 231, 229)",
+          "--x-nt-bookmark-icon-color": "rgb(254, 250, 249)",
+          "--x-nt-bookmark-shadow-rgb": "184, 141, 132"
+        },
+        "dark": {
+          "--x-nt-bookmark-card-color": "rgb(44, 35, 32)",
+          "--x-nt-bookmark-card-hover-color": "rgba(56, 42, 37, 0.78)",
+          "--x-nt-bookmark-card-border-color": "rgb(69, 61, 59)",
+          "--x-nt-bookmark-icon-color": "rgb(40, 33, 31)",
+          "--x-nt-bookmark-shadow-rgb": "96, 68, 66"
+        }
+      }
+    },
+    "google": {
+      "title": "Google",
+      "url": "https://www.google.com/",
+      "favicon": "/assets/design/favicons/google.png",
+      "faviconOffset": "translate(0px, 0px)",
+      "tile": {
+        "light": {
+          "bg": "rgb(221, 233, 253)",
+          "color": "#111827"
+        },
+        "dark": {
+          "bg": "rgb(34, 53, 84)",
+          "color": "#F8FAFC"
+        }
+      },
+      "card": {
+        "light": {
+          "--x-nt-bookmark-card-color": "rgb(244, 248, 254)",
+          "--x-nt-bookmark-card-hover-color": "rgba(236, 243, 254, 0.86)",
+          "--x-nt-bookmark-card-border-color": "rgb(227, 231, 236)",
+          "--x-nt-bookmark-icon-color": "rgb(247, 250, 255)",
+          "--x-nt-bookmark-shadow-rgb": "99, 139, 205"
+        },
+        "dark": {
+          "--x-nt-bookmark-card-color": "rgb(28, 35, 46)",
+          "--x-nt-bookmark-card-hover-color": "rgba(31, 41, 59, 0.78)",
+          "--x-nt-bookmark-card-border-color": "rgb(55, 61, 71)",
+          "--x-nt-bookmark-icon-color": "rgb(27, 33, 42)",
+          "--x-nt-bookmark-shadow-rgb": "36, 67, 118"
+        }
+      }
+    },
+    "vercel": {
+      "title": "Vercel",
+      "url": "https://vercel.com/",
+      "favicon": "/assets/design/favicons/vercel.png",
+      "faviconOffset": "translate(0px, 0px)",
+      "tile": {
+        "light": {
+          "bg": "rgb(235, 235, 235)",
+          "color": "#111827"
+        },
+        "dark": {
+          "bg": "rgb(56, 56, 56)",
+          "color": "#F8FAFC"
+        }
+      },
+      "card": {
+        "light": {
+          "--x-nt-bookmark-card-color": "rgb(248, 248, 248)",
+          "--x-nt-bookmark-card-hover-color": "rgba(244, 244, 244, 0.86)",
+          "--x-nt-bookmark-card-border-color": "rgb(231, 231, 231)",
+          "--x-nt-bookmark-icon-color": "rgb(251, 251, 251)",
+          "--x-nt-bookmark-shadow-rgb": "142, 145, 152"
+        },
+        "dark": {
+          "--x-nt-bookmark-card-color": "rgb(36, 36, 36)",
+          "--x-nt-bookmark-card-hover-color": "rgba(43, 43, 43, 0.78)",
+          "--x-nt-bookmark-card-border-color": "rgb(62, 62, 62)",
+          "--x-nt-bookmark-icon-color": "rgb(34, 34, 34)",
+          "--x-nt-bookmark-shadow-rgb": "66, 71, 80"
+        }
+      }
+    },
+    "nextjs": {
+      "title": "Next.js",
+      "url": "https://nextjs.org/",
+      "favicon": "/assets/design/favicons/nextjs.png",
+      "faviconOffset": "translate(0px, 0px)",
+      "tile": {
+        "light": {
+          "bg": "rgb(236, 236, 236)",
+          "color": "#111827"
+        },
+        "dark": {
+          "bg": "rgb(58, 58, 58)",
+          "color": "#F8FAFC"
+        }
+      },
+      "card": {
+        "light": {
+          "--x-nt-bookmark-card-color": "rgb(249, 249, 249)",
+          "--x-nt-bookmark-card-hover-color": "rgba(245, 245, 245, 0.86)",
+          "--x-nt-bookmark-card-border-color": "rgb(232, 232, 232)",
+          "--x-nt-bookmark-icon-color": "rgb(251, 251, 251)",
+          "--x-nt-bookmark-shadow-rgb": "144, 148, 155"
+        },
+        "dark": {
+          "--x-nt-bookmark-card-color": "rgb(37, 37, 37)",
+          "--x-nt-bookmark-card-hover-color": "rgba(44, 44, 44, 0.78)",
+          "--x-nt-bookmark-card-border-color": "rgb(63, 63, 63)",
+          "--x-nt-bookmark-icon-color": "rgb(34, 34, 34)",
+          "--x-nt-bookmark-shadow-rgb": "68, 73, 82"
+        }
+      }
+    },
+    "react": {
+      "title": "React",
+      "url": "https://react.dev/",
+      "favicon": "/assets/design/favicons/react.png",
+      "faviconOffset": "translate(0px, 0px)",
+      "tile": {
+        "light": {
+          "bg": "rgb(239, 249, 252)",
+          "color": "#111827"
+        },
+        "dark": {
+          "bg": "rgb(63, 78, 82)",
+          "color": "#F8FAFC"
+        }
+      },
+      "card": {
+        "light": {
+          "--x-nt-bookmark-card-color": "rgb(250, 253, 254)",
+          "--x-nt-bookmark-card-hover-color": "rgba(246, 252, 253, 0.86)",
+          "--x-nt-bookmark-card-border-color": "rgb(233, 235, 236)",
+          "--x-nt-bookmark-icon-color": "rgb(251, 254, 254)",
+          "--x-nt-bookmark-shadow-rgb": "154, 188, 201"
+        },
+        "dark": {
+          "--x-nt-bookmark-card-color": "rgb(38, 44, 45)",
+          "--x-nt-bookmark-card-hover-color": "rgba(47, 56, 58, 0.78)",
+          "--x-nt-bookmark-card-border-color": "rgb(64, 69, 70)",
+          "--x-nt-bookmark-icon-color": "rgb(35, 40, 41)",
+          "--x-nt-bookmark-shadow-rgb": "75, 101, 114"
+        }
+      }
+    },
+    "tailwind": {
+      "title": "Tailwind CSS",
+      "url": "https://tailwindcss.com/",
+      "favicon": "/assets/design/favicons/tailwind.png",
+      "faviconOffset": "translate(0px, 0px)",
+      "tile": {
+        "light": {
+          "bg": "rgb(234, 248, 254)",
+          "color": "#111827"
+        },
+        "dark": {
+          "bg": "rgb(54, 76, 86)",
+          "color": "#F8FAFC"
+        }
+      },
+      "card": {
+        "light": {
+          "--x-nt-bookmark-card-color": "rgb(248, 253, 255)",
+          "--x-nt-bookmark-card-hover-color": "rgba(243, 251, 255, 0.86)",
+          "--x-nt-bookmark-card-border-color": "rgb(231, 235, 237)",
+          "--x-nt-bookmark-icon-color": "rgb(250, 253, 255)",
+          "--x-nt-bookmark-shadow-rgb": "137, 183, 209"
+        },
+        "dark": {
+          "--x-nt-bookmark-card-color": "rgb(35, 43, 47)",
+          "--x-nt-bookmark-card-hover-color": "rgba(42, 55, 60, 0.78)",
+          "--x-nt-bookmark-card-border-color": "rgb(61, 68, 72)",
+          "--x-nt-bookmark-icon-color": "rgb(33, 39, 42)",
+          "--x-nt-bookmark-shadow-rgb": "63, 98, 120"
+        }
+      }
+    },
+    "supabase": {
+      "title": "Supabase",
+      "url": "https://supabase.com/",
+      "favicon": "/assets/design/favicons/supabase.png",
+      "faviconOffset": "translate(0px, 0px)",
+      "tile": {
+        "light": {
+          "bg": "rgb(237, 239, 238)",
+          "color": "#111827"
+        },
+        "dark": {
+          "bg": "rgb(59, 62, 61)",
+          "color": "#F8FAFC"
+        }
+      },
+      "card": {
+        "light": {
+          "--x-nt-bookmark-card-color": "rgb(249, 250, 249)",
+          "--x-nt-bookmark-card-hover-color": "rgba(245, 246, 246, 0.86)",
+          "--x-nt-bookmark-card-border-color": "rgb(232, 233, 232)",
+          "--x-nt-bookmark-icon-color": "rgb(251, 251, 251)",
+          "--x-nt-bookmark-shadow-rgb": "147, 156, 160"
+        },
+        "dark": {
+          "--x-nt-bookmark-card-color": "rgb(37, 38, 38)",
+          "--x-nt-bookmark-card-hover-color": "rgba(45, 47, 46, 0.78)",
+          "--x-nt-bookmark-card-border-color": "rgb(63, 64, 64)",
+          "--x-nt-bookmark-icon-color": "rgb(34, 35, 35)",
+          "--x-nt-bookmark-shadow-rgb": "70, 79, 86"
+        }
+      }
+    },
+    "npm": {
+      "title": "npm",
+      "url": "https://www.npmjs.com/",
+      "favicon": "/assets/design/favicons/npm.png",
+      "faviconOffset": "translate(0px, 0px)",
+      "tile": {
+        "light": {
+          "bg": "rgb(246, 213, 213)",
+          "color": "#111827"
+        },
+        "dark": {
+          "bg": "rgb(74, 21, 21)",
+          "color": "#F8FAFC"
+        }
+      },
+      "card": {
+        "light": {
+          "--x-nt-bookmark-card-color": "rgb(252, 241, 241)",
+          "--x-nt-bookmark-card-hover-color": "rgba(250, 232, 232, 0.86)",
+          "--x-nt-bookmark-card-border-color": "rgb(234, 224, 224)",
+          "--x-nt-bookmark-icon-color": "rgb(253, 246, 246)",
+          "--x-nt-bookmark-shadow-rgb": "175, 78, 84"
+        },
+        "dark": {
+          "--x-nt-bookmark-card-color": "rgb(42, 24, 24)",
+          "--x-nt-bookmark-card-hover-color": "rgba(53, 23, 23, 0.78)",
+          "--x-nt-bookmark-card-border-color": "rgb(68, 52, 52)",
+          "--x-nt-bookmark-icon-color": "rgb(39, 24, 24)",
+          "--x-nt-bookmark-shadow-rgb": "90, 24, 32"
+        }
+      }
+    },
+    "stackoverflow": {
+      "title": "Stack Overflow",
+      "url": "https://stackoverflow.com/",
+      "favicon": "/assets/design/favicons/stackoverflow.png",
+      "faviconOffset": "translate(0px, 0px)",
+      "tile": {
+        "light": {
+          "bg": "rgb(249, 224, 210)",
+          "color": "#111827"
+        },
+        "dark": {
+          "bg": "rgb(78, 39, 17)",
+          "color": "#F8FAFC"
+        }
+      },
+      "card": {
+        "light": {
+          "--x-nt-bookmark-card-color": "rgb(253, 245, 240)",
+          "--x-nt-bookmark-card-hover-color": "rgba(252, 238, 230, 0.86)",
+          "--x-nt-bookmark-card-border-color": "rgb(235, 228, 223)",
+          "--x-nt-bookmark-icon-color": "rgb(254, 248, 245)",
+          "--x-nt-bookmark-shadow-rgb": "183, 113, 76"
+        },
+        "dark": {
+          "--x-nt-bookmark-card-color": "rgb(44, 30, 22)",
+          "--x-nt-bookmark-card-hover-color": "rgba(56, 34, 21, 0.78)",
+          "--x-nt-bookmark-card-border-color": "rgb(69, 57, 50)",
+          "--x-nt-bookmark-icon-color": "rgb(40, 29, 22)",
+          "--x-nt-bookmark-shadow-rgb": "95, 48, 26"
+        }
+      }
+    },
+    "medium": {
+      "title": "Medium",
+      "url": "https://medium.com/",
+      "favicon": "/assets/design/favicons/medium.png",
+      "faviconOffset": "translate(0px, 0px)",
+      "tile": {
+        "light": {
+          "bg": "rgb(237, 237, 237)",
+          "color": "#111827"
+        },
+        "dark": {
+          "bg": "rgb(60, 60, 60)",
+          "color": "#F8FAFC"
+        }
+      },
+      "card": {
+        "light": {
+          "--x-nt-bookmark-card-color": "rgb(249, 249, 249)",
+          "--x-nt-bookmark-card-hover-color": "rgba(245, 245, 245, 0.86)",
+          "--x-nt-bookmark-card-border-color": "rgb(232, 232, 232)",
+          "--x-nt-bookmark-icon-color": "rgb(251, 251, 251)",
+          "--x-nt-bookmark-shadow-rgb": "148, 151, 158"
+        },
+        "dark": {
+          "--x-nt-bookmark-card-color": "rgb(37, 37, 37)",
+          "--x-nt-bookmark-card-hover-color": "rgba(45, 45, 45, 0.78)",
+          "--x-nt-bookmark-card-border-color": "rgb(63, 63, 63)",
+          "--x-nt-bookmark-icon-color": "rgb(35, 35, 35)",
+          "--x-nt-bookmark-shadow-rgb": "70, 75, 84"
+        }
+      }
+    },
+    "fonts": {
+      "title": "Google Fonts",
+      "url": "https://fonts.google.com/",
+      "favicon": "/assets/design/favicons/fonts.png",
+      "faviconOffset": "translate(0px, 0px)",
+      "tile": {
+        "light": {
+          "bg": "rgb(221, 233, 253)",
+          "color": "#111827"
+        },
+        "dark": {
+          "bg": "rgb(34, 53, 84)",
+          "color": "#F8FAFC"
+        }
+      },
+      "card": {
+        "light": {
+          "--x-nt-bookmark-card-color": "rgb(244, 248, 254)",
+          "--x-nt-bookmark-card-hover-color": "rgba(236, 243, 254, 0.86)",
+          "--x-nt-bookmark-card-border-color": "rgb(227, 231, 236)",
+          "--x-nt-bookmark-icon-color": "rgb(247, 250, 255)",
+          "--x-nt-bookmark-shadow-rgb": "99, 139, 205"
+        },
+        "dark": {
+          "--x-nt-bookmark-card-color": "rgb(28, 35, 46)",
+          "--x-nt-bookmark-card-hover-color": "rgba(31, 41, 59, 0.78)",
+          "--x-nt-bookmark-card-border-color": "rgb(55, 61, 71)",
+          "--x-nt-bookmark-icon-color": "rgb(27, 33, 42)",
+          "--x-nt-bookmark-shadow-rgb": "36, 67, 118"
+        }
+      }
+    },
+    "apple-hig": {
+      "title": "Apple HIG",
+      "url": "https://developer.apple.com/design/",
+      "favicon": "/assets/design/favicons/apple-hig.png",
+      "faviconOffset": "translate(0px, 0px)",
+      "tile": {
+        "light": {
+          "bg": "rgb(220, 233, 253)",
+          "color": "#111827"
+        },
+        "dark": {
+          "bg": "rgb(32, 52, 85)",
+          "color": "#F8FAFC"
+        }
+      },
+      "card": {
+        "light": {
+          "--x-nt-bookmark-card-color": "rgb(250, 252, 255)",
+          "--x-nt-bookmark-card-hover-color": "rgba(247, 251, 255, 0.86)",
+          "--x-nt-bookmark-card-border-color": "rgb(233, 234, 237)",
+          "--x-nt-bookmark-icon-color": "rgb(252, 253, 255)",
+          "--x-nt-bookmark-shadow-rgb": "158, 182, 211"
+        },
+        "dark": {
+          "--x-nt-bookmark-card-color": "rgb(39, 43, 47)",
+          "--x-nt-bookmark-card-hover-color": "rgba(48, 54, 61, 0.78)",
+          "--x-nt-bookmark-card-border-color": "rgb(65, 68, 72)",
+          "--x-nt-bookmark-icon-color": "rgb(36, 39, 42)",
+          "--x-nt-bookmark-shadow-rgb": "78, 97, 122"
+        }
+      }
+    },
+    "material": {
+      "title": "Material 3",
+      "url": "https://m3.material.io/",
+      "favicon": "/assets/design/favicons/material.png",
+      "faviconOffset": "translate(0px, 0px)",
+      "tile": {
+        "light": {
+          "bg": "rgb(220, 233, 241)",
+          "color": "#111827"
+        },
+        "dark": {
+          "bg": "rgb(32, 53, 66)",
+          "color": "#F8FAFC"
+        }
+      },
+      "card": {
+        "light": {
+          "--x-nt-bookmark-card-color": "rgb(243, 248, 250)",
+          "--x-nt-bookmark-card-hover-color": "rgba(235, 243, 247, 0.86)",
+          "--x-nt-bookmark-card-border-color": "rgb(226, 231, 233)",
+          "--x-nt-bookmark-icon-color": "rgb(247, 250, 252)",
+          "--x-nt-bookmark-shadow-rgb": "95, 139, 170"
+        },
+        "dark": {
+          "--x-nt-bookmark-card-color": "rgb(28, 35, 39)",
+          "--x-nt-bookmark-card-hover-color": "rgba(30, 41, 49, 0.78)",
+          "--x-nt-bookmark-card-border-color": "rgb(55, 61, 65)",
+          "--x-nt-bookmark-icon-color": "rgb(27, 33, 36)",
+          "--x-nt-bookmark-shadow-rgb": "34, 67, 92"
+        }
+      }
+    },
+    "sf-symbols": {
+      "title": "SF Symbols",
+      "url": "https://developer.apple.com/sf-symbols/",
+      "favicon": "/assets/design/favicons/sf-symbols.png",
+      "faviconOffset": "translate(0px, 0px)",
+      "tile": {
+        "light": {
+          "bg": "rgb(220, 233, 253)",
+          "color": "#111827"
+        },
+        "dark": {
+          "bg": "rgb(32, 52, 85)",
+          "color": "#F8FAFC"
+        }
+      },
+      "card": {
+        "light": {
+          "--x-nt-bookmark-card-color": "rgb(250, 252, 255)",
+          "--x-nt-bookmark-card-hover-color": "rgba(247, 251, 255, 0.86)",
+          "--x-nt-bookmark-card-border-color": "rgb(233, 234, 237)",
+          "--x-nt-bookmark-icon-color": "rgb(252, 253, 255)",
+          "--x-nt-bookmark-shadow-rgb": "158, 182, 211"
+        },
+        "dark": {
+          "--x-nt-bookmark-card-color": "rgb(39, 43, 47)",
+          "--x-nt-bookmark-card-hover-color": "rgba(48, 54, 61, 0.78)",
+          "--x-nt-bookmark-card-border-color": "rgb(65, 68, 72)",
+          "--x-nt-bookmark-icon-color": "rgb(36, 39, 42)",
+          "--x-nt-bookmark-shadow-rgb": "78, 97, 122"
+        }
+      }
+    },
+    "material-symbols": {
+      "title": "Material Symbols",
+      "url": "https://fonts.google.com/icons",
+      "favicon": "/assets/design/favicons/material-symbols.png",
+      "faviconOffset": "translate(0px, 0px)",
+      "tile": {
+        "light": {
+          "bg": "rgb(221, 233, 253)",
+          "color": "#111827"
+        },
+        "dark": {
+          "bg": "rgb(34, 53, 84)",
+          "color": "#F8FAFC"
+        }
+      },
+      "card": {
+        "light": {
+          "--x-nt-bookmark-card-color": "rgb(244, 248, 254)",
+          "--x-nt-bookmark-card-hover-color": "rgba(236, 243, 254, 0.86)",
+          "--x-nt-bookmark-card-border-color": "rgb(227, 231, 236)",
+          "--x-nt-bookmark-icon-color": "rgb(247, 250, 255)",
+          "--x-nt-bookmark-shadow-rgb": "99, 139, 205"
+        },
+        "dark": {
+          "--x-nt-bookmark-card-color": "rgb(28, 35, 46)",
+          "--x-nt-bookmark-card-hover-color": "rgba(31, 41, 59, 0.78)",
+          "--x-nt-bookmark-card-border-color": "rgb(55, 61, 71)",
+          "--x-nt-bookmark-icon-color": "rgb(27, 33, 42)",
+          "--x-nt-bookmark-shadow-rgb": "36, 67, 118"
+        }
+      }
+    },
+    "remixicon": {
+      "title": "Remix Icon",
+      "url": "https://remixicon.com/",
+      "favicon": "/assets/design/favicons/remixicon.jpg",
+      "faviconOffset": "translate(0px, 0px)",
+      "tile": {
+        "light": {
+          "bg": "rgb(219, 234, 252)",
+          "color": "#111827"
+        },
+        "dark": {
+          "bg": "rgb(32, 55, 83)",
+          "color": "#F8FAFC"
+        }
+      },
+      "card": {
+        "light": {
+          "--x-nt-bookmark-card-color": "rgb(243, 248, 254)",
+          "--x-nt-bookmark-card-hover-color": "rgba(235, 243, 254, 0.86)",
+          "--x-nt-bookmark-card-border-color": "rgb(226, 231, 236)",
+          "--x-nt-bookmark-icon-color": "rgb(247, 250, 254)",
+          "--x-nt-bookmark-shadow-rgb": "94, 142, 203"
+        },
+        "dark": {
+          "--x-nt-bookmark-card-color": "rgb(27, 36, 46)",
+          "--x-nt-bookmark-card-hover-color": "rgba(29, 42, 59, 0.78)",
+          "--x-nt-bookmark-card-border-color": "rgb(54, 62, 71)",
+          "--x-nt-bookmark-icon-color": "rgb(27, 33, 41)",
+          "--x-nt-bookmark-shadow-rgb": "33, 69, 116"
+        }
+      }
+    }
+  }
+}

@@ -24,6 +24,8 @@ Lumno wurde mit selbst gehostetem Nextcloud, mit WebDAV-Servern auf Basis von Ap
 
 Wenn dein Dienst App-Passwörter anbietet, erstelle ein eigenes App-Passwort für Lumno, anstatt dein Hauptpasswort zu verwenden.
 
+Bekommt ein Server in kurzer Zeit zu viele Anfragen, lehnen Dienste wie Nutstore (坚果云) sie eine Weile ab (HTTP 429 oder 503). Lumno pausiert dann die Hintergrundsynchronisierung und versucht es von selbst erneut – nach der vom Server genannten Wartezeit oder nach einer wachsenden Pause von 5 Minuten bis zu einer Stunde. Die Daten auf deinem Computer bleiben erhalten. Die Einstellungen von Lumno zeigen den Grund und den nächsten Versuch an, das Pop-up in der Symbolleiste zeigt „WebDAV waiting to retry“.
+
 ## Einen weiteren Computer einrichten {#second-device}
 
 Wenn beide Computer mit demselben Browserkonto angemeldet sind, öffne auf dem anderen Computer in den Einstellungen von Lumno „Account & sync“ → WebDAV. Dort findest du eine Verbindung mit dem Hinweis „From another device“, in der Serveradresse, Ordner und Benutzername bereits ausgefüllt sind. Gib nur noch einmal das App-Passwort ein. Wenn du sie auf diesem Computer nicht verwenden möchtest, klicke auf „Dismiss“. Nutzen die Computer kein gemeinsames Browserkonto, füge eine Verbindung mit demselben Server, demselben Ordner und demselben Konto hinzu.

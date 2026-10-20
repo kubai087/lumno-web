@@ -13,11 +13,17 @@ Klicke unten rechts im neuen Tab auf die Schaltfläche „Appearance“. Die App
 | Built-in | In Lumno enthaltene Gemälde, Tuschelandschaften und Illustrationen, jeweils in einer hellen und einer dunklen Version |
 | Local | Deine eigenen JPG-, PNG- oder WebP-Bilder mit bis zu 8 MB |
 | Bing | Bings Bild des Tages, täglich automatisch aktualisiert oder aus der vergangenen Woche ausgewählt |
-| Curated | Fotos aus Kategorien wie Natur, Wasser, Stadt, Minimal und Kunst, auf Wunsch täglich neu |
+| Curated | Fotos aus Kategorien wie Natur, Wasser, Stadt, Minimal und Kunst; „Mix“ kann nur aus den Kategorien wählen, die du ankreuzt, auf Wunsch täglich neu |
 
 Um ein Bild aus dem Web zu verwenden, klicke auf „Add image link“ und füge eine Bildadresse ein, die mit `https://` beginnt.
 
 Wenn die tägliche Aktualisierung aktiviert ist, gilt ein selbst gewählter Hintergrund nur für den aktuellen Tag. Am nächsten Tag wird wieder das Tagesbild angezeigt.
+
+Wenn du nur bestimmte Arten von Fotos sehen möchtest, öffne unter „Curated“ den Tab „Mix“, klicke auf das Kategoriemenü neben der Überschrift der Fotoliste und kreuze die gewünschten Kategorien an. Die Fotoliste und das Tagesbild stammen dann nur aus diesen Kategorien, und deine Auswahl wird über den Browser synchronisiert.
+
+## Ein Hintergrundbild behalten {#save-local}
+
+Um ein Bing- oder Curated-Bild zu behalten, klicke in den Appearance-Einstellungen mit der rechten Maustaste auf seine Miniatur und wähle „Save to local wallpapers“. Es wird bei deinen lokalen Hintergründen („Local“) gespeichert und braucht danach keine Verbindung mehr. Du kannst bis zu 30 lokale Hintergründe behalten; ist die Sammlung voll, lösche zuerst einige.
 
 ## Getrennte Hintergründe für hellen und dunklen Modus {#dark-mode}
 
@@ -51,6 +57,8 @@ Den hellen oder dunklen Modus selbst legst du oben im Panel fest: wie im System,
 | Default | Das bisherige Aussehen von Lumno |
 | Acrylic | Eine weiche Unschärfe über einer durchscheinenden Tönung |
 | Liquid glass | Klareres Glas; die Ränder des Suchfelds und seiner Ergebnisse brechen den Hintergrund wie eine Linse |
+
+Ist ein Glasmaterial aktiv, kannst du außerdem „Material theme“ festlegen. „Match New Tab“ übernimmt den aktuellen hellen oder dunklen Modus des neuen Tabs; „Light“ oder „Dark“ hält den neuen Tab in diesem Modus, mit dem Hintergrundbild für diesen Modus.
 
 Beide Glasmaterialien sind in der Betaphase und wirken am besten über einem Hintergrundbild. Firefox zeigt die Glasoptik ohne die Lichtbrechung an den Rändern.
 

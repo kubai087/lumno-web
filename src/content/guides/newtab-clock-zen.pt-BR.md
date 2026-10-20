@@ -5,7 +5,14 @@ Você pode mostrar a hora e uma citação diária da sua própria coleção na n
 1. Clique no botão Appearance no canto inferior direito da nova guia.
 2. Na seção Search box, altere "Content above the search bar" para Time.
 
-Você pode alterar o peso da fonte da hora e escolher se os segundos são exibidos. Escolha Brand para mostrar o logotipo do Lumno ou Hide para não exibir nada.
+Na mesma seção você ajusta a aparência do relógio:
+
+- Time font: Open Sans, Geist, JetBrains Mono, Bricolage Grotesque, Unbounded ou Bitcount. O controle de peso acompanha a faixa de cada fonte.
+- Time font weight, Time size e Time opacity: arraste os controles, ou clique no botão ao lado para voltar ao padrão.
+- Show seconds e 12-hour clock: com o relógio de 12 horas, as horas vão de 1 a 12, seguidas de um pequeno AM / PM.
+- Time color: Auto pega a cor do papel de parede ou do tema, enquanto Light e Dark mantêm o relógio em uma só cor sobre qualquer papel de parede.
+
+As mesmas opções ficam em Appearance, nas configurações do Lumno. Escolha Brand para mostrar o logotipo do Lumno ou Hide para não exibir nada.
 
 ![A nova guia completa: o relógio 09:41 e a caixa de pesquisa no alto, depois uma fileira de atalhos, oito favoritos e os sites mais visitados, sobre um pomar impressionista](nt-clock "Um relógio acima da caixa de pesquisa")
 
@@ -21,7 +28,7 @@ Cada linha de texto não vazia do arquivo é uma citação. As marcas de lista e
 
 - O arquivo pode ter até 1 MB, com até 1.000 citações de no máximo 500 caracteres cada.
 - Uma nova citação aparece todo dia. Para ver outra agora, clique em "Shuffle". Para usar outro arquivo, clique em "Replace file"; se a importação falhar, sua coleção anterior é mantida.
-- Você pode escolher onde a citação aparece (acima da caixa de pesquisa, abaixo dela, abaixo dos atalhos ou no fim da página) e o tamanho da fonte. As mesmas opções ficam em Appearance, nas configurações do Lumno.
+- Você pode escolher onde a citação aparece (acima da caixa de pesquisa, abaixo dela, abaixo dos atalhos ou no fim da página), a fonte (LXGW WenKai, ZCOOL XiaoWei ou System sans-serif) e o tamanho da fonte. As mesmas opções ficam em Appearance, nas configurações do Lumno.
 - Sua coleção fica armazenada neste dispositivo e não passa pela sincronização do navegador. Se você ativar a [sincronização WebDAV](../sync/#webdav), ela será sincronizada com as demais configurações.
 
 A outra fonte, Hitokoto, oferece literatura e poesia chinesas e só mostra uma citação quando o Lumno está em chinês.

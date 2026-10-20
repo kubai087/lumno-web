@@ -24,6 +24,8 @@ Lumno se ha probado con Nextcloud autoalojado, con servidores WebDAV de Apache, 
 
 Si tu servicio ofrece contraseñas de aplicación, crea una para Lumno en lugar de usar la contraseña principal de tu cuenta.
 
+Si un servidor recibe demasiadas solicitudes en poco tiempo, servicios como Nutstore (坚果云) las rechazan durante un rato (HTTP 429 o 503). Lumno pausa entonces la sincronización en segundo plano y vuelve a intentarlo por su cuenta tras la espera que indique el servidor, o tras una espera creciente de 5 minutos hasta una hora. Los datos de tu ordenador se conservan. Los ajustes de Lumno explican el motivo y cuándo lo volverá a intentar, y la ventana de la barra de herramientas muestra WebDAV waiting to retry.
+
 ## Configurar otro ordenador {#second-device}
 
 Si los dos ordenadores han iniciado sesión en la misma cuenta del navegador, abre Account & sync → WebDAV en los ajustes de Lumno del otro ordenador. Verás una conexión marcada como "From another device" con la dirección del servidor, la carpeta y el nombre de usuario ya rellenados; solo tienes que volver a escribir la contraseña de aplicación. Si no quieres usarla en ese ordenador, haz clic en "Dismiss". Si los ordenadores no comparten cuenta del navegador, añade una conexión con el mismo servidor, la misma carpeta y la misma cuenta.

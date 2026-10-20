@@ -20,6 +20,14 @@ Les suggestions de votre moteur de recherche s'affichent également ; appuyez s
 
 Autres touches utiles : `⌥ ↩` ouvre un résultat dans l'onglet actuel, et `⇧ ↩` ouvre une seconde fois un onglet déjà ouvert. Pour la liste complète, consultez [Raccourcis clavier](../keyboard-shortcuts/#command-bar-keys).
 
+## Saisi avec la mauvaise disposition de clavier {#keyboard-layout}
+
+Si votre saisie ne correspond à rien dans vos onglets, favoris ou historique, Lumno la relit comme si elle avait été tapée sur un clavier russe, ukrainien, hébreu, arabe ou coréen (2 jeux). Ainsi, `vjcrdf` trouve Москва. Cela fonctionne aussi dans l'autre sens : `пшерги`, tapé avec la disposition russe encore active, trouve GitHub. Ces résultats s'affichent sous les correspondances directes.
+
+La recherche ignore aussi les différences comme les accents et les caractères pleine chasse, et le coréen se recherche par consonnes initiales (`ㅅㅇ` trouve 서울). Le panneau de portée de recherche fonctionne de la même façon.
+
+Les titres chinois se trouvent en pinyin, par initiales ou en mélangeant les deux : `wxds`, `wxdushu` et `weixinds` trouvent tous 微信读书. Pour considérer z et zh, c et ch, s et sh, n et l, an et ang, en et eng, ainsi que in et ing comme identiques, activez Fuzzy pinyin sous Search Result Settings dans les réglages de Lumno.
+
 ## Rechercher uniquement dans les onglets ouverts {#open-tabs}
 
 Si de nombreux onglets sont ouverts, vous pouvez restreindre la recherche : appuyez une fois sur `Tab` lorsque le champ est vide. « Search open tabs » s'affiche à gauche, et seuls vos onglets ouverts restent dans la liste. Saisissez un terme pour filtrer, appuyez sur Entrée pour basculer et sur `Esc` pour quitter.

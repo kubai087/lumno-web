@@ -24,6 +24,8 @@ Lumno a été testé avec Nextcloud auto-hébergé, avec des serveurs WebDAV Apa
 
 Si votre service propose des mots de passe d'application, créez-en un pour Lumno plutôt que d'utiliser le mot de passe principal de votre compte.
 
+Lorsqu'un serveur reçoit trop de requêtes en peu de temps, des services comme Nutstore (坚果云) les refusent pendant un moment (HTTP 429 ou 503). Lumno met alors la synchronisation en arrière-plan en pause et réessaie tout seul après le délai demandé par le serveur, ou après une attente croissante de 5 minutes à une heure. Les données de votre ordinateur sont conservées. Les réglages de Lumno indiquent la raison et l'heure du prochain essai, et la fenêtre de la barre d'outils affiche WebDAV waiting to retry.
+
 ## Configurer un autre ordinateur {#second-device}
 
 Si les deux ordinateurs sont connectés au même compte de navigateur, ouvrez Account & sync → WebDAV dans les réglages de Lumno sur l'autre ordinateur. Une connexion marquée « From another device » y apparaît, avec l'adresse du serveur, le dossier et le nom d'utilisateur déjà renseignés : il suffit de saisir à nouveau le mot de passe d'application. Si vous ne voulez pas l'utiliser sur cet ordinateur, cliquez sur « Dismiss ». Si les ordinateurs n'utilisent pas le même compte de navigateur, ajoutez une connexion avec le même serveur, le même dossier et le même compte.

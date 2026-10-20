@@ -99,5 +99,12 @@
   { "q": "reorder search engines", "expect": ["site-search#order"] },
   { "q": "add a bookmark to shortcuts", "expect": ["newtab-bookmarks-shortcuts#bookmarks"] },
   { "q": "close a tab from the switcher", "expect": ["tab-switcher#switch", "keyboard-shortcuts#switcher-keys"] },
-  { "q": "shortcut opens a new tab instead", "expect": ["limitations#restricted-pages", "faq#using"] }
+  { "q": "shortcut opens a new tab instead", "expect": ["limitations#restricted-pages", "faq#using"] },
+  { "q": "clock font", "expect": ["newtab-clock-zen#clock"] },
+  { "q": "12-hour clock", "expect": ["newtab-clock-zen#clock"] },
+  { "q": "save bing wallpaper", "expect": ["newtab-wallpaper#save-local"] },
+  { "q": "toolbar icon", "expect": ["install#toolbar-popup"] },
+  { "q": "wrong keyboard layout", "expect": ["search-tabs-bookmarks-history#keyboard-layout"] },
+  { "q": "material theme", "expect": ["newtab-wallpaper#glass"] },
+  { "q": "icon background", "expect": ["newtab-bookmarks-shortcuts#shortcuts"] }
 ]

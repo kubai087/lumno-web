@@ -13,11 +13,17 @@ Haz clic en el botón Appearance, en la esquina inferior derecha de la nueva pes
 | Built-in | Cuadros, paisajes a tinta e ilustraciones incluidos en Lumno, en versión clara y oscura |
 | Local | Tus propias imágenes JPG, PNG o WebP, de hasta 8 MB |
 | Bing | La foto del día de Bing, que se actualiza a diario o que puedes elegir entre las de la última semana |
-| Curated | Fotos por categorías como naturaleza, agua, ciudad, minimalista y arte, que también pueden cambiar cada día |
+| Curated | Fotos por categorías como naturaleza, agua, ciudad, minimalista y arte; Mix puede elegir solo de las categorías que marques, y también pueden cambiar cada día |
 
 Para usar una imagen de internet, haz clic en "Add image link" y pega una dirección de imagen que empiece por `https://`.
 
 Si la actualización diaria está activada, un fondo que elijas tú se mantiene durante ese día; al día siguiente vuelve a mostrarse el fondo diario.
+
+Para ver solo algunos tipos de fotos, abre la pestaña Mix en Curated, haz clic en el menú de categorías junto al título de la lista de fotos y marca las que quieras. La lista y la foto del día saldrán solo de esas categorías, y tu elección se sincroniza con el navegador.
+
+## Guardar un fondo que te guste {#save-local}
+
+Para guardar un fondo de Bing o Curated, haz clic derecho en su miniatura en los ajustes de Appearance y elige Save to local wallpapers. Se guarda con tus fondos locales (Local) y ya no depende de la red. Puedes guardar hasta 30 fondos locales; cuando la colección esté llena, borra algunos primero.
 
 ## Fondos distintos para los modos claro y oscuro {#dark-mode}
 
@@ -51,6 +57,8 @@ En la sección Style de los ajustes de Appearance, cambia Material de Default a 
 | Default | El aspecto de siempre de Lumno |
 | Acrylic | Un desenfoque suave sobre un tono translúcido |
 | Liquid glass | Un cristal más limpio; los bordes del cuadro de búsqueda y de sus resultados curvan el fondo como una lente |
+
+Con un material de cristal activado, también puedes ajustar Material theme. Match New Tab sigue el modo claro u oscuro actual de la nueva pestaña; Light o Dark fija la nueva pestaña en ese modo, con el fondo correspondiente.
 
 Los dos materiales de cristal están en fase beta y lucen mejor sobre un fondo. Firefox muestra el acabado de cristal, pero sin la curvatura de los bordes.
 

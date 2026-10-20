@@ -13,11 +13,19 @@ The row of icons under the search box shows your shortcuts. When you hover over 
 3. Choose an icon: a built-in icon, an online icon, or your own image (a square image of at least 128×128 px works best).
 4. Click Save.
 
+You can also add the page you're on: right-click an empty part of the page and choose Add to Lumno New Tab shortcuts, or click the Lumno icon in the toolbar and choose Add shortcut in the [popup](../install/#toolbar-popup). The page is added to the end of your last shortcut group.
+
+### Icon backgrounds
+
+Some sites have transparent or non-square icons. Lumno puts these on a plate tinted with the icon's main color, so they look like the other square icons.
+
+In a shortcut's edit dialog, you can turn off "Add a background to irregular icons", or change Background color from From the icon to Custom color. The palette button lets you pick any color, enter a HEX / RGB value, or use a color you saved.
+
 ### Organize shortcuts
 
 - Right-click a shortcut to edit or remove it. If you remove one by mistake, use the shortcut shown in the notice to undo.
 - Drag shortcuts to reorder them. Drag one onto your bookmarks to turn it into a bookmark. You can also select a shortcut with `Tab` and press `⌥ ←` or `⌥ →` to move it one place.
-- To change how many shortcuts appear per row, icon size, spacing, Dock magnification or the "+" button, use the Shortcuts section of the new tab's Appearance settings, or Appearance → New Tab in Lumno's settings. You can also hide "+" by clicking it and choosing Hide.
+- To change how many shortcuts appear per row, icon size (up to 112), spacing, Dock magnification or the "+" button, use the Shortcuts section of the new tab's Appearance settings, or Appearance → New Tab in Lumno's settings. You can also hide "+" by clicking it and choosing Hide.
 - You can add up to 200 shortcuts.
 - If you don't need shortcuts, turn off Shortcuts in the same place to remove the row of icons under the search box.
 

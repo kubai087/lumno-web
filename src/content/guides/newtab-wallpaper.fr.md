@@ -13,11 +13,17 @@ Cliquez sur le bouton Appearance en bas à droite du nouvel onglet. Les réglage
 | Built-in | Tableaux, paysages à l'encre et illustrations fournis avec Lumno, en version claire et sombre |
 | Local | Vos propres images JPG, PNG ou WebP, jusqu'à 8 Mo |
 | Bing | La photo du jour de Bing, mise à jour chaque jour ou choisie parmi celles de la semaine écoulée |
-| Curated | Des photos classées par catégorie (nature, eau, ville, minimal, art), qui peuvent changer chaque jour |
+| Curated | Des photos classées par catégorie (nature, eau, ville, minimal, art) ; Mix peut puiser uniquement dans les catégories que vous cochez, et la photo peut changer chaque jour |
 
 Pour utiliser une image trouvée sur le web, cliquez sur « Add image link » et collez une adresse d'image commençant par `https://`.
 
 Lorsque la mise à jour quotidienne est activée, un fond d'écran que vous choisissez vous-même reste affiché pour la journée ; le lendemain, le fond d'écran du jour revient.
+
+Pour ne voir que certains types de photos, ouvrez l'onglet Mix sous Curated, cliquez sur le menu des catégories à côté du titre de la liste de photos et cochez celles que vous voulez. La liste et la photo du jour ne viennent alors que de ces catégories, et votre choix se synchronise avec votre navigateur.
+
+## Garder un fond d'écran qui vous plaît {#save-local}
+
+Pour garder un fond d'écran Bing ou Curated, faites un clic droit sur sa miniature dans les réglages Appearance et choisissez Save to local wallpapers. Il rejoint vos fonds d'écran locaux (Local) et ne dépend plus du réseau. Vous pouvez en garder jusqu'à 30 ; lorsque la bibliothèque est pleine, supprimez-en d'abord quelques-uns.
 
 ## Fonds d'écran distincts pour les modes clair et sombre {#dark-mode}
 
@@ -51,6 +57,8 @@ Dans la section Style des réglages Appearance, remplacez Material « Default 
 | Default | L'apparence habituelle de Lumno |
 | Acrylic | Un flou doux sur une teinte translucide |
 | Liquid glass | Un verre plus limpide ; les bords du champ de recherche et de ses résultats courbent le fond d'écran comme une lentille |
+
+Avec une matière en verre, vous pouvez aussi régler Material theme. Match New Tab suit le mode clair ou sombre actuel du nouvel onglet ; Light ou Dark fixe le nouvel onglet dans ce mode, avec le fond d'écran prévu pour lui.
 
 Les deux matières en verre sont en version bêta et rendent mieux sur un fond d'écran. Firefox affiche l'aspect de verre, sans la déformation sur les bords.
 

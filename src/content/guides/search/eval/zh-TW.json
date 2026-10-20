@@ -84,5 +84,12 @@
   { "q": "搜尋引擎排序", "expect": ["site-search#order"] },
   { "q": "書籤加入捷徑", "expect": ["newtab-bookmarks-shortcuts#bookmarks"] },
   { "q": "在切換器裡關閉分頁", "expect": ["tab-switcher#switch", "keyboard-shortcuts#switcher-keys"] },
-  { "q": "按快速鍵開了新分頁", "expect": ["limitations#restricted-pages", "faq#using"] }
+  { "q": "按快速鍵開了新分頁", "expect": ["limitations#restricted-pages", "faq#using"] },
+  { "q": "時鐘字體", "expect": ["newtab-clock-zen#clock"] },
+  { "q": "12 小時制", "expect": ["newtab-clock-zen#clock"] },
+  { "q": "儲存 Bing 桌布", "expect": ["newtab-wallpaper#save-local"] },
+  { "q": "工具列圖示", "expect": ["install#toolbar-popup"] },
+  { "q": "拼音首字母", "expect": ["search-tabs-bookmarks-history#pinyin"] },
+  { "q": "鍵盤配置", "expect": ["search-tabs-bookmarks-history#keyboard-layout"] },
+  { "q": "材質深淺色", "expect": ["newtab-wallpaper#glass"] }
 ]

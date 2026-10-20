@@ -13,11 +13,17 @@ Click the Appearance button in the bottom-right corner of the new tab. Appearanc
 | Built-in | Paintings, ink landscapes and illustrations that come with Lumno, in light and dark versions |
 | Local | Your own JPG, PNG or WebP images, up to 8 MB |
 | Bing | Bing's photo of the day, updated daily or chosen from the past week |
-| Curated | Photos in categories such as nature, water, city, minimal and art, with an optional new photo every day |
+| Curated | Photos in categories such as nature, water, city, minimal and art; Mix can draw only from the categories you pick, with an optional new photo every day |
 
 To use a picture from the web, click "Add image link" and paste an image address that starts with `https://`.
 
 When daily updates are on, a wallpaper you choose yourself stays for the rest of the day; the next day, the daily wallpaper returns.
+
+To see only some kinds of curated photos, open the Mix tab under Curated, click the category menu next to the photo list's heading, and check the categories you want. The photo list and the daily photo then come only from them, and your choice syncs through your browser.
+
+## Keep a wallpaper you like {#save-local}
+
+To keep a Bing or curated wallpaper, right-click its thumbnail in the Appearance settings and choose Save to local wallpapers. It's stored with your Local wallpapers, so it no longer depends on the network. You can keep up to 30 local wallpapers; when the library is full, delete some first.
 
 ## Separate wallpapers for light and dark mode {#dark-mode}
 
@@ -51,6 +57,8 @@ In the Style section of Appearance settings, change Material from Default to Acr
 | Default | Lumno's original look |
 | Acrylic | A soft blur over a translucent tint |
 | Liquid glass | Clearer glass; the edges of the search box and its results bend the wallpaper behind them like a lens |
+
+With a glass material on, you can also set Material theme. Match New Tab keeps the new tab's current light or dark mode; Light or Dark holds the new tab in that mode, with that mode's wallpaper.
 
 Both glass materials are in beta and look best over a wallpaper. Firefox shows the glass finish without the bending at the edges.
 

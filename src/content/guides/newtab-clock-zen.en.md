@@ -5,7 +5,14 @@ Show the time above the search box and a daily quote from your own collection, o
 1. Click the Appearance button in the bottom-right corner of the new tab.
 2. In the Search box section, set "Content above the search bar" to Time.
 
-You can change the time's font weight and choose whether to show seconds. Choose Brand to show the Lumno wordmark instead, or Hide to show nothing.
+The same section sets how the clock looks:
+
+- Time font: Open Sans, Geist, JetBrains Mono, Bricolage Grotesque, Unbounded or Bitcount. The weight slider follows each font's range.
+- Time font weight, Time size and Time opacity: drag the sliders, or click the button beside one to restore its default.
+- Show seconds and 12-hour clock: with the 12-hour clock on, hours read 1–12 with a small AM / PM after the digits.
+- Time color: Auto takes its color from the wallpaper or the theme, while Light and Dark keep the clock one color over any wallpaper.
+
+The same options are under Appearance in Lumno's settings. Choose Brand to show the Lumno wordmark instead, or Hide to show nothing.
 
 ![The full new tab: the clock 09:41 and search box at the top, then a row of shortcuts, eight bookmarks and most visited sites, over an impressionist orchard](nt-clock "A clock above the search box")
 
@@ -21,7 +28,7 @@ Each non-empty line of text in the file is one quote. Markdown list and quote ma
 
 - Files can be up to 1 MB, with up to 1,000 quotes of up to 500 characters each.
 - A new quote appears every day. To pick another one now, click Shuffle. To use a different file, click Replace file; if an import fails, your previous collection is kept.
-- You can choose where the quote appears (above the search box, below it, below your shortcuts or at the bottom of the page) and its font size. The same options are under Appearance in Lumno's settings.
+- You can choose where the quote appears (above the search box, below it, below your shortcuts or at the bottom of the page), its font (LXGW WenKai, ZCOOL XiaoWei or System sans-serif) and its font size. The same options are under Appearance in Lumno's settings.
 - Your collection is stored on this device and doesn't go through browser sync. If you turn on [WebDAV sync](../sync/#webdav), it syncs along with your other settings.
 
 The other source, Hitokoto, offers Chinese literature and poetry and shows a quote only when Lumno's language is Chinese.

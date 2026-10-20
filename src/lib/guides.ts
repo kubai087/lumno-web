@@ -66,8 +66,8 @@ export const GUIDE_NAV_KEYS: GuideNavKey[] = GUIDE_NAV.flatMap((group) => group.
 export const GUIDE_SLUGS: GuideSlug[] = GUIDE_NAV_KEYS.filter((key): key is GuideSlug => key !== "privacy");
 
 /** When the pages were last checked against the extension. */
-export const GUIDES_LAST_UPDATED = "2026-10-18";
-export const GUIDES_EXTENSION_VERSION = "1.0.1";
+export const GUIDES_LAST_UPDATED = "2026-10-21";
+export const GUIDES_EXTENSION_VERSION = "1.1.4";
 
 type GuideFaqItem = { question: string; answer: string };
 

@@ -13,11 +13,19 @@ La rangée d'icônes sous le champ de recherche correspond à vos raccourcis. Lo
 3. Choisissez une icône : une icône intégrée, une icône en ligne ou votre propre image (de préférence une image carrée d'au moins 128 × 128 px).
 4. Cliquez sur Enregistrer.
 
+Vous pouvez aussi ajouter la page sur laquelle vous êtes : faites un clic droit sur une zone vide de la page et choisissez Add to Lumno New Tab shortcuts, ou cliquez sur l'icône Lumno dans la barre d'outils et choisissez Add shortcut dans la [fenêtre contextuelle](../install/#toolbar-popup). La page est ajoutée à la fin de votre dernier groupe de raccourcis.
+
+### Fond des icônes
+
+Certains sites ont des icônes transparentes ou non carrées. Lumno les pose sur une plaque teintée de la couleur principale de l'icône, pour qu'elles s'accordent avec les autres icônes carrées.
+
+Dans la boîte de dialogue de modification d'un raccourci, vous pouvez désactiver « Add a background to irregular icons » ou faire passer Background color de From the icon à Custom color. Le bouton palette permet de choisir n'importe quelle couleur, de saisir une valeur HEX / RVB ou d'utiliser une couleur enregistrée.
+
 ### Organiser les raccourcis
 
 - Faites un clic droit sur un raccourci pour le modifier ou le supprimer. Si vous en supprimez un par erreur, utilisez le raccourci clavier indiqué dans la notification pour annuler.
 - Faites glisser les raccourcis pour les réorganiser. Déposez-en un sur vos favoris pour le transformer en favori. Vous pouvez aussi sélectionner un raccourci avec `Tab` et appuyer sur `⌥ ←` ou `⌥ →` pour le déplacer d'une position.
-- Le nombre de raccourcis par rangée, la taille des icônes, l'espacement, l'effet d'agrandissement du Dock et le bouton « + » se règlent dans la section Shortcuts des réglages Appearance du nouvel onglet, ou dans les réglages de Lumno, sous Appearance → New Tab. Pour masquer directement « + », cliquez dessus et choisissez « Hide ».
+- Le nombre de raccourcis par rangée, la taille des icônes (jusqu'à 112), l'espacement, l'effet d'agrandissement du Dock et le bouton « + » se règlent dans la section Shortcuts des réglages Appearance du nouvel onglet, ou dans les réglages de Lumno, sous Appearance → New Tab. Pour masquer directement « + », cliquez dessus et choisissez « Hide ».
 - Vous pouvez ajouter jusqu'à 200 raccourcis.
 - Si vous n'utilisez pas les raccourcis, désactivez Shortcuts au même endroit : la rangée d'icônes sous le champ de recherche disparaît.
 

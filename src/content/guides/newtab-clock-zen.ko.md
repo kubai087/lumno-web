@@ -5,7 +5,14 @@
 1. 새 탭 오른쪽 아래의 Appearance 버튼을 클릭하세요.
 2. Search box 항목에서 "Content above the search bar"를 Time으로 변경하세요.
 
-시간의 글꼴 굵기와 초 표시 여부를 조정할 수 있습니다. Brand를 선택하면 Lumno 로고가 표시되고, Hide를 선택하면 아무것도 표시되지 않습니다.
+같은 섹션에서 시계의 모양도 바꿀 수 있습니다.
+
+- Time font: Open Sans, Geist, JetBrains Mono, Bricolage Grotesque, Unbounded, Bitcount 중에서 고를 수 있습니다. 글꼴 굵기 슬라이더의 범위는 글꼴에 따라 달라집니다.
+- Time font weight, Time size, Time opacity: 슬라이더로 조정하며, 슬라이더 옆의 버튼을 클릭하면 기본값으로 돌아갑니다.
+- Show seconds와 12-hour clock: 12-hour clock을 켜면 시간이 1–12로 표시되고 숫자 뒤에 작은 AM / PM이 붙습니다.
+- Time color: Auto는 배경화면이나 테마에 맞춰 색을 정하고, Light와 Dark는 배경화면과 관계없이 시계 색을 고정합니다.
+
+같은 항목이 Lumno 설정의 Appearance에도 있습니다. Brand를 선택하면 Lumno 로고가 표시되고, Hide를 선택하면 아무것도 표시되지 않습니다.
 
 ![전체 새 탭: 위쪽에 09:41 시계와 검색창, 그 아래에 바로가기 한 줄, 북마크 여덟 개, 자주 방문한 사이트가 있으며 배경은 인상파 풍의 과수원](nt-clock "검색창 위에 표시된 시계")
 
@@ -21,7 +28,7 @@
 
 - 파일은 최대 1MB, 문구는 최대 1,000개, 문구 하나는 최대 500자까지입니다.
 - 문구는 매일 자동으로 바뀝니다. 지금 다른 문구를 보려면 Shuffle을 클릭하세요. 다른 파일을 쓰려면 Replace file을 클릭하세요. 가져오기에 실패하면 기존 문구 모음이 그대로 유지됩니다.
-- 문구를 표시할 위치(검색창 위, 검색창 아래, 바로가기 아래, 페이지 아래쪽)와 글자 크기도 바꿀 수 있습니다. 같은 항목이 Lumno 설정의 Appearance에도 있습니다.
+- 문구를 표시할 위치(검색창 위, 검색창 아래, 바로가기 아래, 페이지 아래쪽)와 글꼴(LXGW WenKai, ZCOOL XiaoWei, System sans-serif), 글자 크기도 바꿀 수 있습니다. 같은 항목이 Lumno 설정의 Appearance에도 있습니다.
 - 문구 모음은 이 기기에 저장되며 브라우저 동기화로 동기화되지 않습니다. [WebDAV 동기화](../sync/#webdav)를 켜면 다른 설정과 함께 동기화됩니다.
 
 다른 소스인 Hitokoto는 중국어 문학과 시를 제공하며, Lumno의 언어가 중국어일 때만 문구가 표시됩니다.

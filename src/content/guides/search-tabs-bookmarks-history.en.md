@@ -16,9 +16,19 @@ The label next to each result shows where it comes from:
 
 Suggestions from your search engine also appear; press `↩` to search. Results you choose more often move higher in the list.
 
+A domain typed with a Chinese full stop, such as `baidu。com`, opens as a URL; a sentence that ends in 。 is still searched.
+
 ![Lumno opened on a blank page: typing chrome lists an open GitHub tab, search suggestions, a bookmark and top sites](search "Typing chrome shows open tabs, bookmarks and top sites together")
 
 Other useful keys: `⌥ ↩` opens a result in the current tab, and `⇧ ↩` opens another copy of an open tab. For all keys, see [Keyboard shortcuts](../keyboard-shortcuts/#command-bar-keys).
+
+## Typed with the wrong keyboard {#keyboard-layout}
+
+If what you typed matches nothing in your tabs, bookmarks or history, Lumno reads it again as if it had been typed on a Russian, Ukrainian, Hebrew, Arabic or Korean (2-set) keyboard. For example, `vjcrdf` finds Москва. It works the other way too: `пшерги`, typed with a Russian layout still on, finds GitHub. These results appear below direct matches.
+
+Search also ignores differences such as full-width characters and accents, and Korean matches initial consonants, so `ㅅㅇ` finds 서울. The search scope panel matches the same way.
+
+Chinese titles can be found by pinyin, initials or a mix of both: `wxds`, `wxdushu` and `weixinds` all find 微信读书. To treat z and zh, c and ch, s and sh, n and l, an and ang, en and eng, and in and ing as the same, turn on Fuzzy pinyin under Search Result Settings in Lumno's settings.
 
 ## Search only open tabs {#open-tabs}
 

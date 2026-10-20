@@ -13,11 +13,19 @@ A fileira de ícones abaixo da caixa de pesquisa mostra seus atalhos. Quando voc
 3. Escolha um ícone: um ícone incluído, um ícone on-line ou uma imagem sua (recomenda-se uma imagem quadrada de pelo menos 128 × 128 px).
 4. Clique em Salvar.
 
+Você também pode adicionar a página em que está: clique com o botão direito em uma área vazia da página e escolha Add to Lumno New Tab shortcuts, ou clique no ícone do Lumno na barra de ferramentas e escolha Add shortcut no [pop-up](../install/#toolbar-popup). A página é adicionada ao fim do seu último grupo de atalhos.
+
+### Fundo dos ícones
+
+Alguns sites têm ícones transparentes ou que não são quadrados. O Lumno coloca esses ícones sobre uma placa tingida com a cor principal do ícone, para que combinem com os outros ícones quadrados.
+
+Na caixa de edição de um atalho, você pode desativar "Add a background to irregular icons" ou mudar Background color de From the icon para Custom color. O botão de paleta permite escolher qualquer cor, digitar um valor HEX / RGB ou usar uma cor salva.
+
 ### Organizar os atalhos
 
 - Clique com o botão direito em um atalho para editá-lo ou removê-lo. Se você remover um atalho por engano, use o atalho de teclado indicado no aviso para desfazer.
 - Arraste os atalhos para reordená-los. Se você soltar um atalho sobre os favoritos, ele se torna um favorito. Você também pode selecionar um atalho com `Tab` e pressionar `⌥ ←` ou `⌥ →` para movê-lo uma posição.
-- O número de atalhos por fileira, o tamanho dos ícones, o espaçamento, a ampliação estilo Dock e o botão "+" são definidos na seção Shortcuts das configurações de Appearance da nova guia, ou nas configurações do Lumno, em Appearance → New Tab. Para ocultar o "+" diretamente, clique nele e escolha "Hide".
+- O número de atalhos por fileira, o tamanho dos ícones (até 112), o espaçamento, a ampliação estilo Dock e o botão "+" são definidos na seção Shortcuts das configurações de Appearance da nova guia, ou nas configurações do Lumno, em Appearance → New Tab. Para ocultar o "+" diretamente, clique nele e escolha "Hide".
 - Você pode adicionar até 200 atalhos.
 - Se você não precisa dos atalhos, desative Shortcuts no mesmo lugar para remover a fileira de ícones abaixo da caixa de pesquisa.
 

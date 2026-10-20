@@ -5,7 +5,14 @@ Du kannst im neuen Tab die Uhrzeit und ein tägliches Zitat aus deiner eigenen S
 1. Klicke unten rechts im neuen Tab auf die Schaltfläche „Appearance“.
 2. Stelle im Bereich „Search box“ die Option „Content above the search bar“ auf „Time“.
 
-Du kannst die Schriftstärke der Uhrzeit ändern und festlegen, ob Sekunden angezeigt werden. Mit „Brand“ wird der Lumno-Schriftzug angezeigt, mit „Hide“ wird nichts angezeigt.
+Im selben Abschnitt legst du fest, wie die Uhr aussieht:
+
+- „Time font“: Open Sans, Geist, JetBrains Mono, Bricolage Grotesque, Unbounded oder Bitcount. Der Regler für die Schriftstärke passt sich dem Bereich der jeweiligen Schrift an.
+- „Time font weight“, „Time size“ und „Time opacity“: Stelle sie mit den Reglern ein. Die Schaltfläche neben einem Regler setzt ihn auf den Standardwert zurück.
+- „Show seconds“ und „12-hour clock“: Mit der 12-Stunden-Uhr laufen die Stunden von 1 bis 12, und hinter den Ziffern steht ein kleines AM / PM.
+- „Time color“: „Auto“ übernimmt die Farbe vom Hintergrundbild oder vom Design, „Light“ und „Dark“ halten die Uhr über jedem Hintergrund in einer Farbe.
+
+Dieselben Optionen findest du in den Einstellungen von Lumno unter „Appearance“. Mit „Brand“ wird der Lumno-Schriftzug angezeigt, mit „Hide“ wird nichts angezeigt.
 
 ![Der vollständige neue Tab: oben die Uhrzeit 09:41 und das Suchfeld, darunter eine Reihe Shortcuts, acht Lesezeichen und die meistbesuchten Seiten, dahinter ein impressionistischer Obstgarten](nt-clock "Eine Uhr über dem Suchfeld")
 
@@ -21,7 +28,7 @@ Jede nicht leere Textzeile der Datei ist ein Zitat. Markdown-Listen- und Zitatze
 
 - Dateien dürfen bis zu 1 MB groß sein und bis zu 1.000 Zitate mit jeweils bis zu 500 Zeichen enthalten.
 - Jeden Tag erscheint ein neues Zitat. Um sofort ein anderes anzuzeigen, klicke auf „Shuffle“. Um eine andere Datei zu verwenden, klicke auf „Replace file“. Schlägt ein Import fehl, bleibt deine bisherige Sammlung erhalten.
-- Du kannst festlegen, wo das Zitat erscheint (über dem Suchfeld, darunter, unter den Shortcuts oder unten auf der Seite), und seine Schriftgröße ändern. Dieselben Optionen findest du in den Einstellungen von Lumno unter „Appearance“.
+- Du kannst festlegen, wo das Zitat erscheint (über dem Suchfeld, darunter, unter den Shortcuts oder unten auf der Seite), und seine Schrift (LXGW WenKai, ZCOOL XiaoWei oder System sans-serif) sowie seine Schriftgröße ändern. Dieselben Optionen findest du in den Einstellungen von Lumno unter „Appearance“.
 - Deine Sammlung wird auf diesem Gerät gespeichert und nicht über die Browser-Synchronisierung übertragen. Wenn du die [WebDAV-Synchronisierung](../sync/#webdav) aktivierst, wird sie mit deinen übrigen Einstellungen synchronisiert.
 
 Die andere Quelle, Hitokoto, bietet chinesische Literatur und Lyrik und zeigt nur dann ein Zitat an, wenn Lumno auf Chinesisch eingestellt ist.

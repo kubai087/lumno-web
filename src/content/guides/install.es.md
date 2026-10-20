@@ -24,6 +24,15 @@ Abre cualquier página y pulsa `⌘ ⇧ K` para abrir la barra de comandos. Escr
 
 Si no ocurre nada, consulta las comprobaciones de [Atajos de teclado](../keyboard-shortcuts/).
 
+## La ventana de la barra de herramientas {#toolbar-popup}
+
+Haz clic en el icono de Lumno en la barra de herramientas del navegador para abrir una pequeña ventana. Si no ves el icono, haz clic en el botón de extensiones con forma de pieza de puzle y fija Lumno en la barra de herramientas.
+
+- Arriba aparecen el título y la dirección de la página actual. Si alguno está cortado, pasa el puntero por encima para leerlo completo.
+- Acciones de la página: Add shortcut añade la página a los accesos directos de la nueva pestaña, y también puedes usar Copy link u Open command bar. Con el [recorte web](../web-clip/) activado en los ajustes de Lumno, puedes recortar la página desde aquí; en una página con vídeo, puedes iniciar la imagen en imagen y configurar la [imagen en imagen automática](../auto-pip/).
+- Abre Quick settings para cambiar el tema y activar o desactivar Match page colors y Show open tabs by default.
+- Abajo se muestran la versión de Lumno y el estado de la sincronización WebDAV, con enlaces a Settings, Set shortcuts, Feedback y What's new.
+
 ## Usar Lumno en archivos locales {#file-access}
 
 Para abrir la barra de comandos en archivos PDF o HTML de tu ordenador, ve a `chrome://extensions`, abre los detalles de Lumno, permite el acceso a las URL de archivo y vuelve a cargar el archivo. Firefox no permite que las extensiones accedan a archivos locales, así que la versión para Firefox no puede abrir la barra de comandos en estas páginas.

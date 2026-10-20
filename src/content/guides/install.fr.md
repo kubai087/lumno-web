@@ -24,6 +24,15 @@ Ouvrez n'importe quelle page et appuyez sur `⌘ ⇧ K` pour ouvrir la barre de 
 
 Si rien ne se passe, consultez les vérifications décrites dans [Raccourcis clavier](../keyboard-shortcuts/).
 
+## La fenêtre de la barre d'outils {#toolbar-popup}
+
+Cliquez sur l'icône Lumno dans la barre d'outils de votre navigateur pour ouvrir une petite fenêtre. Si l'icône n'apparaît pas, cliquez sur le bouton Extensions en forme de pièce de puzzle et épinglez Lumno à la barre d'outils.
+
+- En haut s'affichent le titre et l'adresse de la page actuelle. S'ils sont tronqués, survolez-les pour les lire en entier.
+- Actions sur la page : Add shortcut ajoute la page aux raccourcis du nouvel onglet ; vous pouvez aussi utiliser Copy link ou Open command bar. Si la [capture web](../web-clip/) est activée dans les réglages de Lumno, vous pouvez capturer la page d'ici ; sur une page avec une vidéo, vous pouvez lancer l'image dans l'image et régler l'[image dans l'image automatique](../auto-pip/).
+- Ouvrez Quick settings pour changer de thème et activer ou non Match page colors et Show open tabs by default.
+- En bas s'affichent la version de Lumno et l'état de la synchronisation WebDAV, avec des liens vers Settings, Set shortcuts, Feedback et What's new.
+
 ## Utiliser Lumno dans des fichiers locaux {#file-access}
 
 Pour ouvrir la barre de commande dans des fichiers PDF ou HTML de votre ordinateur, accédez à `chrome://extensions`, ouvrez les détails de Lumno, activez « Autoriser l'accès aux URL de fichier », puis actualisez le fichier. Firefox n'autorise pas les extensions à accéder aux fichiers locaux : la version Firefox ne peut donc pas ouvrir la barre de commande sur ces pages.

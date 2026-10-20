@@ -13,11 +13,19 @@ La fila de iconos situada bajo el cuadro de búsqueda muestra tus accesos direct
 3. Elige un icono: un icono incluido, un icono en línea o tu propia imagen (se recomienda una imagen cuadrada de al menos 128 × 128 px).
 4. Haz clic en Guardar.
 
+También puedes añadir la página en la que estás: haz clic derecho en una zona vacía de la página y elige Add to Lumno New Tab shortcuts, o haz clic en el icono de Lumno en la barra de herramientas y elige Add shortcut en la [ventana emergente](../install/#toolbar-popup). La página se añade al final de tu último grupo de accesos directos.
+
+### Fondo de los iconos
+
+Algunos sitios tienen iconos transparentes o que no son cuadrados. Lumno los coloca sobre una placa teñida con el color principal del icono, para que combinen con los demás iconos cuadrados.
+
+En el diálogo de edición de un acceso directo puedes desactivar "Add a background to irregular icons" o cambiar Background color de From the icon a Custom color. El botón de paleta te permite elegir cualquier color, escribir un valor HEX / RGB o usar un color guardado.
+
 ### Organizar los accesos directos
 
 - Haz clic con el botón derecho en un acceso directo para editarlo o eliminarlo. Si eliminas uno por error, usa el atajo que aparece en el aviso para deshacer la acción.
 - Arrastra los accesos directos para reordenarlos. Si sueltas uno sobre tus marcadores, se convierte en un marcador. También puedes seleccionar un acceso directo con `Tab` y pulsar `⌥ ←` o `⌥ →` para moverlo una posición.
-- El número de accesos directos por fila, el tamaño de los iconos, el espaciado, la ampliación tipo Dock y el botón "+" se configuran en la sección Shortcuts de los ajustes de Appearance de la nueva pestaña, o en los ajustes de Lumno, en Appearance → New Tab. Para ocultar "+" directamente, haz clic en él y elige "Hide".
+- El número de accesos directos por fila, el tamaño de los iconos (hasta 112), el espaciado, la ampliación tipo Dock y el botón "+" se configuran en la sección Shortcuts de los ajustes de Appearance de la nueva pestaña, o en los ajustes de Lumno, en Appearance → New Tab. Para ocultar "+" directamente, haz clic en él y elige "Hide".
 - Puedes añadir hasta 200 accesos directos.
 - Si no necesitas los accesos directos, desactiva Shortcuts en ese mismo lugar y desaparecerá la fila de iconos bajo el cuadro de búsqueda.
 

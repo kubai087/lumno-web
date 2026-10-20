@@ -124,5 +124,16 @@
   { "q": "悬浮书签栏", "expect": ["newtab-bookmarks-shortcuts#bookmark-layouts"] },
   { "q": "快捷方式同步不了", "expect": ["sync#browser-sync"] },
   { "q": "按快捷键打开了新标签页", "expect": ["limitations#restricted-pages", "faq#using"] },
-  { "q": "扩展程序页打不开命令栏", "expect": ["limitations#restricted-pages", "faq#using"] }
+  { "q": "扩展程序页打不开命令栏", "expect": ["limitations#restricted-pages", "faq#using"] },
+  { "q": "时钟字体", "expect": ["newtab-clock-zen#clock"] },
+  { "q": "12 小时制", "expect": ["newtab-clock-zen#clock"] },
+  { "q": "名句字体", "expect": ["newtab-clock-zen#quote"] },
+  { "q": "保存必应壁纸", "expect": ["newtab-wallpaper#save-local"] },
+  { "q": "工具栏图标", "expect": ["install#toolbar-popup"] },
+  { "q": "拼音首字母搜索", "expect": ["search-tabs-bookmarks-history#pinyin"] },
+  { "q": "拼音模糊音", "expect": ["search-tabs-bookmarks-history#pinyin"] },
+  { "q": "键盘布局", "expect": ["search-tabs-bookmarks-history#keyboard-layout"] },
+  { "q": "坚果云 503", "expect": ["sync#jianguoyun"] },
+  { "q": "图标背景", "expect": ["newtab-bookmarks-shortcuts#shortcuts"] },
+  { "q": "材质深浅色", "expect": ["newtab-wallpaper#glass"] }
 ]

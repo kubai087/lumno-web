@@ -20,6 +20,14 @@ As sugestões do seu mecanismo de pesquisa também são exibidas; pressione Ente
 
 Outras teclas úteis: `⌥ ↩` abre um resultado na guia atual, e `⇧ ↩` abre novamente uma guia que já está aberta. Para ver todas as teclas, consulte [Atalhos de teclado](../keyboard-shortcuts/#command-bar-keys).
 
+## Digitado no layout de teclado errado {#keyboard-layout}
+
+Se o que você digitou não corresponde a nada nas guias, favoritos ou histórico, o Lumno lê a entrada de novo como se ela tivesse sido digitada em um teclado russo, ucraniano, hebraico, árabe ou coreano (2 conjuntos). Assim, `vjcrdf` encontra Москва. Funciona também ao contrário: `пшерги`, digitado com o layout russo ainda ativo, encontra o GitHub. Esses resultados aparecem abaixo das correspondências diretas.
+
+A pesquisa também ignora diferenças como acentos e caracteres de largura total, e o coreano pode ser pesquisado pelas consoantes iniciais (`ㅅㅇ` encontra 서울). O painel de escopo da pesquisa funciona do mesmo jeito.
+
+Títulos em chinês podem ser encontrados por pinyin, por iniciais ou misturando os dois: `wxds`, `wxdushu` e `weixinds` encontram 微信读书. Para tratar z e zh, c e ch, s e sh, n e l, an e ang, en e eng, e in e ing como iguais, ative Fuzzy pinyin em Search Result Settings, nas configurações do Lumno.
+
 ## Pesquisar apenas nas guias abertas {#open-tabs}
 
 Se houver muitas guias abertas, você pode restringir a pesquisa: pressione `Tab` uma vez com a caixa vazia. "Search open tabs" aparece à esquerda, e apenas as guias abertas permanecem na lista. Digite para filtrar, pressione Enter para alternar e `Esc` para sair.

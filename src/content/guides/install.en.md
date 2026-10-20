@@ -24,6 +24,15 @@ Open any page and press `⌘ ⇧ K` to open the command bar. Type a few letters 
 
 If nothing happens, see the troubleshooting steps in [Keyboard shortcuts](../keyboard-shortcuts/).
 
+## The toolbar popup {#toolbar-popup}
+
+Click the Lumno icon in your browser's toolbar to open a small popup. If you don't see the icon, click the puzzle-piece Extensions button and pin Lumno to the toolbar.
+
+- The top shows the current page's title and address. If one is cut off, rest the pointer on it to read it in full.
+- Page actions: Add shortcut adds the page to your new tab shortcuts, and you can also Copy link or Open command bar. With [Web Clip](../web-clip/) turned on in Lumno's settings, you can clip the page from here; on a page with a video, you can start picture-in-picture and set up [auto picture-in-picture](../auto-pip/).
+- Open Quick settings to switch the theme, Match page colors, and Show open tabs by default.
+- The bottom shows Lumno's version and your WebDAV sync status, with links to Settings, Set shortcuts, Feedback and What's new.
+
 ## Use it in local files {#file-access}
 
 To open the command bar in PDF or HTML files on your computer, go to `chrome://extensions`, open Lumno's details page, turn on "Allow access to file URLs", then reload the file. Firefox doesn't let extensions access local files, so the Firefox version can't open the command bar there.

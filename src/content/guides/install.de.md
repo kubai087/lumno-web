@@ -24,6 +24,15 @@ Wenn du zum ersten Mal einen neuen Tab öffnest, fragt Chrome möglicherweise, o
 
 Wenn nichts passiert, findest du unter [Tastenkürzel](../keyboard-shortcuts/) Hinweise zur Fehlerbehebung.
 
+## Das Pop-up in der Symbolleiste {#toolbar-popup}
+
+Klicke in der Symbolleiste deines Browsers auf das Lumno-Symbol, um ein kleines Pop-up zu öffnen. Siehst du das Symbol nicht, klicke auf die Erweiterungen-Schaltfläche mit dem Puzzleteil und hefte Lumno an die Symbolleiste an.
+
+- Oben stehen Titel und Adresse der aktuellen Seite. Ist einer davon abgeschnitten, zeige mit der Maus darauf, um ihn vollständig zu lesen.
+- Seitenaktionen: „Add shortcut“ fügt die Seite zu den Shortcuts im neuen Tab hinzu, außerdem gibt es „Copy link“ und „Open command bar“. Ist [Web-Clip](../web-clip/) in den Einstellungen von Lumno aktiviert, kannst du die Seite von hier aus ausschneiden; auf Seiten mit Video startest du Bild-im-Bild und richtest [automatisches Bild-im-Bild](../auto-pip/) ein.
+- Unter „Quick settings“ wechselst du das Design und schaltest „Match page colors“ und „Show open tabs by default“ um.
+- Unten stehen die Version von Lumno und der Status der WebDAV-Synchronisierung, mit Links zu „Settings“, „Set shortcuts“, „Feedback“ und „What's new“.
+
 ## In lokalen Dateien verwenden {#file-access}
 
 Um die Befehlsleiste auch in PDF- oder HTML-Dateien auf deinem Computer zu öffnen, rufe `chrome://extensions` auf, öffne die Details von Lumno, aktiviere „Zugriff auf Datei-URLs zulassen“ und lade die Datei anschließend neu. Firefox erlaubt Erweiterungen keinen Zugriff auf lokale Dateien, daher lässt sich die Befehlsleiste der Firefox-Version auf solchen Seiten nicht öffnen.

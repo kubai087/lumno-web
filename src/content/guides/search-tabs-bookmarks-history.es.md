@@ -20,6 +20,14 @@ También se muestran las sugerencias de tu buscador; pulsa Intro para buscar. Lo
 
 Otras teclas útiles: `⌥ ↩` abre un resultado en la pestaña actual y `⇧ ↩` abre de nuevo una pestaña ya abierta. Para ver todas las teclas, consulta [Atajos de teclado](../keyboard-shortcuts/#command-bar-keys).
 
+## Escrito con la distribución de teclado equivocada {#keyboard-layout}
+
+Si lo que escribes no coincide con nada en tus pestañas, marcadores o historial, Lumno lo vuelve a leer como si lo hubieras escrito con un teclado ruso, ucraniano, hebreo, árabe o coreano (2 juegos). Así, `vjcrdf` encuentra Москва. También funciona al revés: `пшерги`, escrito con la distribución rusa todavía activa, encuentra GitHub. Estos resultados aparecen debajo de las coincidencias directas.
+
+La búsqueda también ignora diferencias como los acentos y los caracteres de ancho completo, y el coreano se puede buscar por consonantes iniciales (`ㅅㅇ` encuentra 서울). El panel de ámbito de búsqueda funciona igual.
+
+Los títulos en chino se encuentran por pinyin, por iniciales o mezclando ambos: `wxds`, `wxdushu` y `weixinds` encuentran 微信读书. Para tratar z y zh, c y ch, s y sh, n y l, an y ang, en y eng, e in e ing como iguales, activa Fuzzy pinyin en Search Result Settings, en los ajustes de Lumno.
+
 ## Buscar solo en las pestañas abiertas {#open-tabs}
 
 Si tienes muchas pestañas abiertas, puedes acotar la búsqueda: pulsa `Tab` una vez con el cuadro vacío. Aparece "Search open tabs" a la izquierda y en la lista solo quedan tus pestañas abiertas. Escribe para filtrar, pulsa Intro para cambiar de pestaña y `Esc` para salir.

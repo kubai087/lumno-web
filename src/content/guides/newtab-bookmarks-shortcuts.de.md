@@ -13,11 +13,19 @@ Die Symbolreihe unter dem Suchfeld zeigt deine Shortcuts. Wenn du mit dem Mausze
 3. Wähle ein Symbol aus: ein integriertes Symbol, ein Online-Symbol oder ein eigenes Bild (empfohlen ist ein quadratisches Bild ab 128 × 128 px).
 4. Klicke auf „Speichern“.
 
+Du kannst auch die Seite hinzufügen, auf der du gerade bist: Klicke mit der rechten Maustaste auf eine leere Stelle der Seite und wähle „Add to Lumno New Tab shortcuts“, oder klicke in der Symbolleiste auf das Lumno-Symbol und wähle im [Pop-up](../install/#toolbar-popup) „Add shortcut“. Die Seite landet am Ende deiner letzten Shortcut-Gruppe.
+
+### Symbolhintergründe
+
+Manche Websites haben transparente oder nicht quadratische Symbole. Lumno legt sie auf eine Platte in der Hauptfarbe des Symbols, damit sie wie die anderen quadratischen Symbole wirken.
+
+Im Bearbeitungsdialog eines Shortcuts kannst du „Add a background to irregular icons“ ausschalten oder „Background color“ von „From the icon“ auf „Custom color“ umstellen. Über die Paletten-Schaltfläche wählst du eine beliebige Farbe, gibst einen HEX- oder RGB-Wert ein oder nutzt eine gespeicherte Farbe.
+
 ### Shortcuts organisieren
 
 - Klicke mit der rechten Maustaste auf einen Shortcut, um ihn zu bearbeiten oder zu entfernen. Wenn du versehentlich einen Shortcut entfernt hast, kannst du dies mit dem in der Meldung angezeigten Tastenkürzel rückgängig machen.
 - Ziehe Shortcuts, um ihre Reihenfolge zu ändern. Wenn du einen Shortcut auf deine Lesezeichen ziehst, wird daraus ein Lesezeichen. Du kannst einen Shortcut auch mit `Tab` auswählen und mit `⌥ ←` oder `⌥ →` um eine Position verschieben.
-- Anzahl pro Reihe, Symbolgröße, Abstände, Dock-Vergrößerung und die Schaltfläche „+“ legst du im Abschnitt „Shortcuts“ der Appearance-Einstellungen im neuen Tab oder in den Einstellungen von Lumno unter Appearance → New Tab fest. Um „+“ direkt auszublenden, klicke darauf und wähle „Hide“.
+- Anzahl pro Reihe, Symbolgröße (bis 112), Abstände, Dock-Vergrößerung und die Schaltfläche „+“ legst du im Abschnitt „Shortcuts“ der Appearance-Einstellungen im neuen Tab oder in den Einstellungen von Lumno unter Appearance → New Tab fest. Um „+“ direkt auszublenden, klicke darauf und wähle „Hide“.
 - Du kannst bis zu 200 Shortcuts hinzufügen.
 - Brauchst du keine Shortcuts, schalte an derselben Stelle „Shortcuts“ aus. Dann verschwindet die Symbolreihe unter dem Suchfeld.
 

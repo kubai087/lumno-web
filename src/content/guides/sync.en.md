@@ -24,6 +24,8 @@ Lumno has been tested with self-hosted Nextcloud and with Apache, nginx, rclone 
 
 If your service offers app passwords, create one for Lumno instead of using your main account password.
 
+If a server gets too many requests in a short time, services such as Nutstore refuse them for a while (HTTP 429 or 503). Lumno then pauses background sync and retries on its own after the wait the server asks for, or after a growing wait from 5 minutes up to an hour. Data on your computer is kept. Lumno's settings explain why and when it will try again, and the toolbar popup shows WebDAV waiting to retry.
+
 ## Set up another computer {#second-device}
 
 If both computers are signed in to the same browser account, open Account & sync → WebDAV in Lumno's settings on the other computer. You'll see a connection marked "From another device" with the server address, folder and username already filled in; just enter the app password again. If you don't want to use it on that computer, click Dismiss. If the computers don't share a browser account, add a connection with the same server, folder and account.

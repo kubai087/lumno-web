@@ -80,5 +80,11 @@
   { "q": "検索エンジンの並び替え", "expect": ["site-search#order"] },
   { "q": "ブックマークをショートカットに追加", "expect": ["newtab-bookmarks-shortcuts#bookmarks"] },
   { "q": "切り替え画面でタブを閉じる", "expect": ["tab-switcher#switch", "keyboard-shortcuts#switcher-keys"] },
-  { "q": "ショートカットキーで新しいタブが開く", "expect": ["limitations#restricted-pages", "faq#using"] }
+  { "q": "ショートカットキーで新しいタブが開く", "expect": ["limitations#restricted-pages", "faq#using"] },
+  { "q": "時計のフォント", "expect": ["newtab-clock-zen#clock"] },
+  { "q": "12時間表示", "expect": ["newtab-clock-zen#clock"] },
+  { "q": "壁紙を保存", "expect": ["newtab-wallpaper#save-local"] },
+  { "q": "ツールバーのアイコン", "expect": ["install#toolbar-popup"] },
+  { "q": "キーボード配列", "expect": ["search-tabs-bookmarks-history#keyboard-layout"] },
+  { "q": "ガラスの明暗", "expect": ["newtab-wallpaper#glass"] }
 ]

@@ -24,6 +24,8 @@ O Lumno foi testado com o Nextcloud auto-hospedado, com servidores WebDAV do Apa
 
 Se o seu serviço oferecer senhas de app, crie uma para o Lumno em vez de usar a senha principal da sua conta.
 
+Quando um servidor recebe solicitações demais em pouco tempo, serviços como o Nutstore (坚果云) as recusam por um tempo (HTTP 429 ou 503). O Lumno então pausa a sincronização em segundo plano e tenta de novo sozinho depois da espera indicada pelo servidor, ou depois de uma espera crescente de 5 minutos até uma hora. Os dados do seu computador são mantidos. As configurações do Lumno explicam o motivo e quando haverá nova tentativa, e o pop-up da barra de ferramentas mostra WebDAV waiting to retry.
+
 ## Configurar outro computador {#second-device}
 
 Se os dois computadores estiverem conectados à mesma conta do navegador, abra Account & sync → WebDAV nas configurações do Lumno no outro computador. Você verá uma conexão marcada como "From another device", com o endereço do servidor, a pasta e o nome de usuário já preenchidos; basta digitar a senha de app de novo. Se não quiser usá-la nesse computador, clique em "Dismiss". Se os computadores não usarem a mesma conta do navegador, adicione uma conexão com o mesmo servidor, a mesma pasta e a mesma conta.

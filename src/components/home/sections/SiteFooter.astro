@@ -20,13 +20,13 @@ interface Props {
   columns: Array<{ title: string; links: Link[] }>;
   community: { label: string; panel: CommunityPanel; analyticsLabel: string };
   copyright: string;
-  licenseHref: string;
-  /** The website's own repository, after the license. */
+  /** The extension's license, then the website's own repository and its license. */
+  extensionLicense: Link;
   websiteSource: Link;
   languages: Array<{ code: string; label: string; href: string; current: boolean }>;
 }
 
-const { homeHref, tagline, storesLabel, stores, socialAria, socials, columns, community, copyright, licenseHref, websiteSource, languages } = Astro.props;
+const { homeHref, tagline, storesLabel, stores, socialAria, socials, columns, community, copyright, extensionLicense, websiteSource, languages } = Astro.props;
 // A narrow (centred) tagline may only wrap between Chinese phrases, never inside a word.
 const taglinePhrases = tagline.split(/(?<=、)/);
 ---
@@ -117,7 +117,7 @@ const taglinePhrases = tagline.split(/(?<=、)/);
   <div class="site-footer__meta">
     <p>
       <span>© {new Date().getFullYear()} {copyright}</span>
-      <a href={licenseHref} target="_blank" rel="noreferrer noopener">GPL-3.0</a>
+      <a href={extensionLicense.href} target="_blank" rel="noreferrer noopener">{extensionLicense.label}</a>
       <a href={websiteSource.href} target="_blank" rel="noreferrer noopener">{websiteSource.label}</a>
     </p>
     <ul class="site-footer__languages">

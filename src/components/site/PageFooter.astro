@@ -111,7 +111,7 @@ const { firefox: firefoxStoreVersion } = await getSiteStoreVersions();
   ]}
   community={{ label: community.label, panel: getCommunityPanel(locale), analyticsLabel: `${analyticsScope}_footer_community` }}
   copyright={content.footerCopyright}
-  licenseHref={LICENSE_URL}
+  extensionLicense={{ label: content.footerExtensionLicense, href: LICENSE_URL }}
   websiteSource={{ label: content.footerWebsiteSource, href: WEBSITE_GITHUB_URL }}
   languages={LOCALE_CONFIG.map((language) => ({
     code: language.code,

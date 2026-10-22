@@ -243,7 +243,9 @@ type HomeContent = {
   footerSocialAria: string;
   footerGithub: string;
   footerCopyright: string;
-  /** The website's own repository, beside the license. */
+  /** The extension's license, in the footer's bottom row. */
+  footerExtensionLicense: string;
+  /** The website's own repository and its license, after the extension's. */
   footerWebsiteSource: string;
   languageSelectAria: string;
 };
@@ -567,7 +569,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerSocialAria: "关注 Lumno",
     footerGithub: "GitHub",
     footerCopyright: "Lumno",
-    footerWebsiteSource: "官网源码",
+    footerExtensionLicense: "扩展：GPL-3.0",
+    footerWebsiteSource: "官网源码：MIT",
     languageSelectAria: "选择语言",
   },
   "zh-TW": {
@@ -886,7 +889,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerSocialAria: "追蹤 Lumno",
     footerGithub: "GitHub",
     footerCopyright: "Lumno",
-    footerWebsiteSource: "官網原始碼",
+    footerExtensionLicense: "擴充功能：GPL-3.0",
+    footerWebsiteSource: "官網原始碼：MIT",
     languageSelectAria: "選擇語言",
   },
   en: {
@@ -1200,7 +1204,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerSocialAria: "Follow Lumno",
     footerGithub: "GitHub",
     footerCopyright: "Lumno",
-    footerWebsiteSource: "Website source",
+    footerExtensionLicense: "Extension: GPL-3.0",
+    footerWebsiteSource: "Website source: MIT",
     languageSelectAria: "Choose language",
   },
   ja: {
@@ -1510,7 +1515,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerSocialAria: "Lumno をフォロー",
     footerGithub: "GitHub",
     footerCopyright: "Lumno",
-    footerWebsiteSource: "サイトのソースコード",
+    footerExtensionLicense: "拡張機能：GPL-3.0",
+    footerWebsiteSource: "サイトのソースコード：MIT",
     languageSelectAria: "言語を選択",
   },
   ko: {
@@ -1820,7 +1826,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerSocialAria: "Lumno 팔로우",
     footerGithub: "GitHub",
     footerCopyright: "Lumno",
-    footerWebsiteSource: "웹사이트 소스 코드",
+    footerExtensionLicense: "확장 프로그램: GPL-3.0",
+    footerWebsiteSource: "웹사이트 소스 코드: MIT",
     languageSelectAria: "언어 선택",
   },
   de: {
@@ -2132,7 +2139,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerSocialAria: "Lumno folgen",
     footerGithub: "GitHub",
     footerCopyright: "Lumno",
-    footerWebsiteSource: "Quellcode der Website",
+    footerExtensionLicense: "Erweiterung: GPL-3.0",
+    footerWebsiteSource: "Quellcode der Website: MIT",
     languageSelectAria: "Sprache wählen",
   },
   fr: {
@@ -2444,7 +2452,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerSocialAria: "Suivre Lumno",
     footerGithub: "GitHub",
     footerCopyright: "Lumno",
-    footerWebsiteSource: "Code source du site",
+    footerExtensionLicense: "Extension : GPL-3.0",
+    footerWebsiteSource: "Code source du site : MIT",
     languageSelectAria: "Choisir la langue",
   },
   es: {
@@ -2756,7 +2765,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerSocialAria: "Seguir a Lumno",
     footerGithub: "GitHub",
     footerCopyright: "Lumno",
-    footerWebsiteSource: "Código fuente del sitio",
+    footerExtensionLicense: "Extensión: GPL-3.0",
+    footerWebsiteSource: "Código fuente del sitio: MIT",
     languageSelectAria: "Elegir idioma",
   },
   "pt-BR": {
@@ -3068,7 +3078,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerSocialAria: "Seguir o Lumno",
     footerGithub: "GitHub",
     footerCopyright: "Lumno",
-    footerWebsiteSource: "Código-fonte do site",
+    footerExtensionLicense: "Extensão: GPL-3.0",
+    footerWebsiteSource: "Código-fonte do site: MIT",
     languageSelectAria: "Escolher idioma",
   },
   ru: {
@@ -3380,7 +3391,8 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerSocialAria: "Следить за Lumno",
     footerGithub: "GitHub",
     footerCopyright: "Lumno",
-    footerWebsiteSource: "Исходный код сайта",
+    footerExtensionLicense: "Расширение: GPL-3.0",
+    footerWebsiteSource: "Исходный код сайта: MIT",
     languageSelectAria: "Выбрать язык",
   },
 };

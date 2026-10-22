@@ -398,7 +398,7 @@ const STORE_CHIPS = [
 <html lang={uiLocale}>
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <LocaleNormalizer />
     {
       !forcedLocale && (
@@ -517,7 +517,6 @@ const STORE_CHIPS = [
         line-height: normal;
         padding: calc(var(--release-header-offset) + 30px) 24px 60px;
         padding: calc(var(--release-header-offset) + 30px) 24px max(60px, var(--safe-area-bottom));
-        transition: padding-top var(--top-nav-safe-glide);
       }
 
       .top-banner {

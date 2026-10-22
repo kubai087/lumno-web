@@ -335,8 +335,8 @@ test("homepage navbar animates in the community action and opens the community p
   assert.match(source, /@media \(prefers-reduced-motion:\s*reduce\)[\s\S]*?body\.has-nav-install \.top-nav\s*\{[\s\S]*?animation:\s*none;/);
   assert.match(
     source,
-    /\.top-nav\[data-nav-surface="hero"\]\s*\{[\s\S]*?background:\s*transparent;[\s\S]*?box-shadow:\s*none;[\s\S]*?transition:\s*margin-top var\(--top-nav-safe-glide\);/,
-    "the restored hero header should not retain glass navigation visuals or transitions (only the safe-area glide)",
+    /\.top-nav\[data-nav-surface="hero"\]\s*\{[\s\S]*?background:\s*transparent;[\s\S]*?box-shadow:\s*none;[\s\S]*?transition:\s*none;/,
+    "the restored hero header should not retain glass navigation visuals or transitions",
   );
   assert.doesNotMatch(source, /has-nav-overlap/);
 });

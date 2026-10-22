@@ -198,7 +198,7 @@ import LanguageScrollRestore from "../components/LanguageScrollRestore.astro";
 <html lang={uiLocale}>
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <LocaleNormalizer />
     <SeoHead
       title={pageTitle}
@@ -951,7 +951,6 @@ import LanguageScrollRestore from "../components/LanguageScrollRestore.astro";
         .hero-section {
           padding: calc(120px + var(--top-nav-safe-shift)) 0 52px;
           gap: 0;
-          transition: padding-top var(--top-nav-safe-glide);
         }
 
         /*

@@ -77,7 +77,7 @@ test("site pages hand the top bar over like the homepage", () => {
   // The clear state must win over the install-keeping pages' glass state.
   assert.match(header, /\.top-nav\[data-nav-surface="hero"\],\s*body\.has-nav-install \.top-nav\[data-nav-surface="hero"\] \{\s*position: absolute;/);
   // Phones: the restored clear bar rests where it first loaded.
-  assert.match(header, /@media \(max-width: 760px\) \{\s*\/\*[^*]*\*\/\s*\.top-nav\[data-nav-surface="hero"\],\s*body\.has-nav-install \.top-nav\[data-nav-surface="hero"\] \{\s*top: 10px;/);
+  assert.match(header, /@media \(max-width: 760px\) \{\s*\/\*[^*]*\*\/\s*\.top-nav\[data-nav-surface="hero"\],\s*body\.has-nav-install \.top-nav\[data-nav-surface="hero"\] \{\s*top: max\(10px, env\(safe-area-inset-top\)\);/);
 });
 
 test("privacy document stays readable on narrow screens", () => {

@@ -121,11 +121,6 @@ const {
     </div>
   </nav>
 </header>
-<script is:inline>
-  // From the second frame on, a top safe area that arrives late (X's in-app
-  // browser reports it after the first paint) glides in instead of jumping.
-  requestAnimationFrame(() => requestAnimationFrame(() => document.documentElement.setAttribute("data-safe-area-glide", "")));
-</script>
 
 <script>
   import "../../scripts/community-panel";
@@ -403,8 +398,7 @@ const {
       background-color 180ms ease,
       border-color 180ms ease,
       box-shadow 180ms ease,
-      backdrop-filter 180ms ease,
-      margin-top var(--top-nav-safe-glide);
+      backdrop-filter 180ms ease;
   }
 
   .top-nav:has(.lumno-settings-select[data-open="true"]) {
@@ -435,7 +429,7 @@ const {
     translate: 0 0;
     transform: translateY(0);
     filter: none;
-    transition: margin-top var(--top-nav-safe-glide);
+    transition: none;
   }
 
 
@@ -679,24 +673,19 @@ const {
     /* Back at the top the bar rests where it first loaded. */
     .top-nav[data-nav-surface="hero"],
     body.has-nav-install .top-nav[data-nav-surface="hero"] {
-      top: 10px;
+      top: max(10px, env(safe-area-inset-top));
     }
 
-    /*
-     * Below a status bar the page is drawn under, the margin carries the drop in
-     * every state, so only a change in the safe area itself moves (glides) it.
-     */
     .top-nav {
-      top: 10px;
-      margin-top: var(--top-nav-safe-shift);
+      top: max(10px, env(safe-area-inset-top));
       min-height: 58px;
       padding: 5px;
       gap: 10px;
     }
 
-    /* The glass pill stays clear of that status bar too. */
+    /* The glass pill stays clear of a status bar the page is drawn under. */
     body.has-nav-install .top-nav {
-      top: calc(max(6px, env(safe-area-inset-top, 0px)) - var(--top-nav-safe-shift));
+      top: max(6px, env(safe-area-inset-top));
     }
 
     /* The bar's gap already separates the wordmark; its own right padding would only crowd the actions. */

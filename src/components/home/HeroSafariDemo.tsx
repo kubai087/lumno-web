@@ -8,6 +8,7 @@ import {
   type AnimationEvent as ReactAnimationEvent,
   type CSSProperties,
 } from "react";
+import { flushSync } from "react-dom";
 import { AnimatePresence, motion, type Variants } from "motion/react";
 
 import { getExtensionLocale, type ExtensionLocale, type SupportedLocale } from "@/lib/locales";
@@ -1818,41 +1819,61 @@ export function HeroSafariDemo({
   }, [revealHomeIntro]);
 
   useEffect(() => {
-    if (introState !== "pending") {
+    if (introState === "complete") {
       return undefined;
     }
 
-    // The body is scroll-locked while the intro is pending, so treat scroll
-    // gestures and navigation keys as an explicit skip.
-    const skipKeys = new Set([
-      "ArrowDown",
-      "End",
-      "Enter",
-      "Escape",
-      "PageDown",
-      " ",
-    ]);
+    // The body is scroll-locked until the intro completes. A scroll gesture
+    // ends it on the spot instead of waiting out the reveal: the page unlocks
+    // within the same event, so the gesture itself scrolls it. Enter and
+    // Escape only skip, with the usual reveal.
+    const scrollKeys = new Set(["ArrowDown", "End", "PageDown", " "]);
+    const skipKeys = new Set(["Enter", "Escape"]);
+    let unlocked = false;
+    const unlock = () => {
+      if (unlocked) return;
+      unlocked = true;
+      // Commit now, so the lock is gone before the browser acts on this event.
+      flushSync(completeHomeIntroForScroll);
+    };
     const handleWheel = (event: WheelEvent) => {
-      if (event.deltaY > 0) {
-        handleHomeIntroSkip();
+      // Upward has nowhere to go at the top; ctrl+wheel is a pinch zoom.
+      if (unlocked || event.deltaY <= 0 || event.ctrlKey) {
+        return;
       }
+      // The locked page dropped this event's scroll, so replay it; the rest of
+      // the gesture scrolls natively.
+      event.preventDefault();
+      unlock();
+      const unit = event.deltaMode === WheelEvent.DOM_DELTA_LINE
+        ? 40
+        : event.deltaMode === WheelEvent.DOM_DELTA_PAGE
+          ? window.innerHeight
+          : 1;
+      window.scrollBy({ top: event.deltaY * unit });
+    };
+    const handleTouchMove = () => {
+      unlock();
     };
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (skipKeys.has(event.key)) {
+      if (scrollKeys.has(event.key)) {
+        // The key's own scroll runs after this handler, on the unlocked page.
+        unlock();
+      } else if (skipKeys.has(event.key) && introState === "pending") {
         handleHomeIntroSkip();
       }
     };
 
-    window.addEventListener("wheel", handleWheel, { passive: true });
-    window.addEventListener("touchmove", handleHomeIntroSkip, { passive: true });
+    window.addEventListener("wheel", handleWheel, { passive: false });
+    window.addEventListener("touchmove", handleTouchMove, { passive: true });
     window.addEventListener("keydown", handleKeyDown);
 
     return () => {
       window.removeEventListener("wheel", handleWheel);
-      window.removeEventListener("touchmove", handleHomeIntroSkip);
+      window.removeEventListener("touchmove", handleTouchMove);
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [handleHomeIntroSkip, introState]);
+  }, [completeHomeIntroForScroll, handleHomeIntroSkip, introState]);
   const animationKey = `${locale}-${scene.id}-${replayKey}`;
   const pacedSceneIdRef = useRef(scene.id);
   useEffect(() => {

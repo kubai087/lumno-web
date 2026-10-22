@@ -102,7 +102,10 @@ test("homepage opens with a full-screen Search All demo and can settle early on 
   assert.match(source, /const HOME_INTRO_QUIET_MS = 30 \* 60 \* 1000;/);
   assert.match(source, /playHomeIntro = forced \|\| Date\.now\(\) - seenAt > HOME_INTRO_QUIET_MS;\s*localStorage\.setItem\(HOME_INTRO_SEEN_KEY, String\(Date\.now\(\)\)\);/);
   assert.doesNotMatch(source, /navigation\.type === "reload"/);
-  assert.match(component, /window\.addEventListener\("wheel", handleWheel, \{ passive: true \}\)/);
+  // Scrolling ends the intro within the same event and replays that wheel's scroll on the unlocked page.
+  assert.match(component, /flushSync\(completeHomeIntroForScroll\)/);
+  assert.match(component, /const handleWheel = \(event: WheelEvent\) => \{[\s\S]*?event\.preventDefault\(\);[\s\S]*?unlock\(\);[\s\S]*?window\.scrollBy\(/);
+  assert.match(component, /window\.addEventListener\("wheel", handleWheel, \{ passive: false \}\)/);
   assert.match(component, /window\.addEventListener\("keydown", handleKeyDown\)/);
   assert.match(component, /className="hero-intro-skip-hint"[\s\S]*?onClick=\{handleHomeIntroSkip\}[\s\S]*?\{siteCopy\.skipIntroLabel\}/);
   assert.match(component, /skipIntroLabel: "点击任意处跳过"/);

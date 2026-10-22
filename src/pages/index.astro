@@ -282,12 +282,19 @@ import LanguageScrollRestore from "../components/LanguageScrollRestore.astro";
             if (document.body) stopEarlySkip();
             return;
           }
-          if (event.type === "wheel" && !(event.deltaY > 0)) return;
+          if (event.type === "wheel" && (!(event.deltaY > 0) || event.ctrlKey)) return;
           if (event.type === "keydown" && !skipKeys.has(event.key)) return;
           stopEarlySkip();
           settleHomeIntro();
+          // Settling lifts the scroll lock, but the locked page already dropped this wheel's
+          // scroll: replay it so the gesture that skipped also moves the page.
+          if (event.type === "wheel") {
+            event.preventDefault();
+            const unit = event.deltaMode === 1 ? 40 : event.deltaMode === 2 ? window.innerHeight : 1;
+            window.scrollBy({ top: event.deltaY * unit });
+          }
         };
-        skipEvents.forEach((type) => window.addEventListener(type, skipHomeIntroEarly, { capture: true, passive: true }));
+        skipEvents.forEach((type) => window.addEventListener(type, skipHomeIntroEarly, { capture: true, passive: type !== "wheel" }));
       }
     </script>
     <script is:inline define:vars={{ firefoxListed }}>

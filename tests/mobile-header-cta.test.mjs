@@ -207,10 +207,10 @@ test("homepage navbar matches the content width and reveals after the hero intro
     /\.top-nav\s*\{[\s\S]*?contain:\s*layout;/,
     "the fixed navbar should isolate its layout from content below",
   );
-  assert.match(
+  assert.doesNotMatch(
     source,
-    /html\s*\{[\s\S]*?overscroll-behavior-y:\s*none;/,
-    "the homepage should disable top overscroll bounce so rapid return-to-top does not flash the navbar",
+    /html\s*\{[^}]*overscroll-behavior-y:\s*none;/,
+    "the page keeps the native overscroll bounce (the footer painting fades out so the bounce shows no seam)",
   );
 });
 

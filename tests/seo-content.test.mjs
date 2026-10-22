@@ -267,5 +267,5 @@ test("homepage shows search crawlers the settled page instead of the intro and s
 
   // The New Tab heading fades in on view, which a crawler never scrolls to.
   const parallax = readSource("src/components/ui/hero-parallax.tsx");
-  assert.match(parallax, /document\.documentElement\.hasAttribute\("data-crawler"\)\s*\|\| \(header/);
+  assert.match(parallax, /document\.documentElement\.hasAttribute\("data-crawler"\)\s*\|\| element\.getBoundingClientRect\(\)/);
 });

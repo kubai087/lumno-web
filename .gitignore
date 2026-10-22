@@ -1,10 +1,24 @@
-node_modules
-.astro
-dist
-resource_commited/
+# Dependencies and build output
+node_modules/
+.venv/
+.astro/
+dist/
+
+# Local environment (copy .env.example to .env)
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
 
 # macOS Finder metadata
 .DS_Store
+
+# Editor settings
+.vscode/
+.idea/
 
 # Local visual debug screenshots
 tmp-*.png
@@ -14,6 +28,12 @@ test-results/
 
 # Local scratch output
 tmp/
+
+# Local design sources kept out of the repository
+resource_commited/
+
+# Internal planning notes
+docs/seo-recommendations.md
 
 # Local Claude Code config and scratch pages
 .claude/

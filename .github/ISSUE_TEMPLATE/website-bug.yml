@@ -1,0 +1,25 @@
+name: Website bug · 官网问题
+description: Something on lumno.kubai.design looks or works wrong. 官网显示或功能异常。
+labels: [bug]
+body:
+  - type: input
+    id: url
+    attributes:
+      label: Page URL · 页面地址
+      placeholder: https://lumno.kubai.design/en/help/install/
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened · 发生了什么
+      description: What you expected, what you saw instead, and a screenshot if it's visual. 预期效果、实际效果，视觉问题请附截图。
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and device · 浏览器与设备
+      placeholder: Safari 26 on iPhone 17, Chrome 141 on Windows 11
+    validations:
+      required: true

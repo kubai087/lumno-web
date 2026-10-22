@@ -165,12 +165,15 @@ test("homepage opens with a full-screen Search All demo and can settle early on 
   assert.doesNotMatch(styles, /hero-demo-switcher-settle|--hero-intro-switcher-/);
   assert.match(styles, /\.hero-safari-demo\[data-home-intro="pending"\] \.hero-safari-mask-content,[\s\S]*?width: var\(--hero-intro-source-width, 100%\);[\s\S]*?height: var\(--hero-intro-source-height, 100%\);/);
   assert.doesNotMatch(styles, /hero-intro-dither-out|hero-settled-dither-in|hero-safari-dither--intro|hero-safari-dither--settled/);
-  assert.match(dither, /const workWidth = Math\.max\(1, Math\.ceil\(width \/ baseCellSize\)\)/);
-  assert.match(dither, /data-dither-grid-size=\{gridSize\}/);
-  assert.match(dither, /introSourceDimensionsRef = useRef/);
-  assert.match(dither, /introState === "pending" \|\| introState === "revealing"/);
-  assert.match(dither, /introState === "complete" && introSourceDimensionsRef\.current/);
-  assert.doesNotMatch(dither, /MAX_DITHER_WIDTH|qualityScale/);
+  // Cells keep a fixed size: a wider box gets more of them, never bigger ones.
+  const ditherPaint = readSource("src/lib/ordered-dither.ts");
+  assert.match(ditherPaint, /const columns = Math\.max\(1, Math\.ceil\(width \/ cell\)\)/);
+  assert.doesNotMatch(ditherPaint, /MAX_DITHER_WIDTH|qualityScale/);
+  // The canvas painted during the intro carries on through the handoff to the resting size.
+  assert.match(dither, /let introSize: Size \| null = null;/);
+  assert.match(dither, /intro === "pending" \|\| intro === "revealing"/);
+  assert.match(dither, /intro === "complete" && introSize/);
+  assert.match(dither, /"lumno:home-intro-complete"/);
   assert.match(readSource("src/styles/site.css"), /html \{[\s\S]*?scrollbar-gutter: stable;/);
   assert.doesNotMatch(styles, /hero-safari-enter/);
   assert.doesNotMatch(source, /hero-copy-in/);
@@ -353,11 +356,17 @@ test("dither rendering is throttled and paints a single low-resolution buffer", 
   const dither = readSource("src/components/home/DitherShader.tsx");
   const styles = readSource("src/components/home/hero-safari-demo.css");
 
-  assert.match(dither, /RESIZE_RENDER_DELAY_MS = 90/);
+  const ditherPaint = readSource("src/lib/ordered-dither.ts");
+
+  assert.match(dither, /RESIZE_DEBOUNCE_MS = 90/);
   assert.match(dither, /ResizeObserver/);
-  assert.match(dither, /requestAnimationFrame\(flushRender\)/);
-  assert.match(dither, /context\.putImageData\(outputData, 0, 0\)/);
-  assert.doesNotMatch(dither, /setDimensions|fillRect\(/);
+  assert.match(dither, /requestAnimationFrame\(paint\)/);
+  assert.doesNotMatch(dither, /useState|setDimensions/);
+  // One canvas, painted in place from a lookup table built once per setting.
+  assert.match(dither, /const table = buildDitherTable\(\{ brightness, contrast, grain \}\)/);
+  assert.match(ditherPaint, /new Uint8ClampedArray\(16 \* 256\)/);
+  assert.match(ditherPaint, /context\.putImageData\(frame, 0, 0\)/);
+  assert.doesNotMatch(ditherPaint, /createElement\("canvas"\)|fillRect\(/);
   assert.match(styles, /image-rendering: pixelated/);
 });
 

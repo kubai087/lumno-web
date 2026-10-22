@@ -1,0 +1,16 @@
+name: Content or translation · 文案或翻译
+description: A typo, an outdated help article or an awkward translation. 错别字、过时的教程或不通顺的翻译。
+labels: [content]
+body:
+  - type: input
+    id: url
+    attributes:
+      label: Page URL · 页面地址
+    validations:
+      required: true
+  - type: textarea
+    id: text
+    attributes:
+      label: Current text and suggested text · 现有文字与建议改法
+    validations:
+      required: true

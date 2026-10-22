@@ -2,6 +2,16 @@
   "name": "lumno-web",
   "version": "1.0.0",
   "private": true,
+  "description": "Source of lumno.kubai.design, the website of the Lumno browser extension",
+  "license": "MIT",
+  "homepage": "https://lumno.kubai.design",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kubai087/lumno-web.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kubai087/lumno-web/issues"
+  },
   "type": "module",
   "engines": {
     "node": ">=22.12.0"
@@ -22,7 +32,6 @@
     "astro": "^7.1.6",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "input-otp": "^1.4.2",
     "lucide-react": "^1.28.0",
     "marked": "^16.4.2",
     "motion": "^12.5.0",

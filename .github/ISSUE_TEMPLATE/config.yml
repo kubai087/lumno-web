@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Extension bug or feature request · 扩展的问题或建议
+    url: https://github.com/kubai087/lumno-extension/issues
+    about: Problems with the Lumno extension itself belong in lumno-extension. 扩展本身的问题请提到 lumno-extension。
+  - name: Help center · 帮助中心
+    url: https://lumno.kubai.design/help/
+    about: How-to guides and answers to common questions. 使用教程与常见问题。

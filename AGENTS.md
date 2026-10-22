@@ -1,6 +1,6 @@
 # Lumno Web Agent Notes
 
-Last updated: 2026-10-08
+Last updated: 2026-10-22
 
 ## Confirmed Tech Direction
 
@@ -67,16 +67,22 @@ Last updated: 2026-10-08
   - minimalist new tab
   - Arc migration / alternatives for Dia or Chrome
 
+## Open Source
+
+- The repository is public. Code is MIT (`LICENSE`); the Lumno brand, screenshots, artwork, written content and QR codes are all rights reserved, and third-party fonts, icons, logos and adapted components keep their own licenses. `THIRD_PARTY_NOTICES.md` lists which files are which: update it whenever you add or remove such a file.
+- Only commit values that ship to browsers anyway (Supabase publishable key, reCAPTCHA site key, IndexNow key). Anything secret belongs in repository secrets, and `.env` stays untracked.
+- Don't commit internal planning notes or local debugging pages; `docs/seo-recommendations.md` stays local.
+- Pull requests are checked by `.github/workflows/ci.yml`; `deploy-pages.yml` only runs in `kubai087/lumno-web`.
+
 ## Implementation Status
 
-- Astro + React scaffold has been introduced in repository root.
-- GitHub Pages workflow now builds with Node and deploys `dist/`.
+- GitHub Pages workflow builds with Node and deploys `dist/`.
 - Pages below the homepage (`/release`, `/privacy`) use `src/layouts/SitePage.astro`, which shares the homepage header (`src/components/site/SiteHeader.astro`), footer (`src/components/site/PageFooter.astro`) and design tokens (`src/styles/home.css`, `src/styles/site.css`).
 
 ## Loading Performance Notes
 
 - The header menus are React components rendered to static HTML with no `client:*` directive; `src/scripts/settings-select-runtime.ts` drives them. Keep it that way so `/release` and `/privacy` ship no React.
-- Community QR dialogs open from static `[data-community-qr-trigger]` buttons; `src/scripts/community-qr.ts` lazy-loads the React dialog on first use.
+- The community panel opens from static `[data-community-trigger]` buttons; `src/scripts/community-panel.ts` lazy-loads the React dialog on first hover, focus or press.
 - `src/integrations/island-modulepreload.mjs` adds `modulepreload` links for every `client:load` island's import graph; prefer `client:idle` / `client:visible` for anything the first paint does not need.
 - Homepage intro: before hydration it paints the hero artwork from server HTML (a 32px inlined placeholder under the real image, sized by the inline script after the hero) while the demo's CSS animations stay paused until `data-intro-ready`. Don't gate the reveal on the window `load` event; fonts and the stable-frame check are enough.
 - Help center (`src/lib/guides.ts` holds the sidebar tree; page text in `src/content/guides/<locale>.ts`, bodies in `src/content/guides/*.md`) ships in every site language and uses only real captures of the extension, taken by `scripts/guide-screenshots/` in the language the extension shows that reader (`getExtensionLocale`: zh-CN, zh-TW, en, ja have their own captures; ko, de, fr, es, pt-BR and ru translate the text and reuse the English captures, so the extension's own labels stay in English there). The language menu keeps the reader on the same guide page. Help search runs `src/scripts/help-center-search.js`, the same matching rules as the extension's 「Lumno 帮助中心」 site search (keep the two copies in step), over `search-index.json` and `search-synonyms.json`. It reads hidden user-phrasing aliases from `src/content/guides/search/<locale>.ts`, keyed by section anchor (keep them in step when sections are renamed or added), and synonym groups from `search/synonyms/<locale>.ts`, for zh-CN, zh-TW, ja and en. `npm run build` ends with `scripts/help-search-eval.mjs`, which runs `search/eval/<locale>.json` (query → page#anchor) and fails below the floor; add a case when you fix a search miss. The index's `text` keeps one line per block (`toSearchBlocks` in `src/lib/guides.ts`: tabs mark headings, bullets and table rows), so each result carries a `context` passage that the help center and the extension show as a card beside the list on hover or arrow-key focus.

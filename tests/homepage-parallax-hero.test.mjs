@@ -6,7 +6,7 @@ import path from "node:path";
 const workspaceRoot = path.resolve(import.meta.dirname, "..");
 const readSource = (file) => fs.readFileSync(path.join(workspaceRoot, file), "utf8");
 
-test("homepage second section uses the Aceternity Hero Parallax composition", () => {
+test("homepage second section opens with the tilted screenshot wall", () => {
   const pageSource = readSource("src/pages/index.astro");
   const componentSource = readSource("src/components/ui/hero-parallax.tsx");
   const copySource = readSource("src/lib/home-content.ts");
@@ -31,69 +31,84 @@ test("homepage second section uses the Aceternity Hero Parallax composition", ()
     for (const preview of previews[locale]) assert.match(preview, /^data:image\/webp;base64,/);
   }
   assert.match(pageSource, /srcSet: `\$\{base\}-480\.webp 480w, \$\{base\}-960\.webp 960w, \$\{base\}\.webp 1280w`/);
-  assert.match(componentSource, /srcSet=\{product\.srcSet\}/);
-  assert.match(componentSource, /backgroundImage: product\.preview/);
+  assert.match(componentSource, /srcSet=\{shot\.srcSet\}/);
+  assert.match(componentSource, /backgroundImage: `url\("\$\{shot\.preview\}"\)`/);
   assert.match(pageSource, /<section id="new-tab" class="feature-intro"[\s\S]*?<HeroParallax/);
-  assert.match(pageSource, /products=\{newTabParallaxProducts\}/);
+  assert.match(pageSource, /shots=\{newTabParallaxShots\}/);
   assert.match(pageSource, /title: content\.newTab\.screenshotAlt/);
   assert.match(pageSource, /<HeroParallax[\s\S]*?client:idle[\s\S]*?\/>/);
-  assert.match(componentSource, /products\.slice\(0, 5\)/);
-  assert.match(componentSource, /products\.slice\(5, 10\)/);
-  assert.match(componentSource, /products\.slice\(10, 15\)/);
-  assert.match(componentSource, /const LOOP_COPY_COUNT = 3/);
-  assert.match(componentSource, /Array\.from\(\{ length: LOOP_COPY_COUNT \}/);
-  assert.match(componentSource, /hero-parallax__row--reverse/);
-  assert.match(componentSource, /aria-hidden=\{isLoopCopy \|\| undefined\}/);
+  assert.match(pageSource, /eyebrow=\{content\.newTab\.eyebrow\}/);
+  // Feature cards follow the wall inside the same section.
+  assert.match(pageSource, /<HeroParallax[\s\S]*?<NewTabSection content=\{content\.newTab\} locale=\{uiLocale\} \/>[\s\S]*?<\/section>/);
+  assert.match(copySource, /title: "每次打开，都是一幅画"/);
+
+  // Rows: three of five on wide screens, a fourth reshuffled row on phones, each repeated
+  // so its drift never runs out, with only one pass in the accessibility tree.
+  assert.match(componentSource, /shots\.slice\(0, 5\), driftsRight: true/);
+  assert.match(componentSource, /shots\.slice\(5, 10\), driftsRight: false/);
+  assert.match(componentSource, /shots\.slice\(10, 15\), driftsRight: true/);
+  assert.match(componentSource, /index % 3 === 0\), driftsRight: false, className: "mb-0 md:hidden"/);
+  assert.match(componentSource, /const ROW_REPEATS = 3;/);
+  assert.match(componentSource, /aria-hidden=\{hidden \|\| undefined\}/);
+  assert.match(componentSource, /hero-parallax__row--reverse flex-row-reverse/);
   assert.doesNotMatch(componentSource, /<a\b/);
-  assert.match(componentSource, /useScroll\(\{[\s\S]*?target: containerRef/);
-  assert.match(componentSource, /offset: \["start 55%", "end 18%"\]/);
-  assert.match(componentSource, /useTransform\(scrollYProgress, \[0, 0\.72\], \[0, 820\]\)/);
-  assert.match(componentSource, /useTransform\(scrollYProgress, \[0, 0\.72\], \[0, -820\]\)/);
-  assert.match(componentSource, /const ENTRANCE_END = 0\.18;/);
-  assert.match(componentSource, /useTransform\(entrance, \[0, 1\], \[-700, -300\]\)/);
-  // The 3D tilt plays once per page view: after the stage first flattens, it stays flat.
-  assert.match(componentSource, /if \(progress >= ENTRANCE_END\) hasEnteredRef\.current = true;/);
-  assert.match(componentSource, /return hasEnteredRef\.current \? 1 : progress \/ ENTRANCE_END;/);
-  // The copy reveals once it is in view, so it can never stay hidden on short pages.
-  assert.match(componentSource, /const isHeaderInView = useInView\(headerRef, \{ once: true, amount: 0\.4 \}\)/);
-  assert.match(componentSource, /const isHeaderVisible = isHeaderInView \|\| isHeaderPassed \|\| Boolean\(shouldReduceMotion\)/);
+
+  // Scroll drives four springs without React renders; CSS turns their variables into transforms.
+  assert.doesNotMatch(componentSource, /useScroll|useSpring|useTransform|MotionValue/);
+  assert.match(componentSource, /const PROGRESS_START = 0\.55;/);
+  assert.match(componentSource, /const PROGRESS_END = 0\.18;/);
+  assert.match(componentSource, /const TILT_SPAN = 0\.18;/);
+  assert.match(componentSource, /const DRIFT_SPAN = 0\.72;/);
+  assert.match(componentSource, /const DRIFT_PX = 820;/);
+  assert.match(componentSource, /tiltX: \{ from: 15, to: 0 \}/);
+  assert.match(componentSource, /tiltZ: \{ from: 20, to: 0 \}/);
+  assert.match(componentSource, /lift: \{ from: -700, to: -300 \}/);
+  assert.match(componentSource, /const SPRING_OMEGA = Math\.sqrt\(300\);/);
+  assert.match(componentSource, /const SPRING_ZETA = 30 \/ \(2 \* SPRING_OMEGA\);/);
+  assert.match(componentSource, /\[transform:translateY\(var\(--hp-lift\)\)_rotateX\(var\(--hp-tilt-x\)\)_rotateZ\(var\(--hp-tilt-z\)\)\]/);
+  assert.match(componentSource, /\[transform:translateX\(var\(--hp-drift\)\)\]/);
+  assert.match(componentSource, /\[transform:translateX\(calc\(var\(--hp-drift\)\*-1\)\)\]/);
+  // The server frame is the tilted wall, and reduced motion gets the flat one from CSS alone.
+  assert.match(componentSource, /style=\{stageStyle\(RESTING\)\}/);
+  assert.match(componentSource, /motion-reduce:\[transform:translateY\(-300px\)\]/);
+  assert.match(componentSource, /motion-reduce:\[transform:none\]/);
+  assert.match(componentSource, /useStageMotion\(wallRef, stageRef, !reduceMotion\)/);
+  // The tilt plays once per page view: after the stage first flattens, it stays flat.
+  assert.match(componentSource, /if \(progress >= TILT_SPAN\) hasFlattened = true;/);
+  assert.match(componentSource, /const flatness = hasFlattened \? 1 : progress \/ TILT_SPAN;/);
+  // Layout offsets, not boxes, so a transformed ancestor can't shift the progress.
+  assert.match(componentSource, /node\.offsetTop/);
   // A flat container lets the copy's z-index sit above the rotated card stage.
   assert.doesNotMatch(componentSource, /\[transform-style:preserve-3d\]/);
-  assert.match(componentSource, /rotateX: shouldReduceMotion \? 0 : rotateX/);
-  assert.match(componentSource, /rotateZ: shouldReduceMotion \? 0 : rotateZ/);
-  assert.match(componentSource, /translateY: shouldReduceMotion \? -300 : translateY/);
-  assert.doesNotMatch(componentSource, /isStageSettled/);
-  assert.match(componentSource, /relative flex h-auto flex-col[\s\S]*?md:h-auto/);
-  assert.doesNotMatch(componentSource, /h-\[[^\]]+\][\s\S]*?md:h-\[[^\]]+\]/);
-  assert.match(componentSource, /useReducedMotion\(\)/);
+  assert.match(componentSource, /\[perspective:1000px\]/);
   assert.match(componentSource, /data-hero-parallax-stage/);
-  assert.match(componentSource, /data-hero-parallax-copy/);
-  assert.match(componentSource, /initial=\{HERO_COPY_HIDDEN\}/);
-  assert.match(componentSource, /const HERO_COPY_TRANSITION: Transition = \{[\s\S]*?opacity: \{ duration: 0\.72, ease: "easeOut" \}[\s\S]*?filter: \{ duration: 0\.82, ease: HERO_COPY_EASE \}/);
-  assert.match(componentSource, /const HERO_DESCRIPTION_TRANSITION: Transition = \{[\s\S]*?delay: 0\.13/);
-  assert.doesNotMatch(componentSource, /data-hero-parallax-stage[\s\S]*?filter:/);
-  assert.doesNotMatch(componentSource, /opacity:\s*shouldReduceMotion|const opacity = useTransform/);
-  assert.doesNotMatch(componentSource, /x:\s*isStageSettled/);
-  assert.doesNotMatch(componentSource, /<motion\.div\s+data-hero-parallax-stage[^>]*initial=/);
-  assert.doesNotMatch(componentSource, /useTransform\([^)]*filter:/);
   assert.match(componentSource, /data-hero-parallax-card/);
+
+  // The copy reveals once it is in view or already passed, so it can never stay hidden.
+  assert.match(componentSource, /\{ threshold: 0\.4 \}/);
+  assert.match(componentSource, /element\.getBoundingClientRect\(\)\.top < window\.innerHeight \* 0\.6/);
+  assert.match(componentSource, /hasAttribute\("data-crawler"\)/);
+  assert.match(componentSource, /const copyRevealed = useRevealOnce\(copyRef\) \|\| reduceMotion;/);
+  assert.match(componentSource, /data-hero-parallax-copy/);
+  assert.match(componentSource, /hidden: \{ opacity: 0, y: 22, filter: "blur\(10px\)" \}/);
+  assert.match(componentSource, /opacity: \{ duration: 0\.72, delay, ease: "easeOut" \}/);
+  assert.match(componentSource, /filter: \{ duration: 0\.82, delay, ease: COPY_EASE \}/);
+  assert.match(componentSource, /transition=\{copyTransition\(0\.13\)\}/);
   assert.match(componentSource, /hero-parallax__title/);
   assert.match(componentSource, /hero-parallax__description/);
   assert.match(componentSource, /hero-parallax__header relative -top-20/);
   assert.match(componentSource, /hero-title-line/);
   assert.match(componentSource, /hero-title-segment/);
+
+  // Cards: full-bleed 8/5 renders with no hover chrome.
   assert.equal(fullBleedFeatureRules.length, 1);
   assert.match(componentSource, /aspect-\[8\/5\]/);
   assert.match(componentSource, /object-contain object-center/);
   assert.doesNotMatch(componentSource, /object-cover/);
   assert.doesNotMatch(componentSource, /shadow-xl/);
-  assert.doesNotMatch(componentSource, /ring-1 ring-border/);
   assert.doesNotMatch(componentSource, /whileHover=/);
-  assert.doesNotMatch(componentSource, /group-hover\/product:opacity-100/);
   assert.doesNotMatch(componentSource, /<h3/);
-  assert.doesNotMatch(componentSource, /hero-parallax__link/);
-  assert.doesNotMatch(pageSource, /linkLabel=\{content\.featurePageLabel\}/);
-  assert.doesNotMatch(pageSource, /linkAriaLabel=\{content\.featurePageAria\}/);
+
   assert.match(pageSource, /\.hero-parallax\s*\{[\s\S]*?--hero-parallax-row-loop-offset: -175rem/);
   assert.match(
     pageSource,
@@ -104,10 +119,6 @@ test("homepage second section uses the Aceternity Hero Parallax composition", ()
     pageSource,
     /@media \(max-width: 760px\)[\s\S]*?--hero-parallax-row-loop-offset: -77\.5rem/,
   );
-  assert.match(copySource, /title: "每次打开，都是一幅画"/);
-  assert.match(pageSource, /eyebrow=\{content\.newTab\.eyebrow\}/);
-  // Feature cards follow the parallax inside the same section.
-  assert.match(pageSource, /<HeroParallax[\s\S]*?<NewTabSection content=\{content\.newTab\} locale=\{uiLocale\} \/>[\s\S]*?<\/section>/);
 });
 
 test("new tab filter lab loads renders sized to the screen", () => {

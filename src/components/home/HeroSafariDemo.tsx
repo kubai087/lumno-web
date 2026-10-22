@@ -1907,12 +1907,6 @@ export function HeroSafariDemo({
           <DitherShader
             className="hero-safari-dither--continuous"
             src="/assets/settings-bg-light-monet-newtab.webp"
-            gridSize={2}
-            ditherMode="bayer"
-            colorMode="original"
-            brightness={0.01}
-            contrast={1.08}
-            threshold={0.22}
           />
           <div aria-hidden="true" className="hero-safari-screen" inert>
             <AnimatePresence custom={sceneDirection} mode="wait">

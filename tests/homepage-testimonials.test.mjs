@@ -85,7 +85,7 @@ test("testimonial marquee fills two continuous lanes with hover-intent pause and
   // A single store link sits in the header; cards themselves stay link-free.
   assert.match(source, /data-analytics-event="open_chrome_web_store_reviews"/);
   assert.match(source, /src="\/assets\/lumno-newtab-monet-coastal-white\.webp"/);
-  assert.match(source, /gridSize=\{2\}[\s\S]*?ditherMode="bayer"[\s\S]*?client:visible/);
+  assert.match(source, /<DitherShader[\s\S]*?className="chrome-review-marquee__dither"[\s\S]*?client:visible/);
   assert.match(source, /chrome-review-marquee__header[\s\S]*?chrome-review-marquee__frame[\s\S]*?<DitherShader[\s\S]*?chrome-review-marquee__rows/);
   assert.match(source, /\.chrome-review-marquee__frame \{[\s\S]*?width: var\(--home-column\);/);
   assert.match(source, /overflow: hidden;[\s\S]*?border-radius: var\(--home-radius-xl\);[\s\S]*?background: #f7f8ef;/);

@@ -30,6 +30,8 @@ env:
 
 jobs:
   deploy:
+    # Forks have no Pages environment or secrets; they build through ci.yml instead.
+    if: github.repository == 'kubai087/lumno-web'
     runs-on: ubuntu-latest
     environment:
       name: github-pages

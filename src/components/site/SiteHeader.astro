@@ -683,6 +683,11 @@ const {
       gap: 10px;
     }
 
+    /* The glass pill stays clear of a status bar the page is drawn under. */
+    body.has-nav-install .top-nav {
+      top: max(6px, env(safe-area-inset-top));
+    }
+
     /* The bar's gap already separates the wordmark; its own right padding would only crowd the actions. */
     .top-nav-brand {
       padding-left: 17px;

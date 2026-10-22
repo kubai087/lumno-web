@@ -1131,7 +1131,7 @@
       "banner"
       "article";
     width: min(100% - 32px, 720px);
-    padding-top: 96px;
+    padding-top: calc(96px + var(--top-nav-safe-shift));
   }
 
   .guide-side {

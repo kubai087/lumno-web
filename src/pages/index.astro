@@ -949,7 +949,7 @@ import LanguageScrollRestore from "../components/LanguageScrollRestore.astro";
         }
 
         .hero-section {
-          padding: 120px 0 52px;
+          padding: calc(120px + var(--top-nav-safe-shift)) 0 52px;
           gap: 0;
         }
 
@@ -1038,7 +1038,7 @@ import LanguageScrollRestore from "../components/LanguageScrollRestore.astro";
 
       @media (max-width: 760px) and (max-height: 740px) {
         .hero-section {
-          padding-top: 80px;
+          padding-top: calc(80px + var(--top-nav-safe-shift));
         }
 
         .hero-copy > p {

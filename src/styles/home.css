@@ -11,6 +11,12 @@
   --home-section-width: 1360px;
   --home-gutter: 24px;
   --home-column: min(calc(100% - var(--home-gutter) * 2), var(--home-section-width));
+  /*
+   * How far the top bar drops below its usual 10px on phones that draw the page
+   * under the status bar (in-app browsers such as X's report a top safe area;
+   * Safari reports 0). Every page's opening adds it to its top padding.
+   */
+  --top-nav-safe-shift: calc(max(10px, env(safe-area-inset-top, 0px)) - 10px);
 
   /*
    * Spacing. A 4px ladder, then one named step per level of the page, so the

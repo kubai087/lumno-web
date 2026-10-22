@@ -456,7 +456,7 @@ const STORE_CHIPS = [
         --chip-bg: #f9fafb;
         --chip-text: #475467;
         /* The shared top bar: a 58px pill, 6px from the top. */
-        --release-header-offset: 64px;
+        --release-header-offset: calc(64px + var(--top-nav-safe-shift));
         --text-main: #15171a;
         --safe-area-bottom: 0px;
         --safe-area-bottom: env(safe-area-inset-bottom, 0px);

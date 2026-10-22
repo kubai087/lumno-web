@@ -880,6 +880,18 @@ import LanguageScrollRestore from "../components/LanguageScrollRestore.astro";
         overflow: hidden;
       }
 
+      /*
+       * The full-screen artwork covers the whole window, but nothing in the page can paint
+       * into the scrollbar gutter html reserves (site.css), so a classic scrollbar left a
+       * bare strip down the right edge. Scrolling is locked here anyway; the gutter returns
+       * when the reveal starts, and HeroSafariDemo measures the card again at that point.
+       */
+      @media (prefers-reduced-motion: no-preference) {
+        html[data-home-intro-js]:has(> body[data-home-intro="pending"]) {
+          scrollbar-gutter: auto;
+        }
+      }
+
       html[data-home-intro-js] body[data-home-intro="pending"] main > :not(.hero-section),
       html[data-home-intro-js] body[data-home-intro="revealing"] main > :not(.hero-section),
       html[data-home-intro-js] body[data-home-intro="pending"] .site-footer,

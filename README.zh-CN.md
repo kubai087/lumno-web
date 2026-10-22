@@ -123,6 +123,10 @@ Open Sans 和 Remix Icon 由 `scripts/subset-fonts.py` 子集化（需要 `fontt
 
 欢迎修复问题、改进翻译和性能。提交前请先读 [CONTRIBUTING.md](CONTRIBUTING.md) 和[行为准则](CODE_OF_CONDUCT.md)；安全问题请按 [SECURITY.md](SECURITY.md) 私下报告。
 
+## 鸣谢
+
+- 日文本地化：感谢 [Humi](https://github.com/Hum1Tab) 参与扩展的日文翻译与校对。官网的日文帮助中心和演示沿用了扩展的日文界面文字。
+
 ## 许可证
 
 源代码以 [MIT 许可证](LICENSE) 发布。欢迎学习，也可以把其中的实现方法和组件用到你自己的项目里。

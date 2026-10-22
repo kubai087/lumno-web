@@ -123,6 +123,10 @@ Open Sans and Remix Icon are subset by `scripts/subset-fonts.py` (needs `fonttoo
 
 Fixes, translations and performance improvements are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) and the [code of conduct](CODE_OF_CONDUCT.md) first; security issues go through [SECURITY.md](SECURITY.md).
 
+## Credits
+
+- Japanese localization: thanks to [Humi](https://github.com/Hum1Tab) for translating and reviewing the extension's Japanese interface. The website's Japanese help center and demos use the same interface text.
+
 ## License
 
 The source code is released under the [MIT License](LICENSE). Feel free to learn from it and reuse the techniques and components in your own projects.

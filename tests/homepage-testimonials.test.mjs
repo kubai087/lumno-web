@@ -153,7 +153,7 @@ test("homepage places the new-tab showcase and AI intent page before the review 
   assert.match(source, /@media \(max-width: 1080px\)[\s\S]*?\.ai-intent-section\s*\{[\s\S]*?grid-template-columns: minmax\(0, 1fr\)/);
   assert.match(source, /reviews=\{showcaseReviews\}/);
   assert.match(source, /padding: 120px 0 80px/);
-  assert.match(source, /height: max\(300px, calc\(100svh - 500px\)\)/);
+  assert.match(source, /height: max\(300px, calc\(100svh - 546px\)\)/);
   assert.match(source, /@media \(max-width: 760px\)[\s\S]*?\.hero-demo-slot \{[\s\S]*?height: 320px;[\s\S]*?max-height: none;/);
   assert.match(source, /@media \(min-width: 761px\) and \(max-height: 740px\)/);
 });

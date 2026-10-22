@@ -316,6 +316,20 @@ import LanguageScrollRestore from "../components/LanguageScrollRestore.astro";
     <main>
       <section class="hero-section" aria-labelledby="hero-title">
         <div class="hero-copy">
+          <a
+            class="hero-open-source"
+            href={GITHUB_URL}
+            target="_blank"
+            rel="noreferrer noopener"
+            aria-label={content.heroOpenSource.aria}
+            data-analytics-event="open_github_repo"
+            data-analytics-category="cta"
+            data-analytics-label="home_hero_open_source"
+          >
+            <span class="hero-open-source-icon" aria-hidden="true" set:html={githubIcon}></span>
+            <span>{content.heroOpenSource.label}</span>
+            <span class="hero-open-source-chevron" aria-hidden="true"></span>
+          </a>
           <h1
             id="hero-title"
             class:list={{
@@ -611,6 +625,66 @@ import LanguageScrollRestore from "../components/LanguageScrollRestore.astro";
           filter 680ms cubic-bezier(0.22, 1, 0.36, 1);
       }
 
+      .hero-open-source {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        margin: 0 auto var(--home-eyebrow-gap);
+        padding: 5px 12px 5px 10px;
+        border-radius: var(--home-radius-pill);
+        background: rgba(255, 255, 255, 0.72);
+        box-shadow: inset 0 0 0 1px var(--home-hairline), var(--home-shadow-chip);
+        color: var(--home-ink-soft);
+        font-size: 13px;
+        font-weight: 550;
+        line-height: 20px;
+        text-decoration: none;
+        white-space: nowrap;
+        transition:
+          opacity 600ms ease-out,
+          translate 680ms cubic-bezier(0.22, 1, 0.36, 1),
+          filter 680ms cubic-bezier(0.22, 1, 0.36, 1),
+          color 160ms ease,
+          background-color 160ms ease;
+      }
+
+      .hero-open-source:hover {
+        color: var(--home-ink);
+        background-color: #fff;
+      }
+
+      .hero-open-source:focus-visible {
+        outline: 2px solid var(--home-select-ink);
+        outline-offset: 2px;
+      }
+
+      .hero-open-source-icon {
+        display: inline-flex;
+        width: 15px;
+        height: 15px;
+      }
+
+      .hero-open-source-icon svg {
+        width: 100%;
+        height: 100%;
+      }
+
+      /* A drawn chevron: no extra SVG or icon-font glyph for one arrow. */
+      .hero-open-source-chevron {
+        width: 5px;
+        height: 5px;
+        margin-left: 2px;
+        border-top: 1.5px solid currentColor;
+        border-right: 1.5px solid currentColor;
+        rotate: 45deg;
+        opacity: 0.6;
+        transition: translate 160ms ease;
+      }
+
+      .hero-open-source:hover .hero-open-source-chevron {
+        translate: 2px 0;
+      }
+
       .hero-copy h1 {
         margin: 0 auto;
         max-width: 760px;
@@ -762,7 +836,8 @@ import LanguageScrollRestore from "../components/LanguageScrollRestore.astro";
         position: relative;
         z-index: var(--home-z-content);
         width: 100%;
-        height: max(300px, calc(100svh - 500px));
+        /* 500px of nav, copy and actions above it, plus the open source pill. */
+        height: max(300px, calc(100svh - 546px));
         /* Portrait screens: don't stretch past the demo's native ratio. */
         max-height: calc(100cqw * 753 / 1203);
         margin-top: clamp(44px, 4vw, 64px);
@@ -803,6 +878,10 @@ import LanguageScrollRestore from "../components/LanguageScrollRestore.astro";
 
       html[data-home-intro-js] body[data-home-intro="revealing"] .top-nav {
         transition-delay: 80ms;
+      }
+
+      html[data-home-intro-js] body[data-home-intro="revealing"] .hero-open-source {
+        transition-delay: 140ms;
       }
 
       html[data-home-intro-js] body[data-home-intro="revealing"] .hero-copy h1 {

@@ -21,6 +21,19 @@ test("homepage places the onboarding browser skeleton directly below the hero co
   assert.match(source, /client:load/);
 });
 
+test("hero title sits under an open source pill that links to the source in every language", () => {
+  const source = readSource("src/pages/index.astro");
+  const content = readSource("src/lib/home-content.ts");
+
+  assert.match(
+    source,
+    /<div class="hero-copy">\s*<a\s+class="hero-open-source"\s+href=\{GITHUB_URL\}[\s\S]*?aria-label=\{content\.heroOpenSource\.aria\}[\s\S]*?\{content\.heroOpenSource\.label\}[\s\S]*?<\/a>\s*<h1/,
+  );
+  const labels = [...content.matchAll(/heroOpenSource: \{ label: "([^"]+)", aria: "[^"]+" \}/g)].map((m) => m[1]);
+  assert.equal(labels.length, 10);
+  for (const label of labels) assert.match(label, /GPL-3\.0/);
+});
+
 test("homepage opens with a full-screen Search All demo and can settle early on click or scroll", () => {
   const source = readSource("src/pages/index.astro");
   const component = readSource("src/components/home/HeroSafariDemo.tsx");
@@ -100,7 +113,7 @@ test("homepage opens with a full-screen Search All demo and can settle early on 
   assert.match(component, /className="hero-safari-dither--continuous"/);
   assert.match(component, /--hero-intro-source-width/);
   assert.match(component, /--hero-intro-source-height/);
-  assert.match(source, /\.hero-demo-slot \{[\s\S]*?height: max\(300px, calc\(100svh - 500px\)\);/);
+  assert.match(source, /\.hero-demo-slot \{[\s\S]*?height: max\(300px, calc\(100svh - 546px\)\);/);
   assert.match(component, /const HOME_INTRO_DESKTOP_SCALE_MAX = 1\.32/);
   assert.match(component, /const HOME_INTRO_MOBILE_SCALE_MIN = 0\.94/);
   assert.match(component, /const HOME_INTRO_MOBILE_SCALE_MAX = 1\.02/);
@@ -547,7 +560,7 @@ test("hero demo exposes three replayable plugin-consistent search scenes", () =>
   assert.doesNotMatch(styles, /hero-demo-page-indicator/);
   assert.doesNotMatch(switcherStyles, /backdrop-filter/);
   assert.match(styles, /hero-demo-page-button:focus-visible/);
-  assert.match(homepage, /height: max\(300px, calc\(100svh - 500px\)\);/);
+  assert.match(homepage, /height: max\(300px, calc\(100svh - 546px\)\);/);
   assert.match(homepage, /\.hero-demo-slot \{\s*height: 320px;\s*max-height: none;/);
   assert.match(
     styles,

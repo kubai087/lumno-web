@@ -1489,10 +1489,20 @@ html[data-home-intro-js] .hero-safari-demo[data-home-intro="pending"]:not([data-
   }
 }
 
-@media (max-width: 760px) and (max-height: 740px) {
+/*
+ * Phones: the card is a fixed 320px, so the menu takes a fixed height too,
+ * shorter on short phones (judged once at load, index.astro). A vh height
+ * changed while X's in-app browser grew its sheet.
+ */
+@media (max-width: 760px) {
   .site-search-demo-scope-menu {
-    height: min(170px, 30vh);
-    max-height: min(170px, 30vh);
+    height: 220px;
+    max-height: 220px;
+  }
+
+  html[data-short-viewport] .site-search-demo-scope-menu {
+    height: 170px;
+    max-height: 170px;
   }
 }
 

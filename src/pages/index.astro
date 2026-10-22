@@ -248,6 +248,10 @@ import LanguageScrollRestore from "../components/LanguageScrollRestore.astro";
       // Shortcut keycaps render both spellings; show Ctrl/Shift instead of ⌘/⇧ off Apple platforms.
       const platformHint = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || "";
       document.documentElement.setAttribute("data-platform", /mac|iphone|ipad|ios/i.test(platformHint) ? "mac" : "other");
+      // Phones size the hero for a short screen once, at load. X's in-app browser opens the page in a
+      // part-height sheet and grows it on the first scroll, so a max-height media query flipped
+      // mid-scroll and moved everything below the hero.
+      if (innerHeight <= 740) document.documentElement.setAttribute("data-short-viewport", "");
       // Only a demo that has not hydrated yet: once it has, HeroSafariDemo plays and skips the intro itself.
       const isHomeIntroWaitingForDemo = () => Boolean(
         document.body
@@ -1071,7 +1075,14 @@ import LanguageScrollRestore from "../components/LanguageScrollRestore.astro";
           --hero-parallax-row-loop-offset: -77.5rem;
         }
 
+        /*
+         * Phones: the hero's height comes from its content (the demo slot is a
+         * fixed 320px below), never the viewport. In X's in-app browser the
+         * viewport grows as its sheet expands mid-scroll, and 100svh grew the
+         * hero with it, moving the rest of the page.
+         */
         .hero-section {
+          min-height: 0;
           padding: calc(120px + var(--top-nav-safe-shift)) 0 52px;
           gap: 0;
         }
@@ -1159,17 +1170,18 @@ import LanguageScrollRestore from "../components/LanguageScrollRestore.astro";
         }
       }
 
-      @media (max-width: 760px) and (max-height: 740px) {
-        .hero-section {
+      /* Short phones, judged once at load (data-short-viewport, set in the head script). */
+      @media (max-width: 760px) {
+        html[data-short-viewport] .hero-section {
           padding-top: calc(80px + var(--top-nav-safe-shift));
         }
 
-        .hero-copy > p {
+        html[data-short-viewport] .hero-copy > p {
           margin-top: 12px;
           line-height: 1.55;
         }
 
-        .hero-actions {
+        html[data-short-viewport] .hero-actions {
           margin-top: 16px;
         }
       }

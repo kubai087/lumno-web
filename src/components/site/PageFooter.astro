@@ -13,6 +13,7 @@ import {
   GITHUB_ISSUE_URL,
   GITHUB_URL,
   LICENSE_URL,
+  WEBSITE_GITHUB_URL,
   getSiteStoreVersions,
 } from "../../lib/site-links";
 
@@ -111,6 +112,7 @@ const { firefox: firefoxStoreVersion } = await getSiteStoreVersions();
   community={{ label: community.label, panel: getCommunityPanel(locale), analyticsLabel: `${analyticsScope}_footer_community` }}
   copyright={content.footerCopyright}
   licenseHref={LICENSE_URL}
+  websiteSource={{ label: content.footerWebsiteSource, href: WEBSITE_GITHUB_URL }}
   languages={LOCALE_CONFIG.map((language) => ({
     code: language.code,
     label: language.label,

@@ -7,6 +7,8 @@ export const GITHUB_URL = "https://github.com/kubai087/lumno-extension";
 export const GITHUB_ISSUE_URL = `${GITHUB_URL}/issues/new/choose`;
 export const GITHUB_PULL_REQUEST_URL = `${GITHUB_URL}/compare`;
 export const LICENSE_URL = `${GITHUB_URL}/blob/main/LICENSE`;
+/** This website's own repository, apart from the extension's. */
+export const WEBSITE_GITHUB_URL = "https://github.com/kubai087/lumno-web";
 
 /** Store versions for the install menu, preferring the ones CI resolved before the build. */
 export function getSiteStoreVersions() {

@@ -21,10 +21,12 @@ interface Props {
   community: { label: string; panel: CommunityPanel; analyticsLabel: string };
   copyright: string;
   licenseHref: string;
+  /** The website's own repository, after the license. */
+  websiteSource: Link;
   languages: Array<{ code: string; label: string; href: string; current: boolean }>;
 }
 
-const { homeHref, tagline, storesLabel, stores, socialAria, socials, columns, community, copyright, licenseHref, languages } = Astro.props;
+const { homeHref, tagline, storesLabel, stores, socialAria, socials, columns, community, copyright, licenseHref, websiteSource, languages } = Astro.props;
 // A narrow (centred) tagline may only wrap between Chinese phrases, never inside a word.
 const taglinePhrases = tagline.split(/(?<=、)/);
 ---
@@ -37,9 +39,10 @@ const taglinePhrases = tagline.split(/(?<=、)/);
     <div class="site-footer__brand">
       <a class="site-footer__logo" href={homeHref} aria-label="Lumno">
         <span class="site-footer__icon" aria-hidden="true" set:html={logoIconSvg}></span>
-        <img src="/assets/textlogo.svg" width="165" height="43" alt="Lumno" loading="lazy" />
+        <img src="/assets/textlogo.svg" width="165" height="43" alt="Lumno" />
       </a>
       <p>{taglinePhrases.map((phrase) => <span class="site-footer__phrase">{phrase}</span>)}</p>
+      {/* Eager: the logos are a few KB, and lazy loading only asked for them once the footer came near, so on a slow link the buttons sat blank. */}
       <ul class="site-footer__stores" aria-label={storesLabel}>
         {stores.map((store) => (
           <li>
@@ -51,7 +54,7 @@ const taglinePhrases = tagline.split(/(?<=、)/);
               data-analytics-category="conversion"
               data-analytics-label={store.analyticsLabel}
             >
-              <img src={store.logoSrc} width="18" height="18" alt="" loading="lazy" decoding="async" />
+              <img src={store.logoSrc} width="18" height="18" alt="" decoding="async" />
               {store.label}
             </a>
           </li>
@@ -115,6 +118,7 @@ const taglinePhrases = tagline.split(/(?<=、)/);
     <p>
       <span>© {new Date().getFullYear()} {copyright}</span>
       <a href={licenseHref} target="_blank" rel="noreferrer noopener">GPL-3.0</a>
+      <a href={websiteSource.href} target="_blank" rel="noreferrer noopener">{websiteSource.label}</a>
     </p>
     <ul class="site-footer__languages">
       {languages.map((language) => (

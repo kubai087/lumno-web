@@ -243,6 +243,8 @@ type HomeContent = {
   footerSocialAria: string;
   footerGithub: string;
   footerCopyright: string;
+  /** The website's own repository, beside the license. */
+  footerWebsiteSource: string;
   languageSelectAria: string;
 };
 
@@ -565,6 +567,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerSocialAria: "关注 Lumno",
     footerGithub: "GitHub",
     footerCopyright: "Lumno",
+    footerWebsiteSource: "官网源码",
     languageSelectAria: "选择语言",
   },
   "zh-TW": {
@@ -883,6 +886,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerSocialAria: "追蹤 Lumno",
     footerGithub: "GitHub",
     footerCopyright: "Lumno",
+    footerWebsiteSource: "官網原始碼",
     languageSelectAria: "選擇語言",
   },
   en: {
@@ -1196,6 +1200,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerSocialAria: "Follow Lumno",
     footerGithub: "GitHub",
     footerCopyright: "Lumno",
+    footerWebsiteSource: "Website source",
     languageSelectAria: "Choose language",
   },
   ja: {
@@ -1505,6 +1510,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerSocialAria: "Lumno をフォロー",
     footerGithub: "GitHub",
     footerCopyright: "Lumno",
+    footerWebsiteSource: "サイトのソースコード",
     languageSelectAria: "言語を選択",
   },
   ko: {
@@ -1814,6 +1820,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerSocialAria: "Lumno 팔로우",
     footerGithub: "GitHub",
     footerCopyright: "Lumno",
+    footerWebsiteSource: "웹사이트 소스 코드",
     languageSelectAria: "언어 선택",
   },
   de: {
@@ -2125,6 +2132,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerSocialAria: "Lumno folgen",
     footerGithub: "GitHub",
     footerCopyright: "Lumno",
+    footerWebsiteSource: "Quellcode der Website",
     languageSelectAria: "Sprache wählen",
   },
   fr: {
@@ -2436,6 +2444,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerSocialAria: "Suivre Lumno",
     footerGithub: "GitHub",
     footerCopyright: "Lumno",
+    footerWebsiteSource: "Code source du site",
     languageSelectAria: "Choisir la langue",
   },
   es: {
@@ -2747,6 +2756,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerSocialAria: "Seguir a Lumno",
     footerGithub: "GitHub",
     footerCopyright: "Lumno",
+    footerWebsiteSource: "Código fuente del sitio",
     languageSelectAria: "Elegir idioma",
   },
   "pt-BR": {
@@ -3058,6 +3068,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerSocialAria: "Seguir o Lumno",
     footerGithub: "GitHub",
     footerCopyright: "Lumno",
+    footerWebsiteSource: "Código-fonte do site",
     languageSelectAria: "Escolher idioma",
   },
   ru: {
@@ -3369,6 +3380,7 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerSocialAria: "Следить за Lumno",
     footerGithub: "GitHub",
     footerCopyright: "Lumno",
+    footerWebsiteSource: "Исходный код сайта",
     languageSelectAria: "Выбрать язык",
   },
 };

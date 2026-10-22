@@ -85,7 +85,6 @@ html {
   position: relative;
   scroll-behavior: smooth;
   scroll-padding-top: 88px;
-  overscroll-behavior-y: none;
   background: var(--bg);
   scrollbar-gutter: stable;
   scrollbar-width: thin;

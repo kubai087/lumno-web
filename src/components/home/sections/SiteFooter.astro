@@ -184,10 +184,18 @@ const taglinePhrases = tagline.split(/(?<=、)/);
     /*
      * The page reserves a scrollbar gutter (site.css) that always shows the
      * white page background, so the painting fades out at both sides rather
-     * than stopping in a hard edge beside the scrollbar.
+     * than stopping in a hard edge beside the scrollbar. It fades out at the
+     * bottom too: macOS bounces the page past its end, and the white that
+     * shows below should meet the sea without a seam.
      */
-    -webkit-mask-image: linear-gradient(to right, transparent, #000 72px, #000 calc(100% - 72px), transparent);
-    mask-image: linear-gradient(to right, transparent, #000 72px, #000 calc(100% - 72px), transparent);
+    -webkit-mask-image:
+      linear-gradient(to right, transparent, #000 72px, #000 calc(100% - 72px), transparent),
+      linear-gradient(to bottom, #000 calc(100% - 40px), transparent);
+    -webkit-mask-composite: source-in;
+    mask-image:
+      linear-gradient(to right, transparent, #000 72px, #000 calc(100% - 72px), transparent),
+      linear-gradient(to bottom, #000 calc(100% - 40px), transparent);
+    mask-composite: intersect;
   }
 
   .site-footer__art::after {

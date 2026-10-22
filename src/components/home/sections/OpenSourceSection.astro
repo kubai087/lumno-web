@@ -62,12 +62,14 @@ const browsersWithLogo = content.browserNames.filter((name) => BROWSER_LOGOS[nam
   </header>
 
   <!--
-    Three cards in the feature cards' material: copy on top, an illustration
-    in a white panel inset from the top and sides and running off the bottom.
+    Three lit cards (the command bar cards' material): copy on top, an
+    illustration in a white panel inset from the top and sides and running off
+    the bottom.
   -->
   <ul class="open-source__cards">
     {POINTS.map((id) => (
-      <li class="os-card" data-reveal data-os-card data-point={id}>
+      <li class="os-card home-lit" data-reveal data-os-card data-point={id}>
+        <div class="home-lit__dither" aria-hidden="true"><canvas></canvas></div>
         <h3>{content.points[id]}</h3>
         <div class="os-card__art" aria-hidden="true">
           <div class="os-card__panel">
@@ -94,6 +96,7 @@ const browsersWithLogo = content.browserNames.filter((name) => BROWSER_LOGOS[nam
    * Phones (home-phone) have no hover to show a logo's name with, so a tap
    * shows it for a moment instead; tapping another logo moves it there.
    */
+  import "../../../scripts/card-dither";
   import { isPhone } from "../../../scripts/home-phone";
 
   const logos = Array.from(document.querySelectorAll<HTMLElement>(".os-logos li"));
@@ -134,7 +137,7 @@ const browsersWithLogo = content.browserNames.filter((name) => BROWSER_LOGOS[nam
     list-style: none;
   }
 
-  /* The feature cards' paper material (NewTabFeatureCard): ring, white rim, lift. */
+  /* Fill, ring, glow and lift come from .home-lit (styles/home.css). */
   .os-card {
     --pad: calc(var(--home-card-pad) - 1px);
     position: relative;
@@ -145,30 +148,14 @@ const browsersWithLogo = content.browserNames.filter((name) => BROWSER_LOGOS[nam
     overflow: hidden;
     border: 1px solid transparent;
     border-radius: var(--home-radius-xl);
-    background:
-      linear-gradient(var(--home-paper), var(--home-paper)) padding-box,
-      var(--home-ring) border-box;
-    box-shadow: var(--home-highlight), var(--home-shadow-card);
     transition:
       box-shadow 240ms ease,
       transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 
-  /* Dense, faint diagonal lines, absent behind the copy and full behind the panel. */
-  .os-card::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: repeating-linear-gradient(-45deg, rgba(var(--home-edge), 0.075) 0 1px, transparent 1px 7px);
-    -webkit-mask-image: linear-gradient(to bottom, transparent 22%, #000 64%);
-    mask-image: linear-gradient(to bottom, transparent 22%, #000 64%);
-    pointer-events: none;
-  }
-
   @media (hover: hover) {
     .os-card:hover {
-      box-shadow: var(--home-highlight), var(--home-shadow-card-hover);
+      box-shadow: var(--home-shadow-lit-hover);
       transform: translateY(-3px);
     }
   }

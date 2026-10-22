@@ -1,11 +1,12 @@
 /*
- * Paints each command-bar card's own fill as an ordered dither, at the hero
- * painting's 2px grain (lib/ordered-dither.ts treats the paintings the same
- * way). The fill is .bento-cell's two background layers, computed per cell
- * rather than drawn and read back: a grey that deepens toward the bottom, under
- * a white bloom from the top centre. Each cell's brightness is snapped to a
- * multiple of STEP after its Bayer nudge, and all three channels move by the
- * same amount, so the grain stays neutral and neighbouring cells stay close.
+ * Paints each lit card's own fill (.home-lit, styles/home.css) as an ordered
+ * dither, at the hero painting's 2px grain (lib/ordered-dither.ts treats the
+ * paintings the same way). The fill is .home-lit's two background layers,
+ * computed per cell rather than drawn and read back: a grey that deepens toward
+ * the bottom, under a white bloom from the top centre. Each cell's brightness
+ * is snapped to a multiple of STEP after its Bayer nudge, and all three
+ * channels move by the same amount, so the grain stays neutral and
+ * neighbouring cells stay close.
  *
  * The CSS gradient underneath shows the same light, so nothing waits on this:
  * a card paints in idle time once it comes within a screen of the viewport,
@@ -97,7 +98,7 @@ function fill(card: Card) {
 const whenIdle = (run: () => void) =>
   typeof requestIdleCallback === "function" ? requestIdleCallback(run, { timeout: 500 }) : window.setTimeout(run, 50);
 
-export function startCardDither(hosts: HTMLElement[]) {
+function startCardDither(hosts: Iterable<HTMLElement>) {
   const cards = new Map<Element, Card>();
 
   // The first paint waits for idle time; later ones for the resize to settle.
@@ -147,3 +148,6 @@ export function startCardDither(hosts: HTMLElement[]) {
     approaches.observe(host);
   }
 }
+
+// Sections import this for its effect; a module runs once, so every lit card on the page is covered.
+startCardDither(document.querySelectorAll<HTMLElement>(".home-lit__dither"));

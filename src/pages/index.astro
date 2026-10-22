@@ -44,6 +44,7 @@ import {
   getScreenshotLocale,
   type SupportedLocale,
 } from "../lib/locales";
+import { fetchGitHubStars, formatStarCount } from "../lib/github-stars";
 import { GITHUB_ISSUE_URL, GITHUB_URL, getSiteStoreVersions } from "../lib/site-links";
 import {
   CHROME_STORE_URL,
@@ -79,6 +80,11 @@ const { firefox: firefoxStoreVersion } = await getSiteStoreVersions();
 const firefoxListed = Boolean(firefoxStoreVersion);
 const installStoreUrls = { chrome: CHROME_STORE_URL, edge: EDGE_STORE_URL, firefox: FIREFOX_STORE_URL };
 const content = getHomeContent(uiLocale, { firefoxListed });
+// Read at build time; the pill drops the number when GitHub can't be reached.
+const githubStars = await fetchGitHubStars();
+const heroOpenSourceAria = githubStars === null
+  ? content.heroOpenSource.aria
+  : content.heroOpenSource.ariaWithStars.replace("{count}", new Intl.NumberFormat(uiLocale).format(githubStars));
 const localeScript = getLocaleScript(uiLocale);
 // Chinese pages lead to the WeChat group; every other locale to GitHub and X (lib/community-panel.ts).
 const community = content.community;
@@ -321,13 +327,16 @@ import LanguageScrollRestore from "../components/LanguageScrollRestore.astro";
             href={GITHUB_URL}
             target="_blank"
             rel="noreferrer noopener"
-            aria-label={content.heroOpenSource.aria}
+            aria-label={heroOpenSourceAria}
             data-analytics-event="open_github_repo"
             data-analytics-category="cta"
             data-analytics-label="home_hero_open_source"
           >
             <span class="hero-open-source-icon" aria-hidden="true" set:html={githubIcon}></span>
             <span>{content.heroOpenSource.label}</span>
+            {githubStars !== null && (
+              <span class="hero-open-source-stars">★ {formatStarCount(githubStars, uiLocale)}</span>
+            )}
             <span class="hero-open-source-chevron" aria-hidden="true"></span>
           </a>
           <h1
@@ -667,6 +676,22 @@ import LanguageScrollRestore from "../components/LanguageScrollRestore.astro";
       .hero-open-source-icon svg {
         width: 100%;
         height: 100%;
+      }
+
+      /* The star count sits behind a hairline, apart from the license. */
+      .hero-open-source-stars {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-variant-numeric: tabular-nums;
+      }
+
+      .hero-open-source-stars::before {
+        width: 1px;
+        height: 12px;
+        margin-right: 2px;
+        background: var(--home-hairline);
+        content: "";
       }
 
       /* A drawn chevron: no extra SVG or icon-font glyph for one arrow. */

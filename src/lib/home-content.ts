@@ -112,7 +112,12 @@ type HomeContent = {
   // Optional editorial two-line slogan: a roman lead line and an italic accent line.
   heroTitleSerif?: { lead: string; accent: string };
   /** The pill above the hero title: the license, linking to the source. */
-  heroOpenSource: { label: string; aria: string };
+  heroOpenSource: {
+    label: string;
+    aria: string;
+    /** Used instead of aria when the build read the star count; {count} is the full number. */
+    ariaWithStars: string;
+  };
   heroDescription: string;
   heroInstallLabel: string;
   /** One per store; the install button speaks the store it links to. */
@@ -277,7 +282,11 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     installChromeRecommendationNote: "更新更快",
 
     heroTitle: "让浏览器的一切，一搜即达",
-    heroOpenSource: { label: "开源 · GPL-3.0 协议", aria: "在 GitHub 查看 Lumno 的源代码" },
+    heroOpenSource: {
+      label: "开源 · GPL-3.0 协议",
+      aria: "在 GitHub 查看 Lumno 的源代码",
+      ariaWithStars: "在 GitHub 查看 Lumno 的源代码（{count} 个星标）",
+    },
     heroDescription:
       "Lumno 是开源的浏览器命令栏与新标签页。\n一个快捷键，搜遍标签页、书签、历史记录和常用网站。",
     heroInstallLabel: "免费安装 Lumno",
@@ -591,7 +600,11 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     installChromeRecommendationNote: "更新更快",
 
     heroTitle: "瀏覽器裡的一切，一搜就到",
-    heroOpenSource: { label: "開源 · GPL-3.0 授權", aria: "在 GitHub 查看 Lumno 的原始碼" },
+    heroOpenSource: {
+      label: "開源 · GPL-3.0 授權",
+      aria: "在 GitHub 查看 Lumno 的原始碼",
+      ariaWithStars: "在 GitHub 查看 Lumno 的原始碼（{count} 顆星）",
+    },
     heroDescription:
       "Lumno 是開源的瀏覽器命令列與新分頁。\n一組快速鍵，就能搜遍分頁、書籤、瀏覽紀錄與常用網站。",
     heroInstallLabel: "免費安裝 Lumno",
@@ -900,7 +913,11 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
 
     heroTitle: "Your browser, at command.",
     heroTitleSerif: { lead: "Your browser,", accent: "at command." },
-    heroOpenSource: { label: "Open source · GPL-3.0", aria: "View Lumno's source code on GitHub" },
+    heroOpenSource: {
+      label: "Open source · GPL-3.0",
+      aria: "View Lumno's source code on GitHub",
+      ariaWithStars: "View Lumno's source code on GitHub ({count} stars)",
+    },
     heroDescription:
       "Lumno is an open-source command bar and new tab for your browser.\nOne shortcut to search tabs, bookmarks, history, and the sites you love.",
     heroInstallLabel: "Install Lumno — it’s free",
@@ -1207,7 +1224,11 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     installChromeRecommendationNote: "更新が早い",
 
     heroTitle: "ブラウザのすべてを、キーひとつで。",
-    heroOpenSource: { label: "オープンソース · GPL-3.0", aria: "GitHub で Lumno のソースコードを見る" },
+    heroOpenSource: {
+      label: "オープンソース · GPL-3.0",
+      aria: "GitHub で Lumno のソースコードを見る",
+      ariaWithStars: "GitHub で Lumno のソースコードを見る（スター {count} 件）",
+    },
     heroDescription:
       "Lumno は、オープンソースのコマンドバーと新しいタブ。\nショートカットひとつで、タブ・ブックマーク・履歴・よく使うサイトをまとめて検索。",
     heroInstallLabel: "Lumno を無料でインストール",
@@ -1512,7 +1533,11 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     installChromeRecommendationNote: "업데이트가 더 빨라요",
 
     heroTitle: "브라우저의 모든 것, 검색 한 번으로",
-    heroOpenSource: { label: "오픈 소스 · GPL-3.0", aria: "GitHub에서 Lumno 소스 코드 보기" },
+    heroOpenSource: {
+      label: "오픈 소스 · GPL-3.0",
+      aria: "GitHub에서 Lumno 소스 코드 보기",
+      ariaWithStars: "GitHub에서 Lumno 소스 코드 보기 (스타 {count}개)",
+    },
     heroDescription:
       "Lumno는 오픈 소스 브라우저 커맨드 바이자 새 탭입니다.\n단축키 하나로 탭, 북마크, 방문 기록, 자주 가는 사이트를 한 번에 검색하세요.",
     heroInstallLabel: "Lumno 무료 설치",
@@ -1818,7 +1843,11 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
 
     heroTitle: "Dein Browser, auf Befehl.",
     heroTitleSerif: { lead: "Dein Browser,", accent: "auf Befehl." },
-    heroOpenSource: { label: "Open Source · GPL-3.0", aria: "Lumnos Quellcode auf GitHub ansehen" },
+    heroOpenSource: {
+      label: "Open Source · GPL-3.0",
+      aria: "Lumnos Quellcode auf GitHub ansehen",
+      ariaWithStars: "Lumnos Quellcode auf GitHub ansehen ({count} Sterne)",
+    },
     heroDescription:
       "Lumno ist eine Open-Source-Befehlsleiste und ein neuer Tab für deinen Browser.\nEin Kürzel durchsucht Tabs, Lesezeichen, Verlauf und deine Lieblingsseiten.",
     heroInstallLabel: "Lumno kostenlos installieren",
@@ -2125,7 +2154,11 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
 
     heroTitle: "Votre navigateur, à vos ordres.",
     heroTitleSerif: { lead: "Votre navigateur,", accent: "à vos ordres." },
-    heroOpenSource: { label: "Open source · GPL-3.0", aria: "Voir le code source de Lumno sur GitHub" },
+    heroOpenSource: {
+      label: "Open source · GPL-3.0",
+      aria: "Voir le code source de Lumno sur GitHub",
+      ariaWithStars: "Voir le code source de Lumno sur GitHub ({count} étoiles)",
+    },
     heroDescription:
       "Lumno, c’est une barre de commande et un nouvel onglet open source.\nUn seul raccourci pour fouiller onglets, favoris, historique et sites préférés.",
     heroInstallLabel: "Installer Lumno, c’est gratuit",
@@ -2432,7 +2465,11 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
 
     heroTitle: "Tu navegador, a tus órdenes.",
     heroTitleSerif: { lead: "Tu navegador,", accent: "a tus órdenes." },
-    heroOpenSource: { label: "Código abierto · GPL-3.0", aria: "Ver el código fuente de Lumno en GitHub" },
+    heroOpenSource: {
+      label: "Código abierto · GPL-3.0",
+      aria: "Ver el código fuente de Lumno en GitHub",
+      ariaWithStars: "Ver el código fuente de Lumno en GitHub ({count} estrellas)",
+    },
     heroDescription:
       "Lumno es una barra de comandos y una nueva pestaña de código abierto.\nCon un solo atajo, busca en pestañas, marcadores, historial y tus sitios favoritos.",
     heroInstallLabel: "Instalar Lumno, es gratis",
@@ -2739,7 +2776,11 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
 
     heroTitle: "Seu navegador, às suas ordens.",
     heroTitleSerif: { lead: "Seu navegador,", accent: "às suas ordens." },
-    heroOpenSource: { label: "Código aberto · GPL-3.0", aria: "Ver o código-fonte do Lumno no GitHub" },
+    heroOpenSource: {
+      label: "Código aberto · GPL-3.0",
+      aria: "Ver o código-fonte do Lumno no GitHub",
+      ariaWithStars: "Ver o código-fonte do Lumno no GitHub ({count} estrelas)",
+    },
     heroDescription:
       "O Lumno é uma barra de comandos e uma nova aba de código aberto.\nCom um só atalho, pesquise abas, favoritos, histórico e os sites que você mais usa.",
     heroInstallLabel: "Instalar o Lumno, é grátis",
@@ -3046,7 +3087,11 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
 
     heroTitle: "Весь браузер — под рукой.",
     heroTitleSerif: { lead: "Весь браузер —", accent: "под рукой." },
-    heroOpenSource: { label: "Открытый код · GPL-3.0", aria: "Исходный код Lumno на GitHub" },
+    heroOpenSource: {
+      label: "Открытый код · GPL-3.0",
+      aria: "Исходный код Lumno на GitHub",
+      ariaWithStars: "Исходный код Lumno на GitHub (звёзд: {count})",
+    },
     heroDescription:
       "Lumno — командная панель и новая вкладка с открытым исходным кодом.\nОдно сочетание клавиш — и поиск по вкладкам, закладкам, истории и любимым сайтам.",
     heroInstallLabel: "Установить Lumno — бесплатно",

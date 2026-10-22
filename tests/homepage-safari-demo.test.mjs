@@ -27,11 +27,36 @@ test("hero title sits under an open source pill that links to the source in ever
 
   assert.match(
     source,
-    /<div class="hero-copy">\s*<a\s+class="hero-open-source"\s+href=\{GITHUB_URL\}[\s\S]*?aria-label=\{content\.heroOpenSource\.aria\}[\s\S]*?\{content\.heroOpenSource\.label\}[\s\S]*?<\/a>\s*<h1/,
+    /<div class="hero-copy">\s*<a\s+class="hero-open-source"\s+href=\{GITHUB_URL\}[\s\S]*?aria-label=\{heroOpenSourceAria\}[\s\S]*?\{content\.heroOpenSource\.label\}[\s\S]*?<\/a>\s*<h1/,
   );
-  const labels = [...content.matchAll(/heroOpenSource: \{ label: "([^"]+)", aria: "[^"]+" \}/g)].map((m) => m[1]);
-  assert.equal(labels.length, 10);
-  for (const label of labels) assert.match(label, /GPL-3\.0/);
+  const pills = [
+    ...content.matchAll(/heroOpenSource: \{\s*label: "([^"]+)",\s*aria: "[^"]+",\s*ariaWithStars: "([^"]+)",\s*\}/g),
+  ];
+  assert.equal(pills.length, 10);
+  for (const [, label, ariaWithStars] of pills) {
+    assert.match(label, /GPL-3\.0/);
+    assert.match(ariaWithStars, /\{count\}/);
+  }
+});
+
+test("hero star count comes from the build and disappears when GitHub can't be reached", () => {
+  const source = readSource("src/pages/index.astro");
+  const stars = readSource("src/lib/github-stars.ts");
+
+  assert.match(source, /const githubStars = await fetchGitHubStars\(\);/);
+  assert.match(source, /\{githubStars !== null && \(\s*<span class="hero-open-source-stars">/);
+  assert.match(source, /githubStars === null\s*\? content\.heroOpenSource\.aria/);
+  assert.match(stars, /GITHUB_RELEASES_TOKEN/);
+  assert.match(stars, /AbortSignal\.timeout\(/);
+  assert.match(stars, /catch \{\s*return null;/);
+});
+
+test("hero star count reads short in each language", async () => {
+  const { formatStarCount } = await import("../src/lib/github-stars.ts");
+
+  assert.equal(formatStarCount(286, "zh-CN"), "286");
+  assert.equal(formatStarCount(1234, "en"), "1.2K");
+  assert.equal(formatStarCount(12345, "zh-CN"), "1.2万");
 });
 
 test("homepage opens with a full-screen Search All demo and can settle early on click or scroll", () => {

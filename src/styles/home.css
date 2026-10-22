@@ -17,6 +17,8 @@
    * Safari reports 0). Every page's opening adds it to its top padding.
    */
   --top-nav-safe-shift: calc(max(10px, env(safe-area-inset-top, 0px)) - 10px);
+  /* How that shift moves when the safe area arrives after the first paint (below). */
+  --top-nav-safe-glide: 0s;
 
   /*
    * Spacing. A 4px ladder, then one named step per level of the page, so the
@@ -158,6 +160,17 @@
     0 24px 48px -22px rgba(var(--home-edge), 0.22);
   --home-select-ink: #1f5fbf;
   --home-heading-gradient: linear-gradient(180deg, #2f2a22 0%, #5a5247 100%);
+}
+
+/* Set from the page's second frame (SiteHeader.astro); before that the shift lands at once, unseen. */
+html[data-safe-area-glide] {
+  --top-nav-safe-glide: 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html[data-safe-area-glide] {
+    --top-nav-safe-glide: 0s;
+  }
 }
 
 .home-section {

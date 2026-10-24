@@ -23,6 +23,8 @@ Lumno 的大部分操作都可以用键盘完成。下面是默认快捷键、�
 
 如果习惯了 [Arc](https://arc.net/) 或 [Zen](https://zen-browser.app/) 的操作，可以把「唤起聚焦搜索窗口」改为 `⌘ T`。
 
+快捷键页面不接受 `⌃ Tab`。如果想用它打开切换器，请参阅[用 Ctrl+Tab 打开切换器](../tab-switcher/#ctrl-tab)。
+
 在 Dia 中按下快捷键没有反应时，请将该项右侧的范围从「在 Dia 中」改为「全局」。
 
 ## 命令栏中的按键 {#command-bar-keys}

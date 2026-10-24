@@ -23,6 +23,8 @@ Lumno 大部分的操作都可以用鍵盤完成。以下是預設快速鍵、�
 
 如果習慣了 [Arc](https://arc.net/) 或 [Zen](https://zen-browser.app/) 的操作，可以把「叫出聚焦搜尋視窗」改為 `⌘ T`。
 
+快速鍵頁面不接受 `⌃ Tab`。如果想用它開啟切換器，請參閱[用 Ctrl+Tab 開啟切換器](../tab-switcher/#ctrl-tab)。
+
 在 Dia 中按下快速鍵沒有反應時，請將該項右側的範圍從「在 Dia 中」改為「全域」。
 
 ## 命令列中的按鍵 {#command-bar-keys}

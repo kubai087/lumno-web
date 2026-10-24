@@ -23,6 +23,8 @@ Browsers manage extension shortcuts on a separate page:
 
 If you're used to [Arc](https://arc.net/) or [Zen](https://zen-browser.app/), set "Open command bar" to `⌘ T`.
 
+The shortcuts page won't accept `⌃ Tab`. To open the switcher with it, see [Open the switcher with Ctrl+Tab](../tab-switcher/#ctrl-tab).
+
 If the shortcut doesn't work in Dia, change the scope next to it from "In Dia" to "Global".
 
 ## Keys in the command bar {#command-bar-keys}

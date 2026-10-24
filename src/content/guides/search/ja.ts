@@ -108,6 +108,7 @@ export default {
     open: ["Alt Q、Option Q、⌥Q とは？"],
     switch: ["Ctrl Tab や Cmd Tab のようにタブを切り替える", "切り替え画面でタブを閉じる"],
     shortcut: ["切り替え画面のショートカットを変更"],
+    "ctrl-tab": ["切り替え画面のショートカットを Ctrl Tab、Control Tab、⌃Tab にできる？ショートカット設定ページで Ctrl Tab を登録できない。Arc のように Ctrl Tab で切り替え"],
   },
   "newtab-wallpaper": {
     "": ["壁紙の変え方、背景、背景画像、新しいタブの背景、テーマ"],

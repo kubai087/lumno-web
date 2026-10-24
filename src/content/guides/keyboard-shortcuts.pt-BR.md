@@ -23,6 +23,8 @@ Os navegadores gerenciam os atalhos das extensões em uma página própria:
 
 Se você estiver acostumado com o [Arc](https://arc.net/) ou o [Zen](https://zen-browser.app/), pode atribuir `⌘ T` a "Open command bar".
 
+A página de atalhos não aceita `⌃ Tab`. Para abrir o alternador com essa combinação, consulte [Abrir o alternador com Ctrl+Tab](../tab-switcher/#ctrl-tab).
+
 Se o atalho não funcionar no Dia, altere o escopo ao lado dele de "In Dia" para "Global".
 
 ## Teclas da barra de comandos {#command-bar-keys}

@@ -23,6 +23,8 @@ Browser verwalten die Tastenkürzel von Erweiterungen auf einer eigenen Seite:
 
 Wenn du an [Arc](https://arc.net/) oder [Zen](https://zen-browser.app/) gewöhnt bist, kannst du „Open command bar“ auf `⌘ T` legen.
 
+Die Tastenkürzel-Seite nimmt `⌃ Tab` nicht an. Wie du den Tab-Umschalter trotzdem damit öffnest, steht unter [Den Tab-Umschalter mit Ctrl+Tab öffnen](../tab-switcher/#ctrl-tab).
+
 Wenn das Tastenkürzel in Dia nicht funktioniert, ändere den Bereich daneben von „In Dia“ zu „Global“.
 
 ## Tasten in der Befehlsleiste {#command-bar-keys}

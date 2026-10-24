@@ -801,6 +801,26 @@ const scenes = {
     await shot("shortcuts", sc, { left: 0, top: 0, right: 1040, bottom: 440 });
     await sc.close();
   },
+  // The same page after the tab switcher guide's console snippet binds ⌃ Tab, run as the guide writes it.
+  async "shortcuts-ctrl-tab"() {
+    const sc = await ctx.newPage();
+    await sc.goto("chrome://extensions/shortcuts");
+    await sleep(1500);
+    await sc.evaluate(async () => {
+      const extensions = await chrome.developerPrivate.getExtensionsInfo();
+      const lumno = extensions.find((item) =>
+        item.commands.some((command) => command.name === "show-tab-switcher"));
+      await chrome.developerPrivate.updateExtensionCommand({
+        extensionId: lumno.id,
+        commandName: "show-tab-switcher",
+        keybinding: "Ctrl+Tab",
+      });
+    });
+    await sc.reload();
+    await sleep(1500);
+    await shot("shortcuts-ctrl-tab", sc, { left: 0, top: 0, right: 1040, bottom: 440 });
+    await sc.close();
+  },
 };
 
 for (const [name, run] of Object.entries(scenes)) {

@@ -87,6 +87,10 @@
     1440,
     640
   ],
+  "en/shortcuts-ctrl-tab": [
+    1440,
+    640
+  ],
   "en/sitesearch": [
     1440,
     485
@@ -196,6 +200,10 @@
     1005
   ],
   "ja/shortcuts": [
+    1440,
+    640
+  ],
+  "ja/shortcuts-ctrl-tab": [
     1440,
     640
   ],
@@ -315,6 +323,10 @@
     1440,
     640
   ],
+  "zh-CN/shortcuts-ctrl-tab": [
+    1440,
+    640
+  ],
   "zh-CN/sitesearch": [
     1440,
     486
@@ -424,6 +436,10 @@
     918
   ],
   "zh-TW/shortcuts": [
+    1440,
+    640
+  ],
+  "zh-TW/shortcuts-ctrl-tab": [
     1440,
     640
   ],

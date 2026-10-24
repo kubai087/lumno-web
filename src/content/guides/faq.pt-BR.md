@@ -22,6 +22,10 @@ No modo "Follow system", a barra de comandos também considera as cores da pági
 
 Sim. O funcionamento do Lumno se inspira no [Arc](https://arc.net/) (sem vínculo com o Arc), e você pode abrir a barra de comandos a qualquer momento no Dia, no Chrome ou no Edge. Atribua `⌘ T` ao atalho para manter seus hábitos do Arc. Para saber mais, consulte [Vindo do Arc](../arc-command-bar/).
 
+### Posso trocar de guia com Ctrl+Tab, como no Arc?
+
+Sim. A página de atalhos do navegador não aceita `⌃ Tab`, mas você pode executar um pequeno trecho de código no console dessa página para torná-lo o atalho do alternador do Lumno. Consulte [Abrir o alternador com Ctrl+Tab](../tab-switcher/#ctrl-tab).
+
 ## Nova guia {#new-tab}
 
 ### Posso usar apenas a barra de comandos e manter outra extensão de nova guia?

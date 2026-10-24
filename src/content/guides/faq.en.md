@@ -22,6 +22,10 @@ When set to "Follow system", the command bar also adapts to the colors of the cu
 
 Yes. Lumno's design is inspired by [Arc](https://arc.net/) (it isn't affiliated with Arc), and you can open the command bar at any time in Dia, Chrome or Edge. Set the shortcut to `⌘ T` to keep your Arc habits. See [Moving from Arc](../arc-command-bar/).
 
+### Can I switch tabs with Ctrl+Tab, like in Arc?
+
+Yes. The browser's shortcuts page won't accept `⌃ Tab`, but you can run a short piece of code in that page's console to make it the shortcut for Lumno's switcher. See [Open the switcher with Ctrl+Tab](../tab-switcher/#ctrl-tab).
+
 ## New tab {#new-tab}
 
 ### Can I use only the command bar and keep another new tab extension?

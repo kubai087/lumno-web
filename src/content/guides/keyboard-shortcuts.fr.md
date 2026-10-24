@@ -23,6 +23,8 @@ Les navigateurs gèrent les raccourcis des extensions sur une page dédiée :
 
 Si vous avez l'habitude d'[Arc](https://arc.net/) ou de [Zen](https://zen-browser.app/), vous pouvez attribuer `⌘ T` à « Open command bar ».
 
+La page des raccourcis n'accepte pas `⌃ Tab`. Pour ouvrir le sélecteur avec cette combinaison, consultez [Ouvrir le sélecteur avec Ctrl+Tab](../tab-switcher/#ctrl-tab).
+
 Si le raccourci ne fonctionne pas dans Dia, remplacez la portée indiquée à côté, « In Dia », par « Global ».
 
 ## Touches de la barre de commande {#command-bar-keys}

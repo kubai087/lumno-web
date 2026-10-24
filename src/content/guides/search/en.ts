@@ -109,6 +109,7 @@ export default {
     open: ["What does Alt Q, Option Q or ⌥Q do?"],
     switch: ["Switch tabs like Ctrl Tab or Cmd Tab", "Close a tab from the switcher"],
     shortcut: ["Change the switcher's shortcut"],
+    "ctrl-tab": ["Can the switcher use Ctrl Tab, Control Tab or ⌃Tab? The shortcuts page won't take Ctrl Tab. Switch with Ctrl Tab like Arc"],
   },
   "newtab-wallpaper": {
     "": ["Change the wallpaper, background, background image, new tab background, theme"],

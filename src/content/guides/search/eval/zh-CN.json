@@ -135,5 +135,7 @@
   { "q": "键盘布局", "expect": ["search-tabs-bookmarks-history#keyboard-layout"] },
   { "q": "坚果云 503", "expect": ["sync#jianguoyun"] },
   { "q": "图标背景", "expect": ["newtab-bookmarks-shortcuts#shortcuts"] },
-  { "q": "材质深浅色", "expect": ["newtab-wallpaper#glass"] }
+  { "q": "材质深浅色", "expect": ["newtab-wallpaper#glass"] },
+  { "q": "Ctrl Tab 设置不了", "expect": ["tab-switcher#ctrl-tab"] },
+  { "q": "切换器改成 ctrl tab", "expect": ["tab-switcher#ctrl-tab"] }
 ]

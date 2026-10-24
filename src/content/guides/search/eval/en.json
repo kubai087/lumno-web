@@ -106,5 +106,6 @@
   { "q": "toolbar icon", "expect": ["install#toolbar-popup"] },
   { "q": "wrong keyboard layout", "expect": ["search-tabs-bookmarks-history#keyboard-layout"] },
   { "q": "material theme", "expect": ["newtab-wallpaper#glass"] },
-  { "q": "icon background", "expect": ["newtab-bookmarks-shortcuts#shortcuts"] }
+  { "q": "icon background", "expect": ["newtab-bookmarks-shortcuts#shortcuts"] },
+  { "q": "set ctrl tab as the switcher shortcut", "expect": ["tab-switcher#ctrl-tab"] }
 ]

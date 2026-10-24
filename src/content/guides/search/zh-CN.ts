@@ -109,6 +109,7 @@ export default {
     open: ["Alt Q、Option Q、⌥Q 是什么？"],
     switch: ["像 Ctrl Tab、Cmd Tab 一样切换标签页", "在切换器里关闭标签页、关掉标签"],
     shortcut: ["怎么改切换器的快捷键？"],
+    "ctrl-tab": ["切换器的快捷键能改成 Ctrl Tab、Control Tab、⌃Tab 吗？快捷键页面设置不了 Ctrl Tab，像 Arc 一样用 Ctrl Tab 切换"],
   },
   "newtab-wallpaper": {
     "": ["怎么换壁纸？换背景、背景图、新标签页背景、桌面壁纸、主题"],

@@ -22,6 +22,10 @@
 
 可以。Lumno 的交互参考了 [Arc](https://arc.net/)（与 Arc 官方没有关联），在 Dia、Chrome 和 Edge 中都可以随时唤出命令栏。把快捷键改为 `⌘ T`，即可沿用 Arc 的操作习惯。详见[从 Arc 迁移](../arc-command-bar/)。
 
+### 能像 Arc 一样用 Ctrl+Tab 切换标签页吗？
+
+可以。浏览器的快捷键页面不接受 `⌃ Tab`，但可以在该页面的控制台中运行一段代码，把它设为 Lumno 切换器的快捷键。具体步骤见[用 Ctrl+Tab 打开切换器](../tab-switcher/#ctrl-tab)。
+
 ## 新标签页 {#new-tab}
 
 ### 能只用命令栏，继续使用其他新标签页扩展吗？

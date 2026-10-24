@@ -109,6 +109,7 @@ export default {
     open: ["Alt Q、Option Q、⌥Q 是什麼？"],
     switch: ["像 Ctrl Tab、Cmd Tab 一樣切換分頁", "在切換器裡關閉分頁"],
     shortcut: ["怎麼改切換器的快速鍵？"],
+    "ctrl-tab": ["切換器的快速鍵能改成 Ctrl Tab、Control Tab、⌃Tab 嗎？快速鍵頁面設定不了 Ctrl Tab，像 Arc 一樣用 Ctrl Tab 切換"],
   },
   "newtab-wallpaper": {
     "": ["怎麼換桌布？換背景、背景圖、壁紙、新分頁背景、主題"],

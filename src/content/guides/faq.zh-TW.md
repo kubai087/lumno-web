@@ -22,6 +22,10 @@
 
 可以。Lumno 的互動參考了 [Arc](https://arc.net/)（與 Arc 官方沒有關聯），在 Dia、Chrome 和 Edge 中都可以隨時叫出命令列。把快速鍵改為 `⌘ T`，即可沿用 Arc 的操作習慣。詳見[從 Arc 搬家](../arc-command-bar/)。
 
+### 能像 Arc 一樣用 Ctrl+Tab 切換分頁嗎？
+
+可以。瀏覽器的快速鍵頁面不接受 `⌃ Tab`，但可以在該頁面的主控台中執行一段程式碼，把它設為 Lumno 切換器的快速鍵。具體步驟請見[用 Ctrl+Tab 開啟切換器](../tab-switcher/#ctrl-tab)。
+
 ## 新分頁 {#new-tab}
 
 ### 能只用命令列，繼續使用其他新分頁擴充功能嗎？

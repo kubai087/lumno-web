@@ -23,6 +23,8 @@ Lumno의 대부분의 기능은 키보드로 사용할 수 있습니다. 이 페
 
 [Arc](https://arc.net/)나 [Zen](https://zen-browser.app/) 사용 방식에 익숙하다면 "Open command bar"를 `⌘ T`로 변경할 수 있습니다.
 
+단축키 페이지에서는 `⌃ Tab`을 등록할 수 없습니다. 이 키로 전환기를 열려면 [Ctrl+Tab으로 전환기 열기](../tab-switcher/#ctrl-tab)를 참고하세요.
+
 Dia에서 단축키가 작동하지 않으면 항목 옆의 범위를 "In Dia"에서 "Global"로 변경하세요.
 
 ## 명령 바의 키 {#command-bar-keys}

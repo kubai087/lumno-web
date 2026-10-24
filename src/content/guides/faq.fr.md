@@ -22,6 +22,10 @@ En mode « Follow system », la barre de commande tient également compte des 
 
 Oui. L'interface de Lumno s'inspire d'[Arc](https://arc.net/) (sans aucun lien avec Arc), et vous pouvez ouvrir la barre de commande à tout moment dans Dia, Chrome ou Edge. Attribuez `⌘ T` au raccourci pour conserver vos habitudes d'Arc. Pour en savoir plus, consultez [Venir d'Arc](../arc-command-bar/).
 
+### Puis-je changer d'onglet avec Ctrl+Tab, comme dans Arc ?
+
+Oui. La page des raccourcis du navigateur n'accepte pas `⌃ Tab`, mais vous pouvez exécuter quelques lignes de code dans la console de cette page pour en faire le raccourci du sélecteur de Lumno. Consultez [Ouvrir le sélecteur avec Ctrl+Tab](../tab-switcher/#ctrl-tab).
+
 ## Nouvel onglet {#new-tab}
 
 ### Puis-je utiliser uniquement la barre de commande et conserver une autre extension de nouvel onglet ?

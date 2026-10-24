@@ -22,6 +22,10 @@ Im Modus „Follow system“ berücksichtigt die Befehlsleiste zusätzlich die F
 
 Ja. Lumnos Bedienung orientiert sich an [Arc](https://arc.net/) (Lumno steht in keiner Verbindung zu Arc), und du kannst die Befehlsleiste in Dia, Chrome und Edge jederzeit öffnen. Wenn du das Tastenkürzel auf `⌘ T` legst, behältst du deine Arc-Gewohnheiten bei. Weitere Informationen findest du unter [Umstieg von Arc](../arc-command-bar/).
 
+### Kann ich wie in Arc mit Ctrl+Tab zwischen Tabs wechseln?
+
+Ja. Die Tastenkürzel-Seite des Browsers nimmt `⌃ Tab` nicht an, aber du kannst in der Konsole dieser Seite ein kurzes Stück Code ausführen und die Kombination so als Tastenkürzel für Lumnos Tab-Umschalter festlegen. Siehe [Den Tab-Umschalter mit Ctrl+Tab öffnen](../tab-switcher/#ctrl-tab).
+
 ## Neuer Tab {#new-tab}
 
 ### Kann ich nur die Befehlsleiste verwenden und eine andere Erweiterung für den neuen Tab behalten?

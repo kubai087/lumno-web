@@ -20,6 +20,36 @@
 - 目的のページが直前に使った数ページの中にある場合は、切り替え画面を使うと 2 回のキー操作で移動できます。
 - タブが多く、目的のページが最近使ったタブの中にない場合は、`⌘ ⇧ K` を押し、検索ボックスが空のときに `Tab` を押して、開いているタブだけを検索します。詳しくは、[タブ・ブックマーク・履歴を検索する](../search-tabs-bookmarks-history/#open-tabs)を参照してください。
 
+## Ctrl+Tab で切り替え画面を開く {#ctrl-tab}
+
+[Arc](https://arc.net/) で `⌃ Tab` を使ってタブを切り替えていた場合は、このキーを切り替え画面のショートカットにすることもできます。ブラウザのショートカット設定ページではこの組み合わせを登録できないため、そのページのコンソールから設定します。
+
+1. アドレスバーに `chrome://extensions/shortcuts` と入力して開きます。
+2. `⌘ ⌥ J | Ctrl + Shift + J` を押してコンソールを開きます。
+3. 次のコードを貼り付け、`↩` を押して実行します。
+
+   ```js
+   const extensions = await chrome.developerPrivate.getExtensionsInfo();
+   const lumno = extensions.find((item) =>
+     item.commands.some((command) => command.name === "show-tab-switcher"));
+   await chrome.developerPrivate.updateExtensionCommand({
+     extensionId: lumno.id,
+     commandName: "show-tab-switcher",
+     keybinding: "Ctrl+Tab",
+   });
+   ```
+
+4. ページを再読み込みすると、「最近のタブ切り替えを開く」が `⌃ Tab` と表示されます。
+
+![ブラウザの拡張機能のショートカット設定ページ。Lumno の「最近のタブ切り替えを開く」が ⌃⇥](shortcuts-ctrl-tab "設定後の拡張機能のショートカット設定ページ")
+
+あとは `⌃` を押したまま `Tab` を繰り返し押してタブを選び、`⌃` を離すと切り替わります。
+
+- 初めてコンソールに貼り付けるときは、確認の文字を入力するよう求められます。表示どおりに入力してから、もう一度貼り付けてください。
+- このコードが変更するのは Lumno のこのショートカットだけです。設定後は、ブラウザ標準の `⌃ Tab`（右隣のタブへ移動）は使えなくなります。
+- 元に戻すには、同じページで項目の右にある鉛筆アイコンをクリックし、ショートカットを設定し直します。
+- ブラウザのショートカット設定ページに組み込まれた機能を使うため、ブラウザの更新後に使えなくなる可能性があります。
+
 ## ショートカットを変更する {#shortcut}
 
 切り替え画面のショートカットは、`chrome://extensions/shortcuts` で変更できます。詳しくは、[キーボードショートカット](../keyboard-shortcuts/#change)を参照してください。

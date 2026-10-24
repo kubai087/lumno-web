@@ -22,6 +22,10 @@ En el modo "Follow system", la barra de comandos también tiene en cuenta los co
 
 Sí. El funcionamiento de Lumno se inspira en [Arc](https://arc.net/) (sin tener relación con Arc), y puedes abrir la barra de comandos en cualquier momento en Dia, Chrome o Edge. Asigna `⌘ T` al atajo para mantener tus costumbres de Arc. Para obtener más información, consulta [Si vienes de Arc](../arc-command-bar/).
 
+### ¿Puedo cambiar de pestaña con Ctrl+Tab, como en Arc?
+
+Sí. La página de atajos del navegador no acepta `⌃ Tab`, pero puedes ejecutar un breve fragmento de código en la consola de esa página para convertirlo en el atajo del selector de Lumno. Consulta [Abrir el selector con Ctrl+Tab](../tab-switcher/#ctrl-tab).
+
 ## Nueva pestaña {#new-tab}
 
 ### ¿Puedo usar solo la barra de comandos y conservar otra extensión de nueva pestaña?

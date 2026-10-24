@@ -91,5 +91,6 @@
   { "q": "工具列圖示", "expect": ["install#toolbar-popup"] },
   { "q": "拼音首字母", "expect": ["search-tabs-bookmarks-history#pinyin"] },
   { "q": "鍵盤配置", "expect": ["search-tabs-bookmarks-history#keyboard-layout"] },
-  { "q": "材質深淺色", "expect": ["newtab-wallpaper#glass"] }
+  { "q": "材質深淺色", "expect": ["newtab-wallpaper#glass"] },
+  { "q": "Ctrl Tab 設定不了", "expect": ["tab-switcher#ctrl-tab"] }
 ]

@@ -703,6 +703,53 @@
   white-space: nowrap;
 }
 
+/* Code to paste: a quiet block that scrolls sideways, with its copy button in the corner. */
+.guide-code {
+  position: relative;
+  margin: 12px 0 20px;
+  border: 1px solid var(--guide-line);
+  border-radius: 8px;
+  background: var(--surface-soft);
+}
+
+.guide-code pre {
+  margin: 0;
+  padding: 14px 16px;
+  overflow-x: auto;
+}
+
+.guide__body .guide-code code {
+  display: block;
+  width: max-content;
+  padding: 0 64px 0 0;
+  border-radius: 0;
+  background: none;
+  font-size: 13px;
+  line-height: 1.65;
+  white-space: pre;
+}
+
+.guide-code__copy {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  min-height: 28px;
+  padding: 0 12px;
+  border: 1px solid var(--guide-line);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--guide-ink);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 160ms ease;
+}
+
+.guide-code__copy:hover {
+  background: var(--guide-row-hover);
+}
+
 /*
  * Keys: one homepage keycap per key, in the system face so ⌘ ⇧ ⌥ get their
  * proper glyphs, sized to sit on the text line.

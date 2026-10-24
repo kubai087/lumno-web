@@ -100,6 +100,9 @@ export type GuideLocaleContent = {
     homeCardTitle: string;
     zoomLabel: string;
     closeLabel: string;
+    /** The button on a code block, and what it says for a moment once the code is copied. */
+    copyLabel: string;
+    copiedLabel: string;
     privacyLabel: string;
     searchPlaceholder: string;
     searchLabel: string;
@@ -161,6 +164,8 @@ export const withPlatformKeys = (markdown: string) =>
 /** Markdown reduced to plain text for the search index. */
 export function toSearchText(markdown: string): string {
   return withPlatformKeys(markdown)
+    // Code to paste is not something a reader searches for.
+    .replace(/^\s*```[\s\S]*?^\s*```\s*$/gm, "")
     .replace(/!\[[^\]]*\]\([^)]*\)/g, "")
     .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
     .replace(/\{#[a-z0-9-]+\}/g, "")
@@ -190,10 +195,17 @@ export function toSearchBlocks(markdown: string): string {
     push("", paragraph.join(" "));
     paragraph = [];
   };
+  let inCode = false;
   for (const raw of withPlatformKeys(markdown).split("\n")) {
     const line = raw.trim();
     let match: RegExpMatchArray | null;
-    if (!line || /^!\[[^\]]*\]\([^)]*\)$/.test(line)) {
+    if (line.startsWith("```")) {
+      // Code to paste stays out of the index, like it stays out of toSearchText.
+      flush();
+      inCode = !inCode;
+    } else if (inCode) {
+      // Inside a code block.
+    } else if (!line || /^!\[[^\]]*\]\([^)]*\)$/.test(line)) {
       flush();
     } else if (/^\|?\s*:?-{3,}/.test(line)) {
       // A table's divider row.

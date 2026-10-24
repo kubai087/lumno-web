@@ -391,6 +391,20 @@ const searchLibHref = `/help/help-center-search.js?v=${createHash("sha256").upda
       lightbox.addEventListener("click", () => lightbox.close());
     }
 
+    // Code blocks copy their whole text; the button says so for a moment.
+    document.addEventListener("click", (event) => {
+      const button = event.target instanceof Element ? event.target.closest("[data-guide-copy]") : null;
+      const code = button && button.parentElement.querySelector("code");
+      if (!code || !navigator.clipboard) return;
+      navigator.clipboard.writeText(code.textContent).then(() => {
+        button.textContent = button.dataset.copiedLabel;
+        window.clearTimeout(button.copyTimer);
+        button.copyTimer = window.setTimeout(() => {
+          button.textContent = button.dataset.copyLabel;
+        }, 1600);
+      }, () => {});
+    });
+
     // Moving to another page: switch at once, then glide up from where the reader was.
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const goTo = (href) => {

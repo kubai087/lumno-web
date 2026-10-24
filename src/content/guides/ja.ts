@@ -27,6 +27,8 @@ const content: GuideLocaleContent = {
     homeCardTitle: "Lumno のトップページへ",
     zoomLabel: "拡大表示",
     closeLabel: "閉じる",
+    copyLabel: "コピー",
+    copiedLabel: "コピーしました",
     privacyLabel: "プライバシーポリシー",
     searchPlaceholder: "ヘルプを検索",
     searchLabel: "ヘルプセンターを検索",

@@ -27,6 +27,8 @@ const content: GuideLocaleContent = {
     homeCardTitle: "Zur Lumno-Startseite",
     zoomLabel: "In voller Größe ansehen",
     closeLabel: "Schließen",
+    copyLabel: "Kopieren",
+    copiedLabel: "Kopiert",
     privacyLabel: "Datenschutzerklärung",
     searchPlaceholder: "Hilfe durchsuchen",
     searchLabel: "Die Hilfe durchsuchen",

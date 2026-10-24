@@ -27,6 +27,8 @@ const content: GuideLocaleContent = {
     homeCardTitle: "Retour à l'accueil de Lumno",
     zoomLabel: "Voir en grand",
     closeLabel: "Fermer",
+    copyLabel: "Copier",
+    copiedLabel: "Copié",
     privacyLabel: "Politique de confidentialité",
     searchPlaceholder: "Rechercher dans l'aide",
     searchLabel: "Rechercher dans le centre d'aide",

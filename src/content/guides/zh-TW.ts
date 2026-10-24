@@ -27,6 +27,8 @@ const content: GuideLocaleContent = {
     homeCardTitle: "回到 Lumno 首頁",
     zoomLabel: "查看大圖",
     closeLabel: "關閉",
+    copyLabel: "複製",
+    copiedLabel: "已複製",
     privacyLabel: "隱私權政策",
     searchPlaceholder: "搜尋說明",
     searchLabel: "搜尋說明中心",

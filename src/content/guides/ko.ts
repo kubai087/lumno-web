@@ -27,6 +27,8 @@ const content: GuideLocaleContent = {
     homeCardTitle: "Lumno 홈으로",
     zoomLabel: "크게 보기",
     closeLabel: "닫기",
+    copyLabel: "복사",
+    copiedLabel: "복사됨",
     privacyLabel: "개인정보처리방침",
     searchPlaceholder: "도움말 검색",
     searchLabel: "도움말 센터 검색",

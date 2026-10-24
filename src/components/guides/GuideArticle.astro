@@ -123,6 +123,10 @@ renderer.link = function ({ href, title, tokens }) {
 renderer.codespan = function ({ text }) {
   return renderKeys(text) ?? `<code>${text}</code>`;
 };
+// Code to paste (a console snippet) copies whole with the button in its corner (GuideShell).
+renderer.code = function ({ text }) {
+  return `<div class="guide-code"><pre><code>${escapeHtml(text)}</code></pre><button type="button" class="guide-code__copy" data-guide-copy data-copy-label="${escapeHtml(ui.copyLabel)}" data-copied-label="${escapeHtml(ui.copiedLabel)}">${escapeHtml(ui.copyLabel)}</button></div>\n`;
+};
 renderer.heading = function ({ tokens, depth, text }) {
   if (depth !== 2) return `<h${depth}>${this.parser.parseInline(tokens)}</h${depth}>\n`;
   // "## 怎么用 {#how}": a stable ASCII anchor whatever the language.

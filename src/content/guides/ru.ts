@@ -27,6 +27,8 @@ const content: GuideLocaleContent = {
     homeCardTitle: "На главную Lumno",
     zoomLabel: "Открыть в полном размере",
     closeLabel: "Закрыть",
+    copyLabel: "Копировать",
+    copiedLabel: "Скопировано",
     privacyLabel: "Политика конфиденциальности",
     searchPlaceholder: "Поиск по справке",
     searchLabel: "Поиск по справочному центру",

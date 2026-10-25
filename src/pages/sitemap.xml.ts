@@ -122,6 +122,8 @@ ${urls
     const path = new URL(item.loc).pathname;
     const normalized = stripLocaleSegment(path);
     const alternates = alternateByPath.get(normalized) || [];
+    // Searchers in a language the site doesn't have get the English page (buildAlternateLinks).
+    const xDefault = alternates.find((alt) => alt.hreflang === "en")?.href ?? `${SITE_URL}${normalized}`;
     return `  <url>
     <loc>${escapeXml(item.loc)}</loc>
 ${alternates
@@ -130,7 +132,7 @@ ${alternates
       `    <xhtml:link rel="alternate" hreflang="${escapeXml(alt.hreflang)}" href="${escapeXml(alt.href)}" />`,
   )
   .join("\n")}
-    <xhtml:link rel="alternate" hreflang="x-default" href="${escapeXml(`${SITE_URL}${normalized}`)}" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="${escapeXml(xDefault)}" />
     <lastmod>${escapeXml(item.lastmod)}</lastmod>
     <changefreq>${item.changefreq}</changefreq>
     <priority>${item.priority}</priority>

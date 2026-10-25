@@ -6,9 +6,10 @@ export const DEFAULT_LOCALE = "zh-CN" as const;
  * - `label`: the language's own name, shown in menus whatever the page language.
  * - `script`: "cjk" pages keep CJK line breaking and sans headings; "alphabetic"
  *   pages (Latin and Cyrillic) use the editorial serif for headings.
- * - `extensionLocale`: the language the extension itself shows these visitors. It
- *   ships zh-CN, zh-TW, en and ja; everyone else gets English, so illustrations of
- *   the extension's own UI use that language rather than promising a translation.
+ * - `extensionLocale`: the language of the extension's UI in this locale's help
+ *   center captures and drawings of the extension. The extension itself ships in
+ *   every site language; only zh-CN, zh-TW, en and ja have captures so far, so
+ *   the rest show the English UI until they get their own.
  */
 export const LOCALE_CONFIG = [
   { code: "zh-CN", segment: "", label: "简体中文", ogLocale: "zh_CN", script: "cjk", extensionLocale: "zh-CN" },

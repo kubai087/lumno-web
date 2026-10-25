@@ -25,9 +25,6 @@ const OG_LOCALE_BY_LOCALE: Partial<Record<string, string>> = Object.fromEntries(
   LOCALE_CONFIG.map((item) => [item.code, item.ogLocale]),
 );
 
-/** Languages the extension's own interface ships in (not the website's). */
-const EXTENSION_UI_LANGUAGES = ["zh-CN", "zh-TW", "en", "ja"];
-
 /*
  * The site's search intents in each language (AGENTS.md): command bar, focus
  * search, tab/bookmark/history/site search, minimalist new tab, Arc alternatives.
@@ -70,6 +67,11 @@ export function buildAbsoluteUrl(path: string): string {
   return new URL(path, SITE_URL).toString();
 }
 
+/**
+ * hreflang links for every language of a page. Searchers whose language the
+ * site doesn't have (x-default) get its English page; `xDefaultPath` is only
+ * for a page with no English version.
+ */
 export function buildAlternateLinks(
   routeLanguageMap: Record<string, string>,
   xDefaultPath: string,
@@ -81,7 +83,7 @@ export function buildAlternateLinks(
     })),
     {
       hreflang: "x-default",
-      href: buildAbsoluteUrl(xDefaultPath),
+      href: buildAbsoluteUrl(routeLanguageMap.en ?? xDefaultPath),
     },
   ];
 }
@@ -189,7 +191,8 @@ export function buildSoftwareApplicationSchema({
           }
         : undefined,
     softwareVersion: version || undefined,
-    availableLanguage: EXTENSION_UI_LANGUAGES,
+    // The extension's interface ships in the same languages as the site.
+    availableLanguage: SUPPORTED_UI_LANGUAGES,
     audience: {
       "@type": "Audience",
       audienceType: [

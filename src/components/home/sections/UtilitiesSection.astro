@@ -18,6 +18,8 @@ const { content, locale } = Astro.props;
 const UTILITY_ORDER: Array<{ id: HomeUtilityId; icon: HomeCellIconName }> = [
   { id: "clip", icon: "screenshot-2-line" },
   { id: "autoPip", icon: "picture-in-picture-2-line" },
+  { id: "linkPreview", icon: "eye-line" },
+  { id: "tabSwitcher", icon: "arrow-left-right-line" },
   { id: "progress", icon: "play-list-2-line" },
   { id: "sync", icon: "cloud-line" },
   { id: "pinned", icon: "pushpin-line" },
@@ -25,17 +27,19 @@ const UTILITY_ORDER: Array<{ id: HomeUtilityId; icon: HomeCellIconName }> = [
 ];
 
 // The help center section that explains each one; the titles link there.
-const UTILITY_GUIDES: Record<HomeUtilityId, { slug: GuideSlug; anchor?: string }> = {
+// One with no page yet shows a plain title.
+const UTILITY_GUIDES: Partial<Record<HomeUtilityId, { slug: GuideSlug; anchor?: string }>> = {
   clip: { slug: "web-clip" },
   autoPip: { slug: "auto-pip" },
+  tabSwitcher: { slug: "tab-switcher" },
   progress: { slug: "newtab-frequent-sites", anchor: "progress" },
   sync: { slug: "sync", anchor: "webdav" },
   pinned: { slug: "arc-command-bar", anchor: "mapping" },
   languages: { slug: "browser-compatibility", anchor: "languages" },
 };
 const guideHref = (id: HomeUtilityId) => {
-  const { slug, anchor } = UTILITY_GUIDES[id];
-  return `${getGuidePath(locale, slug)}${anchor ? `#${anchor}` : ""}`;
+  const guide = UTILITY_GUIDES[id];
+  return guide && `${getGuidePath(locale, guide.slug)}${guide.anchor ? `#${guide.anchor}` : ""}`;
 };
 ---
 
@@ -52,45 +56,89 @@ const guideHref = (id: HomeUtilityId) => {
   </header>
 
   <ul class="home-sheet utilities__grid" data-reveal>
-    {UTILITY_ORDER.map(({ id, icon }) => (
-      <li>
-        <HomeCellIcon name={icon} />
-        <h3 class="home-cell__title">
-          <a class="utilities__link" href={guideHref(id)}>{content.items[id].title}<i class="ri-arrow-right-s-line" aria-hidden="true"></i></a>
-        </h3>
-        <p class="home-cell__text">{content.items[id].description}</p>
-        <UtilityArt id={id} />
-      </li>
-    ))}
+    {UTILITY_ORDER.map(({ id, icon }) => {
+      const href = guideHref(id);
+      return (
+        <li>
+          <HomeCellIcon name={icon} />
+          <h3 class="home-cell__title">
+            {href ? (
+              <a class="utilities__link" href={href}>{content.items[id].title}<i class="ri-arrow-right-s-line" aria-hidden="true"></i></a>
+            ) : (
+              content.items[id].title
+            )}
+          </h3>
+          <p class="home-cell__text">{content.items[id].description}</p>
+          <UtilityArt id={id} />
+        </li>
+      );
+    })}
   </ul>
 </section>
 
 <script>
   /*
-   * Phones (home-phone) have no hover to play a cell's icon and art with, so
-   * there the grid is marked [data-phone] and each cell plays once, a moment
-   * after it is mostly on screen, then rests on the finished frame like the
-   * other homepage demos; a tap replays it. Cells that arrive together go a
-   * beat apart, in reading order. Desktop keeps the hover. Resizing the
-   * window across the phone width switches between the two live.
+   * Each cell plays its icon and art once, a moment after it is mostly on
+   * screen, then rests on the finished frame like the other homepage demos.
+   * Cells that arrive together go a beat apart, in reading order.
+   *
+   * Afterwards the two replay apart: the pointer entering the art (or a tap
+   * on it on phones) replays the art, and entering anywhere else in the cell
+   * (or a tap there) replays the icon. Each is marked [data-played]: the
+   * icon's on the cell (home.css), the art's on its tile (UtilityArt).
    */
-  import { isPhone, onPhoneChange } from "../../../scripts/home-phone";
-
-  const grid = document.querySelector<HTMLElement>(".utilities__grid");
   const cells = Array.from(document.querySelectorAll<HTMLElement>(".utilities__grid > li"));
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  if (grid && cells.length) {
+  type Zone = "icon" | "art";
+  // Where a cell's zone mark goes: the cell itself, or its art tile.
+  const target = (cell: HTMLElement, zone: Zone) =>
+    zone === "art" ? cell.querySelector<HTMLElement>(".util-art") : cell;
+  const zoneOf = (element: Element): Zone => (element.closest(".util-art") ? "art" : "icon");
+
+  if (reduceMotion) {
+    // No motion: show every art tile on its finished frame.
+    cells.forEach((cell) => {
+      cell.dataset.played = "";
+      const art = target(cell, "art");
+      if (art) art.dataset.played = "";
+    });
+  } else if (cells.length) {
     const DELAY = 300;
     const STAGGER = 500;
+    // The longest icon and the longest scene; a pointer arriving sooner
+    // would cut them short.
+    const PLAY_LENGTH: Record<Zone, number> = { icon: 1000, art: 2900 };
     const timers = new Map<HTMLElement, number>();
+    const playedAt = new Map<HTMLElement, number>();
+    const pointerZone = new Map<HTMLElement, Zone>();
     let nextStart = 0;
 
     // Dropping the mark for one style pass restarts every animation it drives.
-    const play = (cell: HTMLElement) => {
-      delete cell.dataset.played;
-      void cell.offsetWidth;
-      cell.dataset.played = "";
+    const play = (element: HTMLElement) => {
+      delete element.dataset.played;
+      void element.offsetWidth;
+      element.dataset.played = "";
+      playedAt.set(element, performance.now());
+    };
+
+    const playCell = (cell: HTMLElement) => {
+      play(cell);
+      const art = target(cell, "art");
+      if (art) play(art);
+    };
+
+    // A replay before the cell's turn takes the place of its first play.
+    const replay = (cell: HTMLElement, zone: Zone) => {
+      if (timers.has(cell)) {
+        window.clearTimeout(timers.get(cell));
+        timers.delete(cell);
+        observer.unobserve(cell);
+        playCell(cell);
+        return;
+      }
+      const element = target(cell, zone);
+      if (element) play(element);
     };
 
     const observer = new IntersectionObserver(
@@ -112,7 +160,8 @@ const guideHref = (id: HomeUtilityId) => {
             timers.set(
               cell,
               window.setTimeout(() => {
-                play(cell);
+                timers.delete(cell);
+                playCell(cell);
                 observer.unobserve(cell);
               }, at - now),
             );
@@ -121,42 +170,39 @@ const guideHref = (id: HomeUtilityId) => {
       { threshold: 0.7 },
     );
 
-    const setMode = (phone: boolean) => {
-      observer.disconnect();
-      timers.forEach((timer) => window.clearTimeout(timer));
-      timers.clear();
-      if (!phone) {
-        // Back to hover: tiles hide until the pointer comes.
-        delete grid.dataset.phone;
-        cells.forEach((cell) => delete cell.dataset.played);
-        return;
-      }
-      grid.dataset.phone = "";
-      // No motion: show every art tile on its finished frame.
-      if (reduceMotion) cells.forEach((cell) => (cell.dataset.played = ""));
-      else cells.filter((cell) => !("played" in cell.dataset)).forEach((cell) => observer.observe(cell));
-    };
-
     cells.forEach((cell) => {
+      observer.observe(cell);
+      cell.addEventListener("pointerover", (event) => {
+        if (event.pointerType !== "mouse") return;
+        const zone = zoneOf(event.target as Element);
+        if (pointerZone.get(cell) === zone) return;
+        pointerZone.set(cell, zone);
+        // Not over a play about to start or still running.
+        if (timers.has(cell)) return;
+        const element = target(cell, zone);
+        if (!element || performance.now() - (playedAt.get(element) ?? -Infinity) < PLAY_LENGTH[zone]) return;
+        replay(cell, zone);
+      });
+      cell.addEventListener("pointerleave", () => pointerZone.delete(cell));
       cell.addEventListener("click", (event) => {
+        // A mouse already replayed it on the way in.
+        if ((event as PointerEvent).pointerType === "mouse") return;
         // The title is a link to the help center; following it needs no replay.
-        if (!isPhone() || reduceMotion || (event.target as Element).closest("a")) return;
-        // A tap before its turn takes the place of the first play.
-        window.clearTimeout(timers.get(cell));
-        timers.delete(cell);
-        observer.unobserve(cell);
-        play(cell);
+        if ((event.target as Element).closest("a")) return;
+        replay(cell, zoneOf(event.target as Element));
       });
     });
-
-    setMode(isPhone());
-    onPhoneChange(setMode);
   }
 </script>
 
 <style>
+  /* Eight cells: four by two where each cell still has room for its art,
+     otherwise two by four, so no row is left half empty. */
   .utilities__grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    /* White cells, so the patterned art tiles read as panels set into them;
+       the sheet keeps its hairline ring and card shadow. */
+    --home-paper: var(--home-card);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   /* Each cell is a container so its art (UtilityArt) shows only when there
@@ -201,7 +247,28 @@ const guideHref = (id: HomeUtilityId) => {
     }
   }
 
-  @media (max-width: 980px) {
+  /* Four across leaves no room beside the text, so each cell's art moves
+     below it (UtilityArt), and the text takes the cell's full width. The
+     narrower cells take a smaller padding too; the art's inset follows it. */
+  @media (min-width: 1280px) {
+    .utilities__grid > li {
+      --home-card-pad: var(--home-space-6);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .home-cell__title,
+    .home-cell__text {
+      max-width: none;
+    }
+
+    .home-cell__text {
+      margin-bottom: var(--home-space-6);
+    }
+  }
+
+  @media (max-width: 1279px) {
     .utilities__grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }

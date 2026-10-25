@@ -46,7 +46,15 @@ export type HomeNewTabScene = {
 };
 
 /** Ids keep icons and visuals in markup while copy stays per-locale. */
-export type HomeUtilityId = "clip" | "autoPip" | "progress" | "sync" | "pinned" | "languages";
+export type HomeUtilityId =
+  | "clip"
+  | "autoPip"
+  | "linkPreview"
+  | "tabSwitcher"
+  | "progress"
+  | "sync"
+  | "pinned"
+  | "languages";
 export type HomeTrustId = "local" | "source" | "optional";
 
 /**
@@ -457,13 +465,15 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           title: "视频自动画中画",
           description: "切走标签页，视频自动小窗续播。",
         },
+        linkPreview: { title: "网页预览", description: "按住 Shift 点链接，先在小窗里看一眼。" },
+        tabSwitcher: { title: "标签切换器", description: "像切换应用一样，在最近的标签页间来回。" },
         progress: {
           title: "追剧追更卡片",
           description: "钉在新标签页，自动记住看到哪集。",
         },
         sync: { title: "WebDAV 同步", description: "设置、图标和壁纸，跨浏览器同步。" },
         pinned: { title: "固定标签页恢复", description: "重启浏览器，固定标签页自动恢复。" },
-        languages: { title: "多语言界面", description: "简繁中文、英文、日文随心切换。" },
+        languages: { title: "多语言界面", description: "支持 10 种界面语言。" },
       },
     },
     reviews: {
@@ -798,13 +808,15 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           title: "影片自動子母畫面",
           description: "切走分頁，影片自動轉小視窗續播。",
         },
+        linkPreview: { title: "網頁預覽", description: "按住 Shift 點連結，先在小視窗裡看一眼。" },
+        tabSwitcher: { title: "分頁切換器", description: "像切換 App 一樣，在最近的分頁間來回。" },
         progress: {
           title: "追劇進度卡片",
           description: "釘選在新分頁，自動記住看到哪一集。",
         },
         sync: { title: "WebDAV 同步", description: "設定、圖示和桌布，跨瀏覽器同步。" },
         pinned: { title: "釘選分頁復原", description: "重新啟動瀏覽器，釘選分頁自動回來。" },
-        languages: { title: "多語系介面", description: "繁簡中文、英文、日文隨心切換。" },
+        languages: { title: "多語系介面", description: "支援 10 種介面語言。" },
       },
     },
     reviews: {
@@ -1134,13 +1146,18 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           title: "Auto Picture-in-Picture",
           description: "Switch tabs and the video keeps playing in a floating window.",
         },
+        linkPreview: {
+          title: "Link preview",
+          description: "Shift+click a link to peek at it in a small window without leaving the page.",
+        },
+        tabSwitcher: { title: "Tab switcher", description: "Flip between your recent tabs the way you switch apps." },
         progress: {
           title: "Progress cards",
           description: "Pin a show or novel to your new tab. It tracks your latest episode or chapter.",
         },
         sync: { title: "WebDAV sync", description: "Sync settings, icons, and wallpapers across browsers." },
         pinned: { title: "Pinned tab recovery", description: "Pinned web tabs come back automatically after the browser restarts." },
-        languages: { title: "Your language", description: "English, 日本語, 简体中文, and 繁體中文—or follow your browser." },
+        languages: { title: "Your language", description: "Ten interface languages—or just follow your browser." },
       },
     },
     reviews: {
@@ -1466,13 +1483,15 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           title: "自動ピクチャー・イン・ピクチャー",
           description: "タブを切り替えても、動画は小窓で再生を続けます。",
         },
+        linkPreview: { title: "リンクプレビュー", description: "Shift を押しながらリンクをクリックすると、小さなウィンドウでのぞけます。" },
+        tabSwitcher: { title: "タブ切り替え", description: "アプリを切り替えるように、最近のタブを行き来できます。" },
         progress: {
           title: "進捗カード",
           description: "ドラマや小説を新しいタブに固定。どこまで見たかを自動で記録します。",
         },
         sync: { title: "WebDAV 同期", description: "設定、アイコン、壁紙をブラウザ間で同期。" },
         pinned: { title: "固定タブの復元", description: "ブラウザを再起動しても、固定タブが自動で戻ります。" },
-        languages: { title: "日本語に対応", description: "日本語、English、简体中文、繁體中文。ブラウザの言語にも合わせられます。" },
+        languages: { title: "10 言語に対応", description: "日本語を含む 10 言語で表示。ブラウザの言語にも合わせられます。" },
       },
     },
     reviews: {
@@ -1798,13 +1817,15 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           title: "자동 PIP",
           description: "탭을 바꿔도 동영상은 작은 창에서 계속 재생됩니다.",
         },
+        linkPreview: { title: "링크 미리보기", description: "Shift를 누른 채 링크를 클릭하면 작은 창에서 먼저 볼 수 있습니다." },
+        tabSwitcher: { title: "탭 전환기", description: "앱을 전환하듯 최근 탭 사이를 오갑니다." },
         progress: {
           title: "진도 카드",
           description: "드라마나 웹소설을 새 탭에 고정하면 어디까지 봤는지 자동으로 기록합니다.",
         },
         sync: { title: "WebDAV 동기화", description: "설정, 아이콘, 배경화면을 브라우저 간에 동기화합니다." },
         pinned: { title: "고정 탭 복원", description: "브라우저를 다시 시작해도 고정 탭이 자동으로 돌아옵니다." },
-        languages: { title: "인터페이스 언어", description: "English, 日本語, 简体中文, 繁體中文 지원. 브라우저 언어를 따를 수도 있습니다." },
+        languages: { title: "인터페이스 언어", description: "한국어를 포함한 10개 언어를 지원하며, 브라우저 언어를 따를 수도 있습니다." },
       },
     },
     reviews: {
@@ -2132,13 +2153,24 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           title: "Automatisches Bild-in-Bild",
           description: "Tab wechseln, und das Video läuft im schwebenden Fenster weiter.",
         },
+        linkPreview: {
+          title: "Link-Vorschau",
+          description: "Klicke mit gedrückter Umschalttaste auf einen Link und sieh ihn dir im kleinen Fenster an – ohne die Seite zu verlassen.",
+        },
+        tabSwitcher: {
+          title: "Tab-Umschalter",
+          description: "Wechsle zwischen deinen letzten Tabs wie zwischen Apps.",
+        },
         progress: {
           title: "Fortschrittskarten",
           description: "Hefte eine Serie oder einen Roman an den neuen Tab. Die Karte merkt sich Folge oder Kapitel.",
         },
         sync: { title: "WebDAV-Sync", description: "Einstellungen, Symbole und Hintergründe zwischen Browsern synchronisieren." },
         pinned: { title: "Angeheftete Tabs zurückholen", description: "Nach einem Neustart des Browsers sind angeheftete Tabs automatisch wieder da." },
-        languages: { title: "Oberflächensprachen", description: "English, 日本語, 简体中文 und 繁體中文 – oder wie dein Browser." },
+        languages: {
+          title: "Oberflächensprachen",
+          description: "Zehn Sprachen, darunter Deutsch – oder wie dein Browser.",
+        },
       },
     },
     reviews: {
@@ -2466,13 +2498,24 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           title: "Picture-in-picture automatique",
           description: "Changez d’onglet : la vidéo continue dans une fenêtre flottante.",
         },
+        linkPreview: {
+          title: "Aperçu des liens",
+          description: "Maj + clic sur un lien pour l’ouvrir dans une petite fenêtre, sans quitter la page.",
+        },
+        tabSwitcher: {
+          title: "Sélecteur d’onglets",
+          description: "Passez d’un onglet récent à l’autre, comme d’une app à l’autre.",
+        },
         progress: {
           title: "Cartes de progression",
           description: "Épinglez une série ou un roman au nouvel onglet : il retient le dernier épisode ou chapitre.",
         },
         sync: { title: "Synchro WebDAV", description: "Synchronisez réglages, icônes et fonds d’écran entre navigateurs." },
         pinned: { title: "Onglets épinglés restaurés", description: "Vos onglets épinglés reviennent tout seuls après un redémarrage du navigateur." },
-        languages: { title: "Langues de l’interface", description: "English, 日本語, 简体中文 et 繁體中文, ou celle de votre navigateur." },
+        languages: {
+          title: "Langues de l’interface",
+          description: "Dix langues, dont le français, ou celle de votre navigateur.",
+        },
       },
     },
     reviews: {
@@ -2800,13 +2843,24 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           title: "Imagen en imagen automática",
           description: "Cambia de pestaña y el vídeo sigue en una ventana flotante.",
         },
+        linkPreview: {
+          title: "Vista previa de enlaces",
+          description: "Mayús + clic en un enlace para verlo en una ventana pequeña, sin salir de la página.",
+        },
+        tabSwitcher: {
+          title: "Selector de pestañas",
+          description: "Salta entre tus pestañas recientes como entre apps.",
+        },
         progress: {
           title: "Tarjetas de progreso",
           description: "Fija una serie o novela en la nueva pestaña y recordará tu último episodio o capítulo.",
         },
         sync: { title: "Sincronización WebDAV", description: "Sincroniza ajustes, iconos y fondos entre navegadores." },
         pinned: { title: "Pestañas fijadas a salvo", description: "Tus pestañas fijadas vuelven solas al reiniciar el navegador." },
-        languages: { title: "Idiomas de la interfaz", description: "English, 日本語, 简体中文 y 繁體中文, o el de tu navegador." },
+        languages: {
+          title: "Idiomas de la interfaz",
+          description: "Diez idiomas, español incluido, o el de tu navegador.",
+        },
       },
     },
     reviews: {
@@ -3134,13 +3188,21 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           title: "Picture-in-picture automático",
           description: "Troque de aba e o vídeo continua numa janela flutuante.",
         },
+        linkPreview: {
+          title: "Prévia de links",
+          description: "Shift + clique num link para vê-lo numa janela pequena, sem sair da página.",
+        },
+        tabSwitcher: { title: "Alternador de abas", description: "Alterne entre as abas recentes como entre apps." },
         progress: {
           title: "Cartões de progresso",
           description: "Fixe uma série ou um livro na nova aba, e ele lembra o último episódio ou capítulo.",
         },
         sync: { title: "Sincronização WebDAV", description: "Sincronize configurações, ícones e papéis de parede entre navegadores." },
         pinned: { title: "Abas fixadas de volta", description: "Suas abas fixadas voltam sozinhas quando o navegador reinicia." },
-        languages: { title: "Idiomas da interface", description: "English, 日本語, 简体中文 e 繁體中文, ou o idioma do navegador." },
+        languages: {
+          title: "Idiomas da interface",
+          description: "Dez idiomas, incluindo português, ou o idioma do navegador.",
+        },
       },
     },
     reviews: {
@@ -3468,13 +3530,21 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           title: "Авто «картинка в картинке»",
           description: "Переключитесь на другую вкладку — видео продолжит играть в плавающем окне.",
         },
+        linkPreview: {
+          title: "Предпросмотр ссылок",
+          description: "Shift + щелчок по ссылке открывает её в небольшом окне поверх страницы.",
+        },
+        tabSwitcher: {
+          title: "Переключатель вкладок",
+          description: "Переходите между недавними вкладками, как между приложениями.",
+        },
         progress: {
           title: "Карточки прогресса",
           description: "Закрепите сериал или книгу на новой вкладке — она запомнит последнюю серию или главу.",
         },
         sync: { title: "Синхронизация WebDAV", description: "Настройки, значки и фоны — синхронно во всех браузерах." },
         pinned: { title: "Закреплённые вкладки на месте", description: "После перезапуска браузера закреплённые вкладки возвращаются сами." },
-        languages: { title: "Языки интерфейса", description: "English, 日本語, 简体中文 и 繁體中文 — или как в браузере." },
+        languages: { title: "Языки интерфейса", description: "Десять языков, включая русский, — или как в браузере." },
       },
     },
     reviews: {

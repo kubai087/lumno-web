@@ -3,12 +3,12 @@ import type { HomeUtilityId } from "../../lib/home-content";
 import SceneFavicon from "./newtab/SceneFavicon.astro";
 
 /*
- * Hover art for a utilities cell: a small patterned tile in the cell's empty
- * right side, showing the feature in one short scene. Hidden at rest; on
- * hover it fades in and the scene plays once (and replays on the next
- * hover), like the cell icon beside it. Phones have no hover, so there
- * (UtilitiesSection marks the grid [data-phone]) it plays once when the cell
- * scrolls into view ([data-played]) and stays; a tap replays it.
+ * Art for a utilities cell: a small patterned tile in the cell's empty right
+ * side (or along its bottom, four cells across), showing the feature in one
+ * short scene. Hidden until the cell has scrolled into view; then
+ * UtilitiesSection marks the tile [data-played], it fades in, the scene plays
+ * once and the tile stays on its last frame. Hovering the tile (or tapping it
+ * on phones) replays it.
  *
  * Every element's resting style is the scene's final frame, so reduced
  * motion simply shows the result, and leaving mid-play never snaps.
@@ -20,7 +20,24 @@ interface Props {
 
 const { id } = Astro.props;
 
-const LANGUAGES = ["简体中文", "繁體中文", "English", "日本語"];
+// The extension's language menu, in its order.
+const LANGUAGES = [
+  "简体中文",
+  "繁體中文",
+  "日本語",
+  "English",
+  "한국어",
+  "Deutsch",
+  "Español",
+  "Français",
+  "Português (Brasil)",
+  "Русский",
+];
+const SWITCHER_TABS = [
+  { icon: "github", thumb: "repo" },
+  { icon: "youtube", thumb: "video" },
+  { icon: "figma", thumb: "canvas" },
+];
 const BARS = [42, 64, 50, 78, 36];
 ---
 
@@ -127,10 +144,64 @@ const BARS = [42, 64, 50, 78, 36];
       </div>
     )}
 
+    {id === "linkPreview" && (
+      <div class="ua-lp">
+        <div class="ua-lp__page">
+          <span class="ua-line ua-line--strong" style="--w: 44px" />
+          <span class="ua-line" style="--w: 92px" />
+          <span class="ua-line" style="--w: 78px" />
+          <span class="ua-lp__link" />
+          <span class="ua-line" style="--w: 86px" />
+          <span class="ua-line" style="--w: 60px" />
+        </div>
+        <span class="ua-lp__scrim" />
+        <span class="ua-lp__key">⇧</span>
+        <div class="ua-lp__window">
+          <span class="ua-lp__hero" />
+          <span class="ua-line ua-line--strong" style="--w: 38px" />
+          <span class="ua-line" style="--w: 58px" />
+          <span class="ua-line" style="--w: 46px" />
+        </div>
+        <span class="ua-lp__controls">
+          <i class="ri-close-line" />
+          <i class="ri-external-link-line" />
+          <i class="ri-link" />
+        </span>
+      </div>
+    )}
+
+    {id === "tabSwitcher" && (
+      <>
+        <div class="ua-win ua-sw__win">
+          <div class="ua-win__tabs">
+            {SWITCHER_TABS.map(({ icon }, i) => (
+              <span class:list={["ua-tab", { "ua-tab--active": i === 0 }]}><SceneFavicon icon={icon} /><i class="ua-tab__label" /></span>
+            ))}
+          </div>
+          <div class="ua-win__body">
+            <span class="ua-line ua-line--strong" style="--w: 46px" />
+            <span class="ua-line" style="--w: 88px" />
+          </div>
+        </div>
+        <div class="ua-sw">
+          <span class="ua-sw__mark" />
+          {SWITCHER_TABS.map(({ icon, thumb }) => (
+            <span class="ua-sw__card">
+              <span class={`ua-sw__thumb ua-sw__thumb--${thumb}`} />
+              <span class="ua-sw__title"><SceneFavicon icon={icon} /><i /></span>
+              <i class="ua-sw__host" />
+            </span>
+          ))}
+        </div>
+      </>
+    )}
+
     {id === "languages" && (
       <div class="ua-menu">
         <span class="ua-menu__mark"><i class="ri-check-line" /></span>
-        {LANGUAGES.map((language) => <span class="ua-menu__row">{language}</span>)}
+        <span class="ua-menu__list">
+          {LANGUAGES.map((language) => <span class="ua-menu__row">{language}</span>)}
+        </span>
       </div>
     )}
   </div>
@@ -186,9 +257,27 @@ const BARS = [42, 64, 50, 78, 36];
     }
   }
 
-  :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) > .util-art {
+  /* Four cells across (UtilitiesSection): a panel along the bottom of the
+     cell instead, inset like the side tile, so a row's art lines up. */
+  @media (min-width: 1280px) {
+    .util-art {
+      position: relative;
+      top: auto;
+      right: auto;
+      bottom: auto;
+      display: block;
+      align-self: stretch;
+      width: auto;
+      height: 148px;
+      margin: auto calc(var(--home-card-inset) - var(--home-card-pad)) calc(var(--home-card-inset) - var(--home-card-pad));
+      transform-origin: center bottom;
+    }
+  }
+
+  .util-art[data-played] {
     opacity: 1;
     transform: none;
+    pointer-events: auto;
   }
 
   .util-art__stage {
@@ -664,17 +753,16 @@ const BARS = [42, 64, 50, 78, 36];
     opacity: 0;
   }
 
-  /* ---------- Languages: the check moves down the menu ---------- */
+  /* ---------- Languages: the list rolls through every language under the check, and back ---------- */
 
   .ua-menu {
     position: absolute;
-    top: 8px;
+    top: 4px;
     left: 9px;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
     box-sizing: border-box;
     width: 108px;
+    height: 110px;
+    overflow: hidden;
     padding: 5px;
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 12px;
@@ -684,16 +772,24 @@ const BARS = [42, 64, 50, 78, 36];
       0 2px 4px rgba(var(--ua-shadow), 0.05);
   }
 
-  .ua-menu__row {
+  .ua-menu__list {
     position: relative;
     z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .ua-menu__row {
+    overflow: hidden;
     height: 23px;
-    padding: 0 8px;
+    padding: 0 22px 0 8px;
     color: #374151;
     font-size: 10.5px;
     font-weight: 500;
     line-height: 23px;
     white-space: nowrap;
+    text-overflow: ellipsis;
   }
 
   .ua-menu__mark {
@@ -712,91 +808,365 @@ const BARS = [42, 64, 50, 78, 36];
     font-size: 12px;
   }
 
-  /* ---------- Motion (on hover, or once in view on phones; every resting style above is the last frame) ---------- */
+  /* ---------- Link preview: ⇧ + click, the page recedes, the link opens in a small window ---------- */
+
+  .ua-lp {
+    position: absolute;
+    top: 9px;
+    left: 2px;
+    width: 122px;
+    height: 100px;
+    overflow: hidden;
+    border-radius: 9px;
+    isolation: isolate;
+    background: #0c0c0f;
+    box-shadow:
+      0 0 0 1px rgba(var(--ua-shadow), 0.06),
+      0 8px 20px -10px rgba(var(--ua-shadow), 0.25);
+  }
+
+  .ua-lp__page {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 10px 9px;
+    border-radius: 6px;
+    background: #fff;
+    filter: blur(0.6px);
+    transform: scale(0.95);
+  }
+
+  .ua-lp__link {
+    display: block;
+    width: 40px;
+    height: 4px;
+    border-radius: 2px;
+    background: var(--ua-accent);
+  }
+
+  .ua-lp__scrim {
+    position: absolute;
+    inset: 0;
+    background: rgba(8, 8, 12, 0.2);
+  }
+
+  .ua-lp__key {
+    position: absolute;
+    top: 33px;
+    left: 52px;
+    display: grid;
+    place-items: center;
+    width: 16px;
+    height: 15px;
+    border-radius: 4px;
+    background: #fff;
+    box-shadow:
+      0 0 0 1px rgba(var(--ua-shadow), 0.14),
+      0 1.5px 0 rgba(var(--ua-shadow), 0.14);
+    color: #374151;
+    font-size: 9px;
+    line-height: 1;
+    opacity: 0;
+  }
+
+  /* Springs out of the link that was clicked. */
+  .ua-lp__window {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    box-sizing: border-box;
+    width: 80px;
+    height: 76px;
+    padding: 6px;
+    border-radius: 7px;
+    background: #fff;
+    box-shadow:
+      0 0 0 0.5px rgba(0, 0, 0, 0.12),
+      0 8px 18px rgba(0, 0, 0, 0.28),
+      0 2px 6px rgba(0, 0, 0, 0.12);
+    transform-origin: 18px 31px;
+  }
+
+  .ua-lp__hero {
+    display: block;
+    height: 24px;
+    margin-bottom: 1px;
+    border-radius: 4px;
+    background: #eef1f5;
+  }
+
+  .ua-lp__controls {
+    position: absolute;
+    top: 12px;
+    left: 98px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .ua-lp__controls i {
+    display: grid;
+    place-items: center;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    --lumno-corner-shape: round;
+    background: rgba(255, 255, 255, 0.24);
+    box-shadow:
+      inset 0 0 0 0.5px rgba(255, 255, 255, 0.34),
+      0 3px 8px rgba(0, 0, 0, 0.18);
+    color: #fff;
+    font-size: 8px;
+    line-height: 1;
+  }
+
+  /* ---------- Tab switcher: the recent tabs appear over the page, the selection steps through them ---------- */
+
+  .ua-sw__win {
+    top: 2px;
+    left: 4px;
+    width: 118px;
+    height: 74px;
+  }
+
+  .ua-sw__win .ua-tab {
+    width: 34px;
+  }
+
+  /* The extension's panel and cards, at a tenth of the size: the card and
+     thumbnail corners stay concentric with the panel's. */
+  .ua-sw {
+    position: absolute;
+    top: 58px;
+    left: 0;
+    display: flex;
+    gap: 2px;
+    box-sizing: border-box;
+    width: 126px;
+    padding: 4px;
+    border-radius: 11px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(245, 247, 250, 0.88));
+    box-shadow:
+      0 0 0 0.5px rgba(15, 23, 42, 0.1),
+      0 1px 2px rgba(15, 23, 42, 0.06),
+      0 8px 18px -6px rgba(15, 23, 42, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(8px) saturate(120%);
+  }
+
+  .ua-sw__mark {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    box-sizing: border-box;
+    width: 38px;
+    height: 39px;
+    border: 1px solid color-mix(in srgb, #2563eb 32%, rgba(15, 23, 42, 0.08));
+    border-radius: 7px;
+    background: linear-gradient(
+      180deg,
+      color-mix(in srgb, #2563eb 16%, rgba(255, 255, 255, 0.88)),
+      color-mix(in srgb, #2563eb 8%, rgba(255, 255, 255, 0.78))
+    );
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.84);
+    transform: translateX(40px);
+  }
+
+  .ua-sw__card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    box-sizing: border-box;
+    width: 38px;
+    height: 39px;
+    padding: 4px;
+  }
+
+  .ua-sw__thumb {
+    position: relative;
+    display: block;
+    height: 17px;
+    border-radius: 3px;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    box-shadow: inset 0 0 0 0.5px rgba(15, 23, 42, 0.2);
+  }
+
+  .ua-sw__thumb--repo {
+    background-image:
+      linear-gradient(#24292f, #24292f),
+      linear-gradient(#cdd4de, #cdd4de),
+      linear-gradient(#e5e9ef, #e5e9ef),
+      linear-gradient(#e5e9ef, #e5e9ef);
+    background-position: 0 0, 4px 7px, 4px 10.5px, 4px 13px;
+    background-size: 100% 4px, 12px 2px, 20px 1.5px, 16px 1.5px;
+  }
+
+  .ua-sw__thumb--video {
+    background-image:
+      linear-gradient(180deg, #404859, #273042),
+      linear-gradient(#cdd4de, #cdd4de),
+      linear-gradient(#e5e9ef, #e5e9ef);
+    background-position: 3px 3px, 21px 4px, 21px 7.5px;
+    background-size: 16px 11px, 6px 2px, 5px 1.5px;
+  }
+
+  .ua-sw__thumb--canvas {
+    background-color: #f4f5f7;
+    background-image:
+      linear-gradient(#fff, #fff),
+      linear-gradient(#b9c9e0, #b9c9e0),
+      linear-gradient(#e07a5f, #e07a5f);
+    background-position: 5px 3px, 8px 6px, 18px 9px;
+    background-size: 20px 11px, 7px 5px, 5px 4px;
+  }
+
+  .ua-sw__title {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    height: 6px;
+  }
+
+  .ua-sw :global(.nts-fav) {
+    width: 6px;
+    height: 6px;
+  }
+
+  .ua-sw__title i {
+    flex: 1;
+    height: 2.5px;
+    border-radius: 1px;
+    background: #9aa3af;
+  }
+
+  .ua-sw__host {
+    display: block;
+    width: 60%;
+    height: 2px;
+    border-radius: 1px;
+    background: #cdd4de;
+  }
+
+  /* ---------- Motion (once in view, and again on a replay; every resting style above is the last frame) ---------- */
 
   @media (prefers-reduced-motion: no-preference) {
-    :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) .ua-clip__marquee {
+    .util-art[data-played] .ua-clip__marquee {
       animation: ua-marquee 420ms var(--ua-ease) 220ms both;
     }
 
-    :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) .ua-clip__float {
+    .util-art[data-played] .ua-clip__float {
       animation: ua-float-out 560ms var(--ua-spring) 700ms both;
     }
 
-    :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) .ua-chart .ua-clip__live {
+    .util-art[data-played] .ua-chart .ua-clip__live {
       animation: ua-live 520ms var(--ua-spring) 1350ms both;
     }
 
-    :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) .ua-pip__tab--video {
+    .util-art[data-played] .ua-pip__tab--video {
       animation: ua-tab-leave 1ms linear 520ms both;
     }
 
-    :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) .ua-pip__tab--next {
+    .util-art[data-played] .ua-pip__tab--next {
       animation: ua-tab-enter 1ms linear 520ms both;
     }
 
-    :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) .ua-pip__page {
+    .util-art[data-played] .ua-pip__page {
       animation: ua-fade-in 260ms ease 560ms both;
     }
 
-    :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) .ua-pip__video {
+    .util-art[data-played] .ua-pip__video {
       animation: ua-pip-shrink 620ms var(--ua-spring) 620ms both;
     }
 
-    :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) .ua-pip__played {
+    .util-art[data-played] .ua-pip__played {
       animation: ua-played 2400ms linear 200ms both;
     }
 
-    :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) .ua-card__watched {
+    .util-art[data-played] .ua-card__watched {
       animation: ua-watched 1500ms var(--ua-ease) 250ms both;
     }
 
-    :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) .ua-ep__reel {
+    .util-art[data-played] .ua-ep__reel {
       animation: ua-roll 480ms var(--ua-spring) 1150ms both;
     }
 
-    :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) .ua-radar::after {
+    .util-art[data-played] .ua-radar::after {
       animation: ua-ping 900ms var(--ua-ease) 1050ms 2 both;
     }
 
-    :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) .ua-sync__from .ua-nt__wall--new {
+    .util-art[data-played] .ua-sync__from .ua-nt__wall--new {
       animation: ua-fade-in 420ms ease 300ms both;
     }
 
-    :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) .ua-sync__from .ua-nt__added {
+    .util-art[data-played] .ua-sync__from .ua-nt__added {
       animation: ua-pop 420ms var(--ua-spring) 520ms both;
     }
 
-    :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) .ua-sync__spin {
+    .util-art[data-played] .ua-sync__spin {
       animation: ua-spin 640ms var(--ua-ease) 760ms both;
     }
 
-    :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) .ua-sync__done {
+    .util-art[data-played] .ua-sync__done {
       animation: ua-pop 360ms var(--ua-spring) 1360ms both;
     }
 
-    :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) .ua-sync__to .ua-nt__wall--new {
+    .util-art[data-played] .ua-sync__to .ua-nt__wall--new {
       animation: ua-fade-in 420ms ease 1400ms both;
     }
 
-    :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) .ua-sync__to .ua-nt__added {
+    .util-art[data-played] .ua-sync__to .ua-nt__added {
       animation: ua-pop 420ms var(--ua-spring) 1560ms both;
     }
 
-    :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) .ua-pin__restart {
+    .util-art[data-played] .ua-pin__restart {
       animation: ua-restart 760ms var(--ua-ease) 160ms both;
     }
 
-    :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) .ua-pin__lines {
+    .util-art[data-played] .ua-pin__lines {
       animation: ua-fade-in 300ms ease 900ms both;
     }
 
-    :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) .ua-pin__tab {
+    .util-art[data-played] .ua-pin__tab {
       animation: ua-pop 440ms var(--ua-spring) calc(860ms + var(--i) * 120ms) both;
     }
 
-    :global(:is(.utilities__grid:not([data-phone]) > li:hover, .utilities__grid > li[data-played])) .ua-menu__mark {
-      animation: ua-menu-walk 2000ms var(--ua-ease) 300ms both;
+    .util-art[data-played] .ua-menu__list {
+      animation: ua-menu-roll 2400ms var(--ua-ease) 300ms both;
+    }
+
+    .util-art[data-played] .ua-lp__key {
+      animation: ua-lp-key 900ms var(--ua-ease) 150ms both;
+    }
+
+    .util-art[data-played] .ua-lp__page {
+      animation: ua-lp-recede 360ms cubic-bezier(0.2, 0.9, 0.1, 1) 820ms both;
+    }
+
+    .util-art[data-played] .ua-lp__scrim {
+      animation: ua-fade-in 260ms cubic-bezier(0.3, 0.7, 0.2, 1) 820ms both;
+    }
+
+    .util-art[data-played] .ua-lp__window {
+      animation: ua-lp-open 560ms var(--ua-spring) 820ms both;
+    }
+
+    .util-art[data-played] .ua-lp__controls {
+      animation: ua-lp-controls 360ms var(--ua-ease) 1060ms both;
+    }
+
+    .util-art[data-played] .ua-sw {
+      animation: ua-sw-show 320ms var(--ua-ease) 200ms both;
+    }
+
+    .util-art[data-played] .ua-sw__mark {
+      animation: ua-sw-walk 2200ms linear 500ms both;
     }
   }
 
@@ -935,25 +1305,91 @@ const BARS = [42, 64, 50, 78, 36];
     }
   }
 
-  @keyframes ua-menu-walk {
+  /* Six rows up, so the last four (to Русский) show, then back. */
+  @keyframes ua-menu-roll {
     0%,
-    10% {
+    8% {
       transform: none;
     }
-    22%,
-    34% {
-      transform: translateY(25px);
-    }
-    46%,
-    58% {
-      transform: translateY(50px);
-    }
-    70%,
-    82% {
-      transform: translateY(75px);
+    52%,
+    64% {
+      transform: translateY(-150px);
     }
     100% {
       transform: none;
+    }
+  }
+
+  /* ⇧ appears by the link, goes down with the click, and gives way to the window. */
+  @keyframes ua-lp-key {
+    0% {
+      opacity: 0;
+      transform: scale(0.6);
+    }
+    22%,
+    55% {
+      opacity: 1;
+      transform: none;
+    }
+    64%,
+    78% {
+      opacity: 1;
+      transform: translateY(1px) scale(0.92);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(1px) scale(0.92);
+    }
+  }
+
+  @keyframes ua-lp-recede {
+    from {
+      filter: none;
+      transform: none;
+    }
+  }
+
+  @keyframes ua-lp-open {
+    from {
+      opacity: 0;
+      transform: scale(0.4);
+    }
+    25% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes ua-lp-controls {
+    from {
+      opacity: 0;
+      transform: translateX(-4px);
+    }
+  }
+
+  @keyframes ua-sw-show {
+    from {
+      opacity: 0;
+      transform: scale(0.94);
+    }
+  }
+
+  /* The selection opens on the previous tab, steps right, wraps to the first, and comes back. */
+  @keyframes ua-sw-walk {
+    0%,
+    18% {
+      transform: translateX(40px);
+    }
+    26%,
+    46% {
+      transform: translateX(80px);
+    }
+    54%,
+    74% {
+      transform: none;
+    }
+    82%,
+    100% {
+      transform: translateX(40px);
     }
   }
 </style>

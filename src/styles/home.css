@@ -616,18 +616,15 @@ html[data-platform="other"] [data-key-mac] {
 }
 
 /*
- * Hover: the chip grows from its corner (1.125 keeps it on whole pixels,
- * 32px → 36px) while the glyph is rebuilt part by part. When the last part
- * has settled (--handoff), the original fill takes over again. Restarts every
- * time the pointer enters.
- *
- * Phones have no hover, so there (the sheet is marked [data-phone]) the cell
- * is marked [data-played] once it has scrolled into view, and again on a tap
- * (UtilitiesSection), and the glyph is rebuilt then, without the grow, which
- * only answers a pointer.
+ * The cell is marked [data-played] once it has scrolled into view, and again
+ * when the pointer enters it, or a phone taps it, anywhere but its art tile
+ * (UtilitiesSection): the glyph is rebuilt part by part, and when the last
+ * part has settled (--handoff) the original fill takes over again. Under a
+ * pointer (off the art) the chip also grows from its corner (1.125 keeps it
+ * on whole pixels, 32px → 36px).
  */
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .home-sheet > li:hover .home-cell__icon {
+  .home-sheet > li:hover:not(:has(.util-art:hover)) .home-cell__icon {
     transform: scale(1.125);
     color: var(--home-ink);
     box-shadow:
@@ -637,31 +634,31 @@ html[data-platform="other"] [data-key-mac] {
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  :is(.home-sheet:not([data-phone]) > li:hover, .home-sheet > li[data-played]) .home-cell__icon-fill {
+  .home-sheet > li[data-played] .home-cell__icon-fill {
     animation: home-cell-icon-handoff 160ms linear var(--handoff) reverse both;
   }
 
-  :is(.home-sheet:not([data-phone]) > li:hover, .home-sheet > li[data-played]) .home-cell__icon-trace {
+  .home-sheet > li[data-played] .home-cell__icon-trace {
     animation: home-cell-icon-handoff 160ms linear var(--handoff) both;
   }
 
-  :is(.home-sheet:not([data-phone]) > li:hover, .home-sheet > li[data-played]) .home-cell__icon-trace [data-motion="draw"] {
+  .home-sheet > li[data-played] .home-cell__icon-trace [data-motion="draw"] {
     animation: home-cell-icon-draw var(--dur) cubic-bezier(0.65, 0, 0.35, 1) var(--at) both;
   }
 
-  :is(.home-sheet:not([data-phone]) > li:hover, .home-sheet > li[data-played]) .home-cell__icon-trace [data-motion="pop"] {
+  .home-sheet > li[data-played] .home-cell__icon-trace [data-motion="pop"] {
     animation: home-cell-icon-pop var(--dur) cubic-bezier(0.22, 1, 0.36, 1) var(--at) both;
   }
 
-  :is(.home-sheet:not([data-phone]) > li:hover, .home-sheet > li[data-played]) .home-cell__icon-trace [data-motion="slide"] {
+  .home-sheet > li[data-played] .home-cell__icon-trace [data-motion="slide"] {
     animation: home-cell-icon-slide var(--dur) cubic-bezier(0.34, 1.4, 0.64, 1) var(--at) both;
   }
 
-  :is(.home-sheet:not([data-phone]) > li:hover, .home-sheet > li[data-played]) .home-cell__icon-trace [data-motion="swing"] {
+  .home-sheet > li[data-played] .home-cell__icon-trace [data-motion="swing"] {
     animation: home-cell-icon-swing var(--dur) cubic-bezier(0.34, 1.3, 0.64, 1) var(--at) both;
   }
 
-  :is(.home-sheet:not([data-phone]) > li:hover, .home-sheet > li[data-played]) .home-cell__icon-trace [data-motion="wag"] {
+  .home-sheet > li[data-played] .home-cell__icon-trace [data-motion="wag"] {
     animation: home-cell-icon-wag var(--dur) ease-in-out var(--at) both;
   }
 }

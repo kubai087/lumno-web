@@ -64,6 +64,29 @@ export const HOME_CELL_ICON_PARTS = {
     { d: "M10 11V8.914L7.914 11Z", join: "miter", motion: PIP_ARROW_ENTER },
     { d: "M13 14H21V20H13Z", motion: { type: "pop", at: 300, dur: 420, origin: [13, 14], peak: 1.08 } },
   ],
+  // Link preview: the eye draws open round its outline, then the pupil pops in.
+  "eye-line": [
+    {
+      d: "M2.202 12C3.131 7.414 7.186 4 12 4C16.814 4 20.869 7.414 21.798 12C20.869 16.586 16.814 20 12 20C7.186 20 3.131 16.586 2.202 12Z",
+      motion: { type: "draw", at: 0, dur: 520 },
+    },
+    { d: "M12 8.5A3.5 3.5 0 1 1 12 15.5A3.5 3.5 0 1 1 12 8.5Z", motion: { type: "pop", at: 320, dur: 380, peak: 1.3 } },
+  ],
+  // Tab switcher: each arrow's shaft draws toward its head, which then pops in; the second follows the first.
+  "arrow-left-right-line": [
+    { d: "M20 7H4.414", motion: { type: "draw", at: 0, dur: 320 } },
+    {
+      d: "M8.657 2.757L4.414 7L8.657 11.243",
+      join: "miter",
+      motion: { type: "pop", at: 240, dur: 360, origin: [4.414, 7], peak: 1.25 },
+    },
+    { d: "M4 17H19.586", motion: { type: "draw", at: 200, dur: 320 } },
+    {
+      d: "M15.343 12.757L19.586 17L15.343 21.243",
+      join: "miter",
+      motion: { type: "pop", at: 440, dur: 360, origin: [19.586, 17], peak: 1.25 },
+    },
+  ],
   // Watch progress: the play button pops, the list fills in line by line.
   "play-list-2-line": [
     { d: "M3 5.304L8.113 8.5L3 11.696Z", join: "miter", motion: { type: "pop", at: 0, dur: 380, peak: 1.3 } },

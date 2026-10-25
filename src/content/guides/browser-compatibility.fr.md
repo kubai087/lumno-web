@@ -52,4 +52,4 @@ Le système d'extensions de Safari est très différent de celui de Chromium, et
 
 ## Langues de l'interface {#languages}
 
-L'extension est disponible en anglais, en japonais et en chinois simplifié et traditionnel ; si votre navigateur est en français, elle s'affiche en anglais. Par défaut, elle utilise la langue de votre navigateur, que vous pouvez modifier dans les réglages.
+Depuis la version 1.2.0, l'extension est disponible en 10 langues : français, anglais, chinois simplifié et traditionnel, japonais, coréen, allemand, espagnol, portugais (Brésil) et russe. Par défaut, elle utilise la langue de votre navigateur, que vous pouvez modifier dans les réglages.

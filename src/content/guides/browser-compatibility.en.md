@@ -52,4 +52,4 @@ Safari's extension system is very different from Chromium's, and there's no Safa
 
 ## Interface languages {#languages}
 
-The extension is available in English, Japanese, and Simplified and Traditional Chinese. It uses your browser's language by default, and you can change it in settings.
+Since version 1.2.0, the extension is available in 10 languages: English, Simplified Chinese, Traditional Chinese, Japanese, Korean, German, Spanish, French, Portuguese (Brazil), and Russian. It uses your browser's language by default, and you can change it in settings.

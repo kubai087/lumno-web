@@ -52,4 +52,4 @@ Das Erweiterungssystem von Safari unterscheidet sich stark von Chromium, daher g
 
 ## Sprachen der Benutzeroberfläche {#languages}
 
-Die Erweiterung ist auf Englisch, Japanisch sowie in vereinfachtem und traditionellem Chinesisch verfügbar. Bei deutscher Browsersprache wird sie auf Englisch angezeigt. Standardmäßig richtet sie sich nach der Sprache deines Browsers; du kannst die Sprache in den Einstellungen ändern.
+Seit Version 1.2.0 ist die Erweiterung in 10 Sprachen verfügbar: Deutsch, Englisch, vereinfachtes und traditionelles Chinesisch, Japanisch, Koreanisch, Spanisch, Französisch, Portugiesisch (Brasilien) und Russisch. Standardmäßig richtet sie sich nach der Sprache deines Browsers; du kannst die Sprache in den Einstellungen ändern.

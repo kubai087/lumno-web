@@ -207,7 +207,7 @@ export default {
   "browser-compatibility": {
     "": ["Which browsers are supported? Does it work in my browser? Compatible"],
     support: ["Does it work in Edge, Brave, Opera, Vivaldi, Google Chrome?"],
-    dia: ["Dia new tab doesn't work, Dia shortcut does nothing"],
+    dia: ["Dia new tab doesn't work, Dia shortcut does nothing", "Use Cmd T, ⌘T in Dia to open the command bar; Cmd T opens Dia's new tab instead"],
     firefox: ["Does it work in Firefox or Zen browser?"],
     safari: ["Does it work in Safari? Apple's browser on Mac"],
     languages: ["Change the language: English, Chinese, Japanese interface"],

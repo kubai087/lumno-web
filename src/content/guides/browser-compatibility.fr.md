@@ -17,6 +17,15 @@ Les navigateurs sur téléphone et tablette ne sont pas encore pris en charge. S
 
 Dia n'autorise pas les extensions à remplacer le nouvel onglet : le nouvel onglet de Lumno n'y est donc pas disponible. La barre de commande fonctionne normalement.
 
+Pour ouvrir la barre de commande avec `⌘ T`, libérez d'abord ce raccourci dans Dia, car les raccourcis de Dia sont prioritaires :
+
+1. Dans Dia, ouvrez Settings → Shortcuts et remplacez le raccourci `⌘ T` de « New Tab » par une autre touche.
+2. Ouvrez `dia://extensions/shortcuts` et attribuez `⌘ T` à « Open command bar » de Lumno.
+
+![Page Shortcuts des réglages de Dia, « New Tab » n'utilise plus ⌘T](dia-newtab "Étape 1 : attribuez une autre touche à « New Tab » dans Settings → Shortcuts de Dia")
+
+![Page des raccourcis d'extensions de Dia, « Open command bar » de Lumno sur ⌘T](dia-shortcuts "Étape 2 : attribuez ⌘T à « Open command bar » dans dia://extensions/shortcuts")
+
 Si le raccourci ne fonctionne pas, ouvrez la page des raccourcis d'extensions et remplacez la portée indiquée à côté de Lumno, « In Dia », par « Global ».
 
 ## Firefox {#firefox}

@@ -23,7 +23,7 @@ Lumno durchsucht nur Inhalte in deinem Browser. Wenn du Apps, Dateien und System
 ## Browserunterstützung {#browsers}
 
 - Safari wird nicht unterstützt, ebenso wenig Browser auf Mobilgeräten.
-- In Dia funktioniert die Befehlsleiste, Lumnos neuer Tab ist dort jedoch nicht verfügbar.
+- In Dia funktioniert die Befehlsleiste, Lumnos neuer Tab ist dort jedoch nicht verfügbar. Außerdem haben Dias eigene Tastenkürzel Vorrang: Um die Befehlsleiste mit `⌘ T` zu öffnen, ändere zuerst das Tastenkürzel für „New Tab“ in Dia. Weitere Informationen findest du unter [Browserkompatibilität](../browser-compatibility/#dia).
 - In der Firefox-Version sind einige Funktionen nicht verfügbar. Weitere Informationen findest du unter [Browserkompatibilität](../browser-compatibility/).
 
 ## Widgets im neuen Tab {#widgets}

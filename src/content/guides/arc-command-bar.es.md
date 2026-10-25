@@ -17,11 +17,11 @@ Lumno es un proyecto de código abierto independiente y no tiene relación con A
 ## Pasos para el cambio {#steps}
 
 1. [Instala Lumno](../install/): desde Chrome Web Store para Chrome y Dia, o desde los complementos de Edge para Edge.
-2. Abre `chrome://extensions/shortcuts` y asigna `⌘ T` a "Open command bar", como en Arc y [Zen](https://zen-browser.app/). Para obtener más información, consulta [Atajos de teclado](../keyboard-shortcuts/#change).
+2. Abre `chrome://extensions/shortcuts` y asigna `⌘ T` a "Open command bar", como en Arc y [Zen](https://zen-browser.app/). Para obtener más información, consulta [Atajos de teclado](../keyboard-shortcuts/#change). En Dia, primero libera `⌘ T` (consulta más abajo).
 3. Pulsa `⌘ T` y prueba a [buscar en tus pestañas, marcadores e historial](../search-tabs-bookmarks-history/).
 4. Para cambiar entre tus últimas páginas, pulsa `⌥ Q` y abre el [selector de pestañas recientes](../tab-switcher/).
 
-Si el atajo no funciona en Dia, cambia su ámbito de "In Dia" a "Global" en la página de extensiones.
+Los atajos propios de Dia tienen prioridad, así que en Dia abre primero Settings → Shortcuts y cambia el `⌘ T` de "New Tab" a otra tecla. Para obtener más información, consulta [Compatibilidad con navegadores](../browser-compatibility/#dia). Si el atajo no funciona en Dia, cambia su ámbito de "In Dia" a "Global" en la página de extensiones.
 
 ## Funciones de Arc que Lumno no puede ofrecer {#limits}
 

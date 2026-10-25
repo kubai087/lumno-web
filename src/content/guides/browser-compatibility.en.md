@@ -17,6 +17,15 @@ Browsers on phones and tablets aren't supported yet. If you're reading this on a
 
 Dia doesn't allow extensions to replace the new tab, so Lumno's new tab isn't available there. The command bar works normally.
 
+To open the command bar with `⌘ T`, free it in Dia first, because Dia's own shortcuts take priority:
+
+1. In Dia, open Settings → Shortcuts and change the "New Tab" shortcut from `⌘ T` to another key.
+2. Open `dia://extensions/shortcuts` and set Lumno's "Open command bar" to `⌘ T`.
+
+![Dia's Settings, Shortcuts page, with New Tab moved off ⌘T](dia-newtab "Step 1: give New Tab another key in Dia's Settings → Shortcuts")
+
+![Dia's extension shortcuts page with Lumno's Open command bar set to ⌘T](dia-shortcuts "Step 2: set Open command bar to ⌘T at dia://extensions/shortcuts")
+
 If the shortcut doesn't work, open the extension shortcuts page and change the scope next to Lumno from "In Dia" to "Global".
 
 ## Firefox {#firefox}

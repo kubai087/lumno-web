@@ -25,6 +25,8 @@ Se você estiver acostumado com o [Arc](https://arc.net/) ou o [Zen](https://zen
 
 A página de atalhos não aceita `⌃ Tab`. Para abrir o alternador com essa combinação, consulte [Abrir o alternador com Ctrl+Tab](../tab-switcher/#ctrl-tab).
 
+Os atalhos do próprio Dia têm prioridade sobre os das extensões. Para usar `⌘ T` no Dia, primeiro altere "New Tab" para outra tecla em Settings → Shortcuts do Dia. Para saber mais, consulte [Compatibilidade com navegadores](../browser-compatibility/#dia).
+
 Se o atalho não funcionar no Dia, altere o escopo ao lado dele de "In Dia" para "Global".
 
 ## Teclas da barra de comandos {#command-bar-keys}

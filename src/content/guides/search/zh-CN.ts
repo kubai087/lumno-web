@@ -209,7 +209,7 @@ export default {
   "browser-compatibility": {
     "": ["支持哪些浏览器？能在什么浏览器用？兼容吗"],
     support: ["Edge、Brave、Opera、Vivaldi、谷歌浏览器、微软浏览器能用吗？"],
-    dia: ["Dia 浏览器新标签页用不了、Dia 快捷键没反应"],
+    dia: ["Dia 浏览器新标签页用不了、Dia 快捷键没反应", "Dia 里用 ⌘T、Cmd T 打开命令栏，⌘T 被 Dia 新建标签页占用"],
     firefox: ["火狐浏览器、Firefox、Zen 浏览器能用吗？"],
     safari: ["Safari 能用吗？苹果浏览器、Mac 自带浏览器"],
     languages: ["怎么改语言？切换中文、英文、繁体、日文界面"],

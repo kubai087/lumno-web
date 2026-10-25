@@ -23,7 +23,7 @@ Lumno recherche uniquement dans le contenu de votre navigateur. Pour rechercher 
 ## Navigateurs pris en charge {#browsers}
 
 - Safari n'est pas pris en charge, pas plus que les navigateurs sur appareils mobiles.
-- Dans Dia, la barre de commande fonctionne, mais le nouvel onglet de Lumno n'est pas disponible.
+- Dans Dia, la barre de commande fonctionne, mais le nouvel onglet de Lumno n'est pas disponible. Les raccourcis de Dia sont aussi prioritaires : pour ouvrir la barre de commande avec `⌘ T`, modifiez d'abord le raccourci de « New Tab » dans Dia. Pour en savoir plus, consultez [Compatibilité des navigateurs](../browser-compatibility/#dia).
 - Certaines fonctions ne sont pas disponibles dans la version Firefox. Pour en savoir plus, consultez [Compatibilité des navigateurs](../browser-compatibility/).
 
 ## Widgets du nouvel onglet {#widgets}

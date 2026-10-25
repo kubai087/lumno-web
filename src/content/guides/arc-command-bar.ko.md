@@ -17,11 +17,11 @@ Lumno는 독립 오픈소스 프로젝트이며, Arc 및 The Browser Company와�
 ## 옮겨 오는 방법 {#steps}
 
 1. [Lumno를 설치하세요](../install/). Chrome과 Dia에서는 Chrome 웹 스토어에서, Edge에서는 Edge 추가 기능에서 설치합니다.
-2. `chrome://extensions/shortcuts`를 열고 "Open command bar"를 Arc, Zen과 같은 `⌘ T`로 변경하세요. 자세한 내용은 [단축키](../keyboard-shortcuts/#change)를 참고하세요.
+2. `chrome://extensions/shortcuts`를 열고 "Open command bar"를 Arc, Zen과 같은 `⌘ T`로 변경하세요. 자세한 내용은 [단축키](../keyboard-shortcuts/#change)를 참고하세요. Dia에서는 먼저 `⌘ T`를 비워야 합니다(아래 참고).
 3. `⌘ T`를 누르고 [탭, 북마크, 방문 기록 검색](../search-tabs-bookmarks-history/)을 사용해 보세요.
 4. 최근에 본 몇 개의 페이지 사이를 오가려면 `⌥ Q`를 눌러 [최근 탭 전환기](../tab-switcher/)를 여세요.
 
-Dia에서 단축키가 작동하지 않으면 확장 프로그램 페이지에서 범위를 "In Dia"에서 "Global"로 변경하세요.
+Dia 자체 단축키가 우선하므로 Dia에서는 먼저 Settings → Shortcuts를 열고 "New Tab"의 `⌘ T`를 다른 키로 변경하세요. 자세한 내용은 [브라우저 호환성](../browser-compatibility/#dia)을 참고하세요. Dia에서 단축키가 작동하지 않으면 확장 프로그램 페이지에서 범위를 "In Dia"에서 "Global"로 변경하세요.
 
 ## Lumno에서 제공할 수 없는 Arc 기능 {#limits}
 

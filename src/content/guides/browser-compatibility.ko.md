@@ -17,6 +17,15 @@ Lumno는 Chromium 기반 브라우저를 위해 개발되었으며, Firefox 버�
 
 Dia에서는 확장 프로그램이 새 탭을 바꿀 수 없으므로 Lumno 새 탭을 사용할 수 없습니다. 명령 바는 정상적으로 작동합니다.
 
+`⌘ T`로 명령 바를 열려면 Dia 자체 단축키가 우선하므로 먼저 Dia에서 `⌘ T`를 비워야 합니다.
+
+1. Dia에서 Settings → Shortcuts를 열고 "New Tab" 단축키를 `⌘ T`에서 다른 키로 변경하세요.
+2. `dia://extensions/shortcuts`를 열고 Lumno의 "Open command bar"를 `⌘ T`로 변경하세요.
+
+![Dia 설정의 Shortcuts 페이지에서 New Tab을 ⌘T가 아닌 키로 변경한 모습](dia-newtab "1단계: Dia의 Settings → Shortcuts에서 New Tab을 다른 키로 변경")
+
+![Dia 확장 프로그램 단축키 페이지에서 Lumno의 Open command bar를 ⌘T로 설정한 모습](dia-shortcuts "2단계: dia://extensions/shortcuts에서 Open command bar를 ⌘T로 설정")
+
 단축키가 작동하지 않으면 확장 프로그램 단축키 페이지를 열고 Lumno 옆의 범위를 "In Dia"에서 "Global"로 변경하세요.
 
 ## Firefox {#firefox}

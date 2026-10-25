@@ -17,6 +17,15 @@ Navegadores de celulares e tablets ainda não são compatíveis. Se você está 
 
 O Dia não permite que extensões substituam a nova guia, por isso a nova guia do Lumno não está disponível nesse navegador. A barra de comandos funciona normalmente.
 
+Para abrir a barra de comandos com `⌘ T`, libere esse atalho no Dia primeiro, porque os atalhos do próprio Dia têm prioridade:
+
+1. No Dia, abra Settings → Shortcuts e altere o atalho de "New Tab" de `⌘ T` para outra tecla.
+2. Abra `dia://extensions/shortcuts` e atribua `⌘ T` a "Open command bar" do Lumno.
+
+![Página Shortcuts das configurações do Dia, com "New Tab" fora do ⌘T](dia-newtab "Passo 1: atribua outra tecla a "New Tab" em Settings → Shortcuts do Dia")
+
+![Página de atalhos de extensões do Dia, com "Open command bar" do Lumno em ⌘T](dia-shortcuts "Passo 2: atribua ⌘T a "Open command bar" em dia://extensions/shortcuts")
+
 Se o atalho não funcionar, abra a página de atalhos de extensões e altere o escopo ao lado do Lumno de "In Dia" para "Global".
 
 ## Firefox {#firefox}

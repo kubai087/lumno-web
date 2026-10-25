@@ -8,7 +8,7 @@
 
 ### 按下快捷键没有反应怎么办？
 
-请先确认当前页面不是 `chrome://` 设置页、扩展商店这类受限页面，再到 `chrome://extensions/shortcuts` 检查快捷键是否被其他扩展占用。在 Dia 中，还需要把该项右侧的范围改为「全局」。
+请先确认当前页面不是 `chrome://` 设置页、扩展商店这类受限页面，再到 `chrome://extensions/shortcuts` 检查快捷键是否被其他扩展占用。在 Dia 中，还需要把该项右侧的范围改为「Global」。
 
 ### 为什么在有些页面上打不开命令栏，而是打开了新标签页？
 
@@ -20,7 +20,7 @@
 
 ### 从 Arc 换过来，还能使用熟悉的命令栏吗？
 
-可以。Lumno 的交互参考了 [Arc](https://arc.net/)（与 Arc 官方没有关联），在 Dia、Chrome 和 Edge 中都可以随时唤出命令栏。把快捷键改为 `⌘ T`，即可沿用 Arc 的操作习惯。详见[从 Arc 迁移](../arc-command-bar/)。
+可以。Lumno 的交互参考了 [Arc](https://arc.net/)（与 Arc 官方没有关联），在 Dia、Chrome 和 Edge 中都可以随时唤出命令栏。把快捷键改为 `⌘ T`，即可沿用 Arc 的操作习惯。在 Dia 中需要先让出 `⌘ T`，见[浏览器兼容性](../browser-compatibility/#dia)。详见[从 Arc 迁移](../arc-command-bar/)。
 
 ### 能像 Arc 一样用 Ctrl+Tab 切换标签页吗？
 

@@ -11,6 +11,14 @@
     1440,
     1490
   ],
+  "en/dia-newtab": [
+    985,
+    592
+  ],
+  "en/dia-shortcuts": [
+    915,
+    825
+  ],
   "en/modemenu": [
     1440,
     939
@@ -127,6 +135,14 @@
     1440,
     1490
   ],
+  "ja/dia-newtab": [
+    985,
+    592
+  ],
+  "ja/dia-shortcuts": [
+    915,
+    825
+  ],
   "ja/modemenu": [
     1440,
     937
@@ -242,6 +258,14 @@
   "zh-CN/clip-picker": [
     1440,
     1310
+  ],
+  "zh-CN/dia-newtab": [
+    985,
+    592
+  ],
+  "zh-CN/dia-shortcuts": [
+    915,
+    825
   ],
   "zh-CN/modemenu": [
     1440,
@@ -362,6 +386,14 @@
   "zh-TW/clip-picker": [
     1440,
     1310
+  ],
+  "zh-TW/dia-newtab": [
+    985,
+    592
+  ],
+  "zh-TW/dia-shortcuts": [
+    915,
+    825
   ],
   "zh-TW/modemenu": [
     1440,

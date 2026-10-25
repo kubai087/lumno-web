@@ -19,6 +19,8 @@ Copyright © 2026 Kubai087. These are not licensed for reuse. You may show them 
 
 Some wallpapers are based on public-domain paintings from museum open-access collections. The underlying paintings remain in the public domain; the reservation covers Lumno's edits, crops and treatments.
 
+Some help center screenshots also show other browsers' own pages, such as the extension shortcuts page in Chrome and Dia and Dia's settings. That interface belongs to its makers and is not licensed here.
+
 Lumno is a trademark of its author. A fork must use a different name and logo and must not suggest it is the official Lumno website.
 
 ## Third-party code

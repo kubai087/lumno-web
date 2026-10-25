@@ -17,11 +17,11 @@ Lumno est un projet open source indépendant, sans lien avec Arc ni avec The Bro
 ## Étapes de la migration {#steps}
 
 1. [Installez Lumno](../install/) : depuis le Chrome Web Store pour Chrome et Dia, ou depuis les modules complémentaires Edge pour Edge.
-2. Ouvrez `chrome://extensions/shortcuts` et attribuez `⌘ T` à « Open command bar », comme dans Arc et [Zen](https://zen-browser.app/). Pour en savoir plus, consultez [Raccourcis clavier](../keyboard-shortcuts/#change).
+2. Ouvrez `chrome://extensions/shortcuts` et attribuez `⌘ T` à « Open command bar », comme dans Arc et [Zen](https://zen-browser.app/). Pour en savoir plus, consultez [Raccourcis clavier](../keyboard-shortcuts/#change). Dans Dia, libérez d'abord `⌘ T` (voir ci-dessous).
 3. Appuyez sur `⌘ T` et essayez de [chercher dans vos onglets, favoris et historique](../search-tabs-bookmarks-history/).
 4. Pour passer d'une page récente à l'autre, appuyez sur `⌥ Q` afin d'ouvrir le [sélecteur d'onglets récents](../tab-switcher/).
 
-Si le raccourci ne fonctionne pas dans Dia, remplacez sa portée « In Dia » par « Global » sur la page des extensions.
+Les raccourcis de Dia sont prioritaires : dans Dia, ouvrez d'abord Settings → Shortcuts et remplacez le raccourci `⌘ T` de « New Tab » par une autre touche. Pour en savoir plus, consultez [Compatibilité des navigateurs](../browser-compatibility/#dia). Si le raccourci ne fonctionne pas dans Dia, remplacez sa portée « In Dia » par « Global » sur la page des extensions.
 
 ## Fonctions d'Arc que Lumno ne peut pas proposer {#limits}
 

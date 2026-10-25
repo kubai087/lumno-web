@@ -17,7 +17,16 @@ Lumno 主要面向 Chromium 浏览器，同时提供 Firefox 版。下表列出�
 
 Dia 限制了扩展接管新标签页，因此 Lumno 的新标签页在 Dia 中无法使用，命令栏则可以正常使用。
 
-如果按下快捷键没有反应，请打开扩展快捷键页面，将 Lumno 对应项右侧的范围从「在 Dia 中」改为「全局」。
+想用 `⌘ T` 唤出命令栏时，由于 Dia 自己的快捷键优先，需要先在 Dia 中让出 `⌘ T`：
+
+1. 打开 Dia 的 Settings → Shortcuts，把「New Tab」的快捷键从 `⌘ T` 改为其他按键。
+2. 打开 `dia://extensions/shortcuts`，把 Lumno 的「Open command bar」改为 `⌘ T`。
+
+![Dia 设置的 Shortcuts 页面，「New Tab」已从 ⌘T 改为其他按键](dia-newtab "第 1 步：在 Dia 的 Settings → Shortcuts 中给「New Tab」换一个按键")
+
+![Dia 的扩展快捷键页面，Lumno 的「Open command bar」设为 ⌘T](dia-shortcuts "第 2 步：在 dia://extensions/shortcuts 中把「Open command bar」设为 ⌘T")
+
+如果按下快捷键没有反应，请打开扩展快捷键页面，将 Lumno 对应项右侧的范围从「In Dia」改为「Global」。
 
 ## Firefox {#firefox}
 

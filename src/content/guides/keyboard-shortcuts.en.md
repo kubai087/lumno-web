@@ -25,6 +25,8 @@ If you're used to [Arc](https://arc.net/) or [Zen](https://zen-browser.app/), se
 
 The shortcuts page won't accept `⌃ Tab`. To open the switcher with it, see [Open the switcher with Ctrl+Tab](../tab-switcher/#ctrl-tab).
 
+Dia's own shortcuts take priority over extensions. To use `⌘ T` in Dia, first change "New Tab" to another key in Dia's Settings → Shortcuts. See [Browser compatibility](../browser-compatibility/#dia).
+
 If the shortcut doesn't work in Dia, change the scope next to it from "In Dia" to "Global".
 
 ## Keys in the command bar {#command-bar-keys}

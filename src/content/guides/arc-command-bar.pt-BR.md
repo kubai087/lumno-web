@@ -17,11 +17,11 @@ O Lumno é um projeto independente de código aberto, sem vínculo com o Arc nem
 ## Etapas para migrar {#steps}
 
 1. [Instale o Lumno](../install/): pela Chrome Web Store no Chrome e no Dia, ou pelos complementos do Edge no Edge.
-2. Abra `chrome://extensions/shortcuts` e atribua `⌘ T` a "Open command bar", como no Arc e no [Zen](https://zen-browser.app/). Para saber mais, consulte [Atalhos de teclado](../keyboard-shortcuts/#change).
+2. Abra `chrome://extensions/shortcuts` e atribua `⌘ T` a "Open command bar", como no Arc e no [Zen](https://zen-browser.app/). Para saber mais, consulte [Atalhos de teclado](../keyboard-shortcuts/#change). No Dia, libere `⌘ T` primeiro (veja abaixo).
 3. Pressione `⌘ T` e experimente [pesquisar suas guias, favoritos e histórico](../search-tabs-bookmarks-history/).
 4. Para alternar entre suas últimas páginas, pressione `⌥ Q` e abra o [alternador de guias recentes](../tab-switcher/).
 
-Se o atalho não funcionar no Dia, altere o escopo de "In Dia" para "Global" na página de extensões.
+Os atalhos do próprio Dia têm prioridade, então no Dia abra primeiro Settings → Shortcuts e altere o `⌘ T` de "New Tab" para outra tecla. Para saber mais, consulte [Compatibilidade com navegadores](../browser-compatibility/#dia). Se o atalho não funcionar no Dia, altere o escopo de "In Dia" para "Global" na página de extensões.
 
 ## Recursos do Arc que o Lumno não pode oferecer {#limits}
 

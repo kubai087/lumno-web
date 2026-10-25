@@ -205,7 +205,7 @@ export default {
   "browser-compatibility": {
     "": ["支援哪些瀏覽器？能在什麼瀏覽器用？相容嗎"],
     support: ["Edge、Brave、Opera、Vivaldi、Google 瀏覽器能用嗎？"],
-    dia: ["Dia 瀏覽器新分頁不能用、Dia 快速鍵沒反應"],
+    dia: ["Dia 瀏覽器新分頁不能用、Dia 快速鍵沒反應", "Dia 裡用 ⌘T、Cmd T 叫出命令列，⌘T 被 Dia 新分頁佔用"],
     firefox: ["火狐、Firefox、Zen 瀏覽器能用嗎？"],
     safari: ["Safari 能用嗎？蘋果瀏覽器、Mac 內建瀏覽器"],
     languages: ["怎麼改語言？切換中文、英文、簡體、日文介面"],

@@ -20,7 +20,7 @@ Lumno 웹사이트와 커뮤니티에서 자주 묻는 질문과 답변을 정�
 
 ### Arc에서 옮겨 와도 익숙한 명령 바를 사용할 수 있나요?
 
-네. Lumno의 디자인은 [Arc](https://arc.net/)를 참고했으며(Arc와는 관련이 없습니다), Dia, Chrome, Edge에서 언제든지 명령 바를 열 수 있습니다. 단축키를 `⌘ T`로 변경하면 Arc에서와 같은 방식으로 사용할 수 있습니다. 자세한 내용은 [Arc에서 옮겨 왔다면](../arc-command-bar/)을 참고하세요.
+네. Lumno의 디자인은 [Arc](https://arc.net/)를 참고했으며(Arc와는 관련이 없습니다), Dia, Chrome, Edge에서 언제든지 명령 바를 열 수 있습니다. 단축키를 `⌘ T`로 변경하면 Arc에서와 같은 방식으로 사용할 수 있습니다. Dia에서는 먼저 `⌘ T`를 비워야 합니다. [브라우저 호환성](../browser-compatibility/#dia)을 참고하세요. 자세한 내용은 [Arc에서 옮겨 왔다면](../arc-command-bar/)을 참고하세요.
 
 ### Arc처럼 Ctrl+Tab으로 탭을 전환할 수 있나요?
 

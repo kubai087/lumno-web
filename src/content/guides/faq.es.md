@@ -20,7 +20,7 @@ En el modo "Follow system", la barra de comandos también tiene en cuenta los co
 
 ### Si vengo de Arc, ¿puedo usar una barra de comandos familiar?
 
-Sí. El funcionamiento de Lumno se inspira en [Arc](https://arc.net/) (sin tener relación con Arc), y puedes abrir la barra de comandos en cualquier momento en Dia, Chrome o Edge. Asigna `⌘ T` al atajo para mantener tus costumbres de Arc. Para obtener más información, consulta [Si vienes de Arc](../arc-command-bar/).
+Sí. El funcionamiento de Lumno se inspira en [Arc](https://arc.net/) (sin tener relación con Arc), y puedes abrir la barra de comandos en cualquier momento en Dia, Chrome o Edge. Asigna `⌘ T` al atajo para mantener tus costumbres de Arc. En Dia, primero libera `⌘ T`; consulta [Compatibilidad con navegadores](../browser-compatibility/#dia). Para obtener más información, consulta [Si vienes de Arc](../arc-command-bar/).
 
 ### ¿Puedo cambiar de pestaña con Ctrl+Tab, como en Arc?
 

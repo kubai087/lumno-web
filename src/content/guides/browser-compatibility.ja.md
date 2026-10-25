@@ -17,7 +17,16 @@ Lumno は Chromium 系ブラウザ向けに開発されており、Firefox 版�
 
 Dia では拡張機能が新しいタブを置き換えることができないため、Lumno の新しいタブは使用できません。コマンドバーは通常どおり使用できます。
 
-ショートカットキーが反応しない場合は、拡張機能のショートカット設定ページを開き、Lumno の右側にある範囲を「Dia 内」から「グローバル」に変更してください。
+`⌘ T` でコマンドバーを開くには、Dia 自体のショートカットが優先されるため、先に Dia で `⌘ T` を空ける必要があります。
+
+1. Dia の Settings → Shortcuts を開き、「New Tab」のショートカットを `⌘ T` から別のキーに変更します。
+2. `dia://extensions/shortcuts` を開き、Lumno の「Open command bar」を `⌘ T` に変更します。
+
+![Dia の設定の Shortcuts ページ。「New Tab」を ⌘T から別のキーに変更済み](dia-newtab "手順 1：Dia の Settings → Shortcuts で「New Tab」を別のキーに変更")
+
+![Dia の拡張機能のショートカットページ。Lumno の「Open command bar」が ⌘T](dia-shortcuts "手順 2：dia://extensions/shortcuts で「Open command bar」を ⌘T に設定")
+
+ショートカットキーが反応しない場合は、拡張機能のショートカット設定ページを開き、Lumno の右側にある範囲を「In Dia」から「Global」に変更してください。
 
 ## Firefox {#firefox}
 

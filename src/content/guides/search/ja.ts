@@ -203,7 +203,7 @@ export default {
   "browser-compatibility": {
     "": ["対応ブラウザ、どのブラウザで使える？互換性"],
     support: ["Edge、Brave、Opera、Vivaldi、Google Chrome で使える？"],
-    dia: ["Dia で新しいタブが使えない、Dia でショートカットが効かない"],
+    dia: ["Dia で新しいタブが使えない、Dia でショートカットが効かない", "Dia で ⌘T、Cmd T でコマンドバーを開きたい、⌘T で Dia の新しいタブが開く"],
     firefox: ["Firefox、Zen ブラウザで使える？"],
     safari: ["Safari で使える？Mac 標準のブラウザ"],
     languages: ["言語の変更：日本語、英語、中国語の表示"],

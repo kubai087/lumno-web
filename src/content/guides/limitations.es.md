@@ -23,7 +23,7 @@ Lumno solo busca en el contenido de tu navegador. Si quieres buscar apps, archiv
 ## Compatibilidad con navegadores {#browsers}
 
 - Safari no es compatible, ni tampoco los navegadores de dispositivos móviles.
-- En Dia, la barra de comandos funciona, pero la nueva pestaña de Lumno no está disponible.
+- En Dia, la barra de comandos funciona, pero la nueva pestaña de Lumno no está disponible. Además, los atajos propios de Dia tienen prioridad: para abrir la barra de comandos con `⌘ T`, primero cambia el atajo de "New Tab" en Dia. Para obtener más información, consulta [Compatibilidad con navegadores](../browser-compatibility/#dia).
 - Algunas funciones no están disponibles en la versión de Firefox. Para obtener más información, consulta [Compatibilidad con navegadores](../browser-compatibility/).
 
 ## Widgets en la nueva pestaña {#widgets}

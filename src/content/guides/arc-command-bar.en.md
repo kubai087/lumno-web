@@ -17,11 +17,11 @@ Lumno is an independent open-source project and is not affiliated with Arc or Th
 ## How to switch {#steps}
 
 1. [Install Lumno](../install/): from the Chrome Web Store for Chrome and Dia, or from Edge Add-ons for Edge.
-2. Open `chrome://extensions/shortcuts` and set "Open command bar" to `⌘ T`, the same key as in Arc and [Zen](https://zen-browser.app/). See [Keyboard shortcuts](../keyboard-shortcuts/#change).
+2. Open `chrome://extensions/shortcuts` and set "Open command bar" to `⌘ T`, the same key as in Arc and [Zen](https://zen-browser.app/). See [Keyboard shortcuts](../keyboard-shortcuts/#change). In Dia, free `⌘ T` first (see below).
 3. Press `⌘ T` and try [searching your tabs, bookmarks and history](../search-tabs-bookmarks-history/).
 4. To move between your last few pages, press `⌥ Q` to open the [recent tab switcher](../tab-switcher/).
 
-If the shortcut doesn't work in Dia, change its scope from "In Dia" to "Global" on the extensions page.
+Dia's own shortcuts take priority, so in Dia, first open Settings → Shortcuts and change "New Tab" from `⌘ T` to another key. See [Browser compatibility](../browser-compatibility/#dia). If the shortcut doesn't work in Dia, change its scope from "In Dia" to "Global" on the extensions page.
 
 ## Arc features Lumno can't provide {#limits}
 

@@ -25,6 +25,8 @@ Wenn du an [Arc](https://arc.net/) oder [Zen](https://zen-browser.app/) gewöhnt
 
 Die Tastenkürzel-Seite nimmt `⌃ Tab` nicht an. Wie du den Tab-Umschalter trotzdem damit öffnest, steht unter [Den Tab-Umschalter mit Ctrl+Tab öffnen](../tab-switcher/#ctrl-tab).
 
+Dias eigene Tastenkürzel haben Vorrang vor denen von Erweiterungen. Wenn du `⌘ T` in Dia nutzen möchtest, ändere zuerst in Dia unter Settings → Shortcuts „New Tab“ auf eine andere Taste. Weitere Informationen findest du unter [Browserkompatibilität](../browser-compatibility/#dia).
+
 Wenn das Tastenkürzel in Dia nicht funktioniert, ändere den Bereich daneben von „In Dia“ zu „Global“.
 
 ## Tasten in der Befehlsleiste {#command-bar-keys}

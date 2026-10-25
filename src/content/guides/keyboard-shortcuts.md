@@ -25,7 +25,9 @@ Lumno 的大部分操作都可以用键盘完成。下面是默认快捷键、�
 
 快捷键页面不接受 `⌃ Tab`。如果想用它打开切换器，请参阅[用 Ctrl+Tab 打开切换器](../tab-switcher/#ctrl-tab)。
 
-在 Dia 中按下快捷键没有反应时，请将该项右侧的范围从「在 Dia 中」改为「全局」。
+Dia 自己的快捷键优先于扩展。想在 Dia 中使用 `⌘ T`，请先在 Dia 的 Settings → Shortcuts 中把「New Tab」改为其他按键，详见[浏览器兼容性](../browser-compatibility/#dia)。
+
+在 Dia 中按下快捷键没有反应时，请将该项右侧的范围从「In Dia」改为「Global」。
 
 ## 命令栏中的按键 {#command-bar-keys}
 

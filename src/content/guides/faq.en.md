@@ -20,7 +20,7 @@ When set to "Follow system", the command bar also adapts to the colors of the cu
 
 ### I'm moving from Arc. Can I keep a familiar command bar?
 
-Yes. Lumno's design is inspired by [Arc](https://arc.net/) (it isn't affiliated with Arc), and you can open the command bar at any time in Dia, Chrome or Edge. Set the shortcut to `⌘ T` to keep your Arc habits. See [Moving from Arc](../arc-command-bar/).
+Yes. Lumno's design is inspired by [Arc](https://arc.net/) (it isn't affiliated with Arc), and you can open the command bar at any time in Dia, Chrome or Edge. Set the shortcut to `⌘ T` to keep your Arc habits. In Dia, free `⌘ T` first, as described in [Browser compatibility](../browser-compatibility/#dia). See [Moving from Arc](../arc-command-bar/).
 
 ### Can I switch tabs with Ctrl+Tab, like in Arc?
 

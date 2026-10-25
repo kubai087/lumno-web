@@ -23,7 +23,7 @@ Lumno 只搜索浏览器中的内容。如果想用一个快捷键搜索电脑�
 ## 浏览器支持 {#browsers}
 
 - 暂不支持 Safari，也不支持移动设备上的浏览器。
-- 在 Dia 中可以使用命令栏，但无法使用新标签页。
+- 在 Dia 中可以使用命令栏，但无法使用新标签页；Dia 自己的快捷键优先于扩展，想用 `⌘ T` 唤出命令栏，需要先在 Dia 中改掉「New Tab」的快捷键，详见[浏览器兼容性](../browser-compatibility/#dia)。
 - Firefox 版有几项功能无法使用，详见[浏览器兼容性](../browser-compatibility/)。
 
 ## 新标签页小组件 {#widgets}

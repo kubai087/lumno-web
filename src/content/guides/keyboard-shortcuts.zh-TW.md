@@ -25,7 +25,9 @@ Lumno 大部分的操作都可以用鍵盤完成。以下是預設快速鍵、�
 
 快速鍵頁面不接受 `⌃ Tab`。如果想用它開啟切換器，請參閱[用 Ctrl+Tab 開啟切換器](../tab-switcher/#ctrl-tab)。
 
-在 Dia 中按下快速鍵沒有反應時，請將該項右側的範圍從「在 Dia 中」改為「全域」。
+Dia 自己的快速鍵優先於擴充功能。想在 Dia 中使用 `⌘ T`，請先在 Dia 的 Settings → Shortcuts 中把「New Tab」改為其他按鍵，詳見[瀏覽器相容性](../browser-compatibility/#dia)。
+
+在 Dia 中按下快速鍵沒有反應時，請將該項右側的範圍從「In Dia」改為「Global」。
 
 ## 命令列中的按鍵 {#command-bar-keys}
 

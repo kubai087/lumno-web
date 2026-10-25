@@ -17,7 +17,16 @@ Lumno 主要針對 Chromium 瀏覽器設計，同時提供 Firefox 版。下表�
 
 Dia 限制了擴充功能接管新分頁，因此 Lumno 的新分頁在 Dia 中無法使用，命令列則可以正常使用。
 
-如果按下快速鍵沒有反應，請開啟擴充功能快速鍵頁面，將 Lumno 對應項目右側的範圍從「在 Dia 中」改為「全域」。
+想用 `⌘ T` 叫出命令列時，因為 Dia 自己的快速鍵優先，需要先在 Dia 中讓出 `⌘ T`：
+
+1. 開啟 Dia 的 Settings → Shortcuts，把「New Tab」的快速鍵從 `⌘ T` 改為其他按鍵。
+2. 開啟 `dia://extensions/shortcuts`，把 Lumno 的「Open command bar」改為 `⌘ T`。
+
+![Dia 設定的 Shortcuts 頁面，「New Tab」已從 ⌘T 改為其他按鍵](dia-newtab "第 1 步：在 Dia 的 Settings → Shortcuts 中替「New Tab」換一個按鍵")
+
+![Dia 的擴充功能快速鍵頁面，Lumno 的「Open command bar」設為 ⌘T](dia-shortcuts "第 2 步：在 dia://extensions/shortcuts 中把「Open command bar」設為 ⌘T")
+
+如果按下快速鍵沒有反應，請開啟擴充功能快速鍵頁面，將 Lumno 對應項目右側的範圍從「In Dia」改為「Global」。
 
 ## Firefox {#firefox}
 

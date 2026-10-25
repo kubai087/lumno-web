@@ -17,6 +17,15 @@ Browser auf Smartphones und Tablets werden derzeit nicht unterstützt. Wenn du d
 
 Dia erlaubt Erweiterungen nicht, den neuen Tab zu ersetzen. Daher ist Lumnos neuer Tab dort nicht verfügbar. Die Befehlsleiste funktioniert normal.
 
+Wenn du die Befehlsleiste mit `⌘ T` öffnen möchtest, gib `⌘ T` zuerst in Dia frei, denn Dias eigene Tastenkürzel haben Vorrang:
+
+1. Öffne in Dia Settings → Shortcuts und ändere das Tastenkürzel für „New Tab“ von `⌘ T` auf eine andere Taste.
+2. Öffne `dia://extensions/shortcuts` und lege „Open command bar“ von Lumno auf `⌘ T`.
+
+![Dias Einstellungsseite Shortcuts, „New Tab“ liegt nicht mehr auf ⌘T](dia-newtab "Schritt 1: „New Tab“ in Dias Settings → Shortcuts auf eine andere Taste legen")
+
+![Dias Seite für Erweiterungs-Tastenkürzel, Lumnos „Open command bar“ liegt auf ⌘T](dia-shortcuts "Schritt 2: „Open command bar“ unter dia://extensions/shortcuts auf ⌘T legen")
+
 Wenn das Tastenkürzel nicht funktioniert, öffne die Seite für Erweiterungs-Tastenkürzel und ändere den Bereich neben Lumno von „In Dia“ zu „Global“.
 
 ## Firefox {#firefox}

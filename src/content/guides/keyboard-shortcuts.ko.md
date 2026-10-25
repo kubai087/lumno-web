@@ -25,6 +25,8 @@ Lumno의 대부분의 기능은 키보드로 사용할 수 있습니다. 이 페
 
 단축키 페이지에서는 `⌃ Tab`을 등록할 수 없습니다. 이 키로 전환기를 열려면 [Ctrl+Tab으로 전환기 열기](../tab-switcher/#ctrl-tab)를 참고하세요.
 
+Dia 자체 단축키는 확장 프로그램보다 우선합니다. Dia에서 `⌘ T`를 사용하려면 먼저 Dia의 Settings → Shortcuts에서 "New Tab"을 다른 키로 변경하세요. 자세한 내용은 [브라우저 호환성](../browser-compatibility/#dia)을 참고하세요.
+
 Dia에서 단축키가 작동하지 않으면 항목 옆의 범위를 "In Dia"에서 "Global"로 변경하세요.
 
 ## 명령 바의 키 {#command-bar-keys}

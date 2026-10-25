@@ -23,7 +23,7 @@ Lumno searches only what's in your browser. To search apps, files and system set
 ## Browser support {#browsers}
 
 - Safari isn't supported, and neither are browsers on mobile devices.
-- In Dia, the command bar works, but Lumno's new tab isn't available.
+- In Dia, the command bar works, but Lumno's new tab isn't available. Dia's own shortcuts also take priority, so to open the command bar with `⌘ T`, change Dia's "New Tab" shortcut first. See [Browser compatibility](../browser-compatibility/#dia).
 - Some features aren't available in the Firefox version. See [Browser compatibility](../browser-compatibility/).
 
 ## New tab widgets {#widgets}

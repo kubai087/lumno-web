@@ -17,11 +17,11 @@ Lumno 是獨立的開源專案，與 Arc 及 The Browser Company 沒有任何關
 ## 轉移步驟 {#steps}
 
 1. [安裝 Lumno](../install/)：Chrome、Dia 使用者從 Chrome 線上應用程式商店安裝，Edge 使用者從 Edge 附加元件安裝。
-2. 開啟 `chrome://extensions/shortcuts`，把「叫出聚焦搜尋視窗」改為 `⌘ T`，和 Arc、[Zen](https://zen-browser.app/) 中的操作一致，詳見[快速鍵](../keyboard-shortcuts/#change)。
+2. 開啟 `chrome://extensions/shortcuts`，把「叫出聚焦搜尋視窗」改為 `⌘ T`，和 Arc、[Zen](https://zen-browser.app/) 中的操作一致，詳見[快速鍵](../keyboard-shortcuts/#change)。Dia 使用者需要先讓出 `⌘ T`，見下文。
 3. 按 `⌘ T`，試著[搜尋分頁、書籤和瀏覽紀錄](../search-tabs-bookmarks-history/)。
 4. 需要在最近幾個頁面之間來回切換時，按 `⌥ Q` 開啟[最近分頁切換器](../tab-switcher/)。
 
-在 Dia 中按下快速鍵沒有反應時，請在擴充功能快速鍵頁面將範圍從「在 Dia 中」改為「全域」。
+Dia 自己的快速鍵優先於擴充功能，因此在 Dia 中需要先開啟 Settings → Shortcuts，把「New Tab」的 `⌘ T` 改為其他按鍵，詳見[瀏覽器相容性](../browser-compatibility/#dia)。在 Dia 中按下快速鍵沒有反應時，請在擴充功能快速鍵頁面將範圍從「In Dia」改為「Global」。
 
 ## Lumno 無法提供的 Arc 功能 {#limits}
 

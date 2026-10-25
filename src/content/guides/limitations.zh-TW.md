@@ -23,7 +23,7 @@ Lumno 只搜尋瀏覽器中的內容。如果想用一組快速鍵搜尋電腦�
 ## 瀏覽器支援 {#browsers}
 
 - 暫不支援 Safari，也不支援行動裝置上的瀏覽器。
-- 在 Dia 中可以使用命令列，但無法使用新分頁。
+- 在 Dia 中可以使用命令列，但無法使用新分頁；Dia 自己的快速鍵優先於擴充功能，想用 `⌘ T` 叫出命令列，需要先在 Dia 中改掉「New Tab」的快速鍵，詳見[瀏覽器相容性](../browser-compatibility/#dia)。
 - Firefox 版有幾項功能無法使用，詳見[瀏覽器相容性](../browser-compatibility/)。
 
 ## 新分頁小工具 {#widgets}

@@ -23,7 +23,7 @@ O Lumno pesquisa apenas o conteúdo do seu navegador. Para pesquisar apps, arqui
 ## Compatibilidade com navegadores {#browsers}
 
 - O Safari não é compatível, nem os navegadores de dispositivos móveis.
-- No Dia, a barra de comandos funciona, mas a nova guia do Lumno não está disponível.
+- No Dia, a barra de comandos funciona, mas a nova guia do Lumno não está disponível. Além disso, os atalhos do próprio Dia têm prioridade: para abrir a barra de comandos com `⌘ T`, primeiro altere o atalho de "New Tab" no Dia. Para saber mais, consulte [Compatibilidade com navegadores](../browser-compatibility/#dia).
 - Alguns recursos não estão disponíveis na versão para Firefox. Para saber mais, consulte [Compatibilidade com navegadores](../browser-compatibility/).
 
 ## Widgets na nova guia {#widgets}

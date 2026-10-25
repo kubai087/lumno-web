@@ -8,7 +8,7 @@
 
 ### 按下快速鍵沒有反應怎麼辦？
 
-請先確認目前頁面不是 `chrome://` 設定頁、擴充功能商店這類受限頁面，再到 `chrome://extensions/shortcuts` 檢查快速鍵是否被其他擴充功能佔用。在 Dia 中，還需要把該項右側的範圍改為「全域」。
+請先確認目前頁面不是 `chrome://` 設定頁、擴充功能商店這類受限頁面，再到 `chrome://extensions/shortcuts` 檢查快速鍵是否被其他擴充功能佔用。在 Dia 中，還需要把該項右側的範圍改為「Global」。
 
 ### 為什麼在有些頁面上打不開命令列，而是開啟了新分頁？
 
@@ -20,7 +20,7 @@
 
 ### 從 Arc 換過來，還能使用熟悉的命令列嗎？
 
-可以。Lumno 的互動參考了 [Arc](https://arc.net/)（與 Arc 官方沒有關聯），在 Dia、Chrome 和 Edge 中都可以隨時叫出命令列。把快速鍵改為 `⌘ T`，即可沿用 Arc 的操作習慣。詳見[從 Arc 搬家](../arc-command-bar/)。
+可以。Lumno 的互動參考了 [Arc](https://arc.net/)（與 Arc 官方沒有關聯），在 Dia、Chrome 和 Edge 中都可以隨時叫出命令列。把快速鍵改為 `⌘ T`，即可沿用 Arc 的操作習慣。在 Dia 中需要先讓出 `⌘ T`，見[瀏覽器相容性](../browser-compatibility/#dia)。詳見[從 Arc 搬家](../arc-command-bar/)。
 
 ### 能像 Arc 一樣用 Ctrl+Tab 切換分頁嗎？
 

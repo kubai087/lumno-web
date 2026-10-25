@@ -25,6 +25,8 @@ Si estás acostumbrado a [Arc](https://arc.net/) o [Zen](https://zen-browser.app
 
 La página de atajos no acepta `⌃ Tab`. Para abrir el selector con esta combinación, consulta [Abrir el selector con Ctrl+Tab](../tab-switcher/#ctrl-tab).
 
+Los atajos propios de Dia tienen prioridad sobre los de las extensiones. Para usar `⌘ T` en Dia, primero cambia "New Tab" a otra tecla en Settings → Shortcuts de Dia. Para obtener más información, consulta [Compatibilidad con navegadores](../browser-compatibility/#dia).
+
 Si el atajo no funciona en Dia, cambia el ámbito que aparece junto a él de "In Dia" a "Global".
 
 ## Teclas de la barra de comandos {#command-bar-keys}

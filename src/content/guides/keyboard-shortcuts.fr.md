@@ -25,6 +25,8 @@ Si vous avez l'habitude d'[Arc](https://arc.net/) ou de [Zen](https://zen-browse
 
 La page des raccourcis n'accepte pas `⌃ Tab`. Pour ouvrir le sélecteur avec cette combinaison, consultez [Ouvrir le sélecteur avec Ctrl+Tab](../tab-switcher/#ctrl-tab).
 
+Les raccourcis de Dia sont prioritaires sur ceux des extensions. Pour utiliser `⌘ T` dans Dia, remplacez d'abord le raccourci de « New Tab » par une autre touche dans Settings → Shortcuts de Dia. Pour en savoir plus, consultez [Compatibilité des navigateurs](../browser-compatibility/#dia).
+
 Si le raccourci ne fonctionne pas dans Dia, remplacez la portée indiquée à côté, « In Dia », par « Global ».
 
 ## Touches de la barre de commande {#command-bar-keys}

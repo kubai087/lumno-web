@@ -142,7 +142,9 @@ renderer.image = function ({ href, title, text }) {
   const loading = images.length ? "lazy" : "eager";
   images.push(shot.src);
   const caption = title ? `<figcaption>${escapeHtml(title)}</figcaption>` : "";
-  return `<figure class="guide-shot"><button type="button" class="guide-shot__zoom" data-guide-zoom aria-label="${escapeHtml(ui.zoomLabel)}"><img src="${shot.src}" width="${shot.width}" height="${shot.height}" alt="${escapeHtml(text)}" loading="${loading}" decoding="async" /></button>${caption}</figure>`;
+  // Captures are 2x; one narrower than the column shows at its own size instead of stretching.
+  const cap = shot.width < 1440 ? ` style="--guide-shot-max: ${shot.width / 2}px"` : "";
+  return `<figure class="guide-shot"${cap}><button type="button" class="guide-shot__zoom" data-guide-zoom aria-label="${escapeHtml(ui.zoomLabel)}"><img src="${shot.src}" width="${shot.width}" height="${shot.height}" alt="${escapeHtml(text)}" loading="${loading}" decoding="async" /></button>${caption}</figure>`;
 };
 // A paragraph holding only a figure must not wrap it in <p>.
 renderer.paragraph = function ({ tokens }) {

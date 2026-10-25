@@ -810,6 +810,8 @@
 .guide-shot__zoom {
   display: block;
   width: 100%;
+  max-width: var(--guide-shot-max, none);
+  margin-inline: auto;
   padding: 0;
   border: 0;
   background: none;

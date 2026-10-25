@@ -227,6 +227,14 @@ const content: GuideLocaleContent = {
       title: "자동 PIP",
       navTitle: "자동 PIP",
     },
+    "link-preview": {
+      pageTitle: "링크 미리보기: Shift를 누른 채 링크를 클릭해 작은 창에서 보기 | Lumno 도움말",
+      pageDescription:
+        "Shift를 누른 채 링크를 클릭하면 현재 페이지 위의 작은 창에서 링크가 열립니다. 창을 닫으면 읽던 위치로 돌아가고, 새 탭으로 옮길 수도 있습니다. 사용 방법, 창의 버튼, 미리보기할 수 없는 경우와 켜고 끄는 방법을 설명합니다.",
+      keywords: ["링크 미리보기", "새 탭 없이 링크 보기", "Shift 클릭 링크", "크롬 확장 프로그램 링크 미리보기", "Arc Peek"],
+      title: "링크 미리보기",
+      navTitle: "링크 미리보기",
+    },
     "web-clip": {
       pageTitle: "웹 클립: 페이지 일부를 플로팅 창에 띄우기 | Lumno 도움말",
       pageDescription:

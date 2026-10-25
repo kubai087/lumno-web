@@ -227,6 +227,14 @@ const content: GuideLocaleContent = {
       title: "Image dans l'image automatique",
       navTitle: "Image dans l'image automatique",
     },
+    "link-preview": {
+      pageTitle: "Aperçu des liens : ouvrir un lien dans une petite fenêtre avec Maj+clic | Aide Lumno",
+      pageDescription:
+        "Cliquez sur un lien en maintenant Maj pour l'ouvrir dans une petite fenêtre au-dessus de la page. Fermez-la pour revenir où vous en étiez, ou déplacez-la dans un nouvel onglet. Découvrez comment l'utiliser, à quoi servent ses boutons, quelles pages ne peuvent pas s'afficher et comment la désactiver.",
+      keywords: ["aperçu des liens", "voir un lien sans ouvrir d'onglet", "Maj clic lien", "extension Chrome aperçu de lien", "alternative à Arc Peek"],
+      title: "Aperçu des liens",
+      navTitle: "Aperçu des liens",
+    },
     "web-clip": {
       pageTitle: "Capture web : garder une partie de page dans une fenêtre flottante | Aide Lumno",
       pageDescription:

@@ -79,6 +79,11 @@
     "height": 400,
     "color": "#e8f8f8"
   },
+  "link-preview": {
+    "width": 2000,
+    "height": 400,
+    "color": "#f8f8d8"
+  },
   "web-clip": {
     "width": 2000,
     "height": 400,

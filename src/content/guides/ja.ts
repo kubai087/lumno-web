@@ -216,6 +216,14 @@ const content: GuideLocaleContent = {
       title: "動画の自動ピクチャー・イン・ピクチャー",
       navTitle: "自動ピクチャー・イン・ピクチャー",
     },
+    "link-preview": {
+      pageTitle: "リンクプレビュー：Shift キーを押しながらクリックして小さなウインドウで表示｜Lumno ヘルプ",
+      pageDescription:
+        "Shift キーを押しながらリンクをクリックすると、ページの上の小さなウインドウでリンク先を開けます。閉じれば元の位置に戻り、新しいタブに移すこともできます。使い方、ウインドウのボタン、プレビューできない場合とオン・オフの方法を説明します。",
+      keywords: ["リンクプレビュー", "リンク先 プレビュー", "Shift クリック リンク", "Chrome 拡張機能 リンクプレビュー", "新しいタブを開かずにリンクを見る", "Arc Peek"],
+      title: "リンクプレビュー",
+      navTitle: "リンクプレビュー",
+    },
     "web-clip": {
       pageTitle: "Webクリップ：ページの一部をフローティングウインドウで表示｜Lumno ヘルプ",
       pageDescription:

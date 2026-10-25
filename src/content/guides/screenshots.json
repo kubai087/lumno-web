@@ -19,6 +19,10 @@
     915,
     825
   ],
+  "en/link-preview": [
+    1440,
+    900
+  ],
   "en/modemenu": [
     1440,
     939
@@ -143,6 +147,10 @@
     915,
     825
   ],
+  "ja/link-preview": [
+    1440,
+    900
+  ],
   "ja/modemenu": [
     1440,
     937
@@ -266,6 +274,10 @@
   "zh-CN/dia-shortcuts": [
     915,
     825
+  ],
+  "zh-CN/link-preview": [
+    1440,
+    900
   ],
   "zh-CN/modemenu": [
     1440,
@@ -394,6 +406,10 @@
   "zh-TW/dia-shortcuts": [
     915,
     825
+  ],
+  "zh-TW/link-preview": [
+    1440,
+    900
   ],
   "zh-TW/modemenu": [
     1440,

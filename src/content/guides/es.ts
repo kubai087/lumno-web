@@ -227,6 +227,14 @@ const content: GuideLocaleContent = {
       title: "Imagen en imagen automática",
       navTitle: "Imagen en imagen automática",
     },
+    "link-preview": {
+      pageTitle: "Vista previa de enlaces: abre un enlace en una ventana pequeña con Mayús+clic | Ayuda de Lumno",
+      pageDescription:
+        "Haz clic en un enlace mientras mantienes pulsada la tecla Mayús para abrirlo en una ventana pequeña sobre la página. Ciérrala para volver a donde estabas o pásala a una pestaña nueva. Aprende a usarla, qué hacen sus botones, qué páginas no se pueden mostrar y cómo desactivarla.",
+      keywords: ["vista previa de enlaces", "ver un enlace sin abrir pestaña", "Mayús clic enlace", "extensión Chrome vista previa de enlaces", "alternativa a Arc Peek"],
+      title: "Vista previa de enlaces",
+      navTitle: "Vista previa de enlaces",
+    },
     "web-clip": {
       pageTitle: "Recorte web: mantén parte de una página en una ventana flotante | Ayuda de Lumno",
       pageDescription:

@@ -185,6 +185,13 @@ export default {
     how: ["Turn on selection quick actions, where are Labs features?"],
     provider: ["Choose which AI: ChatGPT, Gemini, DeepSeek"],
   },
+  "link-preview": {
+    "": ["Link preview, preview a link, peek at a link, Shift click a link, open link in a popup, quick look, Arc Peek"],
+    how: ["Open a link in a small window without a new tab"],
+    window: ["Move the preview to a new tab, copy the link, go back in the preview"],
+    blocked: ["This page can't be shown in a preview, link preview not working"],
+    toggle: ["Turn off link preview, Shift click should open a new window"],
+  },
   "web-clip": {
     "": ["Web clip, clip part of a page, crop a web page, floating window, always on top, pop out, mini window, /clip"],
     enable: ["Turn on web clip"],

@@ -23,6 +23,7 @@ Después de instalar Lumno, la nueva pestaña de Chrome y Edge muestra la págin
 ## Otras funciones {#more}
 
 - [Acciones rápidas sobre la selección](../selection-actions/) (Selection quick actions): selecciona un fragmento para que la IA lo responda, lo traduzca, lo explique o lo resuma. El botón solo aparece cuando Lumno considera que el texto necesita ayuda. Está desactivada por defecto; puedes activarla en la sección Labs de los ajustes.
+- [Vista previa de enlaces](../link-preview/): haz clic en un enlace mientras mantienes pulsada `⇧` para verlo en una ventana pequeña sobre la página, sin abrir una pestaña nueva.
 - [Recorte web](../web-clip/): recorta una parte de una página y muéstrala en una ventana flotante de imagen en imagen.
 - [Imagen en imagen automática](../auto-pip/): al salir de una pestaña de YouTube o Twitch, el vídeo sigue reproduciéndose en una ventana pequeña.
 - Restauración de pestañas fijadas: si activas "Restore Pinned Tabs After Restart", las pestañas fijadas se restauran automáticamente al reiniciar el navegador.

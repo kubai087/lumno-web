@@ -227,6 +227,14 @@ const content: GuideLocaleContent = {
       title: "Automatisches Bild-im-Bild",
       navTitle: "Automatisches Bild-im-Bild",
     },
+    "link-preview": {
+      pageTitle: "Link-Vorschau: Links mit Umschalt-Klick in einem kleinen Fenster öffnen | Lumno-Hilfe",
+      pageDescription:
+        "Klicke mit gedrückter Umschalttaste auf einen Link, um ihn in einem kleinen Fenster über der Seite zu öffnen. Schließe es, um dort weiterzulesen, wo du warst, oder verschiebe es in einen neuen Tab. So funktioniert es, das bedeuten die Schaltflächen, diese Seiten lassen sich nicht anzeigen – und so schaltest du es aus.",
+      keywords: ["Link-Vorschau", "Link ansehen ohne neuen Tab", "Umschalt-Klick Link", "Link-Vorschau Chrome-Erweiterung", "Arc Peek Alternative"],
+      title: "Link-Vorschau",
+      navTitle: "Link-Vorschau",
+    },
     "web-clip": {
       pageTitle: "Web-Clip: Einen Seitenbereich in einem schwebenden Fenster behalten | Lumno-Hilfe",
       pageDescription:

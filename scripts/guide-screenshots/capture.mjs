@@ -29,13 +29,25 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const APPLE_LANGUAGE = { "zh-CN": "zh-Hans", "zh-TW": "zh-Hant", en: "en", ja: "ja" };
 
 // "blank" in the tab list is a plain local page, so nothing competes with Lumno behind the overlay.
-// "/article" is a short plain article to select text in (use cases).
+// "/article" is a short plain article to select text in (use cases); "/article-link" turns
+// the article's link text into a link to "/article-preview", a second article (link preview).
 const escapeHtml = (value) => String(value).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
+const articleParagraph = (text, link) => {
+  const html = escapeHtml(text);
+  if (!link) return html;
+  const label = escapeHtml(link.text);
+  return html.replace(label, `<a id="preview-link" href="/article-preview" style="color:#0969da;text-decoration:underline;text-underline-offset:3px">${label}</a>`);
+};
 const blankServer = http.createServer((request, response) => {
   response.writeHead(200, { "Content-Type": "text/html; charset=utf-8" });
   const article = cfg.useCases && cfg.useCases.article;
+  const previewed = article && article.link && article.link.page;
+  if (request.url.startsWith("/article-preview") && previewed) {
+    response.end(`<!doctype html><title>${escapeHtml(previewed.title)}</title><body style="margin:0;background:#fff;color:#1f2328;font:18px/1.8 -apple-system,'PingFang SC','Hiragino Sans',sans-serif"><main style="max-width:640px;margin:96px auto;padding:0 24px"><h1 style="font-size:30px;line-height:1.3;margin:0 0 24px">${escapeHtml(previewed.title)}</h1>${previewed.paragraphs.map((text) => `<p style="margin:0 0 20px">${escapeHtml(text)}</p>`).join("")}</main></body>`);
+    return;
+  }
   if (request.url.startsWith("/article") && article) {
-    response.end(`<!doctype html><title>${escapeHtml(article.title)}</title><body style="margin:0;background:#fff;color:#1f2328;font:18px/1.8 -apple-system,'PingFang SC','Hiragino Sans',sans-serif"><main style="max-width:640px;margin:96px auto;padding:0 24px"><h1 style="font-size:30px;line-height:1.3;margin:0 0 24px">${escapeHtml(article.title)}</h1>${article.paragraphs.map((text) => `<p style="margin:0 0 20px">${escapeHtml(text)}</p>`).join("")}${request.url.startsWith("/article-clip") && article.table ? `<table id="clip-target" style="border-collapse:collapse;width:100%;font-size:16px;line-height:1.6;margin:8px 0 0"><thead><tr>${article.table.head.map((cell) => `<th style="text-align:left;padding:10px 14px;border-bottom:1px solid #d0d7de;background:#f6f8fa">${escapeHtml(cell)}</th>`).join("")}</tr></thead><tbody>${article.table.rows.map((row) => `<tr>${row.map((cell, index) => `<td style="padding:10px 14px;border-bottom:1px solid #eaeef2;${index ? "" : "font-family:ui-monospace,Menlo,monospace;font-size:14px"}">${escapeHtml(cell)}</td>`).join("")}</tr>`).join("")}</tbody></table>` : ""}</main></body>`);
+    response.end(`<!doctype html><title>${escapeHtml(article.title)}</title><body style="margin:0;background:#fff;color:#1f2328;font:18px/1.8 -apple-system,'PingFang SC','Hiragino Sans',sans-serif"><main style="max-width:640px;margin:96px auto;padding:0 24px"><h1 style="font-size:30px;line-height:1.3;margin:0 0 24px">${escapeHtml(article.title)}</h1>${article.paragraphs.map((text) => `<p style="margin:0 0 20px">${articleParagraph(text, request.url.startsWith("/article-link") && article.link)}</p>`).join("")}${request.url.startsWith("/article-clip") && article.table ? `<table id="clip-target" style="border-collapse:collapse;width:100%;font-size:16px;line-height:1.6;margin:8px 0 0"><thead><tr>${article.table.head.map((cell) => `<th style="text-align:left;padding:10px 14px;border-bottom:1px solid #d0d7de;background:#f6f8fa">${escapeHtml(cell)}</th>`).join("")}</tr></thead><tbody>${article.table.rows.map((row) => `<tr>${row.map((cell, index) => `<td style="padding:10px 14px;border-bottom:1px solid #eaeef2;${index ? "" : "font-family:ui-monospace,Menlo,monospace;font-size:14px"}">${escapeHtml(cell)}</td>`).join("")}</tr>`).join("")}</tbody></table>` : ""}</main></body>`);
     return;
   }
   response.end(`<!doctype html><title>${cfg.blankTitle || "Blank"}</title><body style="margin:0;background:#f3f4f6"></body>`);
@@ -771,6 +783,30 @@ const scenes = {
     await page.keyboard.press("Escape");
     await page.close();
     await setPrefs({ _x_extension_document_pip_enabled_2026_unique_: false });
+  },
+  // Link preview: Shift+click a link in the article; the page recedes behind the preview window.
+  async "link-preview"() {
+    const article = cfg.useCases && cfg.useCases.article;
+    if (!article || !article.link || !article.link.page) return;
+    const page = await ctx.newPage();
+    await page.goto(`${BLANK_URL}article-link`);
+    await sleep(1500);
+    const link = await page.evaluate(() => {
+      const r = document.getElementById("preview-link").getBoundingClientRect();
+      return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+    });
+    await page.mouse.move(link.x, link.y, { steps: 6 });
+    await page.keyboard.down("Shift");
+    await sleep(400);
+    await page.mouse.click(link.x, link.y);
+    await page.keyboard.up("Shift");
+    // Let the previewed page load and the opening settle.
+    await sleep(Number(process.env.PREVIEW_WAIT || 3000));
+    // Park the pointer away from the window's buttons so none shows its hover state.
+    await page.mouse.move(8, 8);
+    await shot("link-preview", page);
+    await page.keyboard.press("Escape");
+    await page.close();
   },
   // Pinned episode and chapter cards that follow progress (the radar icon).
   async "uc-series"() {

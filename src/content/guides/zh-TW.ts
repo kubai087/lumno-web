@@ -216,6 +216,14 @@ const content: GuideLocaleContent = {
       title: "影片自動子母畫面",
       navTitle: "影片自動子母畫面",
     },
+    "link-preview": {
+      pageTitle: "網頁預覽：按住 Shift 點擊連結，在小視窗中預覽網頁｜Lumno 說明中心",
+      pageDescription:
+        "按住 Shift 點擊連結，網頁會在目前頁面上方的小視窗中開啟，看完關閉就能回到原處，也可以移到新分頁。說明操作方式、小視窗中的按鈕、無法預覽的情況和開關位置。",
+      keywords: ["網頁預覽", "連結預覽", "Shift 點擊連結", "Chrome 連結預覽 擴充功能", "不開新分頁看連結", "Arc Peek"],
+      title: "網頁預覽",
+      navTitle: "網頁預覽",
+    },
     "web-clip": {
       pageTitle: "網頁剪裁：把網頁的一部分放進浮動視窗對照查看｜Lumno 說明中心",
       pageDescription:

@@ -237,6 +237,14 @@ const content: GuideLocaleContent = {
       title: "视频自动画中画",
       navTitle: "视频自动画中画",
     },
+    "link-preview": {
+      pageTitle: "网页预览：按住 Shift 点击链接，在小窗中预览网页｜Lumno 帮助中心",
+      pageDescription:
+        "按住 Shift 点击链接，网页会在当前页面上方的小窗中打开，看完关闭即可回到原位，也可以移到新标签页。介绍操作方法、小窗中的按钮、无法预览的情况和开关位置。",
+      keywords: ["网页预览", "链接预览", "Shift 点击链接", "Chrome 链接预览插件", "不打开新标签页查看链接", "Arc Peek"],
+      title: "网页预览",
+      navTitle: "网页预览",
+    },
     "web-clip": {
       pageTitle: "网页剪裁：把网页的一部分放进悬浮窗口对照查看｜Lumno 帮助中心",
       pageDescription:

@@ -23,6 +23,7 @@ After you install Lumno, the new tab in Chrome and Edge becomes Lumno's start pa
 ## More features {#more}
 
 - [Selection quick actions](../selection-actions/): select a passage and have AI answer, translate, explain or summarize it. The button appears only when Lumno judges the text likely to need help. Off by default; turn it on under Labs in settings.
+- [Link preview](../link-preview/): Shift-click a link to look at it in a small window over the page, without opening a new tab.
 - [Web clip](../web-clip/): clip part of a page into a floating picture-in-picture window.
 - [Auto picture-in-picture](../auto-pip/): when you leave a YouTube or Twitch tab, the video keeps playing in a small window.
 - Restore pinned tabs: with "Restore Pinned Tabs After Restart" turned on, pinned tabs come back automatically after you restart the browser.

@@ -227,6 +227,14 @@ const content: GuideLocaleContent = {
       title: "Picture-in-picture automático",
       navTitle: "Picture-in-picture automático",
     },
+    "link-preview": {
+      pageTitle: "Prévia de links: abra um link em uma janela pequena com Shift+clique | Ajuda do Lumno",
+      pageDescription:
+        "Clique em um link segurando Shift para abri-lo em uma janela pequena sobre a página. Feche a janela para voltar ao ponto em que estava ou mova o link para uma nova guia. Veja como usar, o que fazem os botões, quais páginas não podem ser exibidas e como desativar.",
+      keywords: ["prévia de links", "ver link sem abrir guia", "Shift clique link", "extensão Chrome prévia de link", "alternativa ao Arc Peek"],
+      title: "Prévia de links",
+      navTitle: "Prévia de links",
+    },
     "web-clip": {
       pageTitle: "Recorte da web: mantenha parte de uma página em uma janela flutuante | Ajuda do Lumno",
       pageDescription:

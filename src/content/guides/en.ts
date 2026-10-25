@@ -227,6 +227,14 @@ const content: GuideLocaleContent = {
       title: "Auto picture-in-picture",
       navTitle: "Auto picture-in-picture",
     },
+    "link-preview": {
+      pageTitle: "Link preview: Shift-click a link to open it in a small window | Lumno Help",
+      pageDescription:
+        "Shift-click a link to open it in a small window over the page. Close it to return to where you were, or move it to a new tab. Learn how it works, what the window's buttons do, which pages can't be previewed, and how to turn it off.",
+      keywords: ["link preview", "preview links without opening a tab", "Shift click link", "link preview Chrome extension", "peek link", "Arc Peek alternative"],
+      title: "Link preview",
+      navTitle: "Link preview",
+    },
     "web-clip": {
       pageTitle: "Web clip: keep part of a page in a floating window | Lumno Help",
       pageDescription:

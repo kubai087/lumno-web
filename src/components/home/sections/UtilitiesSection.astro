@@ -29,6 +29,7 @@ const UTILITY_ORDER: Array<{ id: HomeUtilityId; icon: HomeCellIconName }> = [
 // The help center section that explains each one; the titles link there.
 // One with no page yet shows a plain title.
 const UTILITY_GUIDES: Partial<Record<HomeUtilityId, { slug: GuideSlug; anchor?: string }>> = {
+  linkPreview: { slug: "link-preview" },
   clip: { slug: "web-clip" },
   autoPip: { slug: "auto-pip" },
   tabSwitcher: { slug: "tab-switcher" },

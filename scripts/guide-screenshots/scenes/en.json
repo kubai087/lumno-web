@@ -192,6 +192,18 @@
         "Items can also span several cells, so a magazine-style layout takes only a few lines of code."
       ],
       "select": "which stands for one share of the space left in the container",
+      "link": {
+        "text": "flexbox",
+        "page": {
+          "title": "Getting started with flexbox",
+          "paragraphs": [
+            "Flexbox lays out items in a single direction, either as a row or as a column. It's well suited to toolbars, navigation menus and other parts of an interface where items sit side by side.",
+            "Set display: flex on a container, and its children become flex items. justify-content spaces them along the main axis, and align-items lines them up across it.",
+            "Items can grow to fill the space left over, or shrink when there isn't enough, so the layout holds together as the window changes size.",
+            "When a layout needs rows and columns at the same time, grid is usually the better choice."
+          ]
+        }
+      },
       "table": {
         "head": [
           "Property",

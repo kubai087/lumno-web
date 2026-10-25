@@ -50,6 +50,7 @@
   { "q": "網頁剪輯", "expect": ["web-clip"] },
   { "q": "畫中畫", "expect": ["auto-pip"] },
   { "q": "關掉子母畫面", "expect": ["auto-pip#toggle"] },
+  { "q": "helium 子母畫面沒反應", "expect": ["auto-pip#site-permission"] },
 
   { "q": "Arc 替代", "expect": ["arc-command-bar", "use-cases#from-arc"] },
   { "q": "Raycast", "expect": ["limitations#outside-browser", "browser-compatibility#safari", "what-is-lumno#command-bar"] },

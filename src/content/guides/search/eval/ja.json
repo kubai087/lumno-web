@@ -46,6 +46,7 @@
   { "q": "切り抜き", "expect": ["web-clip"] },
   { "q": "ピクチャーインピクチャー", "expect": ["auto-pip"] },
   { "q": "小窓", "expect": ["auto-pip", "web-clip"] },
+  { "q": "helium ピクチャーインピクチャー", "expect": ["auto-pip#site-permission"] },
 
   { "q": "Arc の代わり", "expect": ["arc-command-bar", "use-cases#from-arc"] },
   { "q": "Raycast", "expect": ["limitations#outside-browser", "browser-compatibility#safari", "what-is-lumno#command-bar"] },

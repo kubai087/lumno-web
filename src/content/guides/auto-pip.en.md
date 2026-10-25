@@ -20,6 +20,18 @@ When you go back to the video's tab, the picture-in-picture window closes and th
 - If a site disables picture-in-picture through its policy, the browser doesn't allow it.
 - While a [web clip](../web-clip/) window is open, video picture-in-picture doesn't start automatically.
 
+## If nothing happens in Helium and similar browsers {#site-permission}
+
+Unless you allow it yourself, the browser only lets sites where you often watch videos enter picture-in-picture automatically. Chrome ships with a list of popular video sites, so it works on YouTube and similar sites right after you install it. Helium, ungoogled-chromium and some other browsers remove that list, so in a fresh install it only starts working once you've watched videos on the site for a while.
+
+To use it right away, allow the site yourself:
+
+1. Open the video site, click the site information icon on the left of the address bar, and choose "Site settings".
+2. Find "Automatic picture-in-picture" and change it to "Allow".
+3. Go back to the video, play it, and switch to another tab.
+
+Do this once for each video site you want to use. In Chrome, if a site doesn't respond when you switch tabs, you can set it the same way.
+
 ## Turn it on or off {#toggle}
 
 This feature is on by default. If you don't need it, turn off "Auto Picture-in-Picture" in Lumno's settings.

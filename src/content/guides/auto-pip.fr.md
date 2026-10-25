@@ -20,6 +20,18 @@ Lorsque vous revenez à l'onglet de la vidéo, la fenêtre en image dans l'image
 - Si un site désactive l'image dans l'image par sa politique, le navigateur ne l'autorise pas.
 - Tant qu'une fenêtre de [capture web](../web-clip/) est ouverte, l'image dans l'image vidéo ne démarre pas automatiquement.
 
+## Si rien ne se passe dans Helium et des navigateurs similaires {#site-permission}
+
+Sauf si vous l'autorisez vous-même, le navigateur ne lance l'image dans l'image automatique que sur les sites où vous regardez souvent des vidéos. Chrome intègre une liste de sites vidéo populaires : elle fonctionne donc sur YouTube et des sites similaires dès l'installation. Helium, ungoogled-chromium et d'autres navigateurs retirent cette liste ; après une nouvelle installation, elle ne fonctionne qu'une fois que vous avez regardé des vidéos sur le site pendant un certain temps.
+
+Pour l'utiliser tout de suite, autorisez le site vous-même :
+
+1. Ouvrez le site vidéo, cliquez sur l'icône d'informations sur le site à gauche de la barre d'adresse, puis choisissez « Paramètres des sites ».
+2. Trouvez « Picture-in-picture automatique » et choisissez « Autoriser ».
+3. Revenez à la vidéo, lancez-la, puis passez à un autre onglet.
+
+Faites-le une fois pour chaque site vidéo que vous souhaitez utiliser. Dans Chrome aussi, si un site ne réagit pas quand vous changez d'onglet, vous pouvez le régler de la même façon.
+
 ## Activer ou désactiver {#toggle}
 
 Cette fonction est activée par défaut. Si vous n'en avez pas besoin, désactivez « Auto Picture-in-Picture » dans les réglages de Lumno.

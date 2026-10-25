@@ -195,6 +195,7 @@ export default {
     "": ["Video picture-in-picture, PiP, floating video, mini player, pop out video"],
     when: ["Video turns into a small window when I switch tabs"],
     excluded: ["Why doesn't a video go into picture-in-picture? PiP not working"],
+    "site-permission": ["Auto PiP not working in Helium, nothing happens when I switch tabs, allow automatic picture-in-picture"],
     toggle: ["Turn off auto picture-in-picture, stop the floating video"],
   },
   "arc-command-bar": {

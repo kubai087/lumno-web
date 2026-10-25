@@ -70,6 +70,7 @@
   { "q": "视频小窗", "expect": ["auto-pip"] },
   { "q": "关掉画中画", "expect": ["auto-pip#toggle"] },
   { "q": "pip", "expect": ["auto-pip"] },
+  { "q": "helium 画中画没反应", "expect": ["auto-pip#site-permission"] },
 
   { "q": "Arc 平替", "expect": ["arc-command-bar", "use-cases#from-arc"] },
   { "q": "Zen", "expect": ["arc-command-bar", "browser-compatibility#firefox", "keyboard-shortcuts#change", "what-is-lumno#command-bar"] },

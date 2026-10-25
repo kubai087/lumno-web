@@ -60,6 +60,7 @@
   { "q": "floating window", "expect": ["web-clip"] },
   { "q": "pip", "expect": ["auto-pip"] },
   { "q": "turn off picture in picture", "expect": ["auto-pip#toggle"] },
+  { "q": "auto pip not working in helium", "expect": ["auto-pip#site-permission"] },
 
   { "q": "arc alternative", "expect": ["arc-command-bar", "use-cases#from-arc"] },
   { "q": "raycast", "expect": ["limitations#outside-browser", "browser-compatibility#safari", "what-is-lumno#command-bar"] },

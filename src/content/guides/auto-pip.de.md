@@ -20,6 +20,18 @@ Wenn du zum Tab mit dem Video zurückkehrst, schließt sich das Bild-im-Bild-Fen
 - Wenn eine Website Bild-im-Bild über ihre Richtlinien deaktiviert, lässt der Browser es nicht zu.
 - Solange ein [Web-Clip](../web-clip/)-Fenster geöffnet ist, startet kein automatisches Video-Bild-im-Bild.
 
+## Wenn in Helium und ähnlichen Browsern nichts passiert {#site-permission}
+
+Solange du es nicht selbst erlaubst, lässt der Browser automatisches Bild-im-Bild nur auf Websites zu, auf denen du oft Videos ansiehst. Chrome bringt eine Liste beliebter Videoseiten mit, deshalb funktioniert es auf YouTube und ähnlichen Seiten direkt nach der Installation. Helium, ungoogled-chromium und einige andere Browser entfernen diese Liste. Nach einer frischen Installation funktioniert es dort erst, wenn du auf der Website eine Weile Videos angesehen hast.
+
+Damit es sofort klappt, erlaube die Website selbst:
+
+1. Öffne die Videoseite, klicke links in der Adressleiste auf das Symbol für Website-Informationen und wähle „Website-Einstellungen“.
+2. Suche „Automatischer Bild-im-Bild-Modus“ und stelle ihn auf „Zulassen“.
+3. Kehre zum Video zurück, spiele es ab und wechsle zu einem anderen Tab.
+
+Das ist für jede Videoseite, die du nutzen möchtest, einmal nötig. Auch in Chrome kannst du eine Website so einstellen, wenn beim Tabwechsel nichts passiert.
+
 ## Aktivieren oder deaktivieren {#toggle}
 
 Die Funktion ist standardmäßig aktiviert. Wenn du sie nicht benötigst, deaktiviere in den Einstellungen von Lumno „Auto Picture-in-Picture“.

@@ -20,6 +20,18 @@ Ao voltar para a guia do vídeo, a janela de picture-in-picture se fecha e o ví
 - Se um site desativar o picture-in-picture pela política do site, o navegador não o permite.
 - Enquanto uma janela de [recorte da web](../web-clip/) estiver aberta, o picture-in-picture de vídeo não é ativado automaticamente.
 
+## Se nada acontecer no Helium e em navegadores parecidos {#site-permission}
+
+A menos que você permita, o navegador só ativa o picture-in-picture automático nos sites em que você costuma assistir a vídeos. O Chrome vem com uma lista de sites de vídeo populares, então funciona no YouTube e em sites parecidos logo após a instalação. O Helium, o ungoogled-chromium e outros navegadores removem essa lista; em uma instalação nova, só começa a funcionar depois que você assiste a vídeos no site por um tempo.
+
+Para usar agora mesmo, permita o site manualmente:
+
+1. Abra o site de vídeo, clique no ícone de informações do site à esquerda da barra de endereço e escolha "Configurações de sites".
+2. Encontre "Picture-in-picture automático" e mude para "Permitir".
+3. Volte ao vídeo, reproduza-o e mude para outra guia.
+
+Faça isso uma vez para cada site de vídeo que quiser usar. No Chrome, se um site não responder quando você trocar de guia, também dá para configurar assim.
+
 ## Ativar ou desativar {#toggle}
 
 Esse recurso vem ativado por padrão. Se não precisar dele, desative "Auto Picture-in-Picture" nas configurações do Lumno.

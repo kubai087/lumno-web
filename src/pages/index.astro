@@ -35,6 +35,7 @@ import { getChromeStoreReviews, selectShowcaseReviews } from "../lib/chrome-stor
 import { getCommunityPanel } from "../lib/community-panel";
 import githubIcon from "../assets/home-icons/github-line.svg?raw";
 import { getHomeContent } from "../lib/home-content";
+import { getGuidePath } from "../lib/guides";
 import { getLumnoBuiltinSiteSearchProviders } from "../lib/lumno-search-providers";
 import {
   DEFAULT_LOCALE,
@@ -511,6 +512,7 @@ import LanguageScrollRestore from "../components/LanguageScrollRestore.astro";
           ? { label: community.askLabel, ariaLabel: community.askAria, panel: communityPanel }
           : undefined}
         items={content.faqItems}
+        more={{ ...content.faqMore, href: getGuidePath(uiLocale, "faq") }}
       />
 
       <FinalCta

@@ -231,6 +231,8 @@ type HomeContent = {
   faqTitle: string;
   faqAskLabel: string;
   faqItems: HomeFaqItem[];
+  /** Closes the list and points to the help center's FAQ; `lead` carries its own trailing space where the script needs one. */
+  faqMore: { lead: string; link: string };
   /** Under the hero title where the closing CTA repeats it. */
   finalDescription: string;
 
@@ -507,6 +509,20 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           "Mac 上默认是 ⌘ ⇧ K，Windows 上是 Ctrl + Shift + K，可以在 `chrome://extensions/shortcuts` 中修改。Firefox 中默认是 Mac 上 ⌃ ⇧ K、Windows 和 Linux 上 Alt + K，可以在 `about:addons` 右上角的齿轮菜单里管理扩展快捷键。",
       },
       {
+        question: "按下快捷键没有反应怎么办？",
+        answer:
+          "先到 `chrome://extensions/shortcuts` 检查快捷键是否已设置，是否被其他扩展占用。在 Dia 中，还需要把该项右侧的范围改为「Global」。",
+        firefoxAnswer:
+          "先到 `chrome://extensions/shortcuts` 检查快捷键是否已设置，是否被其他扩展占用。在 Dia 中，还需要把该项右侧的范围改为「Global」。Firefox 中请到 `about:addons` 右上角的齿轮菜单里检查。",
+      },
+      {
+        question: "为什么在有些页面上按快捷键，打开的是新标签页？",
+        answer:
+          "浏览器不允许任何扩展在 `chrome://` 设置页、扩展商店等受限页面上运行，Lumno 无法在这些页面上显示命令栏，便会新开一个标签页并打开搜索框，这并不是故障。如果想改为打开浏览器自己的新标签页，可以在设置的「常规 → 快捷键设置 → 在受限页行为」中选择「遵循浏览器设置」。如需在本地 PDF 或 HTML 文件中使用，请在扩展详情页开启「允许访问文件网址」。",
+        firefoxAnswer:
+          "浏览器不允许任何扩展在 `chrome://` 设置页、Firefox 的 `about:` 页面和扩展商店等受限页面上运行，Lumno 无法在这些页面上显示命令栏，便会新开一个标签页并打开搜索框，这并不是故障。如果想改为打开浏览器自己的新标签页，可以在设置的「常规 → 快捷键设置 → 在受限页行为」中选择「遵循浏览器设置」。在 Chromium 内核浏览器中，开启扩展详情页的「允许访问文件网址」后，本地 PDF 和 HTML 文件中也能使用。",
+      },
+      {
         question: "支持哪些浏览器？",
         answer:
           "支持 Chrome、Edge、Dia、Brave、Vivaldi 等 Chromium 内核浏览器，暂不支持 Safari 和 Firefox。在 Dia 中可使用命令栏，新标签页暂不可用。",
@@ -524,6 +540,11 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         answer: "可以。Lumno 的交互借鉴了 Arc（与 Arc 官方无关），在 Dia、Chrome、Edge 里同样能随时唤起命令栏，一处搜索、快速切换。把快捷键改成 ⌘ T，就是熟悉的 Arc 手感。",
       },
       {
+        question: "能像 Arc 一样用 Ctrl + Tab 切换标签页吗？",
+        answer:
+          "可以，在 Chrome、Edge 等 Chromium 内核浏览器中都能设置。浏览器的快捷键页面不接受 Ctrl + Tab，但可以在该页面的控制台中运行一段代码，把它设为标签切换器的快捷键，帮助中心有完整步骤。",
+      },
+      {
         question: "能只用命令栏，继续用原来的新标签页吗？",
         answer:
           "可以。保持 Lumno 开启，再重新安装原来的新标签页扩展，让它重新接管新标签页即可，命令栏不受影响。",
@@ -539,9 +560,9 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           "在「跟随系统」模式下，命令栏还会参考当前网页的颜色。如果只想跟随系统，请在设置的「外观」中关闭「基于网页色彩自动变更主题色」。",
       },
       {
-        question: "为什么在有些页面上打不开命令栏？",
+        question: "视频自动画中画没有反应怎么办？",
         answer:
-          "浏览器不允许扩展在 `chrome://` 设置页、扩展商店等受限页面上运行，这时 Lumno 会改为在新标签页中打开搜索。如需在本地 PDF 或 HTML 文件中使用，请在扩展详情页开启「允许访问文件网址」。",
+          "除非你手动允许，浏览器只会让你常看视频的网站自动进入画中画。Chrome 自带一份常用视频网站的名单，Helium、ungoogled-chromium 等浏览器则去掉了这份名单。想马上使用，可以点击地址栏左侧的网站信息图标，打开「网站设置」，把「自动进入画中画模式」改为「允许」，每个视频网站设置一次即可。",
       },
       {
         question: "设置能在多台设备之间同步吗？",
@@ -554,10 +575,12 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           "不会。标签页、书签和历史记录都在本地检索。只有在网页搜索或 AI 搜索时，你输入的内容才会发送给你选择的搜索引擎或 AI 网站。",
       },
       {
-        question: "Lumno 免费吗？",
-        answer: "完全免费，代码在 GitHub 以 GPL-3.0 协议开源。",
+        question: "Lumno 免费吗？需要注册吗？",
+        answer:
+          "完全免费，代码在 GitHub 以 GPL-3.0 协议开源。Lumno 没有账号系统，安装后即可使用，无需注册。",
       },
     ],
+    faqMore: { lead: "没有找到你关心的问题？", link: "去帮助中心看看" },
     finalDescription: "开源浏览器命令栏与新标签页。",
 
     footerTagline: "开源的浏览器命令栏、聚焦搜索与极简新标签页。",
@@ -827,6 +850,20 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           "Mac 上預設是 ⌘ ⇧ K，Windows 上是 Ctrl + Shift + K，可以到 `chrome://extensions/shortcuts` 修改。在 Firefox 中，Mac 預設是 ⌃ ⇧ K，Windows 與 Linux 是 Alt + K，可以到 `about:addons` 右上角的齒輪選單管理擴充套件快速鍵。",
       },
       {
+        question: "按下快速鍵沒有反應怎麼辦？",
+        answer:
+          "請先到 `chrome://extensions/shortcuts` 確認快速鍵已設定，且沒有被其他擴充功能佔用。在 Dia 中，還需要把該項右側的範圍改為「Global」。",
+        firefoxAnswer:
+          "請先到 `chrome://extensions/shortcuts` 確認快速鍵已設定，且沒有被其他擴充功能佔用。在 Dia 中，還需要把該項右側的範圍改為「Global」。在 Firefox 中，請到 `about:addons` 右上角的齒輪選單檢查。",
+      },
+      {
+        question: "為什麼在某些頁面上按快速鍵，開啟的是新分頁？",
+        answer:
+          "瀏覽器不允許任何擴充功能在 `chrome://` 設定頁、線上商店等受限頁面上執行，Lumno 無法在這些頁面上顯示命令列，因此會開啟新分頁並開啟搜尋框，這並不是故障。如果想改為開啟瀏覽器本身的新分頁，可以到設定的「一般 → 快速鍵設定 → 在受限頁行為」選擇「遵循瀏覽器設定」。若要在本機 PDF 或 HTML 檔案中使用，請到擴充功能詳細資料頁開啟「允許存取檔案網址」。",
+        firefoxAnswer:
+          "瀏覽器不允許任何擴充功能在 `chrome://` 設定頁、Firefox 的 `about:` 頁面與線上商店等受限頁面上執行，Lumno 無法在這些頁面上顯示命令列，因此會開啟新分頁並開啟搜尋框，這並不是故障。如果想改為開啟瀏覽器本身的新分頁，可以到設定的「一般 → 快速鍵設定 → 在受限頁行為」選擇「遵循瀏覽器設定」。在 Chromium 核心瀏覽器中，到擴充功能詳細資料頁開啟「允許存取檔案網址」後，本機 PDF 與 HTML 檔案中也能使用。",
+      },
+      {
         question: "支援哪些瀏覽器？",
         answer:
           "支援 Chrome、Edge、Dia、Brave、Vivaldi 等 Chromium 核心瀏覽器，目前不支援 Safari 與 Firefox。在 Dia 中可使用命令列，新分頁暫時無法使用。",
@@ -844,6 +881,11 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         answer: "可以。Lumno 的互動參考了 Arc（與 Arc 官方無關），在 Dia、Chrome、Edge 裡一樣能隨時叫出命令列，一處搜尋、快速切換。把快速鍵改成 ⌘ T，就是熟悉的 Arc 手感。",
       },
       {
+        question: "能像 Arc 一樣用 Ctrl + Tab 切換分頁嗎？",
+        answer:
+          "可以，Chrome、Edge 等 Chromium 核心瀏覽器都能設定。瀏覽器的快速鍵頁面不接受 Ctrl + Tab，但可以在該頁面的主控台中執行一段程式碼，把它設為分頁切換器的快速鍵，說明中心有完整步驟。",
+      },
+      {
         question: "能只用命令列，繼續用原本的新分頁嗎？",
         answer:
           "可以。讓 Lumno 保持啟用，再重新安裝原本的新分頁擴充功能，讓它重新接管新分頁即可，命令列不受影響。",
@@ -859,9 +901,9 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           "在「跟隨系統」模式下，命令列也會參考目前網頁的顏色。如果只想跟隨系統，請到設定的「外觀」關閉「依網頁色彩自動變更主題色」。",
       },
       {
-        question: "為什麼在某些頁面上叫不出命令列？",
+        question: "影片自動子母畫面沒有反應怎麼辦？",
         answer:
-          "瀏覽器不允許擴充功能在 `chrome://` 設定頁、線上商店等受限頁面上執行，這時 Lumno 會改在新分頁開啟搜尋。若要在本機 PDF 或 HTML 檔案中使用，請到擴充功能詳細資料頁開啟「允許存取檔案網址」。",
+          "除非你手動允許，瀏覽器只會讓你常看影片的網站自動進入子母畫面。Chrome 內建一份常用影片網站的名單，Helium、ungoogled-chromium 等瀏覽器則移除了這份名單。想馬上使用，可以點選網址列左側的網站資訊圖示，開啟「網站設定」，把「自動進入子母畫面」改為「允許」，每個影片網站設定一次即可。",
       },
       {
         question: "設定能在多台裝置之間同步嗎？",
@@ -874,10 +916,12 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           "不會。分頁、書籤與瀏覽紀錄都在本機檢索。只有在網頁搜尋或 AI 搜尋時，你輸入的內容才會傳送給你選擇的搜尋引擎或 AI 網站。",
       },
       {
-        question: "Lumno 免費嗎？",
-        answer: "完全免費，程式碼在 GitHub 以 GPL-3.0 授權開源。",
+        question: "Lumno 免費嗎？需要註冊嗎？",
+        answer:
+          "完全免費，程式碼在 GitHub 以 GPL-3.0 授權開源。Lumno 沒有帳號系統，安裝後即可使用，不需要註冊。",
       },
     ],
+    faqMore: { lead: "沒有找到你想問的問題？", link: "到說明中心看看" },
     finalDescription: "開源瀏覽器命令列與新分頁。",
 
     footerTagline: "開源的瀏覽器命令列、聚焦搜尋與極簡新分頁。",
@@ -1141,6 +1185,20 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           "⌘ ⇧ K on Mac and Ctrl + Shift + K on Windows by default. You can change it at `chrome://extensions/shortcuts`. In Firefox, it’s ⌃ ⇧ K on Mac and Alt + K on Windows and Linux; change it from the gear menu in `about:addons` under Manage Extension Shortcuts.",
       },
       {
+        question: "What if the shortcut doesn’t work?",
+        answer:
+          "Go to `chrome://extensions/shortcuts` and check that the shortcut is set and that no other extension uses it. In Dia, also change the scope next to it to “Global”.",
+        firefoxAnswer:
+          "Go to `chrome://extensions/shortcuts` and check that the shortcut is set and that no other extension uses it. In Dia, also change the scope next to it to “Global”. In Firefox, check it from the gear menu in `about:addons`.",
+      },
+      {
+        question: "Why does the shortcut open a new tab on some pages?",
+        answer:
+          "Browsers don’t let any extension run on restricted pages like `chrome://` settings and the Web Store, so Lumno can’t show the command bar there and opens a new tab with the search box instead. That isn’t a bug. To get your browser’s own new tab instead, choose “Follow browser setting” under Settings › General › Shortcut Settings › Restricted page behavior. For local PDF and HTML files, turn on “Allow access to file URLs” on the extension’s details page.",
+        firefoxAnswer:
+          "Browsers don’t let any extension run on restricted pages like `chrome://` settings, Firefox’s `about:` pages, and the add-on stores, so Lumno can’t show the command bar there and opens a new tab with the search box instead. That isn’t a bug. To get your browser’s own new tab instead, choose “Follow browser setting” under Settings › General › Shortcut Settings › Restricted page behavior. In Chromium browsers, turn on “Allow access to file URLs” on the extension’s details page to use it in local PDF and HTML files too.",
+      },
+      {
         question: "Which browsers are supported?",
         answer:
           "Chromium browsers that install Chrome extensions, including Chrome, Edge, Dia, Brave, and Vivaldi. Safari and Firefox aren’t supported yet. In Dia, you get the command bar but not Lumno’s new tab.",
@@ -1159,6 +1217,11 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           "That’s the idea. Lumno borrows from Arc’s interactions (it isn’t affiliated with Arc), so in Dia, Chrome, or Edge you can still call up the command bar anytime, search everything in one place, and switch fast. Set the shortcut to ⌘ T for the Arc feel you know.",
       },
       {
+        question: "Can I switch tabs with Ctrl + Tab, like in Arc?",
+        answer:
+          "Yes, in Chrome, Edge, and other Chromium browsers. The browser’s shortcuts page won’t accept Ctrl + Tab, but a short snippet run in that page’s console makes it the tab switcher’s shortcut. The Help Center walks you through it.",
+      },
+      {
         question: "Can I keep my current new tab and just use the command bar?",
         answer:
           "Yes. Leave Lumno on, then reinstall your other new tab extension so it takes the new tab back. The command bar isn’t affected.",
@@ -1174,9 +1237,9 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           "In Follow system mode, the command bar also takes cues from the current page’s colors. To follow only your system, turn off “Adapt theme colors to each webpage” under Settings › Appearance.",
       },
       {
-        question: "Why doesn’t the command bar open on some pages?",
+        question: "What if Auto Picture-in-Picture doesn’t kick in?",
         answer:
-          "Browsers block extensions on restricted pages like `chrome://` settings and the Web Store, so Lumno opens search in a new tab. For local PDF and HTML files, turn on “Allow access to file URLs” on the extension’s details page.",
+          "Unless you allow it, the browser only lets sites where you often watch videos enter picture-in-picture on their own. Chrome ships with a list of popular video sites; Helium, ungoogled-chromium, and similar browsers remove it. To use it right away, click the site information icon on the left of the address bar, open “Site settings”, and set “Automatic picture-in-picture” to “Allow”. Do this once for each video site.",
       },
       {
         question: "Can I sync my settings across devices?",
@@ -1189,10 +1252,12 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           "No. Tabs, bookmarks, and history are searched locally. Only when you run a web or AI search is what you type sent to the search engine or AI site you picked.",
       },
       {
-        question: "Is Lumno free?",
-        answer: "Completely, and it’s open source under GPL-3.0 on GitHub.",
+        question: "Is Lumno free? Do I need an account?",
+        answer:
+          "Completely free, and open source under GPL-3.0 on GitHub. There’s no account to create: install it and start using it.",
       },
     ],
+    faqMore: { lead: "Didn’t find your question? ", link: "Browse the Help Center" },
     finalDescription: "Open-source command bar and new tab for your browser.",
 
     footerTagline: "An open-source command bar and minimalist new tab for your browser.",
@@ -1452,6 +1517,20 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           "初期設定は Mac が ⌘ ⇧ K、Windows が Ctrl + Shift + K です。`chrome://extensions/shortcuts` で変更できます。Firefox では Mac が ⌃ ⇧ K、Windows と Linux が Alt + K で、`about:addons` の歯車メニューから変更できます。",
       },
       {
+        question: "ショートカットが反応しないときは？",
+        answer:
+          "`chrome://extensions/shortcuts` で、ショートカットが設定されているか、ほかの拡張機能と重なっていないかを確認してください。Dia では、項目の右側にある範囲を「Global」に変更する必要もあります。",
+        firefoxAnswer:
+          "`chrome://extensions/shortcuts` で、ショートカットが設定されているか、ほかの拡張機能と重なっていないかを確認してください。Dia では、項目の右側にある範囲を「Global」に変更する必要もあります。Firefox では `about:addons` の歯車メニューから確認できます。",
+      },
+      {
+        question: "ページによって、ショートカットで新しいタブが開くのはなぜですか？",
+        answer:
+          "`chrome://` の設定ページやウェブストアなどの制限ページでは、ブラウザが拡張機能の動作を許可していません。そのため Lumno はコマンドバーを表示できず、代わりに新しいタブで検索ボックスを開きます。不具合ではありません。ブラウザ本来の新しいタブを開きたい場合は、設定の「一般 → キー設定 → 制限ページでの動作」で「ブラウザ設定に従う」を選んでください。ローカルの PDF や HTML ファイルで使うには、拡張機能の詳細ページで「ファイルの URL へのアクセスを許可する」をオンにしてください。",
+        firefoxAnswer:
+          "`chrome://` の設定ページ、Firefox の `about:` ページ、拡張機能ストアなどの制限ページでは、ブラウザが拡張機能の動作を許可していません。そのため Lumno はコマンドバーを表示できず、代わりに新しいタブで検索ボックスを開きます。不具合ではありません。ブラウザ本来の新しいタブを開きたい場合は、設定の「一般 → キー設定 → 制限ページでの動作」で「ブラウザ設定に従う」を選んでください。Chromium 系ブラウザでは、拡張機能の詳細ページで「ファイルの URL へのアクセスを許可する」をオンにすると、ローカルの PDF や HTML ファイルでも使えます。",
+      },
+      {
         question: "どのブラウザで使えますか？",
         answer:
           "Chrome、Edge、Dia、Brave、Vivaldi など、Chrome 拡張機能を入れられる Chromium 系ブラウザで使えます。Safari と Firefox には未対応です。Dia ではコマンドバーは使えますが、Lumno の新しいタブは使えません。",
@@ -1470,6 +1549,11 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           "使えます。Lumno の操作感は Arc を参考にしています（Arc とは無関係です）。Dia、Chrome、Edge でもいつでもコマンドバーを呼び出し、まとめて検索して素早く切り替えられます。ショートカットを ⌘ T に変えれば、Arc と同じ感覚で使えます。",
       },
       {
+        question: "Arc のように Ctrl + Tab でタブを切り替えられますか？",
+        answer:
+          "はい。Chrome や Edge などの Chromium 系ブラウザで設定できます。ショートカットの設定ページでは Ctrl + Tab を登録できませんが、そのページのコンソールで短いコードを実行すると、タブ切り替えのショートカットにできます。手順はヘルプセンターで紹介しています。",
+      },
+      {
         question: "今の新しいタブはそのままで、コマンドバーだけ使えますか？",
         answer:
           "はい。Lumno をオンにしたまま、使っていた新しいタブの拡張機能を入れ直せば、新しいタブはそちらに戻ります。コマンドバーには影響しません。",
@@ -1485,9 +1569,9 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           "「システムに従う」では、表示中のページの色も参考にしています。システムだけに合わせたい場合は、設定の「外観」で「Web ページの色に合わせてテーマを自動変更」をオフにしてください。",
       },
       {
-        question: "コマンドバーが開かないページがあるのはなぜですか？",
+        question: "自動ピクチャー・イン・ピクチャーが動かないときは？",
         answer:
-          "`chrome://` の設定ページやウェブストアなど、拡張機能の動作が制限されているページがあるためです。その場合、Lumno は新しいタブで検索を開きます。ローカルの PDF や HTML ファイルで使うには、拡張機能の詳細ページで「ファイルの URL へのアクセスを許可する」をオンにしてください。",
+          "自分で許可しない限り、ブラウザはよく動画を見るサイトでしか自動でピクチャー・イン・ピクチャーにしません。Chrome にはよく使われる動画サイトのリストが組み込まれていますが、Helium や ungoogled-chromium などのブラウザはこれを取り除いています。すぐに使いたい場合は、アドレスバー左側のサイト情報アイコンから「サイトの設定」を開き、「ピクチャー イン ピクチャーの自動開始」を「許可する」にしてください。動画サイトごとに一度ずつ設定が必要です。",
       },
       {
         question: "設定は複数のデバイスで同期できますか？",
@@ -1500,10 +1584,12 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           "ありません。タブ、ブックマーク、履歴はすべて端末内で検索します。Web 検索や AI 検索をしたときだけ、入力した内容があなたの選んだ検索エンジンや AI サイトに送られます。",
       },
       {
-        question: "Lumno は無料ですか？",
-        answer: "完全に無料です。ソースコードは GPL-3.0 ライセンスで GitHub に公開しています。",
+        question: "Lumno は無料ですか？ 登録は必要ですか？",
+        answer:
+          "完全に無料です。ソースコードは GPL-3.0 ライセンスで GitHub に公開しています。アカウントの仕組みはないので、インストールすればすぐに使えます。",
       },
     ],
+    faqMore: { lead: "お探しの質問が見つかりませんか？", link: "ヘルプセンターを見る" },
     finalDescription: "オープンソースのコマンドバーと新しいタブ。",
 
     footerTagline: "ブラウザのためのオープンソースのコマンドバーと、シンプルな新しいタブ。",
@@ -1763,6 +1849,20 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           "기본값은 Mac에서 ⌘ ⇧ K, Windows에서 Ctrl + Shift + K입니다. `chrome://extensions/shortcuts`에서 바꿀 수 있습니다. Firefox에서는 Mac에서 ⌃ ⇧ K, Windows와 Linux에서 Alt + K이며, `about:addons`의 톱니바퀴 메뉴에서 바꿀 수 있습니다.",
       },
       {
+        question: "단축키가 작동하지 않으면 어떻게 하나요?",
+        answer:
+          "`chrome://extensions/shortcuts`에서 단축키가 지정되어 있는지, 다른 확장 프로그램과 겹치지 않는지 확인하세요. Dia에서는 항목 옆의 범위도 ‘Global’로 바꿔야 합니다.",
+        firefoxAnswer:
+          "`chrome://extensions/shortcuts`에서 단축키가 지정되어 있는지, 다른 확장 프로그램과 겹치지 않는지 확인하세요. Dia에서는 항목 옆의 범위도 ‘Global’로 바꿔야 합니다. Firefox에서는 `about:addons`의 톱니바퀴 메뉴에서 확인할 수 있습니다.",
+      },
+      {
+        question: "일부 페이지에서 단축키를 누르면 새 탭이 열리는 이유는 무엇인가요?",
+        answer:
+          "브라우저는 `chrome://` 설정 페이지나 웹 스토어 같은 제한된 페이지에서 확장 프로그램 실행을 막기 때문에, Lumno는 그곳에 커맨드 바를 띄우지 못하고 대신 새 탭에서 검색창을 엽니다. 오류가 아닙니다. 브라우저 자체의 새 탭을 열고 싶다면 Settings › General › Shortcut Settings › Restricted page behavior에서 ‘Follow browser setting’을 선택하세요. 로컬 PDF나 HTML 파일에서 쓰려면 확장 프로그램 세부정보 페이지에서 ‘파일 URL에 대한 액세스 허용’을 켜세요.",
+        firefoxAnswer:
+          "브라우저는 `chrome://` 설정 페이지, Firefox의 `about:` 페이지, 확장 프로그램 스토어 같은 제한된 페이지에서 확장 프로그램 실행을 막기 때문에, Lumno는 그곳에 커맨드 바를 띄우지 못하고 대신 새 탭에서 검색창을 엽니다. 오류가 아닙니다. 브라우저 자체의 새 탭을 열고 싶다면 Settings › General › Shortcut Settings › Restricted page behavior에서 ‘Follow browser setting’을 선택하세요. Chromium 브라우저에서는 확장 프로그램 세부정보 페이지에서 ‘파일 URL에 대한 액세스 허용’을 켜면 로컬 PDF나 HTML 파일에서도 쓸 수 있습니다.",
+      },
+      {
         question: "어떤 브라우저를 지원하나요?",
         answer:
           "Chrome, Edge, Dia, Brave, Vivaldi 등 Chrome 확장 프로그램을 설치할 수 있는 Chromium 기반 브라우저를 지원합니다. Safari와 Firefox는 아직 지원하지 않습니다. Dia에서는 커맨드 바만 쓸 수 있고 Lumno 새 탭은 쓸 수 없습니다.",
@@ -1781,6 +1881,11 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           "네. Lumno는 Arc의 사용 방식을 참고했습니다(Arc와는 관련이 없습니다). Dia, Chrome, Edge에서도 언제든 커맨드 바를 불러 한곳에서 검색하고 빠르게 전환할 수 있습니다. 단축키를 ⌘ T로 바꾸면 Arc와 같은 손맛 그대로입니다.",
       },
       {
+        question: "Arc처럼 Ctrl + Tab으로 탭을 전환할 수 있나요?",
+        answer:
+          "네, Chrome, Edge 등 Chromium 브라우저에서 설정할 수 있습니다. 브라우저의 단축키 페이지에서는 Ctrl + Tab을 등록할 수 없지만, 그 페이지의 콘솔에서 짧은 코드를 실행하면 탭 전환기의 단축키로 지정할 수 있습니다. 자세한 단계는 도움말 센터에 있습니다.",
+      },
+      {
         question: "지금 쓰는 새 탭은 그대로 두고 커맨드 바만 쓸 수 있나요?",
         answer:
           "네. Lumno를 켜 둔 채로 기존 새 탭 확장 프로그램을 다시 설치하면 새 탭이 그쪽으로 돌아갑니다. 커맨드 바에는 영향이 없습니다.",
@@ -1796,9 +1901,9 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           "‘Follow system’ 모드에서는 지금 보고 있는 페이지의 색도 참고합니다. 시스템만 따르게 하려면 Settings › Appearance에서 ‘Adapt theme colors to each webpage’를 끄세요.",
       },
       {
-        question: "일부 페이지에서 커맨드 바가 열리지 않는 이유는 무엇인가요?",
+        question: "자동 PIP가 작동하지 않으면 어떻게 하나요?",
         answer:
-          "브라우저가 `chrome://` 설정 페이지나 웹 스토어 같은 제한된 페이지에서는 확장 프로그램 실행을 막기 때문입니다. 이때 Lumno는 새 탭에서 검색을 엽니다. 로컬 PDF나 HTML 파일에서 쓰려면 확장 프로그램 세부정보 페이지에서 ‘파일 URL에 대한 액세스 허용’을 켜세요.",
+          "직접 허용하지 않으면 브라우저는 동영상을 자주 보는 사이트에서만 PIP를 자동으로 시작합니다. Chrome에는 자주 쓰이는 동영상 사이트 목록이 들어 있지만, Helium, ungoogled-chromium 등의 브라우저는 이 목록을 제거했습니다. 바로 쓰려면 주소 표시줄 왼쪽의 사이트 정보 아이콘에서 ‘사이트 설정’을 열고 ‘자동 PIP 모드’를 ‘허용’으로 바꾸세요. 동영상 사이트마다 한 번씩 설정하면 됩니다.",
       },
       {
         question: "여러 기기에서 설정을 동기화할 수 있나요?",
@@ -1811,10 +1916,12 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           "아니요. 탭, 북마크, 방문 기록은 모두 기기 안에서 검색합니다. 웹 검색이나 AI 검색을 할 때만 입력한 내용이 사용자가 고른 검색 엔진이나 AI 사이트로 전송됩니다.",
       },
       {
-        question: "Lumno는 무료인가요?",
-        answer: "완전히 무료이며, GitHub에 GPL-3.0 라이선스로 소스 코드가 공개되어 있습니다.",
+        question: "Lumno는 무료인가요? 가입해야 하나요?",
+        answer:
+          "완전히 무료이며, GitHub에 GPL-3.0 라이선스로 소스 코드가 공개되어 있습니다. 따로 계정이 없어서 설치하면 바로 쓸 수 있습니다.",
       },
     ],
+    faqMore: { lead: "찾는 질문이 없나요? ", link: "도움말 센터 보기" },
     finalDescription: "오픈 소스 브라우저 커맨드 바와 새 탭.",
 
     footerTagline: "오픈 소스 브라우저 커맨드 바와 미니멀한 새 탭.",
@@ -2076,6 +2183,20 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           "Standardmäßig ⌘ ⇧ K auf dem Mac und Strg + Umschalt + K unter Windows. Ändern kannst du es unter `chrome://extensions/shortcuts`. In Firefox ist es ⌃ ⇧ K auf dem Mac und Alt + K unter Windows und Linux; ändern kannst du es über das Zahnradmenü unter `about:addons`.",
       },
       {
+        question: "Was tun, wenn das Tastenkürzel nicht reagiert?",
+        answer:
+          "Prüfe unter `chrome://extensions/shortcuts`, ob das Kürzel gesetzt ist und keine andere Erweiterung es belegt. In Dia stellst du außerdem den Bereich daneben auf „Global“.",
+        firefoxAnswer:
+          "Prüfe unter `chrome://extensions/shortcuts`, ob das Kürzel gesetzt ist und keine andere Erweiterung es belegt. In Dia stellst du außerdem den Bereich daneben auf „Global“. In Firefox findest du die Kürzel im Zahnradmenü unter `about:addons`.",
+      },
+      {
+        question: "Warum öffnet das Tastenkürzel auf manchen Seiten einen neuen Tab?",
+        answer:
+          "Browser lassen keine Erweiterung auf geschützten Seiten wie den `chrome://`-Einstellungen oder dem Web Store laufen. Lumno kann die Befehlsleiste dort nicht zeigen und öffnet stattdessen einen neuen Tab mit dem Suchfeld – das ist kein Fehler. Soll sich lieber der neue Tab deines Browsers öffnen, wähle unter Settings › General › Shortcut Settings › Restricted page behavior die Option „Follow browser setting“. Für lokale PDF- und HTML-Dateien aktiviere auf der Detailseite der Erweiterung „Zugriff auf Datei-URLs zulassen“.",
+        firefoxAnswer:
+          "Browser lassen keine Erweiterung auf geschützten Seiten wie den `chrome://`-Einstellungen, den `about:`-Seiten von Firefox oder den Add-on-Stores laufen. Lumno kann die Befehlsleiste dort nicht zeigen und öffnet stattdessen einen neuen Tab mit dem Suchfeld – das ist kein Fehler. Soll sich lieber der neue Tab deines Browsers öffnen, wähle unter Settings › General › Shortcut Settings › Restricted page behavior die Option „Follow browser setting“. In Chromium-Browsern funktioniert sie auch in lokalen PDF- und HTML-Dateien, wenn du auf der Detailseite der Erweiterung „Zugriff auf Datei-URLs zulassen“ aktivierst.",
+      },
+      {
         question: "Welche Browser werden unterstützt?",
         answer:
           "Chromium-Browser, die Chrome-Erweiterungen installieren können, etwa Chrome, Edge, Dia, Brave und Vivaldi. Safari und Firefox werden noch nicht unterstützt. In Dia gibt es die Befehlsleiste, aber nicht den neuen Tab von Lumno.",
@@ -2094,6 +2215,11 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           "Genau darum geht es. Lumno orientiert sich an der Bedienung von Arc (ohne Verbindung zu Arc): Auch in Dia, Chrome oder Edge rufst du die Befehlsleiste jederzeit auf, suchst an einem Ort und wechselst blitzschnell. Leg das Kürzel auf ⌘ T, und es fühlt sich an wie in Arc.",
       },
       {
+        question: "Kann ich wie in Arc mit Ctrl + Tab zwischen Tabs wechseln?",
+        answer:
+          "Ja, in Chrome, Edge und anderen Chromium-Browsern. Die Tastenkürzel-Seite des Browsers nimmt Ctrl + Tab nicht an, aber ein kurzes Code-Snippet in der Konsole dieser Seite legt es als Kürzel für den Tab-Umschalter fest. Die Hilfe zeigt dir Schritt für Schritt, wie es geht.",
+      },
+      {
         question: "Kann ich meinen bisherigen neuen Tab behalten und nur die Befehlsleiste nutzen?",
         answer:
           "Ja. Lass Lumno aktiviert und installiere deine andere Neuer-Tab-Erweiterung neu, damit sie den neuen Tab wieder übernimmt. Die Befehlsleiste bleibt davon unberührt.",
@@ -2109,9 +2235,9 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           "Im Modus „Follow system“ richtet sich die Befehlsleiste auch nach den Farben der aktuellen Seite. Soll sie nur dem System folgen, schalte unter Settings › Appearance die Option „Adapt theme colors to each webpage“ aus.",
       },
       {
-        question: "Warum öffnet sich die Befehlsleiste auf manchen Seiten nicht?",
+        question: "Was tun, wenn Bild-im-Bild nicht automatisch startet?",
         answer:
-          "Browser sperren Erweiterungen auf geschützten Seiten wie den `chrome://`-Einstellungen und dem Web Store. Lumno öffnet die Suche dann in einem neuen Tab. Für lokale PDF- und HTML-Dateien aktiviere auf der Detailseite der Erweiterung „Zugriff auf Datei-URLs zulassen“.",
+          "Solange du es nicht selbst erlaubst, startet der Browser Bild-im-Bild nur auf Websites automatisch, auf denen du oft Videos ansiehst. Chrome bringt dafür eine Liste beliebter Videoseiten mit, Helium, ungoogled-chromium und ähnliche Browser entfernen sie. Damit es sofort klappt, klicke links in der Adressleiste auf das Symbol für Website-Informationen, öffne „Website-Einstellungen“ und stelle „Automatischer Bild-im-Bild-Modus“ auf „Zulassen“ – einmal pro Videoseite.",
       },
       {
         question: "Kann ich meine Einstellungen zwischen Geräten synchronisieren?",
@@ -2124,10 +2250,12 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           "Nein. Tabs, Lesezeichen und Verlauf werden lokal durchsucht. Nur bei einer Web- oder KI-Suche geht deine Eingabe an die Suchmaschine oder KI-Website, die du gewählt hast.",
       },
       {
-        question: "Ist Lumno kostenlos?",
-        answer: "Komplett – und Open Source unter GPL-3.0 auf GitHub.",
+        question: "Ist Lumno kostenlos? Brauche ich ein Konto?",
+        answer:
+          "Komplett kostenlos – und Open Source unter GPL-3.0 auf GitHub. Ein Konto gibt es nicht: installieren und loslegen.",
       },
     ],
+    faqMore: { lead: "Deine Frage ist nicht dabei? ", link: "Zur Hilfe" },
     finalDescription: "Open-Source-Befehlsleiste und neuer Tab für deinen Browser.",
 
     footerTagline: "Eine Open-Source-Befehlsleiste und ein minimalistischer neuer Tab für deinen Browser.",
@@ -2389,6 +2517,20 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           "Par défaut, ⌘ ⇧ K sur Mac et Ctrl + Maj + K sous Windows. Vous pouvez le modifier dans `chrome://extensions/shortcuts`. Dans Firefox, c’est ⌃ ⇧ K sur Mac et Alt + K sous Windows et Linux ; modifiez-le depuis le menu en forme d’engrenage de `about:addons`.",
       },
       {
+        question: "Que faire si le raccourci ne répond pas ?",
+        answer:
+          "Vérifiez dans `chrome://extensions/shortcuts` que le raccourci est bien défini et qu’aucune autre extension ne l’utilise. Dans Dia, réglez aussi la portée indiquée à côté sur « Global ».",
+        firefoxAnswer:
+          "Vérifiez dans `chrome://extensions/shortcuts` que le raccourci est bien défini et qu’aucune autre extension ne l’utilise. Dans Dia, réglez aussi la portée indiquée à côté sur « Global ». Dans Firefox, vérifiez-le depuis le menu en forme d’engrenage de `about:addons`.",
+      },
+      {
+        question: "Pourquoi le raccourci ouvre-t-il un nouvel onglet sur certaines pages ?",
+        answer:
+          "Les navigateurs n’autorisent aucune extension sur les pages protégées, comme les réglages `chrome://` et le Web Store : Lumno ne peut pas y afficher la barre de commande et ouvre à la place un nouvel onglet avec le champ de recherche. Ce n’est pas un bug. Pour ouvrir plutôt le nouvel onglet de votre navigateur, choisissez « Follow browser setting » dans Settings › General › Shortcut Settings › Restricted page behavior. Pour les fichiers PDF et HTML locaux, activez « Autoriser l’accès aux URL de fichier » dans la page de détails de l’extension.",
+        firefoxAnswer:
+          "Les navigateurs n’autorisent aucune extension sur les pages protégées, comme les réglages `chrome://`, les pages `about:` de Firefox et les boutiques d’extensions : Lumno ne peut pas y afficher la barre de commande et ouvre à la place un nouvel onglet avec le champ de recherche. Ce n’est pas un bug. Pour ouvrir plutôt le nouvel onglet de votre navigateur, choisissez « Follow browser setting » dans Settings › General › Shortcut Settings › Restricted page behavior. Dans les navigateurs Chromium, activez « Autoriser l’accès aux URL de fichier » dans la page de détails de l’extension pour l’utiliser aussi dans les fichiers PDF et HTML locaux.",
+      },
+      {
         question: "Quels navigateurs sont pris en charge ?",
         answer:
           "Les navigateurs Chromium qui acceptent les extensions Chrome, dont Chrome, Edge, Dia, Brave et Vivaldi. Safari et Firefox ne sont pas encore pris en charge. Dans Dia, vous avez la barre de commande, mais pas le nouvel onglet de Lumno.",
@@ -2407,6 +2549,11 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           "C’est tout l’idée. Lumno s’inspire des interactions d’Arc (sans lien avec Arc) : dans Dia, Chrome ou Edge, vous ouvrez la barre de commande à tout moment, cherchez partout au même endroit et passez d’un onglet à l’autre en un éclair. Réglez le raccourci sur ⌘ T pour retrouver vos réflexes d’Arc.",
       },
       {
+        question: "Puis-je changer d’onglet avec Ctrl + Tab, comme dans Arc ?",
+        answer:
+          "Oui, dans Chrome, Edge et les autres navigateurs Chromium. La page des raccourcis du navigateur n’accepte pas Ctrl + Tab, mais quelques lignes de code exécutées dans sa console en font le raccourci du sélecteur d’onglets. Le centre d’aide détaille chaque étape.",
+      },
+      {
         question: "Puis-je garder mon nouvel onglet actuel et n’utiliser que la barre de commande ?",
         answer:
           "Oui. Laissez Lumno activé, puis réinstallez votre autre extension de nouvel onglet pour qu’elle reprenne la main. La barre de commande n’est pas concernée.",
@@ -2422,9 +2569,9 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           "En mode « Follow system », la barre de commande tient aussi compte des couleurs de la page affichée. Pour ne suivre que le système, désactivez « Adapt theme colors to each webpage » dans Settings › Appearance.",
       },
       {
-        question: "Pourquoi la barre de commande ne s’ouvre-t-elle pas sur certaines pages ?",
+        question: "Que faire si le picture-in-picture automatique ne se déclenche pas ?",
         answer:
-          "Les navigateurs bloquent les extensions sur les pages protégées, comme les réglages `chrome://` et le Web Store ; Lumno ouvre alors la recherche dans un nouvel onglet. Pour les fichiers PDF et HTML locaux, activez « Autoriser l’accès aux URL de fichier » dans la page de détails de l’extension.",
+          "Sauf si vous l’autorisez vous-même, le navigateur ne lance l’image dans l’image automatiquement que sur les sites où vous regardez souvent des vidéos. Chrome intègre une liste de sites vidéo populaires ; Helium, ungoogled-chromium et des navigateurs similaires la retirent. Pour l’utiliser tout de suite, cliquez sur l’icône d’informations sur le site à gauche de la barre d’adresse, ouvrez « Paramètres des sites » et réglez « Picture-in-picture automatique » sur « Autoriser ». Une fois par site vidéo suffit.",
       },
       {
         question: "Puis-je synchroniser mes réglages entre plusieurs appareils ?",
@@ -2437,10 +2584,12 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           "Non. Onglets, favoris et historique sont recherchés en local. Ce que vous tapez n’est envoyé au moteur de recherche ou au site d’IA choisi que lorsque vous lancez une recherche web ou IA.",
       },
       {
-        question: "Lumno est-il gratuit ?",
-        answer: "Entièrement, et son code est ouvert sous licence GPL-3.0 sur GitHub.",
+        question: "Lumno est-il gratuit ? Faut-il créer un compte ?",
+        answer:
+          "Entièrement gratuit, et son code est ouvert sous licence GPL-3.0 sur GitHub. Aucun compte n’est nécessaire : installez-le et c’est parti.",
       },
     ],
+    faqMore: { lead: "Vous ne trouvez pas votre question ? ", link: "Consulter le centre d’aide" },
     finalDescription: "Barre de commande et nouvel onglet open source pour votre navigateur.",
 
     footerTagline: "Une barre de commande et un nouvel onglet minimaliste, open source, pour votre navigateur.",
@@ -2702,6 +2851,20 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           "Por defecto es ⌘ ⇧ K en Mac y Ctrl + Mayús + K en Windows. Puedes cambiarlo en `chrome://extensions/shortcuts`. En Firefox es ⌃ ⇧ K en Mac y Alt + K en Windows y Linux; cámbialo desde el menú del engranaje en `about:addons`.",
       },
       {
+        question: "¿Qué hago si el atajo no responde?",
+        answer:
+          "Comprueba en `chrome://extensions/shortcuts` que el atajo está asignado y que ninguna otra extensión lo usa. En Dia, cambia también a «Global» el ámbito que aparece al lado.",
+        firefoxAnswer:
+          "Comprueba en `chrome://extensions/shortcuts` que el atajo está asignado y que ninguna otra extensión lo usa. En Dia, cambia también a «Global» el ámbito que aparece al lado. En Firefox, revísalo desde el menú del engranaje en `about:addons`.",
+      },
+      {
+        question: "¿Por qué el atajo abre una pestaña nueva en algunas páginas?",
+        answer:
+          "Los navegadores no dejan que ninguna extensión se ejecute en páginas protegidas, como los ajustes de `chrome://` y Chrome Web Store, así que Lumno no puede mostrar ahí la barra de comandos y abre en su lugar una pestaña nueva con el cuadro de búsqueda. No es un fallo. Si prefieres que se abra la nueva pestaña de tu navegador, elige «Follow browser setting» en Settings › General › Shortcut Settings › Restricted page behavior. Para archivos PDF y HTML locales, activa «Permitir el acceso a las URL de archivo» en la página de detalles de la extensión.",
+        firefoxAnswer:
+          "Los navegadores no dejan que ninguna extensión se ejecute en páginas protegidas, como los ajustes de `chrome://`, las páginas `about:` de Firefox y las tiendas de extensiones, así que Lumno no puede mostrar ahí la barra de comandos y abre en su lugar una pestaña nueva con el cuadro de búsqueda. No es un fallo. Si prefieres que se abra la nueva pestaña de tu navegador, elige «Follow browser setting» en Settings › General › Shortcut Settings › Restricted page behavior. En los navegadores Chromium, activa «Permitir el acceso a las URL de archivo» en la página de detalles de la extensión para usarla también en archivos PDF y HTML locales.",
+      },
+      {
         question: "¿Qué navegadores son compatibles?",
         answer:
           "Los navegadores Chromium que instalan extensiones de Chrome, como Chrome, Edge, Dia, Brave y Vivaldi. Safari y Firefox aún no son compatibles. En Dia tienes la barra de comandos, pero no la nueva pestaña de Lumno.",
@@ -2720,6 +2883,11 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           "Esa es la idea. Lumno se inspira en las interacciones de Arc (sin relación con Arc): en Dia, Chrome o Edge puedes abrir la barra de comandos cuando quieras, buscar todo en un solo lugar y cambiar de pestaña al instante. Asigna el atajo a ⌘ T y tendrás la sensación de Arc que ya conoces.",
       },
       {
+        question: "¿Puedo cambiar de pestaña con Ctrl + Tab, como en Arc?",
+        answer:
+          "Sí, en Chrome, Edge y otros navegadores Chromium. La página de atajos del navegador no acepta Ctrl + Tab, pero un breve fragmento de código en su consola lo convierte en el atajo del selector de pestañas. El centro de ayuda te guía paso a paso.",
+      },
+      {
         question: "¿Puedo conservar mi nueva pestaña actual y usar solo la barra de comandos?",
         answer:
           "Sí. Deja Lumno activado y vuelve a instalar tu otra extensión de nueva pestaña para que la recupere. La barra de comandos no se ve afectada.",
@@ -2735,9 +2903,9 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           "En el modo «Follow system», la barra de comandos también se guía por los colores de la página actual. Si quieres que siga solo al sistema, desactiva «Adapt theme colors to each webpage» en Settings › Appearance.",
       },
       {
-        question: "¿Por qué la barra de comandos no se abre en algunas páginas?",
+        question: "¿Qué hago si la imagen en imagen automática no se activa?",
         answer:
-          "Los navegadores bloquean las extensiones en páginas protegidas, como los ajustes de `chrome://` y Chrome Web Store, así que Lumno abre la búsqueda en una nueva pestaña. Para archivos PDF y HTML locales, activa «Permitir el acceso a las URL de archivo» en la página de detalles de la extensión.",
+          "A menos que lo permitas tú, el navegador solo activa la imagen en imagen automática en los sitios donde sueles ver vídeos. Chrome incluye una lista de sitios de vídeo populares; Helium, ungoogled-chromium y navegadores parecidos la quitan. Para usarla enseguida, haz clic en el icono de información del sitio a la izquierda de la barra de direcciones, abre «Configuración del sitio» y cambia «Imagen en imagen automática» a «Permitir». Basta con hacerlo una vez en cada sitio de vídeo.",
       },
       {
         question: "¿Puedo sincronizar mis ajustes entre dispositivos?",
@@ -2750,10 +2918,12 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           "No. Las pestañas, los marcadores y el historial se buscan en tu dispositivo. Solo cuando haces una búsqueda web o con IA se envía lo que escribes al buscador o sitio de IA que hayas elegido.",
       },
       {
-        question: "¿Lumno es gratis?",
-        answer: "Totalmente, y es de código abierto con licencia GPL-3.0 en GitHub.",
+        question: "¿Lumno es gratis? ¿Hace falta una cuenta?",
+        answer:
+          "Totalmente gratis, y de código abierto con licencia GPL-3.0 en GitHub. No hay cuentas: lo instalas y ya puedes usarlo.",
       },
     ],
+    faqMore: { lead: "¿No encuentras tu pregunta? ", link: "Visita el centro de ayuda" },
     finalDescription: "Barra de comandos y nueva pestaña de código abierto para tu navegador.",
 
     footerTagline: "Una barra de comandos y una nueva pestaña minimalista de código abierto para tu navegador.",
@@ -3015,6 +3185,20 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           "O padrão é ⌘ ⇧ K no Mac e Ctrl + Shift + K no Windows. Você pode mudar em `chrome://extensions/shortcuts`. No Firefox, é ⌃ ⇧ K no Mac e Alt + K no Windows e no Linux; mude pelo menu de engrenagem em `about:addons`.",
       },
       {
+        question: "O que fazer se o atalho não responder?",
+        answer:
+          "Confira em `chrome://extensions/shortcuts` se o atalho está definido e se nenhuma outra extensão o usa. No Dia, mude também para “Global” o escopo exibido ao lado.",
+        firefoxAnswer:
+          "Confira em `chrome://extensions/shortcuts` se o atalho está definido e se nenhuma outra extensão o usa. No Dia, mude também para “Global” o escopo exibido ao lado. No Firefox, confira pelo menu de engrenagem em `about:addons`.",
+      },
+      {
+        question: "Por que o atalho abre uma nova aba em algumas páginas?",
+        answer:
+          "Os navegadores não deixam nenhuma extensão rodar em páginas protegidas, como as configurações `chrome://` e a Chrome Web Store, então o Lumno não consegue mostrar a barra de comandos ali e abre uma nova aba com a caixa de pesquisa. Não é um erro. Se preferir a nova aba do próprio navegador, escolha “Follow browser setting” em Settings › General › Shortcut Settings › Restricted page behavior. Para arquivos PDF e HTML locais, ative “Permitir acesso aos URLs de arquivo” na página de detalhes da extensão.",
+        firefoxAnswer:
+          "Os navegadores não deixam nenhuma extensão rodar em páginas protegidas, como as configurações `chrome://`, as páginas `about:` do Firefox e as lojas de extensões, então o Lumno não consegue mostrar a barra de comandos ali e abre uma nova aba com a caixa de pesquisa. Não é um erro. Se preferir a nova aba do próprio navegador, escolha “Follow browser setting” em Settings › General › Shortcut Settings › Restricted page behavior. Nos navegadores Chromium, ative “Permitir acesso aos URLs de arquivo” na página de detalhes da extensão para usá-la também em arquivos PDF e HTML locais.",
+      },
+      {
         question: "Quais navegadores são compatíveis?",
         answer:
           "Navegadores Chromium que instalam extensões do Chrome, como Chrome, Edge, Dia, Brave e Vivaldi. Safari e Firefox ainda não são compatíveis. No Dia, você usa a barra de comandos, mas não a nova aba do Lumno.",
@@ -3033,6 +3217,11 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           "Essa é a ideia. O Lumno se inspira nas interações do Arc (sem relação com o Arc): no Dia, no Chrome ou no Edge, você abre a barra de comandos a qualquer momento, pesquisa tudo num só lugar e troca de aba num instante. Defina o atalho como ⌘ T e pronto, é o Arc que você conhece.",
       },
       {
+        question: "Posso trocar de aba com Ctrl + Tab, como no Arc?",
+        answer:
+          "Sim, no Chrome, no Edge e em outros navegadores Chromium. A página de atalhos do navegador não aceita Ctrl + Tab, mas um pequeno trecho de código no console dessa página o define como atalho do alternador de abas. A central de ajuda mostra o passo a passo.",
+      },
+      {
         question: "Posso manter minha nova aba atual e usar só a barra de comandos?",
         answer:
           "Pode. Deixe o Lumno ativado e reinstale sua outra extensão de nova aba para ela voltar a assumir a nova aba. A barra de comandos não muda.",
@@ -3048,9 +3237,9 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           "No modo “Follow system”, a barra de comandos também leva em conta as cores da página atual. Para seguir só o sistema, desative “Adapt theme colors to each webpage” em Settings › Appearance.",
       },
       {
-        question: "Por que a barra de comandos não abre em algumas páginas?",
+        question: "O que fazer se o picture-in-picture automático não funcionar?",
         answer:
-          "Os navegadores bloqueiam extensões em páginas protegidas, como as configurações `chrome://` e a Chrome Web Store, então o Lumno abre a pesquisa numa nova aba. Para arquivos PDF e HTML locais, ative “Permitir acesso aos URLs de arquivo” na página de detalhes da extensão.",
+          "A menos que você permita, o navegador só ativa o picture-in-picture automático nos sites em que você costuma assistir a vídeos. O Chrome vem com uma lista de sites de vídeo populares; o Helium, o ungoogled-chromium e navegadores parecidos removem essa lista. Para usar agora, clique no ícone de informações do site à esquerda da barra de endereço, abra “Configurações de sites” e mude “Picture-in-picture automático” para “Permitir”. Basta fazer isso uma vez em cada site de vídeo.",
       },
       {
         question: "Dá para sincronizar as configurações entre dispositivos?",
@@ -3063,10 +3252,12 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           "Não. Abas, favoritos e histórico são pesquisados no seu dispositivo. Só quando você faz uma pesquisa na web ou com IA o que você digita vai para o buscador ou site de IA que você escolheu.",
       },
       {
-        question: "O Lumno é gratuito?",
-        answer: "Totalmente, e o código é aberto sob a licença GPL-3.0 no GitHub.",
+        question: "O Lumno é gratuito? Preciso criar uma conta?",
+        answer:
+          "Totalmente gratuito, e o código é aberto sob a licença GPL-3.0 no GitHub. Não existe conta: é só instalar e usar.",
       },
     ],
+    faqMore: { lead: "Não encontrou sua pergunta? ", link: "Visite a central de ajuda" },
     finalDescription: "Barra de comandos e nova aba de código aberto para o seu navegador.",
 
     footerTagline: "Uma barra de comandos e uma nova aba minimalista de código aberto para o seu navegador.",
@@ -3328,6 +3519,20 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           "По умолчанию ⌘ ⇧ K на Mac и Ctrl + Shift + K в Windows. Изменить его можно на странице `chrome://extensions/shortcuts`. В Firefox — ⌃ ⇧ K на Mac и Alt + K в Windows и Linux; изменить его можно через меню с шестерёнкой на странице `about:addons`.",
       },
       {
+        question: "Что делать, если сочетание клавиш не срабатывает?",
+        answer:
+          "Проверьте на странице `chrome://extensions/shortcuts`, что сочетание задано и не занято другим расширением. В Dia также переключите область действия рядом с ним на «Global».",
+        firefoxAnswer:
+          "Проверьте на странице `chrome://extensions/shortcuts`, что сочетание задано и не занято другим расширением. В Dia также переключите область действия рядом с ним на «Global». В Firefox проверьте его через меню с шестерёнкой на странице `about:addons`.",
+      },
+      {
+        question: "Почему на некоторых страницах сочетание клавиш открывает новую вкладку?",
+        answer:
+          "Браузеры не пускают расширения на защищённые страницы, например настройки `chrome://` и интернет-магазин Chrome. Lumno не может показать там командную панель и вместо этого открывает новую вкладку со строкой поиска — это не ошибка. Чтобы открывалась новая вкладка самого браузера, выберите «Follow browser setting» в Settings › General › Shortcut Settings › Restricted page behavior. Для локальных PDF- и HTML-файлов включите «Разрешить открывать файлы по ссылкам» на странице сведений о расширении.",
+        firefoxAnswer:
+          "Браузеры не пускают расширения на защищённые страницы, например настройки `chrome://`, страницы `about:` в Firefox и магазины расширений. Lumno не может показать там командную панель и вместо этого открывает новую вкладку со строкой поиска — это не ошибка. Чтобы открывалась новая вкладка самого браузера, выберите «Follow browser setting» в Settings › General › Shortcut Settings › Restricted page behavior. В браузерах на Chromium включите «Разрешить открывать файлы по ссылкам» на странице сведений о расширении, чтобы пользоваться им и в локальных PDF- и HTML-файлах.",
+      },
+      {
         question: "Какие браузеры поддерживаются?",
         answer:
           "Браузеры на Chromium, в которые можно ставить расширения Chrome: Chrome, Edge, Dia, Brave, Vivaldi и другие. Safari и Firefox пока не поддерживаются. В Dia доступна командная панель, но не новая вкладка Lumno.",
@@ -3346,6 +3551,11 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           "В этом и смысл. Lumno вдохновлён интерфейсом Arc (и никак с Arc не связан): в Dia, Chrome или Edge вы так же вызываете командную панель в любой момент, ищете всё в одном месте и мгновенно переключаетесь. Назначьте сочетание ⌘ T — и всё будет как в Arc.",
       },
       {
+        question: "Можно ли переключать вкладки по Ctrl + Tab, как в Arc?",
+        answer:
+          "Да, в Chrome, Edge и других браузерах на Chromium. Страница сочетаний клавиш не принимает Ctrl + Tab, но короткий код в консоли этой страницы назначает его переключателю вкладок. Пошаговая инструкция есть в справке.",
+      },
+      {
         question: "Можно оставить свою новую вкладку и пользоваться только командной панелью?",
         answer:
           "Да. Оставьте Lumno включённым и переустановите своё расширение новой вкладки, чтобы оно снова её заняло. Командная панель продолжит работать.",
@@ -3361,9 +3571,9 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           "В режиме «Follow system» командная панель учитывает ещё и цвета открытой страницы. Чтобы она следовала только за системой, отключите «Adapt theme colors to each webpage» в Settings › Appearance.",
       },
       {
-        question: "Почему на некоторых страницах командная панель не открывается?",
+        question: "Что делать, если «картинка в картинке» не включается автоматически?",
         answer:
-          "Браузеры не пускают расширения на защищённые страницы, например настройки `chrome://` и интернет-магазин Chrome, поэтому Lumno открывает поиск в новой вкладке. Для локальных PDF- и HTML-файлов включите «Разрешить открывать файлы по ссылкам» на странице сведений о расширении.",
+          "Если вы не разрешили это вручную, браузер автоматически включает «картинку в картинке» только на сайтах, где вы часто смотрите видео. В Chrome встроен список популярных видеосайтов, а Helium, ungoogled-chromium и похожие браузеры его удаляют. Чтобы функция заработала сразу, нажмите значок сведений о сайте слева от адресной строки, откройте «Настройки сайтов» и для «Автоматического показа картинки в картинке» выберите «Разрешить». Это нужно сделать один раз для каждого видеосайта.",
       },
       {
         question: "Настройки синхронизируются между устройствами?",
@@ -3376,10 +3586,12 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
           "Нет. Вкладки, закладки и история ищутся прямо на устройстве. Введённый текст уходит в выбранный поисковик или сервис ИИ, только когда вы запускаете веб-поиск или поиск с ИИ.",
       },
       {
-        question: "Lumno бесплатный?",
-        answer: "Полностью. А ещё у него открытый код под лицензией GPL-3.0 на GitHub.",
+        question: "Lumno бесплатный? Нужна ли регистрация?",
+        answer:
+          "Полностью бесплатный, с открытым кодом под лицензией GPL-3.0 на GitHub. Аккаунтов нет: установите и пользуйтесь.",
       },
     ],
+    faqMore: { lead: "Не нашли свой вопрос? ", link: "Загляните в справку" },
     finalDescription: "Командная панель и новая вкладка с открытым исходным кодом.",
 
     footerTagline: "Командная панель и минималистичная новая вкладка с открытым исходным кодом.",

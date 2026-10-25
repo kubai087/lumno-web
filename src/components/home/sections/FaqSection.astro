@@ -17,9 +17,11 @@ interface Props {
    */
   group?: { label: string; ariaLabel: string; panel: CommunityPanel };
   items: HomeFaqItem[];
+  /** The help center's FAQ, for questions the list doesn't cover. */
+  more: { lead: string; link: string; href: string };
 }
 
-const { title, askLabel, askHref, group, items } = Astro.props;
+const { title, askLabel, askHref, group, items, more } = Astro.props;
 
 /*
  * Answers are plain strings with two bits of inline markup: `code` for URLs and
@@ -112,6 +114,14 @@ function parseAnswer(answer: string): AnswerPart[] {
           </div>
         </details>
       ))}
+      <p class="faq__more" data-reveal>
+        {more.lead}<a
+          href={more.href}
+          data-analytics-event="open_help_center"
+          data-analytics-category="cta"
+          data-analytics-label="home_faq_more"
+        >{more.link}</a>
+      </p>
     </div>
   </div>
 </section>
@@ -189,7 +199,9 @@ function parseAnswer(answer: string): AnswerPart[] {
   .faq__list:not([data-enhanced]) .faq__item[open]::before,
   .faq__list:not([data-enhanced]) .faq__item[open] + .faq__item::before,
   .faq__item[data-expanded="true"]::before,
-  .faq__item[data-expanded="true"] + .faq__item::before {
+  .faq__item[data-expanded="true"] + .faq__item::before,
+  .faq__list:not([data-enhanced]) .faq__item[open] + .faq__more::before,
+  .faq__item[data-expanded="true"] + .faq__more::before {
     opacity: 0;
   }
 
@@ -316,6 +328,39 @@ function parseAnswer(answer: string): AnswerPart[] {
     font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
     font-size: 0.86em;
     white-space: nowrap;
+  }
+
+  /* A quiet closing line under the last row, on the same hairline rhythm. */
+  .faq__more {
+    position: relative;
+    margin: 0;
+    padding: 22px var(--faq-pad) 0;
+    color: var(--text-sub, #626870);
+    font-size: var(--home-body);
+    line-height: 1.6;
+  }
+
+  .faq__more::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    inset-inline: var(--faq-pad);
+    height: 1px;
+    background: var(--home-hairline);
+    transition: opacity 280ms ease;
+  }
+
+  .faq__more a {
+    color: var(--home-ink);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: var(--home-hairline-control, currentColor);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 160ms ease;
+  }
+
+  .faq__more a:hover {
+    text-decoration-color: currentColor;
   }
 
   .faq__keys {

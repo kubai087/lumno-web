@@ -589,6 +589,16 @@ html[data-platform="other"] [data-key-mac] {
 .home-cell__icon svg {
   display: block;
   overflow: visible;
+  transition:
+    filter 220ms ease,
+    opacity 220ms ease;
+}
+
+/* Before a replay (UtilitiesSection) the glyph blurs away, so it restarts out of sight. */
+.home-sheet > li[data-rewind] .home-cell__icon svg {
+  filter: blur(2px);
+  opacity: 0;
+  transition-duration: 160ms;
 }
 
 .home-cell__icon-fill {
@@ -617,14 +627,13 @@ html[data-platform="other"] [data-key-mac] {
 
 /*
  * The cell is marked [data-played] once it has scrolled into view, and again
- * when the pointer enters it, or a phone taps it, anywhere but its art tile
- * (UtilitiesSection): the glyph is rebuilt part by part, and when the last
- * part has settled (--handoff) the original fill takes over again. Under a
- * pointer (off the art) the chip also grows from its corner (1.125 keeps it
- * on whole pixels, 32px → 36px).
+ * when the pointer enters it or keyboard focus reaches it (UtilitiesSection):
+ * the glyph is rebuilt part by part, and when the last part has settled
+ * (--handoff) the original fill takes over again. Under a pointer the chip
+ * also grows from its corner (1.125 keeps it on whole pixels, 32px → 36px).
  */
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  .home-sheet > li:hover:not(:has(.util-art:hover)) .home-cell__icon {
+  .home-sheet > li:hover .home-cell__icon {
     transform: scale(1.125);
     color: var(--home-ink);
     box-shadow:

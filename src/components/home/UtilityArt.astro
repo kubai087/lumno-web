@@ -7,8 +7,7 @@ import SceneFavicon from "./newtab/SceneFavicon.astro";
  * side (or along its bottom, four cells across), showing the feature in one
  * short scene. Hidden until the cell has scrolled into view; then
  * UtilitiesSection marks the tile [data-played], it fades in, the scene plays
- * once and the tile stays on its last frame. Hovering the tile (or tapping it
- * on phones) replays it.
+ * once and the tile stays on its last frame. Hovering the cell replays it.
  *
  * Every element's resting style is the scene's final frame, so reduced
  * motion simply shows the result, and leaving mid-play never snaps.
@@ -277,7 +276,6 @@ const BARS = [42, 64, 50, 78, 36];
   .util-art[data-played] {
     opacity: 1;
     transform: none;
-    pointer-events: auto;
   }
 
   .util-art__stage {
@@ -288,6 +286,17 @@ const BARS = [42, 64, 50, 78, 36];
     width: 126px;
     height: 118px;
     transform: translate(-50%, -50%);
+    transition:
+      filter 260ms ease,
+      opacity 260ms ease;
+  }
+
+  /* Before a replay (UtilitiesSection): the finished scene blurs away, the
+     scene restarts underneath, and the blur clears into its first frame. */
+  .util-art[data-rewind] .util-art__stage {
+    filter: blur(6px);
+    opacity: 0;
+    transition-duration: 160ms;
   }
 
   .util-art :global(.nts-fav) {

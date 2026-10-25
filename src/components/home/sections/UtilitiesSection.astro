@@ -83,63 +83,67 @@ const guideHref = (id: HomeUtilityId) => {
    * screen, then rests on the finished frame like the other homepage demos.
    * Cells that arrive together go a beat apart, in reading order.
    *
-   * Afterwards the two replay apart: the pointer entering the art (or a tap
-   * on it on phones) replays the art, and entering anywhere else in the cell
-   * (or a tap there) replays the icon. Each is marked [data-played]: the
-   * icon's on the cell (home.css), the art's on its tile (UtilityArt).
+   * A cell is one link to its help page (the title's link covers it). The
+   * pointer entering it, or keyboard focus reaching it, replays its icon and
+   * art together; on phones a tap follows the link, so only a cell with no
+   * page replays on a tap. The icon's mark ([data-played]) is on the cell
+   * (home.css), the art's on its tile (UtilityArt). A replay first blurs the
+   * finished frame away ([data-rewind]) and restarts under the blur, which
+   * then clears, so the scene never snaps back.
    */
   const cells = Array.from(document.querySelectorAll<HTMLElement>(".utilities__grid > li"));
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  type Zone = "icon" | "art";
-  // Where a cell's zone mark goes: the cell itself, or its art tile.
-  const target = (cell: HTMLElement, zone: Zone) =>
-    zone === "art" ? cell.querySelector<HTMLElement>(".util-art") : cell;
-  const zoneOf = (element: Element): Zone => (element.closest(".util-art") ? "art" : "icon");
+  // The elements a cell's play marks: the cell itself (its icon) and its art tile.
+  const marks = (cell: HTMLElement) =>
+    [cell, cell.querySelector<HTMLElement>(".util-art")].filter((element): element is HTMLElement => Boolean(element));
 
   if (reduceMotion) {
     // No motion: show every art tile on its finished frame.
-    cells.forEach((cell) => {
-      cell.dataset.played = "";
-      const art = target(cell, "art");
-      if (art) art.dataset.played = "";
-    });
+    cells.forEach((cell) => marks(cell).forEach((element) => (element.dataset.played = "")));
   } else if (cells.length) {
-    const DELAY = 300;
-    const STAGGER = 500;
-    // The longest icon and the longest scene; a pointer arriving sooner
-    // would cut them short.
-    const PLAY_LENGTH: Record<Zone, number> = { icon: 1000, art: 2900 };
+    const DELAY = 200;
+    const STAGGER = 260;
+    // Matches the [data-rewind] fade-out in home.css and UtilityArt.
+    const REWIND = 160;
+    // The longest scene; a replay sooner would cut it short.
+    const PLAY_LENGTH = 2900;
     const timers = new Map<HTMLElement, number>();
     const playedAt = new Map<HTMLElement, number>();
-    const pointerZone = new Map<HTMLElement, Zone>();
+    const rewinding = new Set<HTMLElement>();
     let nextStart = 0;
 
     // Dropping the mark for one style pass restarts every animation it drives.
-    const play = (element: HTMLElement) => {
-      delete element.dataset.played;
-      void element.offsetWidth;
-      element.dataset.played = "";
-      playedAt.set(element, performance.now());
-    };
-
-    const playCell = (cell: HTMLElement) => {
-      play(cell);
-      const art = target(cell, "art");
-      if (art) play(art);
+    const play = (cell: HTMLElement) => {
+      marks(cell).forEach((element) => {
+        delete element.dataset.played;
+        void element.offsetWidth;
+        element.dataset.played = "";
+      });
+      playedAt.set(cell, performance.now());
     };
 
     // A replay before the cell's turn takes the place of its first play.
-    const replay = (cell: HTMLElement, zone: Zone) => {
-      if (timers.has(cell)) {
-        window.clearTimeout(timers.get(cell));
-        timers.delete(cell);
-        observer.unobserve(cell);
-        playCell(cell);
+    const playNow = (cell: HTMLElement) => {
+      window.clearTimeout(timers.get(cell));
+      timers.delete(cell);
+      observer.unobserve(cell);
+      play(cell);
+    };
+
+    const replay = (cell: HTMLElement) => {
+      if (!("played" in cell.dataset)) {
+        playNow(cell);
         return;
       }
-      const element = target(cell, zone);
-      if (element) play(element);
+      if (rewinding.has(cell) || performance.now() - (playedAt.get(cell) ?? -Infinity) < PLAY_LENGTH) return;
+      rewinding.add(cell);
+      marks(cell).forEach((element) => (element.dataset.rewind = ""));
+      window.setTimeout(() => {
+        play(cell);
+        marks(cell).forEach((element) => delete element.dataset.rewind);
+        rewinding.delete(cell);
+      }, REWIND);
     };
 
     const observer = new IntersectionObserver(
@@ -162,7 +166,7 @@ const guideHref = (id: HomeUtilityId) => {
               cell,
               window.setTimeout(() => {
                 timers.delete(cell);
-                playCell(cell);
+                play(cell);
                 observer.unobserve(cell);
               }, at - now),
             );
@@ -173,24 +177,17 @@ const guideHref = (id: HomeUtilityId) => {
 
     cells.forEach((cell) => {
       observer.observe(cell);
-      cell.addEventListener("pointerover", (event) => {
-        if (event.pointerType !== "mouse") return;
-        const zone = zoneOf(event.target as Element);
-        if (pointerZone.get(cell) === zone) return;
-        pointerZone.set(cell, zone);
-        // Not over a play about to start or still running.
-        if (timers.has(cell)) return;
-        const element = target(cell, zone);
-        if (!element || performance.now() - (playedAt.get(element) ?? -Infinity) < PLAY_LENGTH[zone]) return;
-        replay(cell, zone);
+      // Not over a first play that is about to start.
+      cell.addEventListener("pointerenter", (event) => {
+        if (event.pointerType === "mouse" && !timers.has(cell)) replay(cell);
       });
-      cell.addEventListener("pointerleave", () => pointerZone.delete(cell));
+      cell.addEventListener("focusin", (event) => {
+        if ((event.target as Element).matches(":focus-visible") && !timers.has(cell)) replay(cell);
+      });
       cell.addEventListener("click", (event) => {
-        // A mouse already replayed it on the way in.
-        if ((event as PointerEvent).pointerType === "mouse") return;
-        // The title is a link to the help center; following it needs no replay.
-        if ((event.target as Element).closest("a")) return;
-        replay(cell, zoneOf(event.target as Element));
+        // A mouse already replayed it on the way in; elsewhere a cell with a page follows its link.
+        if ((event as PointerEvent).pointerType === "mouse" || cell.querySelector("a")) return;
+        replay(cell);
       });
     });
   }
@@ -219,6 +216,24 @@ const guideHref = (id: HomeUtilityId) => {
     text-decoration: none;
   }
 
+  /* The title's link covers the whole cell, so the cell is the link. */
+  .utilities__link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .utilities__link:focus-visible {
+    outline: none;
+  }
+
+  .utilities__link:focus-visible::after {
+    outline: 2px solid var(--home-select-ink);
+    outline-offset: -4px;
+    border-radius: var(--home-radius-inner);
+  }
+
   /* A box one line tall, centring the chevron on the line it ends, for CJK and Latin titles alike. */
   .utilities__link i {
     display: inline-flex;
@@ -231,7 +246,7 @@ const guideHref = (id: HomeUtilityId) => {
     transition: transform 180ms ease, color 180ms ease;
   }
 
-  .utilities__link:hover i,
+  .utilities__grid > li:hover .utilities__link i,
   .utilities__link:focus-visible i {
     color: inherit;
     transform: translateX(2px);

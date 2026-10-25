@@ -209,6 +209,19 @@ const guideHref = (id: HomeUtilityId) => {
   .utilities__grid > li {
     position: relative;
     container: utility / inline-size;
+    transition: background-color 200ms ease;
+  }
+
+  /* Under the pointer (or keyboard focus) the cell takes a faint grey tint,
+     and its art tile (UtilityArt) deepens with it so the two stay apart. */
+  @media (hover: hover) {
+    .utilities__grid > li:hover {
+      background-color: color-mix(in srgb, rgb(var(--home-edge)) 2.5%, var(--home-card));
+    }
+  }
+
+  .utilities__grid > li:has(.utilities__link:focus-visible) {
+    background-color: color-mix(in srgb, rgb(var(--home-edge)) 2.5%, var(--home-card));
   }
 
   .utilities__link {

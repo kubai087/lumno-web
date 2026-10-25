@@ -231,8 +231,23 @@ const BARS = [42, 64, 50, 78, 36];
     transform-origin: right center;
     transition:
       opacity 220ms ease,
-      transform 420ms var(--ua-ease);
+      transform 420ms var(--ua-ease),
+      background-color 200ms ease,
+      box-shadow 200ms ease;
     pointer-events: none;
+  }
+
+  /* The cell under the pointer or keyboard focus tints (UtilitiesSection); the tile deepens a step with it. */
+  @media (hover: hover) {
+    :global(.utilities__grid > li:hover) > .util-art {
+      background-color: #f4f5f6;
+      box-shadow: inset 0 0 0 1px rgba(var(--home-edge), 0.09);
+    }
+  }
+
+  :global(.utilities__grid > li:has(.utilities__link:focus-visible)) > .util-art {
+    background-color: #f4f5f6;
+    box-shadow: inset 0 0 0 1px rgba(var(--home-edge), 0.09);
   }
 
   /*

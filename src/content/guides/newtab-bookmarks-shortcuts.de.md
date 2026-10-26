@@ -65,7 +65,7 @@ Der Lesezeichenbereich zeigt den Inhalt der Lesezeichenleiste deines Browsers. W
 - Klicke mit der rechten Maustaste auf einen Ordner und wähle „Open in new tab group“, um alle seine Seiten auf einmal in einer gemeinsamen Tabgruppe zu öffnen.
 - Klicke mit der rechten Maustaste auf ein Lesezeichen oder einen Ordner und wähle „Add to shortcuts“, um es am Ende deiner letzten Shortcut-Gruppe hinzuzufügen. Das Lesezeichen bleibt, wo es ist. Ist es bereits unter deinen Shortcuts, steht im Menü „Already in shortcuts“.
 - Klicke auf das Lesezeichensymbol, um den Lesezeichen-Manager des Browsers zu öffnen.
-- Shortcuts und Lesezeichen öffnen sich standardmäßig im aktuellen Tab. Sollen sie sich in einem neuen Tab öffnen, aktiviere sie einzeln in den Einstellungen von Lumno unter General → New Tab Settings → Open in a new tab. Klickst du mit gedrückter `⌘` oder mit der mittleren Maustaste, öffnen sie sich immer im Hintergrund.
+- Shortcuts und Lesezeichen öffnen sich standardmäßig im aktuellen Tab. Sollen sie sich in einem neuen Tab öffnen, kreuze sie in den Einstellungen von Lumno unter General → New Tab Settings → Open in a new tab when clicked an. Mit gedrückter `⌥`-Taste öffnest du einen Eintrag einmalig auf die andere Art; klickst du mit gedrückter `⌘` oder mit der mittleren Maustaste, öffnet er sich immer im Hintergrund.
 
 ## Layouts für Lesezeichen {#bookmark-layouts}
 

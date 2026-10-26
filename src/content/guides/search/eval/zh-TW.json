@@ -96,5 +96,10 @@
   { "q": "拼音首字母", "expect": ["search-tabs-bookmarks-history#pinyin"] },
   { "q": "鍵盤配置", "expect": ["search-tabs-bookmarks-history#keyboard-layout"] },
   { "q": "材質深淺色", "expect": ["newtab-wallpaper#glass"] },
-  { "q": "Ctrl Tab 設定不了", "expect": ["tab-switcher#ctrl-tab"] }
+  { "q": "Ctrl Tab 設定不了", "expect": ["tab-switcher#ctrl-tab"] },
+  { "q": "在目前分頁開啟", "expect": ["search-tabs-bookmarks-history#current-tab"] },
+  { "q": "不要開新分頁", "expect": ["search-tabs-bookmarks-history#current-tab"] },
+  { "q": "圖形加速未開啟", "expect": ["browser-compatibility#graphics-acceleration"] },
+  { "q": "硬體加速", "expect": ["browser-compatibility#graphics-acceleration"] },
+  { "q": "搜尋優先", "expect": ["search-tabs-bookmarks-history#results"] }
 ]

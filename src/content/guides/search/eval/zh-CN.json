@@ -141,5 +141,10 @@
   { "q": "图标背景", "expect": ["newtab-bookmarks-shortcuts#shortcuts"] },
   { "q": "材质深浅色", "expect": ["newtab-wallpaper#glass"] },
   { "q": "Ctrl Tab 设置不了", "expect": ["tab-switcher#ctrl-tab"] },
-  { "q": "切换器改成 ctrl tab", "expect": ["tab-switcher#ctrl-tab"] }
+  { "q": "切换器改成 ctrl tab", "expect": ["tab-switcher#ctrl-tab"] },
+  { "q": "结果在当前页打开", "expect": ["search-tabs-bookmarks-history#current-tab"] },
+  { "q": "不要新开标签页", "expect": ["search-tabs-bookmarks-history#current-tab"] },
+  { "q": "图形加速未开启", "expect": ["browser-compatibility#graphics-acceleration"] },
+  { "q": "硬件加速", "expect": ["browser-compatibility#graphics-acceleration"] },
+  { "q": "搜索优先", "expect": ["search-tabs-bookmarks-history#results"] }
 ]

@@ -58,7 +58,7 @@ Dans la section Style des réglages Appearance, remplacez Material « Default 
 | Acrylic | Un flou doux sur une teinte translucide |
 | Liquid glass | Un verre plus limpide ; les bords du champ de recherche et de ses résultats courbent le fond d'écran comme une lentille |
 
-Avec une matière en verre, vous pouvez aussi régler Material theme. Match New Tab suit le mode clair ou sombre actuel du nouvel onglet ; Light ou Dark fixe le nouvel onglet dans ce mode, avec le fond d'écran prévu pour lui.
+Avec une matière en verre, vous pouvez aussi régler Material theme. Auto suit le mode clair ou sombre du nouvel onglet, mais passe à une matière sombre sur les fonds d'écran plus sombres pour garder le texte lisible ; Light ou Dark fixe la matière et le nouvel onglet dans ce mode, avec le fond d'écran prévu pour lui.
 
 Les deux matières en verre sont en version bêta et rendent mieux sur un fond d'écran. Firefox affiche l'aspect de verre, sans la déformation sur les bords.
 

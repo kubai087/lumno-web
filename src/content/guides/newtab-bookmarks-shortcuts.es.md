@@ -65,7 +65,7 @@ La zona de marcadores muestra el contenido de la barra de marcadores de tu naveg
 - Haz clic con el botón derecho en una carpeta y elige "Open in new tab group" para abrir todas sus páginas a la vez, reunidas en un mismo grupo de pestañas.
 - Haz clic con el botón derecho en un marcador o una carpeta y elige "Add to shortcuts" para añadirlo al final de tu último grupo de accesos directos. El marcador se queda donde está. Si ya está entre tus accesos directos, el menú muestra "Already in shortcuts".
 - Haz clic en el icono de marcadores para abrir el administrador de marcadores del navegador.
-- Los accesos directos y los marcadores se abren en la pestaña actual de forma predeterminada. Para abrirlos en una pestaña nueva, actívalos uno a uno en los ajustes de Lumno, en General → New Tab Settings → Open in a new tab. Si haces clic manteniendo pulsada `⌘` o con el botón central, siempre se abren en segundo plano.
+- Los accesos directos y los marcadores se abren en la pestaña actual de forma predeterminada. Para abrirlos en una pestaña nueva, márcalos en los ajustes de Lumno, en General → New Tab Settings → Open in a new tab when clicked. Si haces clic manteniendo pulsada `⌥`, se abren esa vez de la otra forma; si haces clic manteniendo pulsada `⌘` o con el botón central, siempre se abren en segundo plano.
 
 ## Diseños de marcadores {#bookmark-layouts}
 

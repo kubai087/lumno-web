@@ -73,7 +73,7 @@ export default {
       "Open in background: Cmd-click, Ctrl-click, middle-click, Cmd Enter, keep the command bar open to open several",
       "Number jump, open a result by number, Ctrl N, Ctrl P to select, input history",
     ],
-    "newtab-keys": ["New tab keys: undo removing a shortcut, Cmd Z, Ctrl Z, type to search, open shortcuts in background"],
+    "newtab-keys": ["New tab keys: undo removing a shortcut, Cmd Z, Ctrl Z, type to search, open shortcuts in background", "Hold Option or Alt and click to open in a new tab or the current tab"],
     "switcher-keys": ["Using the keyboard in the switcher: Alt Q, Option Q, go back, Shift Tab, cancel"],
     "web-clip-keys": ["Choose the clip area with the keyboard: brackets, scroll wheel for outer and inner elements"],
   },
@@ -89,7 +89,8 @@ export default {
   "search-tabs-bookmarks-history": {
     "": ["Search bookmarks, favorites, history, browsing history, open tabs. Find a page I visited before"],
     open: ["How do I open the search box, popup or search bar?"],
-    results: ["What do Open, Bookmark and History mean in results? Search suggestions, ranking"],
+    results: ["What do Open, Bookmark and History mean in results? Search suggestions, ranking", "Arrow keys put a search suggestion in the box, Esc brings back what I typed", "Is the first result a search or a page? Search First, Autocomplete First, First Search Result Priority, bookmark below suggestions"],
+    "current-tab": ["Open results in the current tab, same tab, open in place like the address bar", "Don't open a new tab, stop opening a new tab every time", "Pinned tab still opens a new tab, what do New Tab and Go mean, hold Option or Alt to open the other way"],
     "keyboard-layout": ["Typed with the wrong keyboard layout, forgot to switch keyboard language, gibberish in Russian, Hebrew, Arabic or Korean", "Search ignores accents and full-width characters, Korean initial consonants, pinyin initials, fuzzy pinyin"],
     "open-tabs": ["Only search open tabs, tab search", "Only search bookmarks, favorites or history"],
     "close-other-tabs": ["Close all other tabs at once, close every tab, clean up tabs, what is the brush icon"],
@@ -123,7 +124,7 @@ export default {
     "save-local": ["Save a Bing or curated wallpaper, download a wallpaper, keep a wallpaper offline, how many local wallpapers"],
     "dark-mode": ["A different wallpaper for dark mode or night mode"],
     effects: ["Wallpaper too busy, can't read the search box: blur, frosted glass, dim, overlay, filters"],
-    glass: ["Liquid glass, acrylic, frosted glass material, glass effect, glassmorphism, iOS style, translucent search box, see-through cards, style, material", "Material theme, keep glass light or dark"],
+    glass: ["Liquid glass, acrylic, frosted glass material, glass effect, glassmorphism, iOS style, translucent search box, see-through cards, style, material", "Material theme, keep glass light or dark", "Material theme Auto, glass turns dark over dark wallpapers"],
     sync: ["Does the wallpaper sync to my other computers?"],
   },
   "newtab-bookmarks-shortcuts": {
@@ -217,6 +218,7 @@ export default {
     dia: ["Dia new tab doesn't work, Dia shortcut does nothing", "Use Cmd T, ⌘T in Dia to open the command bar; Cmd T opens Dia's new tab instead"],
     firefox: ["Does it work in Firefox or Zen browser?"],
     safari: ["Does it work in Safari? Apple's browser on Mac"],
+    "graphics-acceleration": ["Graphics acceleration is off, what does it mean? Turn on hardware acceleration, GPU acceleration", "New tab is slow, laggy command bar, choppy animations, wallpaper effects stutter, browser feels slow", "Dismiss the graphics acceleration notice, chrome://gpu"],
     languages: ["Change the language: English, Chinese, Japanese interface"],
   },
   privacy: {

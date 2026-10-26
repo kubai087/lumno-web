@@ -58,7 +58,7 @@ In the Style section of Appearance settings, change Material from Default to Acr
 | Acrylic | A soft blur over a translucent tint |
 | Liquid glass | Clearer glass; the edges of the search box and its results bend the wallpaper behind them like a lens |
 
-With a glass material on, you can also set Material theme. Match New Tab keeps the new tab's current light or dark mode; Light or Dark holds the new tab in that mode, with that mode's wallpaper.
+With a glass material on, you can also set Material theme. Auto follows the new tab's light or dark mode, but switches to dark material over darker wallpapers to keep text legible; Light or Dark fixes the material and holds the new tab in that mode, with that mode's wallpaper.
 
 Both glass materials are in beta and look best over a wallpaper. Firefox shows the glass finish without the bending at the edges.
 

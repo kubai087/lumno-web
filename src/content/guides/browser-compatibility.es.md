@@ -50,6 +50,18 @@ Como Firefox ya usa `⌘ ⇧ K`, la versión para Firefox usa de forma predeterm
 
 El sistema de extensiones de Safari es muy distinto del de Chromium, y todavía no existe una versión de Lumno para Safari. Si quieres una búsqueda similar en todo el sistema en el Mac, prueba [Raycast](https://www.raycast.com/) o [Alfred](https://www.alfredapp.com/).
 
+## Aceleración de gráficos {#graphics-acceleration}
+
+Con la aceleración de gráficos desactivada, el navegador dibuja las páginas con el procesador, así que el desplazamiento y las animaciones pueden ir a saltos, y los efectos de fondo y los materiales de cristal de Lumno se ralentizan. Cuando Lumno detecta que el navegador no dibuja con la tarjeta gráfica, muestra «Graphics acceleration is off» debajo del cuadro de búsqueda de la nueva pestaña y encima de la barra de comandos.
+
+![Un aviso debajo del cuadro de búsqueda de la nueva pestaña: Graphics acceleration is off, Turn it on for smoother pages; it takes a browser restart, con un botón Turn on a la derecha](graphics-notice "El aviso de aceleración de gráficos")
+
+1. Haz clic en Turn on en el aviso. Lumno abre la configuración de Sistema del navegador (`chrome://settings/system`, o la misma página en Edge y Brave).
+2. Activa «Usar la aceleración de gráficos cuando esté disponible».
+3. Haz clic en «Reiniciar». El cambio se aplica cuando el navegador se reinicia.
+
+Si prefieres dejarla desactivada, haz clic en el botón de cerrar a la derecha del aviso y no volverá a mostrarse en este ordenador. Si el aviso vuelve después de activarla y reiniciar, puede que un controlador gráfico, una máquina virtual o un escritorio remoto impidan al navegador usar la tarjeta gráfica; abre `chrome://gpu` para ver los detalles. La versión para Firefox no muestra este aviso.
+
 ## Idiomas de la interfaz {#languages}
 
 Desde la versión 1.2.0, la extensión está disponible en 10 idiomas: español, inglés, chino simplificado y tradicional, japonés, coreano, alemán, francés, portugués (Brasil) y ruso. De forma predeterminada usa el idioma de tu navegador, y puedes cambiarlo en los ajustes.

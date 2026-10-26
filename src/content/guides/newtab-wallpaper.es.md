@@ -58,7 +58,7 @@ En la sección Style de los ajustes de Appearance, cambia Material de Default a 
 | Acrylic | Un desenfoque suave sobre un tono translúcido |
 | Liquid glass | Un cristal más limpio; los bordes del cuadro de búsqueda y de sus resultados curvan el fondo como una lente |
 
-Con un material de cristal activado, también puedes ajustar Material theme. Match New Tab sigue el modo claro u oscuro actual de la nueva pestaña; Light o Dark fija la nueva pestaña en ese modo, con el fondo correspondiente.
+Con un material de cristal activado, también puedes ajustar Material theme. Auto sigue el modo claro u oscuro de la nueva pestaña, pero usa material oscuro sobre fondos más oscuros para que el texto se lea bien; Light o Dark fija el material y la nueva pestaña en ese modo, con el fondo correspondiente.
 
 Los dos materiales de cristal están en fase beta y lucen mejor sobre un fondo. Firefox muestra el acabado de cristal, pero sin la curvatura de los bordes.
 

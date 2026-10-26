@@ -65,7 +65,7 @@ The bookmarks area shows the contents of your browser's bookmarks bar. When you 
 - Right-click a folder and choose "Open in new tab group" to open all of its pages at once, grouped together.
 - Right-click a bookmark or folder and choose "Add to shortcuts" to add it to the end of your last shortcut group. The bookmark stays where it is. If it's already among your shortcuts, the menu says "Already in shortcuts".
 - Click the bookmark icon to open the browser's bookmark manager.
-- Shortcuts and bookmarks open in the current tab by default. To open them in a new tab instead, turn each one on under General → New Tab Settings → Open in a new tab in Lumno's settings. Holding `⌘` while you click, or middle-clicking, always opens in the background.
+- Shortcuts and bookmarks open in the current tab by default. To open them in a new tab instead, check them under General → New Tab Settings → Open in a new tab when clicked in Lumno's settings. Hold `⌥` while you click to open one the other way; holding `⌘` while you click, or middle-clicking, always opens in the background.
 
 ## Bookmark layouts {#bookmark-layouts}
 

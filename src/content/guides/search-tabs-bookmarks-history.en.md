@@ -14,13 +14,25 @@ The label next to each result shows where it comes from:
 - Bookmark: a page in your bookmarks bar or folders, shown with its folder.
 - Frequent and History: the sites you visit most, and your browsing history.
 
-Suggestions from your search engine also appear; press `↩` to search. Results you choose more often move higher in the list.
+Suggestions from your search engine also appear; press `↩` to search. As in the address bar, moving onto a suggestion with the arrow keys puts it in the search box, and `Esc` brings back what you typed. Results you choose more often move higher in the list.
+
+By default, the first result is the page Lumno completes for you. If you mostly search, set First Search Result Priority to Search First under Search Result Settings in Lumno's settings: searching comes first, followed by any bookmark, history entry or top site titled exactly what you typed.
 
 A domain typed with a Chinese full stop, such as `baidu。com`, opens as a URL; a sentence that ends in 。 is still searched.
 
 ![Lumno opened on a blank page: typing chrome lists an open GitHub tab, search suggestions, a bookmark and top sites](search "Typing chrome shows open tabs, bookmarks and top sites together")
 
 Other useful keys: `⌥ ↩` opens a result in the current tab, and `⇧ ↩` opens another copy of an open tab. For all keys, see [Keyboard shortcuts](../keyboard-shortcuts/#command-bar-keys).
+
+## Open in the current tab {#current-tab}
+
+When you open the command bar on a webpage, results open in a new tab and the page you were on stays put. To open them in the current tab, as the address bar does, turn off "Open in a new tab when clicked" under General → Command Bar in Lumno's settings. Then:
+
+- Pages, searches, typed addresses and site searches open in the current tab, and the hint next to each result changes from New Tab to Go.
+- On a pinned tab, results still open in a new tab, so the pinned page isn't replaced.
+- Open tabs are still switched to directly.
+
+Either way, hold `⌥` while you press `↩` or click to open a result the other way, or hold `⌘` to open it in a background tab. The new tab page's search box has its own setting; see [Keys on the new tab page](../keyboard-shortcuts/#newtab-keys).
 
 ## Typed with the wrong keyboard {#keyboard-layout}
 

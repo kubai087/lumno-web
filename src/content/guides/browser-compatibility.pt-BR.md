@@ -50,6 +50,18 @@ Como o Firefox já usa `⌘ ⇧ K`, a versão para Firefox usa por padrão `⌃ 
 
 O sistema de extensões do Safari é muito diferente do Chromium, e ainda não existe uma versão do Lumno para Safari. Para uma pesquisa semelhante em todo o sistema no Mac, experimente o [Raycast](https://www.raycast.com/) ou o [Alfred](https://www.alfredapp.com/).
 
+## Aceleração gráfica {#graphics-acceleration}
+
+Com a aceleração gráfica desativada, o navegador desenha as páginas no processador, então a rolagem e as animações podem travar, e os efeitos de papel de parede e os materiais de vidro do Lumno ficam mais lentos. Quando o Lumno percebe que o navegador não está desenhando com a placa de vídeo, ele mostra "Graphics acceleration is off" abaixo da caixa de pesquisa da nova guia e acima da barra de comandos.
+
+![Um aviso abaixo da caixa de pesquisa da nova guia: Graphics acceleration is off, Turn it on for smoother pages; it takes a browser restart, com um botão Turn on à direita](graphics-notice "O aviso de aceleração gráfica")
+
+1. Clique em Turn on no aviso. O Lumno abre as configurações de Sistema do navegador (`chrome://settings/system`, ou a mesma página no Edge e no Brave).
+2. Ative "Usar aceleração gráfica quando disponível".
+3. Clique em "Reiniciar". A mudança vale depois que o navegador reiniciar.
+
+Se preferir deixá-la desativada, clique no botão de fechar à direita do aviso, e ele não aparecerá mais neste computador. Se o aviso voltar depois de ativar e reiniciar, talvez um driver de vídeo, uma máquina virtual ou uma área de trabalho remota esteja impedindo o navegador de usar a placa de vídeo; abra `chrome://gpu` para ver os detalhes. A versão para Firefox não mostra este aviso.
+
 ## Idiomas da interface {#languages}
 
 Desde a versão 1.2.0, a extensão está disponível em 10 idiomas: português (Brasil), inglês, chinês simplificado e tradicional, japonês, coreano, alemão, espanhol, francês e russo. Por padrão, ela usa o idioma do navegador, e você pode alterá-lo nas configurações.

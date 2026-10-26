@@ -91,5 +91,10 @@
   { "q": "ツールバーのアイコン", "expect": ["install#toolbar-popup"] },
   { "q": "キーボード配列", "expect": ["search-tabs-bookmarks-history#keyboard-layout"] },
   { "q": "ガラスの明暗", "expect": ["newtab-wallpaper#glass"] },
-  { "q": "Ctrl Tab 登録できない", "expect": ["tab-switcher#ctrl-tab"] }
+  { "q": "Ctrl Tab 登録できない", "expect": ["tab-switcher#ctrl-tab"] },
+  { "q": "現在のタブで開く", "expect": ["search-tabs-bookmarks-history#current-tab"] },
+  { "q": "新しいタブを開かない", "expect": ["search-tabs-bookmarks-history#current-tab"] },
+  { "q": "グラフィック アクセラレーション", "expect": ["browser-compatibility#graphics-acceleration"] },
+  { "q": "ハードウェア アクセラレーション", "expect": ["browser-compatibility#graphics-acceleration"] },
+  { "q": "検索を優先", "expect": ["search-tabs-bookmarks-history#results"] }
 ]

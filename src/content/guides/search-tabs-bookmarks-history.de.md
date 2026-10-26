@@ -14,11 +14,23 @@ Die Kennzeichnung neben jedem Ergebnis gibt an, woher es stammt:
 - Bookmark: eine Seite aus deiner Lesezeichenleiste oder deinen Ordnern; der Ordner wird ebenfalls angezeigt.
 - Frequent und History: deine meistbesuchten Seiten und dein Browserverlauf.
 
-Zusätzlich werden Vorschläge deiner Suchmaschine angezeigt; mit der Eingabetaste startest du die Suche. Ergebnisse, die du häufiger auswählst, erscheinen weiter oben.
+Zusätzlich werden Vorschläge deiner Suchmaschine angezeigt; mit der Eingabetaste startest du die Suche. Wie in der Adressleiste übernimmt das Suchfeld einen Vorschlag, sobald du ihn mit den Pfeiltasten auswählst, und `Esc` holt deine Eingabe zurück. Ergebnisse, die du häufiger auswählst, erscheinen weiter oben.
+
+Standardmäßig steht oben die Seite, die Lumno für dich vervollständigt. Suchst du meistens, stelle in den Einstellungen von Lumno unter „Search Result Settings“ die Option „First Search Result Priority“ auf „Search First“: Dann steht die Suche oben, direkt gefolgt von einem Lesezeichen, Verlaufseintrag oder häufig besuchten Website, deren Titel genau deiner Eingabe entspricht.
 
 ![Lumno auf einer leeren Seite: Die Eingabe chrome zeigt einen offenen GitHub-Tab, Suchvorschläge, ein Lesezeichen und meistbesuchte Seiten](search "Die Eingabe chrome zeigt offene Tabs, Lesezeichen und meistbesuchte Seiten zusammen")
 
 Weitere nützliche Tasten: `⌥ ↩` öffnet ein Ergebnis im aktuellen Tab, `⇧ ↩` öffnet einen bereits geöffneten Tab ein weiteres Mal in einem neuen Tab. Alle Tasten findest du unter [Tastenkürzel](../keyboard-shortcuts/#command-bar-keys).
+
+## Im aktuellen Tab öffnen {#current-tab}
+
+Öffnest du die Befehlsleiste auf einer Webseite, öffnen sich Ergebnisse in einem neuen Tab, und die Seite, auf der du warst, bleibt erhalten. Sollen sie sich wie in der Adressleiste im aktuellen Tab öffnen, schalte in den Einstellungen von Lumno unter „General → Command Bar“ die Option „Open in a new tab when clicked“ aus. Danach gilt:
+
+- Seiten, Suchen, eingegebene Adressen und Website-Suchen öffnen sich im aktuellen Tab, und der Hinweis neben jedem Ergebnis wechselt von „New Tab“ zu „Go“.
+- Auf einem angehefteten Tab öffnen sich Ergebnisse weiterhin in einem neuen Tab, damit die angeheftete Seite erhalten bleibt.
+- Zu geöffneten Tabs wird weiterhin direkt gewechselt.
+
+Unabhängig von der Einstellung öffnest du ein Ergebnis mit gedrückter `⌥`-Taste und Eingabetaste oder Klick auf die andere Art; mit gedrückter `⌘`-Taste öffnet es sich im Hintergrund. Für das Suchfeld im neuen Tab gibt es eine eigene Einstellung, siehe [Tasten im neuen Tab](../keyboard-shortcuts/#newtab-keys).
 
 ## Mit dem falschen Tastaturlayout getippt {#keyboard-layout}
 

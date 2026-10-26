@@ -47,7 +47,7 @@ On macOS, you can also turn on "Mac keyboard navigation" in Labs to select the n
 | Key or click | Action |
 | --- | --- |
 | `↩`, or click a result | Open the result, or switch to it if it's an open tab |
-| `⌥ ↩`, or hold `⌥` and click | Open in the current tab instead of a new one |
+| `⌥ ↩`, or hold `⌥` and click | Open in the current tab instead of a new one, or in a new tab if you've set results to [open in the current tab](../search-tabs-bookmarks-history/#current-tab) |
 | `⇧ ↩`, or hold `⇧` and click | If the result is an open tab, open another copy in a new tab |
 | `⌘ ↩`, hold `⌘` and click, or middle-click | Open in a background tab and keep the command bar open, so you can open the next one |
 
@@ -57,7 +57,7 @@ While you hold `⌥`, `⇧` or `⌘`, the hint on the right of each result chang
 
 | Key | Action |
 | --- | --- |
-| `Tab` | Complete a suggestion; after a site shortcut, start site search; in an empty search box, search open tabs only |
+| `Tab` | Complete a suggestion; after a site shortcut, start site search; in an empty search box, search open tabs only; after selecting a page with the arrow keys, put its address in the box to edit |
 | `Tab` `Tab` | In an empty search box, open the search scope panel; with a scope already selected, one press is enough |
 | `⌥ ↑` `⌥ ↓` | Bring back the previous or next thing you typed |
 | `⌘ Z` `⌘ ⇧ Z` | While the search scope panel is open, undo or redo a change to the order of search sources |
@@ -72,7 +72,8 @@ The search box on the new tab page uses the same keys as the command bar. On top
 | Key or click | Action |
 | --- | --- |
 | Start typing | Your text goes straight into the search box; no need to click it first |
-| Click a search result, shortcut, bookmark or site card | Open it in the current tab by default, or in a new tab once you turn it on under General → New Tab Settings → Open in a new tab |
+| Click a search result, shortcut, bookmark or site card | Open it in the current tab by default, or in a new tab once you check it under General → New Tab Settings → Open in a new tab when clicked |
+| Hold `⌥` and click, or press `⌥ ↩` | Open it the other way: in a new tab if it would open in the current one, and in the current tab if it would open in a new one |
 | Hold `⌘` and click, or middle-click | Open in a background tab |
 | `⌥ ←` `⌥ →` | After selecting a shortcut with `Tab`, move it one place back or forward |
 | `⌘ Z` | Undo your last change to shortcuts or bookmarks, such as removing, moving, creating a folder or deleting a group |

@@ -19,6 +19,10 @@
     915,
     825
   ],
+  "en/graphics-notice": [
+    1440,
+    382
+  ],
   "en/link-preview": [
     1440,
     900
@@ -109,7 +113,7 @@
   ],
   "en/switcher": [
     1440,
-    498
+    510
   ],
   "en/uc-research": [
     1440,
@@ -146,6 +150,10 @@
   "ja/dia-shortcuts": [
     915,
     825
+  ],
+  "ja/graphics-notice": [
+    1440,
+    382
   ],
   "ja/link-preview": [
     1440,
@@ -237,7 +245,7 @@
   ],
   "ja/switcher": [
     1440,
-    498
+    510
   ],
   "ja/uc-research": [
     1440,
@@ -274,6 +282,10 @@
   "zh-CN/dia-shortcuts": [
     915,
     825
+  ],
+  "zh-CN/graphics-notice": [
+    1440,
+    382
   ],
   "zh-CN/link-preview": [
     1440,
@@ -369,7 +381,7 @@
   ],
   "zh-CN/switcher": [
     1440,
-    498
+    510
   ],
   "zh-CN/uc-research": [
     1440,
@@ -406,6 +418,10 @@
   "zh-TW/dia-shortcuts": [
     915,
     825
+  ],
+  "zh-TW/graphics-notice": [
+    1440,
+    382
   ],
   "zh-TW/link-preview": [
     1440,
@@ -497,7 +513,7 @@
   ],
   "zh-TW/switcher": [
     1440,
-    498
+    510
   ],
   "zh-TW/uc-research": [
     1440,

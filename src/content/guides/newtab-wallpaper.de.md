@@ -58,7 +58,7 @@ Den hellen oder dunklen Modus selbst legst du oben im Panel fest: wie im System,
 | Acrylic | Eine weiche Unschärfe über einer durchscheinenden Tönung |
 | Liquid glass | Klareres Glas; die Ränder des Suchfelds und seiner Ergebnisse brechen den Hintergrund wie eine Linse |
 
-Ist ein Glasmaterial aktiv, kannst du außerdem „Material theme“ festlegen. „Match New Tab“ übernimmt den aktuellen hellen oder dunklen Modus des neuen Tabs; „Light“ oder „Dark“ hält den neuen Tab in diesem Modus, mit dem Hintergrundbild für diesen Modus.
+Ist ein Glasmaterial aktiv, kannst du außerdem „Material theme“ festlegen. „Auto“ folgt dem hellen oder dunklen Modus des neuen Tabs, wechselt bei dunkleren Hintergrundbildern aber zu dunklem Material, damit Text lesbar bleibt; „Light“ oder „Dark“ legt das Material fest und hält den neuen Tab in diesem Modus, mit dem Hintergrundbild für diesen Modus.
 
 Beide Glasmaterialien sind in der Betaphase und wirken am besten über einem Hintergrundbild. Firefox zeigt die Glasoptik ohne die Lichtbrechung an den Rändern.
 

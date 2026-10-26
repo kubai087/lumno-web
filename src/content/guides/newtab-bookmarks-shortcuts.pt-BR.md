@@ -65,7 +65,7 @@ A área de favoritos mostra o conteúdo da barra de favoritos do navegador. Quan
 - Clique com o botão direito em uma pasta e escolha "Open in new tab group" para abrir todas as páginas dela de uma vez, reunidas em um mesmo grupo de guias.
 - Clique com o botão direito em um favorito ou uma pasta e escolha "Add to shortcuts" para adicioná-lo ao fim do seu último grupo de atalhos. O favorito continua onde está. Se ele já estiver entre os seus atalhos, o menu mostra "Already in shortcuts".
 - Clique no ícone de favoritos para abrir o gerenciador de favoritos do navegador.
-- Por padrão, atalhos e favoritos abrem na guia atual. Para abri-los em uma nova guia, ative cada um nas configurações do Lumno, em General → New Tab Settings → Open in a new tab. Clicar segurando `⌘` ou com o botão do meio sempre abre em segundo plano.
+- Por padrão, atalhos e favoritos abrem na guia atual. Para abri-los em uma nova guia, marque cada um nas configurações do Lumno, em General → New Tab Settings → Open in a new tab when clicked. Clicar segurando `⌥` abre aquele item do outro jeito só daquela vez; clicar segurando `⌘` ou com o botão do meio sempre abre em segundo plano.
 
 ## Layouts de favoritos {#bookmark-layouts}
 

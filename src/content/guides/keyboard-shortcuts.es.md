@@ -47,7 +47,7 @@ En macOS, también puedes activar "Mac keyboard navigation" en "Labs" para selec
 | Tecla o clic | Acción |
 | --- | --- |
 | `↩` o clic en un resultado | Abrir el resultado o cambiar a una pestaña abierta |
-| `⌥ ↩` o clic manteniendo pulsada `⌥` | Abrir en la pestaña actual en lugar de en una nueva |
+| `⌥ ↩` o clic manteniendo pulsada `⌥` | Abrir en la pestaña actual en lugar de en una nueva, o en una nueva si has configurado los resultados para [abrirse en la pestaña actual](../search-tabs-bookmarks-history/#current-tab) |
 | `⇧ ↩` o clic manteniendo pulsada `⇧` | Si el resultado es una pestaña abierta, abrirla de nuevo en una pestaña nueva |
 | `⌘ ↩`, clic manteniendo pulsada `⌘` o clic central | Abrir en una pestaña en segundo plano; la barra de comandos sigue abierta para que abras el siguiente |
 
@@ -57,7 +57,7 @@ Mientras mantienes pulsada `⌥`, `⇧` o `⌘`, la indicación a la derecha de 
 
 | Tecla | Acción |
 | --- | --- |
-| `Tab` | Completar una sugerencia; después de un atajo de sitio, iniciar la búsqueda en el sitio; con el cuadro vacío, buscar solo en las pestañas abiertas |
+| `Tab` | Completar una sugerencia; después de un atajo de sitio, iniciar la búsqueda en el sitio; con el cuadro vacío, buscar solo en las pestañas abiertas; tras seleccionar una página con las flechas, poner su dirección en el cuadro para editarla |
 | `Tab` `Tab` | Con el cuadro vacío, abrir el panel de ámbitos de búsqueda; si ya hay un ámbito elegido, basta con pulsar una vez |
 | `⌥ ↑` `⌥ ↓` | Volver a lo que escribiste antes o después |
 | `⌘ Z` `⌘ ⇧ Z` | Con el panel de ámbitos de búsqueda abierto, deshacer o rehacer un cambio en el orden de las fuentes de búsqueda |
@@ -72,7 +72,8 @@ El cuadro de búsqueda de la nueva pestaña usa las mismas teclas que la barra d
 | Tecla o clic | Acción |
 | --- | --- |
 | Empezar a escribir | El texto va directamente al cuadro de búsqueda, sin necesidad de hacer clic antes |
-| Clic en un resultado, un acceso directo, un marcador o una tarjeta de sitio | Abrirlo en la pestaña actual de forma predeterminada, o en una nueva si lo activas en General → New Tab Settings → Open in a new tab |
+| Clic en un resultado, un acceso directo, un marcador o una tarjeta de sitio | Abrirlo en la pestaña actual de forma predeterminada, o en una nueva si lo marcas en General → New Tab Settings → Open in a new tab when clicked |
+| Clic manteniendo pulsada `⌥`, o `⌥ ↩` | Abrirlo de la otra forma: en una pestaña nueva lo que se abriría en la actual, y en la actual lo que se abriría en una nueva |
 | Clic manteniendo pulsada `⌘` o clic central | Abrir en una pestaña en segundo plano |
 | `⌥ ←` `⌥ →` | Mover una posición hacia delante o hacia atrás un acceso directo seleccionado con `Tab` |
 | `⌘ Z` | Deshacer tu último cambio en los accesos directos o marcadores, como quitar, mover, crear una carpeta o eliminar un grupo |

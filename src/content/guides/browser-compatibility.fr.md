@@ -50,6 +50,18 @@ Comme Firefox utilise déjà `⌘ ⇧ K`, la version Firefox utilise par défaut
 
 Le système d'extensions de Safari est très différent de celui de Chromium, et il n'existe pas encore de version Safari de Lumno. Pour une recherche similaire à l'échelle du système sur Mac, essayez [Raycast](https://www.raycast.com/) ou [Alfred](https://www.alfredapp.com/).
 
+## Accélération graphique {#graphics-acceleration}
+
+Quand l'accélération graphique est désactivée, le navigateur dessine les pages avec le processeur : le défilement et les animations peuvent saccader, et les effets de fond d'écran et les matières en verre de Lumno ralentissent. Lorsque Lumno constate que le navigateur ne dessine pas avec la carte graphique, il affiche « Graphics acceleration is off » sous le champ de recherche du nouvel onglet et au-dessus de la barre de commande.
+
+![Un avis sous le champ de recherche du nouvel onglet : Graphics acceleration is off, Turn it on for smoother pages; it takes a browser restart, avec un bouton Turn on à droite](graphics-notice "L'avis sur l'accélération graphique")
+
+1. Cliquez sur Turn on dans l'avis. Lumno ouvre les paramètres Système du navigateur (`chrome://settings/system`, ou la même page dans Edge et Brave).
+2. Activez « Utiliser l'accélération graphique si disponible ».
+3. Cliquez sur « Relancer ». Le changement s'applique une fois le navigateur redémarré.
+
+Si vous préférez la laisser désactivée, cliquez sur le bouton de fermeture à droite de l'avis : il ne s'affichera plus sur cet ordinateur. Si l'avis revient après activation et redémarrage, un pilote graphique, une machine virtuelle ou un bureau à distance empêche peut-être le navigateur d'utiliser la carte graphique ; ouvrez `chrome://gpu` pour en savoir plus. La version Firefox n'affiche pas cet avis.
+
 ## Langues de l'interface {#languages}
 
 Depuis la version 1.2.0, l'extension est disponible en 10 langues : français, anglais, chinois simplifié et traditionnel, japonais, coréen, allemand, espagnol, portugais (Brésil) et russe. Par défaut, elle utilise la langue de votre navigateur, que vous pouvez modifier dans les réglages.

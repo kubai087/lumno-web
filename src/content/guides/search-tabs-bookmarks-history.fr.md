@@ -14,11 +14,23 @@ L'étiquette affichée à côté de chaque résultat indique sa provenance :
 - Bookmark : une page de votre barre de favoris ou de vos dossiers ; le dossier est également indiqué.
 - Frequent et History : les sites que vous visitez le plus souvent et votre historique de navigation.
 
-Les suggestions de votre moteur de recherche s'affichent également ; appuyez sur Entrée pour lancer la recherche. Les résultats que vous choisissez le plus souvent apparaissent plus haut.
+Les suggestions de votre moteur de recherche s'affichent également ; appuyez sur Entrée pour lancer la recherche. Comme dans la barre d'adresse, une suggestion sélectionnée avec les flèches s'inscrit dans le champ, et `Esc` rétablit ce que vous aviez tapé. Les résultats que vous choisissez le plus souvent apparaissent plus haut.
+
+Par défaut, le premier résultat est la page que Lumno complète pour vous. Si vous faites surtout des recherches, réglez First Search Result Priority sur Search First sous Search Result Settings dans les réglages de Lumno : la recherche passe en premier, suivie du favori, de l'entrée d'historique ou du site fréquent dont le titre correspond exactement à votre saisie.
 
 ![Lumno ouvert sur une page vide : en tapant chrome, on voit un onglet GitHub ouvert, des suggestions de recherche, un favori et des sites fréquents](search "La saisie de chrome affiche ensemble les onglets ouverts, les favoris et les sites fréquents")
 
 Autres touches utiles : `⌥ ↩` ouvre un résultat dans l'onglet actuel, et `⇧ ↩` ouvre une seconde fois un onglet déjà ouvert. Pour la liste complète, consultez [Raccourcis clavier](../keyboard-shortcuts/#command-bar-keys).
+
+## Ouvrir dans l'onglet actuel {#current-tab}
+
+Quand vous ouvrez la barre de commande sur une page web, les résultats s'ouvrent dans un nouvel onglet et la page où vous étiez reste en place. Pour les ouvrir dans l'onglet actuel, comme le fait la barre d'adresse, désactivez Open in a new tab when clicked sous General → Command Bar dans les réglages de Lumno. Ensuite :
+
+- Les pages, les recherches, les adresses saisies et les recherches sur un site s'ouvrent dans l'onglet actuel, et l'indication à droite de chaque résultat passe de New Tab à Go.
+- Sur un onglet épinglé, les résultats s'ouvrent toujours dans un nouvel onglet, pour ne pas remplacer la page épinglée.
+- Les onglets déjà ouverts sont toujours affichés directement.
+
+Quel que soit le réglage, maintenez `⌥` en appuyant sur Entrée ou en cliquant pour ouvrir un résultat de l'autre façon, ou maintenez `⌘` pour l'ouvrir en arrière-plan. Le champ de recherche du nouvel onglet a son propre réglage : voir [Touches du nouvel onglet](../keyboard-shortcuts/#newtab-keys).
 
 ## Saisi avec la mauvaise disposition de clavier {#keyboard-layout}
 

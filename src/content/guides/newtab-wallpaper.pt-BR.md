@@ -58,7 +58,7 @@ Na seção Style das configurações de Appearance, mude Material de Default par
 | Acrylic | Um desfoque suave sobre uma tonalidade translúcida |
 | Liquid glass | Um vidro mais límpido; as bordas da caixa de pesquisa e dos resultados curvam o papel de parede como uma lente |
 
-Com um material de vidro ativado, você também pode ajustar Material theme. Match New Tab segue o modo claro ou escuro atual da nova guia; Light ou Dark mantém a nova guia nesse modo, com o papel de parede correspondente.
+Com um material de vidro ativado, você também pode ajustar Material theme. Auto segue o modo claro ou escuro da nova guia, mas usa material escuro sobre planos de fundo mais escuros para manter o texto legível; Light ou Dark fixa o material e a nova guia nesse modo, com o papel de parede correspondente.
 
 Os dois materiais de vidro estão em versão beta e ficam melhores sobre um papel de parede. O Firefox mostra o acabamento de vidro, mas sem a curvatura nas bordas.
 

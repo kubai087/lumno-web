@@ -50,6 +50,18 @@ Da Firefox `⌘ ⇧ K` bereits selbst verwendet, nutzt die Firefox-Version stand
 
 Das Erweiterungssystem von Safari unterscheidet sich stark von Chromium, daher gibt es noch keine Safari-Version von Lumno. Für eine ähnliche systemweite Suche auf dem Mac kannst du [Raycast](https://www.raycast.com/) oder [Alfred](https://www.alfredapp.com/) ausprobieren.
 
+## Grafikbeschleunigung {#graphics-acceleration}
+
+Ist die Grafikbeschleunigung aus, zeichnet der Browser Seiten mit dem Prozessor. Scrollen und Animationen ruckeln dann leicht, und Lumnos Hintergrundeffekte und Glasmaterialien werden langsamer. Merkt Lumno, dass der Browser nicht mit der Grafikkarte zeichnet, erscheint unter dem Suchfeld im neuen Tab und über der Befehlsleiste der Hinweis „Graphics acceleration is off“.
+
+![Ein Hinweis unter dem Suchfeld im neuen Tab: Graphics acceleration is off, Turn it on for smoother pages; it takes a browser restart, rechts die Schaltfläche Turn on](graphics-notice "Der Hinweis zur Grafikbeschleunigung")
+
+1. Klicke im Hinweis auf „Turn on“. Lumno öffnet die Systemeinstellungen des Browsers (`chrome://settings/system`, in Edge und Brave die entsprechende Seite).
+2. Schalte „Grafikbeschleunigung verwenden, falls verfügbar“ ein.
+3. Klicke auf „Neu starten“. Die Änderung gilt, sobald der Browser neu gestartet ist.
+
+Möchtest du sie lieber nicht einschalten, klicke rechts im Hinweis auf die Schaltfläche zum Schließen; auf diesem Computer erscheint er dann nicht mehr. Siehst du den Hinweis nach dem Einschalten und Neustart weiterhin, hindern vielleicht ein Grafiktreiber, eine virtuelle Maschine oder ein Remotedesktop den Browser daran, die Grafikkarte zu nutzen; Details findest du unter `chrome://gpu`. Die Firefox-Version zeigt diesen Hinweis nicht.
+
 ## Sprachen der Benutzeroberfläche {#languages}
 
 Seit Version 1.2.0 ist die Erweiterung in 10 Sprachen verfügbar: Deutsch, Englisch, vereinfachtes und traditionelles Chinesisch, Japanisch, Koreanisch, Spanisch, Französisch, Portugiesisch (Brasilien) und Russisch. Standardmäßig richtet sie sich nach der Sprache deines Browsers; du kannst die Sprache in den Einstellungen ändern.

@@ -50,6 +50,18 @@ Firefox already uses `⌘ ⇧ K`, so the Firefox version uses `⌃ ⇧ K | Alt +
 
 Safari's extension system is very different from Chromium's, and there's no Safari version of Lumno yet. For a similar system-wide search on a Mac, try [Raycast](https://www.raycast.com/) or [Alfred](https://www.alfredapp.com/).
 
+## Graphics acceleration {#graphics-acceleration}
+
+With graphics acceleration off, the browser draws pages on the processor, so scrolling and animations can stutter, and Lumno's wallpaper effects and glass materials slow down. When Lumno sees that the browser isn't drawing with the graphics card, it says "Graphics acceleration is off" below the search box on the new tab page and above the command bar.
+
+![A notice below the new tab's search box reads Graphics acceleration is off, Turn it on for smoother pages; it takes a browser restart, with a Turn on button on the right](graphics-notice "The graphics acceleration notice")
+
+1. Click Turn on in the notice. Lumno opens the browser's System settings (`chrome://settings/system`, or the same page in Edge and Brave).
+2. Turn on "Use graphics acceleration when available".
+3. Click Relaunch. The change takes effect once the browser restarts.
+
+If you'd rather leave it off, click the close button on the right of the notice, and it won't show again on this computer. If the notice comes back after you turn it on and restart, a graphics driver, virtual machine or remote desktop may be keeping the browser off the graphics card; open `chrome://gpu` for details. The Firefox version doesn't show this notice.
+
 ## Interface languages {#languages}
 
 Since version 1.2.0, the extension is available in 10 languages: English, Simplified Chinese, Traditional Chinese, Japanese, Korean, German, Spanish, French, Portuguese (Brazil), and Russian. It uses your browser's language by default, and you can change it in settings.

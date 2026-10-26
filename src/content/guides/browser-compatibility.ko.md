@@ -50,6 +50,18 @@ Firefox는 이미 `⌘ ⇧ K`를 사용하므로, Firefox 버전의 기본 단�
 
 Safari의 확장 프로그램 구조는 Chromium과 크게 다르기 때문에 아직 Safari 버전은 제공하지 않습니다. Mac에서 비슷한 시스템 전체 검색이 필요하다면 [Raycast](https://www.raycast.com/)나 [Alfred](https://www.alfredapp.com/)를 사용해 보세요.
 
+## 그래픽 가속 {#graphics-acceleration}
+
+브라우저에서 그래픽 가속이 꺼져 있으면 페이지를 CPU로 그리기 때문에 스크롤과 애니메이션이 끊기기 쉽고, Lumno의 배경화면 효과와 유리 재질도 느려집니다. 브라우저가 그래픽 카드로 페이지를 그리지 않는다는 것을 감지하면, Lumno는 새 탭의 검색창 아래와 명령 바 위에 Graphics acceleration is off 안내를 표시합니다.
+
+![새 탭 검색창 아래의 안내. Graphics acceleration is off, Turn it on for smoother pages; it takes a browser restart라고 적혀 있고 오른쪽에 Turn on 버튼이 있다](graphics-notice "그래픽 가속 안내")
+
+1. 안내에서 Turn on을 클릭하면 Lumno가 브라우저의 시스템 설정(`chrome://settings/system`, Edge와 Brave에서는 각 브라우저의 같은 페이지)을 엽니다.
+2. 가능한 경우 그래픽 가속 사용을 켭니다.
+3. 다시 시작을 클릭합니다. 브라우저가 다시 시작되면 적용됩니다.
+
+켜지 않으려면 안내 오른쪽의 닫기 버튼을 클릭하세요. 이 컴퓨터에서는 다시 표시되지 않습니다. 켜고 다시 시작한 뒤에도 안내가 보인다면 그래픽 드라이버, 가상 머신, 원격 데스크톱 때문에 브라우저가 그래픽 카드를 쓰지 못하는 것일 수 있습니다. `chrome://gpu`에서 자세한 내용을 확인하세요. Firefox 버전에는 이 안내가 표시되지 않습니다.
+
 ## 화면 언어 {#languages}
 
 확장 프로그램은 1.2.0 버전부터 한국어, 영어, 일본어, 중국어 간체·번체, 독일어, 스페인어, 프랑스어, 포르투갈어(브라질), 러시아어 등 10개 언어를 지원합니다. 기본적으로 브라우저 언어를 따르며, 설정에서 변경할 수 있습니다.

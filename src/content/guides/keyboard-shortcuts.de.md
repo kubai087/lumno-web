@@ -47,7 +47,7 @@ Unter macOS kannst du außerdem unter „Labs“ die Option „Mac keyboard navi
 | Taste oder Klick | Funktion |
 | --- | --- |
 | `↩` oder Klick auf ein Ergebnis | Ergebnis öffnen oder zu einem offenen Tab wechseln |
-| `⌥ ↩` oder Klick mit gedrückter `⌥`-Taste | Im aktuellen Tab statt in einem neuen Tab öffnen |
+| `⌥ ↩` oder Klick mit gedrückter `⌥`-Taste | Im aktuellen Tab statt in einem neuen Tab öffnen – oder in einem neuen Tab, wenn Ergebnisse [im aktuellen Tab öffnen](../search-tabs-bookmarks-history/#current-tab) |
 | `⇧ ↩` oder Klick mit gedrückter `⇧`-Taste | Wenn das Ergebnis ein offener Tab ist, ihn zusätzlich in einem neuen Tab öffnen |
 | `⌘ ↩`, Klick mit gedrückter `⌘`-Taste oder Klick mit der mittleren Maustaste | Im Hintergrund öffnen; die Befehlsleiste bleibt offen, sodass du gleich das nächste Ergebnis öffnen kannst |
 
@@ -57,7 +57,7 @@ Solange du `⌥`, `⇧` oder `⌘` gedrückt hältst, passt sich der Hinweis rec
 
 | Taste | Funktion |
 | --- | --- |
-| `Tab` | Vorschlag vervollständigen; nach einem Seitenkürzel die Seitensuche starten; bei leerem Suchfeld nur offene Tabs durchsuchen |
+| `Tab` | Vorschlag vervollständigen; nach einem Seitenkürzel die Seitensuche starten; bei leerem Suchfeld nur offene Tabs durchsuchen; nach Auswahl einer Seite mit den Pfeiltasten ihre Adresse zum Bearbeiten ins Suchfeld übernehmen |
 | `Tab` `Tab` | Bei leerem Suchfeld das Suchbereich-Panel öffnen; ist bereits ein Suchbereich ausgewählt, genügt ein Druck |
 | `⌥ ↑` `⌥ ↓` | Zur vorherigen oder nächsten Eingabe wechseln |
 | `⌘ Z` `⌘ ⇧ Z` | Bei geöffnetem Suchbereich-Panel eine Änderung an der Reihenfolge der Suchquellen rückgängig machen oder wiederherstellen |
@@ -72,7 +72,8 @@ Im Suchfeld des neuen Tabs gelten dieselben Tasten wie in der Befehlsleiste. Au�
 | Taste oder Klick | Funktion |
 | --- | --- |
 | Einfach lostippen | Der Text landet direkt im Suchfeld, ohne dass du es vorher anklicken musst |
-| Klick auf ein Suchergebnis, einen Shortcut, ein Lesezeichen oder eine Website-Karte | Standardmäßig im aktuellen Tab öffnen, in einem neuen Tab, wenn du es unter General → New Tab Settings → Open in a new tab aktivierst |
+| Klick auf ein Suchergebnis, einen Shortcut, ein Lesezeichen oder eine Website-Karte | Standardmäßig im aktuellen Tab öffnen, in einem neuen Tab, wenn du es unter General → New Tab Settings → Open in a new tab when clicked ankreuzt |
+| Klick mit gedrückter `⌥`-Taste oder `⌥ ↩` | Auf die andere Art öffnen: in einem neuen Tab, was sich sonst im aktuellen öffnet, und im aktuellen Tab, was sich sonst in einem neuen öffnet |
 | Klick mit gedrückter `⌘`-Taste oder mit der mittleren Maustaste | Im Hintergrund öffnen |
 | `⌥ ←` `⌥ →` | Einen mit `Tab` ausgewählten Shortcut um eine Position nach vorne oder hinten verschieben |
 | `⌘ Z` | Die letzte Änderung an Shortcuts oder Lesezeichen rückgängig machen, etwa Entfernen, Verschieben, das Anlegen eines Ordners oder das Löschen einer Gruppe |

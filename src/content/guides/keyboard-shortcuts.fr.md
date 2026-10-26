@@ -47,7 +47,7 @@ Sur macOS, vous pouvez aussi activer « Mac keyboard navigation » dans « Labs 
 | Touche ou clic | Action |
 | --- | --- |
 | `↩` ou clic sur un résultat | Ouvrir le résultat ou basculer vers un onglet ouvert |
-| `⌥ ↩` ou clic en maintenant `⌥` | Ouvrir dans l'onglet actuel plutôt que dans un nouvel onglet |
+| `⌥ ↩` ou clic en maintenant `⌥` | Ouvrir dans l'onglet actuel plutôt que dans un nouvel onglet, ou dans un nouvel onglet si les résultats sont réglés pour [s'ouvrir dans l'onglet actuel](../search-tabs-bookmarks-history/#current-tab) |
 | `⇧ ↩` ou clic en maintenant `⇧` | Si le résultat est un onglet ouvert, l'ouvrir une seconde fois dans un nouvel onglet |
 | `⌘ ↩`, clic en maintenant `⌘` ou clic du milieu | Ouvrir dans un onglet en arrière-plan ; la barre de commande reste ouverte pour enchaîner avec le résultat suivant |
 
@@ -57,7 +57,7 @@ Tant que vous maintenez `⌥`, `⇧` ou `⌘`, l'indication affichée à droite 
 
 | Touche | Action |
 | --- | --- |
-| `Tab` | Compléter une suggestion ; après un raccourci de site, lancer la recherche sur le site ; si le champ est vide, rechercher uniquement dans les onglets ouverts |
+| `Tab` | Compléter une suggestion ; après un raccourci de site, lancer la recherche sur le site ; si le champ est vide, rechercher uniquement dans les onglets ouverts ; après avoir sélectionné une page avec les flèches, placer son adresse dans le champ pour la modifier |
 | `Tab` `Tab` | Si le champ est vide, ouvrir le panneau de portée de recherche ; si une portée est déjà choisie, une seule pression suffit |
 | `⌥ ↑` `⌥ ↓` | Revenir à la saisie précédente ou suivante |
 | `⌘ Z` `⌘ ⇧ Z` | Panneau de portée de recherche ouvert, annuler ou rétablir un changement d'ordre des sources de recherche |
@@ -72,7 +72,8 @@ Le champ de recherche du nouvel onglet utilise les mêmes touches que la barre d
 | Touche ou clic | Action |
 | --- | --- |
 | Commencer à taper | Le texte va directement dans le champ de recherche, sans avoir à cliquer dessus |
-| Clic sur un résultat, un raccourci, un favori ou une carte de site | Ouvrir dans l'onglet actuel par défaut, ou dans un nouvel onglet si vous l'activez sous General → New Tab Settings → Open in a new tab |
+| Clic sur un résultat, un raccourci, un favori ou une carte de site | Ouvrir dans l'onglet actuel par défaut, ou dans un nouvel onglet si vous le cochez sous General → New Tab Settings → Open in a new tab when clicked |
+| Clic en maintenant `⌥`, ou `⌥ ↩` | Ouvrir de l'autre façon : dans un nouvel onglet ce qui s'ouvrirait dans l'onglet actuel, et dans l'onglet actuel ce qui s'ouvrirait dans un nouvel onglet |
 | Clic en maintenant `⌘` ou clic du milieu | Ouvrir dans un onglet en arrière-plan |
 | `⌥ ←` `⌥ →` | Déplacer d'une position vers l'avant ou l'arrière un raccourci sélectionné avec `Tab` |
 | `⌘ Z` | Annuler votre dernière modification des raccourcis ou des favoris : suppression, déplacement, création de dossier, suppression de groupe, etc. |

@@ -65,7 +65,7 @@ La zone des favoris affiche le contenu de la barre de favoris de votre navigateu
 - Faites un clic droit sur un dossier et choisissez « Open in new tab group » pour ouvrir toutes ses pages d'un coup, réunies dans un même groupe d'onglets.
 - Faites un clic droit sur un favori ou un dossier et choisissez « Add to shortcuts » pour l'ajouter à la fin de votre dernier groupe de raccourcis. Le favori reste à sa place. S'il figure déjà parmi vos raccourcis, le menu indique « Already in shortcuts ».
 - Cliquez sur l'icône des favoris pour ouvrir le gestionnaire de favoris du navigateur.
-- Par défaut, les raccourcis et les favoris s'ouvrent dans l'onglet actuel. Pour les ouvrir dans un nouvel onglet, activez-les un par un dans les réglages de Lumno, sous General → New Tab Settings → Open in a new tab. Un clic en maintenant `⌘` ou un clic du bouton central les ouvre toujours en arrière-plan.
+- Par défaut, les raccourcis et les favoris s'ouvrent dans l'onglet actuel. Pour les ouvrir dans un nouvel onglet, cochez-les dans les réglages de Lumno, sous General → New Tab Settings → Open in a new tab when clicked. Un clic en maintenant `⌥` les ouvre ponctuellement de l'autre façon ; un clic en maintenant `⌘` ou un clic du bouton central les ouvre toujours en arrière-plan.
 
 ## Dispositions des favoris {#bookmark-layouts}
 

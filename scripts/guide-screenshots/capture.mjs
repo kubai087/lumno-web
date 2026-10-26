@@ -5,25 +5,39 @@
 //   node scripts/guide-screenshots/capture.mjs zh-CN [scene...]
 //   node scripts/guide-screenshots/convert.mjs zh-CN
 //
-// Needs a lumno-extension checkout (LUMNO_EXTENSION_DIR, default ../lumno-extension
-// with `npm run build:react` done) and Chromium, not branded Chrome, which no
+// Needs a lumno-extension checkout (LUMNO_EXTENSION_SOURCE, default ../lumno-extension), built with
+// `npm run build` (LUMNO_EXTENSION_DIR, default its dist/chrome), and Chromium, not branded Chrome, which no
 // longer loads unpacked extensions from the command line. CHROMIUM_PATH picks a
 // specific build; HEADED=1 shows the window.
 import { chromium } from "playwright";
+import { build } from "esbuild";
 import { execFileSync } from "node:child_process";
 import fs from "node:fs";
 import http from "node:http";
 import sharp from "sharp";
 import os from "node:os";
 import path from "node:path";
+import { pathToFileURL } from "node:url";
 
 const REPO = path.resolve(import.meta.dirname, "../..");
-const EXT = path.resolve(process.env.LUMNO_EXTENSION_DIR || path.join(REPO, "../lumno-extension"));
+const EXT_SOURCE = path.resolve(process.env.LUMNO_EXTENSION_SOURCE || path.join(REPO, "../lumno-extension"));
+const EXT = path.resolve(process.env.LUMNO_EXTENSION_DIR || path.join(EXT_SOURCE, "dist/chrome"));
 const locale = process.argv[2] || "zh-CN";
 const only = new Set(process.argv.slice(3));
 const WORK = path.join(os.tmpdir(), "lumno-guide-shots");
 const OUT = path.join(WORK, locale);
 fs.mkdirSync(OUT, { recursive: true });
+// The new tab packs its shortcuts into several storage keys; the extension's own code does the packing.
+const shortcutsStoreFile = path.join(WORK, "shortcuts-store.mjs");
+await build({
+  entryPoints: [path.join(EXT_SOURCE, "src/domain/shortcuts-store.ts")],
+  bundle: true,
+  format: "esm",
+  platform: "neutral",
+  outfile: shortcutsStoreFile,
+  logLevel: "silent",
+});
+const ShortcutsStore = await import(pathToFileURL(shortcutsStoreFile).href);
 const cfg = JSON.parse(fs.readFileSync(path.join(import.meta.dirname, "scenes", `${locale}.json`), "utf8"));
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const APPLE_LANGUAGE = { "zh-CN": "zh-Hans", "zh-TW": "zh-Hant", en: "en", ja: "ja" };
@@ -81,8 +95,12 @@ const ctx = await chromium.launchPersistentContext(profile, {
   args: [`--disable-extensions-except=${EXT}`, `--load-extension=${EXT}`, `--lang=${locale}`, "--hide-scrollbars"],
 });
 const sw = ctx.serviceWorkers()[0] || (await ctx.waitForEvent("serviceworker"));
-const extBase = sw.url().replace(/src\/background\/background\.js$/, "");
+const extBase = sw.url().replace(/^(chrome-extension:\/\/[^/]+\/).*$/, "$1");
 await sleep(2000);
+// Lumno suggests graphics acceleration where the browser draws without the GPU; keep that
+// notice closed everywhere but its own scene.
+const GRAPHICS_NOTICE_DISMISSED_KEY = "_x_lumno_feature_hint_local_dismissed_2026_graphics_acceleration_notice_1";
+await sw.evaluate((key) => chrome.storage.local.set({ [key]: true }), GRAPHICS_NOTICE_DISMISSED_KEY);
 
 // Seed bookmarks (bookmark bar) and history, then open the demo tabs.
 await sw.evaluate(async (bookmarks) => {
@@ -129,10 +147,7 @@ await sleep(800);
 
 async function openOverlay(page) {
   await page.bringToFront();
-  await sw.evaluate(async () => {
-    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-    triggerShowSearchForTab(tab, "commands");
-  });
+  await sw.evaluate(() => chrome.commands.onCommand.dispatch("show-search"));
   await sleep(1200);
 }
 async function closeOverlay(page) {
@@ -177,7 +192,8 @@ async function boxOf(page, selectors) {
 
 // The command bar renders in a closed shadow root the page cannot measure, so measure the
 // picture instead: everything that differs from the plain backdrop is Lumno (and its shadow).
-async function overlayBox(page) {
+// With lighterOnly, only what is lighter than the backdrop counts: a white panel without its shadow.
+async function overlayBox(page, { lighterOnly = false } = {}) {
   const { data, info } = await sharp(await page.screenshot())
     .removeAlpha()
     .raw()
@@ -189,7 +205,10 @@ async function overlayBox(page) {
   for (let y = 0; y < info.height; y++) {
     for (let x = 0; x < info.width; x++) {
       const i = at(x, y);
-      if (Math.abs(data[i] - bg[0]) + Math.abs(data[i + 1] - bg[1]) + Math.abs(data[i + 2] - bg[2]) > 18) {
+      const differs = lighterOnly
+        ? data[i] + data[i + 1] + data[i + 2] - bg[0] - bg[1] - bg[2] > 12
+        : Math.abs(data[i] - bg[0]) + Math.abs(data[i + 1] - bg[1]) + Math.abs(data[i + 2] - bg[2]) > 18;
+      if (differs) {
         if (x < left) left = x;
         if (x > right) right = x;
         if (y < top) top = y;
@@ -233,6 +252,15 @@ async function setPrefs(values) {
   }, values);
   await sleep(300);
 }
+// Stores the new tab's shortcuts (and their groups, else one untitled group), as the new tab saves them.
+async function saveShortcuts(items, groups) {
+  const plan = ShortcutsStore.createShortcutStoragePlan({ groups, items });
+  await sw.evaluate(async ({ payload, overflow }) => {
+    await chrome.storage.sync.set(payload);
+    await chrome.storage.local.set(overflow);
+  }, { payload: plan.payload, overflow: { [ShortcutsStore.SHORTCUTS_LOCAL_OVERFLOW_KEY]: plan.overflowRecord } });
+  await sleep(300);
+}
 async function dismissHints(page) {
   for (let i = 0; i < 4; i++) {
     const close = page.locator(".x-lumno-feature-hint__close").filter({ visible: true }).first();
@@ -271,16 +299,7 @@ let newtabReady = false;
 async function prepareNewtab() {
   if (newtabReady) return;
   newtabReady = true;
-  const page = await ctx.newPage();
-  await page.goto(extBase + "newtab.html");
-  await sleep(2000);
-  await page.evaluate(async (items) => {
-    await globalThis.LumnoNewtabShortcutsStore.saveShortcuts(chrome.storage.sync, items, {
-      key: "_x_extension_newtab_shortcuts_2026_unique_",
-      maxShortcuts: 60,
-    });
-  }, cfg.shortcuts || []);
-  await page.close();
+  await saveShortcuts(cfg.shortcuts || []);
   await setPrefs({
     _x_extension_newtab_shortcut_add_visible_2026_unique_: false,
     _x_extension_newtab_wordmark_visible_2026_unique_: "time",
@@ -370,12 +389,12 @@ const scenes = {
   },
   async switcher(page) {
     await page.bringToFront();
-    await sw.evaluate(async () => {
-      const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-      triggerTabSwitcherForTab(tab, "commands-tab-switcher", Date.now());
-    });
+    await sw.evaluate(() => chrome.commands.onCommand.dispatch("show-tab-switcher"));
     await sleep(1500);
-    await shot("switcher", page, await overlayBox(page));
+    // Its shadow reaches far below the panel; keep as much room below the panel as above it.
+    const outer = await overlayBox(page);
+    const panel = await overlayBox(page, { lighterOnly: true });
+    await shot("switcher", page, outer && panel ? { ...outer, bottom: Math.min(outer.bottom, panel.bottom + (panel.top - outer.top)) } : outer);
     await closeOverlay(page);
   },
   // The whole new tab, staged like a real one: a vivid painting with no veil, eight bookmarks
@@ -387,6 +406,47 @@ const scenes = {
     await shot("newtab", nt);
     await nt.close();
     await unstageFullNewtab();
+  },
+  // The capsule under the new tab's search box when the browser draws without the GPU.
+  async "graphics-notice"() {
+    await setPrefs({
+      _x_extension_newtab_shortcuts_visible_2026_unique_: false,
+      _x_extension_newtab_wordmark_visible_2026_unique_: "time",
+      ...(cfg.wallpaper
+        ? { _x_extension_newtab_wallpaper_2026_unique_: { version: 2, sameForModes: true, light: cfg.wallpaper, dark: cfg.wallpaper } }
+        : {}),
+    });
+    // The capture browser has a GPU, so the worker's probe is told there is none: WebGL and
+    // WebGPU both come back empty, as they do with graphics acceleration off.
+    await sw.evaluate(async (key) => {
+      globalThis.__lumnoGuideGetContext = OffscreenCanvas.prototype.getContext;
+      OffscreenCanvas.prototype.getContext = () => null;
+      if (navigator.gpu) {
+        globalThis.__lumnoGuideRequestAdapter = navigator.gpu.requestAdapter;
+        navigator.gpu.requestAdapter = async () => null;
+      }
+      await chrome.storage.local.set({ _x_lumno_graphics_probe_2026_unique_: { rendering: "software", checkedAt: Date.now() } });
+      await chrome.storage.local.remove(key);
+      // The new tab's other tips (help center, WebDAV and the rest) would share the picture.
+      const tips = ["newtab_wallpaper_sources_0_9_58", "newtab_ai_quick_jump_0_9_9", "newtab_tab_switcher_0_9_13", "newtab_webdav_sync_0_9_58", "newtab_help_center_ask_1_0_0"];
+      for (const area of ["sync", "local"]) {
+        await chrome.storage[area].set(Object.fromEntries(tips.map((tip) => [`_x_lumno_feature_hint_${area}_dismissed_2026_${tip}`, true])));
+      }
+    }, GRAPHICS_NOTICE_DISMISSED_KEY);
+    const page = await ctx.newPage();
+    await page.clock.setFixedTime(new Date("2026-10-10T09:41:00"));
+    await page.goto(extBase + "newtab.html");
+    await page.locator(".x-lumno-feature-hint--graphics-notice").filter({ visible: true }).first().waitFor({ timeout: 10000 });
+    await page.mouse.move(5, 5);
+    await sleep(1200);
+    await shot("graphics-notice", page, await boxOf(page, ["#_x_extension_newtab_root_2024_unique_", ".x-lumno-feature-hint--graphics-notice"]));
+    await page.close();
+    await sw.evaluate(async (key) => {
+      OffscreenCanvas.prototype.getContext = globalThis.__lumnoGuideGetContext;
+      if (navigator.gpu) navigator.gpu.requestAdapter = globalThis.__lumnoGuideRequestAdapter;
+      await chrome.storage.local.set({ [key]: true, _x_lumno_graphics_probe_2026_unique_: { rendering: "hardware", checkedAt: Date.now() } });
+    }, GRAPHICS_NOTICE_DISMISSED_KEY);
+    await setPrefs({ _x_extension_newtab_shortcuts_visible_2026_unique_: true });
   },
   // The page the extension opens right after installing.
   async onboarding() {
@@ -551,19 +611,11 @@ const scenes = {
     const at = shortcuts.findIndex((item) => stacked.has(item.url));
     const items = shortcuts.filter((item) => !stacked.has(item.url));
     items.splice(Math.max(0, at), 0, { type: "folder", folderId, title: folder.title });
-    const save = (page, list) => page.evaluate(async (list) => {
-      await globalThis.LumnoNewtabShortcutsStore.saveShortcuts(chrome.storage.sync, list, {
-        key: "_x_extension_newtab_shortcuts_2026_unique_",
-        maxShortcuts: 60,
-      });
-    }, list);
     // The bookmarks under the shortcuts would show half-covered behind the menu; hide them for this shot.
     const BOOKMARK_COUNT_KEY = "_x_extension_bookmark_count_2024_unique_";
     const bookmarkCount = await sw.evaluate(async (key) => (await chrome.storage.sync.get(key))[key], BOOKMARK_COUNT_KEY);
     await setPrefs({ [BOOKMARK_COUNT_KEY]: 0 });
-    const setup = await openNewtab();
-    await save(setup, items);
-    await setup.close();
+    await saveShortcuts(items);
     const page = await openNewtab();
     const tile = page.locator(".x-nt-shortcut-tile").nth(Math.max(0, at));
     await tile.click();
@@ -574,8 +626,8 @@ const scenes = {
     await page.addStyleTag({ content: "#_x_extension_newtab_bottom_dock_scroller_2024_unique_ > section:not(#_x_extension_newtab_bookmarks_2024_unique_) { visibility: hidden !important; }" });
     await shot("nt-shortcut-folder", page, await boxOf(page, ["#_x_extension_newtab_root_2024_unique_", "#_x_extension_newtab_shortcuts_2026_unique_", ".x-nt-bookmark-cascade-level"]));
     await page.keyboard.press("Escape");
-    await save(page, shortcuts);
     await page.close();
+    await saveShortcuts(shortcuts);
     await sw.evaluate((id) => chrome.bookmarks.removeTree(id), folderId);
     await setPrefs({ [BOOKMARK_COUNT_KEY]: bookmarkCount ?? 8 });
   },
@@ -591,15 +643,10 @@ const scenes = {
         group.urls.map((url) => ({ ...shortcuts.find((item) => item.url === url), groupId: `guide-group-${index}` })),
       ),
     };
-    const save = (page, { groups, items }) => page.evaluate(async ({ groups, items }) => {
-      await globalThis.LumnoNewtabShortcutsStore.saveShortcuts(chrome.storage.sync, items, groups ? { groups } : {});
-    }, { groups, items });
     const BOOKMARK_COUNT_KEY = "_x_extension_bookmark_count_2024_unique_";
     const bookmarkCount = await sw.evaluate(async (key) => (await chrome.storage.sync.get(key))[key], BOOKMARK_COUNT_KEY);
     await setPrefs({ [BOOKMARK_COUNT_KEY]: 0 });
-    const setup = await openNewtab();
-    await save(setup, state);
-    await setup.close();
+    await saveShortcuts(state.items, state.groups);
     const page = await openNewtab();
     // Three groups need more height than 800px leaves above the site cards, where the shortcuts would scroll.
     await page.setViewportSize({ width: 1280, height: 1000 });
@@ -611,8 +658,8 @@ const scenes = {
     await page.addStyleTag({ content: "#_x_extension_newtab_bottom_dock_scroller_2024_unique_ > section:not(#_x_extension_newtab_bookmarks_2024_unique_) { visibility: hidden !important; } .x-nt-shortcuts-section[data-shortcuts-scrollable='true'] { max-height: none !important; overflow: visible !important; mask-image: none !important; }" });
     await sleep(600);
     await shot("nt-shortcut-groups", page, await boxOf(page, ["#_x_extension_newtab_root_2024_unique_", ".x-nt-shortcut-group-header", ".x-nt-shortcut-tile"]));
-    await save(page, { groups: [{ id: "g0", title: "" }], items: shortcuts.map(({ groupId, ...item }) => item) });
     await page.close();
+    await saveShortcuts(shortcuts);
     await setPrefs({ [BOOKMARK_COUNT_KEY]: bookmarkCount ?? 8 });
   },
   // The whole new tab in the Liquid glass material, over the full new tab's wallpaper.

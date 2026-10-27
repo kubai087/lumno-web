@@ -511,7 +511,7 @@ import LanguageScrollRestore from "../components/LanguageScrollRestore.astro";
         group={community.kind === "group"
           ? { label: community.askLabel, ariaLabel: community.askAria, panel: communityPanel }
           : undefined}
-        items={content.faqItems}
+        items={content.faqItems.map((item) => (item.guide ? { ...item, guideHref: getGuidePath(uiLocale, item.guide.slug) } : item))}
         more={{ ...content.faqMore, href: getGuidePath(uiLocale, "faq") }}
       />
 

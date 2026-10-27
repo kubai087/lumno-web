@@ -1,5 +1,6 @@
 import type { SupportedLocale } from "./locales";
 import type { InstallStore } from "./site-links";
+import type { GuideNavKey } from "./guides";
 
 export type HomeCard = { title: string; description: string };
 export type HomeBentoCard = HomeCard & { label: string };
@@ -10,6 +11,8 @@ export type HomeFaqItem = {
   firefoxAnswer?: string;
   /** Shown only once Firefox Add-ons lists Lumno. */
   firefoxOnly?: boolean;
+  /** A help center page linked after the answer. */
+  guide?: { slug: GuideNavKey; label: string };
 };
 /** `icon` is a provider key from lumno-extension/assets/data/site-search.json. */
 export type HomeOverlayRow = {
@@ -546,8 +549,10 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         firefoxOnly: true,
       },
       {
-        question: "从 Arc 换过来，还能用上熟悉的命令栏吗？",
-        answer: "可以。Lumno 的交互借鉴了 Arc（与 Arc 官方无关），在 Dia、Chrome、Edge 里同样能随时唤起命令栏，一处搜索、快速切换。把快捷键改成 ⌘ T，就是熟悉的 Arc 手感。",
+        question: "Arc 要停用了，换浏览器后还能用上熟悉的命令栏吗？",
+        answer:
+          "可以。Arc 将于 2026 年 12 月 22 日停用，Lumno 的交互借鉴了 Arc（与 Arc 官方无关），在 Dia、Chrome、Edge 里同样能随时唤起命令栏，一处搜索、快速切换。把快捷键改成 ⌘ T，就是熟悉的 Arc 手感。离开 Arc 前，记得把数据导入 Dia 或导出备份。",
+        guide: { slug: "arc-command-bar", label: "查看 Arc 迁移指南" },
       },
       {
         question: "能像 Arc 一样用 Ctrl + Tab 切换标签页吗？",
@@ -1229,9 +1234,10 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         firefoxOnly: true,
       },
       {
-        question: "I’m moving from Arc. Will this feel familiar?",
+        question: "Arc is shutting down. Can I keep the command bar I’m used to?",
         answer:
-          "That’s the idea. Lumno borrows from Arc’s interactions (it isn’t affiliated with Arc), so in Dia, Chrome, or Edge you can still call up the command bar anytime, search everything in one place, and switch fast. Set the shortcut to ⌘ T for the Arc feel you know.",
+          "Yes. Arc shuts down on December 22, 2026, and Lumno borrows from its interactions (it isn’t affiliated with Arc), so in Dia, Chrome, or Edge you can still call up the command bar anytime, search everything in one place, and switch fast. Set the shortcut to ⌘ T for the Arc feel you know, and move your Arc data out before the shutdown.",
+        guide: { slug: "arc-command-bar", label: "Read the Arc migration guide" },
       },
       {
         question: "Can I switch tabs with Ctrl + Tab, like in Arc?",

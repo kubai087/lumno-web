@@ -208,6 +208,10 @@ export default {
   },
   "arc-command-bar": {
     "": ["Arc browser alternative, Arc replacement, Arc no longer updated, switch from Arc to Chrome, Arc users"],
+    timeline: ["Arc is shutting down, Arc shutdown, Arc sunset, Arc discontinued, Arc end of life, Arc stops working, December 22"],
+    export: ["Export Arc data, export Arc bookmarks, export pinned tabs and Spaces, import Arc into Dia"],
+    "lumno-settings": ["Keep my Lumno settings when leaving Arc, move settings to a new browser"],
+    choose: ["Which browser to use after Arc? Dia, Zen or Vivaldi"],
     mapping: ["Arc shortcuts mapped: Cmd T, Ctrl Tab, Cmd Shift C"],
     steps: ["Set it up like Arc, change the shortcut to Cmd T"],
     limits: ["Sidebar, vertical tabs, Spaces, split view"],

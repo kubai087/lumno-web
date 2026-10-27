@@ -146,5 +146,9 @@
   { "q": "不要新开标签页", "expect": ["search-tabs-bookmarks-history#current-tab"] },
   { "q": "图形加速未开启", "expect": ["browser-compatibility#graphics-acceleration"] },
   { "q": "硬件加速", "expect": ["browser-compatibility#graphics-acceleration"] },
-  { "q": "搜索优先", "expect": ["search-tabs-bookmarks-history#results"] }
+  { "q": "搜索优先", "expect": ["search-tabs-bookmarks-history#results"] },
+  { "q": "Arc 关停", "expect": ["arc-command-bar#timeline", "arc-command-bar"] },
+  { "q": "Arc 停用", "expect": ["arc-command-bar#timeline", "arc-command-bar"] },
+  { "q": "导出 Arc 数据", "expect": ["arc-command-bar#export"] },
+  { "q": "Arc 停用后换什么浏览器", "expect": ["arc-command-bar#choose", "arc-command-bar"] }
 ]

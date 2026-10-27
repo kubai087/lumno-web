@@ -16,7 +16,8 @@ interface Props {
    * a quiet link. Elsewhere GitHub is the one button.
    */
   group?: { label: string; ariaLabel: string; panel: CommunityPanel };
-  items: HomeFaqItem[];
+  /** `guideHref` is the resolved path of `guide`, the help center page linked after the answer. */
+  items: (HomeFaqItem & { guideHref?: string })[];
   /** The help center's FAQ, for questions the list doesn't cover. */
   more: { lead: string; link: string; href: string };
 }
@@ -109,6 +110,17 @@ function parseAnswer(answer: string): AnswerPart[] {
                 ) : (
                   part.value
                 ),
+              )}
+              {item.guide && item.guideHref && (
+                <>
+                  {" "}<a
+                    class="faq__guide"
+                    href={item.guideHref}
+                    data-analytics-event="open_help_center"
+                    data-analytics-category="cta"
+                    data-analytics-label={`home_faq_${item.guide.slug}`}
+                  >{item.guide.label}</a>
+                </>
               )}
             </p>
           </div>
@@ -350,7 +362,8 @@ function parseAnswer(answer: string): AnswerPart[] {
     transition: opacity 280ms ease;
   }
 
-  .faq__more a {
+  .faq__more a,
+  .faq__guide {
     color: var(--home-ink);
     font-weight: 600;
     text-decoration: underline;
@@ -359,7 +372,8 @@ function parseAnswer(answer: string): AnswerPart[] {
     transition: text-decoration-color 160ms ease;
   }
 
-  .faq__more a:hover {
+  .faq__more a:hover,
+  .faq__guide:hover {
     text-decoration-color: currentColor;
   }
 

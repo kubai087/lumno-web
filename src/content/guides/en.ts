@@ -244,13 +244,21 @@ const content: GuideLocaleContent = {
       navTitle: "Web clip",
     },
     "arc-command-bar": {
-      pageTitle: "Moving from Arc to Chrome, Dia or Edge: the command bar and shortcuts | Lumno Help",
+      pageTitle: "Arc is shutting down: how to move to Dia, Chrome or Edge | Lumno Help",
       pageDescription:
-        "Left Arc for Chrome, Dia or Edge? Lumno brings back an Arc-style command bar: ⌘⇧K searches tabs, bookmarks and history (or make it ⌘T), and ⌥Q switches recent tabs. Includes an Arc shortcut map.",
-      keywords: ["Arc command bar alternative", "Arc browser alternative", "move from Arc to Chrome", "Dia command bar", "Arc shortcuts"],
+        "Arc shuts down on December 22, 2026. See the timeline, how to export your data before moving to Dia or another browser, and how Lumno keeps an Arc-style command bar in Chrome, Dia and Edge. Includes an Arc shortcut map.",
+      keywords: ["Arc shutting down", "Arc browser shutdown", "Arc browser alternative", "export Arc data", "move from Arc to Chrome", "Arc command bar alternative", "Arc shortcuts"],
       title: "Moving from Arc",
       navTitle: "Moving from Arc",
       faq: [
+        {
+          question: "Can I still open Arc after December 22?",
+          answer: "No. Arc for Mac and Windows stops working on December 22, 2026, and the Arc data on your computer can't be opened after that. Import into Dia or export your data before then.",
+        },
+        {
+          question: "I use Lumno in Arc. Can I keep my settings?",
+          answer: "Yes. Before Arc shuts down, export your settings in Lumno, then import them after installing Lumno in your new browser. Or turn on WebDAV sync.",
+        },
         {
           question: "Is Lumno related to Arc?",
           answer: "No. Lumno is an independent open-source project inspired by Arc's command bar, not affiliated with Arc or The Browser Company.",

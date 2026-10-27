@@ -116,5 +116,9 @@
   { "q": "open search results in the same tab", "expect": ["search-tabs-bookmarks-history#current-tab"] },
   { "q": "graphics acceleration is off", "expect": ["browser-compatibility#graphics-acceleration"] },
   { "q": "hardware acceleration", "expect": ["browser-compatibility#graphics-acceleration"] },
-  { "q": "search first", "expect": ["search-tabs-bookmarks-history#results"] }
+  { "q": "search first", "expect": ["search-tabs-bookmarks-history#results"] },
+  { "q": "arc shutting down", "expect": ["arc-command-bar#timeline", "arc-command-bar"] },
+  { "q": "arc sunset", "expect": ["arc-command-bar#timeline", "arc-command-bar"] },
+  { "q": "export arc data", "expect": ["arc-command-bar#export"] },
+  { "q": "browser after arc", "expect": ["arc-command-bar#choose", "arc-command-bar"] }
 ]

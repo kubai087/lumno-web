@@ -210,6 +210,10 @@ export default {
   },
   "arc-command-bar": {
     "": ["Arc 浏览器替代、Arc 平替、Arc 停更、从 Arc 换到 Chrome、Arc 用户"],
+    timeline: ["Arc 关停了怎么办？Arc 停用、Arc 关闭、Arc 倒闭、Arc 停止服务、Arc 不能用了、12 月 22 日"],
+    export: ["怎么导出 Arc 的数据？Arc 导出书签、导出固定标签页、导出 Spaces、Arc 导入 Dia"],
+    "lumno-settings": ["Arc 里的 Lumno 设置怎么带走？换浏览器后设置还在吗、迁移配置"],
+    choose: ["Arc 停用后换什么浏览器？Dia、Zen、Vivaldi 哪个好"],
     mapping: ["Arc 快捷键对应、Arc 的 Cmd T、Ctrl Tab、Cmd Shift C"],
     steps: ["怎么设置成和 Arc 一样？把快捷键改成 Cmd T"],
     limits: ["侧边栏、垂直标签页、Spaces、分屏能用吗？"],

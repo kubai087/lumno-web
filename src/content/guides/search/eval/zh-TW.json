@@ -101,5 +101,9 @@
   { "q": "不要開新分頁", "expect": ["search-tabs-bookmarks-history#current-tab"] },
   { "q": "圖形加速未開啟", "expect": ["browser-compatibility#graphics-acceleration"] },
   { "q": "硬體加速", "expect": ["browser-compatibility#graphics-acceleration"] },
-  { "q": "搜尋優先", "expect": ["search-tabs-bookmarks-history#results"] }
+  { "q": "搜尋優先", "expect": ["search-tabs-bookmarks-history#results"] },
+  { "q": "Arc 停止服務", "expect": ["arc-command-bar#timeline", "arc-command-bar"] },
+  { "q": "Arc 關閉", "expect": ["arc-command-bar#timeline", "arc-command-bar"] },
+  { "q": "匯出 Arc 資料", "expect": ["arc-command-bar#export"] },
+  { "q": "Arc 之後換什麼瀏覽器", "expect": ["arc-command-bar#choose", "arc-command-bar"] }
 ]

@@ -244,13 +244,21 @@ const content: GuideLocaleContent = {
       navTitle: "Capture web",
     },
     "arc-command-bar": {
-      pageTitle: "Passer d'Arc à Chrome, Dia ou Edge : barre de commande et raccourcis | Aide Lumno",
+      pageTitle: "Arc s'arrête : comment passer à Dia, Chrome ou Edge | Aide Lumno",
       pageDescription:
-        "Vous avez quitté Arc pour Chrome, Dia ou Edge ? Lumno ramène une barre de commande à la Arc : ⌘⇧K cherche dans les onglets, favoris et historique (ou réglez-la sur ⌘T), et ⌥Q passe d'un onglet récent à l'autre. Avec un tableau des raccourcis d'Arc.",
-      keywords: ["alternative barre de commande Arc", "alternative au navigateur Arc", "passer d'Arc à Chrome", "barre de commande Dia", "raccourcis Arc"],
+        "Arc s'arrête le 22 décembre 2026. Retrouvez le calendrier, comment exporter vos données avant de passer à Dia ou à un autre navigateur, et comment Lumno garde une barre de commande à la Arc dans Chrome, Dia et Edge. Avec un tableau des raccourcis d'Arc.",
+      keywords: ["arrêt d'Arc", "fin du navigateur Arc", "alternative au navigateur Arc", "exporter les données d'Arc", "passer d'Arc à Chrome", "alternative barre de commande Arc", "raccourcis Arc"],
       title: "Venir d'Arc",
       navTitle: "Venir d'Arc",
       faq: [
+        {
+          question: "Pourrai-je encore ouvrir Arc après le 22 décembre ?",
+          answer: "Non. Arc pour Mac et Windows cesse de fonctionner le 22 décembre 2026, et les données d'Arc enregistrées sur votre ordinateur ne pourront plus être ouvertes. Importez-les dans Dia ou exportez-les avant cette date.",
+        },
+        {
+          question: "J'utilise Lumno dans Arc. Puis-je garder mes réglages ?",
+          answer: "Oui. Avant l'arrêt d'Arc, exportez vos réglages dans Lumno, puis importez-les après avoir installé Lumno dans votre nouveau navigateur. Vous pouvez aussi activer la synchronisation WebDAV.",
+        },
         {
           question: "Lumno est-il lié à Arc ?",
           answer: "Non. Lumno est un projet open source indépendant, inspiré de la barre de commande d'Arc, sans lien avec Arc ni The Browser Company.",

@@ -244,13 +244,21 @@ const content: GuideLocaleContent = {
       navTitle: "Recorte web",
     },
     "arc-command-bar": {
-      pageTitle: "De Arc a Chrome, Dia o Edge: la barra de comandos y los atajos | Ayuda de Lumno",
+      pageTitle: "Arc cierra: cómo pasarte a Dia, Chrome o Edge | Ayuda de Lumno",
       pageDescription:
-        "¿Has dejado Arc por Chrome, Dia o Edge? Lumno recupera una barra de comandos al estilo de Arc: ⌘⇧K busca en pestañas, marcadores e historial (o cámbialo a ⌘T) y ⌥Q salta entre pestañas recientes. Incluye una tabla de equivalencias de atajos de Arc.",
-      keywords: ["alternativa barra de comandos Arc", "alternativa al navegador Arc", "pasar de Arc a Chrome", "barra de comandos Dia", "atajos de Arc"],
+        "Arc deja de funcionar el 22 de diciembre de 2026. Consulta el calendario, cómo exportar tus datos antes de pasarte a Dia o a otro navegador y cómo Lumno mantiene una barra de comandos al estilo de Arc en Chrome, Dia y Edge. Incluye una tabla de equivalencias de atajos de Arc.",
+      keywords: ["cierre de Arc", "Arc deja de funcionar", "alternativa al navegador Arc", "exportar datos de Arc", "pasar de Arc a Chrome", "alternativa barra de comandos Arc", "atajos de Arc"],
       title: "Si vienes de Arc",
       navTitle: "Si vienes de Arc",
       faq: [
+        {
+          question: "¿Podré abrir Arc después del 22 de diciembre?",
+          answer: "No. Arc para Mac y Windows deja de funcionar el 22 de diciembre de 2026, y los datos de Arc guardados en tu ordenador ya no se podrán abrir. Impórtalos en Dia o expórtalos antes de esa fecha.",
+        },
+        {
+          question: "Uso Lumno en Arc. ¿Puedo conservar mis ajustes?",
+          answer: "Sí. Antes del cierre de Arc, exporta tus ajustes en Lumno e impórtalos después de instalar Lumno en el nuevo navegador. También puedes activar la sincronización WebDAV.",
+        },
         {
           question: "¿Lumno tiene relación con Arc?",
           answer: "No. Lumno es un proyecto de código abierto independiente, inspirado en la barra de comandos de Arc, sin relación con Arc ni con The Browser Company.",

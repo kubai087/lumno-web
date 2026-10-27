@@ -244,13 +244,21 @@ const content: GuideLocaleContent = {
       navTitle: "Web-Clip",
     },
     "arc-command-bar": {
-      pageTitle: "Von Arc zu Chrome, Dia oder Edge: Befehlsleiste und Tastenkürzel | Lumno-Hilfe",
+      pageTitle: "Arc wird eingestellt: so wechselst du zu Dia, Chrome oder Edge | Lumno-Hilfe",
       pageDescription:
-        "Von Arc zu Chrome, Dia oder Edge gewechselt? Mit Lumno erhältst du wieder eine Befehlsleiste im Stil von Arc: ⌘⇧K durchsucht Tabs, Lesezeichen und Verlauf (auch auf ⌘T legbar), ⌥Q wechselt zwischen den letzten Tabs. Mit Übersicht der Arc-Tastenkürzel.",
-      keywords: ["Arc Befehlsleiste Alternative", "Arc Browser Alternative", "von Arc zu Chrome wechseln", "Dia Befehlsleiste", "Arc Tastenkürzel"],
+        "Arc wird am 22. Dezember 2026 eingestellt. Hier findest du den Zeitplan, wie du deine Daten vor dem Wechsel zu Dia oder einem anderen Browser exportierst und wie Lumno dir in Chrome, Dia und Edge eine Befehlsleiste im Stil von Arc gibt. Mit Übersicht der Arc-Tastenkürzel.",
+      keywords: ["Arc wird eingestellt", "Arc Browser Einstellung", "Arc Browser Alternative", "Arc Daten exportieren", "von Arc zu Chrome wechseln", "Arc Befehlsleiste Alternative", "Arc Tastenkürzel"],
       title: "Umstieg von Arc",
       navTitle: "Umstieg von Arc",
       faq: [
+        {
+          question: "Kann ich Arc nach dem 22. Dezember noch öffnen?",
+          answer: "Nein. Arc für Mac und Windows funktioniert ab dem 22. Dezember 2026 nicht mehr, und die Arc-Daten auf deinem Computer lassen sich danach nicht mehr öffnen. Importiere sie vorher in Dia oder exportiere sie.",
+        },
+        {
+          question: "Ich nutze Lumno in Arc. Kann ich meine Einstellungen behalten?",
+          answer: "Ja. Exportiere deine Einstellungen in Lumno, bevor Arc eingestellt wird, und importiere sie, nachdem du Lumno im neuen Browser installiert hast. Oder schalte die WebDAV-Synchronisierung ein.",
+        },
         {
           question: "Hat Lumno etwas mit Arc zu tun?",
           answer: "Nein. Lumno ist ein unabhängiges Open-Source-Projekt, inspiriert von Arcs Befehlsleiste, und steht in keiner Verbindung zu Arc oder The Browser Company.",

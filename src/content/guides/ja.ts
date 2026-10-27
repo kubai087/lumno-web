@@ -233,14 +233,25 @@ const content: GuideLocaleContent = {
       navTitle: "Webクリップ",
     },
     "arc-command-bar": {
-      pageTitle: "Arc から Chrome・Dia・Edge へ：コマンドバーとショートカットの対応表｜Lumno ヘルプ",
+      pageTitle: "Arc の提供終了に備えて：データの書き出し、ブラウザ選び、ショートカット対応表｜Lumno ヘルプ",
       pageDescription:
-        "Arc から Chrome、Dia、Edge に乗り換えたら、Lumno で Arc のようなコマンドバーを取り戻せます。⌘⇧K でタブ・ブックマーク・履歴を検索（⌘T にも変更可）、⌥Q で最近のタブを切り替え。Arc のショートカット対応表付き。",
-      keywords: ["Arc コマンドバー 代わり", "Arc ブラウザ 代わり", "Arc から Chrome", "Dia コマンドバー", "Arc ショートカット"],
+        "Arc は 2026年12月22日に提供を終了します。終了までのスケジュール、Dia やほかのブラウザに移る前のデータの書き出し方、Lumno で Chrome・Dia・Edge でも Arc のようなコマンドバーを使い続ける方法をまとめました。Arc のショートカット対応表付き。",
+      keywords: ["Arc 提供終了", "Arc サービス終了", "Arc ブラウザ 代わり", "Arc データ 書き出し", "Arc から Chrome", "Arc コマンドバー 代わり", "Arc ショートカット"],
       title: "Arc から乗り換える",
       navTitle: "Arc から乗り換える",
       faq: [
-        { question: "Lumno は Arc と関係がありますか？", answer: "いいえ。Lumno は Arc を参考にした独立したオープンソースプロジェクトであり、Arc および The Browser Company とは関係ありません。" },
+        {
+          question: "12月22日以降も Arc を開けますか？",
+          answer: "いいえ。Mac 版と Windows 版の Arc は 2026年12月22日に動作しなくなり、コンピュータに保存された Arc のデータも開けなくなります。それまでに Dia に読み込むか、データを書き出してください。",
+        },
+        {
+          question: "Arc で使っていた Lumno の設定は引き継げますか？",
+          answer: "はい。Arc の提供終了前に Lumno の設定画面からエクスポートし、新しいブラウザに Lumno をインストールしてからインポートしてください。WebDAV 同期を使うこともできます。",
+        },
+        {
+          question: "Lumno は Arc と関係がありますか？",
+          answer: "いいえ。Lumno は Arc を参考にした独立したオープンソースプロジェクトであり、Arc および The Browser Company とは関係ありません。",
+        },
       ],
     },
     "browser-compatibility": {

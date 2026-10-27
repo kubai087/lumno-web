@@ -244,13 +244,21 @@ const content: GuideLocaleContent = {
       navTitle: "웹 클립",
     },
     "arc-command-bar": {
-      pageTitle: "Arc에서 Chrome, Dia, Edge로: 명령 바와 단축키 그대로 | Lumno 도움말",
+      pageTitle: "Arc 서비스 종료 대비: 데이터 내보내기, 브라우저 고르기, 단축키 비교 | Lumno 도움말",
       pageDescription:
-        "Arc에서 Chrome, Dia, Edge로 옮겼다면 Lumno로 Arc와 비슷한 명령 바를 사용할 수 있습니다. ⌘⇧K(또는 ⌘T)로 탭, 북마크, 방문 기록을 검색하고 ⌥Q로 최근 탭을 전환하세요. Arc 단축키 비교표도 포함되어 있습니다.",
-      keywords: ["Arc 명령 바 대안", "Arc 브라우저 대안", "Arc에서 크롬으로", "Dia 명령 바", "Arc 단축키"],
+        "Arc는 2026년 12월 22일에 서비스를 종료합니다. 종료 일정, Dia나 다른 브라우저로 옮기기 전에 데이터를 내보내는 방법, Lumno로 Chrome, Dia, Edge에서도 Arc와 비슷한 명령 바를 계속 쓰는 방법을 정리했습니다. Arc 단축키 비교표도 포함되어 있습니다.",
+      keywords: ["Arc 서비스 종료", "Arc 종료", "Arc 브라우저 대안", "Arc 데이터 내보내기", "Arc에서 크롬으로", "Arc 명령 바 대안", "Arc 단축키"],
       title: "Arc에서 옮겨 왔다면",
       navTitle: "Arc에서 옮겨 왔다면",
       faq: [
+        {
+          question: "12월 22일 이후에도 Arc를 열 수 있나요?",
+          answer: "아니요. Mac과 Windows용 Arc는 2026년 12월 22일에 작동을 멈추며, 컴퓨터에 저장된 Arc 데이터도 열 수 없게 됩니다. 그 전에 Dia로 가져오거나 데이터를 내보내세요.",
+        },
+        {
+          question: "Arc에서 쓰던 Lumno 설정을 새 브라우저로 옮길 수 있나요?",
+          answer: "네. Arc 서비스가 종료되기 전에 Lumno 설정을 내보내고, 새 브라우저에 Lumno를 설치한 뒤 가져오세요. WebDAV 동기화를 켜도 됩니다.",
+        },
         {
           question: "Lumno는 Arc와 관련이 있나요?",
           answer: "아니요. Lumno는 Arc의 명령 바에서 영감을 받은 독립 오픈소스 프로젝트이며, Arc 및 The Browser Company와는 관련이 없습니다.",

@@ -96,5 +96,9 @@
   { "q": "新しいタブを開かない", "expect": ["search-tabs-bookmarks-history#current-tab"] },
   { "q": "グラフィック アクセラレーション", "expect": ["browser-compatibility#graphics-acceleration"] },
   { "q": "ハードウェア アクセラレーション", "expect": ["browser-compatibility#graphics-acceleration"] },
-  { "q": "検索を優先", "expect": ["search-tabs-bookmarks-history#results"] }
+  { "q": "検索を優先", "expect": ["search-tabs-bookmarks-history#results"] },
+  { "q": "Arc 提供終了", "expect": ["arc-command-bar#timeline", "arc-command-bar"] },
+  { "q": "Arc サービス終了", "expect": ["arc-command-bar#timeline", "arc-command-bar"] },
+  { "q": "Arc データ 書き出し", "expect": ["arc-command-bar#export"] },
+  { "q": "Arc の後 ブラウザ", "expect": ["arc-command-bar#choose", "arc-command-bar"] }
 ]

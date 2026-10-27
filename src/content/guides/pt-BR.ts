@@ -244,13 +244,21 @@ const content: GuideLocaleContent = {
       navTitle: "Recorte da web",
     },
     "arc-command-bar": {
-      pageTitle: "Do Arc para o Chrome, Dia ou Edge: a barra de comandos e os atalhos | Ajuda do Lumno",
+      pageTitle: "O Arc vai acabar: como mudar para o Dia, Chrome ou Edge | Ajuda do Lumno",
       pageDescription:
-        "Trocou o Arc pelo Chrome, Dia ou Edge? O Lumno traz de volta uma barra de comandos no estilo do Arc: ⌘⇧K pesquisa guias, favoritos e histórico (ou mude para ⌘T), e ⌥Q alterna entre guias recentes. Com uma tabela dos atalhos do Arc.",
-      keywords: ["alternativa à barra de comandos do Arc", "alternativa ao navegador Arc", "mudar do Arc para o Chrome", "barra de comandos do Dia", "atalhos do Arc"],
+        "O Arc será encerrado em 22 de dezembro de 2026. Veja o cronograma, como exportar seus dados antes de ir para o Dia ou outro navegador e como o Lumno mantém uma barra de comandos no estilo do Arc no Chrome, no Dia e no Edge. Com uma tabela dos atalhos do Arc.",
+      keywords: ["encerramento do Arc", "fim do navegador Arc", "alternativa ao navegador Arc", "exportar dados do Arc", "mudar do Arc para o Chrome", "alternativa à barra de comandos do Arc", "atalhos do Arc"],
       title: "Vindo do Arc",
       navTitle: "Vindo do Arc",
       faq: [
+        {
+          question: "Ainda vou conseguir abrir o Arc depois de 22 de dezembro?",
+          answer: "Não. O Arc para Mac e Windows para de funcionar em 22 de dezembro de 2026, e os dados do Arc salvos no seu computador não poderão mais ser abertos. Importe-os para o Dia ou exporte-os antes dessa data.",
+        },
+        {
+          question: "Uso o Lumno no Arc. Posso manter minhas configurações?",
+          answer: "Sim. Antes do encerramento do Arc, exporte suas configurações no Lumno e importe-as depois de instalar o Lumno no novo navegador. Você também pode ativar a sincronização WebDAV.",
+        },
         {
           question: "O Lumno tem relação com o Arc?",
           answer: "Não. O Lumno é um projeto independente de código aberto, inspirado na barra de comandos do Arc, sem vínculo com o Arc nem com a The Browser Company.",

@@ -233,14 +233,25 @@ const content: GuideLocaleContent = {
       navTitle: "網頁剪裁",
     },
     "arc-command-bar": {
-      pageTitle: "從 Arc 搬到 Chrome、Dia 或 Edge：命令列與快速鍵對照｜Lumno 說明中心",
+      pageTitle: "Arc 停止服務後怎麼搬家：匯出資料、選瀏覽器與快速鍵對照｜Lumno 說明中心",
       pageDescription:
-        "從 Arc 換到 Chrome、Dia 或 Edge 後，用 Lumno 找回 Arc 式命令列：按 ⌘⇧K 搜尋分頁、書籤和瀏覽紀錄，也能改成 ⌘T；按 ⌥Q 切換最近的分頁。附 Arc 快速鍵對照表。",
-      keywords: ["Arc 命令列替代", "Arc 瀏覽器替代", "Arc 搬到 Chrome", "Dia 命令列", "Arc 快速鍵"],
+        "Arc 將於 2026 年 12 月 22 日停止服務。了解停止服務時間表、換到 Dia 或其他瀏覽器前如何匯出資料，以及如何用 Lumno 在 Chrome、Dia、Edge 中繼續使用 Arc 式命令列，附 Arc 快速鍵對照表。",
+      keywords: ["Arc 停止服務", "Arc 關閉", "Arc 瀏覽器替代", "Arc 匯出資料", "Arc 搬到 Chrome", "Arc 命令列替代", "Arc 快速鍵"],
       title: "從 Arc 搬家",
       navTitle: "從 Arc 搬家",
       faq: [
-        { question: "Lumno 和 Arc 有什麼關係？", answer: "Lumno 是獨立的開源專案，互動參考了 Arc，和 Arc、The Browser Company 沒有關係。" },
+        {
+          question: "12 月 22 日之後還能開啟 Arc 嗎？",
+          answer: "不能。Mac 和 Windows 版 Arc 將於 2026 年 12 月 22 日停止運作，存在電腦上的 Arc 資料也無法再開啟，請在這之前匯入 Dia 或匯出資料。",
+        },
+        {
+          question: "在 Arc 裡裝的 Lumno，設定能帶到新瀏覽器嗎？",
+          answer: "可以。在 Arc 停止服務前，先在 Lumno 設定中匯出設定，在新瀏覽器安裝 Lumno 後再匯入；也可以開啟 WebDAV 同步。",
+        },
+        {
+          question: "Lumno 和 Arc 有什麼關係？",
+          answer: "Lumno 是獨立的開源專案，互動參考了 Arc，和 Arc、The Browser Company 沒有關係。",
+        },
       ],
     },
     "browser-compatibility": {

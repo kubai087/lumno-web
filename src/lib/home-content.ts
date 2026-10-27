@@ -894,8 +894,10 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         firefoxOnly: true,
       },
       {
-        question: "從 Arc 換過來，還能用到熟悉的命令列嗎？",
-        answer: "可以。Lumno 的互動參考了 Arc（與 Arc 官方無關），在 Dia、Chrome、Edge 裡一樣能隨時叫出命令列，一處搜尋、快速切換。把快速鍵改成 ⌘ T，就是熟悉的 Arc 手感。",
+        question: "Arc 要停止服務了，換瀏覽器後還能用到熟悉的命令列嗎？",
+        answer:
+          "可以。Arc 將於 2026 年 12 月 22 日停止服務，Lumno 的互動參考了 Arc（與 Arc 官方無關），在 Dia、Chrome、Edge 裡一樣能隨時叫出命令列，一處搜尋、快速切換。把快速鍵改成 ⌘ T，就是熟悉的 Arc 手感。離開 Arc 前，記得把資料匯入 Dia 或匯出備份。",
+        guide: { slug: "arc-command-bar", label: "查看 Arc 搬家指南" },
       },
       {
         question: "能像 Arc 一樣用 Ctrl + Tab 切換分頁嗎？",
@@ -1569,9 +1571,10 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         firefoxOnly: true,
       },
       {
-        question: "Arc から乗り換えても、いつものコマンドバーは使えますか？",
+        question: "Arc が提供終了しても、いつものコマンドバーは使えますか？",
         answer:
-          "使えます。Lumno の操作感は Arc を参考にしています（Arc とは無関係です）。Dia、Chrome、Edge でもいつでもコマンドバーを呼び出し、まとめて検索して素早く切り替えられます。ショートカットを ⌘ T に変えれば、Arc と同じ感覚で使えます。",
+          "使えます。Arc は 2026年12月22日に提供を終了しますが、Lumno の操作感は Arc を参考にしています（Arc とは無関係です）。Dia、Chrome、Edge でもいつでもコマンドバーを呼び出し、まとめて検索して素早く切り替えられます。ショートカットを ⌘ T に変えれば、Arc と同じ感覚で使えます。Arc を離れる前に、データを Dia に読み込むか書き出しておきましょう。",
+        guide: { slug: "arc-command-bar", label: "Arc からの移行ガイドを見る" },
       },
       {
         question: "Arc のように Ctrl + Tab でタブを切り替えられますか？",
@@ -1903,9 +1906,10 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         firefoxOnly: true,
       },
       {
-        question: "Arc에서 넘어와도 익숙한 커맨드 바를 쓸 수 있나요?",
+        question: "Arc 서비스가 종료되어도 익숙한 커맨드 바를 쓸 수 있나요?",
         answer:
-          "네. Lumno는 Arc의 사용 방식을 참고했습니다(Arc와는 관련이 없습니다). Dia, Chrome, Edge에서도 언제든 커맨드 바를 불러 한곳에서 검색하고 빠르게 전환할 수 있습니다. 단축키를 ⌘ T로 바꾸면 Arc와 같은 손맛 그대로입니다.",
+          "네. Arc는 2026년 12월 22일에 서비스를 종료하지만, Lumno는 Arc의 사용 방식을 참고했습니다(Arc와는 관련이 없습니다). Dia, Chrome, Edge에서도 언제든 커맨드 바를 불러 한곳에서 검색하고 빠르게 전환할 수 있습니다. 단축키를 ⌘ T로 바꾸면 Arc와 같은 손맛 그대로입니다. Arc를 떠나기 전에 데이터를 Dia로 가져오거나 내보내 두세요.",
+        guide: { slug: "arc-command-bar", label: "Arc 이전 가이드 보기" },
       },
       {
         question: "Arc처럼 Ctrl + Tab으로 탭을 전환할 수 있나요?",
@@ -2248,9 +2252,10 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         firefoxOnly: true,
       },
       {
-        question: "Ich komme von Arc. Fühlt sich das vertraut an?",
+        question: "Arc wird eingestellt. Kann ich die gewohnte Befehlsleiste behalten?",
         answer:
-          "Genau darum geht es. Lumno orientiert sich an der Bedienung von Arc (ohne Verbindung zu Arc): Auch in Dia, Chrome oder Edge rufst du die Befehlsleiste jederzeit auf, suchst an einem Ort und wechselst blitzschnell. Leg das Kürzel auf ⌘ T, und es fühlt sich an wie in Arc.",
+          "Ja. Arc wird am 22. Dezember 2026 eingestellt, und Lumno orientiert sich an der Bedienung von Arc (ohne Verbindung zu Arc): Auch in Dia, Chrome oder Edge rufst du die Befehlsleiste jederzeit auf, suchst an einem Ort und wechselst blitzschnell. Leg das Kürzel auf ⌘ T, und es fühlt sich an wie in Arc. Bring deine Arc-Daten vor der Einstellung in Sicherheit.",
+        guide: { slug: "arc-command-bar", label: "Zur Anleitung für den Umstieg von Arc" },
       },
       {
         question: "Kann ich wie in Arc mit Ctrl + Tab zwischen Tabs wechseln?",
@@ -2593,9 +2598,10 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         firefoxOnly: true,
       },
       {
-        question: "Je viens d’Arc. Vais-je m’y retrouver ?",
+        question: "Arc s’arrête. Puis-je garder la barre de commande à laquelle je suis habitué ?",
         answer:
-          "C’est tout l’idée. Lumno s’inspire des interactions d’Arc (sans lien avec Arc) : dans Dia, Chrome ou Edge, vous ouvrez la barre de commande à tout moment, cherchez partout au même endroit et passez d’un onglet à l’autre en un éclair. Réglez le raccourci sur ⌘ T pour retrouver vos réflexes d’Arc.",
+          "Oui. Arc s’arrête le 22 décembre 2026, et Lumno s’inspire de ses interactions (sans lien avec Arc) : dans Dia, Chrome ou Edge, vous ouvrez la barre de commande à tout moment, cherchez partout au même endroit et passez d’un onglet à l’autre en un éclair. Réglez le raccourci sur ⌘ T pour retrouver vos réflexes d’Arc, et récupérez vos données d’Arc avant l’arrêt.",
+        guide: { slug: "arc-command-bar", label: "Lire le guide pour quitter Arc" },
       },
       {
         question: "Puis-je changer d’onglet avec Ctrl + Tab, comme dans Arc ?",
@@ -2938,9 +2944,10 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         firefoxOnly: true,
       },
       {
-        question: "Vengo de Arc. ¿Me resultará familiar?",
+        question: "Arc cierra. ¿Puedo seguir con la barra de comandos de siempre?",
         answer:
-          "Esa es la idea. Lumno se inspira en las interacciones de Arc (sin relación con Arc): en Dia, Chrome o Edge puedes abrir la barra de comandos cuando quieras, buscar todo en un solo lugar y cambiar de pestaña al instante. Asigna el atajo a ⌘ T y tendrás la sensación de Arc que ya conoces.",
+          "Sí. Arc deja de funcionar el 22 de diciembre de 2026, y Lumno se inspira en sus interacciones (sin relación con Arc): en Dia, Chrome o Edge puedes abrir la barra de comandos cuando quieras, buscar todo en un solo lugar y cambiar de pestaña al instante. Asigna el atajo a ⌘ T para tener la sensación de Arc que ya conoces, y saca tus datos de Arc antes del cierre.",
+        guide: { slug: "arc-command-bar", label: "Ver la guía para dejar Arc" },
       },
       {
         question: "¿Puedo cambiar de pestaña con Ctrl + Tab, como en Arc?",
@@ -3280,9 +3287,10 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         firefoxOnly: true,
       },
       {
-        question: "Estou vindo do Arc. Vou me sentir em casa?",
+        question: "O Arc vai acabar. Posso continuar com a barra de comandos que já conheço?",
         answer:
-          "Essa é a ideia. O Lumno se inspira nas interações do Arc (sem relação com o Arc): no Dia, no Chrome ou no Edge, você abre a barra de comandos a qualquer momento, pesquisa tudo num só lugar e troca de aba num instante. Defina o atalho como ⌘ T e pronto, é o Arc que você conhece.",
+          "Sim. O Arc será encerrado em 22 de dezembro de 2026, e o Lumno se inspira nas interações dele (sem relação com o Arc): no Dia, no Chrome ou no Edge, você abre a barra de comandos a qualquer momento, pesquisa tudo num só lugar e troca de aba num instante. Defina o atalho como ⌘ T para ter o Arc que você conhece, e leve seus dados do Arc antes do encerramento.",
+        guide: { slug: "arc-command-bar", label: "Ver o guia para sair do Arc" },
       },
       {
         question: "Posso trocar de aba com Ctrl + Tab, como no Arc?",
@@ -3622,9 +3630,10 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
         firefoxOnly: true,
       },
       {
-        question: "Я перехожу с Arc. Всё будет привычно?",
+        question: "Arc закрывается. Можно сохранить привычную командную панель?",
         answer:
-          "В этом и смысл. Lumno вдохновлён интерфейсом Arc (и никак с Arc не связан): в Dia, Chrome или Edge вы так же вызываете командную панель в любой момент, ищете всё в одном месте и мгновенно переключаетесь. Назначьте сочетание ⌘ T — и всё будет как в Arc.",
+          "Да. Arc прекращает работу 22 декабря 2026 года, а Lumno вдохновлён его интерфейсом (и никак с Arc не связан): в Dia, Chrome или Edge вы так же вызываете командную панель в любой момент, ищете всё в одном месте и мгновенно переключаетесь. Назначьте сочетание ⌘ T — и всё будет как в Arc. Не забудьте до закрытия перенести данные из Arc.",
+        guide: { slug: "arc-command-bar", label: "Руководство по переходу с Arc" },
       },
       {
         question: "Можно ли переключать вкладки по Ctrl + Tab, как в Arc?",

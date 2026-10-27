@@ -204,6 +204,10 @@ export default {
   },
   "arc-command-bar": {
     "": ["Arc ブラウザの代わり、Arc の代替、Arc の開発終了、Arc から Chrome へ乗り換え、Arc ユーザー"],
+    timeline: ["Arc の提供終了、Arc のサービス終了、Arc が終わる、Arc が使えなくなる、12月22日"],
+    export: ["Arc のデータを書き出す、Arc のエクスポート、ブックマーク・固定タブ・Spaces の書き出し、Arc から Dia に移行"],
+    "lumno-settings": ["Arc で使っていた Lumno の設定を引き継ぐ、別のブラウザに設定を移す"],
+    choose: ["Arc の後はどのブラウザ？Dia、Zen、Vivaldi の比較"],
     mapping: ["Arc のショートカット対応表：Cmd T、Ctrl Tab、Cmd Shift C"],
     steps: ["Arc と同じ設定にする、ショートカットを Cmd T に変更"],
     limits: ["サイドバー、縦タブ、Spaces、分割表示は使える？"],

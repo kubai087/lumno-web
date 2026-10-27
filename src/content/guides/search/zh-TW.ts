@@ -206,6 +206,10 @@ export default {
   },
   "arc-command-bar": {
     "": ["Arc 瀏覽器替代、Arc 停止更新、從 Arc 換到 Chrome、Arc 使用者"],
+    timeline: ["Arc 停止服務了怎麼辦？Arc 關閉、Arc 收掉、Arc 倒閉、Arc 不能用了、12 月 22 日"],
+    export: ["怎麼匯出 Arc 的資料？Arc 匯出書籤、匯出釘選分頁、匯出 Spaces、Arc 匯入 Dia"],
+    "lumno-settings": ["Arc 裡的 Lumno 設定怎麼帶走？換瀏覽器後設定還在嗎、搬移設定"],
+    choose: ["Arc 停止服務後換什麼瀏覽器？Dia、Zen、Vivaldi 哪個好"],
     mapping: ["Arc 快速鍵對照、Arc 的 Cmd T、Ctrl Tab、Cmd Shift C"],
     steps: ["怎麼設定成和 Arc 一樣？把快速鍵改成 Cmd T"],
     limits: ["側邊欄、垂直分頁、Spaces、分割畫面能用嗎？"],

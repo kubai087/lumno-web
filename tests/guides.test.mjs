@@ -234,7 +234,9 @@ test("the page list scrolls to its last item without clipping it", () => {
   const styles = readSource("src/styles/guides.css");
   // The bottom fades only while more of the list waits below.
   assert.match(styles, /\.guide-nav \{[\s\S]*?scrollbar-width: none;[\s\S]*?mask-image: linear-gradient\(/);
-  assert.match(styles, /\.guide-nav\[data-more\] \{\s*--guide-nav-fade-bottom: 48px;/);
+  assert.match(styles, /\.guide-nav\[data-more\] \{\s*--guide-nav-clear-bottom: 12px;\s*--guide-nav-fade-bottom: 56px;/);
+  // A clear strip at the edge, so a row straddling it never shows as half a line of faint text.
+  assert.match(styles, /transparent calc\(100% - var\(--guide-nav-clear-bottom\)\)\s*\);/);
   // No scrollbar: arrow buttons at the edges that have more beyond them.
   assert.match(readSource("src/components/guides/GuideShell.astro"), /class="guide-nav-step guide-nav-step--up" data-guide-nav-step="-1"[\s\S]*?class="guide-nav-step guide-nav-step--down" data-guide-nav-step="1"/);
   assert.match(styles, /\.guide-nav-frame\[data-above\] \.guide-nav-step--up,\s*\.guide-nav-frame\[data-below\] \.guide-nav-step--down \{\s*opacity: 1;/);

@@ -344,26 +344,36 @@
 }
 
 .guide-nav {
+  --guide-nav-clear-top: 0px;
   --guide-nav-fade-top: 0px;
+  --guide-nav-clear-bottom: 0px;
   --guide-nav-fade-bottom: 0px;
   min-height: 0;
   overflow-y: auto;
   padding-bottom: 12px;
   scrollbar-width: none;
-  /* Edges fade only where more of the list waits beyond them, instead of cutting an item in half. */
+  /*
+   * Edges fade only where more of the list waits beyond them, instead of cutting an item in half.
+   * A clear strip right at the edge and an eased ramp keep a row that straddles the edge from
+   * showing as a faint half line of text beside the arrow.
+   */
   -webkit-mask-image: linear-gradient(
     to bottom,
-    transparent,
+    transparent var(--guide-nav-clear-top),
+    rgb(0 0 0 / 0.3) calc((var(--guide-nav-clear-top) + var(--guide-nav-fade-top)) / 2),
     #000 var(--guide-nav-fade-top),
     #000 calc(100% - var(--guide-nav-fade-bottom)),
-    transparent
+    rgb(0 0 0 / 0.3) calc(100% - (var(--guide-nav-clear-bottom) + var(--guide-nav-fade-bottom)) / 2),
+    transparent calc(100% - var(--guide-nav-clear-bottom))
   );
   mask-image: linear-gradient(
     to bottom,
-    transparent,
+    transparent var(--guide-nav-clear-top),
+    rgb(0 0 0 / 0.3) calc((var(--guide-nav-clear-top) + var(--guide-nav-fade-top)) / 2),
     #000 var(--guide-nav-fade-top),
     #000 calc(100% - var(--guide-nav-fade-bottom)),
-    transparent
+    rgb(0 0 0 / 0.3) calc(100% - (var(--guide-nav-clear-bottom) + var(--guide-nav-fade-bottom)) / 2),
+    transparent calc(100% - var(--guide-nav-clear-bottom))
   );
 }
 
@@ -372,11 +382,13 @@
 }
 
 .guide-nav[data-more-above] {
-  --guide-nav-fade-top: 32px;
+  --guide-nav-clear-top: 8px;
+  --guide-nav-fade-top: 40px;
 }
 
 .guide-nav[data-more] {
-  --guide-nav-fade-bottom: 48px;
+  --guide-nav-clear-bottom: 12px;
+  --guide-nav-fade-bottom: 56px;
 }
 
 /* No scrollbar: a small round arrow at each edge that still has more beyond it. */

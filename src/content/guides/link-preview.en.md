@@ -1,4 +1,4 @@
-Shift-click a link and Lumno opens it in a small window over the page you're on. The page behind it shrinks back and blurs. When you're done, close the window to pick up where you left off, or move the link to a new tab to keep reading.
+Shift-click a link and Lumno opens it in a small window over the page you're on. The page behind it shrinks back and blurs. When you're done, close the window to pick up where you left off, or move the link to a new tab or a split view beside the page to keep reading.
 
 ## Preview a link {#how}
 
@@ -21,6 +21,7 @@ From top to bottom, the buttons to the right of the window are:
 
 - Close: Closes the window and returns you to the page.
 - Open in new tab: Moves the page in the window to a new tab and closes the window.
+- Open in split view: Moves the page in the window into a split view beside the page you're on and closes the window. It appears only where the browser has split views (Chrome 155 or later for now) and the page isn't already in one. See [Browser compatibility](../browser-compatibility/#split-view).
 - Copy link: Copies the address of the page shown in the window. If you followed other links in the window, it copies the page you're looking at now.
 - Reload: Reloads the page in the window.
 - Back: Appears after you follow a link in the window, and returns to the previous page.

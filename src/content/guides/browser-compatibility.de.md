@@ -43,8 +43,16 @@ Da sich die Erweiterungs-APIs von Firefox von denen in Chromium unterscheiden, s
 | Befehlsleiste auf lokalen `file://`-Seiten | Nicht verfügbar |
 | Website-Symbole | Bei noch nicht besuchten Websites wird anfangs möglicherweise ein Platzhaltersymbol angezeigt |
 | Liquid glass im neuen Tab | Nur die Glasoptik, ohne Lichtbrechung an den Rändern |
+| [Geteilte Ansicht](#split-view) | Nicht verfügbar; `⌥ ↩` öffnet stattdessen einen neuen Tab |
 
 Da Firefox `⌘ ⇧ K` bereits selbst verwendet, nutzt die Firefox-Version standardmäßig `⌃ ⇧ K | Alt + K`. `⌥ Q` bleibt unverändert. Um die Tastenkürzel zu ändern, öffne `about:addons`, klicke oben rechts auf das Zahnrad und wähle „Tastenkombinationen von Erweiterungen verwalten“.
+
+## Geteilte Ansicht {#split-view}
+
+Ab Version 1.3.1 öffnest du eine Seite in geteilter Ansicht neben der aktuellen, wenn du in der Befehlsleiste oder im Suchfeld des neuen Tabs `⌥ ↩` drückst oder in der [Link-Vorschau](../link-preview/#window) auf „In geteilter Ansicht öffnen“ klickst. Dafür brauchst du einen Browser mit geteilter Ansicht, derzeit also Chrome 155 oder neuer.
+
+- In Firefox, älteren Chrome-Versionen und anderen Browsern ohne geteilte Ansicht öffnet `⌥ ↩` stattdessen einen neuen Tab im Vordergrund, und die Link-Vorschau zeigt die Schaltfläche „In geteilter Ansicht öffnen“ nicht an.
+- Ist die aktuelle Seite bereits in einer geteilten Ansicht, öffnet sich das Ergebnis ebenfalls in einem neuen Tab.
 
 ## Safari {#safari}
 

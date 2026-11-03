@@ -43,8 +43,16 @@ Les API d'extensions de Firefox étant différentes de celles de Chromium, certa
 | Barre de commande sur les pages locales `file://` | Non disponible |
 | Icônes de sites | Les sites jamais visités peuvent d'abord afficher une icône générique |
 | Liquid glass dans le nouvel onglet | Aspect de verre uniquement, sans déformation sur les bords |
+| [Écran partagé](#split-view) | Non disponible ; `⌥ ↩` ouvre plutôt un nouvel onglet |
 
 Comme Firefox utilise déjà `⌘ ⇧ K`, la version Firefox utilise par défaut `⌃ ⇧ K | Alt + K`. `⌥ Q` reste inchangé. Pour modifier ces raccourcis, ouvrez `about:addons`, cliquez sur le bouton en forme d'engrenage en haut à droite et choisissez « Gérer les raccourcis d’extensions ».
+
+## Écran partagé {#split-view}
+
+Depuis la version 1.3.1, appuyer sur `⌥ ↩` dans la barre de commande ou le champ de recherche du nouvel onglet, ou cliquer sur « Ouvrir en écran partagé » dans un [aperçu de lien](../link-preview/#window), ouvre une page à côté de la page actuelle, en écran partagé. Il faut pour cela un navigateur qui propose l'écran partagé, c'est-à-dire pour l'instant Chrome 155 ou version ultérieure.
+
+- Dans Firefox, les versions antérieures de Chrome et les autres navigateurs sans écran partagé, `⌥ ↩` ouvre plutôt un nouvel onglet au premier plan, et les aperçus de liens n'affichent pas le bouton « Ouvrir en écran partagé ».
+- Si la page actuelle est déjà en écran partagé, le résultat s'ouvre lui aussi dans un nouvel onglet.
 
 ## Safari {#safari}
 

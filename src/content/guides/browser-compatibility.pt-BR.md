@@ -43,8 +43,16 @@ Como as APIs de extensões do Firefox são diferentes das do Chromium, alguns re
 | Barra de comandos em páginas locais `file://` | Indisponível |
 | Ícones de sites | Sites que você nunca visitou podem mostrar inicialmente um ícone genérico |
 | Liquid glass na nova guia | Só o acabamento de vidro, sem curvatura nas bordas |
+| [Tela dividida](#split-view) | Indisponível; `⌥ ↩` abre uma nova guia |
 
 Como o Firefox já usa `⌘ ⇧ K`, a versão para Firefox usa por padrão `⌃ ⇧ K | Alt + K`. O `⌥ Q` não muda. Para alterar os atalhos, abra `about:addons`, clique no botão de engrenagem no canto superior direito e escolha "Gerenciar atalhos de extensões".
+
+## Tela dividida {#split-view}
+
+Desde a versão 1.3.1, pressionar `⌥ ↩` na barra de comandos ou na caixa de pesquisa da nova guia, ou clicar em "Abrir em tela dividida" na [prévia de links](../link-preview/#window), abre uma página ao lado da atual em tela dividida. Isso exige um navegador com tela dividida, o que por enquanto significa o Chrome 155 ou mais recente.
+
+- No Firefox, em versões anteriores do Chrome e em outros navegadores sem tela dividida, `⌥ ↩` abre uma nova guia em primeiro plano, e a prévia de links não mostra o botão "Abrir em tela dividida".
+- Se a página atual já estiver em tela dividida, o resultado também abre em uma nova guia.
 
 ## Safari {#safari}
 

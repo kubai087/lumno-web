@@ -26,6 +26,10 @@ Lumno solo busca en el contenido de tu navegador. Si quieres buscar apps, archiv
 - En Dia, la barra de comandos funciona, pero la nueva pestaña de Lumno no está disponible. Además, los atajos propios de Dia tienen prioridad: para abrir la barra de comandos con `⌘ T`, primero cambia el atajo de "New Tab" en Dia. Para obtener más información, consulta [Compatibilidad con navegadores](../browser-compatibility/#dia).
 - Algunas funciones no están disponibles en la versión de Firefox. Para obtener más información, consulta [Compatibilidad con navegadores](../browser-compatibility/).
 
+## Barra lateral, espacios y vista dividida {#browser-ui}
+
+La barra lateral y los espacios forman parte de la interfaz del propio navegador, por lo que una extensión no puede añadirlos. La vista dividida también la ofrece el navegador: donde existe (por ahora, en Chrome 155 o posterior), Lumno puede abrir en ella los resultados de búsqueda y las vistas previas de enlaces; en los demás navegadores se abren en una pestaña nueva. Consulta [Compatibilidad con navegadores](../browser-compatibility/#split-view). Si necesitas una barra lateral, elige Dia, Zen o Vivaldi, como se explica en [Si vienes de Arc](../arc-command-bar/#choose).
+
 ## Widgets en la nueva pestaña {#widgets}
 
 La nueva pestaña de Lumno prioriza la sencillez y no incluye widgets como el tiempo, tareas o notas. Si quieres una nueva pestaña con muchos widgets, prueba [Momentum](https://momentumdash.com/) o [Tabliss](https://tabliss.io/).

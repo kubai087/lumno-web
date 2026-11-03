@@ -1,4 +1,4 @@
-Haz clic en un enlace mientras mantienes pulsada `⇧` y Lumno lo abrirá en una ventana pequeña sobre la página actual. La página de detrás se reduce, se difumina y queda al fondo. Cuando termines, cierra la ventana para seguir donde lo dejaste, o pasa el enlace a una pestaña nueva para seguir leyendo.
+Haz clic en un enlace mientras mantienes pulsada `⇧` y Lumno lo abrirá en una ventana pequeña sobre la página actual. La página de detrás se reduce, se difumina y queda al fondo. Cuando termines, cierra la ventana para seguir donde lo dejaste, o pasa el enlace a una pestaña nueva o a una vista dividida junto a la página para seguir leyendo.
 
 ## Ver la vista previa de un enlace {#how}
 
@@ -21,6 +21,7 @@ A la derecha de la ventana encontrarás, de arriba abajo, estos botones:
 
 - Cerrar: cierra la ventana y vuelve a la página.
 - Abrir en una pestaña nueva: pasa la página de la ventana a una pestaña nueva y cierra la ventana.
+- Abrir en vista dividida: pasa la página de la ventana a una vista dividida junto a la página actual y cierra la ventana. Solo aparece si el navegador tiene vista dividida (por ahora, Chrome 155 o posterior) y la página no está ya en una. Consulta [Compatibilidad con navegadores](../browser-compatibility/#split-view).
 - Copiar enlace: copia la dirección de la página que se muestra en la ventana. Si has seguido otros enlaces dentro de la ventana, copia la de la página que estás viendo en ese momento.
 - Volver a cargar: vuelve a cargar la página de la ventana.
 - Atrás: aparece después de seguir un enlace dentro de la ventana y vuelve a la página anterior.

@@ -1,4 +1,4 @@
-Clique em um link segurando `⇧` e o Lumno vai abri-lo em uma janela pequena sobre a página atual. A página de trás diminui, fica desfocada e vai para o fundo. Quando terminar, feche a janela para voltar ao ponto em que estava ou mova o link para uma nova guia para continuar lendo.
+Clique em um link segurando `⇧` e o Lumno vai abri-lo em uma janela pequena sobre a página atual. A página de trás diminui, fica desfocada e vai para o fundo. Quando terminar, feche a janela para voltar ao ponto em que estava ou mova o link para uma nova guia ou para uma tela dividida ao lado da página para continuar lendo.
 
 ## Ver a prévia de um link {#how}
 
@@ -21,6 +21,7 @@ Além de links comuns, também é possível ver a prévia de:
 
 - Fechar: fecha a janela e volta para a página.
 - Abrir em nova guia: move a página da janela para uma nova guia e fecha a janela.
+- Abrir em tela dividida: move a página da janela para uma tela dividida ao lado da página atual e fecha a janela. Só aparece quando o navegador tem tela dividida (por enquanto, o Chrome 155 ou mais recente) e a página ainda não está em uma. Consulte [Compatibilidade com navegadores](../browser-compatibility/#split-view).
 - Copiar link: copia o endereço da página exibida na janela. Se você seguiu outros links dentro da janela, copia o endereço da página que está aberta no momento.
 - Recarregar: carrega de novo a página da janela.
 - Voltar: aparece depois que você segue um link dentro da janela e volta para a página anterior.

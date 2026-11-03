@@ -26,6 +26,10 @@ Lumno durchsucht nur Inhalte in deinem Browser. Wenn du Apps, Dateien und System
 - In Dia funktioniert die Befehlsleiste, Lumnos neuer Tab ist dort jedoch nicht verfügbar. Außerdem haben Dias eigene Tastenkürzel Vorrang: Um die Befehlsleiste mit `⌘ T` zu öffnen, ändere zuerst das Tastenkürzel für „New Tab“ in Dia. Weitere Informationen findest du unter [Browserkompatibilität](../browser-compatibility/#dia).
 - In der Firefox-Version sind einige Funktionen nicht verfügbar. Weitere Informationen findest du unter [Browserkompatibilität](../browser-compatibility/).
 
+## Seitenleiste, Spaces und geteilte Ansicht {#browser-ui}
+
+Seitenleiste und Spaces gehören zur Oberfläche des Browsers selbst, deshalb kann eine Erweiterung sie nicht hinzufügen. Auch die geteilte Ansicht stammt vom Browser: Wo er sie bietet (derzeit Chrome 155 oder neuer), kann Lumno Suchergebnisse und Link-Vorschauen in geteilter Ansicht öffnen; anderswo öffnen sie sich in einem neuen Tab. Siehe [Browserkompatibilität](../browser-compatibility/#split-view). Bist du auf eine Seitenleiste angewiesen, wähle Dia, Zen oder Vivaldi, wie unter [Umstieg von Arc](../arc-command-bar/#choose) beschrieben.
+
 ## Widgets im neuen Tab {#widgets}
 
 Lumnos neuer Tab ist bewusst schlicht gehalten und bietet keine Widgets wie Wetter, Aufgaben oder Notizen. Wenn du einen neuen Tab mit vielen Widgets möchtest, probiere [Momentum](https://momentumdash.com/) oder [Tabliss](https://tabliss.io/) aus.

@@ -1,4 +1,4 @@
-Klicke mit gedrückter `⇧`-Taste auf einen Link, und Lumno öffnet ihn in einem kleinen Fenster über der aktuellen Seite. Die Seite dahinter wird verkleinert, unscharf und rückt in den Hintergrund. Wenn du fertig bist, schließt du das Fenster und liest dort weiter, wo du warst – oder du verschiebst den Link in einen neuen Tab.
+Klicke mit gedrückter `⇧`-Taste auf einen Link, und Lumno öffnet ihn in einem kleinen Fenster über der aktuellen Seite. Die Seite dahinter wird verkleinert, unscharf und rückt in den Hintergrund. Wenn du fertig bist, schließt du das Fenster und liest dort weiter, wo du warst – oder du verschiebst den Link in einen neuen Tab oder in eine geteilte Ansicht neben der Seite, um weiterzulesen.
 
 ## Einen Link in der Vorschau öffnen {#how}
 
@@ -21,6 +21,7 @@ Rechts neben dem Fenster findest du von oben nach unten diese Schaltflächen:
 
 - Schließen: Schließt das Fenster und bringt dich zurück zur Seite.
 - In neuem Tab öffnen: Verschiebt die Seite aus dem Fenster in einen neuen Tab und schließt das Fenster.
+- In geteilter Ansicht öffnen: Verschiebt die Seite aus dem Fenster in eine geteilte Ansicht neben der aktuellen Seite und schließt das Fenster. Die Schaltfläche erscheint nur, wenn der Browser geteilte Ansichten unterstützt (derzeit Chrome 155 oder neuer) und die Seite noch nicht in einer geteilten Ansicht ist. Siehe [Browserkompatibilität](../browser-compatibility/#split-view).
 - Link kopieren: Kopiert die Adresse der Seite, die im Fenster angezeigt wird. Bist du im Fenster weiteren Links gefolgt, wird die Seite kopiert, die du gerade siehst.
 - Neu laden: Lädt die Seite im Fenster neu.
 - Zurück: Erscheint, nachdem du im Fenster einem Link gefolgt bist, und kehrt zur vorherigen Seite zurück.

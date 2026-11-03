@@ -45,6 +45,7 @@ Dia로 옮길 때 확장 프로그램도 함께 가져오지만, 만약을 위�
 | `⌘ ⇧ C`로 URL 복사 | 확장 프로그램 페이지에서 "Copy Current Page URL"에 단축키 지정 |
 | 재시작 후에도 고정 탭 유지 | Lumno 설정에서 "Restore Pinned Tabs After Restart" 켜기 |
 | 탭을 전환하면 동영상이 PIP로 재생 | [자동 PIP](../auto-pip/), 기본적으로 켜져 있음 |
+| 현재 페이지 옆에 분할 화면으로 열기 | 명령 바에서 `⌥ ↩` 누르기 또는 [링크 미리보기](../link-preview/)에서 "분할 화면으로 열기" 클릭(Chrome 155 이상) |
 | 새 탭 | Lumno 새 탭(Dia에서는 아직 지원하지 않음) |
 
 ## 옮겨 오는 방법 {#steps}
@@ -58,4 +59,4 @@ Dia 자체 단축키가 우선하므로 Dia에서는 먼저 Settings → Shortcu
 
 ## Lumno에서 제공할 수 없는 Arc 기능 {#limits}
 
-사이드바, Spaces, 화면 분할은 브라우저 자체가 지원해야 하는 기능이므로 확장 프로그램으로는 추가할 수 없습니다. 이러한 기능이 꼭 필요하다면 위 표의 Dia, Zen, Vivaldi 중에서 골라 보세요. 자세한 내용은 [Lumno가 할 수 없는 일](../limitations/)을 참고하세요.
+사이드바와 Spaces는 브라우저 자체가 지원해야 하는 기능이므로 확장 프로그램으로는 추가할 수 없습니다. 분할 화면도 브라우저가 제공하는 기능입니다. 브라우저에 분할 화면이 있다면(현재는 Chrome 155 이상) Lumno에서 명령 바 결과와 링크 미리보기를 분할 화면으로 열 수 있습니다. [브라우저 호환성](../browser-compatibility/#split-view)을 참고하세요. 사이드바와 Spaces가 꼭 필요하다면 위 표의 Dia, Zen, Vivaldi 중에서 골라 보세요. 자세한 내용은 [Lumno가 할 수 없는 일](../limitations/)을 참고하세요.

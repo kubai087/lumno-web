@@ -26,6 +26,10 @@ O Lumno pesquisa apenas o conteúdo do seu navegador. Para pesquisar apps, arqui
 - No Dia, a barra de comandos funciona, mas a nova guia do Lumno não está disponível. Além disso, os atalhos do próprio Dia têm prioridade: para abrir a barra de comandos com `⌘ T`, primeiro altere o atalho de "New Tab" no Dia. Para saber mais, consulte [Compatibilidade com navegadores](../browser-compatibility/#dia).
 - Alguns recursos não estão disponíveis na versão para Firefox. Para saber mais, consulte [Compatibilidade com navegadores](../browser-compatibility/).
 
+## Barra lateral, espaços e tela dividida {#browser-ui}
+
+A barra lateral e os espaços fazem parte da interface do próprio navegador, por isso uma extensão não pode adicioná-los. A tela dividida também vem do navegador: onde ela existe (por enquanto, no Chrome 155 ou mais recente), o Lumno pode abrir resultados da pesquisa e prévias de links em tela dividida; nos outros navegadores, eles abrem em uma nova guia. Consulte [Compatibilidade com navegadores](../browser-compatibility/#split-view). Se você depende da barra lateral, escolha o Dia, o Zen ou o Vivaldi, como explicado em [Vindo do Arc](../arc-command-bar/#choose).
+
 ## Widgets na nova guia {#widgets}
 
 A nova guia do Lumno prioriza a simplicidade e não inclui widgets como previsão do tempo, tarefas ou notas. Se você quiser uma nova guia com muitos widgets, experimente o [Momentum](https://momentumdash.com/) ou o [Tabliss](https://tabliss.io/).

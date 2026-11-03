@@ -26,6 +26,10 @@ Lumno는 브라우저 안의 항목만 검색합니다. 앱, 파일, 시스템 �
 - Dia에서는 명령 바를 사용할 수 있지만, Lumno 새 탭은 사용할 수 없습니다. 또한 Dia 자체 단축키가 우선하므로 `⌘ T`로 명령 바를 열려면 먼저 Dia의 "New Tab" 단축키를 변경해야 합니다. 자세한 내용은 [브라우저 호환성](../browser-compatibility/#dia)을 참고하세요.
 - Firefox 버전에서는 일부 기능을 사용할 수 없습니다. 자세한 내용은 [브라우저 호환성](../browser-compatibility/)을 참고하세요.
 
+## 사이드바, Spaces, 분할 화면 {#browser-ui}
+
+사이드바와 Spaces는 브라우저 자체 인터페이스의 일부이므로 확장 프로그램으로는 추가할 수 없습니다. 분할 화면도 브라우저가 제공하는 기능입니다. 브라우저에 분할 화면이 있다면(현재는 Chrome 155 이상) Lumno에서 검색 결과와 링크 미리보기를 분할 화면으로 열 수 있고, 그렇지 않은 브라우저에서는 새 탭에서 열립니다. [브라우저 호환성](../browser-compatibility/#split-view)을 참고하세요. 사이드바가 꼭 필요하다면 [Arc에서 옮겨 왔다면](../arc-command-bar/#choose)에서 안내하는 Dia, Zen, Vivaldi 중에서 골라 보세요.
+
 ## 새 탭 위젯 {#widgets}
 
 Lumno의 새 탭은 단순함을 우선하므로 날씨, 할 일, 메모 같은 위젯을 제공하지 않습니다. 위젯이 많은 새 탭이 필요하다면 [Momentum](https://momentumdash.com/)이나 [Tabliss](https://tabliss.io/)를 사용해 보세요.

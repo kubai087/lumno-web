@@ -30,8 +30,8 @@ Aunque Dia traslade la extensión, exporta antes una copia por si acaso.
 | --- | --- | --- |
 | Dia | Del mismo equipo, con barra lateral, pestañas fijadas y selector de pestañas; importa directamente desde Arc | La barra de comandos funciona; la nueva pestaña aún no está disponible |
 | Chrome, Edge | Sin barra lateral ni espacios, pero con la mayor oferta de extensiones | Funciona todo |
-| [Zen Browser](https://zen-browser.app/) | Basado en Firefox, con barra lateral, espacios de trabajo y pantalla dividida, muy parecido a Arc | Se instala desde Complementos de Firefox; algunas funciones son limitadas |
-| [Vivaldi](https://vivaldi.com/) | Barra lateral, espacios de trabajo y pantalla dividida | Funciona todo |
+| [Zen Browser](https://zen-browser.app/) | Basado en Firefox, con barra lateral, espacios de trabajo y vista dividida, muy parecido a Arc | Se instala desde Complementos de Firefox; algunas funciones son limitadas |
+| [Vivaldi](https://vivaldi.com/) | Barra lateral, espacios de trabajo y vista dividida | Funciona todo |
 
 Para ver los detalles de cada navegador, consulta [Compatibilidad con navegadores](../browser-compatibility/).
 
@@ -45,6 +45,7 @@ Para ver los detalles de cada navegador, consulta [Compatibilidad con navegadore
 | `⌘ ⇧ C` copia la URL | Asignar un atajo a "Copy Current Page URL" en la página de extensiones |
 | Las pestañas fijadas se conservan al reiniciar | Activar "Restore Pinned Tabs After Restart" en los ajustes de Lumno |
 | Los vídeos pasan a imagen en imagen al cambiar de pestaña | [Imagen en imagen automática](../auto-pip/), activada por defecto |
+| Vista dividida junto a la página actual | Pulsar `⌥ ↩` en la barra de comandos, o hacer clic en "Abrir en vista dividida" en una [vista previa de enlace](../link-preview/) (Chrome 155 o posterior) |
 | Nueva pestaña | La nueva pestaña de Lumno (aún no disponible en Dia) |
 
 ## Pasos para el cambio {#steps}
@@ -58,4 +59,4 @@ Los atajos propios de Dia tienen prioridad, así que en Dia abre primero Setting
 
 ## Funciones de Arc que Lumno no puede ofrecer {#limits}
 
-La barra lateral, los espacios y la pantalla dividida dependen del propio navegador, por lo que una extensión no puede añadirlos. Si los necesitas, elige Dia, Zen o Vivaldi de la tabla anterior. Para obtener más información, consulta [Lo que Lumno no hace](../limitations/).
+La barra lateral y los espacios dependen del propio navegador, por lo que una extensión no puede añadirlos. La vista dividida también la ofrece el navegador: donde existe (por ahora, en Chrome 155 o posterior), Lumno puede abrir en ella los resultados de la barra de comandos y las vistas previas de enlaces. Consulta [Compatibilidad con navegadores](../browser-compatibility/#split-view). Si necesitas la barra lateral y los espacios, elige Dia, Zen o Vivaldi de la tabla anterior. Para obtener más información, consulta [Lo que Lumno no hace](../limitations/).

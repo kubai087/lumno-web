@@ -26,6 +26,10 @@ Lumno 只搜尋瀏覽器中的內容。如果想用一組快速鍵搜尋電腦�
 - 在 Dia 中可以使用命令列，但無法使用新分頁；Dia 自己的快速鍵優先於擴充功能，想用 `⌘ T` 叫出命令列，需要先在 Dia 中改掉「New Tab」的快速鍵，詳見[瀏覽器相容性](../browser-compatibility/#dia)。
 - Firefox 版有幾項功能無法使用，詳見[瀏覽器相容性](../browser-compatibility/)。
 
+## 側邊欄、Spaces 和分割畫面 {#browser-ui}
+
+側邊欄和 Spaces 屬於瀏覽器本身的介面，擴充功能無法加入。分割畫面同樣由瀏覽器提供：瀏覽器內建分割畫面時（目前為 Chrome 155 以上版本），Lumno 可以把搜尋結果和網頁預覽開在分割畫面中；在其他瀏覽器中，會改為開新分頁，詳見[瀏覽器相容性](../browser-compatibility/#split-view)。離不開側邊欄時，可以選擇 Dia、Zen 或 Vivaldi，見[從 Arc 搬家](../arc-command-bar/#choose)。
+
 ## 新分頁小工具 {#widgets}
 
 Lumno 的新分頁以簡潔為主，不提供天氣、待辦、便利貼等小工具。如果需要功能豐富的起始頁，可以試試 [Momentum](https://momentumdash.com/) 或 [Infinity 新分頁](https://www.infinitynewtab.com/)。

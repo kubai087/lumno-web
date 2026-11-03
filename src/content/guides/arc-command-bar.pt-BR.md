@@ -45,6 +45,7 @@ Para ver os detalhes de cada navegador, consulte [Compatibilidade com navegadore
 | `⌘ ⇧ C` copia a URL | Atribuir um atalho a "Copy Current Page URL" na página de extensões |
 | As guias fixadas são mantidas após reiniciar | Ativar "Restore Pinned Tabs After Restart" nas configurações do Lumno |
 | Os vídeos entram em picture-in-picture ao trocar de guia | [Picture-in-picture automático](../auto-pip/), ativado por padrão |
+| Tela dividida ao lado da página atual | Pressionar `⌥ ↩` na barra de comandos ou clicar em "Abrir em tela dividida" na [prévia de links](../link-preview/) (Chrome 155 ou mais recente) |
 | Nova guia | A nova guia do Lumno (ainda não disponível no Dia) |
 
 ## Etapas para migrar {#steps}
@@ -58,4 +59,4 @@ Os atalhos do próprio Dia têm prioridade, então no Dia abra primeiro Settings
 
 ## Recursos do Arc que o Lumno não pode oferecer {#limits}
 
-A barra lateral, os espaços e a tela dividida dependem do próprio navegador, por isso uma extensão não pode adicioná-los. Se você precisar desses recursos, escolha o Dia, o Zen ou o Vivaldi na tabela acima. Para saber mais, consulte [O que o Lumno não faz](../limitations/).
+A barra lateral e os espaços dependem do próprio navegador, por isso uma extensão não pode adicioná-los. A tela dividida também vem do navegador: onde ela existe (por enquanto, no Chrome 155 ou mais recente), o Lumno pode abrir resultados da barra de comandos e prévias de links em tela dividida. Consulte [Compatibilidade com navegadores](../browser-compatibility/#split-view). Se você depende da barra lateral e dos espaços, escolha o Dia, o Zen ou o Vivaldi na tabela acima. Para saber mais, consulte [O que o Lumno não faz](../limitations/).

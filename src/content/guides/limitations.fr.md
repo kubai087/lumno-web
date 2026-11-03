@@ -26,6 +26,10 @@ Lumno recherche uniquement dans le contenu de votre navigateur. Pour rechercher 
 - Dans Dia, la barre de commande fonctionne, mais le nouvel onglet de Lumno n'est pas disponible. Les raccourcis de Dia sont aussi prioritaires : pour ouvrir la barre de commande avec `⌘ T`, modifiez d'abord le raccourci de « New Tab » dans Dia. Pour en savoir plus, consultez [Compatibilité des navigateurs](../browser-compatibility/#dia).
 - Certaines fonctions ne sont pas disponibles dans la version Firefox. Pour en savoir plus, consultez [Compatibilité des navigateurs](../browser-compatibility/).
 
+## Barre latérale, espaces et écran partagé {#browser-ui}
+
+La barre latérale et les espaces font partie de l'interface du navigateur lui-même ; une extension ne peut pas les ajouter. L'écran partagé est lui aussi une fonction du navigateur : là où il existe (pour l'instant Chrome 155 ou version ultérieure), Lumno peut ouvrir les résultats de recherche et les aperçus de liens en écran partagé ; ailleurs, ils s'ouvrent dans un nouvel onglet. Consultez [Compatibilité des navigateurs](../browser-compatibility/#split-view). Si la barre latérale vous est indispensable, choisissez Dia, Zen ou Vivaldi, comme indiqué dans [Venir d'Arc](../arc-command-bar/#choose).
+
 ## Widgets du nouvel onglet {#widgets}
 
 Le nouvel onglet de Lumno privilégie la simplicité et ne propose pas de widgets comme la météo, les tâches ou les notes. Si vous souhaitez un nouvel onglet riche en widgets, essayez [Momentum](https://momentumdash.com/) ou [Tabliss](https://tabliss.io/).

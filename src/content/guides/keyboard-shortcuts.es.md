@@ -47,11 +47,11 @@ En macOS, también puedes activar "Mac keyboard navigation" en "Labs" para selec
 | Tecla o clic | Acción |
 | --- | --- |
 | `↩` o clic en un resultado | Abrir el resultado o cambiar a una pestaña abierta |
-| `⌥ ↩` o clic manteniendo pulsada `⌥` | Abrir en la pestaña actual en lugar de en una nueva, o en una nueva si has configurado los resultados para [abrirse en la pestaña actual](../search-tabs-bookmarks-history/#current-tab) |
-| `⇧ ↩` o clic manteniendo pulsada `⇧` | Si el resultado es una pestaña abierta, abrirla de nuevo en una pestaña nueva |
+| `⇧ ↩` o clic manteniendo pulsada `⇧` | Abrir en la pestaña actual en lugar de en una nueva, o en una nueva si has configurado los resultados para [abrirse en la pestaña actual](../search-tabs-bookmarks-history/#current-tab). Si el resultado es una pestaña abierta, abrirla de nuevo en una pestaña nueva |
+| `⌥ ↩` o clic manteniendo pulsada `⌥` | Abrir junto a la página actual en una vista dividida. Si el navegador no tiene vista dividida, o la página ya está en una, se abre en una pestaña nueva. Consulta [Compatibilidad con navegadores](../browser-compatibility/#split-view) |
 | `⌘ ↩`, clic manteniendo pulsada `⌘` o clic central | Abrir en una pestaña en segundo plano; la barra de comandos sigue abierta para que abras el siguiente |
 
-Mientras mantienes pulsada `⌥`, `⇧` o `⌘`, la indicación a la derecha de cada resultado cambia según corresponda.
+Mientras mantienes pulsada `⇧`, `⌥` o `⌘`, la indicación a la derecha de cada resultado cambia según corresponda. Por ejemplo, al mantener pulsada `⌥` aparece "Split View".
 
 ### Escritura y modos de búsqueda
 
@@ -67,13 +67,13 @@ Mientras mantienes pulsada `⌥`, `⇧` o `⌘`, la indicación a la derecha de 
 
 ## Teclas de la nueva pestaña {#newtab-keys}
 
-El cuadro de búsqueda de la nueva pestaña usa las mismas teclas que la barra de comandos. Además:
+El cuadro de búsqueda de la nueva pestaña usa las mismas teclas que la barra de comandos, así que `⌥ ↩` también abre ahí un resultado de búsqueda en una vista dividida. Además:
 
 | Tecla o clic | Acción |
 | --- | --- |
 | Empezar a escribir | El texto va directamente al cuadro de búsqueda, sin necesidad de hacer clic antes |
 | Clic en un resultado, un acceso directo, un marcador o una tarjeta de sitio | Abrirlo en la pestaña actual de forma predeterminada, o en una nueva si lo marcas en General → New Tab Settings → Open in a new tab when clicked |
-| Clic manteniendo pulsada `⌥`, o `⌥ ↩` | Abrirlo de la otra forma: en una pestaña nueva lo que se abriría en la actual, y en la actual lo que se abriría en una nueva |
+| Clic manteniendo pulsada `⇧`, o `⇧ ↩` | Abrirlo de la otra forma: en una pestaña nueva lo que se abriría en la actual, y en la actual lo que se abriría en una nueva |
 | Clic manteniendo pulsada `⌘` o clic central | Abrir en una pestaña en segundo plano |
 | `⌥ ←` `⌥ →` | Mover una posición hacia delante o hacia atrás un acceso directo seleccionado con `Tab` |
 | `⌘ Z` | Deshacer tu último cambio en los accesos directos o marcadores, como quitar, mover, crear una carpeta o eliminar un grupo |

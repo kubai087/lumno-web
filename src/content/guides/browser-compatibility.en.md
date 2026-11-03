@@ -43,8 +43,16 @@ Because Firefox's extension APIs differ from Chromium's, some features aren't av
 | Command bar on local `file://` pages | Not available |
 | Site icons | Sites you haven't visited may show a placeholder icon at first |
 | Liquid glass on the new tab | Glass finish only; the edges don't bend the wallpaper |
+| [Split view](#split-view) | Not available; `⌥ ↩` opens a new tab instead |
 
 Firefox already uses `⌘ ⇧ K`, so the Firefox version uses `⌃ ⇧ K | Alt + K` by default. `⌥ Q` stays the same. To change them, open `about:addons`, click the gear button at the top right and choose "Manage Extension Shortcuts".
+
+## Split view {#split-view}
+
+Since version 1.3.1, pressing `⌥ ↩` in the command bar or the new tab's search box, or clicking "Open in split view" in a [link preview](../link-preview/#window), opens a page beside the current one in a split view. This needs a browser with split views, which for now means Chrome 155 or later.
+
+- In Firefox, earlier versions of Chrome and other browsers without split views, `⌥ ↩` opens a new tab in the foreground instead, and link previews don't show the "Open in split view" button.
+- If the current page is already in a split view, the result opens in a new tab too.
 
 ## Safari {#safari}
 

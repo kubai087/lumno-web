@@ -43,8 +43,16 @@ Como las API de extensiones de Firefox son distintas de las de Chromium, algunas
 | Barra de comandos en páginas locales `file://` | No disponible |
 | Iconos de sitios | Los sitios que no has visitado pueden mostrar al principio un icono genérico |
 | Liquid glass en la nueva pestaña | Solo el acabado de cristal, sin curvatura en los bordes |
+| [Vista dividida](#split-view) | No disponible; `⌥ ↩` abre una pestaña nueva |
 
 Como Firefox ya usa `⌘ ⇧ K`, la versión para Firefox usa de forma predeterminada `⌃ ⇧ K | Alt + K`. `⌥ Q` no cambia. Para cambiar los atajos, abre `about:addons`, haz clic en el botón del engranaje de la esquina superior derecha y elige "Administrar atajos de extensiones".
+
+## Vista dividida {#split-view}
+
+Desde la versión 1.3.1, al pulsar `⌥ ↩` en la barra de comandos o en el cuadro de búsqueda de la nueva pestaña, o al hacer clic en "Abrir en vista dividida" en una [vista previa de enlace](../link-preview/#window), la página se abre junto a la actual en una vista dividida. Para ello necesitas un navegador con vista dividida, que por ahora es Chrome 155 o posterior.
+
+- En Firefox, en versiones anteriores de Chrome y en otros navegadores sin vista dividida, `⌥ ↩` abre una pestaña nueva en primer plano, y las vistas previas de enlaces no muestran el botón "Abrir en vista dividida".
+- Si la página actual ya está en una vista dividida, el resultado también se abre en una pestaña nueva.
 
 ## Safari {#safari}
 

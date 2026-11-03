@@ -26,6 +26,10 @@ Lumno searches only what's in your browser. To search apps, files and system set
 - In Dia, the command bar works, but Lumno's new tab isn't available. Dia's own shortcuts also take priority, so to open the command bar with `⌘ T`, change Dia's "New Tab" shortcut first. See [Browser compatibility](../browser-compatibility/#dia).
 - Some features aren't available in the Firefox version. See [Browser compatibility](../browser-compatibility/).
 
+## Sidebar, Spaces and split view {#browser-ui}
+
+A sidebar and Spaces are part of the browser's own interface, so an extension can't add them. Split view comes from the browser too: where the browser has it (Chrome 155 or later for now), Lumno can open search results and link previews in a split view; elsewhere they open in a new tab. See [Browser compatibility](../browser-compatibility/#split-view). If you rely on a sidebar, choose Dia, Zen or Vivaldi, as described in [Moving from Arc](../arc-command-bar/#choose).
+
 ## New tab widgets {#widgets}
 
 Lumno's new tab is designed to stay simple, so it doesn't include widgets such as weather, to-dos or notes. If you want a new tab with lots of widgets, try [Momentum](https://momentumdash.com/) or [Tabliss](https://tabliss.io/).

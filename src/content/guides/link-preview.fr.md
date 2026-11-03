@@ -1,4 +1,4 @@
-Cliquez sur un lien en maintenant `⇧` enfoncée : Lumno l'ouvre dans une petite fenêtre au-dessus de la page en cours. La page derrière se réduit, devient floue et passe à l'arrière-plan. Une fois votre lecture terminée, fermez la fenêtre pour reprendre là où vous en étiez, ou déplacez le lien dans un nouvel onglet pour continuer.
+Cliquez sur un lien en maintenant `⇧` enfoncée : Lumno l'ouvre dans une petite fenêtre au-dessus de la page en cours. La page derrière se réduit, devient floue et passe à l'arrière-plan. Une fois votre lecture terminée, fermez la fenêtre pour reprendre là où vous en étiez, ou déplacez le lien dans un nouvel onglet ou en écran partagé, à côté de la page, pour continuer.
 
 ## Afficher l'aperçu d'un lien {#how}
 
@@ -21,6 +21,7 @@ En plus des liens ordinaires, vous pouvez aussi afficher l'aperçu :
 
 - Fermer : ferme la fenêtre et vous ramène à la page.
 - Ouvrir dans un nouvel onglet : déplace la page de la fenêtre dans un nouvel onglet et ferme la fenêtre.
+- Ouvrir en écran partagé : place la page de la fenêtre en écran partagé, à côté de la page en cours, et ferme la fenêtre. Ce bouton n'apparaît que si le navigateur propose l'écran partagé (pour l'instant Chrome 155 ou version ultérieure) et que la page n'y est pas déjà. Consultez [Compatibilité des navigateurs](../browser-compatibility/#split-view).
 - Copier le lien : copie l'adresse de la page affichée dans la fenêtre. Si vous avez suivi d'autres liens dans la fenêtre, c'est l'adresse de la page affichée à ce moment-là qui est copiée.
 - Actualiser : recharge la page dans la fenêtre.
 - Retour : apparaît une fois que vous avez suivi un lien dans la fenêtre et revient à la page précédente.

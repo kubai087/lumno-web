@@ -47,11 +47,11 @@ On macOS, you can also turn on "Mac keyboard navigation" in Labs to select the n
 | Key or click | Action |
 | --- | --- |
 | `↩`, or click a result | Open the result, or switch to it if it's an open tab |
-| `⌥ ↩`, or hold `⌥` and click | Open in the current tab instead of a new one, or in a new tab if you've set results to [open in the current tab](../search-tabs-bookmarks-history/#current-tab) |
-| `⇧ ↩`, or hold `⇧` and click | If the result is an open tab, open another copy in a new tab |
+| `⇧ ↩`, or hold `⇧` and click | Open in the current tab instead of a new one, or in a new tab if you've set results to [open in the current tab](../search-tabs-bookmarks-history/#current-tab). If the result is an open tab, open another copy in a new tab |
+| `⌥ ↩`, or hold `⌥` and click | Open beside the current page in a split view. Where the browser has no split view, or the page is already in one, open in a new tab instead. See [Browser compatibility](../browser-compatibility/#split-view) |
 | `⌘ ↩`, hold `⌘` and click, or middle-click | Open in a background tab and keep the command bar open, so you can open the next one |
 
-While you hold `⌥`, `⇧` or `⌘`, the hint on the right of each result changes to match.
+While you hold `⇧`, `⌥` or `⌘`, the hint on the right of each result changes to match. Holding `⌥`, for example, shows "Split View".
 
 ### Typing and search modes
 
@@ -67,13 +67,13 @@ While you hold `⌥`, `⇧` or `⌘`, the hint on the right of each result chang
 
 ## Keys on the new tab page {#newtab-keys}
 
-The search box on the new tab page uses the same keys as the command bar. On top of that:
+The search box on the new tab page uses the same keys as the command bar, so `⌥ ↩` opens a search result in a split view there too. On top of that:
 
 | Key or click | Action |
 | --- | --- |
 | Start typing | Your text goes straight into the search box; no need to click it first |
 | Click a search result, shortcut, bookmark or site card | Open it in the current tab by default, or in a new tab once you check it under General → New Tab Settings → Open in a new tab when clicked |
-| Hold `⌥` and click, or press `⌥ ↩` | Open it the other way: in a new tab if it would open in the current one, and in the current tab if it would open in a new one |
+| Hold `⇧` and click, or press `⇧ ↩` | Open it the other way: in a new tab if it would open in the current one, and in the current tab if it would open in a new one |
 | Hold `⌘` and click, or middle-click | Open in a background tab |
 | `⌥ ←` `⌥ →` | After selecting a shortcut with `Tab`, move it one place back or forward |
 | `⌘ Z` | Undo your last change to shortcuts or bookmarks, such as removing, moving, creating a folder or deleting a group |

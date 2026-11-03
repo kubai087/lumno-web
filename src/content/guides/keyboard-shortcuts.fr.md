@@ -47,11 +47,11 @@ Sur macOS, vous pouvez aussi activer « Mac keyboard navigation » dans « Labs 
 | Touche ou clic | Action |
 | --- | --- |
 | `↩` ou clic sur un résultat | Ouvrir le résultat ou basculer vers un onglet ouvert |
-| `⌥ ↩` ou clic en maintenant `⌥` | Ouvrir dans l'onglet actuel plutôt que dans un nouvel onglet, ou dans un nouvel onglet si les résultats sont réglés pour [s'ouvrir dans l'onglet actuel](../search-tabs-bookmarks-history/#current-tab) |
-| `⇧ ↩` ou clic en maintenant `⇧` | Si le résultat est un onglet ouvert, l'ouvrir une seconde fois dans un nouvel onglet |
+| `⇧ ↩` ou clic en maintenant `⇧` | Ouvrir dans l'onglet actuel plutôt que dans un nouvel onglet, ou dans un nouvel onglet si les résultats sont réglés pour [s'ouvrir dans l'onglet actuel](../search-tabs-bookmarks-history/#current-tab). Si le résultat est un onglet ouvert, l'ouvrir une seconde fois dans un nouvel onglet |
+| `⌥ ↩` ou clic en maintenant `⌥` | Ouvrir à côté de la page actuelle, en écran partagé. Si le navigateur ne propose pas l'écran partagé, ou si la page y est déjà, ouvrir plutôt dans un nouvel onglet. Consultez [Compatibilité des navigateurs](../browser-compatibility/#split-view) |
 | `⌘ ↩`, clic en maintenant `⌘` ou clic du milieu | Ouvrir dans un onglet en arrière-plan ; la barre de commande reste ouverte pour enchaîner avec le résultat suivant |
 
-Tant que vous maintenez `⌥`, `⇧` ou `⌘`, l'indication affichée à droite de chaque résultat change en conséquence.
+Tant que vous maintenez `⇧`, `⌥` ou `⌘`, l'indication affichée à droite de chaque résultat change en conséquence. Avec `⌥`, par exemple, elle devient « Split View ».
 
 ### Saisie et modes de recherche
 
@@ -67,13 +67,13 @@ Tant que vous maintenez `⌥`, `⇧` ou `⌘`, l'indication affichée à droite 
 
 ## Touches du nouvel onglet {#newtab-keys}
 
-Le champ de recherche du nouvel onglet utilise les mêmes touches que la barre de commande. En plus :
+Le champ de recherche du nouvel onglet utilise les mêmes touches que la barre de commande : `⌥ ↩` y ouvre donc aussi un résultat de recherche en écran partagé. En plus :
 
 | Touche ou clic | Action |
 | --- | --- |
 | Commencer à taper | Le texte va directement dans le champ de recherche, sans avoir à cliquer dessus |
 | Clic sur un résultat, un raccourci, un favori ou une carte de site | Ouvrir dans l'onglet actuel par défaut, ou dans un nouvel onglet si vous le cochez sous General → New Tab Settings → Open in a new tab when clicked |
-| Clic en maintenant `⌥`, ou `⌥ ↩` | Ouvrir de l'autre façon : dans un nouvel onglet ce qui s'ouvrirait dans l'onglet actuel, et dans l'onglet actuel ce qui s'ouvrirait dans un nouvel onglet |
+| Clic en maintenant `⇧`, ou `⇧ ↩` | Ouvrir de l'autre façon : dans un nouvel onglet ce qui s'ouvrirait dans l'onglet actuel, et dans l'onglet actuel ce qui s'ouvrirait dans un nouvel onglet |
 | Clic en maintenant `⌘` ou clic du milieu | Ouvrir dans un onglet en arrière-plan |
 | `⌥ ←` `⌥ →` | Déplacer d'une position vers l'avant ou l'arrière un raccourci sélectionné avec `Tab` |
 | `⌘ Z` | Annuler votre dernière modification des raccourcis ou des favoris : suppression, déplacement, création de dossier, suppression de groupe, etc. |

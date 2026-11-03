@@ -26,6 +26,10 @@ Lumno 只搜索浏览器中的内容。如果想用一个快捷键搜索电脑�
 - 在 Dia 中可以使用命令栏，但无法使用新标签页；Dia 自己的快捷键优先于扩展，想用 `⌘ T` 唤出命令栏，需要先在 Dia 中改掉「New Tab」的快捷键，详见[浏览器兼容性](../browser-compatibility/#dia)。
 - Firefox 版有几项功能无法使用，详见[浏览器兼容性](../browser-compatibility/)。
 
+## 侧边栏、Spaces 和分屏 {#browser-ui}
+
+侧边栏和 Spaces 属于浏览器本身的界面，扩展无法添加。分屏同样由浏览器提供：浏览器自带分屏时（目前为 Chrome 155 及以上版本），Lumno 可以把搜索结果和网页预览开进分屏；在其他浏览器中，会改为新开标签页，详见[浏览器兼容性](../browser-compatibility/#split-view)。离不开侧边栏时，可以选择 Dia、Zen 或 Vivaldi，见[从 Arc 迁移](../arc-command-bar/#choose)。
+
 ## 新标签页小组件 {#widgets}
 
 Lumno 的新标签页以简洁为主，不提供天气、待办、便签等小组件。如果需要功能丰富的起始页，可以试试 [Momentum](https://momentumdash.com/)、[Infinity 新标签页](https://www.infinitynewtab.com/) 或 [WeTab](https://www.wetab.link/)。

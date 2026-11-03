@@ -45,6 +45,7 @@ For details on each browser, see [Browser compatibility](../browser-compatibilit
 | `⌘ ⇧ C` copies the URL | Assign a shortcut to "Copy Current Page URL" on the extensions page |
 | Pinned tabs come back after a restart | Turn on "Restore Pinned Tabs After Restart" in Lumno's settings |
 | Videos move into picture-in-picture when you switch tabs | [Auto picture-in-picture](../auto-pip/), on by default |
+| Split view beside the current page | Press `⌥ ↩` in the command bar, or click "Open in split view" in a [link preview](../link-preview/) (Chrome 155 or later) |
 | New tab | Lumno's new tab (not yet available in Dia) |
 
 ## How to switch {#steps}
@@ -58,4 +59,4 @@ Dia's own shortcuts take priority, so in Dia, first open Settings → Shortcuts 
 
 ## Arc features Lumno can't provide {#limits}
 
-A sidebar, Spaces and split view depend on the browser itself, so an extension can't add them. If you rely on them, choose Dia, Zen or Vivaldi from the table above. For more, see [What Lumno can't do](../limitations/).
+A sidebar and Spaces depend on the browser itself, so an extension can't add them. Split view comes from the browser too: where the browser has it (Chrome 155 or later for now), Lumno can open command bar results and link previews in a split view. See [Browser compatibility](../browser-compatibility/#split-view). If you rely on a sidebar and Spaces, choose Dia, Zen or Vivaldi from the table above. For more, see [What Lumno can't do](../limitations/).

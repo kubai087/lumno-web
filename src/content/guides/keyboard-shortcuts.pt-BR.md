@@ -47,11 +47,11 @@ No macOS, você também pode ativar "Mac keyboard navigation" em "Labs" para sel
 | Tecla ou clique | Ação |
 | --- | --- |
 | `↩` ou clique em um resultado | Abrir o resultado ou alternar para uma guia aberta |
-| `⌥ ↩` ou clique com `⌥` pressionada | Abrir na guia atual em vez de em uma nova guia, ou em uma nova guia se os resultados estiverem configurados para [abrir na guia atual](../search-tabs-bookmarks-history/#current-tab) |
-| `⇧ ↩` ou clique com `⇧` pressionada | Se o resultado for uma guia aberta, abri-la novamente em uma nova guia |
+| `⇧ ↩` ou clique com `⇧` pressionada | Abrir na guia atual em vez de em uma nova guia, ou em uma nova guia se os resultados estiverem configurados para [abrir na guia atual](../search-tabs-bookmarks-history/#current-tab). Se o resultado for uma guia aberta, abri-la novamente em uma nova guia |
+| `⌥ ↩` ou clique com `⌥` pressionada | Abrir ao lado da página atual em tela dividida. Se o navegador não tiver tela dividida, ou se a página já estiver em uma, abrir em uma nova guia. Consulte [Compatibilidade com navegadores](../browser-compatibility/#split-view) |
 | `⌘ ↩`, clique com `⌘` pressionada ou clique do meio | Abrir em uma guia em segundo plano; a barra de comandos continua aberta para você abrir o próximo |
 
-Enquanto você mantém `⌥`, `⇧` ou `⌘` pressionada, a dica à direita de cada resultado muda de acordo.
+Enquanto você mantém `⇧`, `⌥` ou `⌘` pressionada, a dica à direita de cada resultado muda de acordo. Com `⌥`, por exemplo, aparece "Split View".
 
 ### Digitação e modos de pesquisa
 
@@ -67,13 +67,13 @@ Enquanto você mantém `⌥`, `⇧` ou `⌘` pressionada, a dica à direita de c
 
 ## Teclas da nova guia {#newtab-keys}
 
-A caixa de pesquisa da nova guia usa as mesmas teclas da barra de comandos. Além disso:
+A caixa de pesquisa da nova guia usa as mesmas teclas da barra de comandos; ali também `⌥ ↩` abre um resultado da pesquisa em tela dividida. Além disso:
 
 | Tecla ou clique | Ação |
 | --- | --- |
 | Começar a digitar | O texto vai direto para a caixa de pesquisa, sem precisar clicar nela antes |
 | Clique em um resultado, atalho, favorito ou cartão de site | Abrir na guia atual por padrão, ou em uma nova guia se você marcar em General → New Tab Settings → Open in a new tab when clicked |
-| Clique com `⌥` pressionada, ou `⌥ ↩` | Abrir do outro jeito: em uma nova guia o que abriria na atual, e na guia atual o que abriria em uma nova |
+| Clique com `⇧` pressionada, ou `⇧ ↩` | Abrir do outro jeito: em uma nova guia o que abriria na atual, e na guia atual o que abriria em uma nova |
 | Clique com `⌘` pressionada ou clique do meio | Abrir em uma guia em segundo plano |
 | `⌥ ←` `⌥ →` | Mover uma posição para a frente ou para trás um atalho selecionado com `Tab` |
 | `⌘ Z` | Desfazer sua última alteração em atalhos ou favoritos, como remover, mover, criar uma pasta ou excluir um grupo |

@@ -45,6 +45,7 @@ Details zu jedem Browser findest du unter [Browserkompatibilität](../browser-co
 | `⌘ ⇧ C` kopiert die URL | Auf der Erweiterungsseite ein Tastenkürzel für „Copy Current Page URL“ festlegen |
 | Angeheftete Tabs bleiben nach einem Neustart erhalten | In den Einstellungen von Lumno „Restore Pinned Tabs After Restart“ aktivieren |
 | Videos wechseln beim Tabwechsel ins Bild-im-Bild | [Automatisches Bild-im-Bild](../auto-pip/), standardmäßig aktiviert |
+| Geteilte Ansicht neben der aktuellen Seite | In der Befehlsleiste `⌥ ↩` drücken oder in der [Link-Vorschau](../link-preview/) auf „In geteilter Ansicht öffnen“ klicken (Chrome 155 oder neuer) |
 | Neuer Tab | Lumnos neuer Tab (in Dia noch nicht verfügbar) |
 
 ## So wechselst du {#steps}
@@ -58,4 +59,4 @@ Dias eigene Tastenkürzel haben Vorrang. Öffne in Dia daher zuerst Settings →
 
 ## Arc-Funktionen, die Lumno nicht bieten kann {#limits}
 
-Seitenleiste, Spaces und geteilte Ansicht hängen vom Browser selbst ab und lassen sich nicht über eine Erweiterung hinzufügen. Wenn du darauf angewiesen bist, wähle Dia, Zen oder Vivaldi aus der Tabelle oben. Weitere Informationen findest du unter [Was Lumno nicht kann](../limitations/).
+Seitenleiste und Spaces hängen vom Browser selbst ab und lassen sich nicht über eine Erweiterung hinzufügen. Auch die geteilte Ansicht stammt vom Browser: Wo er sie bietet (derzeit Chrome 155 oder neuer), kann Lumno Ergebnisse der Befehlsleiste und Link-Vorschauen in geteilter Ansicht öffnen. Siehe [Browserkompatibilität](../browser-compatibility/#split-view). Wenn du auf Seitenleiste und Spaces angewiesen bist, wähle Dia, Zen oder Vivaldi aus der Tabelle oben. Weitere Informationen findest du unter [Was Lumno nicht kann](../limitations/).

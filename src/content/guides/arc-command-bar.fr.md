@@ -45,6 +45,7 @@ Pour le détail par navigateur, consultez [Compatibilité des navigateurs](../br
 | `⌘ ⇧ C` copie l'URL | Attribuer un raccourci à « Copy Current Page URL » sur la page des extensions |
 | Les onglets épinglés sont conservés après un redémarrage | Activer « Restore Pinned Tabs After Restart » dans les réglages de Lumno |
 | Les vidéos passent en image dans l'image quand vous changez d'onglet | [Image dans l'image automatique](../auto-pip/), activée par défaut |
+| Écran partagé à côté de la page actuelle | Appuyer sur `⌥ ↩` dans la barre de commande, ou cliquer sur « Ouvrir en écran partagé » dans un [aperçu de lien](../link-preview/) (Chrome 155 ou version ultérieure) |
 | Nouvel onglet | Le nouvel onglet de Lumno (pas encore disponible dans Dia) |
 
 ## Étapes de la migration {#steps}
@@ -58,4 +59,4 @@ Les raccourcis de Dia sont prioritaires : dans Dia, ouvrez d'abord Settings →
 
 ## Fonctions d'Arc que Lumno ne peut pas proposer {#limits}
 
-La barre latérale, les espaces et l'écran partagé dépendent du navigateur lui-même ; une extension ne peut pas les ajouter. Si ces fonctions vous sont indispensables, choisissez Dia, Zen ou Vivaldi dans le tableau ci-dessus. Pour en savoir plus, consultez [Ce que Lumno ne fait pas](../limitations/).
+La barre latérale et les espaces dépendent du navigateur lui-même ; une extension ne peut pas les ajouter. L'écran partagé est lui aussi une fonction du navigateur : là où il existe (pour l'instant Chrome 155 ou version ultérieure), Lumno peut ouvrir les résultats de la barre de commande et les aperçus de liens en écran partagé. Consultez [Compatibilité des navigateurs](../browser-compatibility/#split-view). Si la barre latérale et les espaces vous sont indispensables, choisissez Dia, Zen ou Vivaldi dans le tableau ci-dessus. Pour en savoir plus, consultez [Ce que Lumno ne fait pas](../limitations/).

@@ -20,7 +20,13 @@ Por padrão, o primeiro resultado é a página que o Lumno completa para você. 
 
 ![O Lumno aberto em uma página em branco: ao digitar chrome aparecem uma guia aberta do GitHub, sugestões de pesquisa, um favorito e sites mais visitados](search "Ao digitar chrome, guias abertas, favoritos e sites frequentes aparecem juntos")
 
-Outras teclas úteis: `⌥ ↩` abre um resultado na guia atual, e `⇧ ↩` abre novamente uma guia que já está aberta. Para ver todas as teclas, consulte [Atalhos de teclado](../keyboard-shortcuts/#command-bar-keys).
+Outras teclas úteis: `⇧ ↩` abre um resultado na guia atual, ou uma cópia de uma guia já aberta em uma nova guia, e `⌥ ↩` abre um resultado ao lado da página atual em tela dividida. Para ver todas as teclas, consulte [Atalhos de teclado](../keyboard-shortcuts/#command-bar-keys).
+
+## Escolher quais resultados aparecem {#result-types}
+
+Para que um tipo de resultado não apareça na pesquisa, desmarque Frequent, Bookmark ou History em Search Result Settings → Visible Result Types, nas configurações do Lumno. Você pode desmarcar os três. A barra de comandos e a caixa de pesquisa da nova guia deixam esses resultados de fora, mas as guias abertas e as sugestões de pesquisa continuam aparecendo. Arraste as três opções para mudar a ordem delas na lista.
+
+Se você só precisa disso por um tempo, como ao compartilhar a tela, digite `/present` na caixa de pesquisa da nova guia para ativar o [modo apresentação](../newtab-clock-zen/#presentation). Enquanto ele estiver ativo, sites frequentes, favoritos e histórico ficam fora da pesquisa, seja qual for a sua escolha aqui, e ela volta a valer quando você desativar o modo.
 
 ## Abrir na guia atual {#current-tab}
 
@@ -30,7 +36,7 @@ Quando você abre a barra de comandos em uma página da web, os resultados abrem
 - Em uma guia fixada, os resultados continuam abrindo em uma nova guia, para não substituir a página fixada.
 - Guias já abertas continuam sendo exibidas diretamente.
 
-Seja qual for a configuração, segure `⌥` ao pressionar Enter ou clicar para abrir um resultado do outro jeito, ou segure `⌘` para abri-lo em segundo plano. A caixa de pesquisa da nova guia tem uma configuração própria; veja [Teclas da nova guia](../keyboard-shortcuts/#newtab-keys).
+Seja qual for a configuração, segure `⇧` ao pressionar Enter ou clicar para abrir um resultado do outro jeito. Segure `⌥` para abri-lo ao lado da página atual em tela dividida, ou em uma nova guia se o navegador não tiver tela dividida. Segure `⌘` para abri-lo em segundo plano. A caixa de pesquisa da nova guia tem uma configuração própria; veja [Teclas da nova guia](../keyboard-shortcuts/#newtab-keys).
 
 ## Digitado no layout de teclado errado {#keyboard-layout}
 

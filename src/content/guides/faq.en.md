@@ -26,6 +26,10 @@ Yes. Lumno's design is inspired by [Arc](https://arc.net/) (it isn't affiliated 
 
 Yes. The browser's shortcuts page won't accept `⌃ Tab`, but you can run a short piece of code in that page's console to make it the shortcut for Lumno's switcher. See [Open the switcher with Ctrl+Tab](../tab-switcher/#ctrl-tab).
 
+### Can I open pages in a split view, like in Arc?
+
+Yes, in browsers with split views, which for now means Chrome 155 or later. Select a result in the command bar or the new tab's search box and press `⌥ ↩` to open it beside the current page. When you preview a link, you can also click "Open in split view" in the window. In browsers without split views, `⌥ ↩` opens a new tab instead. See [Browser compatibility](../browser-compatibility/#split-view).
+
 ## New tab {#new-tab}
 
 ### Can I use only the command bar and keep another new tab extension?
@@ -35,6 +39,10 @@ Yes. Keep Lumno turned on, then reinstall or turn your other new tab extension o
 ### Why does the address bar show an extension URL on a new tab?
 
 This happens when "Automatically focus input" is on: to place your cursor directly in Lumno's search box, the address bar shows the extension URL. Turn this option off in the new tab's Appearance settings, and the address bar stays empty.
+
+### How do I keep my bookmarks and history private when I share my screen?
+
+Type `/present` in the new tab's search box and press `↩` to turn on presentation mode. The new tab hides your bookmarks and site cards, and search no longer shows frequent sites, bookmarks or history. Type `/present` again to turn it off. See [Presentation mode](../newtab-clock-zen/#presentation).
 
 ## Compatibility {#compatibility}
 

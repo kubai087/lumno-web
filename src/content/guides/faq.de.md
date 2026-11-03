@@ -26,6 +26,10 @@ Ja. Lumnos Bedienung orientiert sich an [Arc](https://arc.net/) (Lumno steht in 
 
 Ja. Die Tastenkürzel-Seite des Browsers nimmt `⌃ Tab` nicht an, aber du kannst in der Konsole dieser Seite ein kurzes Stück Code ausführen und die Kombination so als Tastenkürzel für Lumnos Tab-Umschalter festlegen. Siehe [Den Tab-Umschalter mit Ctrl+Tab öffnen](../tab-switcher/#ctrl-tab).
 
+### Kann ich Seiten wie in Arc in geteilter Ansicht öffnen?
+
+Ja, in Browsern mit geteilter Ansicht, derzeit also Chrome 155 oder neuer. Wähle in der Befehlsleiste oder im Suchfeld des neuen Tabs ein Ergebnis aus und drücke `⌥ ↩`, um es neben der aktuellen Seite zu öffnen. In der Link-Vorschau kannst du außerdem im Fenster auf „In geteilter Ansicht öffnen“ klicken. In Browsern ohne geteilte Ansicht öffnet `⌥ ↩` stattdessen einen neuen Tab. Siehe [Browserkompatibilität](../browser-compatibility/#split-view).
+
 ## Neuer Tab {#new-tab}
 
 ### Kann ich nur die Befehlsleiste verwenden und eine andere Erweiterung für den neuen Tab behalten?
@@ -35,6 +39,10 @@ Ja. Lass Lumno aktiviert und installiere deine andere Erweiterung für den neuen
 ### Warum zeigt die Adressleiste im neuen Tab eine Erweiterungs-URL?
 
 Das liegt an der Option „Automatically focus input“: Damit der Cursor direkt in Lumnos Suchfeld steht, zeigt die Adressleiste die URL der Erweiterung an. Wenn du diese Option in den Appearance-Einstellungen des neuen Tabs deaktivierst, bleibt die Adressleiste leer.
+
+### Wie halte ich Lesezeichen und Verlauf beim Bildschirmteilen privat?
+
+Gib `/present` in das Suchfeld des neuen Tabs ein und drücke die Eingabetaste, um den Präsentationsmodus einzuschalten. Der neue Tab blendet dann deine Lesezeichen und Website-Karten aus, und die Suche zeigt keine häufig besuchten Seiten, Lesezeichen und Verlaufseinträge mehr an. Gib erneut `/present` ein, um ihn auszuschalten. Siehe [Präsentationsmodus](../newtab-clock-zen/#presentation).
 
 ## Kompatibilität {#compatibility}
 

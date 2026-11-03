@@ -1,4 +1,4 @@
-Du kannst im neuen Tab die Uhrzeit und ein tägliches Zitat aus deiner eigenen Sammlung anzeigen oder alles außer dem Suchfeld ausblenden, wenn du dich konzentrieren möchtest.
+Du kannst im neuen Tab die Uhrzeit und ein tägliches Zitat aus deiner eigenen Sammlung anzeigen oder alles außer dem Suchfeld ausblenden, wenn du dich konzentrieren möchtest. Teilst du deinen Bildschirm, hält der Präsentationsmodus deine Lesezeichen und deinen Verlauf außer Sicht.
 
 ## Uhr {#clock}
 
@@ -39,4 +39,15 @@ Gib `/zen` in das Suchfeld des neuen Tabs ein und drücke die Eingabetaste. Alle
 
 ![Der neue Tab im Zen-Modus: nur das Suchfeld vor einer Küste von Monet](nt-zen "Im Zen-Modus wird nur das Suchfeld angezeigt")
 
-Der Zen-Modus wird über deinen Browser synchronisiert und gilt daher auch auf deinen anderen Computern.
+Der Zen-Modus wird über deinen Browser synchronisiert und gilt daher auch auf deinen anderen Computern. Er ändert nur das Aussehen des neuen Tabs; die Suchergebnisse bleiben dieselben.
+
+## Präsentationsmodus {#presentation}
+
+Wenn du deinen Bildschirm teilst, etwas vorführst oder ein Video aufnimmst, sollen andere deine Lesezeichen und deinen Verlauf vielleicht nicht sehen. Gib dann `/present` in das Suchfeld des neuen Tabs ein und drücke die Eingabetaste. Danach gilt:
+
+- Der neue Tab blendet deine Lesezeichen aus, auch die Lesezeichenleiste oben, und ebenso die [Website-Karten](../newtab-frequent-sites/) unten. Suchfeld, Shortcuts und Hintergrund bleiben sichtbar.
+- Das Suchfeld im neuen Tab und die Befehlsleiste auf Webseiten zeigen keine häufig besuchten Seiten, Lesezeichen und Verlaufseinträge mehr an. Offene Tabs und Suchvorschläge erscheinen weiterhin.
+
+Gib erneut `/present` ein, um alles wieder anzuzeigen. Auch der Präsentationsmodus wird über deinen Browser synchronisiert.
+
+Anders als der Zen-Modus lässt der Präsentationsmodus deine Shortcuts stehen, nimmt Lesezeichen und Verlauf aber sowohl von der Seite als auch aus den Suchergebnissen. Der Zen-Modus lässt nur das Suchfeld übrig und ändert nichts an den Suchergebnissen. Soll eine Art von Ergebnissen dauerhaft aus der Suche verschwinden, [lege in den Einstellungen von Lumno fest, welche Ergebnisse erscheinen](../search-tabs-bookmarks-history/#result-types).

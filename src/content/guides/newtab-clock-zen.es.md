@@ -1,4 +1,4 @@
-Puedes mostrar la hora y una cita diaria de tu propia colección en la nueva pestaña, u ocultar todo excepto el cuadro de búsqueda cuando necesites concentrarte.
+Puedes mostrar la hora y una cita diaria de tu propia colección en la nueva pestaña, u ocultar todo excepto el cuadro de búsqueda cuando necesites concentrarte. Cuando compartes pantalla, el modo presentación mantiene tus marcadores y tu historial de navegación fuera de la vista.
 
 ## Reloj {#clock}
 
@@ -39,4 +39,15 @@ Escribe `/zen` en el cuadro de búsqueda de la nueva pestaña y pulsa Intro. Se 
 
 ![La nueva pestaña en modo Zen: solo el cuadro de búsqueda sobre una costa de Monet](nt-zen "En el modo Zen solo se muestra el cuadro de búsqueda")
 
-El modo Zen se sincroniza a través de tu navegador, por lo que también se aplica en tus otros ordenadores.
+El modo Zen se sincroniza a través de tu navegador, por lo que también se aplica en tus otros ordenadores. Solo cambia el aspecto de la nueva pestaña; los resultados de búsqueda siguen siendo los mismos.
+
+## Modo presentación {#presentation}
+
+Cuando compartes pantalla, haces una demostración o grabas un vídeo, quizá no quieras que otros vean tus marcadores y tu historial de navegación. Escribe `/present` en el cuadro de búsqueda de la nueva pestaña y pulsa Intro. A partir de entonces:
+
+- La nueva pestaña oculta tus marcadores, incluida la barra de marcadores superior, y las [tarjetas de sitios](../newtab-frequent-sites/) de la parte inferior. El cuadro de búsqueda, los accesos directos y el fondo siguen visibles.
+- El cuadro de búsqueda de la nueva pestaña y la barra de comandos de las páginas web dejan de mostrar sitios frecuentes, marcadores e historial. Las pestañas abiertas y las sugerencias de búsqueda siguen apareciendo.
+
+Vuelve a escribir `/present` para mostrarlo todo de nuevo. El modo presentación también se sincroniza a través de tu navegador.
+
+A diferencia del modo Zen, el modo presentación mantiene tus accesos directos, pero quita los marcadores y el historial tanto de la página como de los resultados de búsqueda. El modo Zen deja solo el cuadro de búsqueda y no cambia lo que muestra la búsqueda. Para dejar un tipo de resultado fuera de la búsqueda de forma permanente, [elige qué resultados aparecen](../search-tabs-bookmarks-history/#result-types) en los ajustes de Lumno.

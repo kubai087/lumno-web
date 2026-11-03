@@ -20,7 +20,13 @@ De forma predeterminada, el primer resultado es la página que Lumno completa po
 
 ![Lumno abierto en una página en blanco: al escribir chrome aparecen una pestaña de GitHub abierta, sugerencias de búsqueda, un marcador y sitios frecuentes](search "Al escribir chrome aparecen juntos las pestañas abiertas, los marcadores y los sitios frecuentes")
 
-Otras teclas útiles: `⌥ ↩` abre un resultado en la pestaña actual y `⇧ ↩` abre de nuevo una pestaña ya abierta. Para ver todas las teclas, consulta [Atajos de teclado](../keyboard-shortcuts/#command-bar-keys).
+Otras teclas útiles: `⇧ ↩` abre un resultado en la pestaña actual, o abre de nuevo una pestaña ya abierta en una pestaña nueva, y `⌥ ↩` abre un resultado junto a la página actual en una vista dividida. Para ver todas las teclas, consulta [Atajos de teclado](../keyboard-shortcuts/#command-bar-keys).
+
+## Elegir qué resultados aparecen {#result-types}
+
+Para que un tipo de resultado deje de aparecer en la búsqueda, desmarca Frequent, Bookmark o History en Search Result Settings → Visible Result Types, en los ajustes de Lumno. Puedes desmarcar los tres. La barra de comandos y el cuadro de búsqueda de la nueva pestaña dejan entonces fuera esos resultados, y las pestañas abiertas y las sugerencias de búsqueda siguen apareciendo. Arrastra las tres opciones para cambiar su orden en la lista.
+
+Si solo lo necesitas durante un rato, por ejemplo al compartir pantalla, escribe `/present` en el cuadro de búsqueda de la nueva pestaña para activar el [modo presentación](../newtab-clock-zen/#presentation). Mientras está activado, los sitios frecuentes, los marcadores y el historial quedan fuera de la búsqueda sea cual sea tu selección aquí, y tu selección vuelve a aplicarse al desactivarlo.
 
 ## Abrir en la pestaña actual {#current-tab}
 
@@ -30,7 +36,7 @@ Cuando abres la barra de comandos en una página web, los resultados se abren en
 - En una pestaña fijada, los resultados se siguen abriendo en una pestaña nueva, para no sustituir la página fijada.
 - A las pestañas ya abiertas se sigue cambiando directamente.
 
-Sea cual sea el ajuste, mantén pulsada `⌥` al pulsar Intro o hacer clic para abrir un resultado de la otra forma, o mantén pulsada `⌘` para abrirlo en segundo plano. El cuadro de búsqueda de la nueva pestaña tiene su propio ajuste; consulta [Teclas de la nueva pestaña](../keyboard-shortcuts/#newtab-keys).
+Sea cual sea el ajuste, mantén pulsada `⇧` al pulsar Intro o hacer clic para abrir un resultado de la otra forma. Mantén pulsada `⌥` para abrirlo junto a la página actual en una vista dividida, o en una pestaña nueva si el navegador no tiene vista dividida. Mantén pulsada `⌘` para abrirlo en segundo plano. El cuadro de búsqueda de la nueva pestaña tiene su propio ajuste; consulta [Teclas de la nueva pestaña](../keyboard-shortcuts/#newtab-keys).
 
 ## Escrito con la distribución de teclado equivocada {#keyboard-layout}
 

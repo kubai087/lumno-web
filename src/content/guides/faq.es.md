@@ -26,6 +26,10 @@ Sí. El funcionamiento de Lumno se inspira en [Arc](https://arc.net/) (sin tener
 
 Sí. La página de atajos del navegador no acepta `⌃ Tab`, pero puedes ejecutar un breve fragmento de código en la consola de esa página para convertirlo en el atajo del selector de Lumno. Consulta [Abrir el selector con Ctrl+Tab](../tab-switcher/#ctrl-tab).
 
+### ¿Puedo abrir páginas en una vista dividida, como en Arc?
+
+Sí, en los navegadores que tienen vista dividida, que por ahora son Chrome 155 y posteriores. Selecciona un resultado en la barra de comandos o en el cuadro de búsqueda de la nueva pestaña y pulsa `⌥ ↩` para abrirlo junto a la página actual. Al ver la vista previa de un enlace, también puedes hacer clic en "Abrir en vista dividida" en la ventana. En los navegadores sin vista dividida, `⌥ ↩` abre una pestaña nueva. Consulta [Compatibilidad con navegadores](../browser-compatibility/#split-view).
+
 ## Nueva pestaña {#new-tab}
 
 ### ¿Puedo usar solo la barra de comandos y conservar otra extensión de nueva pestaña?
@@ -35,6 +39,10 @@ Sí. Mantén Lumno activado y vuelve a instalar tu otra extensión de nueva pest
 ### ¿Por qué la barra de direcciones muestra una URL de la extensión en la nueva pestaña?
 
 Se debe a la opción "Automatically focus input": para colocar el cursor directamente en el cuadro de búsqueda de Lumno, la barra de direcciones muestra la URL de la extensión. Si desactivas esta opción en los ajustes de Appearance de la nueva pestaña, la barra de direcciones se quedará vacía.
+
+### ¿Cómo evito que se vean mis marcadores y mi historial al compartir pantalla?
+
+Escribe `/present` en el cuadro de búsqueda de la nueva pestaña y pulsa Intro para activar el modo presentación. La nueva pestaña oculta tus marcadores y las tarjetas de sitios, y la búsqueda deja de mostrar sitios frecuentes, marcadores e historial. Vuelve a escribir `/present` para desactivarlo. Consulta [Modo presentación](../newtab-clock-zen/#presentation).
 
 ## Compatibilidad {#compatibility}
 

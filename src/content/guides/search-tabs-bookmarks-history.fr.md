@@ -20,7 +20,13 @@ Par défaut, le premier résultat est la page que Lumno complète pour vous. Si 
 
 ![Lumno ouvert sur une page vide : en tapant chrome, on voit un onglet GitHub ouvert, des suggestions de recherche, un favori et des sites fréquents](search "La saisie de chrome affiche ensemble les onglets ouverts, les favoris et les sites fréquents")
 
-Autres touches utiles : `⌥ ↩` ouvre un résultat dans l'onglet actuel, et `⇧ ↩` ouvre une seconde fois un onglet déjà ouvert. Pour la liste complète, consultez [Raccourcis clavier](../keyboard-shortcuts/#command-bar-keys).
+Autres touches utiles : `⇧ ↩` ouvre un résultat dans l'onglet actuel, ou un onglet déjà ouvert une seconde fois dans un nouvel onglet, et `⌥ ↩` ouvre un résultat à côté de la page actuelle, en écran partagé. Pour la liste complète, consultez [Raccourcis clavier](../keyboard-shortcuts/#command-bar-keys).
+
+## Choisir les résultats affichés {#result-types}
+
+Pour qu'un type de résultat n'apparaisse plus dans la recherche, décochez Frequent, Bookmark ou History sous Search Result Settings → Visible Result Types dans les réglages de Lumno. Vous pouvez décocher les trois. La barre de commande et le champ de recherche du nouvel onglet laissent alors ces résultats de côté, tandis que les onglets ouverts et les suggestions de recherche continuent de s'afficher. Faites glisser les trois options pour changer leur ordre dans la liste.
+
+Si vous n'en avez besoin que ponctuellement, par exemple pendant un partage d'écran, saisissez `/present` dans le champ de recherche du nouvel onglet pour activer le [mode présentation](../newtab-clock-zen/#presentation). Tant qu'il est actif, les sites fréquents, les favoris et l'historique restent hors de la recherche quels que soient vos choix ici, et ces choix reprennent effet dès que vous le désactivez.
 
 ## Ouvrir dans l'onglet actuel {#current-tab}
 
@@ -30,7 +36,7 @@ Quand vous ouvrez la barre de commande sur une page web, les résultats s'ouvren
 - Sur un onglet épinglé, les résultats s'ouvrent toujours dans un nouvel onglet, pour ne pas remplacer la page épinglée.
 - Les onglets déjà ouverts sont toujours affichés directement.
 
-Quel que soit le réglage, maintenez `⌥` en appuyant sur Entrée ou en cliquant pour ouvrir un résultat de l'autre façon, ou maintenez `⌘` pour l'ouvrir en arrière-plan. Le champ de recherche du nouvel onglet a son propre réglage : voir [Touches du nouvel onglet](../keyboard-shortcuts/#newtab-keys).
+Quel que soit le réglage, maintenez `⇧` en appuyant sur Entrée ou en cliquant pour ouvrir un résultat de l'autre façon. Maintenez `⌥` pour l'ouvrir à côté de la page actuelle, en écran partagé, ou dans un nouvel onglet si le navigateur ne propose pas l'écran partagé. Maintenez `⌘` pour l'ouvrir en arrière-plan. Le champ de recherche du nouvel onglet a son propre réglage : voir [Touches du nouvel onglet](../keyboard-shortcuts/#newtab-keys).
 
 ## Saisi avec la mauvaise disposition de clavier {#keyboard-layout}
 

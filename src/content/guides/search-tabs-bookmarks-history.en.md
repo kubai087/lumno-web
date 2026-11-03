@@ -22,7 +22,13 @@ A domain typed with a Chinese full stop, such as `baidu。com`, opens as a URL; 
 
 ![Lumno opened on a blank page: typing chrome lists an open GitHub tab, search suggestions, a bookmark and top sites](search "Typing chrome shows open tabs, bookmarks and top sites together")
 
-Other useful keys: `⌥ ↩` opens a result in the current tab, and `⇧ ↩` opens another copy of an open tab. For all keys, see [Keyboard shortcuts](../keyboard-shortcuts/#command-bar-keys).
+Other useful keys: `⇧ ↩` opens a result in the current tab, or another copy of an open tab in a new one, and `⌥ ↩` opens a result beside the current page in a split view. For all keys, see [Keyboard shortcuts](../keyboard-shortcuts/#command-bar-keys).
+
+## Choose which results appear {#result-types}
+
+To keep a kind of result out of search, uncheck Frequent, Bookmark or History under Search Result Settings → Visible Result Types in Lumno's settings. You can uncheck all three. The command bar and the new tab's search box then leave those results out, while open tabs and search suggestions still appear. Drag the three options to change their order in the list.
+
+If you only need this for a while, such as when you share your screen, type `/present` in the new tab's search box to turn on [presentation mode](../newtab-clock-zen/#presentation). While it's on, frequent sites, bookmarks and history stay out of search whatever you've checked here, and your choices come back when you turn it off.
 
 ## Open in the current tab {#current-tab}
 
@@ -32,7 +38,7 @@ When you open the command bar on a webpage, results open in a new tab and the pa
 - On a pinned tab, results still open in a new tab, so the pinned page isn't replaced.
 - Open tabs are still switched to directly.
 
-Either way, hold `⌥` while you press `↩` or click to open a result the other way, or hold `⌘` to open it in a background tab. The new tab page's search box has its own setting; see [Keys on the new tab page](../keyboard-shortcuts/#newtab-keys).
+Either way, hold `⇧` while you press `↩` or click to open a result the other way. Hold `⌥` to open it beside the current page in a split view, or in a new tab where the browser has no split view. Hold `⌘` to open it in a background tab. The new tab page's search box has its own setting; see [Keys on the new tab page](../keyboard-shortcuts/#newtab-keys).
 
 ## Typed with the wrong keyboard {#keyboard-layout}
 

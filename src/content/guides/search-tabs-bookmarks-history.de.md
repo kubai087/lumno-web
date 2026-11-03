@@ -20,7 +20,13 @@ Standardmäßig steht oben die Seite, die Lumno für dich vervollständigt. Such
 
 ![Lumno auf einer leeren Seite: Die Eingabe chrome zeigt einen offenen GitHub-Tab, Suchvorschläge, ein Lesezeichen und meistbesuchte Seiten](search "Die Eingabe chrome zeigt offene Tabs, Lesezeichen und meistbesuchte Seiten zusammen")
 
-Weitere nützliche Tasten: `⌥ ↩` öffnet ein Ergebnis im aktuellen Tab, `⇧ ↩` öffnet einen bereits geöffneten Tab ein weiteres Mal in einem neuen Tab. Alle Tasten findest du unter [Tastenkürzel](../keyboard-shortcuts/#command-bar-keys).
+Weitere nützliche Tasten: `⇧ ↩` öffnet ein Ergebnis im aktuellen Tab oder einen bereits geöffneten Tab ein weiteres Mal in einem neuen Tab, und `⌥ ↩` öffnet ein Ergebnis in geteilter Ansicht neben der aktuellen Seite. Alle Tasten findest du unter [Tastenkürzel](../keyboard-shortcuts/#command-bar-keys).
+
+## Festlegen, welche Ergebnisse erscheinen {#result-types}
+
+Soll eine Art von Ergebnissen nicht in der Suche auftauchen, entferne in den Einstellungen von Lumno unter „Search Result Settings → Visible Result Types“ das Häkchen bei „Frequent“, „Bookmark“ oder „History“. Du kannst auch alle drei abwählen. Die Befehlsleiste und das Suchfeld im neuen Tab lassen diese Ergebnisse dann weg; offene Tabs und Suchvorschläge erscheinen weiterhin. Ziehe die drei Optionen, um ihre Reihenfolge in der Liste zu ändern.
+
+Brauchst du das nur vorübergehend, etwa beim Bildschirmteilen, gib `/present` in das Suchfeld des neuen Tabs ein und schalte so den [Präsentationsmodus](../newtab-clock-zen/#presentation) ein. Solange er aktiv ist, bleiben häufig besuchte Seiten, Lesezeichen und Verlauf aus der Suche heraus, egal was du hier angekreuzt hast. Schaltest du ihn aus, gilt wieder deine Auswahl.
 
 ## Im aktuellen Tab öffnen {#current-tab}
 
@@ -30,7 +36,7 @@ Weitere nützliche Tasten: `⌥ ↩` öffnet ein Ergebnis im aktuellen Tab, `⇧
 - Auf einem angehefteten Tab öffnen sich Ergebnisse weiterhin in einem neuen Tab, damit die angeheftete Seite erhalten bleibt.
 - Zu geöffneten Tabs wird weiterhin direkt gewechselt.
 
-Unabhängig von der Einstellung öffnest du ein Ergebnis mit gedrückter `⌥`-Taste und Eingabetaste oder Klick auf die andere Art; mit gedrückter `⌘`-Taste öffnet es sich im Hintergrund. Für das Suchfeld im neuen Tab gibt es eine eigene Einstellung, siehe [Tasten im neuen Tab](../keyboard-shortcuts/#newtab-keys).
+Unabhängig von der Einstellung öffnest du ein Ergebnis mit gedrückter `⇧`-Taste und Eingabetaste oder Klick auf die andere Art. Mit gedrückter `⌥`-Taste öffnet es sich in geteilter Ansicht neben der aktuellen Seite – oder in einem neuen Tab, wenn der Browser keine geteilte Ansicht hat. Mit gedrückter `⌘`-Taste öffnet es sich im Hintergrund. Für das Suchfeld im neuen Tab gibt es eine eigene Einstellung, siehe [Tasten im neuen Tab](../keyboard-shortcuts/#newtab-keys).
 
 ## Mit dem falschen Tastaturlayout getippt {#keyboard-layout}
 

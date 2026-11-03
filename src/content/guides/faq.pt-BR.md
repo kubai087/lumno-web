@@ -26,6 +26,10 @@ Sim. O funcionamento do Lumno se inspira no [Arc](https://arc.net/) (sem víncul
 
 Sim. A página de atalhos do navegador não aceita `⌃ Tab`, mas você pode executar um pequeno trecho de código no console dessa página para torná-lo o atalho do alternador do Lumno. Consulte [Abrir o alternador com Ctrl+Tab](../tab-switcher/#ctrl-tab).
 
+### Posso abrir páginas em tela dividida, como no Arc?
+
+Sim, em navegadores com tela dividida, o que por enquanto significa o Chrome 155 ou mais recente. Selecione um resultado na barra de comandos ou na caixa de pesquisa da nova guia e pressione `⌥ ↩` para abri-lo ao lado da página atual. Ao ver a prévia de um link, você também pode clicar em "Abrir em tela dividida" na janela. Em navegadores sem tela dividida, `⌥ ↩` abre uma nova guia. Consulte [Compatibilidade com navegadores](../browser-compatibility/#split-view).
+
 ## Nova guia {#new-tab}
 
 ### Posso usar apenas a barra de comandos e manter outra extensão de nova guia?
@@ -35,6 +39,10 @@ Sim. Mantenha o Lumno ativado e reinstale a outra extensão de nova guia, ou des
 ### Por que a barra de endereço mostra uma URL da extensão na nova guia?
 
 Isso acontece por causa da opção "Automatically focus input": para colocar o cursor diretamente na caixa de pesquisa do Lumno, a barra de endereço mostra a URL da extensão. Se você desativar essa opção nas configurações de Appearance da nova guia, a barra de endereço ficará vazia.
+
+### Como manter meus favoritos e meu histórico em sigilo ao compartilhar a tela?
+
+Digite `/present` na caixa de pesquisa da nova guia e pressione Enter para ativar o modo apresentação. A nova guia oculta seus favoritos e os cartões de sites, e a pesquisa deixa de mostrar sites frequentes, favoritos e histórico. Digite `/present` novamente para desativá-lo. Consulte [Modo apresentação](../newtab-clock-zen/#presentation).
 
 ## Compatibilidade {#compatibility}
 

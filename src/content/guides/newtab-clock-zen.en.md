@@ -1,4 +1,4 @@
-Show the time above the search box and a daily quote from your own collection, or hide everything except the search box when you need to focus.
+Show the time above the search box and a daily quote from your own collection, or hide everything except the search box when you need to focus. When you share your screen, presentation mode keeps your bookmarks and browsing history out of sight.
 
 ## Clock {#clock}
 
@@ -39,4 +39,15 @@ Type `/zen` in the new tab's search box and press `↩`. Everything except the s
 
 ![The new tab in Zen mode: only the search box over a Monet coastline](nt-zen "Zen mode keeps only the search box")
 
-Zen mode syncs through your browser, so it applies on your other computers too.
+Zen mode syncs through your browser, so it applies on your other computers too. It only changes how the new tab looks; search results stay the same.
+
+## Presentation mode {#presentation}
+
+When you share your screen, give a demo or record a video, you may not want others to see your bookmarks and browsing history. Type `/present` in the new tab's search box and press `↩`. Then:
+
+- The new tab hides your bookmarks, including the top bookmarks bar, and the [site cards](../newtab-frequent-sites/) at the bottom. The search box, shortcuts and wallpaper stay.
+- The new tab's search box and the command bar on webpages no longer show frequent sites, bookmarks or history. Open tabs and search suggestions still appear.
+
+Type `/present` again to show everything. Presentation mode syncs through your browser too.
+
+Unlike Zen mode, presentation mode leaves your shortcuts in place but takes bookmarks and history off both the page and search results. Zen mode leaves only the search box and doesn't change what search shows. To keep a kind of result out of search for good, [choose which results appear](../search-tabs-bookmarks-history/#result-types) in Lumno's settings.

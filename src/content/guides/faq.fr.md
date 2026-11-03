@@ -26,6 +26,10 @@ Oui. L'interface de Lumno s'inspire d'[Arc](https://arc.net/) (sans aucun lien a
 
 Oui. La page des raccourcis du navigateur n'accepte pas `⌃ Tab`, mais vous pouvez exécuter quelques lignes de code dans la console de cette page pour en faire le raccourci du sélecteur de Lumno. Consultez [Ouvrir le sélecteur avec Ctrl+Tab](../tab-switcher/#ctrl-tab).
 
+### Puis-je ouvrir des pages en écran partagé, comme dans Arc ?
+
+Oui, dans les navigateurs qui proposent l'écran partagé, c'est-à-dire pour l'instant Chrome 155 ou version ultérieure. Sélectionnez un résultat dans la barre de commande ou le champ de recherche du nouvel onglet, puis appuyez sur `⌥ ↩` pour l'ouvrir à côté de la page actuelle. Lors de l'aperçu d'un lien, vous pouvez aussi cliquer sur « Ouvrir en écran partagé » dans la fenêtre. Dans les navigateurs sans écran partagé, `⌥ ↩` ouvre plutôt un nouvel onglet. Consultez [Compatibilité des navigateurs](../browser-compatibility/#split-view).
+
 ## Nouvel onglet {#new-tab}
 
 ### Puis-je utiliser uniquement la barre de commande et conserver une autre extension de nouvel onglet ?
@@ -35,6 +39,10 @@ Oui. Laissez Lumno activé, puis réinstallez votre autre extension de nouvel on
 ### Pourquoi la barre d'adresse affiche-t-elle une URL d'extension dans le nouvel onglet ?
 
 Cela est dû à l'option « Automatically focus input » : pour placer le curseur directement dans le champ de recherche de Lumno, la barre d'adresse affiche l'URL de l'extension. Désactivez cette option dans les réglages Appearance du nouvel onglet pour que la barre d'adresse reste vide.
+
+### Comment garder mes favoris et mon historique privés quand je partage mon écran ?
+
+Saisissez `/present` dans le champ de recherche du nouvel onglet et appuyez sur Entrée pour activer le mode présentation. Le nouvel onglet masque vos favoris et vos cartes de sites, et la recherche n'affiche plus les sites fréquents, les favoris ni l'historique. Saisissez de nouveau `/present` pour le désactiver. Consultez [Mode présentation](../newtab-clock-zen/#presentation).
 
 ## Compatibilité {#compatibility}
 

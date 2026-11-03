@@ -1,4 +1,4 @@
-Vous pouvez afficher l'heure et une citation du jour tirée de votre propre recueil dans le nouvel onglet, ou masquer tout sauf le champ de recherche lorsque vous avez besoin de vous concentrer.
+Vous pouvez afficher l'heure et une citation du jour tirée de votre propre recueil dans le nouvel onglet, ou masquer tout sauf le champ de recherche lorsque vous avez besoin de vous concentrer. Quand vous partagez votre écran, le mode présentation garde vos favoris et votre historique de navigation à l'abri des regards.
 
 ## Horloge {#clock}
 
@@ -39,4 +39,15 @@ Saisissez `/zen` dans le champ de recherche du nouvel onglet et appuyez sur Entr
 
 ![Le nouvel onglet en mode Zen : seulement le champ de recherche sur un littoral de Monet](nt-zen "En mode Zen, seul le champ de recherche reste affiché")
 
-Le mode Zen est synchronisé par votre navigateur et s'applique donc également sur vos autres ordinateurs.
+Le mode Zen est synchronisé par votre navigateur et s'applique donc également sur vos autres ordinateurs. Il ne change que l'apparence du nouvel onglet : les résultats de recherche restent les mêmes.
+
+## Mode présentation {#presentation}
+
+Lorsque vous partagez votre écran, faites une démo ou enregistrez une vidéo, vous ne voulez pas forcément montrer vos favoris et votre historique de navigation. Saisissez `/present` dans le champ de recherche du nouvel onglet et appuyez sur Entrée. Ensuite :
+
+- Le nouvel onglet masque vos favoris, y compris la barre de favoris en haut, ainsi que les [cartes de sites](../newtab-frequent-sites/) en bas de la page. Le champ de recherche, les raccourcis et le fond d'écran restent affichés.
+- Le champ de recherche du nouvel onglet et la barre de commande sur les pages web n'affichent plus les sites fréquents, les favoris ni l'historique. Les onglets ouverts et les suggestions de recherche s'affichent toujours.
+
+Saisissez de nouveau `/present` pour tout afficher. Le mode présentation est lui aussi synchronisé par votre navigateur.
+
+Contrairement au mode Zen, le mode présentation conserve vos raccourcis, mais retire les favoris et l'historique à la fois de la page et des résultats de recherche. Le mode Zen ne laisse que le champ de recherche et ne change pas ce que la recherche affiche. Pour écarter durablement un type de résultat de la recherche, [choisissez les résultats affichés](../search-tabs-bookmarks-history/#result-types) dans les réglages de Lumno.

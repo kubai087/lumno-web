@@ -1,4 +1,4 @@
-Você pode mostrar a hora e uma citação diária da sua própria coleção na nova guia, ou ocultar tudo, exceto a caixa de pesquisa, quando precisar se concentrar.
+Você pode mostrar a hora e uma citação diária da sua própria coleção na nova guia, ou ocultar tudo, exceto a caixa de pesquisa, quando precisar se concentrar. Ao compartilhar a tela, o modo apresentação tira seus favoritos e seu histórico de navegação de vista.
 
 ## Relógio {#clock}
 
@@ -39,4 +39,15 @@ Digite `/zen` na caixa de pesquisa da nova guia e pressione Enter. Tudo é ocult
 
 ![A nova guia no modo Zen: só a caixa de pesquisa sobre um litoral de Monet](nt-zen "No modo Zen, apenas a caixa de pesquisa é exibida")
 
-O modo Zen é sincronizado pelo navegador e, por isso, também se aplica aos seus outros computadores.
+O modo Zen é sincronizado pelo navegador e, por isso, também se aplica aos seus outros computadores. Ele só muda a aparência da nova guia; os resultados da pesquisa continuam os mesmos.
+
+## Modo apresentação {#presentation}
+
+Quando você compartilha a tela, faz uma demonstração ou grava um vídeo, talvez não queira que os outros vejam seus favoritos e seu histórico de navegação. Digite `/present` na caixa de pesquisa da nova guia e pressione Enter. A partir daí:
+
+- A nova guia oculta seus favoritos, inclusive a barra de favoritos no topo, e os [cartões de sites](../newtab-frequent-sites/) da parte inferior. A caixa de pesquisa, os atalhos e o papel de parede continuam lá.
+- A caixa de pesquisa da nova guia e a barra de comandos nas páginas da web deixam de mostrar sites frequentes, favoritos e histórico. As guias abertas e as sugestões de pesquisa continuam aparecendo.
+
+Digite `/present` novamente para exibir tudo outra vez. O modo apresentação também é sincronizado pelo navegador.
+
+Ao contrário do modo Zen, o modo apresentação mantém seus atalhos, mas tira os favoritos e o histórico tanto da página quanto dos resultados da pesquisa. O modo Zen deixa só a caixa de pesquisa e não muda o que a pesquisa mostra. Para deixar um tipo de resultado fora da pesquisa de vez, [escolha quais resultados aparecem](../search-tabs-bookmarks-history/#result-types) nas configurações do Lumno.

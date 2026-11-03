@@ -79,7 +79,7 @@
   { "q": "Zen", "expect": ["arc-command-bar", "browser-compatibility#firefox", "keyboard-shortcuts#change", "what-is-lumno#command-bar"] },
   { "q": "Raycast", "expect": ["limitations#outside-browser", "browser-compatibility#safari", "what-is-lumno#command-bar"] },
   { "q": "Spotlight", "expect": ["limitations#outside-browser", "browser-compatibility#safari", "what-is-lumno#command-bar"] },
-  { "q": "侧边栏", "expect": ["arc-command-bar#limits"] },
+  { "q": "侧边栏", "expect": ["arc-command-bar#limits", "limitations#browser-ui"] },
   { "q": "支持 Safari 吗", "expect": ["browser-compatibility#safari", "limitations#browsers"] },
   { "q": "火狐能用吗", "expect": ["browser-compatibility#firefox"] },
   { "q": "Edge 怎么安装", "expect": ["install#store", "browser-compatibility"] },
@@ -150,5 +150,9 @@
   { "q": "Arc 关停", "expect": ["arc-command-bar#timeline", "arc-command-bar"] },
   { "q": "Arc 停用", "expect": ["arc-command-bar#timeline", "arc-command-bar"] },
   { "q": "导出 Arc 数据", "expect": ["arc-command-bar#export"] },
-  { "q": "Arc 停用后换什么浏览器", "expect": ["arc-command-bar#choose", "arc-command-bar"] }
+  { "q": "Arc 停用后换什么浏览器", "expect": ["arc-command-bar#choose", "arc-command-bar"] },
+  { "q": "分屏打开", "expect": ["browser-compatibility#split-view", "keyboard-shortcuts#command-bar-keys", "faq#using", "link-preview#window", "limitations#browser-ui"] },
+  { "q": "演示模式", "expect": ["newtab-clock-zen#presentation"] },
+  { "q": "共享屏幕隐藏书签", "expect": ["newtab-clock-zen#presentation", "faq#new-tab"] },
+  { "q": "搜索结果不显示历史", "expect": ["search-tabs-bookmarks-history#result-types", "newtab-clock-zen#presentation"] }
 ]

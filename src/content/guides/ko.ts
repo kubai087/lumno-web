@@ -198,8 +198,8 @@ const content: GuideLocaleContent = {
     },
     "newtab-clock-zen": {
       pageTitle: "시계, 오늘의 문구, Zen 모드: 검색창만 남긴 새 탭 | Lumno 도움말",
-      pageDescription: "Lumno 새 탭에 시계와 내 TXT·Markdown 파일에서 고른 오늘의 문구를 표시하거나, /zen을 입력해 검색창만 남길 수 있습니다.",
-      keywords: ["새 탭 시계", "새 탭 명언", "미니멀 새 탭", "Zen 모드", "집중 새 탭"],
+      pageDescription: "Lumno 새 탭에 시계와 내 TXT·Markdown 파일에서 고른 오늘의 문구를 표시하거나, /zen을 입력해 검색창만 남길 수 있습니다. 화면을 공유할 때는 /present로 북마크와 방문 기록을 숨기세요.",
+      keywords: ["새 탭 시계", "새 탭 명언", "미니멀 새 탭", "Zen 모드", "집중 새 탭", "발표 모드"],
       title: "시계, 문구, Zen 모드",
       navTitle: "시계·문구·Zen 모드",
     },
@@ -230,7 +230,7 @@ const content: GuideLocaleContent = {
     "link-preview": {
       pageTitle: "링크 미리보기: Shift를 누른 채 링크를 클릭해 작은 창에서 보기 | Lumno 도움말",
       pageDescription:
-        "Shift를 누른 채 링크를 클릭하면 현재 페이지 위의 작은 창에서 링크가 열립니다. 창을 닫으면 읽던 위치로 돌아가고, 새 탭으로 옮길 수도 있습니다. 사용 방법, 창의 버튼, 미리보기할 수 없는 경우와 켜고 끄는 방법을 설명합니다.",
+        "Shift를 누른 채 링크를 클릭하면 현재 페이지 위의 작은 창에서 링크가 열립니다. 창을 닫으면 읽던 위치로 돌아가고, 새 탭이나 분할 화면으로 옮길 수도 있습니다. 사용 방법, 창의 버튼, 미리보기할 수 없는 경우와 켜고 끄는 방법을 설명합니다.",
       keywords: ["링크 미리보기", "새 탭 없이 링크 보기", "Shift 클릭 링크", "크롬 확장 프로그램 링크 미리보기", "Arc Peek"],
       title: "링크 미리보기",
       navTitle: "링크 미리보기",

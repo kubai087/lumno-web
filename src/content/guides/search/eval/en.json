@@ -120,5 +120,9 @@
   { "q": "arc shutting down", "expect": ["arc-command-bar#timeline", "arc-command-bar"] },
   { "q": "arc sunset", "expect": ["arc-command-bar#timeline", "arc-command-bar"] },
   { "q": "export arc data", "expect": ["arc-command-bar#export"] },
-  { "q": "browser after arc", "expect": ["arc-command-bar#choose", "arc-command-bar"] }
+  { "q": "browser after arc", "expect": ["arc-command-bar#choose", "arc-command-bar"] },
+  { "q": "split view", "expect": ["browser-compatibility#split-view", "keyboard-shortcuts#command-bar-keys", "faq#using", "link-preview#window", "limitations#browser-ui"] },
+  { "q": "presentation mode", "expect": ["newtab-clock-zen#presentation"] },
+  { "q": "hide bookmarks when sharing screen", "expect": ["newtab-clock-zen#presentation", "faq#new-tab"] },
+  { "q": "hide history in search results", "expect": ["search-tabs-bookmarks-history#result-types", "newtab-clock-zen#presentation"] }
 ]

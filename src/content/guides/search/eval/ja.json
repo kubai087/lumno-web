@@ -100,5 +100,9 @@
   { "q": "Arc 提供終了", "expect": ["arc-command-bar#timeline", "arc-command-bar"] },
   { "q": "Arc サービス終了", "expect": ["arc-command-bar#timeline", "arc-command-bar"] },
   { "q": "Arc データ 書き出し", "expect": ["arc-command-bar#export"] },
-  { "q": "Arc の後 ブラウザ", "expect": ["arc-command-bar#choose", "arc-command-bar"] }
+  { "q": "Arc の後 ブラウザ", "expect": ["arc-command-bar#choose", "arc-command-bar"] },
+  { "q": "分割ビューで開く", "expect": ["browser-compatibility#split-view", "keyboard-shortcuts#command-bar-keys", "faq#using", "link-preview#window"] },
+  { "q": "プレゼンモード", "expect": ["newtab-clock-zen#presentation"] },
+  { "q": "画面共有でブックマークを隠す", "expect": ["newtab-clock-zen#presentation", "faq#new-tab"] },
+  { "q": "検索結果に履歴を表示しない", "expect": ["search-tabs-bookmarks-history#result-types", "newtab-clock-zen#presentation"] }
 ]

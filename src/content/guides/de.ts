@@ -198,8 +198,8 @@ const content: GuideLocaleContent = {
     },
     "newtab-clock-zen": {
       pageTitle: "Uhr, tägliches Zitat und Zen-Modus: ein neuer Tab nur mit dem Suchfeld | Lumno-Hilfe",
-      pageDescription: "Zeige in Lumnos neuem Tab eine Uhr und ein tägliches Zitat aus deiner eigenen TXT- oder Markdown-Datei an, oder gib /zen ein, damit nur noch das Suchfeld sichtbar ist.",
-      keywords: ["neuer Tab Uhr", "neuer Tab Zitat", "minimalistischer neuer Tab", "Zen-Modus", "neuer Tab fokussiert"],
+      pageDescription: "Zeige in Lumnos neuem Tab eine Uhr und ein tägliches Zitat aus deiner eigenen TXT- oder Markdown-Datei an, gib /zen ein, damit nur noch das Suchfeld sichtbar ist, oder /present, damit Lesezeichen und Verlauf beim Bildschirmteilen verborgen bleiben.",
+      keywords: ["neuer Tab Uhr", "neuer Tab Zitat", "minimalistischer neuer Tab", "Zen-Modus", "neuer Tab fokussiert", "Präsentationsmodus"],
       title: "Uhr, Zitate und Zen-Modus",
       navTitle: "Uhr, Zitate & Zen-Modus",
     },
@@ -230,7 +230,7 @@ const content: GuideLocaleContent = {
     "link-preview": {
       pageTitle: "Link-Vorschau: Links mit Umschalt-Klick in einem kleinen Fenster öffnen | Lumno-Hilfe",
       pageDescription:
-        "Klicke mit gedrückter Umschalttaste auf einen Link, um ihn in einem kleinen Fenster über der Seite zu öffnen. Schließe es, um dort weiterzulesen, wo du warst, oder verschiebe es in einen neuen Tab. So funktioniert es, das bedeuten die Schaltflächen, diese Seiten lassen sich nicht anzeigen – und so schaltest du es aus.",
+        "Klicke mit gedrückter Umschalttaste auf einen Link, um ihn in einem kleinen Fenster über der Seite zu öffnen. Schließe es, um dort weiterzulesen, wo du warst, oder verschiebe es in einen neuen Tab oder eine geteilte Ansicht. So funktioniert es, das bedeuten die Schaltflächen, diese Seiten lassen sich nicht anzeigen – und so schaltest du es aus.",
       keywords: ["Link-Vorschau", "Link ansehen ohne neuen Tab", "Umschalt-Klick Link", "Link-Vorschau Chrome-Erweiterung", "Arc Peek Alternative"],
       title: "Link-Vorschau",
       navTitle: "Link-Vorschau",

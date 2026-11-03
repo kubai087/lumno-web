@@ -198,8 +198,8 @@ const content: GuideLocaleContent = {
     },
     "newtab-clock-zen": {
       pageTitle: "Relógio, citação diária e modo Zen: uma nova guia só com a caixa de pesquisa | Ajuda do Lumno",
-      pageDescription: "Mostre um relógio e uma citação diária do seu próprio arquivo TXT ou Markdown na nova guia do Lumno, ou digite /zen para esconder tudo menos a caixa de pesquisa.",
-      keywords: ["relógio na nova guia", "citação diária na nova guia", "nova guia minimalista", "modo Zen", "nova guia para foco"],
+      pageDescription: "Mostre um relógio e uma citação diária do seu próprio arquivo TXT ou Markdown na nova guia do Lumno, digite /zen para esconder tudo menos a caixa de pesquisa ou /present para tirar favoritos e histórico de vista ao compartilhar a tela.",
+      keywords: ["relógio na nova guia", "citação diária na nova guia", "nova guia minimalista", "modo Zen", "nova guia para foco", "modo apresentação"],
       title: "Relógio, citações e modo Zen",
       navTitle: "Relógio, citações e Zen",
     },
@@ -230,7 +230,7 @@ const content: GuideLocaleContent = {
     "link-preview": {
       pageTitle: "Prévia de links: abra um link em uma janela pequena com Shift+clique | Ajuda do Lumno",
       pageDescription:
-        "Clique em um link segurando Shift para abri-lo em uma janela pequena sobre a página. Feche a janela para voltar ao ponto em que estava ou mova o link para uma nova guia. Veja como usar, o que fazem os botões, quais páginas não podem ser exibidas e como desativar.",
+        "Clique em um link segurando Shift para abri-lo em uma janela pequena sobre a página. Feche a janela para voltar ao ponto em que estava ou mova o link para uma nova guia ou uma tela dividida. Veja como usar, o que fazem os botões, quais páginas não podem ser exibidas e como desativar.",
       keywords: ["prévia de links", "ver link sem abrir guia", "Shift clique link", "extensão Chrome prévia de link", "alternativa ao Arc Peek"],
       title: "Prévia de links",
       navTitle: "Prévia de links",

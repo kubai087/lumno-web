@@ -198,8 +198,8 @@ const content: GuideLocaleContent = {
     },
     "newtab-clock-zen": {
       pageTitle: "Reloj, cita diaria y modo Zen: una nueva pestaña con solo el cuadro de búsqueda | Ayuda de Lumno",
-      pageDescription: "Muestra un reloj y una cita diaria de tu propio archivo TXT o Markdown en la nueva pestaña de Lumno, o escribe /zen para ocultar todo excepto el cuadro de búsqueda.",
-      keywords: ["reloj nueva pestaña", "cita diaria nueva pestaña", "nueva pestaña minimalista", "modo Zen", "nueva pestaña para concentrarse"],
+      pageDescription: "Muestra un reloj y una cita diaria de tu propio archivo TXT o Markdown en la nueva pestaña de Lumno, escribe /zen para ocultar todo excepto el cuadro de búsqueda, o /present para que no se vean tus marcadores ni tu historial al compartir pantalla.",
+      keywords: ["reloj nueva pestaña", "cita diaria nueva pestaña", "nueva pestaña minimalista", "modo Zen", "nueva pestaña para concentrarse", "modo presentación"],
       title: "Reloj, citas y modo Zen",
       navTitle: "Reloj, citas y modo Zen",
     },
@@ -230,7 +230,7 @@ const content: GuideLocaleContent = {
     "link-preview": {
       pageTitle: "Vista previa de enlaces: abre un enlace en una ventana pequeña con Mayús+clic | Ayuda de Lumno",
       pageDescription:
-        "Haz clic en un enlace mientras mantienes pulsada la tecla Mayús para abrirlo en una ventana pequeña sobre la página. Ciérrala para volver a donde estabas o pásala a una pestaña nueva. Aprende a usarla, qué hacen sus botones, qué páginas no se pueden mostrar y cómo desactivarla.",
+        "Haz clic en un enlace mientras mantienes pulsada la tecla Mayús para abrirlo en una ventana pequeña sobre la página. Ciérrala para volver a donde estabas o pásala a una pestaña nueva o a una vista dividida. Aprende a usarla, qué hacen sus botones, qué páginas no se pueden mostrar y cómo desactivarla.",
       keywords: ["vista previa de enlaces", "ver un enlace sin abrir pestaña", "Mayús clic enlace", "extensión Chrome vista previa de enlaces", "alternativa a Arc Peek"],
       title: "Vista previa de enlaces",
       navTitle: "Vista previa de enlaces",

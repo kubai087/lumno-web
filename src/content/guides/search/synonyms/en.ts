@@ -25,6 +25,8 @@ export default [
   ["search engine", "default search"],
   ["clock", "time"],
   ["zen mode", "focus mode", "minimal mode", "distraction-free"],
+  ["presentation mode", "present mode", "screen sharing", "share screen"],
+  ["split view", "split screen", "side by side"],
   ["pin", "keep on top", "stick"],
   ["icon", "favicon", "logo"],
   ["settings", "preferences", "options", "config"],

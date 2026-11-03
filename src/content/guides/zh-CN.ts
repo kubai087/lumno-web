@@ -208,8 +208,8 @@ const content: GuideLocaleContent = {
     "newtab-clock-zen": {
       pageTitle: "时钟、每日名句和 Zen 模式：让新标签页只留搜索框｜Lumno 帮助中心",
       pageDescription:
-        "在 Lumno 新标签页显示时钟和每日名句：来自一言的文学和诗词，或者导入自己的 TXT、Markdown 句库。在搜索框输入 /zen 进入 Zen 模式，只保留搜索框。",
-      keywords: ["新标签页时钟", "每日一句", "自定义名言", "极简新标签页", "Zen 模式"],
+        "在 Lumno 新标签页显示时钟和每日名句：来自一言的文学和诗词，或者导入自己的 TXT、Markdown 句库。在搜索框输入 /zen 进入 Zen 模式，只保留搜索框；共享屏幕时输入 /present 开启演示模式，隐藏书签和浏览记录。",
+      keywords: ["新标签页时钟", "每日一句", "自定义名言", "极简新标签页", "Zen 模式", "演示模式"],
       title: "时钟、名句和 Zen 模式",
       navTitle: "时钟、名句和 Zen 模式",
     },
@@ -240,7 +240,7 @@ const content: GuideLocaleContent = {
     "link-preview": {
       pageTitle: "网页预览：按住 Shift 点击链接，在小窗中预览网页｜Lumno 帮助中心",
       pageDescription:
-        "按住 Shift 点击链接，网页会在当前页面上方的小窗中打开，看完关闭即可回到原位，也可以移到新标签页。介绍操作方法、小窗中的按钮、无法预览的情况和开关位置。",
+        "按住 Shift 点击链接，网页会在当前页面上方的小窗中打开，看完关闭即可回到原位，也可以移到新标签页或分屏。介绍操作方法、小窗中的按钮、无法预览的情况和开关位置。",
       keywords: ["网页预览", "链接预览", "Shift 点击链接", "Chrome 链接预览插件", "不打开新标签页查看链接", "Arc Peek"],
       title: "网页预览",
       navTitle: "网页预览",

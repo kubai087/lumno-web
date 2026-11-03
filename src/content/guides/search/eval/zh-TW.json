@@ -105,5 +105,9 @@
   { "q": "Arc 停止服務", "expect": ["arc-command-bar#timeline", "arc-command-bar"] },
   { "q": "Arc 關閉", "expect": ["arc-command-bar#timeline", "arc-command-bar"] },
   { "q": "匯出 Arc 資料", "expect": ["arc-command-bar#export"] },
-  { "q": "Arc 之後換什麼瀏覽器", "expect": ["arc-command-bar#choose", "arc-command-bar"] }
+  { "q": "Arc 之後換什麼瀏覽器", "expect": ["arc-command-bar#choose", "arc-command-bar"] },
+  { "q": "分割畫面開啟", "expect": ["browser-compatibility#split-view", "keyboard-shortcuts#command-bar-keys", "faq#using", "link-preview#window"] },
+  { "q": "簡報模式", "expect": ["newtab-clock-zen#presentation"] },
+  { "q": "分享螢幕隱藏書籤", "expect": ["newtab-clock-zen#presentation", "faq#new-tab"] },
+  { "q": "搜尋結果不顯示歷史", "expect": ["search-tabs-bookmarks-history#result-types", "newtab-clock-zen#presentation"] }
 ]

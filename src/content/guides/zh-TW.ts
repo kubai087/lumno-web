@@ -187,8 +187,8 @@ const content: GuideLocaleContent = {
     },
     "newtab-clock-zen": {
       pageTitle: "時鐘、每日名句和 Zen 模式：讓新分頁只留搜尋框｜Lumno 說明中心",
-      pageDescription: "在 Lumno 新分頁顯示時鐘和每日名句：來自一言的文學和詩詞，或者匯入自己的 TXT、Markdown 句庫。在搜尋框輸入 /zen 進入 Zen 模式，只留下搜尋框。",
-      keywords: ["新分頁時鐘", "每日一句", "自訂名言", "極簡新分頁", "Zen 模式"],
+      pageDescription: "在 Lumno 新分頁顯示時鐘和每日名句：來自一言的文學和詩詞，或者匯入自己的 TXT、Markdown 句庫。在搜尋框輸入 /zen 進入 Zen 模式，只留下搜尋框；分享螢幕時輸入 /present 開啟簡報模式，隱藏書籤和瀏覽紀錄。",
+      keywords: ["新分頁時鐘", "每日一句", "自訂名言", "極簡新分頁", "Zen 模式", "簡報模式"],
       title: "時鐘、名句和 Zen 模式",
       navTitle: "時鐘、名句和 Zen 模式",
     },
@@ -219,7 +219,7 @@ const content: GuideLocaleContent = {
     "link-preview": {
       pageTitle: "網頁預覽：按住 Shift 點擊連結，在小視窗中預覽網頁｜Lumno 說明中心",
       pageDescription:
-        "按住 Shift 點擊連結，網頁會在目前頁面上方的小視窗中開啟，看完關閉就能回到原處，也可以移到新分頁。說明操作方式、小視窗中的按鈕、無法預覽的情況和開關位置。",
+        "按住 Shift 點擊連結，網頁會在目前頁面上方的小視窗中開啟，看完關閉就能回到原處，也可以移到新分頁或分割畫面。說明操作方式、小視窗中的按鈕、無法預覽的情況和開關位置。",
       keywords: ["網頁預覽", "連結預覽", "Shift 點擊連結", "Chrome 連結預覽 擴充功能", "不開新分頁看連結", "Arc Peek"],
       title: "網頁預覽",
       navTitle: "網頁預覽",

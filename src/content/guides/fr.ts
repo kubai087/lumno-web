@@ -198,8 +198,8 @@ const content: GuideLocaleContent = {
     },
     "newtab-clock-zen": {
       pageTitle: "Horloge, citation du jour et mode Zen : un nouvel onglet réduit au champ de recherche | Aide Lumno",
-      pageDescription: "Affichez une horloge et une citation du jour tirée de votre propre fichier TXT ou Markdown dans le nouvel onglet de Lumno, ou saisissez /zen pour ne garder que le champ de recherche.",
-      keywords: ["horloge nouvel onglet", "citation du jour nouvel onglet", "nouvel onglet minimaliste", "mode Zen", "nouvel onglet concentration"],
+      pageDescription: "Affichez une horloge et une citation du jour tirée de votre propre fichier TXT ou Markdown dans le nouvel onglet de Lumno, saisissez /zen pour ne garder que le champ de recherche, ou /present pour cacher vos favoris et votre historique lors d'un partage d'écran.",
+      keywords: ["horloge nouvel onglet", "citation du jour nouvel onglet", "nouvel onglet minimaliste", "mode Zen", "nouvel onglet concentration", "mode présentation"],
       title: "Horloge, citations et mode Zen",
       navTitle: "Horloge, citations et Zen",
     },
@@ -230,7 +230,7 @@ const content: GuideLocaleContent = {
     "link-preview": {
       pageTitle: "Aperçu des liens : ouvrir un lien dans une petite fenêtre avec Maj+clic | Aide Lumno",
       pageDescription:
-        "Cliquez sur un lien en maintenant Maj pour l'ouvrir dans une petite fenêtre au-dessus de la page. Fermez-la pour revenir où vous en étiez, ou déplacez-la dans un nouvel onglet. Découvrez comment l'utiliser, à quoi servent ses boutons, quelles pages ne peuvent pas s'afficher et comment la désactiver.",
+        "Cliquez sur un lien en maintenant Maj pour l'ouvrir dans une petite fenêtre au-dessus de la page. Fermez-la pour revenir où vous en étiez, ou déplacez-la dans un nouvel onglet ou en écran partagé. Découvrez comment l'utiliser, à quoi servent ses boutons, quelles pages ne peuvent pas s'afficher et comment la désactiver.",
       keywords: ["aperçu des liens", "voir un lien sans ouvrir d'onglet", "Maj clic lien", "extension Chrome aperçu de lien", "alternative à Arc Peek"],
       title: "Aperçu des liens",
       navTitle: "Aperçu des liens",

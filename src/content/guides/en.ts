@@ -198,8 +198,8 @@ const content: GuideLocaleContent = {
     },
     "newtab-clock-zen": {
       pageTitle: "Clock, daily quote and Zen mode: a new tab with just the search box | Lumno Help",
-      pageDescription: "Show a clock and a daily quote from your own TXT or Markdown file on Lumno's new tab, or type /zen to hide everything but the search box.",
-      keywords: ["new tab clock", "new tab daily quote", "minimal new tab", "Zen mode", "focus new tab"],
+      pageDescription: "Show a clock and a daily quote from your own TXT or Markdown file on Lumno's new tab, type /zen to hide everything but the search box, or /present to keep bookmarks and history out of sight when you share your screen.",
+      keywords: ["new tab clock", "new tab daily quote", "minimal new tab", "Zen mode", "focus new tab", "presentation mode"],
       title: "Clock, quotes and Zen mode",
       navTitle: "Clock, quotes & Zen mode",
     },
@@ -230,7 +230,7 @@ const content: GuideLocaleContent = {
     "link-preview": {
       pageTitle: "Link preview: Shift-click a link to open it in a small window | Lumno Help",
       pageDescription:
-        "Shift-click a link to open it in a small window over the page. Close it to return to where you were, or move it to a new tab. Learn how it works, what the window's buttons do, which pages can't be previewed, and how to turn it off.",
+        "Shift-click a link to open it in a small window over the page. Close it to return to where you were, or move it to a new tab or a split view. Learn how it works, what the window's buttons do, which pages can't be previewed, and how to turn it off.",
       keywords: ["link preview", "preview links without opening a tab", "Shift click link", "link preview Chrome extension", "peek link", "Arc Peek alternative"],
       title: "Link preview",
       navTitle: "Link preview",

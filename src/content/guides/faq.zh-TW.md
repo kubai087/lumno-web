@@ -20,7 +20,7 @@
 
 ### 從 Arc 換過來，還能使用熟悉的命令列嗎？
 
-可以。Lumno 的互動參考了 [Arc](https://arc.net/)（與 Arc 官方沒有關聯），在 Dia、Chrome 和 Edge 中都可以隨時叫出命令列。把快速鍵改為 `⌘ T`，即可沿用 Arc 的操作習慣。在 Dia 中需要先讓出 `⌘ T`，見[瀏覽器相容性](../browser-compatibility/#dia)。詳見[從 Arc 搬家](../arc-command-bar/)。
+可以。Lumno 的互動參考了 [Arc](https://arc.net/)（與 Arc 官方沒有關聯），在 Dia、Chrome 和 Edge 中都可以隨時叫出命令列。把快速鍵改為 `⌘ T`，即可沿用 Arc 的操作習慣。在 Dia 中需要先修改 Dia 內建的 `⌘ T` 快速鍵，見[瀏覽器相容性](../browser-compatibility/#dia)。詳見[從 Arc 搬家](../arc-command-bar/)。
 
 ### 能像 Arc 一樣用 Ctrl+Tab 切換分頁嗎？
 

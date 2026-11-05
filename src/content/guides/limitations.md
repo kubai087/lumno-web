@@ -28,7 +28,7 @@ Lumno 只搜索浏览器中的内容。如果想用一个快捷键搜索电脑�
 
 ## 侧边栏、Spaces 和分屏 {#browser-ui}
 
-侧边栏和 Spaces 属于浏览器本身的界面，扩展无法添加。分屏同样由浏览器提供：浏览器自带分屏时（目前为 Chrome 155 及以上版本），Lumno 可以把搜索结果和网页预览开进分屏；在其他浏览器中，会改为新开标签页，详见[浏览器兼容性](../browser-compatibility/#split-view)。离不开侧边栏时，可以选择 Dia、Zen 或 Vivaldi，见[从 Arc 迁移](../arc-command-bar/#choose)。
+侧边栏和 Spaces 属于浏览器本身的界面，扩展无法添加。分屏同样由浏览器提供：浏览器自带分屏时（目前为 Chrome 155 及以上版本），Lumno 可以在分屏中打开搜索结果和网页预览；在其他浏览器中，会改为新开标签页，详见[浏览器兼容性](../browser-compatibility/#split-view)。需要侧边栏时，可以选择 Dia、Zen 或 Vivaldi，见[从 Arc 迁移](../arc-command-bar/#choose)。
 
 ## 新标签页小组件 {#widgets}
 

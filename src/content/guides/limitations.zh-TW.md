@@ -28,7 +28,7 @@ Lumno 只搜尋瀏覽器中的內容。如果想用一組快速鍵搜尋電腦�
 
 ## 側邊欄、Spaces 和分割畫面 {#browser-ui}
 
-側邊欄和 Spaces 屬於瀏覽器本身的介面，擴充功能無法加入。分割畫面同樣由瀏覽器提供：瀏覽器內建分割畫面時（目前為 Chrome 155 以上版本），Lumno 可以把搜尋結果和網頁預覽開在分割畫面中；在其他瀏覽器中，會改為開新分頁，詳見[瀏覽器相容性](../browser-compatibility/#split-view)。離不開側邊欄時，可以選擇 Dia、Zen 或 Vivaldi，見[從 Arc 搬家](../arc-command-bar/#choose)。
+側邊欄和 Spaces 屬於瀏覽器本身的介面，擴充功能無法加入。分割畫面同樣由瀏覽器提供：瀏覽器內建分割畫面時（目前為 Chrome 155 以上版本），Lumno 可以在分割畫面中開啟搜尋結果和網頁預覽；在其他瀏覽器中，會改為開新分頁，詳見[瀏覽器相容性](../browser-compatibility/#split-view)。需要側邊欄時，可以選擇 Dia、Zen 或 Vivaldi，見[從 Arc 搬家](../arc-command-bar/#choose)。
 
 ## 新分頁小工具 {#widgets}
 

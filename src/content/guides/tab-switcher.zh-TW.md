@@ -54,4 +54,4 @@
 
 切換器的快速鍵可以在 `chrome://extensions/shortcuts` 中修改，詳見[快速鍵](../keyboard-shortcuts/#change)。
 
-頁面預覽由 Lumno 在你切換分頁時於本機擷取，每張最多保留 2 小時，不會離開你的電腦。
+頁面預覽由 Lumno 在你切換分頁時於本機擷取，每張最多保留 2 小時，不會上傳。

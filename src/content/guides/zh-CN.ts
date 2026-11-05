@@ -71,7 +71,7 @@ const content: GuideLocaleContent = {
     "use-cases": {
       pageTitle: "Lumno 使用场景：标签页太多、从 Arc 迁移、开发与写作｜Lumno 帮助中心",
       pageDescription:
-        "Lumno 适合哪些人和场景：标签页开得很多、从 Arc 换到 Chrome 或 Dia、经常查文档和 GitHub 的开发者、需要找回资料的研究和写作者、常用 AI 的人，以及想要安静新标签页的人。",
+        "Lumno 适合哪些人和场景：标签页开得很多、从 Arc 换到 Chrome 或 Dia、经常查文档和 GitHub 的开发者、需要找回资料的研究和写作者、常用 AI 的人，以及想要简洁新标签页的人。",
       keywords: ["Lumno 使用场景", "标签页太多怎么办", "Arc 迁移", "开发者浏览器插件", "AI 快捷提问"],
       title: "使用场景",
       navTitle: "使用场景",
@@ -120,7 +120,7 @@ const content: GuideLocaleContent = {
     sync: {
       pageTitle: "同步设置：用浏览器同步和 WebDAV 在多台电脑间同步 Lumno｜Lumno 帮助中心",
       pageDescription:
-        "Lumno 的设置会跟着浏览器自带的同步走；开启 WebDAV 同步后，上传的快捷方式图标、自定义壁纸和导入的名句库也能同步，支持坚果云、NAS 和自建服务器。附坚果云的填写方法。",
+        "Lumno 的设置通过浏览器自带的同步功能同步；开启 WebDAV 同步后，上传的快捷方式图标、自定义壁纸和导入的名句库也能同步，支持坚果云、NAS 和自建服务器。附坚果云的填写方法。",
       keywords: ["Lumno 同步", "WebDAV 同步", "坚果云 WebDAV", "Chrome 扩展同步设置", "新标签页同步"],
       title: "同步设置",
       navTitle: "同步设置",
@@ -192,13 +192,13 @@ const content: GuideLocaleContent = {
     "newtab-bookmarks-shortcuts": {
       pageTitle: "新标签页的快捷方式和书签：添加、分组与三种书签布局｜Lumno 帮助中心",
       pageDescription:
-        "在 Lumno 新标签页添加常用网站快捷方式、自定义图标、按用途分组、把快捷方式叠成文件夹，并在多层文件夹、多级列表和顶部书签栏三种布局中查看浏览器书签，还可以调整显示行数或隐藏书签。",
+        "在 Lumno 新标签页添加常用网站快捷方式、自定义图标、按用途分组、把快捷方式合并成文件夹，并在多层文件夹、多级列表和顶部书签栏三种布局中查看浏览器书签，还可以调整显示行数或隐藏书签。",
       keywords: ["新标签页快捷方式", "快捷方式分组", "新标签页书签", "Chrome 书签栏", "书签文件夹", "隐藏新标签页书签"],
       title: "快捷方式和书签",
       navTitle: "快捷方式和书签",
     },
     "newtab-frequent-sites": {
-      pageTitle: "常访网站和追更卡片：置顶网站，自动记住看到哪一集｜Lumno 帮助中心",
+      pageTitle: "常访网站和追更卡片：置顶网站，自动记录看到哪一集｜Lumno 帮助中心",
       pageDescription:
         "Lumno 新标签页底部显示最常访问或最近访问的网站，可以置顶最多 3 个卡片，也可以拖到快捷方式或书签中；置顶剧集或连载小说后，卡片会自动更新到最新一集或一章。卡片可以显示 1 至 2 行，也可以关闭。",
       keywords: ["新标签页常用网站", "追剧进度", "连载小说进度", "置顶网站", "关闭新标签页卡片"],
@@ -224,7 +224,7 @@ const content: GuideLocaleContent = {
     "selection-actions": {
       pageTitle: "划词快捷操作：选中文字，让 AI 解释、翻译或总结｜Lumno 帮助中心",
       pageDescription:
-        "在网页上选中文字后，Lumno 会根据内容给出解答、翻译、解释、总结、调研或计算等 AI 操作。Lumno 先在本机判断文字是否需要帮助，不会每次划词都弹出。",
+        "在网页上选中文字后，Lumno 会根据内容给出解答、翻译、解释、总结、调研或计算等 AI 操作。Lumno 先在本机判断是否需要显示操作，不会每次划词都显示。",
       keywords: ["划词翻译", "划词 AI", "选中文字 AI 解释", "浏览器划词插件", "划词总结"],
       title: "划词快捷操作",
       navTitle: "划词快捷操作",
@@ -266,7 +266,7 @@ const content: GuideLocaleContent = {
           answer: "不能。Mac 和 Windows 版 Arc 将于 2026 年 12 月 22 日停止运行，存在电脑上的 Arc 数据也无法再打开，请在这之前导入 Dia 或导出数据。",
         },
         {
-          question: "在 Arc 里装的 Lumno，设置能带到新浏览器吗？",
+          question: "在 Arc 里装的 Lumno，设置能迁移到新浏览器吗？",
           answer: "可以。在 Arc 停用前，在 Lumno 设置中导出配置，到新浏览器安装 Lumno 后再导入；也可以开启 WebDAV 同步。",
         },
         {

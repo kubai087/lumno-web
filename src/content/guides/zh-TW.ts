@@ -68,7 +68,7 @@ const content: GuideLocaleContent = {
     "use-cases": {
       pageTitle: "Lumno 適合誰：分頁太多、從 Arc 搬家、開發與寫作｜Lumno 說明中心",
       pageDescription:
-        "Lumno 最能幫上忙的情境：分頁開了幾十個、從 Arc 換到 Chrome 或 Dia、常查文件和 GitHub 的開發者、需要找回資料的研究和寫作、習慣問 AI，以及想要安靜新分頁的人。",
+        "Lumno 適用的情境：分頁開了幾十個、從 Arc 換到 Chrome 或 Dia、常查文件和 GitHub 的開發者、需要找回資料的研究和寫作、習慣問 AI，以及想要簡潔新分頁的人。",
       keywords: ["Lumno 使用情境", "分頁太多", "Arc 替代", "開發者瀏覽器擴充功能", "快速問 AI"],
       title: "使用情境",
       navTitle: "使用情境",
@@ -114,7 +114,7 @@ const content: GuideLocaleContent = {
     sync: {
       pageTitle: "同步設定：用瀏覽器同步和 WebDAV 在多台電腦間同步 Lumno｜Lumno 說明中心",
       pageDescription:
-        "Lumno 的設定會跟著瀏覽器內建的同步走；開啟 WebDAV 同步後，上傳的捷徑圖示、自訂桌布和匯入的名句庫也能同步，支援堅果雲、NAS 和自架伺服器。附堅果雲的填寫方式。",
+        "Lumno 的設定透過瀏覽器內建的同步功能同步；開啟 WebDAV 同步後，上傳的捷徑圖示、自訂桌布和匯入的名句庫也能同步，支援堅果雲、NAS 和自架伺服器。附堅果雲的填寫方式。",
       keywords: ["Lumno 同步", "WebDAV 同步", "堅果雲 WebDAV", "Chrome 擴充功能同步設定", "新分頁同步"],
       title: "同步設定",
       navTitle: "同步設定",
@@ -172,13 +172,13 @@ const content: GuideLocaleContent = {
     },
     "newtab-bookmarks-shortcuts": {
       pageTitle: "新分頁的捷徑和書籤：新增網站、分組與三種書籤版面｜Lumno 說明中心",
-      pageDescription: "在 Lumno 新分頁加入常用網站的捷徑、自訂圖示、依用途分成群組、把捷徑疊成資料夾，並以多層資料夾、多層級列表或頂端書籤列三種版面瀏覽書籤，也可以調整顯示行數或隱藏書籤。",
+      pageDescription: "在 Lumno 新分頁加入常用網站的捷徑、自訂圖示、依用途分成群組、把捷徑合併成資料夾，並以多層資料夾、多層級列表或頂端書籤列三種版面瀏覽書籤，也可以調整顯示行數或隱藏書籤。",
       keywords: ["新分頁捷徑", "捷徑群組", "新分頁書籤", "Chrome 書籤列", "書籤資料夾", "隱藏新分頁書籤"],
       title: "捷徑和書籤",
       navTitle: "捷徑和書籤",
     },
     "newtab-frequent-sites": {
-      pageTitle: "常用網站和追劇卡片：釘選網站，自動記住看到哪一集｜Lumno 說明中心",
+      pageTitle: "常用網站和追劇卡片：釘選網站，自動記錄看到哪一集｜Lumno 說明中心",
       pageDescription:
         "Lumno 新分頁底端顯示最常或最近瀏覽的網站，最多可以釘選 3 張卡片；釘選劇集或連載小說後，卡片會自動更新到最新一集或一章。卡片可以顯示 1 至 2 行，也可以關閉。",
       keywords: ["新分頁常用網站", "追劇進度", "連載小說進度", "釘選網站", "關閉新分頁卡片"],
@@ -203,7 +203,7 @@ const content: GuideLocaleContent = {
     "selection-actions": {
       pageTitle: "選字快捷操作：選取文字，讓 AI 解釋、翻譯或摘要｜Lumno 說明中心",
       pageDescription:
-        "在網頁上選取文字後，Lumno 會依照內容提供解答、翻譯、解釋、總結、研究或計算等 AI 操作。Lumno 先在本機判斷文字是否需要協助，不會每次選字都跳出。",
+        "在網頁上選取文字後，Lumno 會依照內容提供解答、翻譯、解釋、總結、研究或計算等 AI 操作。Lumno 先在本機判斷是否需要顯示操作，不會每次選字都顯示。",
       keywords: ["選字翻譯", "選字 AI", "選取文字 AI 解釋", "瀏覽器選字擴充功能", "選字摘要"],
       title: "選字快捷操作",
       navTitle: "選字快捷操作",
@@ -245,7 +245,7 @@ const content: GuideLocaleContent = {
           answer: "不能。Mac 和 Windows 版 Arc 將於 2026 年 12 月 22 日停止運作，存在電腦上的 Arc 資料也無法再開啟，請在這之前匯入 Dia 或匯出資料。",
         },
         {
-          question: "在 Arc 裡裝的 Lumno，設定能帶到新瀏覽器嗎？",
+          question: "在 Arc 裡裝的 Lumno，設定能遷移到新瀏覽器嗎？",
           answer: "可以。在 Arc 停止服務前，先在 Lumno 設定中匯出設定，在新瀏覽器安裝 Lumno 後再匯入；也可以開啟 WebDAV 同步。",
         },
         {

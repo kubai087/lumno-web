@@ -54,4 +54,4 @@
 
 切换器的快捷键可以在 `chrome://extensions/shortcuts` 中修改，详见[快捷键](../keyboard-shortcuts/#change)。
 
-页面预览由 Lumno 在你切换标签页时于本机截取，每张最多保留 2 小时，不会离开你的电脑。
+页面预览由 Lumno 在你切换标签页时于本机截取，每张最多保留 2 小时，不会上传。

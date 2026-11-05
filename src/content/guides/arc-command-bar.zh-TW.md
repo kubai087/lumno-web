@@ -1,4 +1,4 @@
-[Arc](https://arc.net/) 將於 2026 年 12 月 22 日停止服務，屆時 Mac 和 Windows 版 Arc 將無法開啟。離開 Arc 之前，先把資料搬出來，再挑一款新瀏覽器。Lumno 參考了 Arc 的多項互動，包括命令列、最近分頁切換、重新啟動後還原釘選分頁，以及影片自動子母畫面，在 Chrome、Dia、Edge 中安裝後即可繼續使用。
+[Arc](https://arc.net/) 將於 2026 年 12 月 22 日停止服務，屆時 Mac 和 Windows 版 Arc 將無法開啟。離開 Arc 之前，先匯出資料，再選擇新的瀏覽器。Lumno 參考了 Arc 的多項互動，包括命令列、最近分頁切換、重新啟動後還原釘選分頁，以及影片自動子母畫面，在 Chrome、Dia、Edge 中安裝後即可繼續使用。
 
 Lumno 是獨立的開源專案，與 Arc 及 The Browser Company 沒有任何關聯。
 
@@ -13,14 +13,14 @@ Lumno 是獨立的開源專案，與 Arc 及 The Browser Company 沒有任何關
 
 ## 12 月 22 日前先匯出資料 {#export}
 
-- **換到 Dia**：不需要匯出。安裝 Dia 後選擇從 Arc 匯入，Spaces、釘選分頁、資料夾、書籤、瀏覽紀錄、密碼和擴充功能都會一起帶過去，Spaces 會變成 Dia 的 Profiles。匯入期間請保留 Arc，詳見 [Move from Arc to Dia](https://resources.arc.net/hc/en-us/articles/44413129117591)。
+- **換到 Dia**：不需要匯出。安裝 Dia 後選擇從 Arc 匯入，Spaces、釘選分頁、資料夾、書籤、瀏覽紀錄、密碼和擴充功能都會一併匯入，Spaces 會變成 Dia 的 Profiles。匯入期間請保留 Arc，詳見 [Move from Arc to Dia](https://resources.arc.net/hc/en-us/articles/44413129117591)。
 - **換到其他瀏覽器**：在 Arc 的設定中開啟「Advanced」，選擇「Export Data」。Arc 會儲存一個 `Arc Data Export.md` 檔案，依 Space 列出最愛、釘選分頁和資料夾裡的連結。這是一份連結清單而不是書籤檔，需要在新瀏覽器中自行開啟或加入書籤，詳見 [How Do I Export My Data from Arc?](https://resources.arc.net/hc/en-us/articles/25583851606039)。
 
 Easel 和 Boost 無法匯出，也不會匯入 Dia。
 
-## 在 Arc 裡用過 Lumno？先帶走設定 {#lumno-settings}
+## 在 Arc 裡用過 Lumno？先匯出設定 {#lumno-settings}
 
-Lumno 的設定儲存在目前的瀏覽器裡，Arc 停止服務後就無法取回。換瀏覽器之前，先在 Lumno 設定中[匯出設定](../sync/#export)，在新瀏覽器裝好 Lumno 後再匯入；也可以開啟 [WebDAV 同步](../sync/)，連圖示和桌布也會一起帶過去。
+Lumno 的設定儲存在目前的瀏覽器裡，Arc 停止服務後就無法取回。換瀏覽器之前，先在 Lumno 設定中[匯出設定](../sync/#export)，在新瀏覽器裝好 Lumno 後再匯入；也可以開啟 [WebDAV 同步](../sync/)，圖示和桌布也會一併同步。
 
 即使換到 Dia 時擴充功能會一起匯入，也建議先匯出一份。
 
@@ -59,4 +59,4 @@ Dia 自己的快速鍵優先於擴充功能，因此在 Dia 中需要先開啟 S
 
 ## Lumno 無法提供的 Arc 功能 {#limits}
 
-側邊欄和 Spaces 需要瀏覽器本身支援，擴充功能無法實現。分割畫面也由瀏覽器提供：瀏覽器內建分割畫面時（目前為 Chrome 155 以上版本），Lumno 可以把命令列中的結果和網頁預覽開在分割畫面中，詳見[瀏覽器相容性](../browser-compatibility/#split-view)。如果離不開側邊欄和 Spaces，可以選擇上文的 Dia、Zen 或 Vivaldi。更多說明見 [Lumno 做不到的事](../limitations/)。
+側邊欄和 Spaces 需要瀏覽器本身支援，擴充功能無法實現。分割畫面也由瀏覽器提供：瀏覽器內建分割畫面時（目前為 Chrome 155 以上版本），Lumno 可以在分割畫面中開啟命令列中的結果和網頁預覽，詳見[瀏覽器相容性](../browser-compatibility/#split-view)。如果需要側邊欄和 Spaces，可以選擇上文的 Dia、Zen 或 Vivaldi。更多說明見 [Lumno 做不到的事](../limitations/)。

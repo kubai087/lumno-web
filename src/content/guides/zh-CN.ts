@@ -79,7 +79,7 @@ const content: GuideLocaleContent = {
     faq: {
       pageTitle: "Lumno 常见问题：快捷键、受限页面、新标签页与数据同步｜Lumno 帮助中心",
       pageDescription:
-        "Lumno 的常见问题：默认快捷键和修改方法、快捷键没有反应怎么办、能否搭配其他新标签页扩展、支持哪些浏览器、设置如何同步，以及是否上传浏览数据。",
+        "Lumno 的常见问题：默认快捷键和修改方法、快捷键没有反应怎么办、能否搭配其他新标签页扩展、支持哪些浏览器、Firefox 版有什么不同、设置如何同步，以及是否上传浏览数据。",
       keywords: ["Lumno 常见问题", "Lumno FAQ", "Chrome 扩展快捷键没反应", "新标签页插件冲突", "Lumno 收费吗"],
       title: "常见问题",
       navTitle: "常见问题",
@@ -216,7 +216,7 @@ const content: GuideLocaleContent = {
     "newtab-other-extensions": {
       pageTitle: "搭配其他新标签页扩展：保留 Momentum、WeTab 等起始页，只用 Lumno 命令栏｜Lumno 帮助中心",
       pageDescription:
-        "想继续使用其他新标签页扩展，同时使用 Lumno 的命令栏：让另一个扩展更晚启用即可接管新标签页。浏览器询问是否保留更改时请选择保留，选择恢复会停用整个扩展。",
+        "想继续使用 Momentum、WeTab 等新标签页扩展，同时使用 Lumno 的命令栏：让另一个扩展更晚启用即可接管新标签页。浏览器询问是否保留更改时请选择保留，选择恢复会停用整个扩展。",
       keywords: ["新标签页扩展冲突", "Chrome 新标签页被扩展接管", "只用 Lumno 命令栏", "Momentum", "WeTab", "Infinity 新标签页"],
       title: "搭配其他新标签页扩展",
       navTitle: "搭配其他新标签页扩展",
@@ -224,7 +224,7 @@ const content: GuideLocaleContent = {
     "selection-actions": {
       pageTitle: "划词快捷操作：选中文字，让 AI 解释、翻译或总结｜Lumno 帮助中心",
       pageDescription:
-        "在网页上选中文字后，Lumno 会根据内容给出解答、翻译、解释、总结、调研或计算等 AI 操作。Lumno 先在本机判断是否需要显示操作，不会每次划词都显示。",
+        "在网页上选中文字后，Lumno 会根据内容给出解答、翻译、解释、总结、调研或计算等 AI 操作，可选 ChatGPT、DeepSeek 等。Lumno 先在本机判断是否需要显示操作，不会每次划词都显示。",
       keywords: ["划词翻译", "划词 AI", "选中文字 AI 解释", "浏览器划词插件", "划词总结"],
       title: "划词快捷操作",
       navTitle: "划词快捷操作",
@@ -232,7 +232,7 @@ const content: GuideLocaleContent = {
     "auto-pip": {
       pageTitle: "视频自动画中画：切换标签页时视频自动小窗播放｜Lumno 帮助中心",
       pageDescription:
-        "在网页上看视频时切换到其他标签页，视频会自动进入画中画小窗继续播放，切回来时自动收起。介绍触发条件、不会触发的网站和开关位置。",
+        "在网页上看视频时切换到其他标签页，视频会自动进入画中画小窗继续播放，切回来时自动收起。介绍触发条件、不会触发的网站、在 Helium 等浏览器中没有反应时的设置方法，以及开关位置。",
       keywords: ["自动画中画", "Chrome 画中画插件", "切换标签页视频小窗", "Arc 自动画中画", "视频悬浮窗"],
       title: "视频自动画中画",
       navTitle: "视频自动画中画",
@@ -248,7 +248,7 @@ const content: GuideLocaleContent = {
     "web-clip": {
       pageTitle: "网页剪裁：把网页的一部分放进悬浮窗口对照查看｜Lumno 帮助中心",
       pageDescription:
-        "在命令栏输入 /clip，选中网页中的表格、代码或图表，即可在悬浮窗口中单独查看，原网页更新时同步刷新。介绍操作方法、按键和使用限制。",
+        "在命令栏输入 /clip，选中网页中的表格、代码或图表，即可在悬浮窗口中单独查看，切换标签页时也一直显示，原网页更新时同步刷新。介绍如何开启、选取内容时的按键、悬浮窗口的操作和使用限制。",
       keywords: ["网页剪裁", "网页悬浮窗", "Document Picture-in-Picture", "网页局部画中画", "Chrome 网页内容悬浮"],
       title: "网页剪裁",
       navTitle: "网页剪裁",
@@ -286,7 +286,7 @@ const content: GuideLocaleContent = {
     "security-open-source": {
       pageTitle: "安全与开源：GPL-3.0 源码、权限和 Manifest V3｜Lumno 帮助中心",
       pageDescription:
-        "Lumno 基于 GPL-3.0 协议开源，源码在 GitHub 公开；采用 Manifest V3，不运行远程代码。只申请必要的浏览器权限。",
+        "Lumno 基于 GPL-3.0 协议开源，源码在 GitHub 公开；采用 Manifest V3，不运行远程代码。没有存放用户数据的服务器，只申请必要的浏览器权限。",
       keywords: ["Lumno 开源", "Lumno 安全", "Chrome 扩展权限", "Manifest V3"],
       title: "安全与开源",
       navTitle: "安全与开源",
@@ -294,7 +294,7 @@ const content: GuideLocaleContent = {
     "ratings-reviews": {
       pageTitle: "评分与评测：Chrome 应用商店评分和少数派报道｜Lumno 帮助中心",
       pageDescription:
-        "Lumno 在 Chrome 应用商店的评分与评价、Firefox 附加组件的评价页，以及少数派对 Lumno 的介绍文章。",
+        "查看用户对 Lumno 的评价：Chrome 应用商店的评分与评价、Firefox 附加组件的评价页，以及少数派对 Lumno 的介绍文章和浏览器扩展合集推荐。",
       keywords: ["Lumno 评价", "Lumno 评分", "少数派 Lumno", "Chrome 命令栏插件推荐"],
       title: "评分与评测",
       navTitle: "评分与评测",

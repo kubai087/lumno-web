@@ -271,7 +271,7 @@ const content: GuideLocaleContent = {
     },
     "ratings-reviews": {
       pageTitle: "評価とメディア掲載：Chrome ウェブストアのレビューと記事｜Lumno ヘルプ",
-      pageDescription: "Chrome ウェブストアでの Lumno の評価とレビュー、Firefox アドオンのレビュー、Lumno を紹介した記事。",
+      pageDescription: "Chrome ウェブストアでの Lumno の評価とレビュー、Firefox アドオンのレビューページ、紹介記事をまとめています。GitHub では不具合の報告や新機能の提案もできます。",
       keywords: ["Lumno レビュー", "Lumno 評価", "Chrome コマンドバー 拡張機能 おすすめ"],
       title: "評価とメディア掲載",
       navTitle: "評価とメディア掲載",

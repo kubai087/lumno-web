@@ -76,7 +76,7 @@ const content: GuideLocaleContent = {
     faq: {
       pageTitle: "Lumno 常見問題：快速鍵、受限頁面、新分頁與資料同步｜Lumno 說明中心",
       pageDescription:
-        "Lumno 的常見問題：預設快速鍵和修改方式、快速鍵沒有反應怎麼辦、能否搭配其他新分頁擴充功能、支援哪些瀏覽器、設定如何同步，以及是否上傳瀏覽資料。",
+        "Lumno 的常見問題：預設快速鍵和修改方式、快速鍵沒有反應怎麼辦、能否搭配其他新分頁擴充功能、支援哪些瀏覽器、Firefox 版有什麼不同、設定如何同步，以及是否上傳瀏覽資料。",
       keywords: ["Lumno 常見問題", "Lumno FAQ", "Chrome 擴充功能快速鍵沒反應", "新分頁擴充功能衝突", "Lumno 免費嗎"],
       title: "常見問題",
       navTitle: "常見問題",
@@ -203,7 +203,7 @@ const content: GuideLocaleContent = {
     "selection-actions": {
       pageTitle: "選字快捷操作：選取文字，讓 AI 解釋、翻譯或摘要｜Lumno 說明中心",
       pageDescription:
-        "在網頁上選取文字後，Lumno 會依照內容提供解答、翻譯、解釋、總結、研究或計算等 AI 操作。Lumno 先在本機判斷是否需要顯示操作，不會每次選字都顯示。",
+        "在網頁上選取文字後，Lumno 會依照內容提供解答、翻譯、解釋、總結、研究或計算等 AI 操作，可選 ChatGPT、DeepSeek 等。Lumno 先在本機判斷是否需要顯示操作，不會每次選字都顯示。",
       keywords: ["選字翻譯", "選字 AI", "選取文字 AI 解釋", "瀏覽器選字擴充功能", "選字摘要"],
       title: "選字快捷操作",
       navTitle: "選字快捷操作",
@@ -211,7 +211,7 @@ const content: GuideLocaleContent = {
     "auto-pip": {
       pageTitle: "影片自動子母畫面：切換分頁時影片自動以小視窗播放｜Lumno 說明中心",
       pageDescription:
-        "在網頁上看影片時切換到其他分頁，影片會自動進入子母畫面小視窗繼續播放，切回來時自動收起。說明觸發條件、不會觸發的網站和開關位置。",
+        "在網頁上看影片時切換到其他分頁，影片會自動進入子母畫面小視窗繼續播放，切回來時自動收起。說明觸發條件、不會觸發的網站、在 Helium 等瀏覽器中沒有反應時的設定方法，以及開關位置。",
       keywords: ["自動子母畫面", "Chrome 子母畫面擴充功能", "切換分頁影片小視窗", "Arc 自動子母畫面", "影片浮動視窗"],
       title: "影片自動子母畫面",
       navTitle: "影片自動子母畫面",
@@ -227,7 +227,7 @@ const content: GuideLocaleContent = {
     "web-clip": {
       pageTitle: "網頁剪裁：把網頁的一部分放進浮動視窗對照查看｜Lumno 說明中心",
       pageDescription:
-        "網頁剪裁可以把表格、程式碼或圖表等網頁內容放進浮動視窗，切換分頁時也一直顯示。說明如何開啟、選取內容、使用浮動視窗，以及有哪些限制。",
+        "網頁剪裁可以把表格、程式碼或圖表等網頁內容放進浮動視窗，切換分頁時也一直顯示，原網頁更新時同步重新整理。說明如何開啟、在命令列輸入 /clip 選取內容、使用浮動視窗，以及有哪些限制。",
       keywords: ["網頁剪裁", "文件子母畫面", "網頁 浮動視窗", "Chrome 擴充功能 子母畫面", "網頁 對照查看"],
       title: "網頁剪裁",
       navTitle: "網頁剪裁",
@@ -264,14 +264,14 @@ const content: GuideLocaleContent = {
     },
     "security-open-source": {
       pageTitle: "安全與開源：GPL-3.0 原始碼、權限與 Manifest V3｜Lumno 說明中心",
-      pageDescription: "Lumno 以 GPL-3.0 授權開源，原始碼公開在 GitHub；採用 Manifest V3，不執行遠端程式碼。只申請必要的瀏覽器權限。",
+      pageDescription: "Lumno 以 GPL-3.0 授權開源，原始碼公開在 GitHub；採用 Manifest V3，不執行遠端程式碼。沒有存放使用者資料的伺服器，只申請必要的瀏覽器權限。",
       keywords: ["Lumno 開源", "Lumno 安全", "Chrome 擴充功能權限", "Manifest V3"],
       title: "安全與開源",
       navTitle: "安全與開源",
     },
     "ratings-reviews": {
       pageTitle: "評分與評測：Chrome 線上應用程式商店評分和少數派報導｜Lumno 說明中心",
-      pageDescription: "Lumno 在 Chrome 線上應用程式商店的評分與評論、Firefox 附加元件的評論頁，以及少數派對 Lumno 的介紹文章。",
+      pageDescription: "查看使用者對 Lumno 的評價：Chrome 線上應用程式商店的評分與評論、Firefox 附加元件的評論頁，以及少數派對 Lumno 的介紹文章和瀏覽器擴充功能合集推薦。",
       keywords: ["Lumno 評價", "Lumno 評分", "少數派 Lumno", "Chrome 命令列擴充功能推薦"],
       title: "評分與評測",
       navTitle: "評分與評測",

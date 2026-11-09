@@ -45,7 +45,7 @@ const content: GuideLocaleContent = {
     "what-is-lumno": {
       pageTitle: "Lumno란? 오픈소스 브라우저 명령 바와 새 탭 | Lumno 도움말",
       pageDescription:
-        "Lumno는 무료 오픈소스 브라우저 확장 프로그램입니다. 어떤 페이지에서든 ⌘⇧K를 누르면 탭, 북마크, 방문 기록을 검색하고 사이트 안을 바로 검색하거나 AI에게 물어볼 수 있고, 새 탭도 원하는 대로 꾸밀 수 있습니다. Chrome, Edge, Dia 등 Chromium 기반 브라우저와 Firefox에서 작동합니다.",
+        "Lumno는 무료 오픈소스 브라우저 확장 프로그램입니다. ⌘⇧K를 누르면 탭, 북마크, 방문 기록을 검색하거나 AI에게 물어볼 수 있고, 새 탭도 원하는 대로 꾸밀 수 있습니다. Chrome, Edge, Dia, Firefox에서 작동합니다.",
       keywords: ["Lumno", "브라우저 명령 바", "크롬 명령 팔레트 확장", "탭 검색", "새 탭 확장 프로그램", "Arc 명령 바"],
       title: "Lumno란?",
       navTitle: "Lumno란?",
@@ -99,7 +99,7 @@ const content: GuideLocaleContent = {
     "keyboard-shortcuts": {
       pageTitle: "Lumno 단축키 총정리: 기본 단축키, 변경 방법, 모든 키 | Lumno 도움말",
       pageDescription:
-        "Lumno는 ⌘⇧K(Windows는 Ctrl+Shift+K)로 열고, 최근 탭 전환기는 ⌥Q(Alt+Q)로 엽니다. chrome://extensions/shortcuts에서 ⌘T 등 원하는 키로 변경할 수 있습니다. 명령 바, 새 탭, 전환기, 웹 클립에서 쓰는 모든 키와 백그라운드에서 열기 같은 클릭 동작도 정리했습니다.",
+        "Lumno는 ⌘⇧K(Windows는 Ctrl+Shift+K)로 열고, 최근 탭 전환기는 ⌥Q(Alt+Q)로 엽니다. 변경 방법과 명령 바, 새 탭, 전환기, 웹 클립에서 쓰는 키를 정리했습니다.",
       keywords: ["Lumno 단축키", "크롬 확장 단축키 변경", "chrome://extensions/shortcuts", "Cmd T 명령 바", "백그라운드 탭에서 열기"],
       title: "단축키",
       navTitle: "단축키",
@@ -175,7 +175,7 @@ const content: GuideLocaleContent = {
     "newtab-wallpaper": {
       pageTitle: "새 탭 배경화면: 명화, Bing 오늘의 사진, 내 사진과 필터 | Lumno 도움말",
       pageDescription:
-        "Appearance 설정에서 Lumno 새 탭의 배경화면을 바꾸세요. 기본 명화, Bing 오늘의 사진, 엄선한 사진, 내 이미지나 이미지 링크를 쓸 수 있고, 마스크와 필터, 라이트·다크 모드별 배경화면도 설정할 수 있습니다. 검색창과 카드에 Acrylic나 Liquid glass 재질을 입힐 수도 있습니다.",
+        "Lumno 새 탭의 배경화면을 바꾸세요. 기본 명화, Bing 오늘의 사진, 엄선한 사진, 내 이미지를 쓸 수 있고, 마스크와 필터, 라이트·다크 모드별 설정도 지원합니다.",
       keywords: ["새 탭 배경화면", "크롬 새 탭 배경", "Bing 오늘의 배경화면", "새 탭 확장 프로그램"],
       title: "배경화면 바꾸기",
       navTitle: "배경화면 바꾸기",
@@ -268,7 +268,7 @@ const content: GuideLocaleContent = {
     "browser-compatibility": {
       pageTitle: "브라우저 호환성: Chrome, Edge, Dia, Brave, Firefox, Safari | Lumno 도움말",
       pageDescription:
-        "Lumno는 Chrome, Edge, Brave, Arc, Vivaldi 등 Chromium 기반 브라우저에서 모든 기능이 작동합니다. Dia에서는 새 탭을 쓸 수 없고, Firefox 버전은 Firefox 부가 기능에 등록되어 있지만 일부 기능이 빠져 있으며, Safari와 모바일 브라우저는 지원하지 않습니다.",
+        "Lumno는 Chrome, Edge, Brave, Arc, Vivaldi 등 Chromium 브라우저에서 모든 기능이 작동합니다. Dia에서는 새 탭을 쓸 수 없고, Firefox는 일부 기능이 빠지며, Safari와 모바일은 지원하지 않습니다.",
       keywords: ["Lumno 호환성", "Dia 확장 프로그램", "Edge 확장 프로그램", "Firefox 버전", "Chromium 확장"],
       title: "브라우저 호환성",
       navTitle: "브라우저 호환성",

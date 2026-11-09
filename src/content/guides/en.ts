@@ -45,7 +45,7 @@ const content: GuideLocaleContent = {
     "what-is-lumno": {
       pageTitle: "What is Lumno? An open-source browser command bar and new tab | Lumno Help",
       pageDescription:
-        "Lumno is a free, open-source browser extension. Press ⌘⇧K on any page to search your tabs, bookmarks and history, search inside sites or ask AI, and get a calm, customizable new tab. Works in Chrome, Edge, Dia and other Chromium browsers, and in Firefox.",
+        "Lumno is a free, open-source browser extension. Press ⌘⇧K on any page to search tabs, bookmarks and history or ask AI, plus a calm, customizable new tab.",
       keywords: ["Lumno", "browser command bar", "Chrome command palette extension", "tab search", "new tab extension", "Arc command bar"],
       title: "What is Lumno?",
       navTitle: "What is Lumno?",
@@ -60,7 +60,7 @@ const content: GuideLocaleContent = {
     limitations: {
       pageTitle: "What Lumno can't do: limits and known gaps | Lumno Help",
       pageDescription:
-        "Lumno is an extension, not a browser: no command bar on chrome:// pages, no Safari, and no new tab in Dia. Here is what it can't do yet, and what to use instead.",
+        "Lumno is an extension, not a browser: no command bar on chrome:// pages, no Safari, no new tab in Dia. What it can't do yet, and what to use instead.",
       keywords: ["Lumno limitations", "Chrome extension restricted pages", "Arc sidebar alternative", "Dia new tab"],
       title: "What Lumno can't do",
       navTitle: "What Lumno can't do",
@@ -68,7 +68,7 @@ const content: GuideLocaleContent = {
     "use-cases": {
       pageTitle: "Who Lumno is for: too many tabs, leaving Arc, developers and writers | Lumno Help",
       pageDescription:
-        "Where Lumno helps most: dozens of open tabs, moving from Arc to Chrome or Dia, developers living in docs and GitHub, research and writing, asking AI, and a calm new tab.",
+        "Where Lumno helps most: dozens of open tabs, moving from Arc to Chrome or Dia, developers in docs and GitHub, research and writing, AI, and a calm new tab.",
       keywords: ["Lumno use cases", "too many tabs", "Arc alternative", "developer browser extension", "ask AI shortcut"],
       title: "Use cases",
       navTitle: "Use cases",
@@ -76,7 +76,7 @@ const content: GuideLocaleContent = {
     faq: {
       pageTitle: "Lumno FAQ: shortcuts, restricted pages, new tab and sync | Lumno Help",
       pageDescription:
-        "Answers to common questions about Lumno: the default shortcut and how to change it, what to do when it doesn't work, using another new tab extension, supported browsers, syncing settings and whether browsing data is uploaded.",
+        "Common questions about Lumno: changing the default shortcut, fixing it when it doesn't work, other new tab extensions, supported browsers, sync and privacy.",
       keywords: ["Lumno FAQ", "Lumno questions", "Chrome extension shortcut not working", "new tab extension conflict", "is Lumno free"],
       title: "Frequently asked questions",
       navTitle: "FAQ",
@@ -84,7 +84,7 @@ const content: GuideLocaleContent = {
     install: {
       pageTitle: "Install Lumno from the Chrome Web Store, Edge Add-ons or Firefox Add-ons | Lumno Help",
       pageDescription:
-        "Install Lumno from the Chrome Web Store in Chrome, Dia, Brave or Arc, from Microsoft Edge Add-ons in Edge, or from Firefox Add-ons in Firefox and Zen. A welcome page opens, and ⌘⇧K is ready to go.",
+        "Install Lumno from the Chrome Web Store for Chrome, Dia, Brave or Arc, from Edge Add-ons for Edge, or from Firefox Add-ons for Firefox and Zen.",
       keywords: ["install Lumno", "Lumno Chrome Web Store", "Lumno Edge Add-ons", "Lumno Firefox Add-ons", "install Chrome extension"],
       title: "Install Lumno",
       navTitle: "Install Lumno",
@@ -99,7 +99,7 @@ const content: GuideLocaleContent = {
     "keyboard-shortcuts": {
       pageTitle: "Lumno keyboard shortcuts: defaults, how to change them, and every key | Lumno Help",
       pageDescription:
-        "Lumno opens with ⌘⇧K (Ctrl+Shift+K on Windows) and its recent tab switcher with ⌥Q (Alt+Q). Change them in chrome://extensions/shortcuts, even to ⌘T. Plus every key in the command bar, new tab, switcher and web clip, and the clicks that do the same, like opening in the background.",
+        "Lumno opens with ⌘⇧K (Ctrl+Shift+K on Windows) and its tab switcher with ⌥Q (Alt+Q). How to change them, plus every key in the command bar and new tab.",
       keywords: ["Lumno shortcuts", "change Chrome extension shortcut", "chrome://extensions/shortcuts", "Cmd T command bar", "open in background tab"],
       title: "Keyboard shortcuts",
       navTitle: "Keyboard shortcuts",
@@ -114,7 +114,7 @@ const content: GuideLocaleContent = {
     sync: {
       pageTitle: "Sync Lumno across computers with browser sync and WebDAV | Lumno Help",
       pageDescription:
-        "Lumno's settings travel with your browser's own sync. Turn on WebDAV sync to bring custom shortcut icons, wallpapers and quotes too, using Nextcloud, a NAS or any WebDAV server you control.",
+        "Lumno's settings travel with your browser's sync. Turn on WebDAV sync to bring shortcut icons, wallpapers and quotes too, using Nextcloud or a NAS.",
       keywords: ["Lumno sync", "WebDAV sync", "Nextcloud WebDAV", "sync Chrome extension settings", "new tab sync"],
       title: "Sync",
       navTitle: "Sync",
@@ -151,7 +151,7 @@ const content: GuideLocaleContent = {
     "site-search": {
       pageTitle: "Site search: type a shortcut, press Tab, search GitHub, YouTube or ChatGPT | Lumno Help",
       pageDescription:
-        "Lumno has 47 built-in search shortcuts. Type gh, yt or sf and press Tab to search GitHub, YouTube or Stack Overflow directly, or send a question straight to ChatGPT, Gemini or Perplexity.",
+        "Lumno has 47 built-in search shortcuts. Type gh, yt or sf and press Tab to search GitHub, YouTube or Stack Overflow, or ask ChatGPT, Gemini or Perplexity.",
       keywords: ["Chrome site search", "Tab to search", "search shortcuts browser", "search GitHub fast", "ask ChatGPT shortcut", "custom search engine"],
       title: "Site search and asking AI",
       navTitle: "Site search & asking AI",
@@ -167,7 +167,7 @@ const content: GuideLocaleContent = {
     "tab-switcher": {
       pageTitle: "Recent tab switcher: press ⌥Q to jump between recent tabs | Lumno Help",
       pageDescription:
-        "Press ⌥Q (Alt+Q on Windows) to open Lumno's recent tab switcher, with your tabs in the order you used them and a preview of each. Hold ⌥ and press Q to choose a tab, then release ⌥ to switch. You can also close tabs right from the switcher.",
+        "Press ⌥Q (Alt+Q on Windows) to open Lumno's recent tab switcher, with previews in the order you used your tabs. Hold ⌥, press Q to choose, release to switch.",
       keywords: ["Chrome tab switcher", "recent tabs", "Alt Tab for browser", "Arc Ctrl Tab"],
       title: "Switch between recent tabs",
       navTitle: "Switch between recent tabs",
@@ -175,7 +175,7 @@ const content: GuideLocaleContent = {
     "newtab-wallpaper": {
       pageTitle: "New tab wallpapers: classic paintings, Bing daily, your photos and filters | Lumno Help",
       pageDescription:
-        "Change Lumno's new tab wallpaper in Appearance settings: built-in paintings, Bing's photo of the day, curated photos, your own images or an image link, with a mask, filters, separate light and dark picks, and an acrylic or liquid glass finish.",
+        "Change Lumno's new tab wallpaper: built-in paintings, Bing's photo of the day, curated photos or your own images, with a mask, filters and a glass finish.",
       keywords: ["new tab wallpaper", "Chrome new tab background", "Bing daily wallpaper", "new tab extension", "liquid glass new tab"],
       title: "Change the wallpaper",
       navTitle: "Change the wallpaper",
@@ -183,7 +183,7 @@ const content: GuideLocaleContent = {
     "newtab-bookmarks-shortcuts": {
       pageTitle: "New tab shortcuts and bookmarks: add and group sites, three bookmark layouts | Lumno Help",
       pageDescription:
-        "Add your go-to sites as shortcuts on Lumno's new tab, pick their icons, sort them into groups, stack them into folders, and browse your bookmarks as folders, a nested list or a top bar, with as many rows as you like or none at all.",
+        "Add sites as shortcuts on Lumno's new tab, pick icons, sort them into groups and folders, and browse bookmarks as folders, a nested list or a top bar.",
       keywords: ["new tab shortcuts", "shortcut groups", "new tab bookmarks", "Chrome bookmarks bar", "bookmark folders", "hide new tab bookmarks"],
       title: "Shortcuts and bookmarks",
       navTitle: "Shortcuts & bookmarks",
@@ -191,14 +191,14 @@ const content: GuideLocaleContent = {
     "newtab-frequent-sites": {
       pageTitle: "Frequent sites and progress cards: pin sites, keep your place in a show | Lumno Help",
       pageDescription:
-        "Lumno's new tab shows your most visited or recent sites. Pin up to three; pin a show or a serialized novel and the card follows you to the next episode or chapter. Show one or two rows of cards, or turn them off.",
+        "Lumno's new tab shows your most visited or recent sites. Pin up to three; a pinned show or serialized novel follows you to the next episode or chapter.",
       keywords: ["new tab most visited", "track show progress", "web novel progress", "pin sites", "hide new tab site cards"],
       title: "Frequent sites and progress cards",
       navTitle: "Frequent sites & progress cards",
     },
     "newtab-clock-zen": {
       pageTitle: "Clock, daily quote and Zen mode: a new tab with just the search box | Lumno Help",
-      pageDescription: "Show a clock and a daily quote from your own TXT or Markdown file on Lumno's new tab, type /zen to hide everything but the search box, or /present to keep bookmarks and history out of sight when you share your screen.",
+      pageDescription: "Add a clock and daily quotes from your own file to Lumno's new tab. Type /zen to leave only the search box, or /present to hide bookmarks when sharing.",
       keywords: ["new tab clock", "new tab daily quote", "minimal new tab", "Zen mode", "focus new tab", "presentation mode"],
       title: "Clock, quotes and Zen mode",
       navTitle: "Clock, quotes & Zen mode",
@@ -206,7 +206,7 @@ const content: GuideLocaleContent = {
     "newtab-other-extensions": {
       pageTitle: "Use another new tab extension with Lumno's command bar | Lumno Help",
       pageDescription:
-        "Keep Momentum, Tabliss or another new tab extension and use only Lumno's command bar: turn the other extension on after Lumno so it takes over the new tab. When the browser asks, keep the change; changing it back turns off the whole extension.",
+        "Keep Momentum, Tabliss or another new tab extension and use only Lumno's command bar: turn the other extension on after Lumno, and keep the change when asked.",
       keywords: ["new tab extension conflict", "Chrome new tab changed by extension", "use only Lumno command bar", "Momentum", "Tabliss"],
       title: "Use another new tab extension",
       navTitle: "Use another new tab extension",
@@ -214,7 +214,7 @@ const content: GuideLocaleContent = {
     "selection-actions": {
       pageTitle: "Selection quick actions: select text to have AI explain, translate or summarize it | Lumno Help",
       pageDescription:
-        "Select text on a page and Lumno suggests AI actions such as Answer, Translate, Explain, Summarize, Research or Calculate. Lumno first checks on your device whether the text needs help, so the button doesn't appear on every selection.",
+        "Select text and Lumno suggests AI actions such as Translate, Explain or Summarize. It checks on your device first, so it doesn't appear on every selection.",
       keywords: ["select text AI", "AI translate selection", "explain selected text", "Chrome selection AI extension", "summarize selection"],
       title: "Selection quick actions",
       navTitle: "Selection quick actions",
@@ -222,7 +222,7 @@ const content: GuideLocaleContent = {
     "auto-pip": {
       pageTitle: "Auto picture-in-picture: videos keep playing in a small window when you switch tabs | Lumno Help",
       pageDescription:
-        "When you switch tabs while a video is playing, it moves into a picture-in-picture window and closes again when you come back. When it starts, where it doesn't, and how to turn it off.",
+        "Switch tabs while a video plays and it moves into a picture-in-picture window, then closes when you come back. When it starts, and how to turn it off.",
       keywords: ["auto picture-in-picture", "Chrome picture in picture extension", "video floating window", "Arc auto PiP", "PiP when switching tabs"],
       title: "Auto picture-in-picture",
       navTitle: "Auto picture-in-picture",
@@ -230,7 +230,7 @@ const content: GuideLocaleContent = {
     "link-preview": {
       pageTitle: "Link preview: Shift-click a link to open it in a small window | Lumno Help",
       pageDescription:
-        "Shift-click a link to open it in a small window over the page. Close it to return to where you were, or move it to a new tab or a split view. Learn how it works, what the window's buttons do, which pages can't be previewed, and how to turn it off.",
+        "Shift-click a link to open it in a small window over the page, then close it or move it to a new tab or split view. Buttons, limits and how to turn it off.",
       keywords: ["link preview", "preview links without opening a tab", "Shift click link", "link preview Chrome extension", "peek link", "Arc Peek alternative"],
       title: "Link preview",
       navTitle: "Link preview",
@@ -238,7 +238,7 @@ const content: GuideLocaleContent = {
     "web-clip": {
       pageTitle: "Web clip: keep part of a page in a floating window | Lumno Help",
       pageDescription:
-        "Web clip puts a table, a block of code or a chart from any page into a floating window that stays on top while you switch tabs. Learn how to turn it on, choose content and use the window, and what its limitations are.",
+        "Web clip puts a table, code block or chart from any page into a floating window that stays on top while you switch tabs. How to use it, and its limits.",
       keywords: ["web clip", "document picture-in-picture", "floating window Chrome extension", "pin part of a web page", "picture-in-picture any element"],
       title: "Web clip",
       navTitle: "Web clip",
@@ -246,7 +246,7 @@ const content: GuideLocaleContent = {
     "arc-command-bar": {
       pageTitle: "Arc is shutting down: how to move to Dia, Chrome or Edge | Lumno Help",
       pageDescription:
-        "Arc shuts down on December 22, 2026. See the timeline, how to export your data before moving to Dia or another browser, and how Lumno keeps an Arc-style command bar in Chrome, Dia and Edge. Includes an Arc shortcut map.",
+        "Arc shuts down on December 22, 2026. See the timeline, how to export your data, and how Lumno keeps an Arc-style command bar in Chrome, Dia and Edge.",
       keywords: ["Arc shutting down", "Arc browser shutdown", "Arc browser alternative", "export Arc data", "move from Arc to Chrome", "Arc command bar alternative", "Arc shortcuts"],
       title: "Moving from Arc",
       navTitle: "Moving from Arc",
@@ -268,7 +268,7 @@ const content: GuideLocaleContent = {
     "browser-compatibility": {
       pageTitle: "Browser compatibility: Chrome, Edge, Dia, Brave, Firefox and Safari | Lumno Help",
       pageDescription:
-        "Lumno works fully in Chrome, Edge, Brave, Arc, Vivaldi and other Chromium browsers. Dia has no Lumno new tab, the Firefox version is on Firefox Add-ons with a few gaps, and Safari and mobile browsers aren't supported.",
+        "Lumno works fully in Chrome, Edge, Brave, Arc, Vivaldi and other Chromium browsers. Dia has no Lumno new tab, Firefox has a few gaps, no Safari or mobile.",
       keywords: ["Lumno compatibility", "Dia extension", "Edge extension", "Firefox version", "Chromium extension"],
       title: "Browser compatibility",
       navTitle: "Browser compatibility",

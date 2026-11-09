@@ -45,7 +45,7 @@ const content: GuideLocaleContent = {
     "what-is-lumno": {
       pageTitle: "O que é o Lumno? Barra de comandos e nova guia de código aberto | Ajuda do Lumno",
       pageDescription:
-        "O Lumno é uma extensão de navegador gratuita e de código aberto. Pressione ⌘⇧K em qualquer página para pesquisar suas guias, favoritos e histórico, pesquisar dentro de sites ou perguntar à IA, e tenha uma nova guia tranquila e personalizável. Funciona no Chrome, Edge, Dia e outros navegadores Chromium, e no Firefox.",
+        "O Lumno é uma extensão gratuita e de código aberto. Use ⌘⇧K para pesquisar guias, favoritos e histórico ou perguntar à IA, com uma nova guia personalizável.",
       keywords: ["Lumno", "barra de comandos do navegador", "extensão paleta de comandos Chrome", "pesquisar guias", "extensão nova guia", "barra de comandos do Arc"],
       title: "O que é o Lumno?",
       navTitle: "O que é o Lumno?",
@@ -60,7 +60,7 @@ const content: GuideLocaleContent = {
     limitations: {
       pageTitle: "O que o Lumno não faz: limites e lacunas conhecidas | Ajuda do Lumno",
       pageDescription:
-        "O Lumno é uma extensão, não um navegador: a barra de comandos não abre em páginas chrome://, não funciona no Safari e não há nova guia no Dia. Veja o que ele ainda não faz e o que usar no lugar.",
+        "O Lumno é uma extensão: a barra de comandos não abre em páginas chrome://, sem Safari e sem nova guia no Dia. O que ele ainda não faz e o que usar no lugar.",
       keywords: ["limites do Lumno", "extensão Chrome páginas restritas", "alternativa à barra lateral do Arc", "nova guia no Dia"],
       title: "O que o Lumno não faz",
       navTitle: "O que o Lumno não faz",
@@ -68,7 +68,7 @@ const content: GuideLocaleContent = {
     "use-cases": {
       pageTitle: "Para quem é o Lumno: guias demais, saindo do Arc, desenvolvimento e escrita | Ajuda do Lumno",
       pageDescription:
-        "Onde o Lumno mais ajuda: dezenas de guias abertas, a mudança do Arc para o Chrome ou o Dia, desenvolvedores entre documentação e GitHub, pesquisa e escrita, perguntas rápidas à IA e uma nova guia tranquila.",
+        "Onde o Lumno mais ajuda: dezenas de guias abertas, a mudança do Arc, documentação e GitHub, pesquisa e escrita, perguntas à IA e uma nova guia tranquila.",
       keywords: ["casos de uso do Lumno", "guias demais", "alternativa ao Arc", "extensão de navegador para desenvolvedores", "atalho para perguntar à IA"],
       title: "Casos de uso",
       navTitle: "Casos de uso",
@@ -76,7 +76,7 @@ const content: GuideLocaleContent = {
     faq: {
       pageTitle: "Perguntas frequentes sobre o Lumno: atalhos, páginas restritas, nova guia e sincronização | Ajuda do Lumno",
       pageDescription:
-        "Respostas às perguntas frequentes sobre o Lumno: o atalho padrão e como alterá-lo, o que fazer se ele não funcionar, como usar com outra extensão de nova guia, navegadores compatíveis, sincronização das configurações e tratamento dos dados de navegação.",
+        "Perguntas frequentes sobre o Lumno: mudar o atalho, o que fazer se não funcionar, outras extensões de nova guia, navegadores compatíveis, sincronização e dados.",
       keywords: ["perguntas frequentes Lumno", "Lumno FAQ", "atalho de extensão do Chrome não funciona", "conflito extensão nova guia", "Lumno gratuito"],
       title: "Perguntas frequentes",
       navTitle: "Perguntas frequentes",
@@ -84,7 +84,7 @@ const content: GuideLocaleContent = {
     install: {
       pageTitle: "Instale o Lumno pela Chrome Web Store, pelos Complementos do Edge ou do Firefox | Ajuda do Lumno",
       pageDescription:
-        "Instale o Lumno pela Chrome Web Store no Chrome, Dia, Brave ou Arc, pelos Complementos do Microsoft Edge no Edge, ou pelos Complementos do Firefox no Firefox e no Zen. Uma página de boas-vindas abre e o ⌘⇧K já está pronto para usar.",
+        "Instale o Lumno pela Chrome Web Store no Chrome, Dia, Brave ou Arc, pelos Complementos do Edge no Edge, ou pelos Complementos do Firefox no Firefox e no Zen.",
       keywords: ["instalar Lumno", "Lumno Chrome Web Store", "Lumno Complementos do Edge", "Lumno Complementos do Firefox", "instalar extensão do Chrome"],
       title: "Instalar o Lumno",
       navTitle: "Instalar o Lumno",
@@ -99,7 +99,7 @@ const content: GuideLocaleContent = {
     "keyboard-shortcuts": {
       pageTitle: "Atalhos de teclado do Lumno: padrões, como mudar e todas as teclas | Ajuda do Lumno",
       pageDescription:
-        "O Lumno abre com ⌘⇧K (Ctrl+Shift+K no Windows) e o alternador de guias recentes com ⌥Q (Alt+Q). Mude os atalhos em chrome://extensions/shortcuts, até para ⌘T. Mais todas as teclas da barra de comandos, da nova guia, do alternador e do recorte da web, e os cliques equivalentes, como abrir em segundo plano.",
+        "O Lumno abre com ⌘⇧K (Ctrl+Shift+K no Windows) e o alternador de guias com ⌥Q (Alt+Q). Como mudar os atalhos e todas as teclas da barra e da nova guia.",
       keywords: ["atalhos do Lumno", "mudar atalho de extensão do Chrome", "chrome://extensions/shortcuts", "Cmd T barra de comandos", "abrir em segundo plano"],
       title: "Atalhos de teclado",
       navTitle: "Atalhos de teclado",
@@ -114,7 +114,7 @@ const content: GuideLocaleContent = {
     sync: {
       pageTitle: "Sincronize o Lumno entre computadores com a sincronização do navegador e WebDAV | Ajuda do Lumno",
       pageDescription:
-        "As configurações do Lumno acompanham a sincronização do seu navegador. Ative a sincronização WebDAV para levar também os ícones de atalhos, os papéis de parede e as citações, usando Nextcloud, um NAS ou qualquer servidor WebDAV que você controle.",
+        "As configurações do Lumno acompanham a sincronização do navegador. Com WebDAV, leve também ícones, papéis de parede e citações, usando Nextcloud ou um NAS.",
       keywords: ["sincronização do Lumno", "sincronização WebDAV", "Nextcloud WebDAV", "sincronizar configurações de extensão do Chrome", "sincronizar nova guia"],
       title: "Sincronização",
       navTitle: "Sincronização",
@@ -132,7 +132,7 @@ const content: GuideLocaleContent = {
     "search-tabs-bookmarks-history": {
       pageTitle: "Pesquise guias abertas, favoritos e histórico em uma única caixa | Ajuda do Lumno",
       pageDescription:
-        "Pressione ⌘⇧K (Ctrl+Shift+K no Windows) em qualquer página para pesquisar suas guias abertas, favoritos, histórico e sites mais visitados em uma única caixa, ou apenas nas guias abertas.",
+        "Pressione ⌘⇧K (Ctrl+Shift+K no Windows) em qualquer página para pesquisar suas guias abertas, favoritos, histórico e sites mais visitados em uma única caixa.",
       keywords: ["pesquisar guias no Chrome", "extensão para pesquisar favoritos", "pesquisar histórico", "pesquisar guias abertas", "paleta de comandos do Chrome"],
       title: "Pesquisar guias, favoritos e histórico",
       navTitle: "Guias, favoritos e histórico",
@@ -151,7 +151,7 @@ const content: GuideLocaleContent = {
     "site-search": {
       pageTitle: "Pesquisa em sites: digite um atalho, pressione Tab e pesquise no GitHub, YouTube ou ChatGPT | Ajuda do Lumno",
       pageDescription:
-        "O Lumno inclui 47 atalhos de pesquisa. Digite gh, yt ou sf e pressione Tab para pesquisar diretamente no GitHub, no YouTube ou no Stack Overflow, ou envie uma pergunta diretamente ao ChatGPT, ao Gemini ou ao Perplexity.",
+        "O Lumno inclui 47 atalhos de pesquisa. Digite gh, yt ou sf e aperte Tab para pesquisar no GitHub, YouTube ou Stack Overflow, ou pergunte ao ChatGPT ou Gemini.",
       keywords: ["pesquisa em sites no Chrome", "Tab para pesquisar", "atalhos de pesquisa no navegador", "pesquisar no GitHub rápido", "atalho para o ChatGPT", "mecanismo de pesquisa personalizado"],
       title: "Pesquisa em sites e perguntas à IA",
       navTitle: "Pesquisa em sites e IA",
@@ -167,7 +167,7 @@ const content: GuideLocaleContent = {
     "tab-switcher": {
       pageTitle: "Alternador de guias recentes: pressione ⌥Q para alternar entre guias recentes | Ajuda do Lumno",
       pageDescription:
-        "Pressione ⌥Q (Alt+Q no Windows) para abrir o alternador de guias recentes do Lumno, com suas guias na ordem em que foram usadas e uma prévia de cada uma. Mantenha ⌥ pressionada, pressione Q várias vezes e solte ⌥ para alternar. Também é possível fechar guias diretamente no alternador.",
+        "Pressione ⌥Q (Alt+Q no Windows) para abrir o alternador de guias recentes do Lumno, com prévias. Mantenha ⌥, pressione Q várias vezes e solte para alternar.",
       keywords: ["alternador de guias do Chrome", "guias recentes", "Alt Tab para o navegador", "Arc Ctrl Tab"],
       title: "Alternar entre guias recentes",
       navTitle: "Guias recentes",
@@ -175,7 +175,7 @@ const content: GuideLocaleContent = {
     "newtab-wallpaper": {
       pageTitle: "Papéis de parede da nova guia: pinturas clássicas, foto do dia do Bing, suas fotos e filtros | Ajuda do Lumno",
       pageDescription:
-        "Mude o papel de parede da nova guia do Lumno nas configurações de Appearance: pinturas incluídas, a foto do dia do Bing, fotos selecionadas, suas próprias imagens ou um link de imagem, com véu, filtros, escolhas separadas para os modos claro e escuro e um acabamento de vidro (Acrylic ou Liquid glass).",
+        "Mude o papel de parede da nova guia do Lumno: pinturas, a foto do dia do Bing, fotos selecionadas ou suas imagens, com véu, filtros e acabamento de vidro.",
       keywords: ["papel de parede da nova guia", "fundo da nova guia do Chrome", "papel de parede diário do Bing", "extensão nova guia"],
       title: "Mudar o papel de parede",
       navTitle: "Mudar o papel de parede",
@@ -183,7 +183,7 @@ const content: GuideLocaleContent = {
     "newtab-bookmarks-shortcuts": {
       pageTitle: "Atalhos e favoritos na nova guia: adicione e agrupe sites, três layouts | Ajuda do Lumno",
       pageDescription:
-        "Adicione seus sites de sempre como atalhos na nova guia do Lumno, escolha os ícones, separe-os em grupos ou pastas e veja seus favoritos como pastas, lista aninhada ou barra no topo, com quantas fileiras quiser ou sem exibi-los.",
+        "Adicione sites como atalhos na nova guia do Lumno, escolha os ícones, separe-os em grupos ou pastas e veja seus favoritos como pastas, lista ou barra no topo.",
       keywords: ["atalhos da nova guia", "grupos de atalhos", "favoritos na nova guia", "barra de favoritos do Chrome", "pastas de favoritos", "ocultar favoritos na nova guia"],
       title: "Atalhos e favoritos",
       navTitle: "Atalhos e favoritos",
@@ -191,14 +191,14 @@ const content: GuideLocaleContent = {
     "newtab-frequent-sites": {
       pageTitle: "Sites frequentes e cartões de progresso: fixe sites e não perca o episódio | Ajuda do Lumno",
       pageDescription:
-        "A nova guia do Lumno mostra seus sites mais visitados ou recentes. Fixe até três; fixe uma série ou um romance em capítulos e o cartão acompanha você até o próximo episódio ou capítulo. Mostre uma ou duas fileiras de cartões, ou desative-os.",
+        "A nova guia do Lumno mostra seus sites mais visitados ou recentes. Fixe até três; com uma série ou romance, o cartão segue para o próximo episódio ou capítulo.",
       keywords: ["sites mais visitados na nova guia", "acompanhar séries", "progresso de web novel", "fixar sites", "ocultar cartões na nova guia"],
       title: "Sites frequentes e cartões de progresso",
       navTitle: "Sites frequentes e progresso",
     },
     "newtab-clock-zen": {
       pageTitle: "Relógio, citação diária e modo Zen: uma nova guia só com a caixa de pesquisa | Ajuda do Lumno",
-      pageDescription: "Mostre um relógio e uma citação diária do seu próprio arquivo TXT ou Markdown na nova guia do Lumno, digite /zen para esconder tudo menos a caixa de pesquisa ou /present para tirar favoritos e histórico de vista ao compartilhar a tela.",
+      pageDescription: "Relógio e citações do seu arquivo na nova guia do Lumno. Digite /zen para deixar só a pesquisa ou /present para ocultar favoritos ao compartilhar a tela.",
       keywords: ["relógio na nova guia", "citação diária na nova guia", "nova guia minimalista", "modo Zen", "nova guia para foco", "modo apresentação"],
       title: "Relógio, citações e modo Zen",
       navTitle: "Relógio, citações e Zen",
@@ -206,7 +206,7 @@ const content: GuideLocaleContent = {
     "newtab-other-extensions": {
       pageTitle: "Usar outra extensão de nova guia com a barra de comandos do Lumno | Ajuda do Lumno",
       pageDescription:
-        "Mantenha o Momentum, o Tabliss ou outra extensão de nova guia e use apenas a barra de comandos do Lumno: ative a outra extensão depois do Lumno para que ela controle a nova guia. Quando o navegador perguntar, mantenha a alteração; desfazê-la desativa a extensão inteira.",
+        "Mantenha o Momentum, o Tabliss ou outra extensão de nova guia e use só a barra de comandos do Lumno: ative a outra depois do Lumno e mantenha a alteração.",
       keywords: ["conflito extensão nova guia", "nova guia do Chrome alterada por extensão", "apenas barra de comandos do Lumno", "Momentum", "Tabliss"],
       title: "Usar outra extensão de nova guia",
       navTitle: "Outra extensão de nova guia",
@@ -214,7 +214,7 @@ const content: GuideLocaleContent = {
     "selection-actions": {
       pageTitle: "Ações rápidas na seleção: peça à IA para explicar, traduzir ou resumir um texto | Ajuda do Lumno",
       pageDescription:
-        "Selecione um texto em uma página e o Lumno sugere ações de IA como Answer, Translate, Explain, Summarize, Research ou Calculate. O Lumno verifica primeiro no seu dispositivo se o texto precisa de ajuda, por isso não aparece a cada seleção.",
+        "Selecione um texto e o Lumno sugere ações de IA como Translate ou Summarize. Ele verifica primeiro no seu dispositivo, por isso não aparece a cada seleção.",
       keywords: ["selecionar texto IA", "traduzir seleção", "explicar texto selecionado", "extensão Chrome seleção IA", "resumir seleção"],
       title: "Ações rápidas na seleção",
       navTitle: "Ações rápidas na seleção",
@@ -222,7 +222,7 @@ const content: GuideLocaleContent = {
     "auto-pip": {
       pageTitle: "Picture-in-picture automático: vídeos continuam em uma janela pequena ao trocar de guia | Ajuda do Lumno",
       pageDescription:
-        "Se você trocar de guia enquanto um vídeo é reproduzido, ele passa automaticamente para picture-in-picture e volta para a página quando você retorna. Quando é ativado, onde não é e como desativar.",
+        "Ao trocar de guia durante um vídeo, ele passa para picture-in-picture e volta para a página quando você retorna. Quando é ativado, onde não é e como desativar.",
       keywords: ["picture-in-picture automático", "extensão Chrome picture-in-picture", "vídeo janela flutuante", "Arc PiP automático", "trocar de guia vídeo"],
       title: "Picture-in-picture automático",
       navTitle: "Picture-in-picture automático",
@@ -230,7 +230,7 @@ const content: GuideLocaleContent = {
     "link-preview": {
       pageTitle: "Prévia de links: abra um link em uma janela pequena com Shift+clique | Ajuda do Lumno",
       pageDescription:
-        "Clique em um link segurando Shift para abri-lo em uma janela pequena sobre a página. Feche a janela para voltar ao ponto em que estava ou mova o link para uma nova guia ou uma tela dividida. Veja como usar, o que fazem os botões, quais páginas não podem ser exibidas e como desativar.",
+        "Clique em um link segurando Shift para abri-lo em uma janela pequena sobre a página. Feche a janela ou mova o link para uma nova guia ou uma tela dividida.",
       keywords: ["prévia de links", "ver link sem abrir guia", "Shift clique link", "extensão Chrome prévia de link", "alternativa ao Arc Peek"],
       title: "Prévia de links",
       navTitle: "Prévia de links",
@@ -238,7 +238,7 @@ const content: GuideLocaleContent = {
     "web-clip": {
       pageTitle: "Recorte da web: mantenha parte de uma página em uma janela flutuante | Ajuda do Lumno",
       pageDescription:
-        "O recorte da web coloca uma tabela, um bloco de código ou um gráfico em uma janela flutuante que continua visível quando você troca de guia. Veja como ativar, escolher o conteúdo e usar a janela, e quais são as limitações.",
+        "O recorte da web coloca uma tabela, código ou gráfico em uma janela flutuante que fica visível ao trocar de guia. Como ativar, usar a janela e as limitações.",
       keywords: ["recorte da web", "Document Picture-in-Picture", "janela flutuante extensão Chrome", "fixar parte de uma página", "picture-in-picture elemento"],
       title: "Recorte da web",
       navTitle: "Recorte da web",
@@ -246,7 +246,7 @@ const content: GuideLocaleContent = {
     "arc-command-bar": {
       pageTitle: "O Arc vai acabar: como mudar para o Dia, Chrome ou Edge | Ajuda do Lumno",
       pageDescription:
-        "O Arc será encerrado em 22 de dezembro de 2026. Veja o cronograma, como exportar seus dados antes de ir para o Dia ou outro navegador e como o Lumno mantém uma barra de comandos no estilo do Arc no Chrome, no Dia e no Edge. Com uma tabela dos atalhos do Arc.",
+        "O Arc será encerrado em 22 de dezembro de 2026. Cronograma, como exportar seus dados e como o Lumno mantém uma barra no estilo do Arc no Chrome, Dia e Edge.",
       keywords: ["encerramento do Arc", "fim do navegador Arc", "alternativa ao navegador Arc", "exportar dados do Arc", "mudar do Arc para o Chrome", "alternativa à barra de comandos do Arc", "atalhos do Arc"],
       title: "Vindo do Arc",
       navTitle: "Vindo do Arc",
@@ -268,7 +268,7 @@ const content: GuideLocaleContent = {
     "browser-compatibility": {
       pageTitle: "Compatibilidade com navegadores: Chrome, Edge, Dia, Brave, Firefox e Safari | Ajuda do Lumno",
       pageDescription:
-        "O Lumno funciona por completo no Chrome, Edge, Brave, Arc, Vivaldi e outros navegadores Chromium. O Dia não tem a nova guia do Lumno, a versão para Firefox está nos Complementos do Firefox, mas tem algumas lacunas, e o Safari e os navegadores de celular não são compatíveis.",
+        "O Lumno funciona por completo no Chrome, Edge, Brave, Arc, Vivaldi e outros Chromium. Sem nova guia no Dia, com lacunas no Firefox e sem Safari nem celular.",
       keywords: ["compatibilidade do Lumno", "extensão para o Dia", "extensão para o Edge", "versão para Firefox", "extensão Chromium"],
       title: "Compatibilidade com navegadores",
       navTitle: "Compatibilidade com navegadores",

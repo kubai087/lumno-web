@@ -94,7 +94,7 @@ export const PRIVACY_CONTENT: Record<SupportedLocale, PrivacyPageContent> = {
   en: {
     pageTitle: "Lumno Privacy Policy | Local Data, Browser Sync & WebDAV",
     pageDescription:
-      "Lumno has no accounts or servers. Your tabs, bookmarks and history stay on your device, and no usage data is collected. The policy covers what leaves your device, browser and WebDAV sync, and your rights.",
+      "Lumno has no accounts or servers. Tabs, bookmarks and history stay on your device, and no usage data is collected. What leaves your device, and your rights.",
     pageKeywords: ["Lumno privacy policy", "Chrome extension privacy policy", "browser extension privacy notice", "Lumno privacy", "browser extension privacy", "Chrome extension data"],
     breadcrumbLabel: "Privacy Policy",
     title: "Lumno Privacy Policy",
@@ -145,7 +145,7 @@ export const PRIVACY_CONTENT: Record<SupportedLocale, PrivacyPageContent> = {
   de: {
     pageTitle: "Lumno Datenschutzerklärung | Lokale Daten, Browser-Sync & WebDAV",
     pageDescription:
-      "Lumno hat weder Konten noch Server. Tabs, Lesezeichen und Verlauf bleiben auf deinem Gerät, Nutzungsdaten werden nicht erhoben. Die Erklärung beschreibt, was dein Gerät verlässt, wie Browser- und WebDAV-Sync funktionieren und welche Rechte du hast.",
+      "Keine Konten, keine Server: Tabs, Lesezeichen und Verlauf bleiben auf deinem Gerät, Nutzungsdaten werden nicht erhoben. Was es verlässt und deine Rechte.",
     pageKeywords: ["Lumno Datenschutzerklärung", "Datenschutz Chrome-Erweiterung", "Datenschutzhinweise Browsererweiterung", "Lumno Datenschutz", "Chrome-Erweiterung Daten"],
     breadcrumbLabel: "Datenschutz",
     title: "Lumno Datenschutzerklärung",
@@ -162,7 +162,7 @@ export const PRIVACY_CONTENT: Record<SupportedLocale, PrivacyPageContent> = {
   fr: {
     pageTitle: "Politique de confidentialité de Lumno | Données locales, synchro du navigateur et WebDAV",
     pageDescription:
-      "Lumno n'a ni comptes ni serveurs. Vos onglets, favoris et historique restent sur votre appareil, et aucune donnée d'usage n'est collectée. La politique détaille ce qui quitte votre appareil, les synchros navigateur et WebDAV, et vos droits.",
+      "Ni comptes ni serveurs : onglets, favoris et historique restent sur votre appareil, aucune donnée d'usage n'est collectée. Ce qui le quitte, et vos droits.",
     pageKeywords: ["politique de confidentialité Lumno", "confidentialité extension Chrome", "données personnelles extension navigateur", "confidentialité Lumno", "données extension Chrome"],
     breadcrumbLabel: "Confidentialité",
     title: "Politique de confidentialité de Lumno",
@@ -179,7 +179,7 @@ export const PRIVACY_CONTENT: Record<SupportedLocale, PrivacyPageContent> = {
   es: {
     pageTitle: "Política de privacidad de Lumno | Datos locales, sincronización y WebDAV",
     pageDescription:
-      "Lumno no tiene cuentas ni servidores. Tus pestañas, marcadores e historial se quedan en tu dispositivo, y no se recopilan datos de uso. La política explica qué sale de tu dispositivo, cómo funcionan la sincronización del navegador y WebDAV, y tus derechos.",
+      "Sin cuentas ni servidores: pestañas, marcadores e historial se quedan en tu dispositivo y no se recopilan datos de uso. Qué sale de él y tus derechos.",
     pageKeywords: ["política de privacidad Lumno", "privacidad extensión Chrome", "privacidad extensión de navegador", "privacidad Lumno", "datos extensión Chrome"],
     breadcrumbLabel: "Privacidad",
     title: "Política de privacidad de Lumno",
@@ -196,7 +196,7 @@ export const PRIVACY_CONTENT: Record<SupportedLocale, PrivacyPageContent> = {
   "pt-BR": {
     pageTitle: "Política de Privacidade do Lumno | Dados locais, sincronização e WebDAV",
     pageDescription:
-      "O Lumno não tem contas nem servidores. Suas guias, favoritos e histórico ficam no seu dispositivo, e nenhum dado de uso é coletado. A política explica o que sai do seu dispositivo, como funcionam a sincronização do navegador e o WebDAV, e seus direitos.",
+      "Sem contas nem servidores: guias, favoritos e histórico ficam no seu dispositivo, e nenhum dado de uso é coletado. O que sai dele e quais são seus direitos.",
     pageKeywords: ["política de privacidade Lumno", "privacidade extensão Chrome", "privacidade extensão de navegador", "privacidade do Lumno", "dados de extensão do Chrome"],
     breadcrumbLabel: "Privacidade",
     title: "Política de Privacidade do Lumno",
@@ -213,7 +213,7 @@ export const PRIVACY_CONTENT: Record<SupportedLocale, PrivacyPageContent> = {
   ru: {
     pageTitle: "Политика конфиденциальности Lumno — локальные данные, синхронизация и WebDAV",
     pageDescription:
-      "У Lumno нет ни аккаунтов, ни серверов. Вкладки, закладки и история остаются на устройстве, данные об использовании не собираются. Политика описывает, что покидает устройство, как работает синхронизация через браузер и WebDAV, и ваши права.",
+      "Нет аккаунтов и серверов: вкладки, закладки и история остаются на устройстве, данные об использовании не собираются. Что покидает устройство и ваши права.",
     pageKeywords: ["политика конфиденциальности Lumno", "конфиденциальность расширения Chrome", "персональные данные расширение браузера", "конфиденциальность Lumno", "данные расширения Chrome"],
     breadcrumbLabel: "Конфиденциальность",
     title: "Политика конфиденциальности Lumno",

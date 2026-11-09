@@ -45,7 +45,7 @@ const content: GuideLocaleContent = {
     "what-is-lumno": {
       pageTitle: "Qu'est-ce que Lumno ? Barre de commande et nouvel onglet open source | Aide Lumno",
       pageDescription:
-        "Lumno est une extension de navigateur gratuite et open source. Appuyez sur ⌘⇧K sur n'importe quelle page pour chercher dans vos onglets, favoris et historique, chercher directement sur un site ou interroger une IA, et profitez d'un nouvel onglet calme et personnalisable. Fonctionne dans Chrome, Edge, Dia et les autres navigateurs Chromium, ainsi que dans Firefox.",
+        "Lumno, extension gratuite et open source : ⌘⇧K pour chercher dans vos onglets, favoris et historique ou interroger une IA, et un nouvel onglet personnalisable.",
       keywords: ["Lumno", "barre de commande navigateur", "extension palette de commandes Chrome", "recherche d'onglets", "extension nouvel onglet", "barre de commande Arc"],
       title: "Qu'est-ce que Lumno ?",
       navTitle: "Qu'est-ce que Lumno ?",
@@ -60,7 +60,7 @@ const content: GuideLocaleContent = {
     limitations: {
       pageTitle: "Ce que Lumno ne fait pas : limites et manques connus | Aide Lumno",
       pageDescription:
-        "Lumno est une extension, pas un navigateur : pas de barre de commande sur les pages chrome://, pas de Safari et pas de nouvel onglet dans Dia. Voici ce qu'il ne fait pas encore, et quoi utiliser à la place.",
+        "Lumno est une extension : pas de barre sur les pages chrome://, pas de Safari, pas de nouvel onglet dans Dia. Ce qu'il ne fait pas encore, et les alternatives.",
       keywords: ["limites de Lumno", "extension Chrome pages restreintes", "alternative barre latérale Arc", "nouvel onglet Dia"],
       title: "Ce que Lumno ne fait pas",
       navTitle: "Ce que Lumno ne fait pas",
@@ -68,7 +68,7 @@ const content: GuideLocaleContent = {
     "use-cases": {
       pageTitle: "Pour qui est Lumno : trop d'onglets, départ d'Arc, développement et écriture | Aide Lumno",
       pageDescription:
-        "Les usages courants de Lumno, étape par étape : des dizaines d'onglets ouverts, le passage d'Arc à Chrome ou Dia, la documentation et GitHub, la recherche et la rédaction, les questions à l'IA et un nouvel onglet épuré.",
+        "Usages courants de Lumno : des dizaines d'onglets, le passage depuis Arc, documentation et GitHub, recherche, questions à l'IA et nouvel onglet épuré.",
       keywords: ["cas d'usage Lumno", "trop d'onglets", "alternative à Arc", "extension navigateur développeur", "raccourci pour interroger l'IA"],
       title: "Cas d'usage",
       navTitle: "Cas d'usage",
@@ -76,7 +76,7 @@ const content: GuideLocaleContent = {
     faq: {
       pageTitle: "Questions fréquentes sur Lumno : raccourcis, pages restreintes, nouvel onglet et synchronisation | Aide Lumno",
       pageDescription:
-        "Réponses aux questions fréquentes sur Lumno : le raccourci par défaut et sa modification, que faire s'il ne fonctionne pas, l'utilisation avec une autre extension de nouvel onglet, les navigateurs pris en charge, la synchronisation des réglages et le traitement des données de navigation.",
+        "Questions fréquentes sur Lumno : changer le raccourci, s'il ne fonctionne pas, autres extensions de nouvel onglet, navigateurs, synchronisation et données.",
       keywords: ["Lumno FAQ", "questions fréquentes Lumno", "raccourci extension Chrome ne fonctionne pas", "conflit extension nouvel onglet", "Lumno gratuit"],
       title: "Questions fréquentes",
       navTitle: "Questions fréquentes",
@@ -84,7 +84,7 @@ const content: GuideLocaleContent = {
     install: {
       pageTitle: "Installer Lumno depuis le Chrome Web Store, les modules Edge ou les modules Firefox | Aide Lumno",
       pageDescription:
-        "Installez Lumno depuis le Chrome Web Store dans Chrome, Dia, Brave ou Arc, depuis les modules complémentaires Microsoft Edge dans Edge, ou depuis les modules complémentaires Firefox dans Firefox et Zen. Une page d'accueil s'ouvre et ⌘⇧K est prêt à l'emploi.",
+        "Installez Lumno depuis le Chrome Web Store dans Chrome, Dia, Brave ou Arc, depuis les modules Edge dans Edge, ou les modules Firefox dans Firefox et Zen.",
       keywords: ["installer Lumno", "Lumno Chrome Web Store", "Lumno modules Edge", "Lumno modules complémentaires Firefox", "installer une extension Chrome"],
       title: "Installer Lumno",
       navTitle: "Installer Lumno",
@@ -99,7 +99,7 @@ const content: GuideLocaleContent = {
     "keyboard-shortcuts": {
       pageTitle: "Raccourcis clavier de Lumno : par défaut, les modifier et toutes les touches | Aide Lumno",
       pageDescription:
-        "Lumno s'ouvre avec ⌘⇧K (Ctrl+Maj+K sous Windows) et son sélecteur d'onglets récents avec ⌥Q (Alt+Q). Modifiez-les dans chrome://extensions/shortcuts, même en ⌘T. Avec toutes les touches de la barre de commande, du nouvel onglet, du sélecteur et de la capture web, et les clics équivalents, comme l'ouverture en arrière-plan.",
+        "Lumno s'ouvre avec ⌘⇧K (Ctrl+Maj+K sous Windows), le sélecteur d'onglets avec ⌥Q (Alt+Q). Comment les modifier, et toutes les touches de l'extension.",
       keywords: ["raccourcis Lumno", "modifier raccourci extension Chrome", "chrome://extensions/shortcuts", "Cmd T barre de commande", "ouvrir en arrière-plan"],
       title: "Raccourcis clavier",
       navTitle: "Raccourcis clavier",
@@ -114,7 +114,7 @@ const content: GuideLocaleContent = {
     sync: {
       pageTitle: "Synchroniser Lumno entre ordinateurs : synchro du navigateur et WebDAV | Aide Lumno",
       pageDescription:
-        "Les réglages de Lumno suivent la synchronisation de votre navigateur. Activez la synchro WebDAV pour emporter aussi vos icônes de raccourcis, fonds d'écran et citations, via Nextcloud, un NAS ou tout serveur WebDAV que vous gérez.",
+        "Les réglages de Lumno suivent la synchro du navigateur. Avec WebDAV, emportez aussi icônes, fonds d'écran et citations, via Nextcloud ou un NAS.",
       keywords: ["synchronisation Lumno", "synchro WebDAV", "Nextcloud WebDAV", "synchroniser les réglages d'une extension Chrome", "synchroniser le nouvel onglet"],
       title: "Synchronisation",
       navTitle: "Synchronisation",
@@ -132,7 +132,7 @@ const content: GuideLocaleContent = {
     "search-tabs-bookmarks-history": {
       pageTitle: "Chercher dans les onglets ouverts, les favoris et l'historique depuis un seul champ | Aide Lumno",
       pageDescription:
-        "Appuyez sur ⌘⇧K (Ctrl+Maj+K sous Windows) sur n'importe quelle page pour chercher dans vos onglets ouverts, favoris, historique et sites les plus visités, ou seulement dans vos onglets ouverts.",
+        "Appuyez sur ⌘⇧K (Ctrl+Maj+K sous Windows) sur n'importe quelle page pour chercher dans vos onglets ouverts, favoris, historique et sites les plus visités.",
       keywords: ["recherche d'onglets Chrome", "extension recherche favoris", "recherche dans l'historique", "chercher un onglet ouvert", "palette de commandes Chrome"],
       title: "Chercher dans les onglets, les favoris et l'historique",
       navTitle: "Onglets, favoris et historique",
@@ -151,7 +151,7 @@ const content: GuideLocaleContent = {
     "site-search": {
       pageTitle: "Recherche sur site : tapez un raccourci, appuyez sur Tab, cherchez sur GitHub, YouTube ou ChatGPT | Aide Lumno",
       pageDescription:
-        "Lumno intègre 47 raccourcis de recherche. Saisissez gh, yt ou sf, puis appuyez sur Tab pour rechercher directement sur GitHub, YouTube ou Stack Overflow, ou envoyez une question directement à ChatGPT, Gemini ou Perplexity.",
+        "Lumno intègre 47 raccourcis de recherche. Saisissez gh, yt ou sf puis Tab pour chercher sur GitHub, YouTube ou Stack Overflow, ou interrogez ChatGPT ou Gemini.",
       keywords: ["recherche sur site Chrome", "Tab pour rechercher", "raccourcis de recherche navigateur", "chercher vite sur GitHub", "raccourci ChatGPT", "moteur de recherche personnalisé"],
       title: "Recherche sur site et questions à l'IA",
       navTitle: "Recherche sur site et IA",
@@ -167,7 +167,7 @@ const content: GuideLocaleContent = {
     "tab-switcher": {
       pageTitle: "Sélecteur d'onglets récents : ⌥Q pour passer d'un onglet récent à l'autre | Aide Lumno",
       pageDescription:
-        "Appuyez sur ⌥Q (Alt+Q sous Windows) pour ouvrir le sélecteur d'onglets récents de Lumno : vos onglets s'affichent dans l'ordre de leur utilisation, chacun avec un aperçu. Maintenez ⌥ enfoncée, appuyez plusieurs fois sur Q, puis relâchez ⌥ pour basculer. Vous pouvez aussi fermer des onglets directement depuis le sélecteur.",
+        "Appuyez sur ⌥Q (Alt+Q sous Windows) pour ouvrir le sélecteur d'onglets récents de Lumno, avec aperçus. Maintenez ⌥, appuyez sur Q, puis relâchez pour basculer.",
       keywords: ["sélecteur d'onglets Chrome", "onglets récents", "Alt Tab pour navigateur", "Arc Ctrl Tab"],
       title: "Passer d'un onglet récent à l'autre",
       navTitle: "Onglets récents",
@@ -175,7 +175,7 @@ const content: GuideLocaleContent = {
     "newtab-wallpaper": {
       pageTitle: "Fonds d'écran du nouvel onglet : tableaux, photo du jour Bing, vos photos et filtres | Aide Lumno",
       pageDescription:
-        "Changez le fond d'écran du nouvel onglet Lumno dans les réglages Appearance : tableaux intégrés, photo du jour de Bing, photos sélectionnées, vos propres images ou un lien d'image, avec voile, filtres, choix séparés pour les modes clair et sombre et un aspect de verre (Acrylic ou Liquid glass).",
+        "Changez le fond du nouvel onglet Lumno : tableaux intégrés, photo du jour de Bing, photos sélectionnées ou vos images, avec voile, filtres et aspect de verre.",
       keywords: ["fond d'écran nouvel onglet", "arrière-plan nouvel onglet Chrome", "fond d'écran Bing du jour", "extension nouvel onglet"],
       title: "Changer le fond d'écran",
       navTitle: "Changer le fond d'écran",
@@ -183,7 +183,7 @@ const content: GuideLocaleContent = {
     "newtab-bookmarks-shortcuts": {
       pageTitle: "Raccourcis et favoris du nouvel onglet : ajouter et grouper des sites, trois dispositions | Aide Lumno",
       pageDescription:
-        "Ajoutez vos sites favoris en raccourcis sur le nouvel onglet Lumno, choisissez leurs icônes, répartissez-les en groupes ou en dossiers et parcourez vos favoris en dossiers, en liste imbriquée ou en barre en haut, sur autant de rangées que vous voulez, ou pas du tout.",
+        "Ajoutez vos sites en raccourcis sur le nouvel onglet Lumno, choisissez les icônes, rangez-les en groupes ou dossiers et affichez vos favoris en liste ou barre.",
       keywords: ["raccourcis nouvel onglet", "groupes de raccourcis", "favoris nouvel onglet", "barre de favoris Chrome", "dossiers de favoris", "masquer les favoris du nouvel onglet"],
       title: "Raccourcis et favoris",
       navTitle: "Raccourcis et favoris",
@@ -191,14 +191,14 @@ const content: GuideLocaleContent = {
     "newtab-frequent-sites": {
       pageTitle: "Sites fréquents et cartes de progression : épingler des sites, reprendre une série | Aide Lumno",
       pageDescription:
-        "Le nouvel onglet Lumno affiche vos sites les plus visités ou récents. Épinglez-en jusqu'à trois ; épinglez une série ou un roman-feuilleton et la carte vous suit jusqu'à l'épisode ou au chapitre suivant. Affichez une ou deux rangées de cartes, ou masquez-les.",
+        "Le nouvel onglet Lumno affiche vos sites fréquents ou récents. Épinglez-en jusqu'à trois ; pour une série ou un feuilleton, la carte passe à l'épisode suivant.",
       keywords: ["sites les plus visités nouvel onglet", "suivre une série", "progression web novel", "épingler des sites", "masquer les cartes du nouvel onglet"],
       title: "Sites fréquents et cartes de progression",
       navTitle: "Sites fréquents et progression",
     },
     "newtab-clock-zen": {
       pageTitle: "Horloge, citation du jour et mode Zen : un nouvel onglet réduit au champ de recherche | Aide Lumno",
-      pageDescription: "Affichez une horloge et une citation du jour tirée de votre propre fichier TXT ou Markdown dans le nouvel onglet de Lumno, saisissez /zen pour ne garder que le champ de recherche, ou /present pour cacher vos favoris et votre historique lors d'un partage d'écran.",
+      pageDescription: "Une horloge et des citations de votre fichier dans le nouvel onglet Lumno. Saisissez /zen pour ne garder que la recherche, ou /present pour cacher vos favoris.",
       keywords: ["horloge nouvel onglet", "citation du jour nouvel onglet", "nouvel onglet minimaliste", "mode Zen", "nouvel onglet concentration", "mode présentation"],
       title: "Horloge, citations et mode Zen",
       navTitle: "Horloge, citations et Zen",
@@ -206,7 +206,7 @@ const content: GuideLocaleContent = {
     "newtab-other-extensions": {
       pageTitle: "Utiliser une autre extension de nouvel onglet avec la barre de commande de Lumno | Aide Lumno",
       pageDescription:
-        "Conservez Momentum, Tabliss ou une autre extension de nouvel onglet et utilisez uniquement la barre de commande de Lumno : activez l'autre extension après Lumno pour qu'elle prenne en charge le nouvel onglet. Lorsque le navigateur le demande, conservez la modification ; l'annuler désactive l'extension entière.",
+        "Gardez Momentum, Tabliss ou une autre extension de nouvel onglet et la seule barre de commande de Lumno : activez l'autre après Lumno et conservez le choix.",
       keywords: ["conflit extension nouvel onglet", "nouvel onglet Chrome modifié par une extension", "barre de commande Lumno seule", "Momentum", "Tabliss"],
       title: "Utiliser une autre extension de nouvel onglet",
       navTitle: "Autre extension de nouvel onglet",
@@ -214,7 +214,7 @@ const content: GuideLocaleContent = {
     "selection-actions": {
       pageTitle: "Actions rapides sur la sélection : faire expliquer, traduire ou résumer un texte par l'IA | Aide Lumno",
       pageDescription:
-        "Sélectionnez du texte sur une page, et Lumno propose des actions d'IA comme Answer, Translate, Explain, Summarize, Research ou Calculate. Lumno vérifie d'abord sur votre appareil si le texte a besoin d'aide : le bouton n'apparaît donc pas à chaque sélection.",
+        "Sélectionnez du texte : Lumno propose des actions d'IA (Translate, Explain, Summarize). Il vérifie d'abord sur l'appareil, le bouton n'apparaît pas toujours.",
       keywords: ["sélection de texte IA", "traduire la sélection", "expliquer un texte sélectionné", "extension Chrome sélection IA", "résumer la sélection"],
       title: "Actions rapides sur la sélection",
       navTitle: "Actions rapides sur la sélection",
@@ -222,7 +222,7 @@ const content: GuideLocaleContent = {
     "auto-pip": {
       pageTitle: "Image dans l'image automatique : les vidéos continuent dans une petite fenêtre quand vous changez d'onglet | Aide Lumno",
       pageDescription:
-        "Lorsque vous changez d'onglet pendant une vidéo, elle passe automatiquement en image dans l'image, puis revient sur la page à votre retour. Quand la fonction démarre, où elle ne démarre pas et comment la désactiver.",
+        "Changez d'onglet pendant une vidéo : elle passe en image dans l'image, puis revient à votre retour. Déclenchement, exceptions et désactivation.",
       keywords: ["image dans l'image automatique", "extension Chrome image dans l'image", "vidéo fenêtre flottante", "Arc image dans l'image", "changer d'onglet vidéo"],
       title: "Image dans l'image automatique",
       navTitle: "Image dans l'image automatique",
@@ -230,7 +230,7 @@ const content: GuideLocaleContent = {
     "link-preview": {
       pageTitle: "Aperçu des liens : ouvrir un lien dans une petite fenêtre avec Maj+clic | Aide Lumno",
       pageDescription:
-        "Cliquez sur un lien en maintenant Maj pour l'ouvrir dans une petite fenêtre au-dessus de la page. Fermez-la pour revenir où vous en étiez, ou déplacez-la dans un nouvel onglet ou en écran partagé. Découvrez comment l'utiliser, à quoi servent ses boutons, quelles pages ne peuvent pas s'afficher et comment la désactiver.",
+        "Maj+clic sur un lien l'ouvre dans une petite fenêtre au-dessus de la page. Fermez-la, ou déplacez-la dans un nouvel onglet ou en écran partagé.",
       keywords: ["aperçu des liens", "voir un lien sans ouvrir d'onglet", "Maj clic lien", "extension Chrome aperçu de lien", "alternative à Arc Peek"],
       title: "Aperçu des liens",
       navTitle: "Aperçu des liens",
@@ -238,7 +238,7 @@ const content: GuideLocaleContent = {
     "web-clip": {
       pageTitle: "Capture web : garder une partie de page dans une fenêtre flottante | Aide Lumno",
       pageDescription:
-        "La capture web place un tableau, un bloc de code ou un graphique dans une fenêtre flottante qui reste visible quand vous changez d'onglet. Découvrez comment l'activer, choisir le contenu, utiliser la fenêtre, et quelles sont ses limites.",
+        "La capture web place un tableau, du code ou un graphique dans une fenêtre flottante visible quand vous changez d'onglet. Activation, utilisation et limites.",
       keywords: ["capture web", "Document Picture-in-Picture", "fenêtre flottante extension Chrome", "épingler une partie de page", "image dans l'image élément"],
       title: "Capture web",
       navTitle: "Capture web",
@@ -246,7 +246,7 @@ const content: GuideLocaleContent = {
     "arc-command-bar": {
       pageTitle: "Arc s'arrête : comment passer à Dia, Chrome ou Edge | Aide Lumno",
       pageDescription:
-        "Arc s'arrête le 22 décembre 2026. Retrouvez le calendrier, comment exporter vos données avant de passer à Dia ou à un autre navigateur, et comment Lumno garde une barre de commande à la Arc dans Chrome, Dia et Edge. Avec un tableau des raccourcis d'Arc.",
+        "Arc s'arrête le 22 décembre 2026. Calendrier, export de vos données et comment Lumno garde une barre de commande à la Arc dans Chrome, Dia et Edge.",
       keywords: ["arrêt d'Arc", "fin du navigateur Arc", "alternative au navigateur Arc", "exporter les données d'Arc", "passer d'Arc à Chrome", "alternative barre de commande Arc", "raccourcis Arc"],
       title: "Venir d'Arc",
       navTitle: "Venir d'Arc",
@@ -268,7 +268,7 @@ const content: GuideLocaleContent = {
     "browser-compatibility": {
       pageTitle: "Compatibilité des navigateurs : Chrome, Edge, Dia, Brave, Firefox et Safari | Aide Lumno",
       pageDescription:
-        "Lumno fonctionne entièrement dans Chrome, Edge, Brave, Arc, Vivaldi et les autres navigateurs Chromium. Dia n'a pas le nouvel onglet Lumno, la version Firefox, disponible sur les modules complémentaires Firefox, a quelques manques, et Safari comme les navigateurs mobiles ne sont pas pris en charge.",
+        "Lumno fonctionne entièrement dans Chrome, Edge, Brave, Arc, Vivaldi et autres Chromium. Pas de nouvel onglet dans Dia, des manques dans Firefox, pas de Safari.",
       keywords: ["compatibilité Lumno", "extension Dia", "extension Edge", "version Firefox", "extension Chromium"],
       title: "Compatibilité des navigateurs",
       navTitle: "Compatibilité des navigateurs",

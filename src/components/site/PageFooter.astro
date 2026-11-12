@@ -11,7 +11,11 @@ import {
   EDGE_STORE_URL,
   FIREFOX_STORE_URL,
   GITHUB_ISSUE_URL,
+  AUTHOR_SITE_EN_URL,
+  AUTHOR_SITE_URL,
+  FRIEND_LINKS,
   GITHUB_URL,
+  KUBAI_ICONS_URL,
   LICENSE_URL,
   WEBSITE_GITHUB_URL,
   getSiteStoreVersions,
@@ -108,6 +112,21 @@ const { firefox: firefoxStoreVersion } = await getSiteStoreVersions();
         { label: content.footerPrivacy, href: buildLocalizedPath(locale, "/privacy/") },
       ],
     },
+  ]}
+  related={[
+    {
+      title: content.footerMoreProjects,
+      links: [
+        { label: "Kubai Icons", href: KUBAI_ICONS_URL, external: true },
+        {
+          label: content.footerAuthorSite,
+          // The author's site has Chinese and English pages only.
+          href: locale.startsWith("zh") ? AUTHOR_SITE_URL : AUTHOR_SITE_EN_URL,
+          external: true,
+        },
+      ],
+    },
+    { title: content.footerFriends, links: FRIEND_LINKS.map((link) => ({ ...link, external: true })) },
   ]}
   community={{ label: community.label, panel: getCommunityPanel(locale), analyticsLabel: `${analyticsScope}_footer_community` }}
   copyright={content.footerCopyright}

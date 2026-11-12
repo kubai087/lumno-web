@@ -18,6 +18,8 @@ interface Props {
   socials: Social[];
   /** The community entry leads the last column, ahead of that column's links. */
   columns: Array<{ title: string; links: Link[] }>;
+  /** Small labelled groups of outside links (the author's other sites, friends' sites) above the bottom row. */
+  related: Array<{ title: string; links: Link[] }>;
   community: { label: string; panel: CommunityPanel; analyticsLabel: string };
   copyright: string;
   /** The extension's license, then the website's own repository and its license. */
@@ -26,7 +28,7 @@ interface Props {
   languages: Array<{ code: string; label: string; href: string; current: boolean }>;
 }
 
-const { homeHref, tagline, storesLabel, stores, socialAria, socials, columns, community, copyright, extensionLicense, websiteSource, languages } = Astro.props;
+const { homeHref, tagline, storesLabel, stores, socialAria, socials, columns, related, community, copyright, extensionLicense, websiteSource, languages } = Astro.props;
 // A narrow (centred) tagline may only wrap between Chinese phrases, never inside a word.
 const taglinePhrases = tagline.split(/(?<=、)/);
 ---
@@ -113,6 +115,22 @@ const taglinePhrases = tagline.split(/(?<=、)/);
         </div>
       ))}
     </nav>
+  </div>
+  <div class="site-footer__related">
+    {related.map((group) => (
+      <nav aria-label={group.title}>
+        <h2>{group.title}</h2>
+        <ul>
+          {group.links.map((link) => (
+            <li>
+              <a href={link.href} target={link.external ? "_blank" : undefined} rel={link.external ? "noopener" : undefined}>
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    ))}
   </div>
   <div class="site-footer__meta">
     <p>
@@ -212,6 +230,7 @@ const taglinePhrases = tagline.split(/(?<=、)/);
   }
 
   .site-footer__main,
+  .site-footer__related,
   .site-footer__meta {
     width: var(--home-column);
     margin-inline: auto;
@@ -373,6 +392,33 @@ const taglinePhrases = tagline.split(/(?<=、)/);
     color: var(--home-ink, #2f2a22);
   }
 
+  /* One quiet line of outside links, each group led by its label, above the bottom row. */
+  .site-footer__related {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--home-space-2) var(--home-space-10);
+    padding-bottom: var(--home-space-6);
+  }
+
+  .site-footer__related nav,
+  .site-footer__related ul {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 6px 16px;
+  }
+
+  .site-footer__related h2 {
+    margin: 0;
+    color: var(--text-soft, #89919a);
+    font-weight: 600;
+    letter-spacing: normal;
+  }
+
+  .site-footer__related a {
+    font-size: 13px;
+  }
+
   .site-footer__meta {
     display: flex;
     flex-wrap: wrap;
@@ -486,6 +532,12 @@ const taglinePhrases = tagline.split(/(?<=、)/);
       overflow: hidden;
       clip-path: inset(50%);
       white-space: nowrap;
+    }
+
+    .site-footer__related,
+    .site-footer__related nav,
+    .site-footer__related ul {
+      justify-content: center;
     }
 
     .site-footer__meta {

@@ -10,6 +10,13 @@ export const LICENSE_URL = `${GITHUB_URL}/blob/main/LICENSE`;
 /** This website's own repository, apart from the extension's. */
 export const WEBSITE_GITHUB_URL = "https://github.com/kubai087/lumno-web";
 
+/** The author's other sites, linked from the footer. */
+export const KUBAI_ICONS_URL = "https://icons.kubai.design/";
+export const AUTHOR_SITE_URL = "https://www.kubai.design/";
+export const AUTHOR_SITE_EN_URL = "https://www.kubai.design/en/";
+/** A friend's site. Plain http until its custom domain serves a valid certificate. */
+export const FRIEND_LINKS = [{ label: "Karl Coding", href: "http://www.leekarl.com/" }] as const;
+
 /** Store versions for the install menu, preferring the ones CI resolved before the build. */
 export function getSiteStoreVersions() {
   return getStoreVersions({

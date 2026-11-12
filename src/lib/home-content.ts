@@ -253,6 +253,11 @@ type HomeContent = {
   footerRelease: string;
   footerReportIssue: string;
   footerPrivacy: string;
+  /** Above the bottom row: the author's other sites, then friends' sites. */
+  footerMoreProjects: string;
+  /** The author's own site, among the other projects. */
+  footerAuthorSite: string;
+  footerFriends: string;
   footerSocialAria: string;
   footerGithub: string;
   footerCopyright: string;
@@ -604,6 +609,9 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerRelease: "近期更新",
     footerReportIssue: "报告问题",
     footerPrivacy: "隐私政策",
+    footerMoreProjects: "更多作品",
+    footerAuthorSite: "枯白啃设计",
+    footerFriends: "友情链接",
     footerSocialAria: "关注 Lumno",
     footerGithub: "GitHub",
     footerCopyright: "Lumno",
@@ -949,6 +957,9 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerRelease: "近期更新",
     footerReportIssue: "回報問題",
     footerPrivacy: "隱私權政策",
+    footerMoreProjects: "更多作品",
+    footerAuthorSite: "枯白啃設計",
+    footerFriends: "友站連結",
     footerSocialAria: "追蹤 Lumno",
     footerGithub: "GitHub",
     footerCopyright: "Lumno",
@@ -1291,6 +1302,9 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerRelease: "Release notes",
     footerReportIssue: "Report an issue",
     footerPrivacy: "Privacy policy",
+    footerMoreProjects: "More projects",
+    footerAuthorSite: "Kubai 087",
+    footerFriends: "Friends",
     footerSocialAria: "Follow Lumno",
     footerGithub: "GitHub",
     footerCopyright: "Lumno",
@@ -1626,6 +1640,9 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerRelease: "更新履歴",
     footerReportIssue: "不具合を報告",
     footerPrivacy: "プライバシーポリシー",
+    footerMoreProjects: "その他の作品",
+    footerAuthorSite: "Kubai 087",
+    footerFriends: "友だちのサイト",
     footerSocialAria: "Lumno をフォロー",
     footerGithub: "GitHub",
     footerCopyright: "Lumno",
@@ -1961,6 +1978,9 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerRelease: "업데이트 내역",
     footerReportIssue: "문제 신고",
     footerPrivacy: "개인정보처리방침",
+    footerMoreProjects: "다른 작품",
+    footerAuthorSite: "Kubai 087",
+    footerFriends: "친구 사이트",
     footerSocialAria: "Lumno 팔로우",
     footerGithub: "GitHub",
     footerCopyright: "Lumno",
@@ -2307,6 +2327,9 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerRelease: "Versionshinweise",
     footerReportIssue: "Problem melden",
     footerPrivacy: "Datenschutz",
+    footerMoreProjects: "Weitere Projekte",
+    footerAuthorSite: "Kubai 087",
+    footerFriends: "Befreundete Seiten",
     footerSocialAria: "Lumno folgen",
     footerGithub: "GitHub",
     footerCopyright: "Lumno",
@@ -2653,6 +2676,9 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerRelease: "Notes de version",
     footerReportIssue: "Signaler un problème",
     footerPrivacy: "Confidentialité",
+    footerMoreProjects: "Autres projets",
+    footerAuthorSite: "Kubai 087",
+    footerFriends: "Sites amis",
     footerSocialAria: "Suivre Lumno",
     footerGithub: "GitHub",
     footerCopyright: "Lumno",
@@ -2999,6 +3025,9 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerRelease: "Novedades",
     footerReportIssue: "Informar de un problema",
     footerPrivacy: "Privacidad",
+    footerMoreProjects: "Otros proyectos",
+    footerAuthorSite: "Kubai 087",
+    footerFriends: "Sitios amigos",
     footerSocialAria: "Seguir a Lumno",
     footerGithub: "GitHub",
     footerCopyright: "Lumno",
@@ -3342,6 +3371,9 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerRelease: "Novidades",
     footerReportIssue: "Relatar um problema",
     footerPrivacy: "Privacidade",
+    footerMoreProjects: "Outros projetos",
+    footerAuthorSite: "Kubai 087",
+    footerFriends: "Sites amigos",
     footerSocialAria: "Seguir o Lumno",
     footerGithub: "GitHub",
     footerCopyright: "Lumno",
@@ -3685,6 +3717,9 @@ export const HOME_CONTENT: Record<SupportedLocale, HomeContent> = {
     footerRelease: "Что нового",
     footerReportIssue: "Сообщить о проблеме",
     footerPrivacy: "Конфиденциальность",
+    footerMoreProjects: "Другие проекты",
+    footerAuthorSite: "Kubai 087",
+    footerFriends: "Друзья",
     footerSocialAria: "Следить за Lumno",
     footerGithub: "GitHub",
     footerCopyright: "Lumno",

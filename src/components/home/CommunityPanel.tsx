@@ -71,9 +71,10 @@ export function CommunityPanel({ panel, onCloseAutoFocus }: CommunityPanelProps)
       )}
       {hint && <p className="mt-3 text-center text-[13px] text-muted-foreground">{hint}</p>}
 
+      {/* Phones keep the panel to the QR: the GitHub note and the follow pills only show from the sm breakpoint up. */}
       {note && (
         <a
-          className="mt-4 self-start text-[13px] text-muted-foreground underline-offset-3 hover:text-foreground hover:underline"
+          className="mt-4 self-start max-sm:hidden text-[13px] text-muted-foreground underline-offset-3 hover:text-foreground hover:underline"
           href={note.href}
           target="_blank"
           rel="noreferrer noopener"
@@ -87,7 +88,7 @@ export function CommunityPanel({ panel, onCloseAutoFocus }: CommunityPanelProps)
 
       {followLabel ? (
         // Under the GitHub note: the author's profiles as a quiet row of follow-ups.
-        <div className="mt-3 flex flex-wrap items-center gap-2">
+        <div className="mt-3 flex flex-wrap items-center gap-2 max-sm:hidden">
           <span className="mr-1 text-sm text-muted-foreground">{followLabel}</span>
           {links.map((link) => (
             <a

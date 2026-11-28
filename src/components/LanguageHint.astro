@@ -1,0 +1,146 @@
+---
+import { SettingsButton, SettingsIconButton } from "./extension-settings/SettingsKit";
+
+/*
+ * The language suggestion. The site never changes a page's language on its
+ * own: a reader who opens a page in a language their browser doesn't list
+ * gets a small card in the bottom corner, written in their own language,
+ * offering the same page in it. scripts/language-hint.ts decides when it shows
+ * and fills in the text; the rules live in lib/language-hint.ts.
+ *
+ * The buttons are the site's own (SettingsButton), rendered into a template
+ * here and filled in by the script.
+ */
+---
+
+<template id="lang-hint-template">
+  <aside class="lang-hint" role="region" aria-live="polite">
+    <p class="lang-hint__text"></p>
+    <div class="lang-hint__actions">
+      <SettingsButton as="a" href="#" variant="primary" className="lang-hint__go" data-lang-hint-go="" />
+      <SettingsButton variant="ghost" className="lang-hint__stay" data-lang-hint-stay="" />
+    </div>
+    <SettingsIconButton
+      variant="ghost"
+      className="lang-hint__close"
+      data-lang-hint-close=""
+      label=""
+      iconClass="ri-close-line"
+    />
+  </aside>
+</template>
+
+<script>
+  import "../scripts/language-hint";
+</script>
+
+<style is:global>
+  /* The release notes' material (home/ReleasePopover.astro), as a small card in the same corner. */
+  .lang-hint {
+    --lang-hint-inset: 24px;
+    --lang-hint-ease: cubic-bezier(0.2, 1, 0.36, 1);
+    /* Ghost buttons read these from the settings kit. */
+    --lumno-panel-text: #3c4455;
+    --lumno-panel-subtext: #556070;
+    --lumno-control-hover-bg: rgba(75, 84, 95, 0.08);
+    position: fixed;
+    right: max(var(--lang-hint-inset), env(safe-area-inset-right));
+    bottom: max(var(--lang-hint-inset), env(safe-area-inset-bottom));
+    z-index: calc(var(--home-z-nav, 50) - 1);
+    box-sizing: border-box;
+    width: min(340px, calc(100vw - var(--lang-hint-inset) * 2));
+    padding: 16px 44px 14px 18px;
+    border: 1px solid rgba(214, 219, 227, 0.95);
+    border-radius: 20px;
+    background: linear-gradient(180deg, #ffffff 0%, #f7f9fc 100%);
+    box-shadow: 0 16px 36px rgba(17, 24, 39, 0.08), 0 3px 10px rgba(17, 24, 39, 0.05);
+    color: #3c4455;
+    font-size: 13px;
+    line-height: 1.55;
+    transform-origin: right bottom;
+    animation: lang-hint-in 360ms var(--lang-hint-ease) both;
+  }
+
+  .lang-hint[data-leaving] {
+    animation: lang-hint-out 200ms ease-in both;
+  }
+
+  .lang-hint__text {
+    margin: 0 0 12px;
+    font-weight: 500;
+  }
+
+  .lang-hint__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* Doubled class: settings-kit.css unsets everything on its buttons. */
+  .lang-hint .lang-hint__close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 28px;
+    min-width: 28px;
+    height: 28px;
+    min-height: 28px;
+    font-size: 15px;
+  }
+
+  /* One notice in the corner at a time: the release pill steps aside. */
+  body[data-lang-hint] .release-popover-trigger {
+    opacity: 0;
+    translate: 0 8px;
+    filter: blur(6px);
+    pointer-events: none;
+  }
+
+  @keyframes lang-hint-in {
+    from {
+      opacity: 0;
+      transform: translateY(12px) scale(0.98);
+      filter: blur(3px);
+    }
+  }
+
+  @keyframes lang-hint-out {
+    to {
+      opacity: 0;
+      transform: translateY(8px) scale(0.98);
+    }
+  }
+
+  /* Phones: across the bottom of the screen. */
+  @media (max-width: 560px) {
+    .lang-hint {
+      --lang-hint-inset: 12px;
+      left: max(var(--lang-hint-inset), env(safe-area-inset-left));
+      right: max(var(--lang-hint-inset), env(safe-area-inset-right));
+      width: auto;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lang-hint {
+      animation-name: lang-hint-fade-in;
+    }
+
+    .lang-hint[data-leaving] {
+      animation-name: lang-hint-fade-out;
+    }
+  }
+
+  @keyframes lang-hint-fade-in {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @keyframes lang-hint-fade-out {
+    to {
+      opacity: 0;
+    }
+  }
+</style>

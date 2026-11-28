@@ -136,7 +136,7 @@ const {
     "click",
     (event) => {
       if (!(event.target instanceof Element)) return;
-      const link = event.target.closest("#language-menu [data-lang-value], .site-footer__languages a[hreflang]");
+      const link = event.target.closest("#language-menu [data-lang-value], .site-footer__languages a[hreflang], .lang-hint a[hreflang]");
       if (!link || window.scrollY < 8) return;
       const line = window.scrollY + 96;
       const anchors = [...document.querySelectorAll<HTMLElement>("main section[id], main h2[id], main h3[id]")].filter(

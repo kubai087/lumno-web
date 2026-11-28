@@ -247,7 +247,7 @@ test("switching language keeps the reader's place", () => {
   const header = readSource("src/components/site/SiteHeader.astro");
   const restore = readSource("src/components/LanguageScrollRestore.astro");
   // Recorded before the language runtime navigates: the section being read and how far into it.
-  assert.match(header, /closest\("#language-menu \[data-lang-value\], \.site-footer__languages a\[hreflang\]"\)[\s\S]*?sessionStorage\.setItem\(\s*"lumno-language-scroll"[\s\S]*?\},\s*true,\s*\);/);
+  assert.match(header, /closest\("#language-menu \[data-lang-value\], \.site-footer__languages a\[hreflang\], \.lang-hint a\[hreflang\]"\)[\s\S]*?sessionStorage\.setItem\(\s*"lumno-language-scroll"[\s\S]*?\},\s*true,\s*\);/);
   // Restored on the new page at the same section (ids are the same in every language), else the same share of the page.
   assert.match(restore, /anchors\.findIndex\(\(element\) => element\.id === saved\.anchor\)[\s\S]*?saved\.ratio \* maxScroll[\s\S]*?behavior: "instant"/);
   assert.match(readSource("src/layouts/SitePage.astro"), /<LanguageScrollRestore \/>/);
